@@ -1,0 +1,28 @@
+p {
+  font-size: 0.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+nz-card {
+  min-height: 12rem;
+}
+
+nz-card span {
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+nz-card :last-child {
+  margin-left: 0.5rem;
+}
+
+.create-card {
+  cursor: pointer;
+  font-size: 4rem;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

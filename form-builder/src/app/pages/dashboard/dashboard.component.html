@@ -1,0 +1,41 @@
+<nz-header>
+  <div class="header"><h1>Form Builder</h1></div>
+</nz-header>
+<nz-content>
+  <div class="toolbar">
+    <button
+      *ngIf="isListView"
+      (click)="createProject('questionnaire')"
+      nz-button
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span> New questionnaire
+    </button>
+    <button *ngIf="isListView" (click)="createProject('test')" nz-button>
+      <span nz-icon nzType="plus" nzTheme="outline"></span> New test
+    </button>
+    <div *ngIf="!isListView; else cardView" (click)="isListView = !isListView">
+      <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
+      <span>List view</span>
+    </div>
+    <ng-template #cardView>
+      <div (click)="isListView = !isListView">
+        <span nz-icon nzType="appstore" nzTheme="outline"></span>
+        <span>Card view</span>
+      </div>
+    </ng-template>
+  </div>
+  <app-list-view
+    *ngIf="isListView; else cardViewComponent"
+    (deleteProject)="deleteProject($event)"
+    (editProject)="editProject()"
+    [projects]="projects.value"
+  />
+  <ng-template #cardViewComponent>
+    <app-card-view
+      [projects]="projects.value"
+      (createProject)="createProject($event)"
+      (deleteProject)="deleteProject($event)"
+      (editProject)="editProject()"
+    ></app-card-view>
+  </ng-template>
+</nz-content>

@@ -1,0 +1,60 @@
+<nz-table
+  #table
+  [nzData]="projects"
+  nzTableLayout="auto"
+  nzPaginationType="small"
+>
+  <thead>
+    <tr>
+      <th
+        *ngFor="let column of columnsConfig"
+        [nzSortOrder]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzSortDirections]="column.sortDirections"
+      >
+        {{ column.name }}
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.created }}</td>
+      <td>{{ data.modified }}</td>
+      <td class="icon-row">
+        <span
+          *ngIf="data.type === 'questionnaire'"
+          nz-icon
+          nzType="question-circle"
+          nzTheme="fill"
+        ></span>
+        <span
+          *ngIf="data.type === 'test'"
+          nz-icon
+          nzType="check-circle"
+          nzTheme="outline"
+          nzTheme="fill"
+        ></span>
+      </td>
+      <td class="icon-row">
+        <span
+          (click)="onEditProject()"
+          nz-icon
+          nzType="edit"
+          nzTheme="outline"
+        ></span>
+      </td>
+      <td>
+        <span
+          (click)="onDeleteProject(data.name)"
+          nz-icon
+          nzType="delete"
+          nzTheme="outline"
+        ></span>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
