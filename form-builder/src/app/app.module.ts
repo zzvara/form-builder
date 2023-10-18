@@ -11,12 +11,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
-import { EditComponent } from './pages/edit/edit.component';
+import { EditModule } from './pages/edit/edit.module';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, EditComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,6 +24,7 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     DashboardModule,
+    EditModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],
