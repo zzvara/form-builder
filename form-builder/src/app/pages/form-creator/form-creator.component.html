@@ -1,0 +1,25 @@
+<div class="form-popup">
+    <h2>Create Form</h2>
+    <form [formGroup]="form" (submit)="submitForm()">
+      <label for="name">Name:</label>
+      <input type="text" formControlName="name" required>
+  
+      <label for="description">Description:</label>
+      <input type="text" formControlName="description" required>
+  
+      <input type="checkbox" formControlName="checkbox">
+      <label for="number">Time limit:</label>
+      <input type="number" formControlName="number">
+  
+      <label for="date">Available until:</label>
+      <input type="date" formControlName="date" required>
+  
+      <label for="createdDate">Created date:</label>
+      <input type="text" formControlName="createdDate">
+  
+      <label for="modifiedDate">Modified date:</label>
+      <input type="text" formControlName="modifiedDate">
+  
+      <button type="submit">Submit</button>
+    </form>
+  </div>
