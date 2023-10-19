@@ -1,0 +1,37 @@
+<!-- Form for adding new form fields -->
+<form (ngSubmit)="saveFormField()">
+  <div>
+    <label for="variableName">Variable Name:</label>
+    <input type="text" id="variableName" [(ngModel)]="formField.variableName" name="variableName" required>
+  </div>
+
+  <div>
+    <label for="question">Question:</label>
+    <input type="text" id="question" [(ngModel)]="formField.question" name="question" required>
+  </div>
+
+  <div>
+    <label for="condition">Condition:</label>
+    <input type="text" id="condition" [(ngModel)]="formField.condition" name="condition">
+  </div>
+
+  <div>
+    <label for="isRequired">Required:</label>
+    <input type="checkbox" id="isRequired" [(ngModel)]="formField.isRequired" name="isRequired">
+  </div>
+
+  <button type="submit">Save</button>
+</form>
+
+
+<!-- Display existing form fields -->
+<div *ngIf="formFields.length > 0">
+  <h2>Existing Form Fields:</h2>
+  <div *ngFor="let field of formFields" class="form-field">
+    <p>ID: {{ field.id }}</p>
+    <p>Variable Name: {{ field.variableName }}</p>
+    <p>Question: {{ field.question }}</p>
+    <p>Condition: {{ field.condition }}</p>
+    <p>Required: {{ field.isRequired ? 'Yes' : 'No' }}</p>
+  </div>
+</div>
