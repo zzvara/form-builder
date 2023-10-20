@@ -1,4 +1,4 @@
-export interface Questionnaire {
+export interface Test {
     name: string;
     description: string;
     timeChechkbox: boolean;
