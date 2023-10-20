@@ -1,0 +1,30 @@
+nz-header {
+  background-color: #908d8d;
+}
+
+nz-content {
+  padding: 0 5rem;
+}
+
+.header > h1 {
+  text-align: center;
+  color: #fff;
+}
+
+.toolbar {
+  margin: 2rem 0;
+  display: flex;
+}
+
+.toolbar > :first-child {
+  margin-right: 1rem;
+}
+
+.toolbar > div {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.toolbar > div > :first-child {
+  margin-right: 0.15rem;
+}
