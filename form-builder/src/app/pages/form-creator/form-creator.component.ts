@@ -29,6 +29,8 @@ export class FormCreatorComponent implements OnInit {
   }
 
   submitForm() {
-      //TODO: itt kell elmenteni
+    //TODO: itt kell elmenteni
+    const formValue = this.form.value;
+    console.log(formValue);
   }
 }
