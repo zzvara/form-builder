@@ -13,11 +13,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { EditModule } from './pages/edit/edit.module';
 import { FormCreatorModule } from './pages/form-creator/form-creator.module';
+import { TextInputComponent } from './shared/components/text-input/text-input.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TextInputComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
