@@ -2,12 +2,7 @@
   text-align: end;
 }
 
-.icon-row > :first-child {
-  font-size: 1rem;
-  color: grey;
-}
-
-tr > td:nth-last-child(-n + 2) span {
+tr > td span {
   cursor: pointer;
   font-size: 1.2rem;
 }

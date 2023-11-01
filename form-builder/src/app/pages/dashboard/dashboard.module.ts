@@ -9,6 +9,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [DashboardComponent, CardViewComponent, ListViewComponent],
@@ -21,7 +22,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
     NzButtonModule,
     NzCardModule,
   ],
-  providers: [],
+  providers: [NzModalService],
   exports: [NzLayoutModule],
 })
 export class DashboardModule {}

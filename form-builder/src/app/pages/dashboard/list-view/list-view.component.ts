@@ -1,16 +1,29 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ColumnItem, Project } from '../dashboard.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ColumnItem, Project, ProjectType } from '../dashboard.model';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.css'],
 })
-export class ListViewComponent {
-  @Input() projects: Project[] = [];
+export class ListViewComponent implements OnInit {
+  @Input() projects: Observable<Project[]> = of([]);
+  @Input() type?: ProjectType;
 
   @Output() deleteProject = new EventEmitter<string>();
   @Output() editProject = new EventEmitter<void>();
+
+  projectList: Project[] = [];
+
+  ngOnInit(): void {
+    this.projects.subscribe(
+      (projects) =>
+        (this.projectList = projects.filter(
+          (project) => project.type === this.type
+        ))
+    );
+  }
 
   columnsConfig: ColumnItem[] = [
     {
@@ -33,11 +46,11 @@ export class ListViewComponent {
     },
   ];
 
-  onDeleteProject(name: string) {
+  onDeleteProject(name: string): void {
     this.deleteProject.emit(name);
   }
 
-  onEditProject() {
+  onEditProject(): void {
     this.editProject.emit();
   }
 }

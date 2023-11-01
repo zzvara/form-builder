@@ -1,6 +1,6 @@
 <nz-table
   #table
-  [nzData]="projects"
+  [nzData]="projectList"
   nzTableLayout="auto"
   nzPaginationType="small"
 >
@@ -16,7 +16,6 @@
       </th>
       <th></th>
       <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -24,21 +23,6 @@
       <td>{{ data.name }}</td>
       <td>{{ data.created }}</td>
       <td>{{ data.modified }}</td>
-      <td class="icon-row">
-        <span
-          *ngIf="data.type === 'questionnaire'"
-          nz-icon
-          nzType="question-circle"
-          nzTheme="fill"
-        ></span>
-        <span
-          *ngIf="data.type === 'test'"
-          nz-icon
-          nzType="check-circle"
-          nzTheme="outline"
-          nzTheme="fill"
-        ></span>
-      </td>
       <td class="icon-row">
         <span
           (click)="onEditProject()"

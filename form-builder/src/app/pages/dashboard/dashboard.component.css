@@ -28,3 +28,18 @@ nz-content {
 .toolbar > div > :first-child {
   margin-right: 0.15rem;
 }
+
+.view > div {
+  display: flex;
+  align-items: center;
+  text-decoration: underline;
+  margin-bottom: 0.5rem;
+}
+
+.view > div:last-of-type {
+  margin-top: 2rem;
+}
+
+.view > div > h3 {
+  margin: auto 1rem auto 0;
+}
