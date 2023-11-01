@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
     templateUrl: './text-input.component.html',
     styleUrls: ['./text-input.component.css']
 })
-export class TextInputComponent {
+export class InputComponent {
     @Input() questionValue!: string;
     @Input() answer!: Component;
 }
