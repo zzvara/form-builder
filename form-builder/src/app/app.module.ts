@@ -15,11 +15,12 @@ import { EditModule } from './pages/edit/edit.module';
 import { FormCreatorModule } from './pages/form-creator/form-creator.module';
 import { InputComponent } from './shared/components/input/input.component';
 import { TextareaComponent } from './shared/components/textarea/textarea.component';
+import { SelectComponent } from './shared/components/select/select.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, InputComponent, TextareaComponent],
+  declarations: [AppComponent, InputComponent, TextareaComponent, SelectComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
