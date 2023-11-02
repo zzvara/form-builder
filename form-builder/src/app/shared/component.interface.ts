@@ -1,7 +1,7 @@
 export interface Component {
+    id: string;
     variableName: string;
     answerValue: string;
-    type: string;
     isReqired: boolean;
     condition: boolean;
 }

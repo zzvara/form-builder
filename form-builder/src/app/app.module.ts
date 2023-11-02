@@ -14,11 +14,12 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { EditModule } from './pages/edit/edit.module';
 import { FormCreatorModule } from './pages/form-creator/form-creator.module';
 import { InputComponent } from './shared/components/input/input.component';
+import { TextareaComponent } from './shared/components/textarea/textarea.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, InputComponent],
+  declarations: [AppComponent, InputComponent, TextareaComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

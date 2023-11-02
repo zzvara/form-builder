@@ -8,4 +8,6 @@ import { Component, Input } from '@angular/core';
 export class InputComponent {
     @Input() questionValue!: string;
     @Input() answer!: Component;
+    @Input() type!: string;
+    @Input() inputPlaceholder!: string;
 }
