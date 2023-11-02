@@ -16,11 +16,12 @@ import { FormCreatorModule } from './pages/form-creator/form-creator.module';
 import { InputComponent } from './shared/components/input/input.component';
 import { TextareaComponent } from './shared/components/textarea/textarea.component';
 import { SelectComponent } from './shared/components/select/select.component';
+import { DatePickerComponent } from './shared/components/date-picker/date-picker.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, InputComponent, TextareaComponent, SelectComponent],
+  declarations: [AppComponent, InputComponent, TextareaComponent, SelectComponent, DatePickerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
