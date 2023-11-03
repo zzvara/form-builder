@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Questionnaire, ProjectType } from '../../items/questionnaire.interface'
 
 @Component({
   selector: 'app-form-creator',
@@ -10,18 +10,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class FormCreatorComponent implements OnInit {
   constructor(private readonly router: Router) {}
-  form: FormGroup = new FormGroup({});
+  questionnaire!: Questionnaire;
 
   ngOnInit() {
-    this.form = new FormBuilder().group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      checkbox: [false],
-      number: [null],
-      date: ['', Validators.required],
-      createdDate: [new Date().toISOString().split('T')[0]],
-      modifiedDate: [new Date().toISOString().split('T')[0]]
-    });
+    this.questionnaire = {
+      id: 0,
+      title: '',
+      description: '',
+      type: ProjectType.QUESTIONNAIRE,
+      timeChechkbox: false,
+      timeLimit: 0,
+      date: '',
+      created: new Date().toISOString().split('T')[0],
+      modified: new Date().toISOString().split('T')[0]
+    };
   }
 
   onNavigateBack() {
@@ -29,8 +31,7 @@ export class FormCreatorComponent implements OnInit {
   }
 
   submitForm() {
-    //TODO: itt kell elmenteni
-    const formValue = this.form.value;
-    console.log(formValue);
+    //TODO:elmenteni
+    console.log(this.questionnaire);
   }
 }
