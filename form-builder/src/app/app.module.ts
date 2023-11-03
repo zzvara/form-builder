@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { EditModule } from './pages/edit/edit.module';
-import { QuestionnaireComponent } from './services/questionnaire/questionnaire.component';
+import { QuestionnaireComponent } from './pages/questionnaire/questionnaire.component';
 
 registerLocaleData(en);
 
