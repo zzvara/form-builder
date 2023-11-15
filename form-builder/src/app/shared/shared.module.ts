@@ -9,6 +9,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
+const COMPONENTS = [HeaderComponent];
 
 @NgModule({
   declarations: [
@@ -16,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     InputComponent,
     SelectComponent,
     TextareaComponent,
+    ...COMPONENTS,
   ],
   imports: [
     BrowserModule,
@@ -24,8 +30,10 @@ import { FormsModule } from '@angular/forms';
     NzInputModule,
     NzSelectModule,
     FormsModule,
+    NzLayoutModule,
+    NzIconModule,
   ],
   providers: [],
-  exports: [],
+  exports: [...COMPONENTS],
 })
 export class SharedModule {}
