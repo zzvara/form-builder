@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { EditModule } from './pages/edit/edit.module';
 import { FormCreatorModule } from './pages/form-creator/form-creator.module';
+import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 
 registerLocaleData(en);
@@ -28,6 +29,7 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     DashboardModule,
     EditModule,
+    SharedModule,
     FormCreatorModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
