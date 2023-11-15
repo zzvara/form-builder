@@ -2,17 +2,38 @@
   <div class="header">
     <div>
       <span
+        *ngIf="headerOptions.includes(options.HOME)"
         (click)="navigateToHome()"
         nz-icon
         nzType="home"
         nzTheme="outline"
       ></span>
-      <span nz-icon nzType="rollback" nzTheme="outline"></span>
-      <span nz-icon nzType="save" nzTheme="outline"></span>
-      <span nz-icon nzType="menu" nzTheme="outline"></span>
+      <span
+        *ngIf="headerOptions.includes(options.UNDO)"
+        nz-icon
+        nzType="rollback"
+        nzTheme="outline"
+      ></span>
+      <span
+        *ngIf="headerOptions.includes(options.SAVE)"
+        nz-icon
+        nzType="save"
+        nzTheme="outline"
+      ></span>
+      <span
+        *ngIf="headerOptions.includes(options.SIDE_MENU)"
+        nz-icon
+        nzType="menu"
+        nzTheme="outline"
+      ></span>
     </div>
     <div>
-      <span nz-icon nzType="setting" nzTheme="outline"></span>
+      <span
+        *ngIf="headerOptions.includes(options.SETTINGS)"
+        nz-icon
+        nzType="setting"
+        nzTheme="outline"
+      ></span>
     </div>
     <h1>Form Builder</h1>
   </div>
