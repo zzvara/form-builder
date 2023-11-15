@@ -5,7 +5,7 @@
     [nzSm]="12"
     [nzMd]="8"
     [nzLg]="6"
-    *ngFor="let project of projects"
+    *ngFor="let project of projectList"
   >
     <nz-card [nzTitle]="project.name">
       <p>Created: {{ project.created }}</p>
@@ -25,7 +25,7 @@
     </nz-card>
   </div>
   <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
-    <nz-card (click)="onCreateProject()" class="create-card" [nzTitle]="">
+    <nz-card (click)="onCreateProject(type!)" class="create-card" [nzTitle]="">
       <div nz-icon nzType="plus" nzTheme="outline"></div>
     </nz-card>
   </div>
