@@ -1,0 +1,10 @@
+<div>
+  <input
+    type="text"
+    [(ngModel)]="inputValue"
+    (ngModelChange)="onChanges($event)"
+  />
+  <br />
+  <button nz-button (click)="undo()"><span nz-icon nzType="undo" nzTheme="outline"></span></button>
+  <button nz-button (click)="redo()"><span nz-icon nzType="redo" nzTheme="outline"></span></button>
+</div>

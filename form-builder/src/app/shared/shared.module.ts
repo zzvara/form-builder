@@ -9,6 +9,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { RedoUndoComponent } from './components/redo-undo/redo-undo.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,7 @@ import { FormsModule } from '@angular/forms';
     InputComponent,
     SelectComponent,
     TextareaComponent,
+    RedoUndoComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,6 +28,8 @@ import { FormsModule } from '@angular/forms';
     NzInputModule,
     NzSelectModule,
     FormsModule,
+    NzIconModule,
+    NzButtonModule,
   ],
   providers: [],
   exports: [],
