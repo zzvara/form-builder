@@ -1,7 +1,7 @@
 export enum ProjectType {
-    QUESTIONNAIRE = 'questionnaire',
-    TEST = 'test',
-  }
+  QUESTIONNAIRE = 'questionnaire',
+  TEST = 'test',
+}
 
 export interface Questionnaire {
   id: number;
