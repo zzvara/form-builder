@@ -82,8 +82,14 @@ nz-step {
 
 label {
     margin-top: 7px;
+    margin-bottom: 15px;
+}
+
+nz-date-picker, nz-time-picker {
+    height: 30px;
 }
 
 #footerdiv {
-    margin-top: 40px;
+  margin-top: 40px;
 }
+

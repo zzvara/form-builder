@@ -10,10 +10,11 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [FormCreatorComponent],
-  imports: [NzFormModule, NzInputModule, NzLayoutModule, NzSwitchModule, NzDatePickerModule, NzTimePickerModule, NzCheckboxModule, NzStepsModule, NzButtonModule, FormsModule, ReactiveFormsModule],
+  imports: [NzFormModule, NzInputModule, NzLayoutModule, NzSwitchModule, NzDatePickerModule, NzTimePickerModule, NzCheckboxModule, NzStepsModule, NzButtonModule, FormsModule, ReactiveFormsModule, BrowserModule],
   providers: [],
   exports: [],
 })

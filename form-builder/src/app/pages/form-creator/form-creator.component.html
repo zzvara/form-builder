@@ -1,25 +1,3 @@
-<!--<form (ngSubmit)="submitForm()">
-  <div class="form-container" [formGroup]="form">
-      <input nz-input type="text" id="name" formControlName="name" placeholder="Form title" required><br>
-
-      <textarea nz-input [nzAutosize]="{ minRows: 1, maxRows: 5 }" id="description" formControlName="description" placeholder="Description" required></textarea><br><hr />
-
-      <input type="checkbox" id="checkbox" formControlName="checkbox" required>
-      <label for="number">Time limit:</label>
-      <input  type="number" id="number" formControlName="number"><br>
-
-      <label for="date">Available until:</label>
-      <nz-date-picker id="date" formControlName="date" required></nz-date-picker><br>
-
-      <label for="createdDate">Created date:</label>
-      <input type="text" id="createdDate">
-
-      <label for="modifiedDate">Modified date:</label>
-      <input type="text" id="modifiedDate"><br>
-
-      <button type="submit">Submit</button>
-  </div>
-</form>-->
 <nz-header>
   <div class="header"><h1>Form Builder</h1></div>
 </nz-header>
@@ -31,7 +9,7 @@
   </nz-steps>
   <div class="form-container">
     <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <input nz-input type="text" id="title" formControlName="name" placeholder="Form title" required><br>
+      <input nz-input type="text" id="title" formControlName="title" placeholder="Form title" required><br>
       <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" id="description" formControlName="description" placeholder="Description" required></textarea><br><hr />
       <nz-form-item id="typeswitchdiv">
         <label class="typelabel">Test</label>
@@ -39,21 +17,21 @@
         <label class="typelabel">Questionaire</label>
       </nz-form-item>
       <nz-form-item id="deadlinediv">
-        <label nz-checkbox>Deadline</label>
-        <nz-date-picker id="deadline" required></nz-date-picker><br>
+        <label nz-checkbox formControlName="hasdeadline" (change)="setdeadline()">Deadline</label>
+        <nz-date-picker *ngIf="hasdeadline" id="deadline" formControlName="deadline"></nz-date-picker><br>
       </nz-form-item>
       <nz-form-item id="limitdiv">
-        <label nz-checkbox>Time limit</label>
-        <nz-time-picker id="limit" required></nz-time-picker><br>
+        <label nz-checkbox formControlName="haslimit" (change)="setlimit()">Time limit</label>
+        <nz-time-picker *ngIf="haslimit" id="limit" formControlName="limit"></nz-time-picker><br>
       </nz-form-item>
       <div nz-row id="footerdiv">
-        <div nz-col nzSpan="3">
+        <div nz-col nzSpan="4">
           <nz-form-label>Created</nz-form-label>
-          <label>aaaaa</label>
+          <label>{{this.questionnaire.created}}</label>
         </div>
-        <div nz-col nzSpan="18">
+        <div nz-col nzSpan="17">
           <nz-form-label>Last modification</nz-form-label>
-          <label>aaaaa</label>
+          <label>{{this.questionnaire.modified}}</label>
         </div>
         <button nz-col nzSpan="3" id="btn" nz-button nzType="primary" type="submit">Save</button>
       </div>

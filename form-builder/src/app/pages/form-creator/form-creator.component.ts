@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,14 +29,21 @@ export class FormCreatorComponent implements OnInit {
   }
 
   todaysDate = new Date();
+  hasdeadline = false;
+  haslimit = false;
 
   form = new FormGroup({
-    name: new FormControl(),
+    title: new FormControl(),
     description: new FormControl(),
-    checkbox: new FormControl(),
-    number: new FormControl(),
-    date: new FormControl()
+    type: new FormControl(),
+    hasdeadline: new FormControl(this.hasdeadline),
+    deadline: new FormControl(),
+    haslimit: new FormControl(this.haslimit),
+    limit: new FormControl()
   });
+
+  setdeadline() { this.hasdeadline = !this.hasdeadline; }
+  setlimit() { this.haslimit = !this.haslimit; }
 
   onNavigateBack() {
     this.router.navigate(['/dashboard']);
@@ -44,5 +52,6 @@ export class FormCreatorComponent implements OnInit {
   submitForm() {
     //TODO:elmenteni
     console.log(this.questionnaire);
+    console.log(this.form.value);
   }
 }
