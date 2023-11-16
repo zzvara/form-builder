@@ -1,22 +1,52 @@
-<form (ngSubmit)="submitForm()">
-  <div class="form-container">
-      <input type="text" id="name" formControlName="name" placeholder="Form title" required><br>
+<!--<form (ngSubmit)="submitForm()">
+  <div class="form-container" [formGroup]="form">
+      <input nz-input type="text" id="name" formControlName="name" placeholder="Form title" required><br>
 
-      <textarea id="description" formControlName="description" rows="1" cols="50" placeholder="Description" required></textarea><br>
+      <textarea nz-input [nzAutosize]="{ minRows: 1, maxRows: 5 }" id="description" formControlName="description" placeholder="Description" required></textarea><br><hr />
 
       <input type="checkbox" id="checkbox" formControlName="checkbox" required>
       <label for="number">Time limit:</label>
-      <input type="number" id="number" formControlName="number"><br>
+      <input  type="number" id="number" formControlName="number"><br>
 
       <label for="date">Available until:</label>
-      <input type="date" id="date" formControlName="date" required><br>
+      <nz-date-picker id="date" formControlName="date" required></nz-date-picker><br>
 
       <label for="createdDate">Created date:</label>
-      <input type="text"  id="createdDate" formControlName="createdDate">
+      <input type="text" id="createdDate">
 
       <label for="modifiedDate">Modified date:</label>
-      <input type="text"  id="modifiedDate" formControlName="modifiedDate"><br>
+      <input type="text" id="modifiedDate"><br>
 
       <button type="submit">Submit</button>
   </div>
-</form>
+</form>-->
+<nz-header>
+  <div class="header"><h1>Form Builder</h1></div>
+</nz-header>
+<nz-layout>
+  <nz-steps [nzCurrent]="0" nzSize="small">
+    <nz-step nzTitle="Form info"></nz-step>
+    <nz-step nzTitle="Components"></nz-step>
+    <nz-step nzTitle="Answers"></nz-step>
+  </nz-steps>
+  <div class="form-container">
+    <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
+      <input nz-input type="text" id="name" formControlName="name" placeholder="Form title" required><br>
+      <textarea nz-input [nzAutosize]="{ minRows: 1, maxRows: 5 }" id="description" formControlName="description" placeholder="Description" required></textarea><br><hr />
+      <nz-form-item>
+        <label>Test</label>
+        <nz-switch></nz-switch>
+        <label>Questionaire</label>
+      </nz-form-item>
+      <nz-form-item>
+        <label nz-checkbox>Deadline</label>
+        <nz-date-picker id="date" required></nz-date-picker><br>
+      </nz-form-item>
+      <nz-form-item>
+        <label nz-checkbox>Time limit</label>
+        <nz-date-picker id="limit" required></nz-date-picker><br>
+      </nz-form-item>
+      <button nz-button nzType="primary" type="submit">Submit</button>
+    </form>
+  </div>
+</nz-layout>

@@ -1,1 +1,25 @@
-/* Ide jöhet majd a formázás az ng-zorroval :) */
+.form-container {
+  background-color: white;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+input {
+    
+    margin: 20px;
+}
+
+#name {
+  margin-left: 40%;
+  margin-right: 40%;
+  width: 20%;
+  text-align: center;
+}
+
+#description {
+  margin: 20px 0 20px 0;
+  width: 100%;
+}
