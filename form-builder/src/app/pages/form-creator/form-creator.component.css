@@ -1,25 +1,89 @@
+nz-header {
+  background-color: #908d8d;
+}
+
+nz-content {
+  padding: 0 5rem;
+}
+
+.header > h1 {
+  text-align: center;
+  color: #fff;
+}
+
+#progressbar {
+  width: 80%;
+  margin: 40px auto 0px auto;
+  background-color: transparent;
+  padding: 0px;
+}
+
+nz-step {
+  padding-top: 12px;
+}
+
+.ant-steps-item{
+    overflow: hidden;
+}
+
+.activeStep {
+  background-color: white;
+}
+
 .form-container {
   background-color: white;
-  width: 95%;
+  width: 80%;
   height: 100%;
   margin: auto;
-  margin-top: 50px;
-  padding: 20px;
+  margin-top: 0px;
+  padding: 40px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-input {
-    
-    margin: 20px;
-}
-
-#name {
-  margin-left: 40%;
-  margin-right: 40%;
-  width: 20%;
-  text-align: center;
+#title {
+  margin-top: 0px;
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  border-width: 2px;
 }
 
 #description {
-  margin: 20px 0 20px 0;
-  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  border-width: 2px;
+}
+
+#typeswitchdiv {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+#typeswitch {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.typelabel {
+    margin-top: 2px;
+}
+
+#limit {
+    width: 160px;
+    margin-left: 20px;
+}
+
+#deadline {
+  width: 160px;
+  margin-left: 26px;
+}
+
+label {
+    margin-top: 7px;
+}
+
+#footerdiv {
+    margin-top: 40px;
 }

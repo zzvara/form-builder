@@ -24,29 +24,39 @@
   <div class="header"><h1>Form Builder</h1></div>
 </nz-header>
 <nz-layout>
-  <nz-steps [nzCurrent]="0" nzSize="small">
-    <nz-step nzTitle="Form info"></nz-step>
+  <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="0">
+    <nz-step class="activeStep" nzTitle="Form info"></nz-step>
     <nz-step nzTitle="Components"></nz-step>
     <nz-step nzTitle="Answers"></nz-step>
   </nz-steps>
   <div class="form-container">
     <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <input nz-input type="text" id="name" formControlName="name" placeholder="Form title" required><br>
-      <textarea nz-input [nzAutosize]="{ minRows: 1, maxRows: 5 }" id="description" formControlName="description" placeholder="Description" required></textarea><br><hr />
-      <nz-form-item>
-        <label>Test</label>
-        <nz-switch></nz-switch>
-        <label>Questionaire</label>
+      <input nz-input type="text" id="title" formControlName="name" placeholder="Form title" required><br>
+      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" id="description" formControlName="description" placeholder="Description" required></textarea><br><hr />
+      <nz-form-item id="typeswitchdiv">
+        <label class="typelabel">Test</label>
+        <nz-switch id="typeswitch"></nz-switch>
+        <label class="typelabel">Questionaire</label>
       </nz-form-item>
-      <nz-form-item>
+      <nz-form-item id="deadlinediv">
         <label nz-checkbox>Deadline</label>
-        <nz-date-picker id="date" required></nz-date-picker><br>
+        <nz-date-picker id="deadline" required></nz-date-picker><br>
       </nz-form-item>
-      <nz-form-item>
+      <nz-form-item id="limitdiv">
         <label nz-checkbox>Time limit</label>
-        <nz-date-picker id="limit" required></nz-date-picker><br>
+        <nz-time-picker id="limit" required></nz-time-picker><br>
       </nz-form-item>
-      <button nz-button nzType="primary" type="submit">Submit</button>
+      <div nz-row id="footerdiv">
+        <div nz-col nzSpan="3">
+          <nz-form-label>Created</nz-form-label>
+          <label>aaaaa</label>
+        </div>
+        <div nz-col nzSpan="18">
+          <nz-form-label>Last modification</nz-form-label>
+          <label>aaaaa</label>
+        </div>
+        <button nz-col nzSpan="3" id="btn" nz-button nzType="primary" type="submit">Save</button>
+      </div>
     </form>
   </div>
 </nz-layout>
