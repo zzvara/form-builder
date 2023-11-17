@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class TextareaComponent {
     @Input() questionValue!: string;
-    @Input() answer!: Component;
+    @Input() answerValue!: Component;
     @Input() textareaPlaceholder!: string;
 }

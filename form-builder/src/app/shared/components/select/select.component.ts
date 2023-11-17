@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class SelectComponent {
     @Input() questionValue!: string;
-    @Input() answer!: Component;
+    //@Input() answerValue!: Component;
     @Input() answerOptions!: string[];
 }

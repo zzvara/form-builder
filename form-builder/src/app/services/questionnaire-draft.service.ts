@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 
-export class QuestionnaireService {
+export class QuestionnaireDraftService {
     private questionnaires: Questionnaire[] = [];
     private questionnaireSubject = new BehaviorSubject<Questionnaire[]>([]);
 
@@ -26,32 +26,14 @@ export class QuestionnaireService {
         localStorage.setItem('questionnaires', JSON.stringify(this.questionnaires));
     }
 
-    private isValidQuestionnaire(data: Questionnaire): boolean {
-        return (
-          data.id !== undefined &&
-          data.title.trim() !== '' &&
-          data.description.trim() !== '' &&
-          typeof(data.timeChechkbox) === 'boolean' &&
-          typeof(data.timeLimit) === 'number' &&
-          data.date.trim() !== '' &&
-          data.created.trim() !== '' &&
-          data.modified.trim() !== ''
-        );
-    }
-
     list() {
         return this.questionnaireSubject.asObservable();
     }
 
     add(data: Questionnaire) {
-        if(this.isValidQuestionnaire(data)){
-            this.questionnaires.push(data);
-            this.questionnaireSubject.next([...this.questionnaires]);
-            this.saveToLocalStorage();
-        }else{
-            console.error('Invalid questionnaire data.');
-        }
-        
+        this.questionnaires.push(data);
+        this.questionnaireSubject.next([...this.questionnaires]);
+        this.saveToLocalStorage();
     }
 
     remove(id: number) {
@@ -61,15 +43,11 @@ export class QuestionnaireService {
     }
 
     update(id: number, data: Questionnaire) {
-        if (this.isValidQuestionnaire(data)) {
-            const index = this.questionnaires.findIndex(q => q.id === id);
-            if (index !== -1) {
-              this.questionnaires[index] = data;
-              this.questionnaireSubject.next([...this.questionnaires]);
-              this.saveToLocalStorage();
-            }
-        } else {
-            console.error('Invalid questionnaire data.');
+        const index = this.questionnaires.findIndex(q => q.id === id);
+        if (index !== -1) {
+            this.questionnaires[index] = data;
+            this.questionnaireSubject.next([...this.questionnaires]);
+            this.saveToLocalStorage();
         }
     }
 }
