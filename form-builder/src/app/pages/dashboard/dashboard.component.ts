@@ -1,55 +1,42 @@
-import { Component } from '@angular/core';
-import { Project, ProjectType } from './dashboard.model';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { Questionnaire, ProjectType } from '../../items/questionnaire.interface';
+import { QuestionnaireService } from '../../services/questionnaire.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
-  projects$: BehaviorSubject<Project[]> = new BehaviorSubject(
-    JSON.parse(localStorage.getItem('projects') ?? '[]')
-  );
+export class DashboardComponent implements OnInit {
+  projects$: Observable<Questionnaire[]> = of([]);
   isListView = true;
   projectTypes = ProjectType;
 
   constructor(
     private readonly router: Router,
-    private readonly modal: NzModalService
+    private readonly modal: NzModalService,
+    private readonly questionnaireService: QuestionnaireService
   ) {}
+
+  ngOnInit(): void {
+    this.projects$ = this.questionnaireService.list();
+  }
 
   createProject(type: ProjectType): void {
     this.router.navigate(['new'], { queryParams: { type } });
-
-    // TODO relocate this logic after form is ready.
-    this.projects$.next([
-      ...this.projects$.value,
-      {
-        name: `${type.charAt(0).toUpperCase() + type.slice(1)} - ${Math.floor(
-          Math.random() * 1000
-        )}`,
-        created: new Date().toDateString(),
-        modified: new Date().toDateString(),
-        type,
-      },
-    ]);
-    localStorage.setItem('projects', JSON.stringify(this.projects$.value));
   }
 
-  deleteProject(name: string): void {
+  deleteProject(id: number): void {
     this.modal.confirm({
       nzTitle: 'Are you sure delete this project?',
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
       nzOnOk: () => {
-        this.projects$.next(
-          this.projects$.value.filter((project) => project.name !== name)
-        );
-        localStorage.setItem('projects', JSON.stringify(this.projects$.value));
+        this.questionnaireService.remove(id);
       },
       nzCancelText: 'No',
     });

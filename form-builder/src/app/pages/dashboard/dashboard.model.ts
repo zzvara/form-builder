@@ -1,20 +1,9 @@
 import { NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
-
-export enum ProjectType {
-  QUESTIONNAIRE = 'questionnaire',
-  TEST = 'test',
-}
-
-export interface Project {
-  name: string;
-  created: string;
-  modified: string;
-  type: ProjectType;
-}
+import { Questionnaire } from '../../items/questionnaire.interface';
 
 export interface ColumnItem {
-  name: string;
+  title: string;
   sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn<Project> | null;
+  sortFn: NzTableSortFn<Questionnaire> | null;
   sortDirections: NzTableSortOrder[];
 }

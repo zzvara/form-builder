@@ -1,9 +1,4 @@
-<nz-table
-  #table
-  [nzData]="projectList"
-  nzTableLayout="auto"
-  nzPaginationType="small"
->
+<nz-table #table [nzData]="projectList" nzTableLayout="auto" nzPaginationType="small">
   <thead>
     <tr>
       <th
@@ -12,7 +7,7 @@
         [nzSortFn]="column.sortFn"
         [nzSortDirections]="column.sortDirections"
       >
-        {{ column.name }}
+        {{ column.title }}
       </th>
       <th></th>
       <th></th>
@@ -20,24 +15,14 @@
   </thead>
   <tbody>
     <tr *ngFor="let data of table.data">
-      <td>{{ data.name }}</td>
+      <td>{{ data.title }}</td>
       <td>{{ data.created }}</td>
       <td>{{ data.modified }}</td>
       <td class="icon-row">
-        <span
-          (click)="onEditProject()"
-          nz-icon
-          nzType="edit"
-          nzTheme="outline"
-        ></span>
+        <span (click)="onEditProject()" nz-icon nzType="edit" nzTheme="outline"></span>
       </td>
       <td>
-        <span
-          (click)="onDeleteProject(data.name)"
-          nz-icon
-          nzType="delete"
-          nzTheme="outline"
-        ></span>
+        <span (click)="onDeleteProject(data.id)" nz-icon nzType="delete" nzTheme="outline"></span>
       </td>
     </tr>
   </tbody>
