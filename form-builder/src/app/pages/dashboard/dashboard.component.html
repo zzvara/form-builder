@@ -21,19 +21,17 @@
     <app-list-view
       (deleteProject)="deleteProject($event)"
       (editProject)="editProject()"
-      [projects]="projects$.asObservable()"
+      [projects]="projects$"
       [type]="projectTypes.QUESTIONNAIRE"
     />
     <div>
       <h3>Tests</h3>
-      <button (click)="createProject(projectTypes.TEST)" nz-button>
-        <span nz-icon nzType="plus" nzTheme="outline"></span> New
-      </button>
+      <button (click)="createProject(projectTypes.TEST)" nz-button><span nz-icon nzType="plus" nzTheme="outline"></span> New</button>
     </div>
     <app-list-view
       (deleteProject)="deleteProject($event)"
       (editProject)="editProject()"
-      [projects]="projects$.asObservable()"
+      [projects]="projects$"
       [type]="projectTypes.TEST"
     />
   </div>
@@ -43,7 +41,7 @@
         <h3>Questionnaires</h3>
       </div>
       <app-card-view
-        [projects]="projects$.asObservable()"
+        [projects]="projects$"
         [type]="projectTypes.QUESTIONNAIRE"
         (createProject)="createProject($event)"
         (deleteProject)="deleteProject($event)"
@@ -53,7 +51,7 @@
         <h3>Tests</h3>
       </div>
       <app-card-view
-        [projects]="projects$.asObservable()"
+        [projects]="projects$"
         [type]="projectTypes.TEST"
         (createProject)="createProject($event)"
         (deleteProject)="deleteProject($event)"
