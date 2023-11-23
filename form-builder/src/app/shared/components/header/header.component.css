@@ -26,3 +26,7 @@ nz-header {
 .header > div :not(:last-child) {
   margin-right: 1rem;
 }
+
+.is-active {
+  color: #fff;
+}

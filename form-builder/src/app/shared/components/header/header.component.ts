@@ -11,22 +11,31 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   headerOptions: MenuOption[] = [];
+  activeOptions: MenuOption[] = [];
   options = MenuOption;
   optionsSub?: Subscription;
 
-  constructor(
-    private readonly router: Router,
-    private readonly headerService: HeaderService
-  ) {}
+  constructor(private readonly router: Router, private readonly headerService: HeaderService) {}
 
   ngOnInit(): void {
     this.optionsSub = this.headerService
       .getOptions()
-      .subscribe((options) => (this.headerOptions = options));
+      .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
   }
 
   navigateToHome(): void {
     this.router.navigate(['dashboard']);
+  }
+
+  changeMenuItemState(toChange: MenuOption) {
+    if (this.activeOptions.includes(toChange)) {
+      this.headerService.setOptions(
+        this.headerOptions,
+        this.activeOptions.filter((option) => option !== toChange)
+      );
+    } else {
+      this.headerService.setOptions(this.headerOptions, [...this.activeOptions, toChange]);
+    }
   }
 
   ngOnDestroy(): void {

@@ -12,27 +12,13 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
-const COMPONENTS = [HeaderComponent];
+const COMPONENTS = [HeaderComponent, SidebarComponent];
 
 @NgModule({
-  declarations: [
-    DatePickerComponent,
-    InputComponent,
-    SelectComponent,
-    TextareaComponent,
-    ...COMPONENTS,
-  ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    NzDatePickerModule,
-    NzInputModule,
-    NzSelectModule,
-    FormsModule,
-    NzLayoutModule,
-    NzIconModule,
-  ],
+  declarations: [DatePickerComponent, InputComponent, SelectComponent, TextareaComponent, ...COMPONENTS],
+  imports: [BrowserModule, CommonModule, NzDatePickerModule, NzInputModule, NzSelectModule, FormsModule, NzLayoutModule, NzIconModule],
   providers: [],
   exports: [...COMPONENTS],
 })
