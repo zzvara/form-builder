@@ -1,3 +1,19 @@
+nz-sider {
+  overflow: scroll;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  opacity: 0.9;
+  z-index: 99;
+}
+
 section {
-  min-width: 200px;
+  padding: 2rem;
+  background-color: #fff;
+  overflow: scroll;
+  height: 100vh;
+}
+
+nz-input-group {
+  margin-top: 3rem;
 }

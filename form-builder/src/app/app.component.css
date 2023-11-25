@@ -1,7 +1,3 @@
 nz-layout {
-  height: 100vh;
-}
-
-nz-layout > div {
-  display: flex;
+  min-height: 100vh;
 }

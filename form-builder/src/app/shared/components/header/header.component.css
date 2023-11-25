@@ -1,6 +1,9 @@
 nz-header {
   background-color: #908d8d;
   padding: 0 5rem;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 }
 
 .header {

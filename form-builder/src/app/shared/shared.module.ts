@@ -18,7 +18,17 @@ const COMPONENTS = [HeaderComponent, SidebarComponent];
 
 @NgModule({
   declarations: [DatePickerComponent, InputComponent, SelectComponent, TextareaComponent, ...COMPONENTS],
-  imports: [BrowserModule, CommonModule, NzDatePickerModule, NzInputModule, NzSelectModule, FormsModule, NzLayoutModule, NzIconModule],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    NzDatePickerModule,
+    NzInputModule,
+    NzSelectModule,
+    FormsModule,
+    NzLayoutModule,
+    NzIconModule,
+    NzLayoutModule,
+  ],
   providers: [],
   exports: [...COMPONENTS],
 })

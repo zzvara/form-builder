@@ -1,3 +1,10 @@
-<section>
-  <p>Hello</p>
-</section>
+<nz-sider [nzWidth]="300">
+  <section>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="input search text" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+  </section>
+</nz-sider>
