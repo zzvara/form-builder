@@ -1,27 +1,13 @@
 <nz-header>
   <div class="header">
     <div>
+      <span *ngIf="headerOptions.includes(options.HOME)" (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline"></span>
+      <span *ngIf="headerOptions.includes(options.UNDO)" nz-icon nzType="rollback" nzTheme="outline"></span>
+      <span *ngIf="headerOptions.includes(options.SAVE)" nz-icon nzType="save" nzTheme="outline"></span>
       <span
-        *ngIf="headerOptions.includes(options.HOME)"
-        (click)="navigateToHome()"
-        nz-icon
-        nzType="home"
-        nzTheme="outline"
-      ></span>
-      <span
-        *ngIf="headerOptions.includes(options.UNDO)"
-        nz-icon
-        nzType="rollback"
-        nzTheme="outline"
-      ></span>
-      <span
-        *ngIf="headerOptions.includes(options.SAVE)"
-        nz-icon
-        nzType="save"
-        nzTheme="outline"
-      ></span>
-      <span
-        *ngIf="headerOptions.includes(options.SIDE_MENU)"
+        *ngIf="headerOptions.includes(options.SIDEBAR)"
+        [ngClass]="activeOptions.includes(options.SIDEBAR) ? 'is-active' : ''"
+        (click)="changeMenuItemState(options.SIDEBAR)"
         nz-icon
         nzType="menu"
         nzTheme="outline"
@@ -30,6 +16,8 @@
     <div>
       <span
         *ngIf="headerOptions.includes(options.SETTINGS)"
+        [ngClass]="activeOptions.includes(options.SETTINGS) ? 'is-active' : ''"
+        (click)="changeMenuItemState(options.SETTINGS)"
         nz-icon
         nzType="setting"
         nzTheme="outline"

@@ -1,0 +1,16 @@
+<nz-sider [nzWidth]="300">
+  <section>
+    <div></div>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="input search text" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+    <nz-collapse cdkDrag [nzBordered]="false">
+      <nz-collapse-panel dr [nzHeader]="panels['basic'].name" [nzActive]="panels['basic'].active">
+        <app-text-input type="text"></app-text-input>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </section>
+</nz-sider>

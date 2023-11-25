@@ -1,6 +1,9 @@
 nz-header {
   background-color: #908d8d;
   padding: 0 5rem;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 }
 
 .header {
@@ -25,4 +28,8 @@ nz-header {
 
 .header > div :not(:last-child) {
   margin-right: 1rem;
+}
+
+.is-active {
+  color: #fff;
 }
