@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RedoUndoComponent } from './components/redo-undo/redo-undo.component';
+import { WjInputModule } from '@grapecity/wijmo.angular2.input';
+import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
+import { WjGaugeModule } from '@grapecity/wijmo.angular2.gauge';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { RedoUndoComponent } from './components/redo-undo/redo-undo.component';
     FormsModule,
     NzIconModule,
     NzButtonModule,
+    WjInputModule,
+    WjGridModule,
+    WjGaugeModule,
   ],
   providers: [],
   exports: [],

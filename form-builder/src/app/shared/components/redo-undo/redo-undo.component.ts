@@ -1,32 +1,28 @@
 import { Component } from '@angular/core';
+import { UndoStack } from '@grapecity/wijmo.undo';
 
 @Component({
   selector: 'app-redo-undo',
   templateUrl: './redo-undo.component.html',
-  styleUrls: ['./redo-undo.component.css']
+  styleUrls: ['./redo-undo.component.css'],
 })
 export class RedoUndoComponent {
-  inputValue: string = '';
-  inputStates: string[] = [];
-  undoStats: number = 0;
+  undoStack!: UndoStack;
+  canUndo = false;
+  canRedo = false;
+  actionCount = 0;
 
-  onChanges(change:any) {
-    this.inputStates.push(change);
-    this.undoStats = 0;
-  }
-
-  undo() {
-    this.undoStats++;
-    this.inputValue = this.inputStates[this.inputStates.length - (this.undoStats + 1)];
-  }
-
-  redo() {
-    if (this.undoStats > 0) this.undoStats--;
-    if (this.undoStats >= 0)
-    this.inputValue = this.inputStates[this.inputStates.length - (this.undoStats + 1)];
+  // enable undo/redo for the form
+  // use ngAfterViewInit to ensure all controls
+  // have been initalized (ngOnInit is too soon)
+  ngAfterViewInit() {
+    this.undoStack = new UndoStack('#undoable-form', {
+      maxActions: 50,
+      stateChanged: (s: UndoStack) => {
+        this.canUndo = s.canUndo;
+        this.canRedo = s.canRedo;
+        this.actionCount = s.actionCount;
+      },
+    });
   }
 }
-
-
-
-

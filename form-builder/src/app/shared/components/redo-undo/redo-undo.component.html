@@ -1,10 +1,79 @@
 <div>
-  <input
-    type="text"
-    [(ngModel)]="inputValue"
-    (ngModelChange)="onChanges($event)"
-  />
-  <br />
-  <button nz-button (click)="undo()"><span nz-icon nzType="undo" nzTheme="outline"></span></button>
-  <button nz-button (click)="redo()"><span nz-icon nzType="redo" nzTheme="outline"></span></button>
+        <button 
+          nz-button             
+          [disabled]="!canUndo"
+          (click)="undoStack.undo()"
+        >
+            <span nz-icon nzType="undo" nzTheme="outline"></span>
+        </button>
+        <button 
+          nz-button 
+          [disabled]="!canRedo"
+          (click)="undoStack.redo()"
+        >
+          <span nz-icon nzType="redo" nzTheme="outline"></span>
+        </button>
+        <button class="btn" disabled>
+            Action Count: {{actionCount}}
+        </button>
+        <button id="clear" class="btn btn-default"
+            [disabled]="!actionCount"
+            (click)="undoStack.clear()">
+            Clear Undo/Redo Stack
+        </button>
+    </div>
+<div>
+
+  <form id="undoable-form">
+        <div class="row">
+
+             <!-- HTML input elements -->
+             <div>
+                <h3>HTML Input Elements</h3>
+                <div>
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" placeholder="First Name" />
+                </div>
+                <div>
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" placeholder="Last Name"/>
+                </div>
+                <div>
+                    <label for="select">Select</label>
+                    <select id="select">
+                        <option value="value1">Apples</option>
+                        <option value="value2" selected>Oranges</option>
+                        <option value="value3">Grapes</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="area">TextArea</label>
+                    <textarea id="area" placeholder="textarea"></textarea>
+                </div>
+                <div>
+                    <label>
+                        <input type="checkbox" id="inlineCheckbox1" value="option1" checked> Red
+                    </label>
+                    <label>
+                        <input type="checkbox" id="inlineCheckbox2" value="option2"> Green
+                    </label>
+                    <label>
+                        <input type="checkbox" id="inlineCheckbox3" value="option3"> Blue
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                        Hot
+                    </label>
+                    <label>
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Cold
+                    </label>
+                    <label>
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Medium
+                    </label>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
