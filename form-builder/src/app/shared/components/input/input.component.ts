@@ -11,4 +11,5 @@ export class InputComponent {
   @Input() answerValue: answerType = { isReqired: false };
   @Input() type!: string;
   @Input() inputPlaceholder: string = '';
+  @Input() sectiondId!: string;
 }

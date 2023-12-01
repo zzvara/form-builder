@@ -9,4 +9,5 @@ export class TextareaComponent {
     @Input() questionValue!: string;
     @Input() answerValue!: Component;
     @Input() textareaPlaceholder!: string;
+    @Input() sectiondId!: string;
 }
