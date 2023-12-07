@@ -1,22 +1,23 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MenuOption } from 'src/app/shared/models/menu-option.model';
+import { MenuOption, MenuState } from 'src/app/shared/models/menu-option.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeaderService {
-  private headerOptions: BehaviorSubject<MenuOption[]> = new BehaviorSubject<
-    MenuOption[]
-  >([MenuOption.HOME, MenuOption.SETTINGS]);
+  private headerOptions: BehaviorSubject<MenuState> = new BehaviorSubject<MenuState>({
+    options: [MenuOption.HOME, MenuOption.SETTINGS],
+    activeOptions: [],
+  });
 
   constructor() {}
 
-  setOptions(options: MenuOption[]): void {
-    this.headerOptions.next(options);
+  setOptions(options: MenuOption[], activeOptions: MenuOption[] = []): void {
+    this.headerOptions.next({ options, activeOptions });
   }
 
-  getOptions(): Observable<MenuOption[]> {
+  getOptions(): Observable<MenuState> {
     return this.headerOptions.asObservable();
   }
 }
