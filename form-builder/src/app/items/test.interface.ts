@@ -1,16 +1,5 @@
-export enum ProjectType {
-    QUESTIONNAIRE = 'questionnaire',
-    TEST = 'test',
-}
+import { Project, ProjectType} from './project.interface';
 
-export interface Test {
-    id: number;
-    title: string;
-    description: string;
-    type: ProjectType;
-    timeChechkbox: boolean;
-    timeLimit: number;
-    date: string;
-    created: string;
-    modified: string;
+export interface Test extends Project {
+    type: ProjectType.TEST;
 }
