@@ -3,8 +3,6 @@ export enum QuestionType {
     RADIO = 'radio',
     CHECKBOX = 'checkbox',
     DATE = 'date',
-    //DROPDOWN = 'dropdown',
-    //FILE = 'file',
 }
 
 export interface Question {
