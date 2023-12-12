@@ -8,8 +8,8 @@ export interface Project {
   title: string;
   description: string;
   type: ProjectType;
-  timeChechkbox: boolean;
-  timeLimit: number;
+  time_chechkbox: boolean;
+  time_limit: number;
   date: string;
   created: string;
   modified: string;
