@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +11,10 @@ import { Injectable } from '@angular/core';
 export class ProjectService<T extends object> {
     private items: T[] = [];
     private itemsSubject = new BehaviorSubject<T[]>([]);
+    @Inject(String) private storageKey: string = 'temp';
 
-    constructor(private storageKey: string) { 
-        this.loadFromLocalStorage();        
+    constructor() {
+        this.loadFromLocalStorage();
     }
 
     private loadFromLocalStorage() {
@@ -37,13 +38,13 @@ export class ProjectService<T extends object> {
           if (key === 'id') {
             return value !== undefined;
           } else if (key === 'title' || key === 'description' || key === 'date' || key === 'created' || key === 'modified' || key === 'correct_answer_date' || key === 'user_answer_date' || key === 'question' || key === 'user_answer_string' || key === 'correct_answer_string') {
-            return typeof value === 'string' && value.trim() !== '';
+            return typeof value === 'string' && (value as string).trim() !== '';
           } else if (key === 'time_chechkbox') {
             return typeof value === 'boolean';
           } else if (key === 'time_limit' || key === 'test_id' || key === 'max_point' || key === 'user_point') {
             return typeof value === 'number';
           } else if (key === 'possible_answers' || key === 'correct_answers' || key === 'user_answers') {
-            return Array.isArray(value) && value.length > 0;
+            return Array.isArray(value) && (value as any[]).length > 0;
           }
           return true;
         });

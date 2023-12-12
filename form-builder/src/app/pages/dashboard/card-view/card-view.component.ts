@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ProjectType, Questionnaire } from '../../../items/questionnaire.interface';
+import { Questionnaire } from '../../../items/questionnaire/questionnaire.interface';
+import { ProjectType } from '../../../items/project.interface';
 
 @Component({
   selector: 'app-card-view',
