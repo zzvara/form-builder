@@ -37,14 +37,14 @@ export class ProjectService<T extends object> {
     
           if (key === 'id') {
             return value !== undefined;
-          } else if (key === 'title' || key === 'description' || key === 'date' || key === 'created' || key === 'modified' || key === 'correct_answer_date' || key === 'user_answer_date' || key === 'question' || key === 'user_answer_string' || key === 'correct_answer_string') {
+          } else if (key === 'title' || key === 'description' || key === 'deadline' || key === 'created' || key === 'modified' || key === 'correct_answer_date' || key === 'user_answer_date' || key === 'question' || key === 'user_answer_string' || key === 'correct_answer_string') {
             return typeof value === 'string' && (value as string).trim() !== '';
           } else if (key === 'time_chechkbox') {
             return typeof value === 'boolean';
           } else if (key === 'time_limit' || key === 'test_id' || key === 'max_point' || key === 'user_point') {
             return typeof value === 'number';
           } else if (key === 'possible_answers' || key === 'correct_answers' || key === 'user_answers') {
-            return Array.isArray(value) && (value as any[]).length > 0;
+            return Array.isArray(value);
           }
           return true;
         });
