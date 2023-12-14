@@ -5,10 +5,11 @@
     "\\form-builder\\src",
     "\\form-builder\\src\\app",
     "\\form-builder\\src\\app\\items",
+    "\\form-builder\\src\\app\\items\\questionnaire",
     "\\form-builder\\src\\app\\pages",
     "\\form-builder\\src\\app\\pages\\form-creator",
     "\\form-builder\\src\\app\\pages\\questionnaire"
   ],
-  "SelectedNode": "\\form-builder\\src\\app\\items\\questionnaire.interface.ts",
+  "SelectedNode": "\\form-builder\\src\\app\\items\\project.interface.ts",
   "PreviewInSolutionExplorer": false
 }

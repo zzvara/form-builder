@@ -29,30 +29,28 @@ export class FormCreatorComponent implements OnInit {
     };
   }
 
-  todaysDate = new Date();
-  hasdeadline = false;
-  haslimit = false;
+  page = 0;
 
-  form = new FormGroup({
-    title: new FormControl(),
-    description: new FormControl(),
-    type: new FormControl(),
-    hasdeadline: new FormControl(this.hasdeadline),
-    deadline: new FormControl(),
-    haslimit: new FormControl(this.haslimit),
-    limit: new FormControl()
-  });
-
-  setdeadline() { this.hasdeadline = !this.hasdeadline; }
-  setlimit() { this.haslimit = !this.haslimit; }
-
-  onNavigateBack() {
-    this.router.navigate(['/dashboard']);
+  setPage(p: number) {
+    if (p <= 2) {
+      this.page = p;
+    }
   }
 
-  submitForm() {
-    //TODO:elmenteni
-    console.log(this.questionnaire);
-    console.log(this.form.value);
+  nextPage() {
+    if (this.page < 2) {
+      this.page += 1;
+    }
   }
+  toInfoPage() {
+    this.page = 0;
+  }
+  toCompPage() {
+    this.page = 1;
+  }
+  toAnswPage() {
+    this.page = 2;
+  }
+
+  
 }

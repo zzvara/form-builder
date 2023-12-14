@@ -1,40 +1,28 @@
-<nz-header>
-  <div class="header"><h1>Form Builder</h1></div>
-</nz-header>
 <nz-layout>
-  <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="0">
-    <nz-step class="activeStep" nzTitle="Form info"></nz-step>
-    <nz-step nzTitle="Components"></nz-step>
-    <nz-step nzTitle="Answers"></nz-step>
+  <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="page">
+    <nz-step nzTitle="Form info" (click)="toInfoPage()"></nz-step>
+    <nz-step nzTitle="Components" (click)="toCompPage()"></nz-step>
+    <nz-step nzTitle="Answers" (click)="toAnswPage()"></nz-step>
   </nz-steps>
   <div class="form-container">
-    <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <input nz-input type="text" id="title" formControlName="title" placeholder="Form title" required><br>
-      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" id="description" formControlName="description" placeholder="Description" required></textarea><br><hr />
-      <nz-form-item id="typeswitchdiv">
-        <label class="typelabel">Test</label>
-        <nz-switch id="typeswitch"></nz-switch>
-        <label class="typelabel">Questionaire</label>
-      </nz-form-item>
-      <nz-form-item id="deadlinediv">
-        <label nz-checkbox formControlName="hasdeadline" (change)="setdeadline()">Deadline</label>
-        <nz-date-picker *ngIf="hasdeadline" id="deadline" formControlName="deadline"></nz-date-picker><br>
-      </nz-form-item>
-      <nz-form-item id="limitdiv">
-        <label nz-checkbox formControlName="haslimit" (change)="setlimit()">Time limit</label>
-        <nz-time-picker *ngIf="haslimit" id="limit" formControlName="limit"></nz-time-picker><br>
-      </nz-form-item>
-      <div nz-row id="footerdiv">
-        <div nz-col nzSpan="4">
-          <nz-form-label>Created</nz-form-label>
-          <label>{{this.questionnaire.created}}</label>
-        </div>
-        <div nz-col nzSpan="17">
-          <nz-form-label>Last modification</nz-form-label>
-          <label>{{this.questionnaire.modified}}</label>
-        </div>
-        <button nz-col nzSpan="3" id="btn" nz-button nzType="primary" type="submit">Save</button>
-      </div>
-    </form>
+    Page: {{page}}
+    <div class="page" *ngIf="page == 0">
+      <app-info-page
+      [page]="page"
+      (setPage)="setPage($event)"
+      />
+    </div>
+    <div class="page" *ngIf="page == 1">
+      <app-components-page
+      [page]="page"
+      (setPage)="setPage($event)"
+      />
+    </div>
+    <div class="page" *ngIf="page == 2">
+      <app-results-page
+      [page]="page"
+      (setPage)="setPage($event)"
+      />
+    </div>
   </div>
 </nz-layout>

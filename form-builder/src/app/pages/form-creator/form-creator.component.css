@@ -1,33 +1,10 @@
-nz-header {
-  background-color: #908d8d;
+nz-layout {
+    margin-top: 100px;
 }
 
-nz-content {
-  padding: 0 5rem;
-}
-
-.header > h1 {
-  text-align: center;
-  color: #fff;
-}
-
-#progressbar {
+nz-steps {
   width: 80%;
-  margin: 40px auto 0px auto;
-  background-color: transparent;
-  padding: 0px;
-}
-
-nz-step {
-  padding-top: 12px;
-}
-
-.ant-steps-item{
-    overflow: hidden;
-}
-
-.activeStep {
-  background-color: white;
+  margin: auto;
 }
 
 .form-container {
@@ -39,57 +16,3 @@ nz-step {
   padding: 40px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-
-#title {
-  margin-top: 0px;
-  margin-bottom: 30px;
-  font-size: 20px;
-  font-weight: bold;
-  border-radius: 10px;
-  border-width: 2px;
-}
-
-#description {
-  margin-top: 20px;
-  margin-bottom: 40px;
-  border-radius: 10px;
-  border-width: 2px;
-}
-
-#typeswitchdiv {
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
-
-#typeswitch {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.typelabel {
-    margin-top: 2px;
-}
-
-#limit {
-    width: 160px;
-    margin-left: 20px;
-}
-
-#deadline {
-  width: 160px;
-  margin-left: 26px;
-}
-
-label {
-    margin-top: 7px;
-    margin-bottom: 15px;
-}
-
-nz-date-picker, nz-time-picker {
-    height: 30px;
-}
-
-#footerdiv {
-  margin-top: 40px;
-}
-

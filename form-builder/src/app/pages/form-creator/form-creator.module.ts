@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormCreatorComponent } from './form-creator.component';
+import { InfoPageComponent } from './info-page/info-page.component';
+import { ComponentsPageComponent } from './components-page/components-page.component';
+import { ResultsPageComponent } from './results-page/results-page.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -13,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
-  declarations: [FormCreatorComponent],
+  declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
   imports: [NzFormModule, NzInputModule, NzLayoutModule, NzSwitchModule, NzDatePickerModule, NzTimePickerModule, NzCheckboxModule, NzStepsModule, NzButtonModule, FormsModule, ReactiveFormsModule, BrowserModule],
   providers: [],
   exports: [],
