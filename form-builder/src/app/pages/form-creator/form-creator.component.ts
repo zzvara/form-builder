@@ -13,20 +13,10 @@ import { ProjectType } from '../../items/project.interface';
 
 export class FormCreatorComponent implements OnInit {
   constructor(private readonly router: Router) {}
-  questionnaire!: Questionnaire;
+  
 
   ngOnInit() {
-    this.questionnaire = {
-      id: 0,
-      title: '',
-      description: '',
-      type: ProjectType.QUESTIONNAIRE,
-      time_chechkbox: false,
-      time_limit: 0,
-      date: '',
-      created: new Date().toISOString().split('T')[0],
-      modified: new Date().toISOString().split('T')[0]
-    };
+    
   }
 
   page = 0;
