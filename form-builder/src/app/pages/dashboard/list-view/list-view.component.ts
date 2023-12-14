@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ColumnItem, Project, ProjectType } from '../dashboard.model';
 import { Observable, of } from 'rxjs';
+import { ColumnItem } from '../dashboard.model';
+import { Questionnaire } from '../../../items/questionnaire/questionnaire.interface';
+import { ProjectType } from '../../../items/project.interface';
 
 @Component({
   selector: 'app-list-view',
@@ -8,46 +10,41 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./list-view.component.css'],
 })
 export class ListViewComponent implements OnInit {
-  @Input() projects: Observable<Project[]> = of([]);
+  @Input() projects: Observable<Questionnaire[]> = of([]);
   @Input() type?: ProjectType;
 
-  @Output() deleteProject = new EventEmitter<string>();
+  @Output() deleteProject = new EventEmitter<number>();
   @Output() editProject = new EventEmitter<void>();
 
-  projectList: Project[] = [];
+  projectList: Questionnaire[] = [];
 
   ngOnInit(): void {
-    this.projects.subscribe(
-      (projects) =>
-        (this.projectList = projects.filter(
-          (project) => project.type === this.type
-        ))
-    );
+    this.projects.subscribe((projects) => (this.projectList = projects.filter((project) => project.type === this.type)));
   }
 
   columnsConfig: ColumnItem[] = [
     {
-      name: 'Name',
+      title: 'Title',
       sortOrder: null,
-      sortFn: (a: Project, b: Project) => a.name.localeCompare(b.name),
+      sortFn: (a: Questionnaire, b: Questionnaire) => a.title.localeCompare(b.title),
       sortDirections: ['ascend', 'descend', null],
     },
     {
-      name: 'Created',
+      title: 'Created',
       sortOrder: 'descend',
-      sortFn: (a: Project, b: Project) => a.created.localeCompare(b.created),
+      sortFn: (a: Questionnaire, b: Questionnaire) => a.created.localeCompare(b.created),
       sortDirections: ['ascend', 'descend', null],
     },
     {
-      name: 'Modified',
+      title: 'Modified',
       sortOrder: null,
-      sortFn: (a: Project, b: Project) => a.modified.localeCompare(b.modified),
+      sortFn: (a: Questionnaire, b: Questionnaire) => a.modified.localeCompare(b.modified),
       sortDirections: ['ascend', 'descend', null],
     },
   ];
 
-  onDeleteProject(name: string): void {
-    this.deleteProject.emit(name);
+  onDeleteProject(id: number): void {
+    this.deleteProject.emit(id);
   }
 
   onEditProject(): void {

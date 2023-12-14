@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class DatePickerComponent {
     @Input() questionValue!: string;
-    @Input() answer!: Component;
+    @Input() answerValue!: Component;
 }

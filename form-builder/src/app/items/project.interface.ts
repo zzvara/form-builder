@@ -1,15 +1,15 @@
 export enum ProjectType {
-    QUESTIONNAIRE = 'questionnaire',
-    TEST = 'test',
-  }
+  QUESTIONNAIRE = 'questionnaire',
+  TEST = 'test',
+}
 
-export interface Questionnaire {
+export interface Project {
   id: number;
   title: string;
   description: string;
   type: ProjectType;
-  timeChechkbox: boolean;
-  timeLimit: number;
+  time_chechkbox: boolean;
+  time_limit: number;
   date: string;
   created: string;
   modified: string;
