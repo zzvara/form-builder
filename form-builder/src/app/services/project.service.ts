@@ -33,11 +33,11 @@ export class ProjectService<T extends Project> {
         this.loadFromLocalStorage();
     }
 
-    private isQuestionnaireType(project): project is T & { type: ProjectType.QUESTIONNAIRE } {
+    private isQuestionnaireType(project: any): project is T & { type: ProjectType.QUESTIONNAIRE } {
         return isQuestionnaireType(project);
     }
 
-    private isTestType(project): project is T & { type: ProjectType.TEST } {
+    private isTestType(project: any): project is T & { type: ProjectType.TEST } {
         return isTestType(project);
     }
 
@@ -139,7 +139,7 @@ export class ProjectService<T extends Project> {
         }
     }
 
-    searchData(id: number): T | undefined {
-        return this.items.find(item => item.id === id);
+    searchData(id: number): T[] {
+        return this.items.filter(item => item.id === id);
     }
 }
