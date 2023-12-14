@@ -14,7 +14,7 @@ export class CardViewComponent implements OnInit {
 
   @Output() deleteProject = new EventEmitter<number>();
   @Output() createProject = new EventEmitter<ProjectType>();
-  @Output() editProject = new EventEmitter<void>();
+  @Output() editProject = new EventEmitter<number>();
 
   projectList: Questionnaire[] = [];
 
@@ -30,7 +30,7 @@ export class CardViewComponent implements OnInit {
     this.createProject.emit(type);
   }
 
-  onEditProject(): void {
-    this.editProject.emit();
+  onEditProject(id: number): void {
+    this.editProject.emit(id);
   }
 }

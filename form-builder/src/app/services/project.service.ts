@@ -62,13 +62,13 @@ export class ProjectService<T extends object> {
     
           if (key === 'id') {
             return value !== undefined;
-          } else if (key === 'title' || key === 'description' || key === 'deadline' || key === 'created' || key === 'modified' || key === 'correct_answer_date' || key === 'user_answer_date' || key === 'question' || key === 'user_answer_string' || key === 'correct_answer_string') {
+          } else if (key === 'title' || key === 'description' || key === 'created' || key === 'modified' || key === 'correct_answer_date' || key === 'user_answer_date' || key === 'question' || key === 'user_answer_string' || key === 'correct_answer_string') {
             return typeof value === 'string' && (value as string).trim() !== '';
           } else if (key === 'time_chechkbox') {
             return typeof value === 'boolean';
-          } else if (key === 'time_limit' || key === 'test_id' || key === 'max_point' || key === 'user_point') {
+          } else if (key === 'time_limit' || key === 'test_id') {
             return typeof value === 'number';
-          } else if (key === 'possible_answers' || key === 'correct_answers' || key === 'user_answers') {
+          } else if (key === 'possible_answers') {
             return Array.isArray(value);
           }
           return true;
@@ -103,35 +103,37 @@ export class ProjectService<T extends object> {
         }
     }
 
-    addWithCheck(data: T) {
+    addWithCheck(data: T): boolean {
         if(this.isValidData(data)){
             this.items.push(data);
             this.itemsSubject.next([...this.items]);
-            this.saveToLocalStorage();
+          this.saveToLocalStorage();
+          return true;
         }else{
-            console.error('Invalid data.');
+          console.error('Invalid data.');
+          return false;
         }
         
     }
 
-    updateWithCheck(id: number, data: T): number {
+    updateWithCheck(id: number, data: T): boolean {
         if (this.isValidData(data)) {
             const index = this.items.findIndex((item: any) => item.id === id);
             if (index !== -1) {
                 this.items[index] = data;
                 this.itemsSubject.next([...this.items]);
                 this.saveToLocalStorage();
-                return 0;
+                return true;
             } else {
-                return -1;
+                return false;
             }
         } else {
             console.error('Invalid data.');
-            return -1;
+            return false;
         }
     }
 
-    searchData(id: number): T | undefined {
-        return this.items.find((item: any) => item.id === id);
+  searchData(id: number): T[] {
+      return this.items.filter((item: any) => item.id === id);
     }
 }

@@ -15,5 +15,4 @@ export interface Project {
   deadline: string;
   created: string;
   modified: string;
-  questions: Question[];
 }

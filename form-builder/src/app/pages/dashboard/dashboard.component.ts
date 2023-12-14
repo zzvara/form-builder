@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  editProject() {
-    this.router.navigate(['new']);
+  editProject(id: number) {
+    this.router.navigate(['new'], { queryParams: { id } });
   }
 }

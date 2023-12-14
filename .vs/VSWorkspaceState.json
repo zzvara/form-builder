@@ -4,13 +4,13 @@
     "\\form-builder",
     "\\form-builder\\src",
     "\\form-builder\\src\\app",
-    "\\form-builder\\src\\app\\items",
-    "\\form-builder\\src\\app\\items\\test",
-    "\\form-builder\\src\\app\\pages",
-    "\\form-builder\\src\\app\\pages\\dashboard",
-    "\\form-builder\\src\\app\\pages\\dashboard\\card-view",
-    "\\form-builder\\src\\app\\services"
+    "\\form-builder\\src\\app\\services",
+    "\\form-builder\\src\\app\\services\\header",
+    "\\form-builder\\src\\app\\shared",
+    "\\form-builder\\src\\app\\shared\\components",
+    "\\form-builder\\src\\app\\shared\\models",
+    "\\form-builder\\src\\app\\shared\\resolvers"
   ],
-  "SelectedNode": "\\form-builder\\src\\app\\services\\project.service.ts",
+  "SelectedNode": "\\form-builder\\src\\app\\items\\project.interface.ts",
   "PreviewInSolutionExplorer": false
 }

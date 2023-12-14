@@ -1,3 +1,22 @@
 nz-layout {
     background-color: transparent;
 }
+
+.formelement {
+    margin-bottom: 30px;
+}
+
+#switch {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#title, #description {
+  font-size: 20px;
+  border-radius: 10px;
+  border-width: 2px;
+}
+
+#title {
+  font-weight: bold;
+}
