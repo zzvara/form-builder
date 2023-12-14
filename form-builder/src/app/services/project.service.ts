@@ -1,26 +1,51 @@
 import { BehaviorSubject } from 'rxjs';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Project , ProjectType} from '../items/project.interface';
+
+function isQuestionnaireType(project: any): project is Project & { type: ProjectType.QUESTIONNAIRE } {
+    return project.type === ProjectType.QUESTIONNAIRE;
+}
+
+function isTestType(project: any): project is Project & { type: ProjectType.TEST } {
+    return project.type === ProjectType.TEST;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 
 //HASZNÁLATA: 
-// const projectService = new ProjectService<Type>('storageKey');
+// const projectService = new ProjectService<Type>();
+
 
 export class ProjectService<T extends object> {
     private items: T[] = [];
     private itemsSubject = new BehaviorSubject<T[]>([]);
-    @Inject(String) private storageKey: string = 'temp';
+    private storageKey: string = '';
 
     constructor() {
+        const temp = this.items[0];
+        if (temp && this.isQuestionnaireType(temp)) {
+            this.storageKey = 'questionnaire';
+        } else if (temp && this.isTestType(temp)) {
+            this.storageKey = 'test';
+        }
+
         this.loadFromLocalStorage();
+    }
+
+    private isQuestionnaireType(project: any): project is T & { type: ProjectType.QUESTIONNAIRE } {
+        return isQuestionnaireType(project);
+    }
+
+    private isTestType(project: any): project is T & { type: ProjectType.TEST } {
+        return isTestType(project);
     }
 
     private loadFromLocalStorage() {
         const savedData = localStorage.getItem(this.storageKey);
         if (savedData) {
-            this.items = JSON.parse(savedData);
+            this.items = JSON.parse(savedData) as T[];
             this.itemsSubject.next([...this.items]);
         }
     }
@@ -29,7 +54,7 @@ export class ProjectService<T extends object> {
         localStorage.setItem(this.storageKey, JSON.stringify(this.items));
     }
 
-    private isValidQuestionnaire(data: T): boolean {
+    private isValidData(data: T): boolean {
         const keys = Object.keys(data) as Array<keyof T>;
     
         return keys.every((key) => {
@@ -66,17 +91,20 @@ export class ProjectService<T extends object> {
         this.saveToLocalStorage();
     }
 
-    update(id: number, data: T) {
+    update(id: number, data: T): number {
         const index = this.items.findIndex((item: any) => item.id === id);
         if (index !== -1) {
             this.items[index] = data;
             this.itemsSubject.next([...this.items]);
             this.saveToLocalStorage();
+            return 0;
+        } else {
+            return -1;
         }
     }
 
     addWithCheck(data: T) {
-        if(this.isValidQuestionnaire(data)){
+        if(this.isValidData(data)){
             this.items.push(data);
             this.itemsSubject.next([...this.items]);
             this.saveToLocalStorage();
@@ -86,17 +114,24 @@ export class ProjectService<T extends object> {
         
     }
 
-
-    updateWithCheck(id: number, data: T) {
-        if (this.isValidQuestionnaire(data)) {
+    updateWithCheck(id: number, data: T): number {
+        if (this.isValidData(data)) {
             const index = this.items.findIndex((item: any) => item.id === id);
             if (index !== -1) {
-              this.items[index] = data;
-              this.itemsSubject.next([...this.items]);
-              this.saveToLocalStorage();
+                this.items[index] = data;
+                this.itemsSubject.next([...this.items]);
+                this.saveToLocalStorage();
+                return 0;
+            } else {
+                return -1;
             }
         } else {
             console.error('Invalid data.');
+            return -1;
         }
+    }
+
+    searchData(id: number): T | undefined {
+        return this.items.find((item: any) => item.id === id);
     }
 }
