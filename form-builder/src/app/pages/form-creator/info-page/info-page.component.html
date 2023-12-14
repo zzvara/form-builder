@@ -1,9 +1,23 @@
 <nz-layout>
   <div>
-    Info page {{page}}
-    <div nz-row id="footerdiv">
-      <div nz-col nzSpan="22"></div>
-      <button nz-col nzSpan="2" id="btn" nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
-    </div>
+    <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
+      <input nz-input type="text" id="title" formControlName="title" placeholder="Form title" (change)="updateForm()" required><br>
+      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" id="description" formControlName="description" placeholder="Description" (change)="updateForm()" required></textarea><br><hr />
+      <nz-form-item>
+        <label>Test</label>
+        <nz-switch></nz-switch>
+        <label>Questionaire</label>
+      </nz-form-item>
+      <nz-form-item>
+        <label nz-checkbox (change)="setlimit()">Time limit</label>
+        <nz-time-picker *ngIf="haslimit"></nz-time-picker><br>
+      </nz-form-item>
+      <div nz-row id="footerdiv">
+        <div nz-col nzSpan="22"></div>
+        <button nz-col nzSpan="2" id="btn" nz-button nzType="primary" type="submit">Save</button>
+      </div>
+    </form>
   </div>
 </nz-layout>
+<pre>{{project | json}}</pre>
+<pre>{{form.value | json}}</pre>
