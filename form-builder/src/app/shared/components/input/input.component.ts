@@ -10,5 +10,5 @@ export class InputComponent {
   @Input() questionValue: string = '';
   @Input() answerValue: answerType = { isReqired: false };
   @Input() type!: string;
-  @Input() inputPlaceholder!: string;
+  @Input() inputPlaceholder: string = '';
 }

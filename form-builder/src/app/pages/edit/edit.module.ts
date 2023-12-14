@@ -10,6 +10,6 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
   declarations: [EditComponent],
   imports: [BrowserModule, NzLayoutModule, NzIconModule, NzFormModule, CdkDrag],
   providers: [],
-  exports: [],
+  exports: [NzIconModule],
 })
 export class EditModule {}

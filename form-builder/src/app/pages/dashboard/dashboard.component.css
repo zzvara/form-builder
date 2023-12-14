@@ -1,14 +1,5 @@
-nz-header {
-  background-color: #908d8d;
-}
-
 nz-content {
   padding: 0 5rem;
-}
-
-.header > h1 {
-  text-align: center;
-  color: #fff;
 }
 
 .toolbar {

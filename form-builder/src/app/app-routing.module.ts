@@ -3,23 +3,28 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { EditComponent } from './pages/edit/edit.component';
 import { FormCreatorComponent } from './pages/form-creator/form-creator.component';
+import { headerResolver } from './shared/resolvers/header.resolver';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    resolve: { menuOptions: headerResolver },
   },
   {
     path: 'edit',
     component: EditComponent,
+    resolve: { menuOptions: headerResolver },
   },
   {
     path: 'new',
     component: FormCreatorComponent,
+    resolve: { menuOptions: headerResolver },
   },
   {
     path: '**',
     component: DashboardComponent,
+    resolve: { menuOptions: headerResolver },
   },
 ];
 

@@ -3,6 +3,12 @@
   <img height="300" src="https://img.alicdn.com/tfs/TB1X.qJJgHqK1RjSZFgXXa7JXXa-89-131.svg">
 </a>-->
 
+<app-header />
 <nz-layout>
-  <router-outlet></router-outlet>
+  <app-sidebar *ngIf="activeOptions.includes(options.SIDEBAR)" />
+  <nz-layout>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
 </nz-layout>

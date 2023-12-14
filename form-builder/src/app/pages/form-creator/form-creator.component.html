@@ -1,24 +1,27 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()">
+<nz-layout>
+  <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="page">
+    <nz-step nzTitle="Form info" (click)="toInfoPage()"></nz-step>
+    <nz-step nzTitle="Components" (click)="toCompPage()"></nz-step>
+    <nz-step nzTitle="Answers" (click)="toAnswPage()"></nz-step>
+  </nz-steps>
   <div class="form-container">
-      <label for="name">Name:</label>
-      <input type="text" id="name" formControlName="name" required><br>
-
-      <label for="description">Description:</label>
-      <textarea id="description" formControlName="description" rows="1" cols="50"required></textarea><br>
-
-      <input type="checkbox" id="checkbox" formControlName="checkbox" required>
-      <label for="number">Time limit:</label>
-      <input type="number" id="number" formControlName="number"><br>
-
-      <label for="date">Available until:</label>
-      <input type="date" id="date" formControlName="date" required><br>
-
-      <label for="createdDate">Created date:</label>
-      <input type="text"  id="createdDate" formControlName="createdDate">
-
-      <label for="modifiedDate">Modified date:</label>
-      <input type="text"  id="modifiedDate" formControlName="modifiedDate"><br>
-
-      <button type="submit">Submit</button>
+    <div class="page" *ngIf="page == 0">
+      <app-info-page
+      [page]="page"
+      (setPage)="setPage($event)"
+      />
+    </div>
+    <div class="page" *ngIf="page == 1">
+      <app-components-page
+      [page]="page"
+      (setPage)="setPage($event)"
+      />
+    </div>
+    <div class="page" *ngIf="page == 2">
+      <app-results-page
+      [page]="page"
+      (setPage)="setPage($event)"
+      />
+    </div>
   </div>
-</form>
+</nz-layout>

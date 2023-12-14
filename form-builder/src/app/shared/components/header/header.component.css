@@ -1,0 +1,35 @@
+nz-header {
+  background-color: #908d8d;
+  padding: 0 5rem;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header > h1 {
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header > div {
+  font-size: 2rem;
+}
+
+.header > div > span {
+  cursor: pointer;
+}
+
+.header > div :not(:last-child) {
+  margin-right: 1rem;
+}
+
+.is-active {
+  color: #fff;
+}
