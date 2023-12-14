@@ -2,7 +2,8 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Questionnaire, ProjectType } from '../../items/questionnaire.interface';
+import { Questionnaire } from '../../items/questionnaire/questionnaire.interface';
+import { ProjectType } from '../../items/project.interface';
 
 @Component({
   selector: 'app-form-creator',
@@ -20,8 +21,8 @@ export class FormCreatorComponent implements OnInit {
       title: '',
       description: '',
       type: ProjectType.QUESTIONNAIRE,
-      timeChechkbox: false,
-      timeLimit: 0,
+      time_chechkbox: false,
+      time_limit: 0,
       date: '',
       created: new Date().toISOString().split('T')[0],
       modified: new Date().toISOString().split('T')[0]
