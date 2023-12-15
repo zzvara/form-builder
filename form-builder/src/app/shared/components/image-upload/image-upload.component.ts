@@ -30,8 +30,7 @@ export class ImageUploadComponent {
     const reader = new FileReader();
     reader.onload = (e) => {
       this.uploadedFile = reader.result as string;
-      const dynamicName = 'uploadedFile_' + Date.now();
-      this.uploadedFile = localStorage.getItem(dynamicName);
+      this.uploadedFile = localStorage.getItem('uploadedFile');
       };
     reader.readAsDataURL(this.file);
   }
