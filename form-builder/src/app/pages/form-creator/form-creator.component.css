@@ -1,1 +1,18 @@
-/* Ide jöhet majd a formázás az ng-zorroval :) */
+nz-layout {
+    margin-top: 100px;
+}
+
+nz-steps {
+  width: 80%;
+  margin: auto;
+}
+
+.form-container {
+  background-color: white;
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  margin-top: 0px;
+  padding: 40px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}

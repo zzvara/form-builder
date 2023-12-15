@@ -1,3 +1,5 @@
+import { Question } from './question/questions.interface';
+
 export enum ProjectType {
   QUESTIONNAIRE = 'questionnaire',
   TEST = 'test',
@@ -10,7 +12,7 @@ export interface Project {
   type: ProjectType;
   time_chechkbox: boolean;
   time_limit: number;
-  date: string;
+  deadline: string;
   created: string;
   modified: string;
 }
