@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CdkDrag } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
@@ -31,7 +31,7 @@ const COMPONENTS = [HeaderComponent, SidebarComponent];
     NzIconModule,
     NzLayoutModule,
     NzCollapseModule,
-    CdkDrag,
+    DragDropModule,
   ],
   providers: [],
   exports: [...COMPONENTS],

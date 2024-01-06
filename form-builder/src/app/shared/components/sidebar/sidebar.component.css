@@ -1,12 +1,3 @@
-nz-sider {
-  overflow: scroll;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  opacity: 0.9;
-  z-index: 99;
-}
-
 section {
   padding: 2rem;
   background-color: #fff;
@@ -16,8 +7,4 @@ section {
 
 nz-input-group {
   margin-top: 3rem;
-}
-
-nz-collapse {
-  margin-top: 2rem;
 }
