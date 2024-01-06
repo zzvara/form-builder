@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ProjectType, Questionnaire } from '../../../items/questionnaire.interface';
+import { Questionnaire } from '../../../items/questionnaire/questionnaire.interface';
+import { ProjectType } from '../../../items/project.interface';
 
 @Component({
   selector: 'app-card-view',
@@ -13,7 +14,7 @@ export class CardViewComponent implements OnInit {
 
   @Output() deleteProject = new EventEmitter<number>();
   @Output() createProject = new EventEmitter<ProjectType>();
-  @Output() editProject = new EventEmitter<void>();
+  @Output() editProject = new EventEmitter<number>();
 
   projectList: Questionnaire[] = [];
 
@@ -29,7 +30,7 @@ export class CardViewComponent implements OnInit {
     this.createProject.emit(type);
   }
 
-  onEditProject(): void {
-    this.editProject.emit();
+  onEditProject(id: number): void {
+    this.editProject.emit(id);
   }
 }

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ColumnItem } from '../dashboard.model';
-import { Questionnaire, ProjectType } from '../../../items/questionnaire.interface';
+import { Questionnaire } from '../../../items/questionnaire/questionnaire.interface';
+import { ProjectType } from '../../../items/project.interface';
 
 @Component({
   selector: 'app-list-view',
@@ -13,7 +14,7 @@ export class ListViewComponent implements OnInit {
   @Input() type?: ProjectType;
 
   @Output() deleteProject = new EventEmitter<number>();
-  @Output() editProject = new EventEmitter<void>();
+  @Output() editProject = new EventEmitter<number>();
 
   projectList: Questionnaire[] = [];
 
@@ -46,7 +47,7 @@ export class ListViewComponent implements OnInit {
     this.deleteProject.emit(id);
   }
 
-  onEditProject(): void {
-    this.editProject.emit();
+  onEditProject(id: number): void {
+    this.editProject.emit(id);
   }
 }

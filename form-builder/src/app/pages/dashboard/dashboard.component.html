@@ -20,7 +20,7 @@
     </div>
     <app-list-view
       (deleteProject)="deleteProject($event)"
-      (editProject)="editProject()"
+      (editProject)="editProject($event)"
       [projects]="projects$"
       [type]="projectTypes.QUESTIONNAIRE"
     />
@@ -30,7 +30,7 @@
     </div>
     <app-list-view
       (deleteProject)="deleteProject($event)"
-      (editProject)="editProject()"
+      (editProject)="editProject($event)"
       [projects]="projects$"
       [type]="projectTypes.TEST"
     />
@@ -45,7 +45,7 @@
         [type]="projectTypes.QUESTIONNAIRE"
         (createProject)="createProject($event)"
         (deleteProject)="deleteProject($event)"
-        (editProject)="editProject()"
+        (editProject)="editProject($event)"
       ></app-card-view>
       <div>
         <h3>Tests</h3>
@@ -55,7 +55,7 @@
         [type]="projectTypes.TEST"
         (createProject)="createProject($event)"
         (deleteProject)="deleteProject($event)"
-        (editProject)="editProject()"
+        (editProject)="editProject($event)"
       ></app-card-view>
     </div>
   </ng-template>

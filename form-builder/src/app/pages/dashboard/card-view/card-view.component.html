@@ -3,7 +3,7 @@
     <nz-card [nzTitle]="project.title">
       <p>Created: {{ project.created }}</p>
       <p>Modified: {{ project.modified }}</p>
-      <span (click)="onEditProject()" nz-icon nzType="edit" nzTheme="outline"></span>
+      <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline"></span>
       <span (click)="onDeleteProject(project.id)" nz-icon nzType="delete" nzTheme="outline"></span>
     </nz-card>
   </div>
