@@ -1,5 +1,5 @@
 import { NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
-import { Questionnaire } from '../../items/questionnaire.interface';
+import { Questionnaire } from '../../items/questionnaire/questionnaire.interface';
 
 export interface ColumnItem {
   title: string;

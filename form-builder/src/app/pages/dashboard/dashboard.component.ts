@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Questionnaire, ProjectType } from '../../items/questionnaire.interface';
-import { QuestionnaireService } from '../../services/questionnaire.service';
+import { Questionnaire } from '../../items/questionnaire/questionnaire.interface';
+import { ProjectType } from '../../items/project.interface';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly modal: NzModalService,
-    private readonly questionnaireService: QuestionnaireService
+    private readonly questionnaireService: ProjectService<Questionnaire>
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  editProject() {
-    this.router.navigate(['new']);
+  editProject(id: number) {
+    this.router.navigate(['new'], { queryParams: { id } });
   }
 }

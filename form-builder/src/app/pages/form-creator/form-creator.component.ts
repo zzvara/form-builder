@@ -1,6 +1,9 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Questionnaire } from '../../items/questionnaire/questionnaire.interface';
+import { ProjectType } from '../../items/project.interface';
 
 @Component({
   selector: 'app-form-creator',
@@ -10,27 +13,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class FormCreatorComponent implements OnInit {
   constructor(private readonly router: Router) {}
-  form: FormGroup = new FormGroup({});
+  
 
   ngOnInit() {
-    this.form = new FormBuilder().group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      checkbox: [false],
-      number: [null],
-      date: ['', Validators.required],
-      createdDate: [new Date().toISOString().split('T')[0]],
-      modifiedDate: [new Date().toISOString().split('T')[0]]
-    });
+    
   }
 
-  onNavigateBack() {
-    this.router.navigate(['/dashboard']);
+  page = 0;
+
+  setPage(p: number) {
+    if (p <= 2) {
+      this.page = p;
+    }
   }
 
-  submitForm() {
-    //TODO: itt kell elmenteni
-    const formValue = this.form.value;
-    console.log(formValue);
+  nextPage() {
+    if (this.page < 2) {
+      this.page += 1;
+    }
   }
+  toInfoPage() {
+    this.page = 0;
+  }
+  toCompPage() {
+    this.page = 1;
+  }
+  toAnswPage() {
+    this.page = 2;
+  }
+
+  
 }
