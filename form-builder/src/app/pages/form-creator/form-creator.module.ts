@@ -14,10 +14,25 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { EditModule } from '../edit/edit.module';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
-  imports: [NzFormModule, NzInputModule, NzLayoutModule, NzSwitchModule, NzDatePickerModule, NzTimePickerModule, NzCheckboxModule, NzStepsModule, NzButtonModule, FormsModule, ReactiveFormsModule, BrowserModule],
+  imports: [
+    NzFormModule,
+    NzInputModule,
+    NzLayoutModule,
+    NzSwitchModule,
+    NzDatePickerModule,
+    NzTimePickerModule,
+    NzCheckboxModule,
+    NzStepsModule,
+    NzButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserModule,
+    EditModule,
+  ],
   providers: [],
   exports: [],
 })

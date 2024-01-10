@@ -5,10 +5,5 @@
 
 <app-header />
 <nz-layout>
-  <app-sidebar *ngIf="activeOptions.includes(options.SIDEBAR)" />
-  <nz-layout>
-    <nz-content>
-      <router-outlet></router-outlet>
-    </nz-content>
-  </nz-layout>
+  <router-outlet></router-outlet>
 </nz-layout>

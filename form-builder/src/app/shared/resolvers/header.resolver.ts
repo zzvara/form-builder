@@ -11,7 +11,7 @@ const HEADER_CONFIGS = [
   },
   {
     path: RoutePath.EDIT,
-    menuOptions: [MenuOption.HOME, MenuOption.SETTINGS, MenuOption.SAVE, MenuOption.SIDEBAR, MenuOption.UNDO],
+    menuOptions: [MenuOption.HOME, MenuOption.SETTINGS, MenuOption.SAVE, MenuOption.UNDO],
   },
   {
     path: RoutePath.NEW,
