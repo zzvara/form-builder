@@ -1,15 +1,16 @@
-<nz-sider [nzWidth]="300">
-  <section>
-    <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="input search text" />
-    </nz-input-group>
-    <ng-template #suffixIconSearch>
-      <span nz-icon nzType="search"></span>
-    </ng-template>
-    <nz-collapse cdkDrag [nzBordered]="false">
-      <nz-collapse-panel dr [nzHeader]="panels['basic'].name" [nzActive]="panels['basic'].active">
-        <app-text-input type="text"></app-text-input>
-      </nz-collapse-panel>
-    </nz-collapse>
-  </section>
-</nz-sider>
+<section>
+  <nz-input-group [nzSuffix]="suffixIconSearch">
+    <input type="text" nz-input placeholder="input search text" />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <span nz-icon nzType="search"></span>
+  </ng-template>
+  <nz-collapse [nzBordered]="false">
+    <nz-collapse-panel cdkDropList [nzHeader]="panels['basic'].name" [nzActive]="panels['basic'].active">
+      <ng-content select="[basic]"></ng-content>
+    </nz-collapse-panel>
+    <nz-collapse-panel cdkDropList [nzHeader]="panels['selector'].name" [nzActive]="panels['selector'].active">
+      <ng-content select="[selector]"></ng-content>
+    </nz-collapse-panel>
+  </nz-collapse>
+</section>

@@ -17,10 +17,18 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 
-const COMPONENTS = [HeaderComponent, SidebarComponent];
+const COMPONENTS = [
+  DatePickerComponent,
+  InputComponent,
+  SelectComponent,
+  TextareaComponent,
+  HeaderComponent,
+  SidebarComponent,
+  ImageUploadComponent,
+];
 
 @NgModule({
-  declarations: [DatePickerComponent, InputComponent, SelectComponent, TextareaComponent, ...COMPONENTS, ImageUploadComponent],
+  declarations: [...COMPONENTS],
   imports: [
     BrowserModule,
     CommonModule,

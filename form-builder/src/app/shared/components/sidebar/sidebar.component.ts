@@ -20,5 +20,9 @@ export class SidebarComponent {
       name: 'Basic inputs',
       active: true,
     },
+    selector: {
+      name: 'Selectors',
+      active: true,
+    },
   };
 }
