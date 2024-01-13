@@ -47,6 +47,18 @@
             ></app-textarea>
           </div>
         </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="pictureInput"
+          [cdkDropListConnectedTo]="[buildedForm]"
+          (cdkDropListDropped)="drop($event)"
+          class="mt-1"
+        >
+          <span>picture input</span>
+          <div class="element-box" cdkDrag [cdkDragData]="pictureInputOptions">
+            <app-picture-input [fileName]="pictureInputOptions.fileName"></app-picture-input>
+          </div>
+        </div>
       </ng-container>
       <ng-container selector>
         <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="[buildedForm]" (cdkDropListDropped)="drop($event)">
