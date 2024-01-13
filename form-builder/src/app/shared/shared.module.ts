@@ -16,6 +16,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { PictureInputComponent } from './components/picture-input/picture-input.component';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -25,10 +26,11 @@ const COMPONENTS = [
   HeaderComponent,
   SidebarComponent,
   ImageUploadComponent,
+  PictureInputComponent
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, PictureInputComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -38,7 +40,6 @@ const COMPONENTS = [
     FormsModule,
     NzLayoutModule,
     NzIconModule,
-    NzLayoutModule,
     NzCollapseModule,
     DragDropModule,
   ],
