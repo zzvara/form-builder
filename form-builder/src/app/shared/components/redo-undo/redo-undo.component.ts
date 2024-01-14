@@ -30,11 +30,24 @@ export class RedoUndoComponent implements OnInit {
     const id = lastAction.id;
 
     const element = document.getElementById(id);
-    const position = lastAction.action;
-    if (element) {
+    let position;
+    if (typeof lastAction.action === 'object') {
+      position = lastAction.action;
+    }
+    if (element && position) {
       element.style.position = 'absolute';
       element.style.left = position.x + 'px';
       element.style.top = position.y + 'px';
+    }
+
+    let value;
+    if (typeof lastAction.action === 'string') {
+      value = lastAction.action;
+    }
+    if (element && (value || value === '')) {
+      console.log('change value', element.textContent, element);
+
+      element.textContent = value;
     }
 
     this.undoRedoService.undo();
@@ -58,11 +71,22 @@ export class RedoUndoComponent implements OnInit {
     const id = lastAction.id;
 
     const element = document.getElementById(id);
-    const position = lastAction.action;
-    if (element) {
+    let position;
+    if (typeof lastAction.action === 'object') {
+      position = lastAction.action;
+    }
+    if (element && position) {
       element.style.position = 'absolute';
       element.style.left = position.x + 'px';
       element.style.top = position.y + 'px';
+    }
+
+    let value;
+    if (typeof lastAction.action === 'string') {
+      value = lastAction.action;
+    }
+    if (element && value) {
+      element.setAttribute('value', value);
     }
 
     this.undoRedoService.redo();

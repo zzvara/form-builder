@@ -56,4 +56,11 @@ export class UndoRedoService {
     this.addToUndoActions(id, action);
     console.log({ action, id });
   }
+
+  changeEvent(event: any) {
+    const id = event.target.id;
+    const action = event.target.value;
+    this.addToUndoActions(id, action);
+    console.log({ action, id });
+  }
 }
