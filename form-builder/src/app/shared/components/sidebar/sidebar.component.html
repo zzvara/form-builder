@@ -4,10 +4,11 @@
     <nz-input-group [nzSuffix]="suffixIconSearch">
       <input type="text" nz-input placeholder="input search text" />
     </nz-input-group>
+    <app-redo-undo></app-redo-undo>
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
     </ng-template>
-    <nz-collapse cdkDrag [nzBordered]="false">
+    <nz-collapse cdkDrag [nzBordered]="false" (cdkDragStarted)="dragStartPosition($event)" id="nz-collapse">
       <nz-collapse-panel dr [nzHeader]="panels['basic'].name" [nzActive]="panels['basic'].active">
         <app-text-input type="text"></app-text-input>
       </nz-collapse-panel>
