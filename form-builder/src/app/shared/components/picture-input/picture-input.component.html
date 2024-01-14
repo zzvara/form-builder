@@ -1,0 +1,7 @@
+<input nz-input placeholder="Question" [(ngModel)]="fileName" />
+<input type="file" (change)="onFileChange($event)" />
+<button (click)="submit()">Upload</button>
+
+<!-- <div *ngIf="uploadedFile">
+  <img [src]="uploadedFile" alt="Uploaded Image" />
+</div> -->

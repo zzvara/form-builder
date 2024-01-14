@@ -1,20 +1,108 @@
-<form nz-form dr cdkDrag>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="6" nzFor="email">E-mail</nz-form-label>
-    <nz-form-control [nzSpan]="14">
-      <input nz-input name="email" type="email" id="email" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item cdkDrag>
-    <nz-form-label [nzSpan]="6" nzFor="username">Username</nz-form-label>
-    <nz-form-control [nzSpan]="14">
-      <input nz-input name="username" type="text" id="username" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="6" nzFor="password">Password</nz-form-label>
-    <nz-form-control [nzSpan]="14">
-      <input nz-input name="password" type="password" id="password" />
-    </nz-form-control>
-  </nz-form-item>
-</form>
+<nz-layout>
+  <nz-sider nzWidth="300px" nzTheme="light">
+    <app-sidebar>
+      <ng-container basic>
+        <div cdkDropList [cdkDropListData]="textInput" [cdkDropListConnectedTo]="[buildedForm]" (cdkDropListDropped)="drop($event)">
+          <span>short text</span>
+          <div class="element-box" cdkDrag [cdkDragData]="textInputOptions">
+            <app-text-input [type]="textInputOptions.type"></app-text-input>
+          </div>
+        </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="numberInput"
+          [cdkDropListConnectedTo]="[buildedForm]"
+          (cdkDropListDropped)="drop($event)"
+          class="mt-1"
+        >
+          <span>number input</span>
+          <div class="element-box" cdkDrag [cdkDragData]="numberInputOptions">
+            <app-text-input [type]="numberInputOptions.type"></app-text-input>
+          </div>
+        </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="dateInput"
+          [cdkDropListConnectedTo]="[buildedForm]"
+          (cdkDropListDropped)="drop($event)"
+          class="mt-1"
+        >
+          <span>date input</span>
+          <div class="element-box" cdkDrag [cdkDragData]="dateInputOptions">
+            <app-date-picker [questionValue]="dateInputOptions.questionValue"></app-date-picker>
+          </div>
+        </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="textAreaInput"
+          [cdkDropListConnectedTo]="[buildedForm]"
+          (cdkDropListDropped)="drop($event)"
+          class="mt-1"
+        >
+          <span>textarea</span>
+          <div class="element-box" cdkDrag [cdkDragData]="textAreaInputOptions">
+            <app-textarea
+              [questionValue]="textAreaInputOptions.questionValue"
+              [textareaPlaceholder]="textAreaInputOptions.textareaPlaceholder"
+            ></app-textarea>
+          </div>
+        </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="pictureInput"
+          [cdkDropListConnectedTo]="[buildedForm]"
+          (cdkDropListDropped)="drop($event)"
+          class="mt-1"
+        >
+          <span>picture input</span>
+          <div class="element-box" cdkDrag [cdkDragData]="pictureInputOptions">
+            <app-picture-input [fileName]="pictureInputOptions.fileName"></app-picture-input>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container selector>
+        <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="[buildedForm]" (cdkDropListDropped)="drop($event)">
+          <span>select</span>
+          <div class="element-box" cdkDrag [cdkDragData]="selectInputOptions">
+            <app-select [questionValue]="selectInputOptions.questionValue" [answerOptions]="selectInputOptions.answerOptions"></app-select>
+          </div>
+        </div>
+      </ng-container>
+    </app-sidebar>
+  </nz-sider>
+  <nz-layout class="inner-layout">
+    <nz-content>
+      <div class="form-container">
+        <div
+          cdkDropList
+          #buildedForm="cdkDropList"
+          [cdkDropListData]="formInputs"
+          class="element-list p-3"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
+            <ng-container [ngSwitch]="item.component">
+              <app-text-input *ngSwitchCase="textInputOptions.component" [type]="item.type"></app-text-input>
+              <app-text-input *ngSwitchCase="numberInputOptions.component" [type]="item.type"></app-text-input>
+              <app-date-picker *ngSwitchCase="dateInputOptions.component" [questionValue]="item.questionValue"></app-date-picker>
+              <app-textarea
+                *ngSwitchCase="textAreaInputOptions.component"
+                [questionValue]="item.questionValue"
+                [textareaPlaceholder]="item.textareaPlaceholder"
+              ></app-textarea>
+              <app-select
+                *ngSwitchCase="selectInputOptions.component"
+                [questionValue]="item.questionValue"
+                [answerOptions]="item.answerOptions"
+              ></app-select>
+              <app-picture-input
+                *ngSwitchCase="pictureInputOptions.component"
+                [fileName]="pictureInputOptions.fileName"
+              ></app-picture-input>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
