@@ -59,6 +59,61 @@
             <app-picture-input [fileName]="pictureInputOptions.fileName"></app-picture-input>
           </div>
         </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="sectionInput"
+          [cdkDropListConnectedTo]="[buildedForm]"
+          (cdkDropListDropped)="drop($event)"
+          class="mt-1"
+        >
+          <span>section</span>
+          <div
+            class="element-box"
+            cdkDropList
+            [cdkDropListData]="formInputs"
+            [cdkDropListConnectedTo]="sectionInputOptions.sectionList"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <app-section>
+              <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
+                <ng-container [ngSwitch]="item.component">
+                  <app-text-input
+                    *ngSwitchCase="textInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [type]="item.type"
+                  ></app-text-input>
+                  <app-text-input
+                    *ngSwitchCase="numberInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [type]="item.type"
+                  ></app-text-input>
+                  <app-date-picker
+                    *ngSwitchCase="dateInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [questionValue]="item.questionValue"
+                  ></app-date-picker>
+                  <app-textarea
+                    *ngSwitchCase="textAreaInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [questionValue]="item.questionValue"
+                    [textareaPlaceholder]="item.textareaPlaceholder"
+                  ></app-textarea>
+                  <app-select
+                    *ngSwitchCase="selectInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [questionValue]="item.questionValue"
+                    [answerOptions]="item.answerOptions"
+                  ></app-select>
+                  <app-picture-input
+                    *ngSwitchCase="pictureInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [fileName]="pictureInputOptions.fileName"
+                  ></app-picture-input>
+                </ng-container>
+              </div>
+            </app-section>
+          </div>
+        </div>
       </ng-container>
       <ng-container selector>
         <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="[buildedForm]" (cdkDropListDropped)="drop($event)">

@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
+import { SectionComponent } from 'src/app/shared/components/section/section.component';
 
 @Component({
   selector: 'app-edit',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent {
+  constructor(private sectionComponent: SectionComponent) {}
   textInputOptions = { component: 'app-text-input', type: 'text' };
   textInput: string[] = Array(100).fill(this.textInputOptions);
   numberInputOptions = { component: 'app-number-input', type: 'number' };
@@ -19,6 +21,12 @@ export class EditComponent {
   pictureInput: string[] = Array(100).fill(this.pictureInputOptions);
   selectInputOptions = { component: 'app-select', questionValue: 'Test', answerOptions: ['Option1', 'Option2'] };
   selectInput: string[] = Array(100).fill(this.selectInputOptions);
+  sectionInputOptions = {
+    component: 'app-section',
+    sectionList: this.sectionComponent.sectionList,
+    sectionId: this.sectionComponent.sectiondId,
+  };
+  sectionInput: string[] = Array(100).fill(this.sectionInputOptions);
   formInputs: any[] = [];
 
   drop(event: CdkDragDrop<string[]>) {
