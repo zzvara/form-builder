@@ -95,6 +95,10 @@
                 [questionValue]="item.questionValue"
                 [answerOptions]="item.answerOptions"
               ></app-select>
+              <app-picture-input
+                *ngSwitchCase="pictureInputOptions.component"
+                [fileName]="pictureInputOptions.fileName"
+              ></app-picture-input>
             </ng-container>
           </div>
         </div>
