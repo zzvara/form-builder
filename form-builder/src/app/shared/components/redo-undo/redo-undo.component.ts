@@ -1,12 +1,81 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 @Component({
   selector: 'app-redo-undo',
   templateUrl: './redo-undo.component.html',
   styleUrls: ['./redo-undo.component.css'],
 })
-export class RedoUndoComponent {
-  canUndo = false;
-  canRedo = false;
-  actionCount = 0;
+export class RedoUndoComponent implements OnInit {
+  constructor(private undoRedoService: UndoRedoService) {}
+  canUndo = this.undoRedoService.canUndo;
+  canRedo = this.undoRedoService.canRedo;
+  undoActions = this.undoRedoService.undoActions;
+  redoActions = this.undoRedoService.redoActions;
+
+  ngOnInit(): void {
+    if (this.undoActions === null) {
+      localStorage.setItem('undoActions', JSON.stringify([]));
+    }
+    if (this.redoActions === null) {
+      localStorage.setItem('redoActions', JSON.stringify([]));
+    }
+    console.log({ undoActions: this.undoActions, redoActions: this.redoActions });
+  }
+
+  undoBtn() {
+    console.log(this.undoActions);
+    const length = this.undoActions.length;
+    const lastAction = this.undoActions[length - 1];
+    const id = lastAction.id;
+
+    const element = document.getElementById(id);
+    const position = lastAction.action;
+    if (element) {
+      element.style.position = 'absolute';
+      element.style.left = position.x + 'px';
+      element.style.top = position.y + 'px';
+    }
+
+    this.undoRedoService.undo();
+    if (this.undoActions.length > 0) {
+      this.canUndo = true;
+    } else {
+      this.canUndo = false;
+    }
+    if (this.redoActions.length > 0) {
+      this.canRedo = true;
+    } else {
+      this.canRedo = false;
+    }
+    console.log('undo button works!', { undoActions: this.undoActions, redoActions: this.redoActions });
+  }
+
+  redoBtn() {
+    console.log(this.redoActions);
+    const length = this.redoActions.length;
+    const lastAction = this.redoActions[length - 1];
+    const id = lastAction.id;
+
+    const element = document.getElementById(id);
+    const position = lastAction.action;
+    if (element) {
+      element.style.position = 'absolute';
+      element.style.left = position.x + 'px';
+      element.style.top = position.y + 'px';
+    }
+
+    this.undoRedoService.redo();
+    if (this.undoActions.length > 0) {
+      this.canUndo = true;
+    } else {
+      this.canUndo = false;
+    }
+    if (this.redoActions.length > 0) {
+      this.canRedo = true;
+    } else {
+      this.canRedo = false;
+    }
+    console.log('undo button works!', { undoActions: this.undoActions, redoActions: this.redoActions });
+  }
 }
