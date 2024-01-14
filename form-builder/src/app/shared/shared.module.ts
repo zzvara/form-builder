@@ -16,22 +16,14 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
-import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RedoUndoComponent } from './components/redo-undo/redo-undo.component';
 
 const COMPONENTS = [HeaderComponent, SidebarComponent];
 
 @NgModule({
-  declarations: [DatePickerComponent, InputComponent, SelectComponent, TextareaComponent, ...COMPONENTS, ImageUploadComponent],
-  declarations: [DatePickerComponent, InputComponent, SelectComponent, TextareaComponent, ...COMPONENTS],
-  declarations: [
-    DatePickerComponent,
-    InputComponent,
-    SelectComponent,
-    TextareaComponent,
-    RedoUndoComponent,
-  ],
+  declarations: [DatePickerComponent, InputComponent, SelectComponent, TextareaComponent, ...COMPONENTS, ImageUploadComponent,
+    RedoUndoComponent,],
   imports: [
     BrowserModule,
     CommonModule,
