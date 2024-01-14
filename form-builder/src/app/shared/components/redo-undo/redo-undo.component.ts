@@ -29,7 +29,7 @@ export class RedoUndoComponent implements OnInit {
     const lastAction = this.undoActions[length - 1];
     const id = lastAction.id;
 
-    const element = document.getElementById(id);
+    const element: any = document.getElementById(id);
     let position;
     if (typeof lastAction.action === 'object') {
       position = lastAction.action;
@@ -45,9 +45,8 @@ export class RedoUndoComponent implements OnInit {
       value = lastAction.action;
     }
     if (element && (value || value === '')) {
-      console.log('change value', element.textContent, element);
-
-      element.textContent = value;
+      console.log('change value', { text: element.value, element });
+      element.value = value;
     }
 
     this.undoRedoService.undo();
@@ -70,7 +69,7 @@ export class RedoUndoComponent implements OnInit {
     const lastAction = this.redoActions[length - 1];
     const id = lastAction.id;
 
-    const element = document.getElementById(id);
+    const element: any = document.getElementById(id);
     let position;
     if (typeof lastAction.action === 'object') {
       position = lastAction.action;
@@ -85,8 +84,9 @@ export class RedoUndoComponent implements OnInit {
     if (typeof lastAction.action === 'string') {
       value = lastAction.action;
     }
-    if (element && value) {
-      element.setAttribute('value', value);
+    if (element && (value || value === '')) {
+      console.log('change value', { text: element.value, element });
+      element.value = value;
     }
 
     this.undoRedoService.redo();
