@@ -1,0 +1,8 @@
+<div>
+  <h2>Version Control</h2>
+  <label>Select Version:</label>
+  <select [(ngModel)]="selectedVersion">
+    <option *ngFor="let version of versions; let i = index" [value]="i">{{ i + 1 }}</option>
+  </select>
+  <button (click)="revertToVersion()">Revert to Selected Version</button>
+</div>

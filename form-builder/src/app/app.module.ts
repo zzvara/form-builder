@@ -14,11 +14,12 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { EditModule } from './pages/edit/edit.module';
 import { FormCreatorModule } from './pages/form-creator/form-creator.module';
 import { SharedModule } from './shared/shared.module';
+import { VersionControlComponent } from './services/version-control/version-control/version-control.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, VersionControlComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
