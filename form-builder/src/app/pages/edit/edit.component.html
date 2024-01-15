@@ -8,7 +8,7 @@
   <nz-form-item cdkDrag>
     <nz-form-label [nzSpan]="6" nzFor="username">Username</nz-form-label>
     <nz-form-control [nzSpan]="14">
-      <input nz-input name="username" type="text" id="username" />
+      <input nz-input name="username" type="text" id="username" (focus)="onValueChange($event)" />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
