@@ -1,3 +1,7 @@
 nz-layout {
   background-color: transparent;
 }
+
+#footerdiv {
+  margin-top: 1rem;
+}
