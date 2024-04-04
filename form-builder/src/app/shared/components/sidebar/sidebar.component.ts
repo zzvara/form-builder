@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 interface Panel {
   active: boolean;
@@ -25,4 +25,5 @@ export class SidebarComponent {
       active: true,
     },
   };
+  @Input() sectiondId!: string;
 }

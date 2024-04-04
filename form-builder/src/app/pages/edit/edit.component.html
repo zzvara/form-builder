@@ -2,7 +2,7 @@
   <nz-sider nzWidth="300px" nzTheme="light">
     <app-sidebar>
       <ng-container basic>
-        <div cdkDropList [cdkDropListData]="textInput" [cdkDropListConnectedTo]="[buildedForm]" (cdkDropListDropped)="drop($event)">
+        <div cdkDropList [cdkDropListData]="textInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
           <span>short text</span>
           <div class="element-box" cdkDrag [cdkDragData]="textInputOptions">
             <app-text-input [type]="textInputOptions.type"></app-text-input>
@@ -11,7 +11,7 @@
         <div
           cdkDropList
           [cdkDropListData]="numberInput"
-          [cdkDropListConnectedTo]="[buildedForm]"
+          [cdkDropListConnectedTo]="sectionList"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
@@ -23,7 +23,7 @@
         <div
           cdkDropList
           [cdkDropListData]="dateInput"
-          [cdkDropListConnectedTo]="[buildedForm]"
+          [cdkDropListConnectedTo]="sectionList"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
@@ -35,7 +35,7 @@
         <div
           cdkDropList
           [cdkDropListData]="textAreaInput"
-          [cdkDropListConnectedTo]="[buildedForm]"
+          [cdkDropListConnectedTo]="sectionList"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
@@ -50,7 +50,7 @@
         <div
           cdkDropList
           [cdkDropListData]="pictureInput"
-          [cdkDropListConnectedTo]="[buildedForm]"
+          [cdkDropListConnectedTo]="sectionList"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
@@ -59,9 +59,58 @@
             <app-picture-input [fileName]="pictureInputOptions.fileName"></app-picture-input>
           </div>
         </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="sectionInput"
+          [cdkDropListConnectedTo]="formInputs"
+          (cdkDropListDropped)="drop($event)"
+          class="mt-1"
+        >
+          <span>section</span>
+          <div class="element-box" cdkDrag cdkDropList [cdkDropListConnectedTo]="formInputs" (cdkDropListDropped)="drop($event)">
+            <app-section>
+              <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
+                <ng-container [ngSwitch]="item.component">
+                  <app-text-input
+                    *ngSwitchCase="textInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [type]="item.type"
+                  ></app-text-input>
+                  <app-text-input
+                    *ngSwitchCase="numberInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [type]="item.type"
+                  ></app-text-input>
+                  <app-date-picker
+                    *ngSwitchCase="dateInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [questionValue]="item.questionValue"
+                  ></app-date-picker>
+                  <app-textarea
+                    *ngSwitchCase="textAreaInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [questionValue]="item.questionValue"
+                    [textareaPlaceholder]="item.textareaPlaceholder"
+                  ></app-textarea>
+                  <app-select
+                    *ngSwitchCase="selectInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [questionValue]="item.questionValue"
+                    [answerOptions]="item.answerOptions"
+                  ></app-select>
+                  <app-picture-input
+                    *ngSwitchCase="pictureInputOptions.component"
+                    id="sectionInputOptions.sectionId"
+                    [fileName]="pictureInputOptions.fileName"
+                  ></app-picture-input>
+                </ng-container>
+              </div>
+            </app-section>
+          </div>
+        </div>
       </ng-container>
       <ng-container selector>
-        <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="[buildedForm]" (cdkDropListDropped)="drop($event)">
+        <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
           <span>select</span>
           <div class="element-box" cdkDrag [cdkDragData]="selectInputOptions">
             <app-select [questionValue]="selectInputOptions.questionValue" [answerOptions]="selectInputOptions.answerOptions"></app-select>
@@ -75,6 +124,7 @@
       <div class="form-container">
         <div
           cdkDropList
+          id="buildedForm"
           #buildedForm="cdkDropList"
           [cdkDropListData]="formInputs"
           class="element-list p-3"
@@ -101,6 +151,11 @@
               ></app-picture-input>
             </ng-container>
           </div>
+        </div>
+        <div class="element-list" *ngFor="let item of sectionList" cdkDrag>
+          <ng-container>
+            <app-section [sectionList]="sectionList"> </app-section>
+          </ng-container>
         </div>
       </div>
     </nz-content>

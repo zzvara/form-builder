@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
@@ -15,6 +15,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SectionComponent } from './components/section/section.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PictureInputComponent } from './components/picture-input/picture-input.component';
 
@@ -26,11 +27,20 @@ const COMPONENTS = [
   HeaderComponent,
   SidebarComponent,
   ImageUploadComponent,
-  PictureInputComponent
+  PictureInputComponent,
+  SectionComponent,
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS, PictureInputComponent],
+  declarations: [
+    DatePickerComponent,
+    InputComponent,
+    SelectComponent,
+    TextareaComponent,
+    ...COMPONENTS,
+    SectionComponent,
+    ImageUploadComponent,
+  ],
   imports: [
     BrowserModule,
     CommonModule,
@@ -41,7 +51,8 @@ const COMPONENTS = [
     NzLayoutModule,
     NzIconModule,
     NzCollapseModule,
-    DragDropModule,
+    CdkDrag,
+    CdkDropList,
   ],
   providers: [],
   exports: [...COMPONENTS],

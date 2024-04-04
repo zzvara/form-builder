@@ -1,14 +1,12 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
-import { SectionComponent } from 'src/app/shared/components/section/section.component';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css'],
+  selector: 'app-section',
+  templateUrl: './section.component.html',
+  styleUrls: ['./section.component.css'],
 })
-export class EditComponent {
-  constructor(private sectionComponent: SectionComponent) {}
+export class SectionComponent {
   textInputOptions = { component: 'app-text-input', type: 'text' };
   textInput: string[] = Array(100).fill(this.textInputOptions);
   numberInputOptions = { component: 'app-number-input', type: 'number' };
@@ -21,16 +19,17 @@ export class EditComponent {
   pictureInput: string[] = Array(100).fill(this.pictureInputOptions);
   selectInputOptions = { component: 'app-select', questionValue: 'Test', answerOptions: ['Option1', 'Option2'] };
   selectInput: string[] = Array(100).fill(this.selectInputOptions);
-  sectionInputOptions = {
-    component: 'app-section',
-    sectionId: this.sectionComponent.sectiondId,
-  };
-  sectionInput: string[] = Array(3).fill(this.sectionInputOptions);
   formInputs: any[] = [];
-  sectionList: any[] = ['buildedForm'];
+
+  randomIntFromInterval(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  @Input() sectiondId: string = `section${this.randomIntFromInterval(1, 100)}`;
+  @Input() sectionList: any[] = ['buildedForm', this.sectiondId];
 
   ngOnInit() {
-    console.log({ list: this.sectionList });
+    JSON.stringify(this.sectiondId);
+    console.log({ sectiondId: this.sectiondId });
   }
 
   drop(event: CdkDragDrop<string[]>) {
