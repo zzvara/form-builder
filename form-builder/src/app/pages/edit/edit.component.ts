@@ -23,13 +23,24 @@ export class EditComponent {
   selectInput: string[] = Array(100).fill(this.selectInputOptions);
   sectionInputOptions = {
     component: 'app-section',
-    sectionList: this.sectionComponent.sectionList,
     sectionId: this.sectionComponent.sectiondId,
   };
-  sectionInput: string[] = Array(100).fill(this.sectionInputOptions);
+  sectionInput: string[] = Array(3).fill(this.sectionInputOptions);
   formInputs: any[] = [];
+  sectionList: any[] = ['buildedForm'];
+
+  ngOnInit() {
+    console.log({ list: this.sectionList });
+  }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log({ event, container: event.container });
+    console.log({ itemId: event.item.element.nativeElement.id });
+    const itemId = event.item.element.nativeElement.id;
+    if (itemId.includes('section') || itemId.includes('cdk-drop-list')) {
+      this.sectionList.push(itemId);
+      console.log({ sectionList: this.sectionList, itemId });
+    }
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
