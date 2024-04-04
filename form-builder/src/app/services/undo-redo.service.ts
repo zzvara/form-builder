@@ -1,5 +1,6 @@
-import { CdkDragStart } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
+import { RedoUndoType } from '../shared/components/redo-undo/redo-undo.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -22,13 +23,11 @@ export class UndoRedoService {
   addToUndoActions(id: any, action: any) {
     this.undoActions.push({ id, action });
     this.saveUndoActionToLocalStorage();
-    console.log({ serviceActions: this.undoActions });
   }
 
   addToRedoActions(id: any, action: any) {
     this.redoActions.push({ id, action });
     this.saveRedoActionToLocalStorage();
-    console.log({ serviceActions: this.redoActions });
   }
 
   undo() {
@@ -36,7 +35,6 @@ export class UndoRedoService {
     this.redoActions.push(lastAction);
     this.saveUndoActionToLocalStorage();
     this.saveRedoActionToLocalStorage();
-    console.log({ serviceActions: this.undoActions });
   }
 
   redo() {
@@ -44,23 +42,29 @@ export class UndoRedoService {
     this.undoActions.push(lastAction);
     this.saveUndoActionToLocalStorage();
     this.saveRedoActionToLocalStorage();
-    console.log({ serviceActions: this.redoActions });
   }
 
-  dragEvent(event: CdkDragStart) {
-    const id = event.source.element.nativeElement.id;
+  dragEvent(event: CdkDragDrop<string[]>) {
+    const id = event.item.data.component;
+    let element;
+    const previousIndex=event.previousIndex
+    const currentIndex =event.currentIndex
+    const dragType = event.previousIndex === event.currentIndex && event.currentIndex!==0  ? 'move-inside' : 'move-in';
+    for (let i = 0; i < event.container.data.length; i++) {
+      element = event.container.data[i] as any;
+    }
     const action = {
-      x: event.source.element.nativeElement.getBoundingClientRect().x,
-      y: event.source.element.nativeElement.getBoundingClientRect().y,
+      previousIndex,
+      currentIndex,
+      dragType,
+      element
     };
     this.addToUndoActions(id, action);
-    console.log({ action, id });
   }
 
   changeEvent(event: any) {
     const id = event.target.id;
     const action = event.target.value;
     this.addToUndoActions(id, action);
-    console.log({ action, id });
   }
 }

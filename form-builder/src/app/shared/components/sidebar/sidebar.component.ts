@@ -1,5 +1,5 @@
 import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 interface Panel {
@@ -28,8 +28,5 @@ export class SidebarComponent {
       active: true,
     },
   };
-
-  dragStartPosition(event: CdkDragStart) {
-    this.undeoRedoService.dragEvent(event);
-  }
+  @Input() formInputs: any[] = [];
 }

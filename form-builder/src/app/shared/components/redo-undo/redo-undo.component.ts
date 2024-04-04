@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, Input, OnInit } from '@angular/core';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class RedoUndoComponent implements OnInit {
   canRedo = this.undoRedoService.canRedo;
   undoActions = this.undoRedoService.undoActions;
   redoActions = this.undoRedoService.redoActions;
+  @Input() formInputs: any[] = [];
 
   ngOnInit(): void {
     if (this.undoActions === null) {
@@ -20,24 +22,27 @@ export class RedoUndoComponent implements OnInit {
     if (this.redoActions === null) {
       localStorage.setItem('redoActions', JSON.stringify([]));
     }
-    console.log({ undoActions: this.undoActions, redoActions: this.redoActions });
   }
 
   undoBtn() {
-    console.log(this.undoActions);
     const length = this.undoActions.length;
     const lastAction = this.undoActions[length - 1];
     const id = lastAction.id;
 
-    const element: any = document.getElementById(id);
+    let element;
     let position;
+    let previousIndex;
+    let currentIndex;
+    let dragType;
     if (typeof lastAction.action === 'object') {
-      position = lastAction.action;
+      previousIndex=lastAction.action.previousIndex
+      currentIndex=lastAction.action.currentIndex
+      dragType = lastAction.action.dragType;
+      element = lastAction.action.element;
     }
-    if (element && position) {
-      element.style.position = 'absolute';
-      element.style.left = position.x + 'px';
-      element.style.top = position.y + 'px';
+
+    if (typeof previousIndex === 'number' && typeof currentIndex === 'number' && typeof dragType === 'string') {
+      dragType === 'move-in' ? this.formInputs.pop() : moveItemInArray(element, previousIndex, currentIndex);
     }
 
     let value;
@@ -60,24 +65,27 @@ export class RedoUndoComponent implements OnInit {
     } else {
       this.canRedo = false;
     }
-    console.log('undo button works!', { undoActions: this.undoActions, redoActions: this.redoActions });
   }
 
   redoBtn() {
-    console.log(this.redoActions);
     const length = this.redoActions.length;
     const lastAction = this.redoActions[length - 1];
     const id = lastAction.id;
 
-    const element: any = document.getElementById(id);
+    let element;
     let position;
+    let previousIndex;
+    let currentIndex;
+    let dragType;
     if (typeof lastAction.action === 'object') {
-      position = lastAction.action;
+      previousIndex=lastAction.action.previousIndex
+      currentIndex=lastAction.action.currentIndex
+      dragType = lastAction.action.dragType;
+      element = lastAction.action.element;
     }
-    if (element && position) {
-      element.style.position = 'absolute';
-      element.style.left = position.x + 'px';
-      element.style.top = position.y + 'px';
+
+    if (typeof previousIndex === 'number' && typeof currentIndex === 'number' && typeof dragType === 'string') {
+      dragType === 'move-in' ? this.formInputs.push(element) : moveItemInArray(element, previousIndex, currentIndex);
     }
 
     let value;
@@ -100,6 +108,5 @@ export class RedoUndoComponent implements OnInit {
     } else {
       this.canRedo = false;
     }
-    console.log('undo button works!', { undoActions: this.undoActions, redoActions: this.redoActions });
   }
 }

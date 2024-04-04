@@ -27,8 +27,10 @@ export class EditComponent {
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.undeoRedoService.dragEvent(event);
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.undeoRedoService.dragEvent(event);
     }
   }
 
