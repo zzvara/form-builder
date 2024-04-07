@@ -1,4 +1,6 @@
+import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
+import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 interface Panel {
   active: boolean;
@@ -15,6 +17,7 @@ interface Panels {
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
+  constructor(private undeoRedoService: UndoRedoService) {}
   panels: Panels = {
     basic: {
       name: 'Basic inputs',
@@ -25,5 +28,6 @@ export class SidebarComponent {
       active: true,
     },
   };
+  @Input() formInputs: any[] = [];
   @Input() sectiondId!: string;
 }
