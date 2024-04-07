@@ -29,4 +29,5 @@ export class SidebarComponent {
     },
   };
   @Input() formInputs: any[] = [];
+  @Input() sectiondId!: string;
 }

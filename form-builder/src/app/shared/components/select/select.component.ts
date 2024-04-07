@@ -9,4 +9,5 @@ export class SelectComponent {
     @Input() questionValue!: string;
     //@Input() answerValue!: Component;
     @Input() answerOptions!: string[];
+    @Input() sectiondId!: string;
 }
