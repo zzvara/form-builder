@@ -1,6 +1,8 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
 import { SectionComponent } from 'src/app/shared/components/section/section.component';
+import { Router } from '@angular/router';
+import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 @Component({
   selector: 'app-edit',
@@ -8,7 +10,7 @@ import { SectionComponent } from 'src/app/shared/components/section/section.comp
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent {
-  constructor(private sectionComponent: SectionComponent) {}
+  constructor(private readonly router: Router, private undeoRedoService: UndoRedoService,private sectionComponent: SectionComponent) {}
   textInputOptions = { component: 'app-text-input', type: 'text' };
   textInput: string[] = Array(100).fill(this.textInputOptions);
   numberInputOptions = { component: 'app-number-input', type: 'number' };
@@ -43,8 +45,14 @@ export class EditComponent {
     }
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.undeoRedoService.dragEvent(event);
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.undeoRedoService.dragEvent(event);
     }
+  }
+
+  onValueChange(event: any) {
+    this.undeoRedoService.changeEvent(event);
   }
 }

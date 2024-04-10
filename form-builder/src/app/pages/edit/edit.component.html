@@ -1,6 +1,6 @@
 <nz-layout>
   <nz-sider nzWidth="300px" nzTheme="light">
-    <app-sidebar>
+    <app-sidebar [formInputs]="formInputs">
       <ng-container basic>
         <div cdkDropList [cdkDropListData]="textInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
           <span>short text</span>
