@@ -44,6 +44,6 @@ export class DashboardComponent implements OnInit {
   }
 
   editProject(id: number) {
-    this.router.navigate(['new'], { queryParams: { id } });
+    this.router.navigate(['edit'], { queryParams: { id } });
   }
 }

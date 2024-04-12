@@ -9,24 +9,23 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
-  styleUrls: ['./info-page.component.css']
+  styleUrls: ['./info-page.component.css'],
 })
 export class InfoPageComponent implements OnInit {
-
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
 
   project = {
-  id: 0,
-  title: '',
-  description: '',
-  type: ProjectType.QUESTIONNAIRE,
-  time_chechkbox: false,
-  time_limit: 0,
-  deadline: '',
-  created: new Date().toISOString().split('T')[0],
-  modified: new Date().toISOString().split('T')[0],
-   };
+    id: 0,
+    title: '',
+    description: '',
+    type: ProjectType.QUESTIONNAIRE,
+    time_chechkbox: false,
+    time_limit: 0,
+    deadline: '',
+    created: new Date().toISOString().split('T')[0],
+    modified: new Date().toISOString().split('T')[0],
+  };
 
   hasdeadline = false;
   haslimit = false;
@@ -39,17 +38,17 @@ export class InfoPageComponent implements OnInit {
     private readonly modal: NzModalService,
     private readonly route: ActivatedRoute,
     private readonly projectService: ProjectService<Project>
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.params = params;
-      if (params["id"]) {
+      if (params['id']) {
         this.formExists = true;
-        this.formId = params["id"]
+        this.formId = params['id'];
       }
-      if (params["type"]) {
-        this.project.type = params["type"];
+      if (params['type']) {
+        this.project.type = params['type'];
       }
     });
 
@@ -65,7 +64,7 @@ export class InfoPageComponent implements OnInit {
     type: new FormControl(this.project?.type == ProjectType.TEST),
     deadline: new FormControl(this.project?.deadline),
     haslimit: new FormControl(this.project?.time_chechkbox),
-    limit: new FormControl(this.project?.time_limit)
+    limit: new FormControl(this.project?.time_limit),
   });
 
   setDeadline() {
@@ -75,24 +74,22 @@ export class InfoPageComponent implements OnInit {
   setLimit() {
     this.haslimit = !this.haslimit;
     this.project.time_chechkbox = this.haslimit;
-
   }
 
   updateForm() {
     if (this.project) {
       this.project.title = this.form.controls['title'].value!;
       this.project.description = this.form.controls['description'].value!;
-      this.project.type = this.form.controls['type'].value! ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
-      //this.project.deadline = this.form.controls['deadline'].value!;
-      //this.project.time_chechkbox = this.form.controls['haslimit'].value!;
-      //if (this.project.time_chechkbox) {
-      //  this.project.time_limit = this.form.controls['limit'].value!;
-      //}
+      this.project.type = this.form.controls['type'].value ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+      this.project.deadline = this.form.controls['deadline'].value!;
+      this.project.time_chechkbox = this.form.controls['haslimit'].value!;
+      if (this.project.time_chechkbox) {
+        this.project.time_limit = this.form.controls['limit'].value!;
+      }
     }
   }
 
   submitForm() {
-
     this.updateForm();
 
     //if (this.formExists) {
@@ -118,19 +115,16 @@ export class InfoPageComponent implements OnInit {
       this.page! += 1;
       this.onsetPage(this.page!);
       this.saveFailed = false;
-    }
-    else {
+    } else {
       this.saveFailed = true;
     }
 
-    
     if (this.saveFailed) {
       this.modal.error({
         nzTitle: 'Faild to save form',
-        nzContent: 'Some fields are not filled properly, please check and try again!'
+        nzContent: 'Some fields are not filled properly, please check and try again!',
       });
     }
-    
   }
 
   onsetPage(page: number): void {
