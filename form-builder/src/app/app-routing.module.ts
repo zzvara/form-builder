@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FormCreatorComponent } from './pages/form-creator/form-creator.component';
 import { headerResolver } from './shared/resolvers/header.resolver';
-import { FormEditorComponent } from './pages/form-editor/form-editor.component';
 
 const routes: Routes = [
   {
@@ -18,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'edit',
-    component: FormEditorComponent,
+    component: FormCreatorComponent,
     resolve: { menuOptions: headerResolver },
   },
   {

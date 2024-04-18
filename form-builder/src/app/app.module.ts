@@ -14,8 +14,6 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { EditModule } from './pages/edit/edit.module';
 import { FormCreatorModule } from './pages/form-creator/form-creator.module';
 import { SharedModule } from './shared/shared.module';
-import { FormEditorComponent } from './pages/form-editor/form-editor.component';
-import { FromEditorModule } from './pages/form-editor/form-editor.module';
 
 registerLocaleData(en);
 
@@ -32,7 +30,6 @@ registerLocaleData(en);
     EditModule,
     SharedModule,
     FormCreatorModule,
-    FromEditorModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],

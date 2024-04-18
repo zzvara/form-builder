@@ -45,26 +45,39 @@ export class InfoPageComponent implements OnInit {
       this.params = params;
       if (params['id']) {
         this.formExists = true;
-        this.formId = params['id'];
+        this.formId = Number(params['id']);
+        const projects = JSON.parse(localStorage.getItem('') || '[]');
+        this.project = projects.find((p: Project) => p.id === this.formId) || null;
+        if (this.project) {
+          this.initializeForm();
+        }
       }
       if (params['type']) {
-        this.project.type = params['type'];
+        if (this.project) {
+          this.project.type = params['type'];
+        }
       }
     });
+  }
 
-    if (this.formExists && this.projectService.searchData(this.formId).length > 0) {
-      this.project = this.projectService.searchData(this.formId)[0];
-    }
-    this.updateForm();
+  initializeForm(): void {
+    this.form = new FormGroup({
+      title: new FormControl(this.project?.title || ''),
+      description: new FormControl(this.project?.description || ''),
+      type: new FormControl(this.project?.type === 'test'),
+      deadline: new FormControl(this.project?.deadline || ''),
+      haslimit: new FormControl(this.project?.time_chechkbox || false),
+      limit: new FormControl(this.project?.time_limit || 0),
+    });
   }
 
   form = new FormGroup({
-    title: new FormControl(this.project?.title),
-    description: new FormControl(this.project?.description),
-    type: new FormControl(this.project?.type == ProjectType.TEST),
-    deadline: new FormControl(this.project?.deadline),
-    haslimit: new FormControl(this.project?.time_chechkbox),
-    limit: new FormControl(this.project?.time_limit),
+    title: new FormControl(''),
+    description: new FormControl(''),
+    type: new FormControl(false),
+    deadline: new FormControl(''),
+    haslimit: new FormControl(false),
+    limit: new FormControl(0),
   });
 
   setDeadline() {
@@ -91,37 +104,27 @@ export class InfoPageComponent implements OnInit {
 
   submitForm() {
     this.updateForm();
+    let projects: Project[] = JSON.parse(localStorage.getItem('') || '[]');
 
-    //if (this.formExists) {
-    //  if (this.projectService.updateWithCheck(this.formId, this.project)) {
-    //    this.page! += 1;
-    //    this.onsetPage(this.page!);
-    //  }
-    //  else {
-    //    this.saveFailed = true;
-    //  }
-    //}
-    //else {
-    //  if (this.projectService.addWithCheck(this.project)) {
-    //    this.page! += 1;
-    //    this.onsetPage(this.page!);
-    //  }
-    //  else {
-    //    this.saveFailed = true;
-    //  }
-    //}
-
-    if (this.projectService.addWithCheck(this.project)) {
-      this.page! += 1;
-      this.onsetPage(this.page!);
-      this.saveFailed = false;
+    if (this.formExists && this.formId !== 0) {
+      const index = projects.findIndex((p) => p.id === this.formId);
+      if (index !== -1) {
+        projects[index] = this.project;
+      }
     } else {
-      this.saveFailed = true;
+      this.project.id = projects.length > 0 ? projects[projects.length - 1].id + 1 : 1;
+      projects.push(this.project);
     }
+
+    localStorage.setItem('', JSON.stringify(projects));
+
+    this.page! += 1;
+    this.onsetPage(this.page!);
+    this.saveFailed = false;
 
     if (this.saveFailed) {
       this.modal.error({
-        nzTitle: 'Faild to save form',
+        nzTitle: 'Failed to save form',
         nzContent: 'Some fields are not filled properly, please check and try again!',
       });
     }
