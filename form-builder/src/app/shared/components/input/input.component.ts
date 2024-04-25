@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { answerType } from '../../answerType.interface';
 
 @Component({
   selector: 'app-text-input',
@@ -7,9 +6,10 @@ import { answerType } from '../../answerType.interface';
   styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
-  @Input() questionValue: string = '';
-  @Input() answerValue: answerType = { isReqired: false };
-  @Input() type!: string;
-  @Input() inputPlaceholder: string = '';
+  questionValue: string = 'Text Input';
+  descriptionValue: string = 'The input can be used for...';
+  answerValue: any = 'Input answer';
+  inputPlaceholder: string = 'Input input value';
   @Input() sectiondId!: string;
+  @Input() type!: string;
 }

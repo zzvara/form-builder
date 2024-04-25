@@ -1,3 +1,8 @@
-<input nz-input placeholder="Question" [(ngModel)]="questionValue" />
-<input nz-input [placeholder]="inputPlaceholder" [(ngModel)]="answerValue.answerValue" [type]="type"/>
-<!--required-->
+<app-input-layout 
+    [questionValue]="questionValue" 
+    [descriptionValue]="descriptionValue"
+    [answerValue]="answerValue"
+    [type]="type"
+    [inputPlaceholder]="inputPlaceholder"
+    >
+</app-input-layout>
