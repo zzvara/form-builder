@@ -1,0 +1,9 @@
+p{
+    cursor: pointer;
+}
+
+span{
+    cursor: pointer;
+    color: gray;
+    font-size: smallers;
+}

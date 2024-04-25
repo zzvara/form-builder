@@ -1,0 +1,19 @@
+<nz-card>
+  <div>
+    <p *ngIf="!isEditingQuestion" (click)="isEditingQuestion = true">
+      {{ questionValue }}
+      <span *ngIf="!isSwitchingAdornment" (click)="isSwitchingAdornment = true" [style.display]="isSwitchingAdornment ? 'none' : 'block'"
+        >? (optional)</span
+      >
+      <span *ngIf="!isSwitchingAdornment" (click)="isSwitchingAdornment = false" [style.display]="isSwitchingAdornment ? 'block' : 'none'"
+        >* (required)</span
+      >
+    </p>
+    <input *ngIf="isEditingQuestion" [type]="type" [(ngModel)]="questionValue" (blur)="isEditingQuestion = false" />
+  </div>
+  <div>
+    <p *ngIf="!isEditingDescription" (click)="isEditingDescription = true">{{ descriptionValue }}</p>
+    <input *ngIf="isEditingDescription" [type]="type" [(ngModel)]="descriptionValue" (blur)="isEditingDescription = false" />
+  </div>
+  <input nz-input placeholder="{{ inputPlaceholder }}" [(ngModel)]="answerValue" [type]="type" />
+</nz-card>
