@@ -4,7 +4,7 @@
     <ng-container [ngSwitch]="item.component">
       <app-text-input *ngSwitchCase="textInputOptions.component" [type]="item.type"></app-text-input>
       <app-text-input *ngSwitchCase="numberInputOptions.component" [type]="item.type"></app-text-input>
-      <app-date-picker *ngSwitchCase="dateInputOptions.component" [questionValue]="item.questionValue"></app-date-picker>
+      <app-date-picker *ngSwitchCase="dateInputOptions.component"></app-date-picker>
       <app-textarea
         *ngSwitchCase="textAreaInputOptions.component"
         [questionValue]="item.questionValue"
