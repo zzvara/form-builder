@@ -20,6 +20,9 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RedoUndoComponent } from './components/redo-undo/redo-undo.component';
 import { PictureInputComponent } from './components/picture-input/picture-input.component';
+import { InputLayoutComponent } from './components/input-layout/input-layout.component';
+import { NumberInputComponent } from './components/number-input/number-input.component';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -32,7 +35,7 @@ const COMPONENTS = [
   PictureInputComponent,
   RedoUndoComponent,
   SectionComponent,
-  PictureInputComponent
+  NumberInputComponent
 ];
 
 @NgModule({
@@ -43,8 +46,10 @@ const COMPONENTS = [
     TextareaComponent,
     ...COMPONENTS,
     ImageUploadComponent,
+    InputLayoutComponent
   ],
   imports: [
+    NzCardModule,
     BrowserModule,
     CommonModule,
     NzDatePickerModule,
