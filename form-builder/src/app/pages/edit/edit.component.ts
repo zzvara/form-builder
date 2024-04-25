@@ -11,9 +11,9 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
 })
 export class EditComponent {
   constructor(private readonly router: Router, private undeoRedoService: UndoRedoService,private sectionComponent: SectionComponent) {}
-  textInputOptions = { component: 'app-text-input', type: 'text' };
+  textInputOptions = { component: 'app-text-input' };
   textInput: string[] = Array(100).fill(this.textInputOptions);
-  numberInputOptions = { component: 'app-number-input', type: 'number' };
+  numberInputOptions = { component: 'app-number-input' };
   numberInput: string[] = Array(100).fill(this.numberInputOptions);
   dateInputOptions = { component: 'app-date-picker', questionValue: 'Test' };
   dateInput: string[] = Array(100).fill(this.dateInputOptions);

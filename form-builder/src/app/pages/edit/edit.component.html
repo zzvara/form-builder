@@ -5,7 +5,7 @@
         <div cdkDropList [cdkDropListData]="textInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
           <span>short text</span>
           <div class="element-box" cdkDrag [cdkDragData]="textInputOptions">
-            <app-text-input [type]="textInputOptions.type"></app-text-input>
+            <app-text-input></app-text-input>
           </div>
         </div>
         <div
@@ -17,7 +17,7 @@
         >
           <span>number input</span>
           <div class="element-box" cdkDrag [cdkDragData]="numberInputOptions">
-            <app-text-input [type]="numberInputOptions.type"></app-text-input>
+            <app-number-input></app-number-input>
           </div>
         </div>
         <div
@@ -29,7 +29,7 @@
         >
           <span>date input</span>
           <div class="element-box" cdkDrag [cdkDragData]="dateInputOptions">
-            <app-date-picker [questionValue]="dateInputOptions.questionValue"></app-date-picker>
+            <app-date-picker></app-date-picker>
           </div>
         </div>
         <div
@@ -84,7 +84,6 @@
                   <app-date-picker
                     *ngSwitchCase="dateInputOptions.component"
                     id="sectionInputOptions.sectionId"
-                    [questionValue]="item.questionValue"
                   ></app-date-picker>
                   <app-textarea
                     *ngSwitchCase="textAreaInputOptions.component"
@@ -132,9 +131,9 @@
         >
           <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
             <ng-container [ngSwitch]="item.component">
-              <app-text-input *ngSwitchCase="textInputOptions.component" [type]="item.type"></app-text-input>
-              <app-text-input *ngSwitchCase="numberInputOptions.component" [type]="item.type"></app-text-input>
-              <app-date-picker *ngSwitchCase="dateInputOptions.component" [questionValue]="item.questionValue"></app-date-picker>
+              <app-text-input *ngSwitchCase="textInputOptions.component"></app-text-input>
+              <app-number-input *ngSwitchCase="numberInputOptions.component" ></app-number-input>
+              <app-date-picker *ngSwitchCase="dateInputOptions.component"></app-date-picker>
               <app-textarea
                 *ngSwitchCase="textAreaInputOptions.component"
                 [questionValue]="item.questionValue"
