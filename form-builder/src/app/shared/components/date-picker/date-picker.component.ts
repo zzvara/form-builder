@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-date-picker',
@@ -6,7 +6,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./date-picker.component.css'],
 })
 export class DatePickerComponent {
-  @Input() questionValue!: string;
-  @Input() answerValue!: Component;
+  questionValue: string = 'Date input';
+  descriptionValue: string = 'The input can be used for...';
+  answerValue: any = 'Date answer';
+  inputPlaceholder: string = 'Date input value';
+  inputTemplate!: TemplateRef<any>;
+  type: string = 'date';
   @Input() sectiondId!: string;
 }
