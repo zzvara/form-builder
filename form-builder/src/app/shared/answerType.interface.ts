@@ -2,6 +2,6 @@ export interface answerType {
     id?: string;
     variableName?: string;
     answerValue?: string;
-    isReqired?: boolean;
+    isRequired?: boolean;
     condition?: boolean;
 }

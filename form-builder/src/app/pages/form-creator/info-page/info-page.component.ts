@@ -46,7 +46,7 @@ export class InfoPageComponent implements OnInit {
       if (params['id']) {
         this.formExists = true;
         this.formId = Number(params['id']);
-        const projects = JSON.parse(localStorage.getItem('') || '[]');
+        const projects = JSON.parse(localStorage.getItem('project') || '[]');
         this.project = projects.find((p: Project) => p.id === this.formId) || null;
         if (this.project) {
           this.initializeForm();
@@ -104,7 +104,7 @@ export class InfoPageComponent implements OnInit {
 
   submitForm() {
     this.updateForm();
-    let projects: Project[] = JSON.parse(localStorage.getItem('') || '[]');
+    let projects: Project[] = JSON.parse(localStorage.getItem('project') || '[]');
 
     if (this.formExists && this.formId !== 0) {
       const index = projects.findIndex((p) => p.id === this.formId);
@@ -116,7 +116,7 @@ export class InfoPageComponent implements OnInit {
       projects.push(this.project);
     }
 
-    localStorage.setItem('', JSON.stringify(projects));
+    localStorage.setItem('project', JSON.stringify(projects));
 
     this.page! += 1;
     this.onsetPage(this.page!);

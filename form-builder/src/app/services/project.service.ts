@@ -19,7 +19,7 @@ function isTestType(project: any): project is Project & { type: ProjectType.TEST
 export class ProjectService<T extends Project> {
   private items: T[] = [];
   private itemsSubject = new BehaviorSubject<T[]>([]);
-  private storageKey: string = '';
+  private storageKey: string = 'project';
 
   constructor() {
     const temp = this.items[0];

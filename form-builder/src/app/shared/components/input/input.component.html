@@ -1,8 +1,3 @@
-<app-input-layout 
-    [questionValue]="questionValue" 
-    [descriptionValue]="descriptionValue"
-    [answerValue]="answerValue"
-    [type]="type"
-    [inputPlaceholder]="inputPlaceholder"
-    >
-</app-input-layout>
+<input nz-input placeholder="Question" [(ngModel)]="questionValue" (ngModelChange)="onQuestionValueChange($event)" />
+<input nz-input [placeholder]="inputPlaceholder" [(ngModel)]="answerValue.answerValue" [type]="type" (ngModelChange)="onAnswerValueChange($event)"/>
+<!--required-->
