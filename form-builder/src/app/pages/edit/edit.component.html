@@ -29,7 +29,7 @@
         >
           <span>date input</span>
           <div class="element-box" cdkDrag [cdkDragData]="dateInputOptions">
-            <app-date-picker [questionValue]="dateInputOptions.questionValue"></app-date-picker>
+            <app-date-picker (valueChanged)="onValueChanged($event)"></app-date-picker>
           </div>
         </div>
         <div
@@ -81,11 +81,7 @@
                     id="sectionInputOptions.sectionId"
                     [type]="item.type"
                   ></app-text-input>
-                  <app-date-picker
-                    *ngSwitchCase="dateInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [questionValue]="item.questionValue"
-                  ></app-date-picker>
+                  <app-date-picker *ngSwitchCase="dateInputOptions.component" id="sectionInputOptions.sectionId"></app-date-picker>
                   <app-textarea
                     *ngSwitchCase="textAreaInputOptions.component"
                     id="sectionInputOptions.sectionId"
@@ -139,7 +135,11 @@
                 (valueChanged)="onValueChanged($event)"
               ></app-text-input>
               <app-text-input *ngSwitchCase="numberInputOptions.component" [type]="item.type"></app-text-input>
-              <app-date-picker *ngSwitchCase="dateInputOptions.component" [questionValue]="item.questionValue"></app-date-picker>
+              <app-date-picker
+                *ngSwitchCase="dateInputOptions.component"
+                [id]="item.id"
+                (valueChanged)="onValueChanged($event)"
+              ></app-date-picker>
               <app-textarea
                 *ngSwitchCase="textAreaInputOptions.component"
                 [questionValue]="item.questionValue"

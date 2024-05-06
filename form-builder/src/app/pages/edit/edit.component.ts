@@ -26,7 +26,7 @@ export class EditComponent {
   textInput: string[] = Array(100).fill(this.textInputOptions);
   numberInputOptions = { component: 'app-number-input', type: 'number' };
   numberInput: string[] = Array(100).fill(this.numberInputOptions);
-  dateInputOptions = { component: 'app-date-picker', questionValue: 'Test' };
+  dateInputOptions = { component: 'app-date-picker' };
   dateInput: string[] = Array(100).fill(this.dateInputOptions);
   textAreaInputOptions = { component: 'app-textarea', questionValue: 'Test', textareaPlaceholder: 'text placeholder' };
   textAreaInput: string[] = Array(100).fill(this.textAreaInputOptions);

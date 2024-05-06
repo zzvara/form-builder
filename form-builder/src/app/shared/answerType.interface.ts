@@ -1,7 +1,7 @@
 export interface answerType {
     id?: string;
     variableName?: string;
-    answerValue?: string;
+    answerValue?: any;
     isRequired?: boolean;
     condition?: boolean;
 }
