@@ -113,6 +113,7 @@ export class ProjectService<T extends Project> {
     const index = this.items.findIndex((item) => item.id === id);
     if (index !== -1) {
       this.items[index] = data;
+      this.items[index].modified = new Date().toISOString().split('T')[0];
       this.itemsSubject.next([...this.items]);
       this.saveToLocalStorage();
       return 0;
@@ -120,7 +121,7 @@ export class ProjectService<T extends Project> {
       return -1;
     }
   }
-
+  
   addWithCheck(data: T): boolean {
     if (this.isValidData(data)) {
       const nextId = this.generateNextId();
@@ -165,6 +166,7 @@ export class ProjectService<T extends Project> {
         this.items[index].formInputs = [];
       }
       this.items[index].formInputs?.push(...formInputs);
+      this.items[index].modified = new Date().toISOString().split('T')[0];
       this.itemsSubject.next([...this.items]);
       this.saveToLocalStorage();
     }
