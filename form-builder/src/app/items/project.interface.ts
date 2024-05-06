@@ -5,6 +5,14 @@ export enum ProjectType {
   TEST = 'test',
 }
 
+export interface FormInput {
+  component: string;
+  type?: string;
+  id: string;
+  question: string;
+  answer: string;
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -14,5 +22,6 @@ export interface Project {
   time_limit: number;
   deadline: string;
   created: string;
-  modified: string;
+  modified: string;  
+  formInputs?: FormInput[];
 }

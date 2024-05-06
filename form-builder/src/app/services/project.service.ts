@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Project, ProjectType } from '../items/project.interface';
+import { FormInput, Project, ProjectType } from '../items/project.interface';
 
 function isQuestionnaireType(project: any): project is Project & { type: ProjectType.QUESTIONNAIRE } {
   return project.type === ProjectType.QUESTIONNAIRE;
@@ -157,4 +157,17 @@ export class ProjectService<T extends Project> {
   searchData(id: number): T[] {
     return this.items.filter((item) => item.id === id);
   }
+
+  addFormInputToProject(id: number, formInputs: FormInput[]) {
+    const index = this.items.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      if (!this.items[index].formInputs) {
+        this.items[index].formInputs = [];
+      }
+      this.items[index].formInputs?.push(...formInputs);
+      this.itemsSubject.next([...this.items]);
+      this.saveToLocalStorage();
+    }
+  }
+
 }

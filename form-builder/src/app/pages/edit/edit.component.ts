@@ -1,10 +1,12 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SectionComponent } from 'src/app/shared/components/section/section.component';
 import { Router } from '@angular/router';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 import { answerType } from 'src/app/shared/answerType.interface';
 import { v4 as uuidv4 } from 'uuid';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/items/project.interface';
 
 @Component({
   selector: 'app-edit',
@@ -12,7 +14,14 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent {
-  constructor(private readonly router: Router, private undeoRedoService: UndoRedoService, private sectionComponent: SectionComponent) {}
+  constructor(
+    private readonly router: Router,
+    private undeoRedoService: UndoRedoService,
+    private sectionComponent: SectionComponent,
+    private projectService: ProjectService<Project>
+  ) {}
+  @Input() projectId: number | undefined;
+
   textInputOptions = { component: 'app-text-input', type: 'text' };
   textInput: string[] = Array(100).fill(this.textInputOptions);
   numberInputOptions = { component: 'app-number-input', type: 'number' };
@@ -34,11 +43,8 @@ export class EditComponent {
   sectionList: any[] = ['buildedForm'];
 
   ngOnInit() {
-    console.log({ list: this.sectionList });
-    const savedFormInputs = localStorage.getItem('formInputs');
-    if (savedFormInputs) {
-      this.formInputs = JSON.parse(savedFormInputs);
-    }
+    // console.log({ list: this.sectionList });
+    // console.log("id", this.projectId);
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -77,6 +83,22 @@ export class EditComponent {
   }
 
   saveForm() {
-    localStorage.setItem('formInputs', JSON.stringify(this.formInputs));
+    const project = this.projectService.searchData(this.projectId!)[0];
+    if (project) {
+      project.formInputs = project.formInputs || [];
+      const existingIds = new Set(project.formInputs.map((input) => input.id));
+      for (const input of this.formInputs) {
+        if (existingIds.has(input.id)) {
+          const index = project.formInputs.findIndex((existingInput) => existingInput.id === input.id);
+          if (index !== -1) {
+            project.formInputs[index] = input;
+          }
+        } else {
+          project.formInputs.push(input);
+          existingIds.add(input.id);
+        }
+      }
+      this.projectService.update(this.projectId!, project);
+    }
   }
 }

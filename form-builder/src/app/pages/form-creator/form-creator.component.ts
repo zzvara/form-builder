@@ -8,16 +8,20 @@ import { ProjectType } from '../../items/project.interface';
 @Component({
   selector: 'app-form-creator',
   templateUrl: './form-creator.component.html',
-  styleUrls: ['./form-creator.component.css']
+  styleUrls: ['./form-creator.component.css'],
 })
-
 export class FormCreatorComponent implements OnInit {
-  constructor(private readonly router: Router) {}
-  
-
-  ngOnInit() {
-    
+  constructor(private readonly router: Router) {
+    this.projectId = 0;
   }
+
+  projectId: number;
+
+  setProjectId(id: number) {
+    this.projectId = id;
+  }
+
+  ngOnInit() {}
 
   page = 0;
 
@@ -41,6 +45,4 @@ export class FormCreatorComponent implements OnInit {
   toAnswPage() {
     this.page = 2;
   }
-
-  
 }

@@ -9,12 +9,14 @@
       <app-info-page
       [page]="page"
       (setPage)="setPage($event)"
+      (projectId)="setProjectId($event)"
       />
     </div>
     <div class="page" *ngIf="page == 1">
       <app-components-page
       [page]="page"
       (setPage)="setPage($event)"
+      [projectId]="projectId"
       />
     </div>
     <div class="page" *ngIf="page == 2">

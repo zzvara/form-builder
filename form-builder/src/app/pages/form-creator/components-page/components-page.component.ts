@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./components-page.component.css']
 })
 export class ComponentsPageComponent implements OnInit {
+  @Input() projectId: number | undefined;
 
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();

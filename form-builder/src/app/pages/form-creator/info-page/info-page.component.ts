@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
+  @Output() projectId = new EventEmitter<number>();
 
   project = {
     id: 0,
@@ -102,8 +103,10 @@ export class InfoPageComponent implements OnInit {
     this.updateForm();
     if (this.formExists && this.formId !== 0) {
       this.projectService.update(this.formId, this.project);
+      this.projectId.emit(this.formId);
     } else {
       this.projectService.add(this.project);
+      this.projectId.emit(this.project.id);
     }
 
     this.page! += 1;
