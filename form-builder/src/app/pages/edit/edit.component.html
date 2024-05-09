@@ -5,7 +5,7 @@
         <div cdkDropList [cdkDropListData]="textInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
           <span>short text</span>
           <div class="element-box" cdkDrag [cdkDragData]="textInputOptions">
-            <app-text-input [type]="textInputOptions.type" (valueChanged)="onValueChanged($event)"></app-text-input>
+            <app-text-input></app-text-input>
           </div>
         </div>
         <div
@@ -17,7 +17,7 @@
         >
           <span>number input</span>
           <div class="element-box" cdkDrag [cdkDragData]="numberInputOptions">
-            <app-text-input [type]="numberInputOptions.type"></app-text-input>
+            <app-text-input ></app-text-input>
           </div>
         </div>
         <div
@@ -29,7 +29,7 @@
         >
           <span>date input</span>
           <div class="element-box" cdkDrag [cdkDragData]="dateInputOptions">
-            <app-date-picker (valueChanged)="onValueChanged($event)"></app-date-picker>
+            <app-date-picker></app-date-picker>
           </div>
         </div>
         <div
@@ -42,7 +42,6 @@
           <span>textarea</span>
           <div class="element-box" cdkDrag [cdkDragData]="textAreaInputOptions">
             <app-textarea
-              [questionValue]="textAreaInputOptions.questionValue"
               [textareaPlaceholder]="textAreaInputOptions.textareaPlaceholder"
             ></app-textarea>
           </div>
@@ -71,21 +70,12 @@
             <app-section>
               <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
                 <ng-container [ngSwitch]="item.component">
-                  <app-text-input
-                    *ngSwitchCase="textInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [type]="item.type"
-                  ></app-text-input>
-                  <app-text-input
-                    *ngSwitchCase="numberInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [type]="item.type"
-                  ></app-text-input>
+                  <app-text-input *ngSwitchCase="textInputOptions.component" id="sectionInputOptions.sectionId"></app-text-input>
+                  <app-text-input *ngSwitchCase="numberInputOptions.component" id="sectionInputOptions.sectionId"></app-text-input>
                   <app-date-picker *ngSwitchCase="dateInputOptions.component" id="sectionInputOptions.sectionId"></app-date-picker>
                   <app-textarea
                     *ngSwitchCase="textAreaInputOptions.component"
                     id="sectionInputOptions.sectionId"
-                    [questionValue]="item.questionValue"
                     [textareaPlaceholder]="item.textareaPlaceholder"
                   ></app-textarea>
                   <app-select
@@ -128,21 +118,11 @@
         >
           <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
             <ng-container [ngSwitch]="item.component">
-              <app-text-input
-                *ngSwitchCase="textInputOptions.component"
-                [type]="item.type"
-                [id]="item.id"
-                (valueChanged)="onValueChanged($event)"
-              ></app-text-input>
-              <app-text-input *ngSwitchCase="numberInputOptions.component" [type]="item.type"></app-text-input>
-              <app-date-picker
-                *ngSwitchCase="dateInputOptions.component"
-                [id]="item.id"
-                (valueChanged)="onValueChanged($event)"
-              ></app-date-picker>
+              <app-text-input *ngSwitchCase="textInputOptions.component" [id]="item.id"></app-text-input>
+              <app-text-input *ngSwitchCase="numberInputOptions.component"></app-text-input>
+              <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>
               <app-textarea
                 *ngSwitchCase="textAreaInputOptions.component"
-                [questionValue]="item.questionValue"
                 [textareaPlaceholder]="item.textareaPlaceholder"
               ></app-textarea>
               <app-select

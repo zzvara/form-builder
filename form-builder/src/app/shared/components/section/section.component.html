@@ -2,12 +2,11 @@
   <h3>SECTION</h3>
   <div class="element-list" *ngFor="let item of sectionList" cdkDrag>
     <ng-container [ngSwitch]="item.component">
-      <app-text-input *ngSwitchCase="textInputOptions.component" [type]="item.type"></app-text-input>
-      <app-text-input *ngSwitchCase="numberInputOptions.component" [type]="item.type"></app-text-input>
+      <app-text-input *ngSwitchCase="textInputOptions.component"></app-text-input>
+      <app-text-input *ngSwitchCase="numberInputOptions.component" ></app-text-input>
       <app-date-picker *ngSwitchCase="dateInputOptions.component"></app-date-picker>
       <app-textarea
         *ngSwitchCase="textAreaInputOptions.component"
-        [questionValue]="item.questionValue"
         [textareaPlaceholder]="item.textareaPlaceholder"
       ></app-textarea>
       <app-select
