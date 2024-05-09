@@ -1,3 +1,13 @@
-<input nz-input placeholder="Question" [(ngModel)]="questionValue"/>
-<textarea nz-input [placeholder]="textareaPlaceholder" [(ngModel)]="answerValue" nzAutosize></textarea>
-<!--required-->
+<app-input-layout
+  [questionValue]="questionValue"
+  [descriptionValue]="descriptionValue"
+  [answerValue]="answerValue"
+  [type]="type"
+  [inputPlaceholder]="inputPlaceholder"
+  [inputTemplate]="inputTemplate"
+>
+</app-input-layout>
+
+<ng-template #inputTemplate>
+  <textarea nz-input [placeholder]="textareaPlaceholder" [(ngModel)]="answerValue" nzAutosize></textarea>
+</ng-template>
