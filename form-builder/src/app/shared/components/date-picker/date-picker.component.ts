@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { answerType } from '../../answerType.interface';
 
 @Component({
@@ -7,13 +7,15 @@ import { answerType } from '../../answerType.interface';
   styleUrls: ['./date-picker.component.css'],
 })
 export class DatePickerComponent {
-  @Input() id!: string;
-  @Input() questionValue: string = '';
-  @Input() answerValue: answerType = { isRequired: false };
-  @Input() inputPlaceholder: string = '';
+  questionValue: string = 'Date input';
+  descriptionValue: string = 'The input can be used for...';
+  answerValue: any = 'Date answer';
+  inputPlaceholder: string = 'Date input value';
+  inputTemplate!: TemplateRef<any>;
+  type: string = 'text';
   @Input() sectiondId!: string;
 
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: answerType; id: string }>();
+  //@Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: answerType; id: string }>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;
@@ -26,8 +28,7 @@ export class DatePickerComponent {
   }
 
   private emitValueChanged() {
-    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, id: this.id });
-    console.log(this.id);
-    
+    // this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, id: this.id });
+    // console.log(this.id);
   }
 }
