@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'app-image-upload',
   templateUrl: './image-upload.component.html',
-  styleUrls: ['./image-upload.component.css']
+  styleUrls: ['./image-upload.component.css'],
 })
 export class ImageUploadComponent {
   form: FormGroup;
   file: File | null = null;
   uploadedFile: string | null = null;
+  fileName: string = 'Image name input';
 
   constructor() {
     this.form = new FormGroup({
@@ -26,12 +28,12 @@ export class ImageUploadComponent {
     if (!this.file) {
       return;
     }
-  
+
     const reader = new FileReader();
     reader.onload = (e) => {
       this.uploadedFile = reader.result as string;
       this.uploadedFile = localStorage.getItem('uploadedFile');
-      };
+    };
     reader.readAsDataURL(this.file);
   }
 }

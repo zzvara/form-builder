@@ -1,7 +1,22 @@
-<input nz-input placeholder="Question" [(ngModel)]="fileName" />
-<input type="file" (change)="onFileChange($event)" />
-<button (click)="submit()">Upload</button>
+<app-input-layout
+  [questionValue]="questionValue"
+  [descriptionValue]="descriptionValue"
+  [answerValue]="answerValue"
+  [type]="type"
+  [inputPlaceholder]="inputPlaceholder"
+  [inputTemplate]="inputTemplate"
+>
+</app-input-layout>
 
-<!-- <div *ngIf="uploadedFile">
-  <img [src]="uploadedFile" alt="Uploaded Image" />
-</div> -->
+<ng-template #inputTemplate>
+  <nz-upload
+    nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    [nzHeaders]="{ authorization: 'authorization-text' }"
+    (nzChange)="handleChange($event)"
+  >
+    <button nz-button>
+      <span nz-icon nzType="upload"></span>
+      Click to Upload
+    </button>
+  </nz-upload>
+</ng-template>

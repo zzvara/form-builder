@@ -1,17 +1,35 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
+import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'app-picture-input',
   templateUrl: './picture-input.component.html',
-  styleUrls: ['./picture-input.component.css']
+  styleUrls: ['./picture-input.component.css'],
 })
 export class PictureInputComponent {
+  questionValue: string = 'Picture input';
+  descriptionValue: string = 'The input can be used for...';
+  answerValue: any = 'Picture ';
+  inputPlaceholder: string = 'Picture input value';
+  inputTemplate!: TemplateRef<any>;
+  type: string = 'text';
   @Input() fileName!: string;
   file: File | null = null;
   uploadedFile: string | null = localStorage.getItem(this.fileName);
 
   onFileChange(event: any): void {
     this.file = event.target.files[0];
+  }
+
+  handleChange(info: NzUploadChangeParam): void {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      console.log(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      console.log(`${info.file.name} file upload failed.`);
+    }
   }
 
   submit(): void {
