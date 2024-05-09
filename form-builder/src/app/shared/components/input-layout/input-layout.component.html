@@ -9,11 +9,11 @@
         >* (required)</span
       >
     </p>
-    <input *ngIf="isEditingQuestion" [type]="type" [(ngModel)]="questionValue" (blur)="isEditingQuestion = false" />
+    <input *ngIf="isEditingQuestion" type="text" [(ngModel)]="questionValue" (blur)="isEditingQuestion = false" />
   </div>
   <div>
     <p *ngIf="!isEditingDescription" (click)="isEditingDescription = true">{{ descriptionValue }}</p>
-    <input *ngIf="isEditingDescription" [type]="type" [(ngModel)]="descriptionValue" (blur)="isEditingDescription = false" />
+    <input *ngIf="isEditingDescription" type="text" [(ngModel)]="descriptionValue" (blur)="isEditingDescription = false" />
   </div>
-  <input nz-input placeholder="{{ inputPlaceholder }}" [(ngModel)]="answerValue" [type]="type" />
+  <ng-container *ngTemplateOutlet="inputTemplate"></ng-container>
 </nz-card>
