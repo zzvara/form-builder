@@ -1,0 +1,14 @@
+section {
+  overflow-y: scroll;
+  height: 450px;
+}
+.sticky-header {
+  position: fixed;
+  background-color: #f0f2f5;
+  z-index: 2;
+  width: 300px;
+}
+.body {
+  position: static;
+  margin-top: 80px;
+}

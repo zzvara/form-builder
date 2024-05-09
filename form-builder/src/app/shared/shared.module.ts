@@ -23,6 +23,8 @@ import { PictureInputComponent } from './components/picture-input/picture-input.
 import { InputLayoutComponent } from './components/input-layout/input-layout.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -49,6 +51,8 @@ const COMPONENTS = [
     InputLayoutComponent
   ],
   imports: [
+    NzInputNumberModule,
+    NzUploadModule,
     NzCardModule,
     BrowserModule,
     CommonModule,

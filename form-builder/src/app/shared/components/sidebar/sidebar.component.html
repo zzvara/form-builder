@@ -1,17 +1,21 @@
 <section>
-<app-redo-undo  [formInputs]="formInputs"></app-redo-undo>
-  <nz-input-group [nzSuffix]="suffixIconSearch">
-    <input type="text" nz-input placeholder="input search text" />
-  </nz-input-group>
-  <ng-template #suffixIconSearch>
-    <span nz-icon nzType="search"></span>
-  </ng-template>
-  <nz-collapse [nzBordered]="false">
-    <nz-collapse-panel cdkDropList [nzHeader]="panels['basic'].name" [nzActive]="panels['basic'].active">
-      <ng-content select="[basic]"></ng-content>
-    </nz-collapse-panel>
-    <nz-collapse-panel cdkDropList [nzHeader]="panels['selector'].name" [nzActive]="panels['selector'].active">
-      <ng-content select="[selector]"></ng-content>
-    </nz-collapse-panel>
-  </nz-collapse>
+  <div class="sticky-header">
+    <app-redo-undo [formInputs]="formInputs"></app-redo-undo>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="input search text" />
+    </nz-input-group>
+  </div>
+  <div class="body">
+    <ng-template #suffixIconSearch>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+    <nz-collapse [nzBordered]="false">
+      <nz-collapse-panel cdkDropList [nzHeader]="panels['basic'].name" [nzActive]="panels['basic'].active">
+        <ng-content select="[basic]"></ng-content>
+      </nz-collapse-panel>
+      <nz-collapse-panel cdkDropList [nzHeader]="panels['selector'].name" [nzActive]="panels['selector'].active">
+        <ng-content select="[selector]"></ng-content>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
 </section>
