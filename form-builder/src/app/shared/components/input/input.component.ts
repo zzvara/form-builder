@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { answerType } from '../../answerType.interface';
+import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-text-input',
@@ -7,14 +6,14 @@ import { answerType } from '../../answerType.interface';
   styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
-  @Input() id!: string;
-  @Input() questionValue: string = '';
-  @Input() answerValue: answerType = { isRequired: false };
-  @Input() type!: string;
-  @Input() inputPlaceholder: string = '';
+  questionValue: string = 'Text Input';
+  descriptionValue: string = 'The input can be used for...';
+  answerValue: any = 'Input answer';
+  inputPlaceholder: string = 'Input input value';
+  inputTemplate!: TemplateRef<any>;
   @Input() sectiondId!: string;
 
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: answerType; id: string }>();
+  //@Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: answerType; id: string }>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;
@@ -27,8 +26,8 @@ export class InputComponent {
   }
 
   private emitValueChanged() {
-    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, id: this.id });
-    console.log(this.id);
+    //this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, id: this.id });
+    //console.log(this.id);
     
   }
 }

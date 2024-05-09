@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-number-input',
@@ -10,6 +10,7 @@ export class NumberInputComponent {
   descriptionValue: string = 'The input can be used for...';
   answerValue: any = 0;
   inputPlaceholder: string = 'Number input value';
+  inputTemplate!: TemplateRef<any>;
   @Input() sectiondId!: string;
   type: string = 'number';
 }

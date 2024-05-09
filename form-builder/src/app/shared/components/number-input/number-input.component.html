@@ -1,8 +1,13 @@
-<app-input-layout 
-    [questionValue]="questionValue" 
-    [descriptionValue]="descriptionValue"
-    [answerValue]="answerValue"
-    [type]="type"
-    [inputPlaceholder]="inputPlaceholder"
-    >
+<app-input-layout
+  [questionValue]="questionValue"
+  [descriptionValue]="descriptionValue"
+  [answerValue]="answerValue"
+  [type]="type"
+  [inputPlaceholder]="inputPlaceholder"
+  [inputTemplate]="inputTemplate"
+>
 </app-input-layout>
+
+<ng-template #inputTemplate>
+  <nz-input-number />
+</ng-template>
