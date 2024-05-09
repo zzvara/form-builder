@@ -17,7 +17,7 @@
         >
           <span>number input</span>
           <div class="element-box" cdkDrag [cdkDragData]="numberInputOptions">
-            <app-text-input ></app-text-input>
+            <app-text-input></app-text-input>
           </div>
         </div>
         <div
@@ -41,9 +41,7 @@
         >
           <span>textarea</span>
           <div class="element-box" cdkDrag [cdkDragData]="textAreaInputOptions">
-            <app-textarea
-              [textareaPlaceholder]="textAreaInputOptions.textareaPlaceholder"
-            ></app-textarea>
+            <app-textarea [textareaPlaceholder]="textAreaInputOptions.textareaPlaceholder"></app-textarea>
           </div>
         </div>
         <div
@@ -81,7 +79,6 @@
                   <app-select
                     *ngSwitchCase="selectInputOptions.component"
                     id="sectionInputOptions.sectionId"
-                    [questionValue]="item.questionValue"
                     [answerOptions]="item.answerOptions"
                   ></app-select>
                   <app-picture-input
@@ -99,7 +96,7 @@
         <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
           <span>select</span>
           <div class="element-box" cdkDrag [cdkDragData]="selectInputOptions">
-            <app-select [questionValue]="selectInputOptions.questionValue" [answerOptions]="selectInputOptions.answerOptions"></app-select>
+            <app-select [answerOptions]="selectInputOptions.answerOptions"></app-select>
           </div>
         </div>
       </ng-container>
@@ -121,15 +118,8 @@
               <app-text-input *ngSwitchCase="textInputOptions.component" [id]="item.id"></app-text-input>
               <app-text-input *ngSwitchCase="numberInputOptions.component"></app-text-input>
               <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>
-              <app-textarea
-                *ngSwitchCase="textAreaInputOptions.component"
-                [textareaPlaceholder]="item.textareaPlaceholder"
-              ></app-textarea>
-              <app-select
-                *ngSwitchCase="selectInputOptions.component"
-                [questionValue]="item.questionValue"
-                [answerOptions]="item.answerOptions"
-              ></app-select>
+              <app-textarea *ngSwitchCase="textAreaInputOptions.component" [textareaPlaceholder]="item.textareaPlaceholder"></app-textarea>
+              <app-select *ngSwitchCase="selectInputOptions.component" [answerOptions]="item.answerOptions"></app-select>
               <app-picture-input
                 *ngSwitchCase="pictureInputOptions.component"
                 [fileName]="pictureInputOptions.fileName"

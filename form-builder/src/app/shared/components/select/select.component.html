@@ -1,5 +1,15 @@
-<input nz-input placeholder="Question" [(ngModel)]="questionValue"/>
-<nz-select *ngFor="let answerOption of answerOptions">
+<app-input-layout
+  [questionValue]="questionValue"
+  [descriptionValue]="descriptionValue"
+  [answerValue]="answerValue"
+  [type]="type"
+  [inputPlaceholder]="inputPlaceholder"
+  [inputTemplate]="selectInput"
+>
+</app-input-layout>
+
+<ng-template #selectInput>
+  <nz-select *ngFor="let answerOption of answerOptions">
     <nz-option nzValue="answerOption" nzLabel="answerOption"></nz-option>
-</nz-select>
-<!--required-->
+  </nz-select>
+</ng-template>
