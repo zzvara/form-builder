@@ -9,7 +9,7 @@
 </app-input-layout>
 
 <ng-template #selectInput>
-  <nz-select *ngFor="let answerOption of answerOptions">
-    <nz-option nzValue="answerOption" nzLabel="answerOption"></nz-option>
+  <nz-select>
+    <nz-option *ngFor="let answerOption of answerOptions" [nzValue]="answerOption" [nzLabel]="answerOption"></nz-option>
   </nz-select>
 </ng-template>
