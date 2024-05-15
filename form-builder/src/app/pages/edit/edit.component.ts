@@ -45,6 +45,17 @@ export class EditComponent {
   ngOnInit() {
     // console.log({ list: this.sectionList });
     // console.log("id", this.projectId);
+
+    if (this.projectId !== undefined) {
+      const project = this.projectService.searchData(this.projectId)?.[0];
+
+      if (project && project.formInputs) {
+        this.formInputs = [...project.formInputs];
+      }
+    }
+
+    console.log(this.formInputs);
+    
   }
 
   drop(event: CdkDragDrop<any[]>) {

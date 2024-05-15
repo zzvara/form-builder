@@ -11,7 +11,7 @@ export class InputComponent {
   @Input() type!: string;
   @Input() questionValue: string = 'Text Input';
   descriptionValue: string = 'The input can be used for...';
-  answerValue: any;
+  @Input() answerValue: any;
   inputPlaceholder: string = 'Input input value';
   inputTemplate!: TemplateRef<any>;
   @Input() sectiondId!: string;

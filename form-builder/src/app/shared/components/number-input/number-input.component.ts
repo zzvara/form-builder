@@ -11,7 +11,7 @@ export class NumberInputComponent {
   @Input() questionValue: string = 'Number Input';
 
   descriptionValue: string = 'The input can be used for...';
-  answerValue: any = 0;
+  @Input() answerValue: any = 0;
   inputPlaceholder: string = 'Number input value';
   inputTemplate!: TemplateRef<any>;
   @Input() sectiondId!: string;

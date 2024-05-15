@@ -124,18 +124,22 @@
           <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
             <ng-container [ngSwitch]="item.component">
               <app-text-input
-                *ngSwitchCase="textInputOptions.component"
-                [type]="item.type"
-                [id]="item.id"
-                (valueChanged)="onValueChanged($event)"
-              ></app-text-input>
-              <app-number-input
-                *ngSwitchCase="numberInputOptions.component"
-                [type]="item.type"
-                [id]="item.id"
-                (valueChanged)="onValueChanged($event)"
-              ></app-number-input>
-              <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>
+              *ngSwitchCase="textInputOptions.component"
+              [type]="item.type"
+              [id]="item.id"
+              [questionValue]="item.question"
+              [answerValue]="item.answer"
+              (valueChanged)="onValueChanged($event)"
+            ></app-text-input>
+            <app-number-input
+              *ngSwitchCase="numberInputOptions.component"
+              [type]="item.type"
+              [id]="item.id"
+              [questionValue]="item.question"
+              [answerValue]="item.answer"
+              (valueChanged)="onValueChanged($event)"
+            ></app-number-input>
+                        <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>
               <app-textarea *ngSwitchCase="textAreaInputOptions.component" [textareaPlaceholder]="item.textareaPlaceholder"></app-textarea>
               <app-select *ngSwitchCase="selectInputOptions.component" [answerOptions]="item.answerOptions"></app-select>
               <app-picture-input
