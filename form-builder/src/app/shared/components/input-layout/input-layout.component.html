@@ -9,7 +9,13 @@
         >* (required)</span
       >
     </p>
-    <input *ngIf="isEditingQuestion" type="text" [(ngModel)]="questionValue" (blur)="isEditingQuestion = false" />
+    <input
+      *ngIf="isEditingQuestion"
+      type="text"
+      [(ngModel)]="questionValue"
+      (blur)="isEditingQuestion = false"
+      (ngModelChange)="onQuestionValueChange($event)"
+    />
   </div>
   <div>
     <p *ngIf="!isEditingDescription" (click)="isEditingDescription = true">{{ descriptionValue }}</p>
