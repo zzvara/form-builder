@@ -63,7 +63,7 @@ export class EditComponent {
     console.log({ formInputs: this.formInputs });
   }
 
-  onValueChanged(event: { questionValue: string; answerValue: string; id: string }) {
+  onValueChanged(event: { questionValue: string; answerValue: any; id: string }) {
     const inputValue = {
       question: event.questionValue,
       answer: event.answerValue,

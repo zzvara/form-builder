@@ -5,9 +5,10 @@
   [type]="type"
   [inputPlaceholder]="inputPlaceholder"
   [inputTemplate]="inputTemplate"
+  (questionValueChanged)="onQuestionValueChange($event)"
 >
 </app-input-layout>
 
 <ng-template #inputTemplate>
-  <nz-input-number />
+  <input nz-input [type]="type" [(ngModel)]="answerValue" (ngModelChange)="onAnswerValueChange($event)" />
 </ng-template>

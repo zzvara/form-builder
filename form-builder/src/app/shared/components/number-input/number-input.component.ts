@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-number-input',
@@ -6,11 +6,31 @@ import { Component, Input, TemplateRef } from '@angular/core';
   styleUrls: ['./number-input.component.css'],
 })
 export class NumberInputComponent {
-  questionValue: string = 'Number Input';
+  @Input() id!: string;
+  @Input() type!: string;
+  @Input() questionValue: string = 'Number Input';
+
   descriptionValue: string = 'The input can be used for...';
   answerValue: any = 0;
   inputPlaceholder: string = 'Number input value';
   inputTemplate!: TemplateRef<any>;
   @Input() sectiondId!: string;
-  type: string = 'number';
+
+  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; id: string }>();
+
+  onQuestionValueChange(newValue: string) {
+    this.questionValue = newValue;
+    this.emitValueChanged();
+  }
+
+  onAnswerValueChange(newValue: string) {
+    this.answerValue = newValue;
+    this.emitValueChanged();
+  }
+
+  private emitValueChanged() {
+    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, id: this.id });
+    //console.log(this.id);
+  }
+
 }
