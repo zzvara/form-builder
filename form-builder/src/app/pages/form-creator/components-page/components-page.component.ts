@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { EditComponent } from '../../edit/edit.component';
 
 @Component({
   selector: 'app-components-page',
@@ -6,6 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./components-page.component.css']
 })
 export class ComponentsPageComponent implements OnInit {
+  @ViewChild(EditComponent) editComponent!: EditComponent;
+
   @Input() projectId: number | undefined;
 
   @Input() page?: number;
@@ -15,6 +18,7 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   nextPage() {
+    this.editComponent.saveForm();
     this.page! += 1;
     this.onsetPage(this.page!);
   }
