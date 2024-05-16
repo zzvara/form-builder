@@ -19,14 +19,25 @@ export class InputLayoutComponent {
   isSwitchingAdornment: boolean = false;
 
   @Output() questionValueChanged = new EventEmitter<string>();
+  @Output() descriptionValueChanged = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
-    this.answerValue = newValue;
+    this.questionValue = newValue;
     this.emitQuestionValue();
+  }
+
+  onDescriptionValueChange(newValue: string) {
+    this.descriptionValue = newValue;
+    this.emitDescriptionValue();
   }
 
   emitQuestionValue() {
     this.questionValueChanged.emit(this.questionValue);
     console.log(this.questionValue);
+  }
+
+  emitDescriptionValue() {
+    this.descriptionValueChanged.emit(this.descriptionValue);
+    console.log(this.descriptionValue);
   }
 }

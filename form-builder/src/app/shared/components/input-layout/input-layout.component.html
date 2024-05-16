@@ -19,7 +19,13 @@
   </div>
   <div>
     <p *ngIf="!isEditingDescription" (click)="isEditingDescription = true">{{ descriptionValue }}</p>
-    <input *ngIf="isEditingDescription" type="text" [(ngModel)]="descriptionValue" (blur)="isEditingDescription = false" />
+    <input
+      *ngIf="isEditingDescription"
+      type="text"
+      [(ngModel)]="descriptionValue"
+      (blur)="isEditingDescription = false"
+      (ngModelChange)="onDescriptionValueChange($event)"
+    />
   </div>
   <ng-container *ngTemplateOutlet="inputTemplate"></ng-container>
 </nz-card>

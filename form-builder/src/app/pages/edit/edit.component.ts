@@ -54,8 +54,7 @@ export class EditComponent {
       }
     }
 
-    console.log(this.formInputs);
-    
+    console.log('saved', this.formInputs);
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -74,10 +73,11 @@ export class EditComponent {
     console.log({ formInputs: this.formInputs });
   }
 
-  onValueChanged(event: { questionValue: string; answerValue: any; id: string }) {
+  onValueChanged(event: { questionValue: string; answerValue: any; descriptionValue: string; id: string }) {
     const inputValue = {
       question: event.questionValue,
       answer: event.answerValue,
+      description: event.descriptionValue,
       id: event.id,
     };
 
@@ -86,6 +86,7 @@ export class EditComponent {
     if (index !== -1) {
       this.formInputs[index].question = event.questionValue;
       this.formInputs[index].answer = event.answerValue;
+      this.formInputs[index].description = event.descriptionValue;
 
       console.log({ formInputs: this.formInputs });
     } else {

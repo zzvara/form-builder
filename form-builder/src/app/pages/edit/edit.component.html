@@ -129,6 +129,7 @@
               [id]="item.id"
               [questionValue]="item.question"
               [answerValue]="item.answer"
+              [descriptionValue]="item.description"
               (valueChanged)="onValueChanged($event)"
             ></app-text-input>
             <app-number-input
@@ -137,6 +138,7 @@
               [id]="item.id"
               [questionValue]="item.question"
               [answerValue]="item.answer"
+              [descriptionValue]="item.description"
               (valueChanged)="onValueChanged($event)"
             ></app-number-input>
                         <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>

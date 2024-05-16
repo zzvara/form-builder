@@ -10,13 +10,13 @@ export class NumberInputComponent {
   @Input() type!: string;
   @Input() questionValue: string = 'Number Input';
 
-  descriptionValue: string = 'The input can be used for...';
+  @Input() descriptionValue: string = 'The input can be used for...';
   @Input() answerValue: any = 0;
   inputPlaceholder: string = 'Number input value';
   inputTemplate!: TemplateRef<any>;
   @Input() sectiondId!: string;
 
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; id: string }>();
+  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;
@@ -28,8 +28,13 @@ export class NumberInputComponent {
     this.emitValueChanged();
   }
 
+  onDescriptionValueChange(newValue: string) {
+    this.descriptionValue = newValue;
+    this.emitValueChanged();
+  }
+
   private emitValueChanged() {
-    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, id: this.id });
+    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
     //console.log(this.id);
   }
 
