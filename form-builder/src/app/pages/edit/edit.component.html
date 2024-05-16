@@ -127,18 +127,18 @@
               *ngSwitchCase="textInputOptions.component"
               [type]="item.type"
               [id]="item.id"
-              [questionValue]="item.question"
+              [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
               [answerValue]="item.answer"
-              [descriptionValue]="item.description"
+              [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
               (valueChanged)="onValueChanged($event)"
             ></app-text-input>
             <app-number-input
               *ngSwitchCase="numberInputOptions.component"
               [type]="item.type"
               [id]="item.id"
-              [questionValue]="item.question"
+              [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
               [answerValue]="item.answer"
-              [descriptionValue]="item.description"
+              [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
               (valueChanged)="onValueChanged($event)"
             ></app-number-input>
                         <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>

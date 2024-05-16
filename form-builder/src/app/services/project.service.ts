@@ -2,6 +2,11 @@ import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { FormInput, Project, ProjectType } from '../items/project.interface';
 
+interface ProjectVersion<T extends Project> {
+  versionNum: number;
+  project: T;
+}
+
 function isQuestionnaireType(project: any): project is Project & { type: ProjectType.QUESTIONNAIRE } {
   return project.type === ProjectType.QUESTIONNAIRE;
 }
@@ -109,9 +114,31 @@ export class ProjectService<T extends Project> {
     this.saveToLocalStorage();
   }
 
+  private updateVersionHistory(projectId: number, project: T) {
+    const versionNum = this.getProjectVersionCount(projectId) + 1;
+    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
+    const projectVersion: ProjectVersion<T> = {
+      versionNum: versionNum,
+      project: project,
+    };
+    const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+    projectHistory.push(projectVersion);
+    localStorage.setItem(projectHistoryKey, JSON.stringify(projectHistory));
+  }
+
+  private getProjectVersionCount(projectId: number): number {
+    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
+    const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+    return projectHistory.length;
+  }
+
   update(id: number, data: T): number {
     const index = this.items.findIndex((item) => item.id === id);
     if (index !== -1) {
+
+      const previousVersion = { ...this.items[index] };
+      this.updateVersionHistory(id, previousVersion);
+
       this.items[index] = data;
       this.items[index].modified = new Date().toISOString().split('T')[0];
       this.itemsSubject.next([...this.items]);
@@ -121,7 +148,7 @@ export class ProjectService<T extends Project> {
       return -1;
     }
   }
-  
+
   addWithCheck(data: T): boolean {
     if (this.isValidData(data)) {
       const nextId = this.generateNextId();
@@ -171,5 +198,4 @@ export class ProjectService<T extends Project> {
       this.saveToLocalStorage();
     }
   }
-
 }
