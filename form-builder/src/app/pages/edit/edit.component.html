@@ -113,7 +113,7 @@
   <nz-layout class="inner-layout">
     <nz-content>
       <div class="form-container">
-        <div
+        <nz-card
           cdkDropList
           id="buildedForm"
           #buildedForm="cdkDropList"
@@ -150,7 +150,7 @@
               ></app-picture-input>
             </ng-container>
           </div>
-        </div>
+        </nz-card>
         <div class="element-list" *ngFor="let item of sectionList" cdkDrag>
           <ng-container>
             <app-section [sectionList]="sectionList"> </app-section>
