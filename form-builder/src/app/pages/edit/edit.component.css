@@ -21,12 +21,15 @@ nz-sider {
 .inner-layout > nz-content {
   display: flex;
   justify-content: center;
+  overflow-y: scroll;
+  height: 500px;
 }
 
 .form-container {
   max-width: 100%;
   display: inline-block;
   vertical-align: top;
+  position: static;
 }
 
 .p-3 {

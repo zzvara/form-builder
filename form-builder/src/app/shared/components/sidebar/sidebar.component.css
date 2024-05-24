@@ -1,6 +1,6 @@
 section {
   overflow-y: scroll;
-  height: 450px;
+  height: 500px;
 }
 .sticky-header {
   position: fixed;
