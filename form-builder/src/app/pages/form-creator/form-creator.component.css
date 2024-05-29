@@ -1,5 +1,5 @@
 nz-layout {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 
 nz-steps {
@@ -10,7 +10,7 @@ nz-steps {
 .form-container {
   background-color: white;
   width: 80%;
-  height: 100%;
+  height: 600px;
   margin: auto;
   margin-top: 0px;
   padding: 40px;
