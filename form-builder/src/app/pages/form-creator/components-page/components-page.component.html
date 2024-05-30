@@ -3,22 +3,29 @@
     <app-edit [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
     <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
-      <button nz-col nzSpan="2" id="btn" nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
-    </div>
-    <div>
-      <h3>current version {{ currentVersionNum }}</h3>
-      <h3>prev. version</h3>
-      <ul>
-        <li *ngFor="let version of projectHistory">
-          <button (click)="revertToVersion(version.versionNum)">version {{ version.versionNum }}</button>
-        </li>
-      </ul>
-    </div>
+      <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
+        <div nz-col>
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()">Previous Version</button>
+        </div>
 
-    <!-- <div>
-      <button></button>
-      <select name="" id=""></select>
-      <button></button>
-    </div> -->
+        <div nz-col>
+          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="onVersionSelect($event)" nzPlaceHolder="Select Version">
+            <nz-option
+              *ngFor="let version of projectHistory"
+              [nzValue]="version.versionNum"
+              [nzLabel]="'Version ' + version.versionNum"
+            ></nz-option>
+          </nz-select>
+        </div>
+
+        <div nz-col nzSpan="2">
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()">Next Version</button>
+        </div>
+
+        <div nz-col nz>
+          <button nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
+        </div>
+      </div>
+    </div>
   </div>
 </nz-layout>

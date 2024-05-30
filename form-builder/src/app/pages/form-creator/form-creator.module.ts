@@ -15,6 +15,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { EditModule } from '../edit/edit.module';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -32,6 +33,9 @@ import { EditModule } from '../edit/edit.module';
     ReactiveFormsModule,
     BrowserModule,
     EditModule,
+    NzButtonModule,
+    NzSelectModule
+    
   ],
   providers: [],
   exports: [],
