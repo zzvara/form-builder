@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { FormInput, Project, ProjectType } from '../items/project.interface';
 
-interface ProjectVersion<T extends Project> {
+export interface ProjectVersion<T extends Project> {
   versionNum: number;
   project: T;
 }
@@ -130,6 +130,37 @@ export class ProjectService<T extends Project> {
     const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
     const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
     return projectHistory.length;
+  }
+
+  getProjectHistory(projectId: number): ProjectVersion<T>[] {
+    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
+    const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+    return projectHistory;
+  }
+
+  getProjectVersion(projectId: number, versionNum: number): T | undefined {
+    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
+    const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+    const version = projectHistory.find(v => v.versionNum === versionNum);
+    return version ? version.project : undefined;
+  }
+
+  revertToVersion(projectId: number, versionNum: number): boolean {
+    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
+    const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+    const version = projectHistory.find(v => v.versionNum === versionNum);
+    
+    if (version) {
+      const index = this.items.findIndex(item => item.id === projectId);
+      if (index !== -1) {
+        this.items[index] = version.project;
+        this.items[index].modified = new Date().toISOString().split('T')[0];
+        this.itemsSubject.next([...this.items]);
+        this.saveToLocalStorage();
+        return true;
+      }
+    }
+    return false;
   }
 
   update(id: number, data: T): number {

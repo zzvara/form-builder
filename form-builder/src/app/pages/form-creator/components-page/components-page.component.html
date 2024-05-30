@@ -1,9 +1,24 @@
 <nz-layout>
   <div>
-    <app-edit [projectId]="projectId" />
+    <app-edit [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
     <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
       <button nz-col nzSpan="2" id="btn" nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
     </div>
+    <div>
+      <h3>current version {{ currentVersionNum }}</h3>
+      <h3>prev. version</h3>
+      <ul>
+        <li *ngFor="let version of projectHistory">
+          <button (click)="revertToVersion(version.versionNum)">version {{ version.versionNum }}</button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- <div>
+      <button></button>
+      <select name="" id=""></select>
+      <button></button>
+    </div> -->
   </div>
 </nz-layout>

@@ -42,19 +42,29 @@ export class EditComponent {
   formInputs: any[] = [];
   sectionList: any[] = ['buildedForm'];
 
-  ngOnInit() {
-    // console.log({ list: this.sectionList });
-    // console.log("id", this.projectId);
-
+  @Input() versionNum?: number;
+  ngOnChanges() {
     if (this.projectId !== undefined) {
-      const project = this.projectService.searchData(this.projectId)?.[0];
+      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
+      if (project && project.formInputs) {
+        this.formInputs = [...project.formInputs];
+      }
+    }
+  }
 
+  ngOnInit() {
+    if (this.projectId !== undefined) {
+      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
       if (project && project.formInputs) {
         this.formInputs = [...project.formInputs];
       }
     }
 
-    console.log('saved', this.formInputs);
+    // console.log({ list: this.sectionList });
+    // console.log("id", this.projectId);
+
+    // console.log('saved', this.formInputs);
+    // console.log('version', this.versionNum);
   }
 
   drop(event: CdkDragDrop<any[]>) {
