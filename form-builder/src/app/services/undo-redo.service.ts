@@ -45,12 +45,12 @@ export class UndoRedoService {
   }
 
   dragEvent(event: CdkDragDrop<string[]>) {
-    const id = event.item.data.component;
+    const id = event.item.data?.component;
     let element;
     const previousIndex=event.previousIndex
     const currentIndex =event.currentIndex
     const dragType = event.previousIndex === event.currentIndex && event.currentIndex!==0  ? 'move-inside' : 'move-in';
-    for (let i = 0; i < event.container.data.length; i++) {
+    for (let i = 0; i < event.container.data?.length; i++) {
       element = event.container.data[i] as any;
     }
     const action = {
