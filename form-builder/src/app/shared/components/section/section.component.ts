@@ -29,12 +29,11 @@ export class SectionComponent {
 
   ngOnInit() {
     JSON.stringify(this.sectiondId);
-    console.log({ sectiondId: this.sectiondId });
+    console.log('Section component  ',{ sectiondId: this.sectiondId });
+    console.log('section component',{ list: this.sectionList });
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log({ event, container: event.container });
-    console.log({ itemId: event.item.element.nativeElement.id });
     const itemId = event.item.element.nativeElement.id;
     if (itemId.includes('section') || itemId.includes('cdk-drop-list')) {
       this.sectionList.push(itemId);
@@ -44,6 +43,27 @@ export class SectionComponent {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
+  }
+
+  onValueChanged(event: { questionValue: string; answerValue: any; descriptionValue: string; id: string }) {
+    const inputValue = {
+      question: event.questionValue,
+      answer: event.answerValue,
+      description: event.descriptionValue,
+      id: event.id,
+    };
+
+    const index = this.formInputs.findIndex((input) => input.id === event.id);
+
+    if (index !== -1) {
+      this.formInputs[index].question = event.questionValue;
+      this.formInputs[index].answer = event.answerValue;
+      this.formInputs[index].description = event.descriptionValue;
+
+      console.log({ formInputs: this.formInputs });
+    } else {
+      console.error('Input not found');
     }
   }
 }

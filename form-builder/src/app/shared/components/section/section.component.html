@@ -1,17 +1,35 @@
-<nz-card [id]="sectiondId" cdkDrag #sectionId="cdkDropList" cdkDropList [cdkDropListData]="formInputs" nzTitle="Section">
-  <div class="element-list" *ngFor="let item of sectionList" cdkDrag>
+<nz-card
+  nzTitle="section"
+  [id]="sectiondId"
+  cdkDrag
+  #sectionId="cdkDropList"
+  cdkDropList
+  [cdkDropListData]="formInputs"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
     <ng-container [ngSwitch]="item.component">
-      <app-text-input *ngSwitchCase="textInputOptions.component"></app-text-input>
-      <app-text-input *ngSwitchCase="numberInputOptions.component" ></app-text-input>
-      <app-date-picker *ngSwitchCase="dateInputOptions.component"></app-date-picker>
-      <app-textarea
-        *ngSwitchCase="textAreaInputOptions.component"
-        [textareaPlaceholder]="item.textareaPlaceholder"
-      ></app-textarea>
-      <app-select
-        *ngSwitchCase="selectInputOptions.component"
-        [answerOptions]="item.answerOptions"
-      ></app-select>
+      <app-text-input
+        *ngSwitchCase="textInputOptions.component"
+        [type]="item.type"
+        [id]="item.id"
+        [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
+        [answerValue]="item.answer"
+        [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
+        (valueChanged)="onValueChanged($event)"
+      ></app-text-input>
+      <app-number-input
+        *ngSwitchCase="numberInputOptions.component"
+        [type]="item.type"
+        [id]="item.id"
+        [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
+        [answerValue]="item.answer"
+        [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
+        (valueChanged)="onValueChanged($event)"
+      ></app-number-input>
+      <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>
+      <app-textarea *ngSwitchCase="textAreaInputOptions.component" [textareaPlaceholder]="item.textareaPlaceholder"></app-textarea>
+      <app-select *ngSwitchCase="selectInputOptions.component" [answerOptions]="item.answerOptions"></app-select>
       <app-picture-input *ngSwitchCase="pictureInputOptions.component" [fileName]="pictureInputOptions.fileName"></app-picture-input>
     </ng-container>
   </div>
