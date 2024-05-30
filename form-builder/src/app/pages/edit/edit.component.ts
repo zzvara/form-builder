@@ -53,6 +53,8 @@ export class EditComponent {
   }
 
   ngOnInit() {
+    console.log('editcomponent', { list: this.sectionList });
+
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
       if (project && project.formInputs) {
@@ -67,17 +69,28 @@ export class EditComponent {
     // console.log('version', this.versionNum);
   }
 
-  drop(event: CdkDragDrop<any[]>) {
-    const itemId = uuidv4();
+  randomIntFromInterval(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.undeoRedoService.dragEvent(event);
+  drop(event: CdkDragDrop<any[]>) {
+    console.log({ event, container: event.container });
+    console.log({ itemId: event.item.element.nativeElement.id });
+    const itemId = event.item.element.nativeElement.id;
+    if (itemId.includes('section') || itemId.includes('cdk-drop-list')) {
+      const newItemId = `section${this.randomIntFromInterval(1, 100)}`;
+      this.sectionList.push(itemId);
+      console.log('section list in edit after drag', { sectionList: this.sectionList, itemId });
     } else {
-      const droppedItem = { ...event.previousContainer.data[event.previousIndex], id: itemId };
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      event.container.data[event.currentIndex] = droppedItem;
-      this.undeoRedoService.dragEvent(event);
+      if (event.previousContainer === event.container) {
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        this.undeoRedoService.dragEvent(event);
+      } else {
+        const droppedItem = { ...event.previousContainer.data[event.previousIndex], id: itemId };
+        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+        event.container.data[event.currentIndex] = droppedItem;
+        this.undeoRedoService.dragEvent(event);
+      }
     }
 
     console.log({ formInputs: this.formInputs });
