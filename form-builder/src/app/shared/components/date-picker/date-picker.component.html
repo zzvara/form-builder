@@ -5,9 +5,12 @@
   [type]="type"
   [inputPlaceholder]="inputPlaceholder"
   [inputTemplate]="dateInput"
+  (questionValueChanged)="onQuestionValueChange($event)"
+  (descriptionValueChanged)="onDescriptionValueChange($event)"
+
 >
 </app-input-layout>
 
 <ng-template #dateInput>
-  <nz-date-picker nz-input [(ngModel)]="answerValue.answerValue" (ngModelChange)="onAnswerValueChange($event)"></nz-date-picker>
+  <nz-date-picker nz-input [(ngModel)]="answerValue" (ngModelChange)="onAnswerValueChange($event)"></nz-date-picker>
 </ng-template>

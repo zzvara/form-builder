@@ -7,15 +7,16 @@ import { answerType } from '../../answerType.interface';
   styleUrls: ['./date-picker.component.css'],
 })
 export class DatePickerComponent {
-  questionValue: string = 'Date input';
-  descriptionValue: string = 'The input can be used for...';
-  answerValue: any = 'Date answer';
+  @Input() id!: string;
+  @Input() questionValue: string = 'Date input';
+  @Input() descriptionValue: string = 'The input can be used for...';
+  @Input() answerValue: any = 'Date answer';
   inputPlaceholder: string = 'Date input value';
   inputTemplate!: TemplateRef<any>;
-  type: string = 'text';
+  @Input() type: string = 'text';
   @Input() sectiondId!: string;
 
-  //@Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: answerType; id: string }>();
+  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string;descriptionValue: string; id: string }>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;
@@ -23,12 +24,17 @@ export class DatePickerComponent {
   }
 
   onAnswerValueChange(newValue: string) {
-    this.answerValue.answerValue = newValue;
+    this.answerValue = newValue;
+    this.emitValueChanged();
+  }
+
+  onDescriptionValueChange(newValue: string) {
+    this.descriptionValue = newValue;
     this.emitValueChanged();
   }
 
   private emitValueChanged() {
-    // this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, id: this.id });
-    // console.log(this.id);
+    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
+    //console.log(this.id);
   }
 }
