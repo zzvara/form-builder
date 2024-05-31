@@ -5,9 +5,17 @@
   [type]="type"
   [inputPlaceholder]="inputPlaceholder"
   [inputTemplate]="inputTemplate"
+  (questionValueChanged)="onQuestionValueChange($event)"
+  (descriptionValueChanged)="onDescriptionValueChange($event)"
 >
 </app-input-layout>
 
 <ng-template #inputTemplate>
-  <textarea nz-input [placeholder]="textareaPlaceholder" [(ngModel)]="answerValue" nzAutosize></textarea>
+  <textarea
+    nz-input
+    [placeholder]="textareaPlaceholder"
+    [(ngModel)]="answerValue"
+    nzAutosize
+    (ngModelChange)="onAnswerValueChange($event)"
+  ></textarea>
 </ng-template>

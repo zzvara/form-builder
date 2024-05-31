@@ -150,7 +150,14 @@
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
                 (valueChanged)="onValueChanged($event)"
               ></app-date-picker>
-              <app-textarea *ngSwitchCase="textAreaInputOptions.component" [textareaPlaceholder]="item.textareaPlaceholder"></app-textarea>
+              <app-textarea
+                *ngSwitchCase="textAreaInputOptions.component"
+                [textareaPlaceholder]="item.textareaPlaceholder"
+                [questionValue]="item.question !== undefined ? item.question : 'Textarea input'"
+                [answerValue]="item.answer"
+                [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
+                (valueChanged)="onValueChanged($event)"
+              ></app-textarea>
               <app-select *ngSwitchCase="selectInputOptions.component" [answerOptions]="item.answerOptions"></app-select>
               <app-picture-input
                 *ngSwitchCase="pictureInputOptions.component"

@@ -28,7 +28,7 @@ export class EditComponent {
   numberInput: string[] = Array(100).fill(this.numberInputOptions);
   dateInputOptions = { component: 'app-date-picker' };
   dateInput: string[] = Array(100).fill(this.dateInputOptions);
-  textAreaInputOptions = { component: 'app-textarea', questionValue: 'Test', textareaPlaceholder: 'text placeholder' };
+  textAreaInputOptions = { component: 'app-textarea', textareaPlaceholder: 'text placeholder' };
   textAreaInput: string[] = Array(100).fill(this.textAreaInputOptions);
   pictureInputOptions = { component: 'app-picture-input', fileName: 'fileName' };
   pictureInput: string[] = Array(100).fill(this.pictureInputOptions);
