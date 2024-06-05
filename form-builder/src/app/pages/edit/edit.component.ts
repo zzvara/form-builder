@@ -3,8 +3,6 @@ import { Component, Input } from '@angular/core';
 import { SectionComponent } from 'src/app/shared/components/section/section.component';
 import { Router } from '@angular/router';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
-import { answerType } from 'src/app/shared/answerType.interface';
-import { v4 as uuidv4 } from 'uuid';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/items/project.interface';
 
@@ -61,12 +59,6 @@ export class EditComponent {
         this.formInputs = [...project.formInputs];
       }
     }
-
-    // console.log({ list: this.sectionList });
-    // console.log("id", this.projectId);
-
-    // console.log('saved', this.formInputs);
-    // console.log('version', this.versionNum);
   }
 
   randomIntFromInterval(min: number, max: number) {
