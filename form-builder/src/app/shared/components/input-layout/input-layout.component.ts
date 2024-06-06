@@ -6,8 +6,8 @@ import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/co
   styleUrls: ['./input-layout.component.css'],
 })
 export class InputLayoutComponent {
-  @Input() questionValue: string = 'xxx';
-  @Input() descriptionValue: string = 'xxx...';
+  @Input() questionValue!: string;
+  @Input() descriptionValue!: string;
   @Input() answerValue!: any;
   @Input() type: string = 'text';
   @Input() inputPlaceholder: string = '';

@@ -51,8 +51,6 @@ export class EditComponent {
   }
 
   ngOnInit() {
-    console.log('editcomponent', { list: this.sectionList });
-
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
       if (project && project.formInputs) {
