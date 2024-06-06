@@ -22,7 +22,6 @@ import { TextareaComponent } from './components/textarea/textarea.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SectionComponent } from './components/section/section.component';
-import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { RedoUndoComponent } from './components/redo-undo/redo-undo.component';
 import { PictureInputComponent } from './components/picture-input/picture-input.component';
 import { InputLayoutComponent } from './components/input-layout/input-layout.component';
@@ -36,7 +35,6 @@ const COMPONENTS = [
   HeaderComponent,
   SidebarComponent,
   SectionComponent,
-  ImageUploadComponent,
   RedoUndoComponent,
   PictureInputComponent,
   NumberInputComponent,
