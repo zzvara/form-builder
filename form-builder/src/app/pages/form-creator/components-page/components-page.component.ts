@@ -25,7 +25,6 @@ export class ComponentsPageComponent implements OnInit {
     if (this.projectId !== undefined) {
       this.projectHistory = this.projectService.getProjectHistory(this.projectId);
       this.currentVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : 1;
-      // console.log('projectHistory', this.projectHistory);
     }
   }
 

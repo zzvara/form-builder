@@ -6,14 +6,12 @@ import { Component, Input, TemplateRef } from '@angular/core';
     styleUrls: ['./select.component.css']
 })
 export class SelectComponent {
-    //questionValue: string = 'Select input';
     descriptionValue: string = 'The input can be used for...';
-    //answerValue: any = 'Select answer';
     inputPlaceholder: string = 'Select input value';
     inputTemplate!: TemplateRef<any>;
     type: string = 'text';
-    /* @Input() */ questionValue!: string;
-    /* @Input() */ answerValue!: Component;
+    questionValue!: string;
+    answerValue!: Component;
     @Input() answerOptions!: string[];
     @Input() sectiondId!: string;
 }

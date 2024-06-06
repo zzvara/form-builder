@@ -1,6 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
-import { RedoUndoType } from '../shared/components/redo-undo/redo-undo.interface';
 
 @Injectable({
   providedIn: 'root',

@@ -50,7 +50,6 @@ export class RedoUndoComponent implements OnInit {
       value = lastAction.action;
     }
     if (element && (value || value === '')) {
-      console.log('change value', { text: element.value, element });
       element.value = value;
     }
 
@@ -93,7 +92,6 @@ export class RedoUndoComponent implements OnInit {
       value = lastAction.action;
     }
     if (element && (value || value === '')) {
-      console.log('change value', { text: element.value, element });
       element.value = value;
     }
 

@@ -32,11 +32,9 @@ export class InputLayoutComponent {
 
   emitQuestionValue() {
     this.questionValueChanged.emit(this.questionValue);
-    console.log(this.questionValue);
   }
 
   emitDescriptionValue() {
     this.descriptionValueChanged.emit(this.descriptionValue);
-    console.log(this.descriptionValue);
   }
 }

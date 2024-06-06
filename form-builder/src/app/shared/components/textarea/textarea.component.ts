@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/co
 export class TextareaComponent {
   @Input() id!: string;
   @Input() descriptionValue: string = 'The input can be used for...';
-  inputPlaceholder: string = 'Date input value';
+  inputPlaceholder: string = 'Text area input value';
   inputTemplate!: TemplateRef<any>;
   @Input() type: string = 'text';
   @Input() questionValue: string = 'Textarea input';
@@ -35,7 +35,6 @@ export class TextareaComponent {
 
   private emitValueChanged() {
     this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
-    //console.log(this.id);
   }
 
 }

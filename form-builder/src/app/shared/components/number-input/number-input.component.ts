@@ -35,7 +35,6 @@ export class NumberInputComponent {
 
   private emitValueChanged() {
     this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
-    //console.log(this.id);
   }
 
 }
