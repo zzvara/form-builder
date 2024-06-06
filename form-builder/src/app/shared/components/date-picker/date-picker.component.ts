@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-import { answerType } from '../../answerType.interface';
 
 @Component({
   selector: 'app-date-picker',

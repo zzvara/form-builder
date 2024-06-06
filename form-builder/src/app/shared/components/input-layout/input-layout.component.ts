@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, TemplateRef } from '@angular/core';
-import { answerType } from '../../answerType.interface';
 
 @Component({
   selector: 'app-input-layout',
