@@ -71,7 +71,7 @@ export class EditComponent {
     const itemId = event.item.element.nativeElement.id;
     if (itemId.includes('section') || itemId.includes('cdk-drop-list')) {
       const newItemId = `section${this.randomIntFromInterval(1, 100)}`;
-      this.sectionList.push(itemId);
+      this.sectionList.push(newItemId);
       console.log('section list in edit after drag', { sectionList: this.sectionList, itemId });
     } else {
       if (event.previousContainer === event.container) {
