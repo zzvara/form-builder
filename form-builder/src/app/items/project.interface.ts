@@ -26,3 +26,8 @@ export interface Project {
   modified: string;  
   formInputs?: FormInput[];
 }
+
+export interface ProjectVersion<T extends Project> {
+  versionNum: number;
+  project: T;
+}
