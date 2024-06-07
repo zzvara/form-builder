@@ -9,13 +9,13 @@ export class DatePickerComponent {
   @Input() id!: string;
   @Input() questionValue: string = 'Date input';
   @Input() descriptionValue: string = 'The input can be used for...';
-  @Input() answerValue: any = 'Date answer';
+  @Input() answerValue: any = new Date();
   inputPlaceholder: string = 'Date input value';
   inputTemplate!: TemplateRef<any>;
   @Input() type: string = 'text';
   @Input() sectiondId!: string;
 
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string;descriptionValue: string; id: string }>();
+  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;
@@ -23,7 +23,11 @@ export class DatePickerComponent {
   }
 
   onAnswerValueChange(newValue: string) {
-    this.answerValue = newValue;
+    let validDate = new Date(newValue);
+    if (!this.isValidDate(validDate)) {
+      validDate = new Date();
+    }
+    this.answerValue = validDate;
     this.emitValueChanged();
   }
 
@@ -33,6 +37,19 @@ export class DatePickerComponent {
   }
 
   private emitValueChanged() {
-    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
+    if (!this.isValidDate(this.answerValue)) {
+      this.answerValue = new Date();
+    }
+
+    this.valueChanged.emit({
+      questionValue: this.questionValue,
+      answerValue: this.answerValue.toISOString(),
+      descriptionValue: this.descriptionValue,
+      id: this.id,
+    });
+  }
+
+  isValidDate(date: Date) {
+    return date instanceof Date && !isNaN(date.getTime());
   }
 }
