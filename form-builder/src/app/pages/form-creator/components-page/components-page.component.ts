@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { EditComponent } from '../../edit/edit.component';
-import { Project } from 'src/app/items/project.interface';
-import { ProjectService, ProjectVersion } from 'src/app/services/project.service';
+import { Project, ProjectVersion } from 'src/app/items/project.interface';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-components-page',
