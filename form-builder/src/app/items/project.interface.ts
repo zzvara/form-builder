@@ -11,6 +11,7 @@ export interface FormInput {
   id: string;
   question: string;
   answer: string;
+  description: string;
 }
 
 export interface Project {

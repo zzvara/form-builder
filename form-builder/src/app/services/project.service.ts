@@ -90,18 +90,6 @@ export class ProjectService<T extends Project> {
     return projectHistory.length;
   }
 
-  private updateVersionHistory(projectId: number, project: T) {
-    const versionNum = this.getProjectVersionCount(projectId) + 1;
-    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
-    const projectVersion: ProjectVersion<T> = {
-      versionNum: versionNum,
-      project: project,
-    };
-    const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
-    projectHistory.push(projectVersion);
-    localStorage.setItem(projectHistoryKey, JSON.stringify(projectHistory));
-  }
-
   getProjectHistory(projectId: number): ProjectVersion<T>[] {
     const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
     const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
@@ -142,8 +130,10 @@ export class ProjectService<T extends Project> {
         versionNum: versionNum,
         project: previousVersion,
       };
+
       const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
       projectHistory.push(projectVersion);
+
       localStorage.setItem(projectHistoryKey, JSON.stringify(projectHistory));
 
       this.items[index] = data;
