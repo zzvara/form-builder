@@ -21,6 +21,11 @@ export class ComponentsPageComponent implements OnInit {
 
   constructor(private projectService: ProjectService<Project>) {}
 
+  /**
+   * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
+   * Otherwise, it defaults the current version number to 1.
+   * @returns {void}
+   */
   ngOnInit(): void {
     if (this.projectId !== undefined) {
       this.projectHistory = this.projectService.getProjectHistory(this.projectId);
@@ -28,24 +33,46 @@ export class ComponentsPageComponent implements OnInit {
     }
   }
 
+  /**
+   * Saves the current form state by calling saveForm on the editComponent.
+   * Then, it increments the page number and emits an event to notify parent components of the page change.
+   */
   nextPage() {
     this.editComponent.saveForm();
     this.page! += 1;
     this.onsetPage(this.page!);
   }
 
+  /**
+   * Emits an event to set the current page in the parent component.
+   * @param {number} page - The new page number to navigate to.
+   * @returns {void}
+   */
   onsetPage(page: number): void {
     this.setPage.emit(page);
   }
 
+  /**
+   * Checks if there is a previous version of the project available.
+   * @returns {boolean} True if the current version number is greater than 1, indicating that previous versions exist.
+   */
   hasPreviousVersion(): boolean {
     return this.currentVersionNum !== undefined && this.currentVersionNum > 1;
   }
 
+  /**
+   * Checks if there is a next version of the project available.
+   * @returns {boolean} True if the current version number is not the latest, indicating that a next version exists.
+   */
   hasNextVersion(): boolean {
     return this.currentVersionNum !== undefined && this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1);
   }
 
+  /**
+   * Navigates to a different version of the project based on the given offset.
+   * @param {number} offset - The number to add to the current version number to navigate to the new version.
+   * @returns {void}
+   */
   navigateVersion(offset: number): void {
     if (this.currentVersionNum !== undefined) {
       const newVersionNum = this.currentVersionNum + offset;
@@ -53,13 +80,23 @@ export class ComponentsPageComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles the selection of a project version from a dropdown menu.
+   * @param {Event} event - The event object from the version selection dropdown.
+   * @returns {void}
+   */
   onVersionSelect(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const selectedVersionNum = parseInt(selectElement.value, 10);
     this.revertToVersion(selectedVersionNum);
   }
 
-  revertToVersion(versionNum: number) {
+  /**
+   * Reverts the project to a specified version.
+   * @param versionNum - The version number to revert the project to.
+   * @returns {void}
+   */
+  revertToVersion(versionNum: number): void {
     if (this.projectId !== undefined) {
       const version = this.projectService.revertToVersion(this.projectId, versionNum);
       if (version) {
