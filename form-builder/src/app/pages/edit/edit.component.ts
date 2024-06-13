@@ -37,9 +37,9 @@ export class EditComponent {
     sectionId: this.sectionComponent.sectiondId,
   };
   sectionInput: string[] = Array(3).fill(this.sectionInputOptions);
-  // TODO: Avoid using any type for the formInputs/sectionList array.
+  // TODO: Avoid using any type for the formInputs array.
   formInputs: any[] = [];
-  sectionList: any[] = ['buildedForm'];
+  sectionList: string[] = ['buildedForm'];
 
   @Input() versionNum?: number;
 
@@ -63,6 +63,7 @@ export class EditComponent {
 
   ngOnInit() {
     this.loadProjectFormInputs();
+    console.log({ formInputs: this.formInputs });
   }
 
   /**
@@ -79,12 +80,13 @@ export class EditComponent {
    * Handles the drag and drop event for form elements.
    * @param {CdkDragDrop<any[]>} event  - The drag and drop event containing the current state and target of the dragged item.
    * @returns {void}
-   * 
+   *
    * TODO: Avoid using any type for the event parameter.
    */
   drop(event: CdkDragDrop<any[]>): void {
     // console.log({ event, container: event.container });
     // console.log({ itemId: event.item.element.nativeElement.id });
+    console.log({ formInputs: this.formInputs });
     const itemId = event.item.element.nativeElement.id;
     // Check if the item is a section or belongs to a cdk-drop-list
     if (itemId.includes('section') || itemId.includes('cdk-drop-list')) {
@@ -119,7 +121,7 @@ export class EditComponent {
    * @param event - The event object containing the new value of the form input.
    * @param index - The index of the form input in the formInputs array that needs to be updated.
    * @returns {void}
-   * 
+   *
    * TODO: Avoid using any type for the answerValue parameter.
    */
   onValueChanged(event: { questionValue: string; answerValue: any; descriptionValue: string; id: string }): void {
