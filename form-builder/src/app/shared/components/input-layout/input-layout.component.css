@@ -7,3 +7,7 @@ span{
     color: gray;
     font-size: smallers;
 }
+
+.section-gap {
+    margin-bottom: 16px;
+}

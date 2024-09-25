@@ -1,31 +1,47 @@
 <nz-card>
-  <div>
-    <p *ngIf="!isEditingQuestion" (click)="isEditingQuestion = true">
-      {{ questionValue }}
-      <span *ngIf="!isSwitchingAdornment" (click)="isSwitchingAdornment = true" [style.display]="isSwitchingAdornment ? 'none' : 'block'"
-        >? (optional)</span
-      >
-      <span *ngIf="!isSwitchingAdornment" (click)="isSwitchingAdornment = false" [style.display]="isSwitchingAdornment ? 'block' : 'none'"
-        >* (required)</span
-      >
-    </p>
-    <input
-      *ngIf="isEditingQuestion"
-      type="text"
-      [(ngModel)]="questionValue"
-      (blur)="isEditingQuestion = false"
-      (ngModelChange)="onQuestionValueChange($event)"
-    />
+  <div class="section-gap">
+    <ng-container *ngIf="!isEditingQuestion">
+      <p (click)="isEditingQuestion = true" style="cursor: pointer">
+        {{ questionValue }}
+        <!-- <span *ngIf="!isSwitchingAdornment" (click)="isSwitchingAdornment = true" [style.display]="isSwitchingAdornment ? 'none' : 'block'">
+          ? (optional)
+        </span>
+        <span *ngIf="isSwitchingAdornment" (click)="isSwitchingAdornment = false" [style.display]="isSwitchingAdornment ? 'block' : 'none'">
+          * (required)
+        </span> -->
+        <i nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></i>
+      </p>
+    </ng-container>
+
+    <ng-container *ngIf="isEditingQuestion">
+      <input
+        nz-input
+        type="text"
+        [(ngModel)]="questionValue"
+        (blur)="isEditingQuestion = false"
+        (ngModelChange)="onQuestionValueChange($event)"
+      />
+    </ng-container>
   </div>
-  <div>
-    <p *ngIf="!isEditingDescription" (click)="isEditingDescription = true">{{ descriptionValue }}</p>
-    <input
-      *ngIf="isEditingDescription"
-      type="text"
-      [(ngModel)]="descriptionValue"
-      (blur)="isEditingDescription = false"
-      (ngModelChange)="onDescriptionValueChange($event)"
-    />
+
+  <div class="section-gap">
+    <ng-container *ngIf="!isEditingDescription">
+      <p (click)="isEditingDescription = true" style="cursor: pointer">
+        {{ descriptionValue }}
+        <i nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></i>
+      </p>
+    </ng-container>
+
+    <ng-container *ngIf="isEditingDescription">
+      <input
+        nz-input
+        type="text"
+        [(ngModel)]="descriptionValue"
+        (blur)="isEditingDescription = false"
+        (ngModelChange)="onDescriptionValueChange($event)"
+      />
+    </ng-container>
   </div>
+
   <ng-container *ngTemplateOutlet="inputTemplate"></ng-container>
 </nz-card>
