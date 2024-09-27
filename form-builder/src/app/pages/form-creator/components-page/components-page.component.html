@@ -9,7 +9,7 @@
         </div>
 
         <div nz-col>
-          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="onVersionSelect($event)" nzPlaceHolder="Select Version">
+          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="revertToVersion($event)" nzPlaceHolder="Select Version">
             <nz-option
               *ngFor="let version of projectHistory"
               [nzValue]="version.versionNum"

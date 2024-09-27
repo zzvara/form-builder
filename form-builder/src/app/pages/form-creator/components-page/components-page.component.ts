@@ -81,17 +81,6 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   /**
-   * Handles the selection of a project version from a dropdown menu.
-   * @param {Event} event - The event object from the version selection dropdown.
-   * @returns {void}
-   */
-  onVersionSelect(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const selectedVersionNum = parseInt(selectElement.value, 10);
-    this.revertToVersion(selectedVersionNum);
-  }
-
-  /**
    * Reverts the project to a specified version.
    * @param versionNum - The version number to revert the project to.
    * @returns {void}
