@@ -4,7 +4,7 @@ import { SectionComponent } from 'src/app/shared/components/section/section.comp
 import { Router } from '@angular/router';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/items/project.interface';
+import { FormInput, Project } from 'src/app/items/project.interface';
 
 @Component({
   selector: 'app-edit',
@@ -14,9 +14,9 @@ import { Project } from 'src/app/items/project.interface';
 export class EditComponent {
   constructor(
     private readonly router: Router,
-    private undeoRedoService: UndoRedoService,
     private sectionComponent: SectionComponent,
-    private projectService: ProjectService<Project>
+    private projectService: ProjectService<Project>,
+    private undoRedoService: UndoRedoService<FormInput[]>
   ) {}
   @Input() projectId: number | undefined;
 
@@ -53,6 +53,7 @@ export class EditComponent {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
       if (project && project.formInputs) {
         this.formInputs = [...project.formInputs];
+        this.undoRedoService.saveState(this.formInputs);
       }
     }
   }
@@ -98,8 +99,6 @@ export class EditComponent {
       if (event.previousContainer === event.container) {
         // Move the item within the array
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        // Record the drag event for undo/redo functionality
-        this.undeoRedoService.dragEvent(event);
       } else {
         // Create a copy of the dropped item with updated ID
         const droppedItem = { ...event.previousContainer.data[event.previousIndex], id: itemId };
@@ -107,9 +106,8 @@ export class EditComponent {
         transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
         // Update the item in the new container with the copied item
         event.container.data[event.currentIndex] = droppedItem;
-        // Record the drag event for undo/redo functionality
-        this.undeoRedoService.dragEvent(event);
       }
+      this.undoRedoService.saveState(this.formInputs);
     }
 
     console.log({ formInputs: this.formInputs });
@@ -138,6 +136,7 @@ export class EditComponent {
       this.formInputs[index].question = event.questionValue;
       this.formInputs[index].answer = event.answerValue;
       this.formInputs[index].description = event.descriptionValue;
+      this.undoRedoService.saveState(this.formInputs);
 
       console.log({ formInputs: this.formInputs });
     } else {
@@ -168,5 +167,9 @@ export class EditComponent {
       }
       this.projectService.update(this.projectId!, project);
     }
+  }
+
+  onFormInputsChange(updatedFormInputs: any[]): void {
+    this.formInputs = updatedFormInputs;
   }
 }

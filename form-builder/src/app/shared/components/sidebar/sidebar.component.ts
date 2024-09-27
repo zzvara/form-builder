@@ -1,5 +1,6 @@
 import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormInput } from 'src/app/items/project.interface';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 interface Panel {
@@ -17,7 +18,7 @@ interface Panels {
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-  constructor(private undeoRedoService: UndoRedoService) {}
+  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
   panels: Panels = {
     basic: {
       name: 'Basic inputs',
@@ -30,4 +31,10 @@ export class SidebarComponent {
   };
   @Input() formInputs: any[] = [];
   @Input() sectiondId!: string;
+  @Output() formInputsChange = new EventEmitter<any[]>();
+
+  onFormInputsChange(updatedFormInputs: any[]): void {
+    this.formInputs = updatedFormInputs;
+    this.formInputsChange.emit(this.formInputs);
+  }
 }
