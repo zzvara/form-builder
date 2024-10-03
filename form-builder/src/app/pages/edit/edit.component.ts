@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { SectionComponent } from 'src/app/shared/components/section/section.component';
 import { Router } from '@angular/router';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
@@ -11,7 +11,7 @@ import { FormInput, Project } from 'src/app/items/project.interface';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent {
+export class EditComponent implements OnInit, OnChanges {
   constructor(
     private readonly router: Router,
     private sectionComponent: SectionComponent,
@@ -58,12 +58,24 @@ export class EditComponent {
     }
   }
 
+  /**
+   * Initializes the undo/redo service by saving the current state of the form inputs.
+   * @returns {void}
+   */
+  private initializeUndoRedo(): void {
+    if (this.formInputs && this.formInputs.length > 0) {
+      this.undoRedoService.clearHistory();
+      this.undoRedoService.saveState(this.formInputs);
+    }
+  }
+
   ngOnChanges() {
     this.loadProjectFormInputs();
   }
 
   ngOnInit() {
     this.loadProjectFormInputs();
+    this.initializeUndoRedo();
     console.log({ formInputs: this.formInputs });
   }
 
