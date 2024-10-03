@@ -11,9 +11,11 @@ export class UndoRedoService<T> {
   constructor() {}
 
   saveState(state: T): void {
-    this.undoStack.push(JSON.parse(JSON.stringify(state)));
-    this.redoStack = [];
-  }
+    if (this.undoStack.length === 0 || JSON.stringify(this.undoStack[this.undoStack.length - 1]) !== JSON.stringify(state)) {
+      this.undoStack.push(JSON.parse(JSON.stringify(state)));
+      this.redoStack = [];
+    }
+  }  
 
   undo(currentState: T): T | null {
     if (this.canUndo()) {

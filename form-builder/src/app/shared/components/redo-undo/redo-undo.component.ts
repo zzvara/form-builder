@@ -10,8 +10,14 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
 })
 export class RedoUndoComponent {
   constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
-  canUndo = this.undoRedoService.canUndo;
-  canRedo = this.undoRedoService.canRedo;
+  
+  get canUndo(): boolean {
+    return this.undoRedoService.canUndo();
+  }
+
+  get canRedo(): boolean {
+    return this.undoRedoService.canRedo();
+  }
 
   @Input() formInputs: any[] = [];
   @Output() formInputsChange = new EventEmitter<any[]>();
