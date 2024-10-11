@@ -20,3 +20,7 @@ nz-layout {
 #title {
   font-weight: bold;
 }
+
+.date-picker {
+  margin-top: -5px;
+}

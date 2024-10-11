@@ -20,16 +20,14 @@ export class InfoPageComponent implements OnInit {
     title: '',
     description: '',
     type: ProjectType.QUESTIONNAIRE,
-    time_chechkbox: false,
+    time_checkbox: false,
+    deadline_checkbox: false,
     time_limit: 0,
     deadline: '',
     created: new Date().toISOString().split('T')[0],
     modified: new Date().toISOString().split('T')[0],
   };
 
-  hasdeadline = false;
-  haslimit = false;
-  params = {};
   formExists = false;
   formId = 0;
   saveFailed = false;
@@ -39,9 +37,11 @@ export class InfoPageComponent implements OnInit {
     description: new FormControl(''),
     type: new FormControl(false),
     deadline: new FormControl(''),
+    hasdeadline: new FormControl(false),
     haslimit: new FormControl(false),
     limit: new FormControl(0),
   });
+  params: any = {};
 
   constructor(
     private readonly modal: NzModalService,
@@ -74,18 +74,10 @@ export class InfoPageComponent implements OnInit {
       description: this.project.description || '',
       type: this.project.type === ProjectType.TEST,
       deadline: this.project.deadline || '',
-      haslimit: this.project.time_chechkbox || false,
+      hasdeadline: this.project.deadline_checkbox || false,
+      haslimit: this.project.time_checkbox || false,
       limit: this.project.time_limit || 0,
     });
-  }
-
-  setDeadline() {
-    this.hasdeadline = !this.hasdeadline;
-  }
-
-  setLimit() {
-    this.haslimit = !this.haslimit;
-    this.project.time_chechkbox = this.haslimit;
   }
 
   updateForm() {
@@ -93,17 +85,10 @@ export class InfoPageComponent implements OnInit {
     this.project.description = this.form.controls['description'].value!;
     this.project.type = this.form.controls['type'].value ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
     this.project.deadline = this.form.controls['deadline'].value!;
-    this.project.time_chechkbox = this.form.controls['haslimit'].value!;
-    if (this.project.time_chechkbox) {
+    this.project.deadline_checkbox = this.form.controls['hasdeadline'].value!;
+    this.project.time_checkbox = this.form.controls['haslimit'].value!;
+    if (this.project.time_checkbox) {
       this.project.time_limit = this.form.controls['limit'].value!;
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.formExists && this.formId !== 0) {
-      this.projectId.emit(this.formId);
-    } else {
-      this.projectId.emit(this.project.id);
     }
   }
 

@@ -4,12 +4,12 @@
     <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
       <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
-        <div nz-col>
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()">Previous Version</button>
+        <div>
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px;">Previous Version</button>
         </div>
 
-        <div nz-col>
-          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="revertToVersion($event)" nzPlaceHolder="Select Version">
+        <div>
+          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="revertToVersion($event)" nzPlaceHolder="Select Version" style="margin-right: 8px;">
             <nz-option
               *ngFor="let version of projectHistory"
               [nzValue]="version.versionNum"
@@ -18,12 +18,12 @@
           </nz-select>
         </div>
 
-        <div nz-col nzSpan="2">
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()">Next Version</button>
+        <div>
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px;">Next Version</button>
         </div>
 
-        <div nz-col nz>
-          <button nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
+        <div>
+          <button nz-button nzType="primary" type="submit" (click)="nextPage()" style="margin-left: 8px;">Save</button>
         </div>
       </div>
     </div>
