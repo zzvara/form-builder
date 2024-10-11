@@ -6,13 +6,8 @@
 >
 </app-input-layout>
 
-<!--TODO Change nzAction to some actual action url -->
 <ng-template #inputTemplate>
-  <nz-upload
-    nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-    [nzHeaders]="{ authorization: 'authorization-text' }"
-    (nzChange)="handleChange($event)"
-  >
+  <nz-upload [nzAction]="uploadToLocalStorage" [nzHeaders]="{ authorization: 'authorization-text' }" (nzChange)="handleChange($event)">
     <button nz-button>
       <span nz-icon nzType="upload"></span>
       Click to Upload

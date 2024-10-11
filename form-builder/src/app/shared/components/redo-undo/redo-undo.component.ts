@@ -1,5 +1,6 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormInput } from 'src/app/items/project.interface';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 @Component({
@@ -7,104 +8,33 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
   templateUrl: './redo-undo.component.html',
   styleUrls: ['./redo-undo.component.css'],
 })
-export class RedoUndoComponent implements OnInit {
-  constructor(private undoRedoService: UndoRedoService) {}
-  canUndo = this.undoRedoService.canUndo;
-  canRedo = this.undoRedoService.canRedo;
-  undoActions = this.undoRedoService.undoActions;
-  redoActions = this.undoRedoService.redoActions;
+export class RedoUndoComponent {
+  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
+
+  get canUndo(): boolean {
+    return this.undoRedoService.canUndo();
+  }
+
+  get canRedo(): boolean {
+    return this.undoRedoService.canRedo();
+  }
+
   @Input() formInputs: any[] = [];
+  @Output() formInputsChange = new EventEmitter<any[]>();
 
-  ngOnInit(): void {
-    if (this.undoActions === null) {
-      localStorage.setItem('undoActions', JSON.stringify([]));
-    }
-    if (this.redoActions === null) {
-      localStorage.setItem('redoActions', JSON.stringify([]));
+  undoBtn(): void {
+    const previousState = this.undoRedoService.undo(this.formInputs);
+    if (previousState) {
+      this.formInputs = previousState;
+      this.formInputsChange.emit(this.formInputs);
     }
   }
 
-  undoBtn() {
-    const length = this.undoActions.length;
-    const lastAction = this.undoActions[length - 1];
-    const id = lastAction.id;
-
-    let element;
-    let position;
-    let previousIndex;
-    let currentIndex;
-    let dragType;
-    if (typeof lastAction.action === 'object') {
-      previousIndex=lastAction.action.previousIndex
-      currentIndex=lastAction.action.currentIndex
-      dragType = lastAction.action.dragType;
-      element = lastAction.action.element;
-    }
-
-    if (typeof previousIndex === 'number' && typeof currentIndex === 'number' && typeof dragType === 'string') {
-      dragType === 'move-in' ? this.formInputs.pop() : moveItemInArray(element, previousIndex, currentIndex);
-    }
-
-    let value;
-    if (typeof lastAction.action === 'string') {
-      value = lastAction.action;
-    }
-    if (element && (value || value === '')) {
-      element.value = value;
-    }
-
-    this.undoRedoService.undo();
-    if (this.undoActions.length > 0) {
-      this.canUndo = true;
-    } else {
-      this.canUndo = false;
-    }
-    if (this.redoActions.length > 0) {
-      this.canRedo = true;
-    } else {
-      this.canRedo = false;
-    }
-  }
-
-  redoBtn() {
-    const length = this.redoActions.length;
-    const lastAction = this.redoActions[length - 1];
-    const id = lastAction.id;
-
-    let element;
-    let position;
-    let previousIndex;
-    let currentIndex;
-    let dragType;
-    if (typeof lastAction.action === 'object') {
-      previousIndex=lastAction.action.previousIndex
-      currentIndex=lastAction.action.currentIndex
-      dragType = lastAction.action.dragType;
-      element = lastAction.action.element;
-    }
-
-    if (typeof previousIndex === 'number' && typeof currentIndex === 'number' && typeof dragType === 'string') {
-      dragType === 'move-in' ? this.formInputs.push(element) : moveItemInArray(element, previousIndex, currentIndex);
-    }
-
-    let value;
-    if (typeof lastAction.action === 'string') {
-      value = lastAction.action;
-    }
-    if (element && (value || value === '')) {
-      element.value = value;
-    }
-
-    this.undoRedoService.redo();
-    if (this.undoActions.length > 0) {
-      this.canUndo = true;
-    } else {
-      this.canUndo = false;
-    }
-    if (this.redoActions.length > 0) {
-      this.canRedo = true;
-    } else {
-      this.canRedo = false;
+  redoBtn(): void {
+    const nextState = this.undoRedoService.redo(this.formInputs);
+    if (nextState) {
+      this.formInputs = nextState;
+      this.formInputsChange.emit(this.formInputs);
     }
   }
 }

@@ -4,66 +4,93 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class UndoRedoService {
+export class UndoRedoService<T> {
+  private undoStack: T[] = [];
+  private redoStack: T[] = [];
+  private hasInitialStateSaved = false;
+
   constructor() {}
-  undoActions: any = localStorage.getItem('undoActions') === null ? [] : JSON.parse(localStorage.getItem('undoActions') as string);
-  redoActions: any = localStorage.getItem('redoActions') === null ? [] : JSON.parse(localStorage.getItem('redoActions') as string);
-  canUndo = this.undoActions.length > 0 ? true : false;
-  canRedo = this.redoActions.length > 0 ? true : false;
 
-  private saveUndoActionToLocalStorage() {
-    localStorage.setItem('undoActions', JSON.stringify(this.undoActions));
+  /**
+   * Method to clone the state to avoid reference issues.
+   * @param {T} state - The state to clone.
+   * @returns {T} - The cloned state.
+   */
+  private cloneState(state: T): T {
+    return JSON.parse(JSON.stringify(state));
   }
 
-  private saveRedoActionToLocalStorage() {
-    localStorage.setItem('redoActions', JSON.stringify(this.redoActions));
+  /**
+   * Method to check if the current state is different from the last saved state.
+   * @param {T} state - The current state to compare.
+   * @returns {boolean} - True if the state is different, false otherwise.
+   */
+  private isStateDifferent(state: T): boolean {
+    return JSON.stringify(this.undoStack[this.undoStack.length - 1]) !== JSON.stringify(state);
   }
 
-  addToUndoActions(id: any, action: any) {
-    this.undoActions.push({ id, action });
-    this.saveUndoActionToLocalStorage();
-  }
-
-  addToRedoActions(id: any, action: any) {
-    this.redoActions.push({ id, action });
-    this.saveRedoActionToLocalStorage();
-  }
-
-  undo() {
-    const lastAction = this.undoActions.pop();
-    this.redoActions.push(lastAction);
-    this.saveUndoActionToLocalStorage();
-    this.saveRedoActionToLocalStorage();
-  }
-
-  redo() {
-    const lastAction = this.redoActions.pop();
-    this.undoActions.push(lastAction);
-    this.saveUndoActionToLocalStorage();
-    this.saveRedoActionToLocalStorage();
-  }
-
-  dragEvent(event: CdkDragDrop<string[]>) {
-    const id = event.item.data?.component;
-    let element;
-    const previousIndex=event.previousIndex
-    const currentIndex =event.currentIndex
-    const dragType = event.previousIndex === event.currentIndex && event.currentIndex!==0  ? 'move-inside' : 'move-in';
-    for (let i = 0; i < event.container.data?.length; i++) {
-      element = event.container.data[i] as any;
+  /**
+   * Method to save the current state to the undo stack.
+   * @param {T} state - The current state to save.
+   * @returns {void}
+   */
+  saveState(state: T): void {
+    if (!this.hasInitialStateSaved || this.undoStack.length === 0 || this.isStateDifferent(state)) {
+      this.undoStack.push(this.cloneState(state));
+      this.redoStack = [];
+      this.hasInitialStateSaved = true;
     }
-    const action = {
-      previousIndex,
-      currentIndex,
-      dragType,
-      element
-    };
-    this.addToUndoActions(id, action);
   }
 
-  changeEvent(event: any) {
-    const id = event.target.id;
-    const action = event.target.value;
-    this.addToUndoActions(id, action);
+  /**
+   * Method to undo the last action and return the previous state.
+   * @param {T} currentState - The current state before undoing.
+   * @returns {T | null} - The previous state if undo is possible, otherwise null.
+   */
+  undo(currentState: T): T | null {
+    if (this.canUndo()) {
+      this.redoStack.push(this.cloneState(currentState));
+      return this.undoStack.pop() as T;
+    }
+    return null;
+  }
+
+  /**
+   * Method to redo the last undone action and return the next state.
+   * @param {T} currentState - The current state before redoing.
+   * @returns {T | null} - The next state if redo is possible, otherwise null.
+   */
+  redo(currentState: T): T | null {
+    if (this.canRedo()) {
+      this.undoStack.push(this.cloneState(currentState));
+      return this.redoStack.pop() as T;
+    }
+    return null;
+  }
+
+  /**
+   * Method to clear the undo and redo history.
+   * @returns {void}
+   */
+  clearHistory(): void {
+    this.undoStack = [];
+    this.redoStack = [];
+    this.hasInitialStateSaved = false;
+  }
+
+  /**
+   * Method to check if undo is possible.
+   * @returns {boolean} - True if undo is possible, false otherwise.
+   */
+  canUndo(): boolean {
+    return this.undoStack.length > 0;
+  }
+
+  /**
+   * Method to check if redo is possible.
+   * @returns {boolean} - True if redo is possible, false otherwise.
+   */
+  canRedo(): boolean {
+    return this.redoStack.length > 0;
   }
 }

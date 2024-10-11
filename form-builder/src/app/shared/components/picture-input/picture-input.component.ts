@@ -1,5 +1,6 @@
 import { Component, Input, TemplateRef } from '@angular/core';
-import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-picture-input',
@@ -32,17 +33,12 @@ export class PictureInputComponent {
     }
   }
 
-  submit(): void {
-    if (!this.file) {
-      console.error('No file selected.');
-      return;
-    }
-
+  uploadToLocalStorage = (file: NzUploadFile): Observable<string> => {
     const reader = new FileReader();
-    reader.onload = (e) => {
-      this.uploadedFile = reader.result as string;
-      localStorage.setItem(this.fileName, this.uploadedFile);
+    reader.onload = () => {
+      localStorage.setItem(file.name, reader.result as string);
     };
-    reader.readAsDataURL(this.file);
-  }
+    reader.readAsDataURL(file as any);
+    return of('');
+  };
 }

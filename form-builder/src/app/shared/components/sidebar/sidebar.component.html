@@ -1,6 +1,6 @@
 <section>
   <div class="sticky-header">
-    <app-redo-undo [formInputs]="formInputs"></app-redo-undo>
+    <app-redo-undo [formInputs]="formInputs" (formInputsChange)="onFormInputsChange($event)"> ></app-redo-undo>
     <nz-input-group [nzSuffix]="suffixIconSearch">
       <input type="text" nz-input placeholder="input search text" />
     </nz-input-group>
