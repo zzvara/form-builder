@@ -19,7 +19,8 @@ export interface Project {
   title: string;
   description: string;
   type: ProjectType;
-  time_chechkbox: boolean;
+  time_checkbox: boolean;
+  deadline_checkbox: boolean;
   time_limit: number;
   deadline: string;
   created: string;

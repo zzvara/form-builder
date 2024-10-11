@@ -1,29 +1,32 @@
 <nz-layout>
   <div>
     <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <input nz-input type="text" class="formelement" id="title" formControlName="title" placeholder="Form Title" (change)="updateForm()" required><br>
-      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" formControlName="description" placeholder="Description" (change)="updateForm()" required></textarea><br><hr class="formelement"/>
+      <input nz-input type="text" class="formelement" id="title" formControlName="title" placeholder="Form Title" (change)="updateForm()" required />
+      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" formControlName="description" placeholder="Description" (change)="updateForm()" required></textarea>
+      <hr class="formelement" />
       <nz-form-item class="formelement">
         <label>Questionaire</label>
         <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
         <label>Test</label>
       </nz-form-item>
       <nz-form-item class="formelement">
-        <label nz-checkbox (change)="setDeadline()">Deadline</label>
-        <nz-date-picker *ngIf="hasdeadline" id="deadline" formControlName="deadline" (change)="updateForm()"></nz-date-picker><br>
+        <label nz-checkbox formControlName="hasdeadline" style="margin-right: 10px;"></label>
+        <label style="margin-right: 10px;">Deadline</label>
+        <nz-date-picker *ngIf="form.get('hasdeadline')?.value" id="deadline" formControlName="deadline" (change)="updateForm()" style="margin-top: -5px;"></nz-date-picker>
       </nz-form-item>
       <nz-form-item class="formelement">
-        <label nz-checkbox formControlName="haslimit" (change)="setLimit()">Time limit</label>
-        <nz-time-picker *ngIf="haslimit" formControlName="limit" (change)="updateForm()"></nz-time-picker><br>
+        <label nz-checkbox formControlName="haslimit" style="margin-right: 10px;"></label>
+        <label style="margin-right: 10px;">Time limit</label>
+        <nz-time-picker *ngIf="form.get('haslimit')?.value" formControlName="limit" (change)="updateForm()" style="margin-top: -5px;"></nz-time-picker>
       </nz-form-item>
       <div nz-row id="footerdiv">
-        <div nz-col nzSpan="4">
+        <div nz-col nzSpan="4" style="display: flex; align-items: center;">
           <nz-form-label>Created</nz-form-label>
-          <label>{{this.project.created}}</label>
+          <label>{{ this.project.created }}</label>
         </div>
-        <div nz-col nzSpan="18">
+        <div nz-col nzSpan="18" style="display: flex; align-items: center;">
           <nz-form-label>Last modification</nz-form-label>
-          <label>{{this.project.modified}}</label>
+          <label>{{ this.project.modified }}</label>
         </div>
         <button nz-col nzSpan="2" id="btn" nz-button nzType="primary" type="submit">Save</button>
       </div>
