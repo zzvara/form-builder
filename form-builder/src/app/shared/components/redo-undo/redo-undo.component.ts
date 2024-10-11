@@ -10,7 +10,7 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
 })
 export class RedoUndoComponent {
   constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
-  
+
   get canUndo(): boolean {
     return this.undoRedoService.canUndo();
   }
