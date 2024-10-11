@@ -26,6 +26,10 @@ import { RedoUndoComponent } from './components/redo-undo/redo-undo.component';
 import { PictureInputComponent } from './components/picture-input/picture-input.component';
 import { InputLayoutComponent } from './components/input-layout/input-layout.component';
 import { NumberInputComponent } from './components/number-input/number-input.component';
+import {SelectModalComponent} from "./components/select/select-modal/select-modal.component";
+import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import {NzListModule} from "ng-zorro-antd/list";
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -39,6 +43,7 @@ const COMPONENTS = [
   PictureInputComponent,
   NumberInputComponent,
   InputLayoutComponent,
+  SelectModalComponent,
 ];
 
 @NgModule({
@@ -62,6 +67,9 @@ const COMPONENTS = [
     CdkDropList,
     DragDropModule,
     NzButtonModule,
+    NzModalModule,
+    NzCheckboxModule,
+    NzListModule,
   ],
   providers: [],
   exports: [...COMPONENTS],

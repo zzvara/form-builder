@@ -87,7 +87,7 @@
                   <app-select
                     *ngSwitchCase="selectInputOptions.component"
                     id="sectionInputOptions.sectionId"
-                    [answerOptions]="item.answerOptions"
+                    [isInSection]="item.isInSection"
                   ></app-select>
                   <app-picture-input
                     *ngSwitchCase="pictureInputOptions.component"
@@ -104,7 +104,9 @@
         <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
           <span>select</span>
           <div class="element-box" cdkDrag [cdkDragData]="selectInputOptions">
-            <app-select [answerOptions]="selectInputOptions.answerOptions"></app-select>
+            <app-select
+              [isInSection]="selectInputOptions.isInSection"
+            ></app-select>
           </div>
         </div>
       </ng-container>
@@ -158,7 +160,10 @@
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
                 (valueChanged)="onValueChanged($event)"
               ></app-textarea>
-              <app-select *ngSwitchCase="selectInputOptions.component" [answerOptions]="item.answerOptions"></app-select>
+              <app-select
+                *ngSwitchCase="selectInputOptions.component"
+                [isInSection]="true"
+              ></app-select>
               <app-picture-input
                 *ngSwitchCase="pictureInputOptions.component"
                 [fileName]="pictureInputOptions.fileName"

@@ -7,7 +7,18 @@
 </app-input-layout>
 
 <ng-template #selectInput>
-  <nz-select>
-    <nz-option *ngFor="let answerOption of answerOptions" [nzValue]="answerOption" [nzLabel]="answerOption"></nz-option>
+  <nz-select
+    [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
+    [(ngModel)]="actualValue"
+    [nzPlaceHolder]="placeholderValue"
+    nzAllowClear>
+    <nz-option
+      *ngFor="let answerOption of answerOptions"
+      [nzValue]="answerOption"
+      [nzLabel]="answerOption"
+    ></nz-option>
   </nz-select>
+  <ng-container *ngIf="isInSection">
+    <button nz-button nzType="primary" (click)="openModal()">Edit</button>
+  </ng-container>
 </ng-template>

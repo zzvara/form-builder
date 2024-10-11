@@ -17,7 +17,7 @@ export class SectionComponent {
   textAreaInput: string[] = Array(100).fill(this.textAreaInputOptions);
   pictureInputOptions = { component: 'app-picture-input', fileName: 'fileName' };
   pictureInput: string[] = Array(100).fill(this.pictureInputOptions);
-  selectInputOptions = { component: 'app-select', questionValue: 'Test', answerOptions: ['Option1', 'Option2'] };
+  selectInputOptions = { component: 'app-select', questionValue: 'Test' };
   selectInput: string[] = Array(100).fill(this.selectInputOptions);
   formInputs: any[] = [];
 
