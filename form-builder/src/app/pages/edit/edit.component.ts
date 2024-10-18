@@ -5,19 +5,25 @@ import { Router } from '@angular/router';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { FormInput, Project } from 'src/app/items/project.interface';
-
+import { Subject, debounceTime } from 'rxjs';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent implements OnInit, OnChanges {
+  private inputChangeSubject = new Subject<any>();
+
   constructor(
     private readonly router: Router,
     private sectionComponent: SectionComponent,
     private projectService: ProjectService<Project>,
     private undoRedoService: UndoRedoService<FormInput[]>
-  ) {}
+  ) {
+    this.inputChangeSubject.pipe(debounceTime(300)).subscribe((event) => {
+      this.saveInputChange(event);
+    });
+  }
   @Input() projectId: number | undefined;
 
   textInputOptions = { component: 'app-text-input', type: 'text' };
@@ -135,21 +141,16 @@ export class EditComponent implements OnInit, OnChanges {
    * TODO: Avoid using any type for the answerValue parameter.
    */
   onValueChanged(event: { questionValue: string; answerValue: any; descriptionValue: string; id: string }): void {
-    const inputValue = {
-      question: event.questionValue,
-      answer: event.answerValue,
-      description: event.descriptionValue,
-      id: event.id,
-    };
+    this.inputChangeSubject.next(event);
+  }
 
+  private saveInputChange(event: { questionValue: string; answerValue: any; descriptionValue: string; id: string }): void {
     const index = this.formInputs.findIndex((input) => input.id === event.id);
-
     if (index !== -1) {
       this.formInputs[index].question = event.questionValue;
       this.formInputs[index].answer = event.answerValue;
       this.formInputs[index].description = event.descriptionValue;
       this.undoRedoService.saveState(this.formInputs);
-
       console.log({ formInputs: this.formInputs });
     } else {
       console.error('Input not found');
