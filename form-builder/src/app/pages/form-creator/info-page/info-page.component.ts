@@ -92,6 +92,14 @@ export class InfoPageComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    if (this.formExists && this.formId !== 0) {
+      this.projectId.emit(this.formId);
+    } else {
+      this.projectId.emit(this.project.id);
+    }
+  }
+
   submitForm() {
     this.updateForm();
     if (this.formExists && this.formId !== 0) {
