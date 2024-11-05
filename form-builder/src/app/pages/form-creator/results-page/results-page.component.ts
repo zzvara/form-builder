@@ -9,8 +9,11 @@ export class ResultsPageComponent implements OnInit {
 
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
+  @Input() projectId: number | undefined;
 
   ngOnInit(): void {
+    console.log(this.projectId);
+    
   }
 
   nextPage() {

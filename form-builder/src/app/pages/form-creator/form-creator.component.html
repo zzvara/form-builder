@@ -6,24 +6,13 @@
   </nz-steps>
   <div class="form-container">
     <div class="page" *ngIf="page == 0">
-      <app-info-page
-      [page]="page"
-      (setPage)="setPage($event)"
-      (projectId)="setProjectId($event)"
-      />
+      <app-info-page [page]="page" (setPage)="setPage($event)" (projectId)="setProjectId($event)" />
     </div>
     <div class="page" *ngIf="page == 1">
-      <app-components-page
-      [page]="page"
-      (setPage)="setPage($event)"
-      [projectId]="projectId"
-      />
+      <app-components-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" />
     </div>
     <div class="page" *ngIf="page == 2">
-      <app-results-page
-      [page]="page"
-      (setPage)="setPage($event)"
-      />
+      <app-results-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" />
     </div>
   </div>
 </nz-layout>
