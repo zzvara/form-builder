@@ -9,10 +9,10 @@
       <app-info-page [page]="page" (setPage)="setPage($event)" (projectId)="setProjectId($event)" />
     </div>
     <div class="page" *ngIf="page == 1">
-      <app-components-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" />
+      <app-components-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" (versionChange)="setVersionNum($event)" />
     </div>
     <div class="page" *ngIf="page == 2">
-      <app-results-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" />
+      <app-results-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" [versionNum]="currentVersionNum" />
     </div>
   </div>
 </nz-layout>

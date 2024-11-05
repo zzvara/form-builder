@@ -12,9 +12,9 @@ export class ComponentsPageComponent implements OnInit {
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: number | undefined;
-
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
+  @Output() versionChange = new EventEmitter<number>();
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
@@ -30,6 +30,7 @@ export class ComponentsPageComponent implements OnInit {
     if (this.projectId !== undefined) {
       this.projectHistory = this.projectService.getProjectHistory(this.projectId);
       this.currentVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : 1;
+      this.versionChange.emit(this.currentVersionNum);
     }
   }
 
@@ -90,6 +91,7 @@ export class ComponentsPageComponent implements OnInit {
       const version = this.projectService.revertToVersion(this.projectId, versionNum);
       if (version) {
         this.currentVersionNum = versionNum;
+        this.versionChange.emit(this.currentVersionNum);
         this.editComponent.ngOnInit();
       } else {
         console.error('Failed to revert to version', versionNum);
