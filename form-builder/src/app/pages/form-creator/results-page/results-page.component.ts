@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/items/project.interface';
+import { JsonService } from 'src/app/services/json.service';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -12,10 +13,22 @@ export class ResultsPageComponent implements OnInit {
   @Output() setPage = new EventEmitter<number>();
   @Input() projectId: number | undefined;
   @Input() versionNum?: number | undefined;
-
-  constructor(private projectService: ProjectService<Project>) {}
-
   formInputs: any[] = [];
+
+  constructor(private projectService: ProjectService<Project>, private jsonService: JsonService) {}
+
+  ngOnInit(): void {
+    this.loadProjectFormInputs();
+  }
+
+  nextPage() {
+    this.page! += 1;
+    this.onsetPage(this.page!);
+  }
+
+  onsetPage(page: number): void {
+    this.setPage.emit(page);
+  }
 
   /**
    * Loads project form inputs based on the current project ID and version number.
@@ -31,17 +44,18 @@ export class ResultsPageComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.loadProjectFormInputs();
-    console.log({ formInputs: this.formInputs });
-  }
-
-  nextPage() {
-    this.page! += 1;
-    this.onsetPage(this.page!);
-  }
-
-  onsetPage(page: number): void {
-    this.setPage.emit(page);
+  /**
+   * Saves the current form state by calling saveForm on the editComponent.
+   * Then, it increments the page number and emits an event to notify parent components of the page change.
+   * @returns {void}
+   */
+  saveJson(): void {
+    if (this.projectId !== undefined) {
+      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
+      const projectHistory = this.projectService.getProjectHistory(this.projectId);
+      if (project) {
+        this.jsonService.saveProjectWithHistoryToJson(project, projectHistory);
+      }
+    }
   }
 }
