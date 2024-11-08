@@ -44,17 +44,21 @@ export class ResultsPageComponent implements OnInit {
     }
   }
 
-  /**
-   * Saves the current form state by calling saveForm on the editComponent.
-   * Then, it increments the page number and emits an event to notify parent components of the page change.
-   * @returns {void}
-   */
-  saveJson(): void {
+  saveProjectWithHistoryToJson(): void {
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
       const projectHistory = this.projectService.getProjectHistory(this.projectId);
       if (project) {
         this.jsonService.saveProjectWithHistoryToJson(project, projectHistory);
+      }
+    }
+  }
+
+  saveProjectToJson(): void {
+    if (this.projectId !== undefined) {
+      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
+      if (project) {
+        this.jsonService.saveProjectToJson(project);
       }
     }
   }

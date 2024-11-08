@@ -3,7 +3,11 @@
     Results page
     <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
-      <button nz-col nzSpan="2" id="btn" nz-button nzType="primary" type="submit" (click)="saveJson()">Save</button>
-    </div>
+      <nz-button-group>
+        <button nz-button nzType="default" type="button" (click)="saveProjectToJson()">Download Project</button>
+        <button nz-button nzType="default" type="button" (click)="saveProjectWithHistoryToJson()">Download Project with History</button>
+        <button nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
+      </nz-button-group>
+  </div>
   </div>
 </nz-layout>

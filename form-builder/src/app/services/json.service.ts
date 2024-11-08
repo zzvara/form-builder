@@ -20,7 +20,7 @@ export class JsonService {
     };
     const blob = this.createJsonBlob(data);
     const url = this.createDownloadLink(blob);
-    this.triggerDownload(url, 'project.json');
+    this.triggerDownload(url, `project_${project.id}_history.json`);
   }
 
   /**
@@ -31,7 +31,7 @@ export class JsonService {
   saveProjectToJson(project: Project): void {
     const blob = this.createJsonBlob(project);
     const url = this.createDownloadLink(blob);
-    this.triggerDownload(url, 'project.json');
+    this.triggerDownload(url, `project_${project.id}.json`);
   }
 
   /**
