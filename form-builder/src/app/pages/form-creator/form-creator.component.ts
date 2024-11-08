@@ -16,9 +16,14 @@ export class FormCreatorComponent implements OnInit {
   }
 
   projectId: number;
+  currentVersionNum?: number;
 
   setProjectId(id: number) {
     this.projectId = id;
+  }
+
+  setVersionNum(versionNum: number) {
+    this.currentVersionNum = versionNum;
   }
 
   ngOnInit() {}
