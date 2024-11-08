@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
+import {NzModalService} from "ng-zorro-antd/modal";
+import {SelectModalComponent} from "./select-modal/select-modal.component";
 
 @Component({
     selector: 'app-select',
@@ -13,8 +15,47 @@ export class SelectComponent {
     type: string = 'text';
     questionValue!: string;
     answerValue!: Component;
-    @Input() answerOptions!: string[];
+
+    actualValue: string | string[] = "";
+
+    answerOptions: string[] = [];
+    defaultValue: string | string[] = "";
+    placeholderValue: string = "";
+    isMultipleChoice: boolean = false;
+
     @Input() sectionId!: string;
 
     @Output() removeComponentEvent = new EventEmitter<string>();
+
+  constructor(private modal: NzModalService) {}
+
+  openModal(): void {
+    this.modal.create({
+      nzTitle: 'Edit Select Component Settings',
+      nzContent: SelectModalComponent,
+      nzData: {
+        selectOptions: [...this.answerOptions],
+        defaultSelectValue: this.defaultValue,
+        placeholderValue: this.placeholderValue,
+        isMultiple: this.isMultipleChoice
+      },
+      nzOnOk: (instance) => {
+        this.answerOptions = instance.selectOptions;
+        if (!instance.defaultSelectValue) {
+          if (instance.isMultiple) {
+            this.defaultValue = [];
+            this.actualValue = [];
+          } else {
+            this.defaultValue = "";
+            this.actualValue = "";
+          }
+        } else {
+          this.defaultValue = instance.defaultSelectValue;
+          this.actualValue = instance.defaultSelectValue;
+        }
+        this.placeholderValue = instance.placeholderValue;
+        this.isMultipleChoice = instance.isMultiple;
+      }
+    });
+  }
 }

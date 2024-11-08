@@ -107,7 +107,7 @@
           (cdkDropListDropped)="drop($event)">
           <span>select</span>
           <div class="element-box" cdkDrag [cdkDragData]="selectInputOptions">
-            <app-select [answerOptions]="selectInputOptions.answerOptions"></app-select>
+            <app-select></app-select>
           </div>
         </div>
       </ng-container>
@@ -202,7 +202,6 @@
                 *ngSwitchCase="selectInputOptions.component"
                 [id]="item.id"
                 [sectionId]="item.sectionId"
-                [answerOptions]="item.answerOptions"
                 (removeComponentEvent)="removeComponent(sect, $event)"
                 style="width: 100%"
               ></app-select>

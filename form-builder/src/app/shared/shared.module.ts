@@ -26,6 +26,10 @@ import {SectionComponent} from './components/section/section.component';
 import {SelectComponent} from './components/select/select.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {TextareaComponent} from './components/textarea/textarea.component';
+import {SelectModalComponent} from "./components/select/select-modal/select-modal.component";
+import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import {NzListModule} from "ng-zorro-antd/list";
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -39,6 +43,7 @@ const COMPONENTS = [
   PictureInputComponent,
   NumberInputComponent,
   InputLayoutComponent,
+  SelectModalComponent,
 ];
 
 @NgModule({
@@ -62,6 +67,9 @@ const COMPONENTS = [
     CdkDropList,
     DragDropModule,
     NzButtonModule,
+    NzModalModule,
+    NzCheckboxModule,
+    NzListModule,
   ],
   providers: [],
   exports: [...COMPONENTS],

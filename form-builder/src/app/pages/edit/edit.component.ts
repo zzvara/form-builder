@@ -36,7 +36,7 @@ export class EditComponent implements OnInit, OnChanges {
   textAreaInput: string[] = Array(100).fill(this.textAreaInputOptions);
   pictureInputOptions = { component: PictureInputComponent, fileName: 'fileName' };
   pictureInput: string[] = Array(100).fill(this.pictureInputOptions);
-  selectInputOptions = { component: SelectComponent, questionValue: 'Test', answerOptions: ['Option1', 'Option2'] };
+  selectInputOptions = { component: SelectComponent, questionValue: 'Test' };
   selectInput: string[] = Array(100).fill(this.selectInputOptions);
 
   sectionInputOptions = { component: SectionComponent};
