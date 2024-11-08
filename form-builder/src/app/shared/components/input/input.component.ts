@@ -13,9 +13,10 @@ export class InputComponent {
   @Input() answerValue: any;
   inputPlaceholder: string = 'Input input value';
   inputTemplate!: TemplateRef<any>;
-  @Input() sectiondId!: string;
+  @Input() sectionId!: string;
 
   @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string;descriptionValue: string; id: string }>();
+  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;

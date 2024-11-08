@@ -75,10 +75,10 @@ nz-sider {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.element-box:last-child {
-  border: none;
-  padding: 0;
-}
+/*.element-box:last-child {*/
+/*  border: none;*/
+/*  padding: 0;*/
+/*}*/
 
 .element-list.cdk-drop-list-dragging .element-box:not(.cdk-drag-placeholder) {
   padding: 0;

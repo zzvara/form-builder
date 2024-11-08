@@ -14,9 +14,10 @@ export class TextareaComponent {
   @Input() questionValue: string = 'Textarea input';
   @Input() answerValue!: any;
   @Input() textareaPlaceholder!: string;
-  @Input() sectiondId!: string;
+  @Input() sectionId!: string;
 
   @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string;descriptionValue: string; id: string }>();
+  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;

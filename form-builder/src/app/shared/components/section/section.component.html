@@ -1,9 +1,7 @@
 <!-- This part is exactly copied from edit.component.html from line 116 (in current version) to line 168 -->
 <nz-card
   nzTitle="section"
-  [id]="sectiondId"
   cdkDrag
-  #sectionId="cdkDropList"
   cdkDropList
   [cdkDropListData]="formInputs"
   (cdkDropListDropped)="drop($event)"
@@ -14,6 +12,7 @@
         *ngSwitchCase="textInputOptions.component"
         [type]="item.type"
         [id]="item.id"
+        [sectionId]="item.sectionId"
         [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
         [answerValue]="item.answer"
         [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
@@ -23,15 +22,31 @@
         *ngSwitchCase="numberInputOptions.component"
         [type]="item.type"
         [id]="item.id"
+        [sectionId]="item.sectionId"
         [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
         [answerValue]="item.answer"
         [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
         (valueChanged)="onValueChanged($event)"
       ></app-number-input>
-      <app-date-picker *ngSwitchCase="dateInputOptions.component" [id]="item.id"></app-date-picker>
-      <app-textarea *ngSwitchCase="textAreaInputOptions.component" [textareaPlaceholder]="item.textareaPlaceholder"></app-textarea>
-      <app-select *ngSwitchCase="selectInputOptions.component" [answerOptions]="item.answerOptions"></app-select>
-      <app-picture-input *ngSwitchCase="pictureInputOptions.component" [fileName]="pictureInputOptions.fileName"></app-picture-input>
+      <app-date-picker
+        *ngSwitchCase="dateInputOptions.component"
+        [id]="item.id"
+        [sectionId]="item.sectionId"></app-date-picker>
+      <app-textarea
+        *ngSwitchCase="textAreaInputOptions.component"
+        [textareaPlaceholder]="item.textareaPlaceholder"
+        [id]="item.id"
+        [sectionId]="item.sectionId"></app-textarea>
+      <app-select
+        *ngSwitchCase="selectInputOptions.component"
+        [answerOptions]="item.answerOptions"
+        [id]="item.id"
+        [sectionId]="item.sectionId"></app-select>
+      <app-picture-input
+        *ngSwitchCase="pictureInputOptions.component"
+        [fileName]="pictureInputOptions.fileName"
+        [id]="item.id"
+        [sectionId]="item.sectionId"></app-picture-input>
     </ng-container>
   </div>
 </nz-card>

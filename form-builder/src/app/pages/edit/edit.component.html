@@ -1,29 +1,33 @@
 <nz-layout>
   <nz-sider nzWidth="300px" nzTheme="light">
-    <app-sidebar [formInputs]="formInputs" (formInputsChange)="onFormInputsChange($event)">
+    <app-sidebar [formInputs]="getAllFormInputs()" (formInputsChange)="onFormInputsChange($event)">
       <ng-container basic>
-        <div cdkDropList [cdkDropListData]="textInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
+        <div
+          cdkDropList
+          [cdkDropListData]="textInput"
+          [cdkDropListConnectedTo]="getSectionIds(sectionList)"
+          (cdkDropListDropped)="drop($event)">
           <span>short text</span>
           <div class="element-box" cdkDrag [cdkDragData]="textInputOptions">
-            <app-text-input [type]="textInputOptions.type" (valueChanged)="onValueChanged($event)"></app-text-input>
+            <app-text-input [type]="textInputOptions.type" (valueChanged)="onValueChanged(null, $event)"></app-text-input>
           </div>
         </div>
         <div
           cdkDropList
           [cdkDropListData]="numberInput"
-          [cdkDropListConnectedTo]="sectionList"
+          [cdkDropListConnectedTo]="getSectionIds(sectionList)"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
           <span>number input</span>
           <div class="element-box" cdkDrag [cdkDragData]="numberInputOptions">
-            <app-number-input [type]="numberInputOptions.type" (valueChanged)="onValueChanged($event)"></app-number-input>
+            <app-number-input [type]="numberInputOptions.type" (valueChanged)="onValueChanged(null, $event)"></app-number-input>
           </div>
         </div>
         <div
           cdkDropList
           [cdkDropListData]="dateInput"
-          [cdkDropListConnectedTo]="sectionList"
+          [cdkDropListConnectedTo]="getSectionIds(sectionList)"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
@@ -35,7 +39,7 @@
         <div
           cdkDropList
           [cdkDropListData]="textAreaInput"
-          [cdkDropListConnectedTo]="sectionList"
+          [cdkDropListConnectedTo]="getSectionIds(sectionList)"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
@@ -47,7 +51,7 @@
         <div
           cdkDropList
           [cdkDropListData]="pictureInput"
-          [cdkDropListConnectedTo]="sectionList"
+          [cdkDropListConnectedTo]="getSectionIds(sectionList)"
           (cdkDropListDropped)="drop($event)"
           class="mt-1"
         >
@@ -59,49 +63,48 @@
         <div
           cdkDropList
           [cdkDropListData]="sectionInput"
-          [cdkDropListConnectedTo]="formInputs"
-          (cdkDropListDropped)="drop($event)"
+          cdkDropListConnectedTo="sectionDropList"
+          (cdkDropListDropped)="sectionDrop($event)"
           class="mt-1"
         >
           <span>section</span>
-          <div class="element-box" cdkDrag cdkDropList [cdkDropListConnectedTo]="formInputs" (cdkDropListDropped)="drop($event)">
-            <app-section>
-              <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
-                <ng-container [ngSwitch]="item.component">
-                  <app-text-input
-                    *ngSwitchCase="textInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [type]="item.type"
-                  ></app-text-input>
-                  <app-number-input
-                    *ngSwitchCase="numberInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [type]="item.type"
-                  ></app-number-input>
-                  <app-date-picker *ngSwitchCase="dateInputOptions.component" id="sectionInputOptions.sectionId"></app-date-picker>
-                  <app-textarea
-                    *ngSwitchCase="textAreaInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [textareaPlaceholder]="item.textareaPlaceholder"
-                  ></app-textarea>
-                  <app-select
-                    *ngSwitchCase="selectInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [answerOptions]="item.answerOptions"
-                  ></app-select>
-                  <app-picture-input
-                    *ngSwitchCase="pictureInputOptions.component"
-                    id="sectionInputOptions.sectionId"
-                    [fileName]="pictureInputOptions.fileName"
-                  ></app-picture-input>
-                </ng-container>
-              </div>
+          <div class="element-box" cdkDrag>
+            <app-section style="width: 100%; border: 1px solid lightgray">
+<!--              <div class="element-box" *ngFor="let item of formInputs" cdkDrag>-->
+<!--                <ng-container [ngSwitch]="item.component">-->
+<!--                  <app-text-input-->
+<!--                    *ngSwitchCase="textInputOptions.component"-->
+<!--                    [type]="item.type"-->
+<!--                  ></app-text-input>-->
+<!--                  <app-number-input-->
+<!--                    *ngSwitchCase="numberInputOptions.component"-->
+<!--                    [type]="item.type"-->
+<!--                  ></app-number-input>-->
+<!--                  <app-date-picker *ngSwitchCase="dateInputOptions.component" id="sectionInputOptions.sectionId"></app-date-picker>-->
+<!--                  <app-textarea-->
+<!--                    *ngSwitchCase="textAreaInputOptions.component"-->
+<!--                    [textareaPlaceholder]="item.textareaPlaceholder"-->
+<!--                  ></app-textarea>-->
+<!--                  <app-select-->
+<!--                    *ngSwitchCase="selectInputOptions.component"-->
+<!--                    [answerOptions]="item.answerOptions"-->
+<!--                  ></app-select>-->
+<!--                  <app-picture-input-->
+<!--                    *ngSwitchCase="pictureInputOptions.component"-->
+<!--                    [fileName]="pictureInputOptions.fileName"-->
+<!--                  ></app-picture-input>-->
+<!--                </ng-container>-->
+<!--              </div>-->
             </app-section>
           </div>
         </div>
       </ng-container>
       <ng-container selector>
-        <div cdkDropList [cdkDropListData]="selectInput" [cdkDropListConnectedTo]="sectionList" (cdkDropListDropped)="drop($event)">
+        <div
+          cdkDropList
+          [cdkDropListData]="selectInput"
+          [cdkDropListConnectedTo]="getSectionIds(sectionList)"
+          (cdkDropListDropped)="drop($event)">
           <span>select</span>
           <div class="element-box" cdkDrag [cdkDragData]="selectInputOptions">
             <app-select [answerOptions]="selectInputOptions.answerOptions"></app-select>
@@ -112,65 +115,108 @@
   </nz-sider>
   <nz-layout class="inner-layout">
     <nz-content>
-      <div class="form-container">
+      <div class="form-container"
+           id="sectionDropList"
+           cdkDropList
+           (cdkDropListDropped)="sectionDrop($event)"
+           [cdkDropListData]="sectionList">
         <nz-card
-          nzTitle="Root Section"
+          *ngFor="let sect of sectionList"
+          id="{{sect.sectionId}}"
+          nzTitle="Section: {{sect.sectionId}} | Layout: {{sect.layout}}"
+          [nzExtra]="sectionRemoveButton"
+          [nzBodyStyle]="{padding: '10px'}"
+          cdkDrag
           cdkDropList
-          id="buildedForm"
-          #buildedForm="cdkDropList"
-          [cdkDropListData]="formInputs"
-          class="element-list p-3"
+          [cdkDropListOrientation]="sect.layout"
+          [cdkDropListConnectedTo]="getSectionIds(sectionList)"
+          [cdkDropListData]="sect.sectionInputs"
           (cdkDropListDropped)="drop($event)"
+          class="element-list p-3"
+          style="padding: 0; width: 900px"
         >
-          <div class="element-box" *ngFor="let item of formInputs" cdkDrag>
+          <ng-template #sectionRemoveButton>
+            <button
+              nz-button nzType="default"
+              nzShape="circle"
+              (click)="sectionLayoutChange(sect)"
+            ><span nz-icon nzType="redo" nzTheme="outline"></span></button>
+            <button
+              style="margin-left: 10px"
+              nz-button nzType="default" nzDanger
+              nzShape="circle"
+              (click)="sectionRemove(sect)"
+            ><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+          </ng-template>
+
+          <div class="element-box" *ngFor="let item of sect.sectionInputs" cdkDrag nz-card-grid [ngStyle]="getSectionInputStyle(sect)">
             <ng-container [ngSwitch]="item.component">
               <app-text-input
                 *ngSwitchCase="textInputOptions.component"
                 [type]="item.type"
                 [id]="item.id"
+                [sectionId]="item.sectionId"
                 [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
                 [answerValue]="item.answer"
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
-                (valueChanged)="onValueChanged($event)"
+                (valueChanged)="onValueChanged(sect, $event)"
+                (removeComponentEvent)="removeComponent(sect, $event)"
+                style="width: 100%"
               ></app-text-input>
               <app-number-input
                 *ngSwitchCase="numberInputOptions.component"
                 [type]="item.type"
                 [id]="item.id"
+                [sectionId]="item.sectionId"
                 [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
                 [answerValue]="item.answer"
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
-                (valueChanged)="onValueChanged($event)"
+                (valueChanged)="onValueChanged(sect,$event)"
+                (removeComponentEvent)="removeComponent(sect,$event)"
+                style="width: 100%"
               ></app-number-input>
               <app-date-picker
                 *ngSwitchCase="dateInputOptions.component"
                 [id]="item.id"
+                [sectionId]="item.sectionId"
                 [questionValue]="item.question !== undefined ? item.question : 'Date input'"
                 [answerValue]="item.answer"
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
-                (valueChanged)="onValueChanged($event)"
+                (valueChanged)="onValueChanged(sect, $event)"
+                (removeComponentEvent)="removeComponent(sect,$event)"
+                style="width: 100%"
               ></app-date-picker>
               <app-textarea
                 *ngSwitchCase="textAreaInputOptions.component"
+                [id]="item.id"
+                [sectionId]="item.sectionId"
                 [textareaPlaceholder]="item.textareaPlaceholder"
                 [questionValue]="item.question !== undefined ? item.question : 'Textarea input'"
                 [answerValue]="item.answer"
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
-                (valueChanged)="onValueChanged($event)"
+                (valueChanged)="onValueChanged(sect, $event)"
+                (removeComponentEvent)="removeComponent(sect, $event)"
+                style="width: 100%"
               ></app-textarea>
-              <app-select *ngSwitchCase="selectInputOptions.component" [answerOptions]="item.answerOptions"></app-select>
+              <app-select
+                *ngSwitchCase="selectInputOptions.component"
+                [id]="item.id"
+                [sectionId]="item.sectionId"
+                [answerOptions]="item.answerOptions"
+                (removeComponentEvent)="removeComponent(sect, $event)"
+                style="width: 100%"
+              ></app-select>
               <app-picture-input
                 *ngSwitchCase="pictureInputOptions.component"
+                [id]="item.id"
+                [sectionId]="item.sectionId"
                 [fileName]="pictureInputOptions.fileName"
+                (removeComponentEvent)="removeComponent(sect, $event)"
+                style="width: 100%"
               ></app-picture-input>
             </ng-container>
           </div>
         </nz-card>
-        <div class="element-list" *ngFor="let item of sectionList" cdkDrag>
-          <ng-container>
-            <app-section [sectionList]="sectionList"> </app-section>
-          </ng-container>
-        </div>
       </div>
     </nz-content>
   </nz-layout>

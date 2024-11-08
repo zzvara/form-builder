@@ -9,6 +9,7 @@ export interface FormInput {
   component: string;
   type?: string;
   id: string;
+  setciondId: string;
   question: string;
   answer: string;
   description: string;
@@ -24,7 +25,7 @@ export interface Project {
   time_limit: number;
   deadline: string;
   created: string;
-  modified: string;  
+  modified: string;
   formInputs?: FormInput[];
 }
 

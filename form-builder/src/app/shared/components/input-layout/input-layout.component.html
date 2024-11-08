@@ -1,4 +1,10 @@
 <nz-card>
+  <button
+    *ngIf="componentId"
+    style="position: absolute; right: 0"
+    nz-button nzType="default" nzDanger
+    nzShape="circle"
+  (click)="removeComponent()"><span nz-icon nzType="delete" nzTheme="outline"></span></button>
   <div class="section-gap">
     <ng-container *ngIf="!isEditingQuestion">
       <p (click)="isEditingQuestion = true" style="cursor: pointer">
@@ -42,6 +48,6 @@
       />
     </ng-container>
   </div>
-
+  <div *ngIf="componentId" style="color: red">Component ID: {{componentId}}; <br> Section ID: {{sectionId}}</div>
   <ng-container *ngTemplateOutlet="inputTemplate"></ng-container>
 </nz-card>
