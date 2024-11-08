@@ -155,7 +155,7 @@
                 *ngSwitchCase="textInputOptions.component"
                 [type]="item.type"
                 [id]="item.id"
-                [sectiondId]="item.sectiondId"
+                [sectionId]="item.sectionId"
                 [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
                 [answerValue]="item.answer"
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
@@ -167,7 +167,7 @@
                 *ngSwitchCase="numberInputOptions.component"
                 [type]="item.type"
                 [id]="item.id"
-                [sectiondId]="item.sectiondId"
+                [sectionId]="item.sectionId"
                 [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
                 [answerValue]="item.answer"
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
@@ -178,7 +178,7 @@
               <app-date-picker
                 *ngSwitchCase="dateInputOptions.component"
                 [id]="item.id"
-                [sectiondId]="item.sectiondId"
+                [sectionId]="item.sectionId"
                 [questionValue]="item.question !== undefined ? item.question : 'Date input'"
                 [answerValue]="item.answer"
                 [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
@@ -189,7 +189,7 @@
               <app-textarea
                 *ngSwitchCase="textAreaInputOptions.component"
                 [id]="item.id"
-                [sectiondId]="item.sectiondId"
+                [sectionId]="item.sectionId"
                 [textareaPlaceholder]="item.textareaPlaceholder"
                 [questionValue]="item.question !== undefined ? item.question : 'Textarea input'"
                 [answerValue]="item.answer"
@@ -201,7 +201,7 @@
               <app-select
                 *ngSwitchCase="selectInputOptions.component"
                 [id]="item.id"
-                [sectiondId]="item.sectiondId"
+                [sectionId]="item.sectionId"
                 [answerOptions]="item.answerOptions"
                 (removeComponentEvent)="removeComponent(sect, $event)"
                 style="width: 100%"
@@ -209,7 +209,7 @@
               <app-picture-input
                 *ngSwitchCase="pictureInputOptions.component"
                 [id]="item.id"
-                [sectiondId]="item.sectiondId"
+                [sectionId]="item.sectionId"
                 [fileName]="pictureInputOptions.fileName"
                 (removeComponentEvent)="removeComponent(sect, $event)"
                 style="width: 100%"

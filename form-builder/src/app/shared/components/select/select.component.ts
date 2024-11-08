@@ -14,7 +14,7 @@ export class SelectComponent {
     questionValue!: string;
     answerValue!: Component;
     @Input() answerOptions!: string[];
-    @Input() sectiondId!: string;
+    @Input() sectionId!: string;
 
     @Output() removeComponentEvent = new EventEmitter<string>();
 }

@@ -1,11 +1,9 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import {NgComponentOutlet} from "@angular/common";
-import {Component, computed, Input, OnChanges, OnInit, QueryList, Signal, ViewChildren, ViewContainerRef} from '@angular/core';
-import { SectionComponent } from 'src/app/shared/components/section/section.component';
-import { Router } from '@angular/router';
-import { UndoRedoService } from 'src/app/services/undo-redo.service';
-import { ProjectService } from 'src/app/services/project.service';
-import { FormInput, Project } from 'src/app/items/project.interface';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {FormInput, Project} from 'src/app/items/project.interface';
+import {ProjectService} from 'src/app/services/project.service';
+import {UndoRedoService} from 'src/app/services/undo-redo.service';
+import {SectionComponent} from 'src/app/shared/components/section/section.component';
 import {DatePickerComponent} from "../../shared/components/date-picker/date-picker.component";
 import {InputComponent} from "../../shared/components/input/input.component";
 import {NumberInputComponent} from "../../shared/components/number-input/number-input.component";
@@ -19,12 +17,11 @@ import {TextareaComponent} from "../../shared/components/textarea/textarea.compo
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent implements OnInit, OnChanges {
-  constructor(
-    private readonly router: Router,
-    private readonly sectionComponent: SectionComponent,
-    private readonly projectService: ProjectService<Project>,
-    private readonly undoRedoService: UndoRedoService<FormInput[]>
-  ) {}
+  private readonly projectService = inject(ProjectService<Project>);
+  private readonly undoRedoService = inject(UndoRedoService<FormInput[]>);
+
+  constructor() {}
+
   @Input() projectId: number | undefined;
 
   textInputOptions = { component: InputComponent, type: 'text' };
@@ -116,7 +113,7 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       const inputId: number = event.previousContainer.data[event.previousIndex].id ?? ++this.sectionComponentId;
       // Create a copy of the dropped item with updated ID
-      const droppedItem = { ...event.previousContainer.data[event.previousIndex], id: inputId, sectiondId: event.container.id };
+      const droppedItem = { ...event.previousContainer.data[event.previousIndex], id: inputId, sectionId: event.container.id };
       // Transfer the item from one container to another
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       // Update the item in the new container with the copied item
@@ -226,7 +223,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionInputStyle(sect: typeof this.sectionList[0]) {
-    const width = sect.layout === 'horizontal' ? (100 / sect.sectionInputs.filter((input) => input.sectiondId === sect.sectionId).length) : 100;
+    const width = sect.layout === 'horizontal' ? (100 / sect.sectionInputs.filter((input) => input.sectionId === sect.sectionId).length) : 100;
     return {
       'width': width.toString() + "%",
     };

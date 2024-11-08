@@ -45,7 +45,7 @@ export class SectionComponent {
   // This part can be found in edit.component.html line 169-173 (in current version). Without it seemingly the section is added to the
   // sectionList but it does NOT display the section.
 
-  @Input() sectiondId?: string;
+  @Input() sectionId?: string;
   @Input() sectionList: any[] = [];
 
   ngOnInit() {

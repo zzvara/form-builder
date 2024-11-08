@@ -19,7 +19,7 @@ export class PictureInputComponent {
   file: File | null = null;
   uploadedFile: string | null = localStorage.getItem(this.fileName);
 
-  @Input() sectiondId!: string;
+  @Input() sectionId!: string;
 
   @Output() removeComponentEvent = new EventEmitter<string>();
 

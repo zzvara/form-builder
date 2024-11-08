@@ -12,7 +12,7 @@
         *ngSwitchCase="textInputOptions.component"
         [type]="item.type"
         [id]="item.id"
-        [sectiondId]="item.sectiondId"
+        [sectionId]="item.sectionId"
         [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
         [answerValue]="item.answer"
         [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
@@ -22,7 +22,7 @@
         *ngSwitchCase="numberInputOptions.component"
         [type]="item.type"
         [id]="item.id"
-        [sectiondId]="item.sectiondId"
+        [sectionId]="item.sectionId"
         [questionValue]="item.question !== undefined ? item.question : 'Text Input'"
         [answerValue]="item.answer"
         [descriptionValue]="item.description !== undefined ? item.description : 'The input can be used for...'"
@@ -31,22 +31,22 @@
       <app-date-picker
         *ngSwitchCase="dateInputOptions.component"
         [id]="item.id"
-        [sectiondId]="item.sectiondId"></app-date-picker>
+        [sectionId]="item.sectionId"></app-date-picker>
       <app-textarea
         *ngSwitchCase="textAreaInputOptions.component"
         [textareaPlaceholder]="item.textareaPlaceholder"
         [id]="item.id"
-        [sectiondId]="item.sectiondId"></app-textarea>
+        [sectionId]="item.sectionId"></app-textarea>
       <app-select
         *ngSwitchCase="selectInputOptions.component"
         [answerOptions]="item.answerOptions"
         [id]="item.id"
-        [sectiondId]="item.sectiondId"></app-select>
+        [sectionId]="item.sectionId"></app-select>
       <app-picture-input
         *ngSwitchCase="pictureInputOptions.component"
         [fileName]="pictureInputOptions.fileName"
         [id]="item.id"
-        [sectiondId]="item.sectiondId"></app-picture-input>
+        [sectionId]="item.sectionId"></app-picture-input>
     </ng-container>
   </div>
 </nz-card>

@@ -13,7 +13,7 @@ export class DatePickerComponent {
   inputPlaceholder: string = 'Date input value';
   inputTemplate!: TemplateRef<any>;
   @Input() type: string = 'text';
-  @Input() sectiondId!: string;
+  @Input() sectionId!: string;
 
   @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
   @Output() removeComponentEvent = new EventEmitter<string>();

@@ -11,7 +11,7 @@ export class InputLayoutComponent {
   @Input() descriptionValue!: string;
   @Input() type: string = 'text';
   @Input() inputPlaceholder: string = '';
-  @Input() sectiondId!: string;
+  @Input() sectionId!: string;
   @Input() inputTemplate!: TemplateRef<any>;
   isEditingQuestion: boolean = false;
   isEditingDescription: boolean = false;

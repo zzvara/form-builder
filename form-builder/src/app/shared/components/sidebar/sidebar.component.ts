@@ -30,7 +30,7 @@ export class SidebarComponent {
     },
   };
   @Input() formInputs: any[] = [];
-  @Input() sectiondId!: string;
+  @Input() sectionId!: string;
   @Output() formInputsChange = new EventEmitter<any[]>();
 
   onFormInputsChange(updatedFormInputs: any[]): void {
