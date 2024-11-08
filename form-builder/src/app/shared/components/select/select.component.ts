@@ -1,33 +1,35 @@
-import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output, TemplateRef} from '@angular/core';
 import {NzModalService} from "ng-zorro-antd/modal";
 import {SelectModalComponent} from "./select-modal/select-modal.component";
 
 @Component({
-    selector: 'app-select',
-    templateUrl: './select.component.html',
-    styleUrls: ['./select.component.css']
+  selector: 'app-select',
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.css']
 })
 export class SelectComponent {
-    @Input() id!: string;
-    descriptionValue: string = 'The input can be used for...';
-    inputPlaceholder: string = 'Select input value';
-    inputTemplate!: TemplateRef<any>;
-    type: string = 'text';
-    questionValue!: string;
-    answerValue!: Component;
+  private readonly modal = inject(NzModalService);
 
-    actualValue: string | string[] = "";
+  @Input() id!: string;
+  descriptionValue: string = 'The input can be used for...';
+  inputPlaceholder: string = 'Select input value';
+  inputTemplate!: TemplateRef<any>;
+  type: string = 'text';
+  questionValue!: string;
+  answerValue!: Component;
 
-    answerOptions: string[] = [];
-    defaultValue: string | string[] = "";
-    placeholderValue: string = "";
-    isMultipleChoice: boolean = false;
+  actualValue: string | string[] = "";
 
-    @Input() sectionId!: string;
+  answerOptions: string[] = [];
+  defaultValue: string | string[] = "";
+  placeholderValue: string = "";
+  isMultipleChoice: boolean = false;
 
-    @Output() removeComponentEvent = new EventEmitter<string>();
+  @Input() sectionId!: string;
 
-  constructor(private modal: NzModalService) {}
+  @Output() removeComponentEvent = new EventEmitter<string>();
+
+  constructor() { }
 
   openModal(): void {
     this.modal.create({

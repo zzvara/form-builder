@@ -21,7 +21,7 @@
       [nzLabel]="answerOption"
     ></nz-option>
   </nz-select>
-  <ng-container *ngIf="isInSection">
+  <ng-container *ngIf="id">
     <button nz-button nzType="primary" (click)="openModal()">Edit</button>
   </ng-container>
 </ng-template>
