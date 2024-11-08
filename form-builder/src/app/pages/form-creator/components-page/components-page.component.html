@@ -1,9 +1,13 @@
 <nz-layout>
   <div>
-    <app-edit [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
+    <!--                                                                                     Pass dat event as an observable to the child   -->
+    <app-edit [projectId]="projectId" [versionNum]="currentVersionNum" [undoRedoEvent]="undoRedoEvent.asObservable()"></app-edit>
     <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
       <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
+        <div>
+          <app-redo-undo [formInputs]="[]" (formInputsChange)="onFormInputsChange($event)"> ></app-redo-undo>
+        </div>
         <div>
           <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px;">Previous Version</button>
         </div>

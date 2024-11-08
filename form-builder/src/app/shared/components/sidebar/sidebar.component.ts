@@ -18,7 +18,7 @@ interface Panels {
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
+  constructor() {}
   panels: Panels = {
     basic: {
       name: 'Basic inputs',
@@ -29,12 +29,4 @@ export class SidebarComponent {
       active: true,
     },
   };
-  @Input() formInputs: any[] = [];
-  @Input() sectionId!: string;
-  @Output() formInputsChange = new EventEmitter<any[]>();
-
-  onFormInputsChange(updatedFormInputs: any[]): void {
-    this.formInputs = updatedFormInputs;
-    this.formInputsChange.emit(this.formInputs);
-  }
 }

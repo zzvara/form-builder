@@ -1,5 +1,5 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import { FormInput } from 'src/app/items/project.interface';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
@@ -9,7 +9,9 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
   styleUrls: ['./redo-undo.component.css'],
 })
 export class RedoUndoComponent {
-  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
+  private readonly undoRedoService = inject(UndoRedoService<FormInput[]>);
+
+  constructor() {}
 
   get canUndo(): boolean {
     return this.undoRedoService.canUndo();
@@ -19,6 +21,7 @@ export class RedoUndoComponent {
     return this.undoRedoService.canRedo();
   }
 
+  //Nem tudom, hogy ez az Input miért kell... :( Majd valaki kitalálja :D
   @Input() formInputs: any[] = [];
   @Output() formInputsChange = new EventEmitter<any[]>();
 

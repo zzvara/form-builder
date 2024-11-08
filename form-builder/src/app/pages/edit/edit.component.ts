@@ -1,5 +1,5 @@
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {FormInput, Project} from 'src/app/items/project.interface';
 import {ProjectService} from 'src/app/services/project.service';
 import {UndoRedoService} from 'src/app/services/undo-redo.service';
@@ -12,6 +12,8 @@ import {SelectComponent} from "../../shared/components/select/select.component";
 import {TextareaComponent} from "../../shared/components/textarea/textarea.component";
 import {SectionList} from "./interfaces/section-list";
 import {LayoutEnum} from "./interfaces/layout-enum";
+import {Observable, Subscription, takeUntil} from "rxjs";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-edit',
@@ -21,8 +23,6 @@ import {LayoutEnum} from "./interfaces/layout-enum";
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService = inject(ProjectService<Project>);
   private readonly undoRedoService = inject(UndoRedoService<FormInput[]>);
-
-  constructor() {}
 
   @Input() projectId: number | undefined;
 
@@ -48,8 +48,13 @@ export class EditComponent implements OnInit, OnChanges {
 
   @Input() versionNum?: number;
 
+  @Input() undoRedoEvent!: Observable<any[]>;
+  private readonly destroyRef = inject(DestroyRef);
+
   sectionId!: number;
   sectionComponentId!: number;
+
+  constructor() { }
 
   /**
    * Loads project form inputs based on the current project ID and version number.
@@ -87,9 +92,19 @@ export class EditComponent implements OnInit, OnChanges {
     this.initializeUndoRedo();
     this.sectionId = 0;
     this.sectionComponentId = 0;
+
+    //Subscribe to the Parent's event
+    this.undoRedoEvent.pipe(
+      // DON'T FORGET to unsubscribe from this event, when the component gets destroyed
+      // Or else you get yourself a pretty neat MEMORY LEAK :)
+      takeUntilDestroyed(this.destroyRef)
+    )
+      .subscribe(inputs => {
+      console.log("UNDO REDO CALLED!!! :D");
+    })
+
     console.log({ formInputs: this.getAllFormInputs() });
   }
-
 
   /**
    * Handles the drag and drop event for form elements.

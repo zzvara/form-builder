@@ -16,26 +16,28 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { EditModule } from '../edit/edit.module';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
-  imports: [
-    NzFormModule,
-    NzInputModule,
-    NzLayoutModule,
-    NzSwitchModule,
-    NzDatePickerModule,
-    NzTimePickerModule,
-    NzCheckboxModule,
-    NzStepsModule,
-    NzButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserModule,
-    EditModule,
-    NzButtonModule,
-    NzSelectModule
-  ],
+    imports: [
+        NzFormModule,
+        NzInputModule,
+        NzLayoutModule,
+        NzSwitchModule,
+        NzDatePickerModule,
+        NzTimePickerModule,
+        NzCheckboxModule,
+        NzStepsModule,
+        NzButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
+        EditModule,
+        NzButtonModule,
+        NzSelectModule,
+        SharedModule
+    ],
   providers: [],
   exports: [],
 })

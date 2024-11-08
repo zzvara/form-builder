@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild, inject} from '@angular/core';
 import { EditComponent } from '../../edit/edit.component';
-import { Project, ProjectVersion } from 'src/app/items/project.interface';
+import {FormInput, Project, ProjectVersion} from 'src/app/items/project.interface';
 import { ProjectService } from 'src/app/services/project.service';
+import {UndoRedoService} from "../../../services/undo-redo.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-components-page',
@@ -9,17 +11,23 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./components-page.component.css'],
 })
 export class ComponentsPageComponent implements OnInit {
+  private readonly undoRedoService = inject(UndoRedoService<FormInput[]>);
+  private readonly projectService = inject(ProjectService<Project>);
+
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: number | undefined;
   @Input() page?: number;
+
+  @Input() undoRedoFormInputs: any[] = [];
+
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
 
-  constructor(private projectService: ProjectService<Project>) {}
+  constructor() {}
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -97,5 +105,12 @@ export class ComponentsPageComponent implements OnInit {
         console.error('Failed to revert to version', versionNum);
       }
     }
+  }
+
+// EMIT DAT EVENT!!!!!!!! :D (Parent ->Child event )
+  undoRedoEvent: Subject<any[]> = new Subject<any[]>();
+
+  onFormInputsChange(updatedFormInputs: any[]): void {
+    this.undoRedoEvent.next(updatedFormInputs);
   }
 }
