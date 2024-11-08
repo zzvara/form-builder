@@ -10,6 +10,8 @@ import {NumberInputComponent} from "../../shared/components/number-input/number-
 import {PictureInputComponent} from "../../shared/components/picture-input/picture-input.component";
 import {SelectComponent} from "../../shared/components/select/select.component";
 import {TextareaComponent} from "../../shared/components/textarea/textarea.component";
+import {SectionList} from "./interfaces/section-list";
+import {LayoutEnum} from "./interfaces/layout-enum";
 
 @Component({
   selector: 'app-edit',
@@ -40,13 +42,8 @@ export class EditComponent implements OnInit, OnChanges {
   sectionInputOptions = { component: SectionComponent};
   sectionInput: string[] = Array(3).fill(this.sectionInputOptions);
 
-  sectionList: {
-    sectionId: string,
-    layout: 'horizontal' | 'vertical',
-    // TODO: Avoid using any type for the formInputs array.
-    sectionInputs: any[]
-  }[] = [];
-  getSectionIds = (list: typeof this.sectionList) => list.map(sect => sect.sectionId);
+  sectionList: SectionList[] = [];
+  getSectionIds = (list: SectionList[]) => list.map(sect => sect.sectionId);
   getAllFormInputs = () => this.sectionList.flatMap(sect => sect.sectionInputs);
 
   @Input() versionNum?: number;
@@ -133,7 +130,7 @@ export class EditComponent implements OnInit, OnChanges {
    *
    * TODO: Avoid using any type for the answerValue parameter.
    */
-  onValueChanged(sect: typeof this.sectionList[0] | null, event: {
+  onValueChanged(sect: SectionList | null, event: {
     questionValue: string;
     answerValue: any;
     descriptionValue: string;
@@ -192,7 +189,7 @@ export class EditComponent implements OnInit, OnChanges {
     // this.formInputs = updatedFormInputs;
   }
 
-  removeComponent(sect: typeof this.sectionList[0], componentId: string) {
+  removeComponent(sect: SectionList, componentId: string) {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.id !== componentId);
   }
 
@@ -201,9 +198,9 @@ export class EditComponent implements OnInit, OnChanges {
     // Check if the item is a section or belongs to a cdk-drop-list
     if (!itemId.includes("section")) {
       const newItemId = `section${++this.sectionId}`;
-      const newSection: typeof this.sectionList = [{
+      const newSection: SectionList[] = [{
         sectionId: newItemId,
-        layout: 'vertical',
+        layout: LayoutEnum.VERTICAL,
         sectionInputs: []
       }];
       transferArrayItem(
@@ -218,22 +215,22 @@ export class EditComponent implements OnInit, OnChanges {
     }
   }
 
-  sectionRemove(sect: typeof this.sectionList[0]) {
+  sectionRemove(sect: SectionList) {
     this.sectionList = this.sectionList.filter((section) => section !== sect);
   }
 
-  getSectionInputStyle(sect: typeof this.sectionList[0]) {
-    const width = sect.layout === 'horizontal' ? (100 / sect.sectionInputs.filter((input) => input.sectionId === sect.sectionId).length) : 100;
+  getSectionInputStyle(sect: SectionList) {
+    const width = sect.layout === LayoutEnum.HORIZONTAL ? (100 / sect.sectionInputs.filter((input) => input.sectionId === sect.sectionId).length) : 100;
     return {
       'width': width.toString() + "%",
     };
   }
 
-  sectionLayoutChange(sect: typeof this.sectionList[0]) {
-    if (sect.layout === 'vertical') {
-      sect.layout = 'horizontal';
+  sectionLayoutChange(sect: SectionList) {
+    if (sect.layout === LayoutEnum.VERTICAL) {
+      sect.layout = LayoutEnum.HORIZONTAL;
     } else {
-      sect.layout = 'vertical';
+      sect.layout = LayoutEnum.VERTICAL;
     }
   }
 }
