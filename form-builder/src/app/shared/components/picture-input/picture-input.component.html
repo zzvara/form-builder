@@ -1,8 +1,11 @@
 <app-input-layout
+  [componentId]="id"
+  [sectiondId]="sectiondId"
   [questionValue]="questionValue"
   [descriptionValue]="descriptionValue"
   [inputPlaceholder]="inputPlaceholder"
   [inputTemplate]="inputTemplate"
+  (removeComponentEvent)="removeComponentEvent.emit($event)"
 >
 </app-input-layout>
 

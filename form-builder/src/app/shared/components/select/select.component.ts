@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
 
 @Component({
     selector: 'app-select',
@@ -6,6 +6,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
     styleUrls: ['./select.component.css']
 })
 export class SelectComponent {
+    @Input() id!: string;
     descriptionValue: string = 'The input can be used for...';
     inputPlaceholder: string = 'Select input value';
     inputTemplate!: TemplateRef<any>;
@@ -14,4 +15,6 @@ export class SelectComponent {
     answerValue!: Component;
     @Input() answerOptions!: string[];
     @Input() sectiondId!: string;
+
+    @Output() removeComponentEvent = new EventEmitter<string>();
 }

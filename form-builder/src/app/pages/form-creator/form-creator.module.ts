@@ -35,7 +35,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     EditModule,
     NzButtonModule,
     NzSelectModule
-    
   ],
   providers: [],
   exports: [],

@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/co
   styleUrls: ['./input-layout.component.css'],
 })
 export class InputLayoutComponent {
+  @Input() componentId!: string;
   @Input() questionValue!: string;
   @Input() descriptionValue!: string;
   @Input() type: string = 'text';
@@ -28,6 +29,7 @@ export class InputLayoutComponent {
 
   @Output() questionValueChanged = new EventEmitter<string>();
   @Output() descriptionValueChanged = new EventEmitter<string>();
+  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;
@@ -45,5 +47,9 @@ export class InputLayoutComponent {
 
   emitDescriptionValue() {
     this.descriptionValueChanged.emit(this.descriptionValue);
+  }
+
+  removeComponent() {
+    this.removeComponentEvent.emit(this.componentId);
   }
 }

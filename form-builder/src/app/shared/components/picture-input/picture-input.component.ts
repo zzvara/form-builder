@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, of } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./picture-input.component.css'],
 })
 export class PictureInputComponent {
+  @Input() id!: string;
   questionValue: string = 'Picture input';
   descriptionValue: string = 'The input can be used for...';
   answerValue: any = 'Picture ';
@@ -17,6 +18,10 @@ export class PictureInputComponent {
   @Input() fileName!: string;
   file: File | null = null;
   uploadedFile: string | null = localStorage.getItem(this.fileName);
+
+  @Input() sectiondId!: string;
+
+  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onFileChange(event: any): void {
     this.file = event.target.files[0];

@@ -16,6 +16,7 @@ export class DatePickerComponent {
   @Input() sectiondId!: string;
 
   @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
+  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;

@@ -21,10 +21,6 @@ export class SectionComponent {
   selectInput: string[] = Array(100).fill(this.selectInputOptions);
   formInputs: any[] = [];
 
-  //Generate random id to put in to the sectionList array
-  randomIntFromInterval(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
   //The sectionId represents the id of the current section and the sectionList array represents the sections that can contain formInputs
   //But in reality this does NOT work. The sectionList array is updated when we drag a new section to the canvas, but when we try to drag
   //a component (that is not a section) into the newly added sections it does NOT accept it, and we can only drag form elements into
@@ -49,13 +45,13 @@ export class SectionComponent {
   // This part can be found in edit.component.html line 169-173 (in current version). Without it seemingly the section is added to the
   // sectionList but it does NOT display the section.
 
-  @Input() sectiondId: string = `section${this.randomIntFromInterval(1, 100)}`;
-  @Input() sectionList: any[] = ['buildedForm', this.sectiondId];
+  @Input() sectiondId?: string;
+  @Input() sectionList: any[] = [];
 
   ngOnInit() {
-    JSON.stringify(this.sectiondId);
-    console.log('Section component  ',{ sectiondId: this.sectiondId });
-    console.log('section component',{ list: this.sectionList });
+    // JSON.stringify(this.sectiondId);
+    // console.log('Section component  ',{ sectiondId: this.sectiondId });
+    // console.log('section component',{ list: this.sectionList });
   }
 
   drop(event: CdkDragDrop<string[]>) {
