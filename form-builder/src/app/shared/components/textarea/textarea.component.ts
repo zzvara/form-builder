@@ -1,23 +1,17 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {AbstractInput} from "../../abstract-classes/abstract-input";
 
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.css'],
 })
-export class TextareaComponent {
-  @Input() id!: string;
-  @Input() descriptionValue: string = 'The input can be used for...';
+export class TextareaComponent extends AbstractInput {
   inputPlaceholder: string = 'Text area input value';
   inputTemplate!: TemplateRef<any>;
-  @Input() type: string = 'text';
-  @Input() questionValue: string = 'Textarea input';
-  @Input() answerValue!: any;
   @Input() textareaPlaceholder!: string;
-  @Input() sectionId!: string;
 
   @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string;descriptionValue: string; id: string }>();
-  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;

@@ -12,16 +12,16 @@
 <ng-template #selectInput>
   <nz-select
     [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
-    [(ngModel)]="actualValue"
+    [(ngModel)]="defaultSelectValue"
     [nzPlaceHolder]="placeholderValue"
     nzAllowClear>
     <nz-option
-      *ngFor="let answerOption of answerOptions"
+      *ngFor="let answerOption of selectOptions"
       [nzValue]="answerOption"
       [nzLabel]="answerOption"
     ></nz-option>
   </nz-select>
   <ng-container *ngIf="id">
-    <button nz-button nzType="primary" (click)="openModal()">Edit</button>
+    <button nz-button nzType="primary" (click)="edit()">Edit</button>
   </ng-container>
 </ng-template>

@@ -1,17 +1,17 @@
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SelectModalComponent } from './select-modal.component';
+import { SelectEditComponent } from './select-edit.component';
 
 describe('ModalComponent', () => {
-  let component: SelectModalComponent;
-  let fixture: ComponentFixture<SelectModalComponent>;
+  let component: SelectEditComponent;
+  let fixture: ComponentFixture<SelectEditComponent>;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectModalComponent ]
+      declarations: [ SelectEditComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SelectModalComponent);
+    fixture = TestBed.createComponent(SelectEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

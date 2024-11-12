@@ -1,23 +1,16 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {AbstractInput} from "../../abstract-classes/abstract-input";
 
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.css'],
 })
-export class NumberInputComponent {
-  @Input() id!: string;
-  @Input() type!: string;
-  @Input() questionValue: string = 'Number Input';
-
-  @Input() descriptionValue: string = 'The input can be used for...';
-  @Input() answerValue: any = 0;
+export class NumberInputComponent extends AbstractInput {
   inputPlaceholder: string = 'Number input value';
   inputTemplate!: TemplateRef<any>;
-  @Input() sectionId!: string;
 
   @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
-  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;

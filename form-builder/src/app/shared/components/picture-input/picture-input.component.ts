@@ -1,27 +1,20 @@
 import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, of } from 'rxjs';
+import {AbstractInput} from "../../abstract-classes/abstract-input";
 
 @Component({
   selector: 'app-picture-input',
   templateUrl: './picture-input.component.html',
   styleUrls: ['./picture-input.component.css'],
 })
-export class PictureInputComponent {
-  @Input() id!: string;
-  questionValue: string = 'Picture input';
-  descriptionValue: string = 'The input can be used for...';
-  answerValue: any = 'Picture ';
+export class PictureInputComponent extends AbstractInput {
   inputPlaceholder: string = 'Picture input value';
   inputTemplate!: TemplateRef<any>;
-  type: string = 'text';
   @Input() fileName!: string;
   file: File | null = null;
   uploadedFile: string | null = localStorage.getItem(this.fileName);
 
-  @Input() sectionId!: string;
-
-  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onFileChange(event: any): void {
     this.file = event.target.files[0];

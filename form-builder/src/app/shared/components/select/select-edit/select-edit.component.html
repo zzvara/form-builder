@@ -1,0 +1,68 @@
+<form id="selectEditFormID" nz-form [formGroup]="formData">
+  <nz-form-item>
+    <ng-template #listHeader>
+      <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">Choices/Values</div>
+    </ng-template>
+    <nz-form-control>
+      <ul nz-list nzBordered [nzHeader]="listHeader">
+        <li nz-list-item *ngFor="let option of options.controls; let i = index">
+          <ul nz-list-item-actions>
+            <nz-list-item-action>
+              <button nz-button nzType="link" nzDanger (click)="removeOption(option, i)">Remove</button>
+            </nz-list-item-action>
+          </ul>
+          {{ option.value }}
+        </li>
+      </ul>
+      <span *ngIf="options.invalid"
+            style="color: red">Please record at least {{getMinOptions()}} more options!</span>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="newOptionErrors">
+      <nz-input-group nzSearch  [nzAddOnAfter]="addOptionButton">
+        <input type="text"
+               nz-input
+               placeholder="New Option"
+               [appMutateText]="String.trim"
+               [formControl]="newOption"/>
+      </nz-input-group>
+      <ng-template #addOptionButton>
+        <button nz-button nzType="primary"
+                [disabled]="newOption.invalid"
+                (click)="addOption()">Add Option</button>
+      </ng-template>
+      <ng-template #newOptionErrors let-control>
+        <ng-container *ngIf="hasErrors(control, 'required', 'fieldIsEmpty')">Cannot be empty!</ng-container>
+        <ng-container *ngIf="hasErrors(control, 'listContainsItem')">Option already in the list: [{{control.errors['listContainsItem']}}]!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Set Default Value</span>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-select
+        formControlName="defaultSelectValue"
+        [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
+        [nzPlaceHolder]="'Please select default value'"
+        nzAllowClear>
+        <nz-option *ngFor="let option of optionsValues" [nzLabel]="option" [nzValue]="option"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Set Placeholder Value</span>
+  <nz-form-item>
+    <nz-form-control>
+      <input nz-input placeholder="Placeholder" formControlName="placeholderValue"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Is Multiple Choice?</span>
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="isMultipleChoice">Multiple</label>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,63 +1,50 @@
-import {Component, EventEmitter, inject, Input, Output, TemplateRef} from '@angular/core';
-import {NzModalService} from "ng-zorro-antd/modal";
-import {SelectModalComponent} from "./select-modal/select-modal.component";
+import {Component, inject, TemplateRef} from '@angular/core';
+import {SelectEditComponent} from "./select-edit/select-edit.component";
+import {AbstractInput} from "../../abstract-classes/abstract-input";
+import {ModalServiceService} from "../../../services/modal/modal-service.service";
+import {SelectData} from "./interfaces/select-data";
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css']
 })
-export class SelectComponent {
-  private readonly modal = inject(NzModalService);
+export class SelectComponent extends AbstractInput {
+  private readonly modalService: ModalServiceService<SelectEditComponent, SelectData> = inject(ModalServiceService);
 
-  @Input() id!: string;
-  descriptionValue: string = 'The input can be used for...';
   inputPlaceholder: string = 'Select input value';
   inputTemplate!: TemplateRef<any>;
-  type: string = 'text';
-  questionValue!: string;
-  answerValue!: Component;
 
-  actualValue: string | string[] = "";
-
-  answerOptions: string[] = [];
-  defaultValue: string | string[] = "";
+  selectOptions: string[] = [];
+  defaultSelectValue: string | string[] = "";
   placeholderValue: string = "";
   isMultipleChoice: boolean = false;
 
-  @Input() sectionId!: string;
-
-  @Output() removeComponentEvent = new EventEmitter<string>();
-
-  constructor() { }
-
-  openModal(): void {
-    this.modal.create({
-      nzTitle: 'Edit Select Component Settings',
-      nzContent: SelectModalComponent,
-      nzData: {
-        selectOptions: [...this.answerOptions],
-        defaultSelectValue: this.defaultValue,
+  edit(): void {
+    this.modalService.openModal({
+      modalTitle: 'Edit Select Component Settings',
+      modalContent: SelectEditComponent,
+      modalData: {
+        selectOptions: this.selectOptions,
+        defaultSelectValue: this.defaultSelectValue,
         placeholderValue: this.placeholderValue,
-        isMultiple: this.isMultipleChoice
-      },
-      nzOnOk: (instance) => {
-        this.answerOptions = instance.selectOptions;
-        if (!instance.defaultSelectValue) {
-          if (instance.isMultiple) {
-            this.defaultValue = [];
-            this.actualValue = [];
+        isMultipleChoice: this.isMultipleChoice
+      }
+    }).subscribe(result => {
+      if (result) {
+        this.selectOptions = result.selectOptions;
+        if (!result.defaultSelectValue) {
+          if (result.isMultipleChoice) {
+            this.defaultSelectValue = [];
           } else {
-            this.defaultValue = "";
-            this.actualValue = "";
+            this.defaultSelectValue = "";
           }
         } else {
-          this.defaultValue = instance.defaultSelectValue;
-          this.actualValue = instance.defaultSelectValue;
+          this.defaultSelectValue = result.defaultSelectValue;
         }
-        this.placeholderValue = instance.placeholderValue;
-        this.isMultipleChoice = instance.isMultiple;
+        this.placeholderValue = result.placeholderValue;
+        this.isMultipleChoice = result.isMultipleChoice;
       }
-    });
+    })
   }
 }

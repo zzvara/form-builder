@@ -1,22 +1,16 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {AbstractInput} from "../../abstract-classes/abstract-input";
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.css'],
 })
-export class DatePickerComponent {
-  @Input() id!: string;
-  @Input() questionValue: string = 'Date input';
-  @Input() descriptionValue: string = 'The input can be used for...';
-  @Input() answerValue: any = new Date();
+export class DatePickerComponent extends AbstractInput {
   inputPlaceholder: string = 'Date input value';
   inputTemplate!: TemplateRef<any>;
-  @Input() type: string = 'text';
-  @Input() sectionId!: string;
 
   @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
-  @Output() removeComponentEvent = new EventEmitter<string>();
 
   onQuestionValueChange(newValue: string) {
     this.questionValue = newValue;
