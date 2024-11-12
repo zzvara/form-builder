@@ -1,9 +1,7 @@
-import {Component, inject, OnInit} from '@angular/core';
-
-import {NZ_MODAL_DATA} from 'ng-zorro-antd/modal';
+import {Component} from '@angular/core';
 import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
 import {SelectComponentData} from "../interfaces/select-component-data";
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormControl, Validators} from "@angular/forms";
 import {ListValidators} from "../../../validators/list-validators";
 import {CustomValidators} from "../../../validators/custom-validators";
 

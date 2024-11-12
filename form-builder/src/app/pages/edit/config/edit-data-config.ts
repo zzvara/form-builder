@@ -4,7 +4,9 @@ import {InputComponent} from "../../../shared/components/input/input.component";
 import {InputComponentData} from "../../../shared/components/input/interfaces/input-component-data";
 import {NumberInputComponentData} from "../../../shared/components/number-input/interfaces/number-input-component-data";
 import {NumberInputComponent} from "../../../shared/components/number-input/number-input.component";
-import {PictureInputComponentData} from "../../../shared/components/picture-input/interfaces/picture-input-component-data";
+import {
+  PictureInputComponentData
+} from "../../../shared/components/picture-input/interfaces/picture-input-component-data";
 import {PictureInputComponent} from "../../../shared/components/picture-input/picture-input.component";
 import {SectionComponent} from "../../../shared/components/section/section.component";
 import {SelectComponentData} from "../../../shared/components/select/interfaces/select-component-data";
@@ -13,40 +15,76 @@ import {SidebarData} from "../../../shared/components/sidebar/interfaces/sidebar
 import {TextareaComponentData} from "../../../shared/components/textarea/interfaces/textarea-component-data";
 import {TextareaComponent} from "../../../shared/components/textarea/textarea.component";
 import {EditComponent} from "../edit.component";
+import {FormInputData} from "../../../shared/interfaces/form-input-data";
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
-  questionValue: "Question value...",
+  questionValue: "Text Field question...",
   descriptionValue: "Question description...",
   placeholderValue: ""
 };
 const numberInputOptions: NumberInputComponentData = {
-  questionValue: "Question value...",
+  questionValue: "Number Field question...",
   descriptionValue: "Question description...",
   placeholderValue: ""
 };
 const dateInputOptions: DatePickerComponentData = {
-  questionValue: "Question value...",
+  questionValue: "Date Picker question...",
   descriptionValue: "Question description...",
   placeholderValue: ""
 };
 const textAreaInputOptions: TextareaComponentData = {
-  questionValue: "Question value...",
+  questionValue: "Text area question...",
   descriptionValue: "Question description...",
   placeholderValue: ""
 };
 const pictureInputOptions: PictureInputComponentData = {
-  questionValue: "Question value...",
+  questionValue: "Picture Input question...",
   descriptionValue: "Question description...",
   placeholderValue: ""
 };
 const selectInputOptions: SelectComponentData = {
-  questionValue: "Question value...",
+  questionValue: "ComboBox question...",
   descriptionValue: "Question description...",
   placeholderValue: "",
   selectOptions: ["Option 1", "Option 2"],
   isMultipleChoice: false
 };
+
+export function getInputGroups(): FormInputData<any, any>[] {
+  return [
+    {
+      title: "TEXT FIELD",
+      type: InputComponent,
+      data: textInputOptions
+    },
+    {
+      title: "NUMBER FIELD",
+      type: NumberInputComponent,
+      data: numberInputOptions
+    },
+    {
+      title: "DATE PICKER",
+      type: DatePickerComponent,
+      data: dateInputOptions
+    },
+    {
+      title: "TEXT AREA",
+      type: TextareaComponent,
+      data: textAreaInputOptions
+    },
+    {
+      title: "PICTURE INPUT",
+      type: PictureInputComponent,
+      data: pictureInputOptions
+    },
+    {
+      title: "COMBOBOX",
+      type: SelectComponent,
+      data: selectInputOptions
+    },
+  ];
+}
 
 // The data shown in the edit sidebar
 export function getSideBarData(component: EditComponent): SidebarData[] {
@@ -55,38 +93,7 @@ export function getSideBarData(component: EditComponent): SidebarData[] {
       groupName: "Basic inputs",
       active: true,
       dropListConnectedTo: () => component.getSectionIds(),
-      groupContents: [
-        {
-          title: "TEXT",
-          type: InputComponent,
-          data: textInputOptions
-        },
-        {
-          title: "NUMBER",
-          type: NumberInputComponent,
-          data: numberInputOptions
-        },
-        {
-          title: "DATE PICKER",
-          type: DatePickerComponent,
-          data: dateInputOptions
-        },
-        {
-          title: "TEXT AREA",
-          type: TextareaComponent,
-          data: textAreaInputOptions
-        },
-        {
-          title: "PICTURE",
-          type: PictureInputComponent,
-          data: pictureInputOptions
-        },
-        {
-          title: "SELECT",
-          type: SelectComponent,
-          data: selectInputOptions
-        },
-      ]
+      groupContents: getInputGroups()
     },{
       groupName: "Sections",
       active: true,
@@ -97,4 +104,4 @@ export function getSideBarData(component: EditComponent): SidebarData[] {
         data: null
       }]
     }];
-};
+}

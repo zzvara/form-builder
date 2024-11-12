@@ -1,6 +1,9 @@
 <div>
   <input nz-input
          type="number"
-         [(ngModel)]="defaultValue"
-         (ngModelChange)="onChange($event)" />
+         [disabled]="!inlineEdit.enabled"
+         [(ngModel)]="data.defaultValue"
+         [placeholder]="data.placeholderValue"
+         (ngModelChange)="onChange($event)"
+         (mousedown)="$event.stopPropagation()"/>
 </div>

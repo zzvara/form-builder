@@ -13,9 +13,8 @@
         <nz-card
           *ngFor="let sect of sectionList"
           id="{{sect.sectionId}}"
-          nzTitle="Section: {{sect.sectionId}} | Layout: {{sect.layout}}"
-          [nzExtra]="sectionRemoveButton"
-          [nzBodyStyle]="{padding: '10px'}"
+          [nzTitle]="sectionTitle"
+          [nzExtra]="sectionButtons"
           cdkDrag
           cdkDropList
           [cdkDropListOrientation]="sect.layout"
@@ -24,27 +23,42 @@
           (cdkDropListDropped)="drop($event)"
           class="element-list p-3"
           style="padding: 0; width: 900px"
+          [nzBodyStyle]="{'padding-bottom':'24px'}"
         >
-          <ng-template #sectionRemoveButton>
-            <button
-              nz-button nzType="default"
-              nzShape="circle"
-              (click)="sectionLayoutChange(sect)"
-            ><span nz-icon nzType="redo" nzTheme="outline"></span></button>
-            <button
-              style="margin-left: 10px"
-              nz-button nzType="default" nzDanger
-              nzShape="circle"
-              (click)="sectionRemove(sect)"
-            ><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+          <ng-template #sectionTitle>
+            <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
+              Section
+              <span style="color: red"> [ID: {{sect.sectionId}} | Layout: {{sect.layout}}]</span>
+            </div>
+          </ng-template>
+          <ng-template #sectionButtons>
+            <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">
+              <button
+                nz-button nzType="default"
+                nzShape="circle"
+                (click)="sectionLayoutChange(sect)"
+              ><span nz-icon nzType="redo" nzTheme="outline"></span></button>
+              <button
+                style="margin-left: 10px"
+                nz-button nzType="default" nzDanger
+                nzShape="circle"
+                (click)="sectionRemove(sect)"
+              ><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+            </div>
           </ng-template>
 
-          <div class="element-box" *ngFor="let item of sect.sectionInputs" cdkDrag nz-card-grid [ngStyle]="getSectionInputStyle(sect)">
-            <app-input-holder
-              [formInput]="item"
-              (removeComponentEvent)="removeComponent(sect, $event)"
-              (edited)="onValueChanged(sect, $event)"/>
-          </div>
+          <app-input-holder
+            class="element-box"
+            *ngFor="let item of sect.sectionInputs"
+            cdkDrag
+            [cdkDragData]="item"
+            nz-card-grid
+            style="padding: 0"
+            [ngStyle]="getSectionInputStyle(sect)"
+
+            [formInput]="item"
+            (removeComponentEvent)="removeComponent(sect, $event)"
+            (edited)="onValueChanged(sect, $event)"/>
         </nz-card>
       </div>
     </nz-content>

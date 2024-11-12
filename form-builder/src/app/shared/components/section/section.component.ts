@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import {AbstractFormComponent} from "../../abstract-classes/abstract-form-component";
+import {FormComponentMarker} from "../../interfaces/form-component-marker";
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.css'],
 })
-export class SectionComponent extends AbstractFormComponent{
-
+export class SectionComponent implements FormComponentMarker {
+  // Egyelőre ennek a komponensnek nincs semmi értelme, mivel az edit.component saját maga generálja le és tárolja a section-ök adatait
 }

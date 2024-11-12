@@ -88,16 +88,21 @@ export class EditComponent implements OnInit, OnChanges {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       const droppedInput: FormInputData<any, any> = event.item.data;
-      const inputId: string = droppedInput.data.id ?? "input-" + (++this.sectionComponentId);
+      // Check if already in a section (has id)
+      if (droppedInput.data.id) {
+        droppedInput.data.sectionId = event.container.id;
 
-      // Create a copy of the dropped item with updated ID
-      const newItem: FormInputData<any, any> = {...droppedInput};
-      newItem.data = structuredClone(droppedInput.data);
-      newItem.data.id = inputId;
-      newItem.data.sectionId = event.container.id;
+        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      } else {
+        // Create a deep copy of the dropped item with updated ID
+        const newItem: FormInputData<any, any> = {...droppedInput};
+        newItem.data = structuredClone(droppedInput.data);
+        newItem.data.id = "input-" + (++this.sectionComponentId);
+        newItem.data.sectionId = event.container.id;
 
-      // Transfer the item from one container to another
-      copyArrayItem([newItem], event.container.data, 0, event.currentIndex);
+        // Copy the item from a temporary container to the given section's (not very nice :( )
+        copyArrayItem([newItem], event.container.data, 0, event.currentIndex);
+      }
     }
     this.undoRedoService.saveState(this.getAllFormInputs());
 
@@ -148,7 +153,7 @@ export class EditComponent implements OnInit, OnChanges {
       project.formInputs = project.formInputs || [];
       const existingIds = new Set(project.formInputs.map((input) => input.id));
       for (const input of this.getAllFormInputs()) {
-        if (existingIds.has(input.data.id!)) {
+        if (existingIds.has(input.data.id)) {
           const index = project.formInputs.findIndex((existingInput) => existingInput.id === input.data.id);
           if (index !== -1) {
             project.formInputs[index] = input.data;
@@ -198,7 +203,8 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionInputStyle(sect: SectionList) {
-    const width = sect.layout === LayoutEnum.HORIZONTAL ? (100 / sect.sectionInputs.filter((input) => input.data.sectionId === sect.sectionId).length) : 100;
+    const width = sect.layout === LayoutEnum.HORIZONTAL ?
+      (100 / sect.sectionInputs.filter((input) => input.data.sectionId === sect.sectionId).length) : 100;
     return {
       'width': width.toString() + "%",
     };

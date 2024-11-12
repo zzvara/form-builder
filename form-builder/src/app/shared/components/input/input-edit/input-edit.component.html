@@ -12,7 +12,7 @@
   <span>Description</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="descriptionErrors">
-      <input nz-input placeholder="Description" formControlName="descriptionValue"/>
+      <textarea nz-input nzAutosize placeholder="Description" formControlName="descriptionValue"></textarea>
     </nz-form-control>
     <ng-template #descriptionErrors let-control>
       <ng-container *ngIf="hasErrors(control, 'required')">Cannot be empty!</ng-container>

@@ -1,8 +1,6 @@
-import {Component, EventEmitter, inject, Input, Output, TemplateRef} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ModalServiceService} from "../../../services/modal/modal-service.service";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
-import {InputEditComponent} from "../input/input-edit/input-edit.component";
-import {InputComponentData} from "../input/interfaces/input-component-data";
 import {NumberInputComponentData} from "./interfaces/number-input-component-data";
 import {NumberInputEditComponent} from "./number-input-edit/number-input-edit.component";
 
@@ -19,19 +17,11 @@ export class NumberInputComponent extends AbstractInput<NumberInputComponentData
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: NumberInputEditComponent,
       modalData: {
-        questionValue: this.questionValue,
-        descriptionValue: this.descriptionValue,
-        defaultValue: this.defaultValue,
-        placeholderValue: this.placeholderValue,
+        questionValue:    this.data.questionValue,
+        descriptionValue: this.data.descriptionValue,
+        defaultValue:     this.data.defaultValue,
+        placeholderValue: this.data.placeholderValue,
       }
-    }).subscribe(result => {
-      if (result) {
-        this.questionValue = result.questionValue;
-        this.descriptionValue = result.descriptionValue;
-        this.defaultValue = result.defaultValue;
-        this.placeholderValue = result.placeholderValue;
-        this.onEdit(result);
-      }
-    });
+    }).subscribe(result => this.defaultValueSetter(result));
   }
 }

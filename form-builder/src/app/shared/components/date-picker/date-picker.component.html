@@ -1,5 +1,9 @@
 <div>
-  <nz-date-picker [nzPlaceHolder]="placeholderValue"
-                  [(ngModel)]="defaultValue"
-                  (ngModelChange)="onChange($event)"></nz-date-picker>
+  <nz-date-picker
+    [disabled]="!inlineEdit.enabled"
+    [nzPlaceHolder]="data.placeholderValue"
+    [(ngModel)]="data.defaultValue"
+    (ngModelChange)="onChange($event)"
+    (mousedown)="$event.stopPropagation()">
+  </nz-date-picker>
 </div>

@@ -1,10 +1,8 @@
-import {Component, EventEmitter, inject, Input, Output, TemplateRef} from '@angular/core';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { Observable, of } from 'rxjs';
+import {Component, inject} from '@angular/core';
+import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
+import {Observable, of} from 'rxjs';
 import {ModalServiceService} from "../../../services/modal/modal-service.service";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
-import {InputEditComponent} from "../input/input-edit/input-edit.component";
-import {InputComponentData} from "../input/interfaces/input-component-data";
 import {PictureInputComponentData} from "./interfaces/picture-input-component-data";
 import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit.component";
 
@@ -16,13 +14,8 @@ import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit
 export class PictureInputComponent extends AbstractInput<PictureInputComponentData, string | null> {
   private readonly modalService: ModalServiceService<PictureInputEditComponent, PictureInputComponentData> = inject(ModalServiceService);
 
-  fileName!: string;
-  file!: File | null;
-  uploadedFile!: string | null;
-
-
   onFileChange(event: any): void {
-    this.file = event.target.files[0];
+    this.data.file = event.target.files[0];
   }
 
   override onChange(info: NzUploadChangeParam): void {
@@ -50,19 +43,11 @@ export class PictureInputComponent extends AbstractInput<PictureInputComponentDa
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: PictureInputEditComponent,
       modalData: {
-        questionValue: this.questionValue,
-        descriptionValue: this.descriptionValue,
-        defaultValue: this.defaultValue,
-        placeholderValue: this.placeholderValue,
+        questionValue:    this.data.questionValue,
+        descriptionValue: this.data.descriptionValue,
+        defaultValue:     this.data.defaultValue,
+        placeholderValue: this.data.placeholderValue,
       }
-    }).subscribe(result => {
-      if (result) {
-        this.questionValue = result.questionValue;
-        this.descriptionValue = result.descriptionValue;
-        this.defaultValue = result.defaultValue;
-        this.placeholderValue = result.placeholderValue;
-        this.onEdit(result);
-      }
-    });
+    }).subscribe(result => this.defaultValueSetter(result));
   }
 }

@@ -17,19 +17,11 @@ export class InputComponent extends AbstractInput<InputComponentData, string> {
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: InputEditComponent,
       modalData: {
-        questionValue: this.questionValue,
-        descriptionValue: this.descriptionValue,
-        defaultValue: this.defaultValue,
-        placeholderValue: this.placeholderValue,
+        questionValue:    this.data.questionValue,
+        descriptionValue: this.data.descriptionValue,
+        defaultValue:     this.data.defaultValue,
+        placeholderValue: this.data.placeholderValue,
       }
-    }).subscribe(result => {
-      if (result) {
-        this.questionValue = result.questionValue;
-        this.descriptionValue = result.descriptionValue;
-        this.defaultValue = result.defaultValue;
-        this.placeholderValue = result.placeholderValue;
-        this.onEdit(result);
-      }
-    });
+    }).subscribe(result => this.defaultValueSetter(result));
   }
 }

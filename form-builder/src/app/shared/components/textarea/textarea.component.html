@@ -1,9 +1,11 @@
 <div>
   <textarea
     nz-input
-    [placeholder]="placeholderValue"
-    [(ngModel)]="defaultValue"
+    [disabled]="!inlineEdit.enabled"
+    [placeholder]="data.placeholderValue"
+    [(ngModel)]="data.defaultValue"
     (ngModelChange)="onChange($event)"
+    (mousedown)="$event.stopPropagation()"
     nzAutosize
   ></textarea>
 </div>

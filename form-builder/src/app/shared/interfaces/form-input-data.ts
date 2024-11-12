@@ -1,9 +1,9 @@
 import {Type} from "@angular/core";
-import {AbstractFormComponent} from "../abstract-classes/abstract-form-component";
 import {InputData} from "./input-data";
+import {FormComponentMarker} from "./form-component-marker";
 
 export interface FormInputData<D extends InputData<T>, T> {
   title: string;
-  type: Type<AbstractFormComponent>
+  type: Type<FormComponentMarker>
   data: D | null;
 }
