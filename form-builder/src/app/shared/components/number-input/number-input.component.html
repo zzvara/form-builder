@@ -1,16 +1,6 @@
-<app-input-layout
-  [componentId]="id"
-  [sectionId]="sectionId"
-  [questionValue]="questionValue"
-  [descriptionValue]="descriptionValue"
-  [inputPlaceholder]="inputPlaceholder"
-  [inputTemplate]="inputTemplate"
-  (questionValueChanged)="onQuestionValueChange($event)"
-  (descriptionValueChanged)="onDescriptionValueChange($event)"
-  (removeComponentEvent)="removeComponentEvent.emit($event)"
->
-</app-input-layout>
-
-<ng-template #inputTemplate>
-  <input nz-input [type]="type" [(ngModel)]="answerValue" (ngModelChange)="onAnswerValueChange($event)" />
-</ng-template>
+<div>
+  <input nz-input
+         type="number"
+         [(ngModel)]="defaultValue"
+         (ngModelChange)="onChange($event)" />
+</div>

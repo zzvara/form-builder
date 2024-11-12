@@ -1,50 +1,37 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output, TemplateRef} from '@angular/core';
+import {ModalServiceService} from "../../../services/modal/modal-service.service";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
+import {InputEditComponent} from "../input/input-edit/input-edit.component";
+import {InputComponentData} from "../input/interfaces/input-component-data";
+import {DatePickerEditComponent} from "./date-picker-edit/date-picker-edit.component";
+import {DatePickerComponentData} from "./interfaces/date-picker-component-data";
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.css'],
 })
-export class DatePickerComponent extends AbstractInput {
-  inputPlaceholder: string = 'Date input value';
-  inputTemplate!: TemplateRef<any>;
+export class DatePickerComponent extends AbstractInput<DatePickerComponentData, Date> {
+  private readonly modalService: ModalServiceService<DatePickerEditComponent, DatePickerComponentData> = inject(ModalServiceService);
 
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
-
-  onQuestionValueChange(newValue: string) {
-    this.questionValue = newValue;
-    this.emitValueChanged();
-  }
-
-  onAnswerValueChange(newValue: string) {
-    let validDate = new Date(newValue);
-    if (!this.isValidDate(validDate)) {
-      validDate = new Date();
-    }
-    this.answerValue = validDate;
-    this.emitValueChanged();
-  }
-
-  onDescriptionValueChange(newValue: string) {
-    this.descriptionValue = newValue;
-    this.emitValueChanged();
-  }
-
-  private emitValueChanged() {
-    if (!this.isValidDate(this.answerValue)) {
-      this.answerValue = new Date();
-    }
-
-    this.valueChanged.emit({
-      questionValue: this.questionValue,
-      answerValue: this.answerValue.toISOString(),
-      descriptionValue: this.descriptionValue,
-      id: this.id,
+  override edit(): void {
+    this.modalService.openModal({
+      modalTitle: 'Edit Text Field Component Settings',
+      modalContent: DatePickerEditComponent,
+      modalData: {
+        questionValue: this.questionValue,
+        descriptionValue: this.descriptionValue,
+        defaultValue: this.defaultValue,
+        placeholderValue: this.placeholderValue,
+      }
+    }).subscribe(result => {
+      if (result) {
+        this.questionValue = result.questionValue;
+        this.descriptionValue = result.descriptionValue;
+        this.defaultValue = result.defaultValue;
+        this.placeholderValue = result.placeholderValue;
+        this.onEdit(result);
+      }
     });
-  }
-
-  isValidDate(date: Date) {
-    return date instanceof Date && !isNaN(date.getTime());
   }
 }

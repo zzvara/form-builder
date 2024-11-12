@@ -1,0 +1,20 @@
+<nz-card nzTitle="{{ formInput.title }}" [nzExtra]="headerTemplate">
+  <div>{{ formInput.data!.questionValue }}</div>
+  <div>{{ formInput.data!.descriptionValue }}</div>
+  <div style="color: red">ID: {{ formInput.data!.id }} | section ID: {{ formInput.data!.sectionId }}</div>
+  <ng-container *ngComponentOutlet="formInput.type; inputs: componentInputs"></ng-container>
+</nz-card>
+<ng-template #headerTemplate>
+  <button
+    nz-button nzType="primary"
+    nzShape="circle"
+    (click)="editComponent()">
+    <span nz-icon nzType="edit" nzTheme="outline"></span>
+  </button>
+  <button
+    nz-button nzType="default" nzDanger
+    nzShape="circle"
+    (click)="removeComponent()">
+    <span nz-icon nzType="delete" nzTheme="outline"></span>
+  </button>
+</ng-template>

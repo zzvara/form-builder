@@ -1,33 +1,35 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {ModalServiceService} from "../../../services/modal/modal-service.service";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
+import {InputEditComponent} from "./input-edit/input-edit.component";
+import {InputComponentData} from "./interfaces/input-component-data";
 
 @Component({
   selector: 'app-text-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent extends AbstractInput {
-  inputPlaceholder: string = 'Input input value';
-  inputTemplate!: TemplateRef<any>;
+export class InputComponent extends AbstractInput<InputComponentData, string> {
+  private readonly modalService: ModalServiceService<InputEditComponent, InputComponentData> = inject(ModalServiceService);
 
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string;descriptionValue: string; id: string }>();
-
-  onQuestionValueChange(newValue: string) {
-    this.questionValue = newValue;
-    this.emitValueChanged();
-  }
-
-  onAnswerValueChange(newValue: string) {
-    this.answerValue = newValue;
-    this.emitValueChanged();
-  }
-
-  onDescriptionValueChange(newValue: string) {
-    this.descriptionValue = newValue;
-    this.emitValueChanged();
-  }
-
-  private emitValueChanged() {
-    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
+  override edit(): void {
+    this.modalService.openModal({
+      modalTitle: 'Edit Text Field Component Settings',
+      modalContent: InputEditComponent,
+      modalData: {
+        questionValue: this.questionValue,
+        descriptionValue: this.descriptionValue,
+        defaultValue: this.defaultValue,
+        placeholderValue: this.placeholderValue,
+      }
+    }).subscribe(result => {
+      if (result) {
+        this.questionValue = result.questionValue;
+        this.descriptionValue = result.descriptionValue;
+        this.defaultValue = result.defaultValue;
+        this.placeholderValue = result.placeholderValue;
+        this.onEdit(result);
+      }
+    });
   }
 }

@@ -1,17 +1,13 @@
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
 import {FormInput, Project} from 'src/app/items/project.interface';
 import {ProjectService} from 'src/app/services/project.service';
 import {UndoRedoService} from 'src/app/services/undo-redo.service';
-import {SectionComponent} from 'src/app/shared/components/section/section.component';
-import {DatePickerComponent} from "../../shared/components/date-picker/date-picker.component";
-import {InputComponent} from "../../shared/components/input/input.component";
-import {NumberInputComponent} from "../../shared/components/number-input/number-input.component";
-import {PictureInputComponent} from "../../shared/components/picture-input/picture-input.component";
-import {SelectComponent} from "../../shared/components/select/select.component";
-import {TextareaComponent} from "../../shared/components/textarea/textarea.component";
-import {SectionList} from "./interfaces/section-list";
+import {SidebarData} from "../../shared/components/sidebar/interfaces/sidebar-data";
+import {FormInputData} from "../../shared/interfaces/form-input-data";
+import {getSideBarData} from "./config/edit-data-config";
 import {LayoutEnum} from "./interfaces/layout-enum";
+import {SectionList} from "./interfaces/section-list";
 
 @Component({
   selector: 'app-edit',
@@ -25,28 +21,13 @@ export class EditComponent implements OnInit, OnChanges {
   constructor() {}
 
   @Input() projectId: number | undefined;
+  @Input() versionNum?: number;
 
-  textInputOptions = { component: InputComponent, type: 'text' };
-  textInput: string[] = Array(100).fill(this.textInputOptions);
-  numberInputOptions = { component: NumberInputComponent, type: 'number' };
-  numberInput: string[] = Array(100).fill(this.numberInputOptions);
-  dateInputOptions = { component: DatePickerComponent };
-  dateInput: string[] = Array(100).fill(this.dateInputOptions);
-  textAreaInputOptions = { component: TextareaComponent, textareaPlaceholder: 'text placeholder' };
-  textAreaInput: string[] = Array(100).fill(this.textAreaInputOptions);
-  pictureInputOptions = { component: PictureInputComponent, fileName: 'fileName' };
-  pictureInput: string[] = Array(100).fill(this.pictureInputOptions);
-  selectInputOptions = { component: SelectComponent, questionValue: 'Test' };
-  selectInput: string[] = Array(100).fill(this.selectInputOptions);
-
-  sectionInputOptions = { component: SectionComponent};
-  sectionInput: string[] = Array(3).fill(this.sectionInputOptions);
+  sideBarData: SidebarData[] = getSideBarData(this);
 
   sectionList: SectionList[] = [];
-  getSectionIds = (list: SectionList[]) => list.map(sect => sect.sectionId);
+  getSectionIds = () => this.sectionList.map(sect => sect.sectionId);
   getAllFormInputs = () => this.sectionList.flatMap(sect => sect.sectionInputs);
-
-  @Input() versionNum?: number;
 
   sectionId!: number;
   sectionComponentId!: number;
@@ -95,10 +76,8 @@ export class EditComponent implements OnInit, OnChanges {
    * Handles the drag and drop event for form elements.
    * @param {CdkDragDrop<any[]>} event  - The drag and drop event containing the current state and target of the dragged item.
    * @returns {void}
-   *
-   * TODO: Avoid using any type for the event parameter.
    */
-  drop(event: CdkDragDrop<any[]>): void {
+  drop(event: CdkDragDrop<FormInputData<any, any>[], FormInputData<any, any>[], FormInputData<any, any>>): void {
     // console.log({ event, container: event.container });
     // console.log({ itemId: event.item.element.nativeElement.id });
     console.log({ formInputs: this.getAllFormInputs() });
@@ -108,13 +87,17 @@ export class EditComponent implements OnInit, OnChanges {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      const inputId: number = event.previousContainer.data[event.previousIndex].id ?? ++this.sectionComponentId;
+      const droppedInput: FormInputData<any, any> = event.item.data;
+      const inputId: string = droppedInput.data.id ?? "input-" + (++this.sectionComponentId);
+
       // Create a copy of the dropped item with updated ID
-      const droppedItem = { ...event.previousContainer.data[event.previousIndex], id: inputId, sectionId: event.container.id };
+      const newItem: FormInputData<any, any> = {...droppedInput};
+      newItem.data = structuredClone(droppedInput.data);
+      newItem.data.id = inputId;
+      newItem.data.sectionId = event.container.id;
+
       // Transfer the item from one container to another
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      // Update the item in the new container with the copied item
-      event.container.data[event.currentIndex] = droppedItem;
+      copyArrayItem([newItem], event.container.data, 0, event.currentIndex);
     }
     this.undoRedoService.saveState(this.getAllFormInputs());
 
@@ -128,14 +111,9 @@ export class EditComponent implements OnInit, OnChanges {
    * @param event - The event object containing the new value of the form input.
    * @returns {void}
    *
-   * TODO: Avoid using any type for the answerValue parameter.
+   * FIXME - It just doesnt work now... sorry :(
    */
-  onValueChanged(sect: SectionList | null, event: {
-    questionValue: string;
-    answerValue: any;
-    descriptionValue: string;
-    id: string
-  }): void {
+  onValueChanged(sect: SectionList | null, event: any): void {
     if (sect) {
       const inputValue = {
         question: event.questionValue,
@@ -144,12 +122,12 @@ export class EditComponent implements OnInit, OnChanges {
         id: event.id,
       };
 
-      const index = sect.sectionInputs.findIndex((input) => input.id === event.id);
+      const index = sect.sectionInputs.findIndex((input) => input.data.id === event.id);
 
       if (index !== -1) {
-        sect.sectionInputs[index].question = event.questionValue;
-        sect.sectionInputs[index].answer = event.answerValue;
-        sect.sectionInputs[index].description = event.descriptionValue;
+        sect.sectionInputs[index].data.question = event.questionValue;
+        sect.sectionInputs[index].data.answer = event.answerValue;
+        sect.sectionInputs[index].data.description = event.descriptionValue;
         this.undoRedoService.saveState(this.getAllFormInputs());
 
         console.log({ formInputs: this.getAllFormInputs() });
@@ -170,14 +148,14 @@ export class EditComponent implements OnInit, OnChanges {
       project.formInputs = project.formInputs || [];
       const existingIds = new Set(project.formInputs.map((input) => input.id));
       for (const input of this.getAllFormInputs()) {
-        if (existingIds.has(input.id)) {
-          const index = project.formInputs.findIndex((existingInput) => existingInput.id === input.id);
+        if (existingIds.has(input.data.id!)) {
+          const index = project.formInputs.findIndex((existingInput) => existingInput.id === input.data.id);
           if (index !== -1) {
-            project.formInputs[index] = input;
+            project.formInputs[index] = input.data;
           }
         } else {
-          project.formInputs.push(input);
-          existingIds.add(input.id);
+          project.formInputs.push(input.data);
+          existingIds.add(input.data.id);
         }
       }
       this.projectService.update(this.projectId!, project);
@@ -190,14 +168,14 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   removeComponent(sect: SectionList, componentId: string) {
-    sect.sectionInputs = sect.sectionInputs.filter((input) => input.id !== componentId);
+    sect.sectionInputs = sect.sectionInputs.filter((input) => input.data.id !== componentId);
   }
 
   sectionDrop($event: CdkDragDrop<any[]>) {
     const itemId = $event.item.element.nativeElement.id;
     // Check if the item is a section or belongs to a cdk-drop-list
     if (!itemId.includes("section")) {
-      const newItemId = `section${++this.sectionId}`;
+      const newItemId = `section-${++this.sectionId}`;
       const newSection: SectionList[] = [{
         sectionId: newItemId,
         layout: LayoutEnum.VERTICAL,
@@ -220,7 +198,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionInputStyle(sect: SectionList) {
-    const width = sect.layout === LayoutEnum.HORIZONTAL ? (100 / sect.sectionInputs.filter((input) => input.sectionId === sect.sectionId).length) : 100;
+    const width = sect.layout === LayoutEnum.HORIZONTAL ? (100 / sect.sectionInputs.filter((input) => input.data.sectionId === sect.sectionId).length) : 100;
     return {
       'width': width.toString() + "%",
     };

@@ -1,40 +1,14 @@
-import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormInput } from 'src/app/items/project.interface';
-import { UndoRedoService } from 'src/app/services/undo-redo.service';
-
-interface Panel {
-  active: boolean;
-  name: string;
-}
-
-interface Panels {
-  [key: string]: Panel;
-}
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {SidebarData} from "./interfaces/sidebar-data";
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
-  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
-  panels: Panels = {
-    basic: {
-      name: 'Basic inputs',
-      active: true,
-    },
-    selector: {
-      name: 'Selectors',
-      active: true,
-    },
-  };
-  @Input() formInputs: any[] = [];
-  @Input() sectionId!: string;
-  @Output() formInputsChange = new EventEmitter<any[]>();
+  constructor() {}
 
-  onFormInputsChange(updatedFormInputs: any[]): void {
-    this.formInputs = updatedFormInputs;
-    this.formInputsChange.emit(this.formInputs);
-  }
+  @Input() sidebarData!: SidebarData[];
 }

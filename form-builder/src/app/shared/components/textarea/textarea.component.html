@@ -1,22 +1,11 @@
-<app-input-layout
-  [componentId]="id"
-  [sectionId]="sectionId"
-  [questionValue]="questionValue"
-  [descriptionValue]="descriptionValue"
-  [inputPlaceholder]="inputPlaceholder"
-  [inputTemplate]="inputTemplate"
-  (questionValueChanged)="onQuestionValueChange($event)"
-  (descriptionValueChanged)="onDescriptionValueChange($event)"
-  (removeComponentEvent)="removeComponentEvent.emit($event)"
->
-</app-input-layout>
-
-<ng-template #inputTemplate>
+<div>
   <textarea
     nz-input
-    [placeholder]="textareaPlaceholder"
-    [(ngModel)]="answerValue"
+    [placeholder]="placeholderValue"
+    [(ngModel)]="defaultValue"
+    (ngModelChange)="onChange($event)"
     nzAutosize
-    (ngModelChange)="onAnswerValueChange($event)"
   ></textarea>
-</ng-template>
+</div>
+
+

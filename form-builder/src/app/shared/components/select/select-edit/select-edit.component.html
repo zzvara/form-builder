@@ -39,23 +39,43 @@
     </nz-form-control>
   </nz-form-item>
 
-  <span>Set Default Value</span>
+  <span>Question</span>
   <nz-form-item>
-    <nz-form-control>
-      <nz-select
-        formControlName="defaultSelectValue"
-        [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
-        [nzPlaceHolder]="'Please select default value'"
-        nzAllowClear>
-        <nz-option *ngFor="let option of optionsValues" [nzLabel]="option" [nzValue]="option"></nz-option>
-      </nz-select>
+    <nz-form-control [nzErrorTip]="questionErrors">
+      <input nz-input placeholder="Question" formControlName="questionValue"/>
     </nz-form-control>
+    <ng-template #questionErrors let-control>
+      <ng-container *ngIf="hasErrors(control, 'required')">Cannot be empty!</ng-container>
+    </ng-template>
+  </nz-form-item>
+
+  <span>Description</span>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="descriptionErrors">
+      <input nz-input placeholder="Description" formControlName="descriptionValue"/>
+    </nz-form-control>
+    <ng-template #descriptionErrors let-control>
+      <ng-container *ngIf="hasErrors(control, 'required')">Cannot be empty!</ng-container>
+    </ng-template>
   </nz-form-item>
 
   <span>Set Placeholder Value</span>
   <nz-form-item>
     <nz-form-control>
       <input nz-input placeholder="Placeholder" formControlName="placeholderValue"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Set Default Value</span>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-select
+        formControlName="defaultValue"
+        [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
+        [nzPlaceHolder]="'Please select default value'"
+        nzAllowClear>
+        <nz-option *ngFor="let option of optionsValues" [nzLabel]="option" [nzValue]="option"></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 

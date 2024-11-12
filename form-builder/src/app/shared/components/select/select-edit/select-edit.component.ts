@@ -1,8 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 
 import {NZ_MODAL_DATA} from 'ng-zorro-antd/modal';
 import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
-import {SelectData} from "../interfaces/select-data";
+import {SelectComponentData} from "../interfaces/select-component-data";
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ListValidators} from "../../../validators/list-validators";
 import {CustomValidators} from "../../../validators/custom-validators";
@@ -12,18 +12,19 @@ import {CustomValidators} from "../../../validators/custom-validators";
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.css']
 })
-export class SelectEditComponent extends AbstractEditForm<SelectData> {
+export class SelectEditComponent extends AbstractEditForm<SelectComponentData> {
   newOption!: FormControl<string | null>;
 
-  ngOnInit(): void {
-    this.initialValues = this.nzModalData;
-
+  override ngOnInit(): void {
+    super.ngOnInit();
     this.formData = this.formBuilder.group({
       selectOptions:      this.formBuilder.array([],
         ListValidators.validateListNum(2)),
-      defaultSelectValue: new FormControl(null, {
+      defaultValue: new FormControl(null, {
         updateOn: "change"
       }),
+      questionValue:      new FormControl(null, Validators.required),
+      descriptionValue:   new FormControl(null, Validators.required),
       placeholderValue:   new FormControl(),
       isMultipleChoice:   new FormControl(false, {
         updateOn: "change"
@@ -75,10 +76,10 @@ export class SelectEditComponent extends AbstractEditForm<SelectData> {
 //----------------------------------------------------------------------------------------------------------------------
 
   getDefaultValues(): string | string[] {
-    return  this.formData.get("defaultSelectValue")?.getRawValue();
+    return  this.formData.get("defaultValue")?.getRawValue();
   }
   setDefaultValue(values: string | string[]): void {
-     this.formData.get("defaultSelectValue")?.setValue(values);
+     this.formData.get("defaultValue")?.setValue(values);
   }
 
   // Add a new option

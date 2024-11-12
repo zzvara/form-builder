@@ -1,19 +1,9 @@
-<app-input-layout
-  [componentId]="id"
-  [sectionId]="sectionId"
-  [questionValue]="questionValue"
-  [descriptionValue]="descriptionValue"
-  [inputPlaceholder]="inputPlaceholder"
-  [inputTemplate]="selectInput"
-  (removeComponentEvent)="removeComponentEvent.emit($event)"
->
-</app-input-layout>
-
-<ng-template #selectInput>
+<div>
   <nz-select
     [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
-    [(ngModel)]="defaultSelectValue"
+    [(ngModel)]="defaultValue"
     [nzPlaceHolder]="placeholderValue"
+    (ngModelChange)="onChange($event)"
     nzAllowClear>
     <nz-option
       *ngFor="let answerOption of selectOptions"
@@ -21,7 +11,4 @@
       [nzLabel]="answerOption"
     ></nz-option>
   </nz-select>
-  <ng-container *ngIf="id">
-    <button nz-button nzType="primary" (click)="edit()">Edit</button>
-  </ng-container>
-</ng-template>
+</div>

@@ -9,7 +9,7 @@ export interface FormInput {
   component: string;
   type?: string;
   id: string;
-  setciondId: string;
+  sectionId: string;
   question: string;
   answer: string;
   description: string;

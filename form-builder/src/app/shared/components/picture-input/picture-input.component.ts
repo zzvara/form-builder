@@ -1,26 +1,31 @@
-import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output, TemplateRef} from '@angular/core';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, of } from 'rxjs';
+import {ModalServiceService} from "../../../services/modal/modal-service.service";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
+import {InputEditComponent} from "../input/input-edit/input-edit.component";
+import {InputComponentData} from "../input/interfaces/input-component-data";
+import {PictureInputComponentData} from "./interfaces/picture-input-component-data";
+import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit.component";
 
 @Component({
   selector: 'app-picture-input',
   templateUrl: './picture-input.component.html',
   styleUrls: ['./picture-input.component.css'],
 })
-export class PictureInputComponent extends AbstractInput {
-  inputPlaceholder: string = 'Picture input value';
-  inputTemplate!: TemplateRef<any>;
-  @Input() fileName!: string;
-  file: File | null = null;
-  uploadedFile: string | null = localStorage.getItem(this.fileName);
+export class PictureInputComponent extends AbstractInput<PictureInputComponentData, string | null> {
+  private readonly modalService: ModalServiceService<PictureInputEditComponent, PictureInputComponentData> = inject(ModalServiceService);
+
+  fileName!: string;
+  file!: File | null;
+  uploadedFile!: string | null;
 
 
   onFileChange(event: any): void {
     this.file = event.target.files[0];
   }
 
-  handleChange(info: NzUploadChangeParam): void {
+  override onChange(info: NzUploadChangeParam): void {
     if (info.file.status !== 'uploading') {
       console.log(info.file, info.fileList);
     }
@@ -39,4 +44,25 @@ export class PictureInputComponent extends AbstractInput {
     reader.readAsDataURL(file as any);
     return of('');
   };
+
+  override edit(): void {
+    this.modalService.openModal({
+      modalTitle: 'Edit Text Field Component Settings',
+      modalContent: PictureInputEditComponent,
+      modalData: {
+        questionValue: this.questionValue,
+        descriptionValue: this.descriptionValue,
+        defaultValue: this.defaultValue,
+        placeholderValue: this.placeholderValue,
+      }
+    }).subscribe(result => {
+      if (result) {
+        this.questionValue = result.questionValue;
+        this.descriptionValue = result.descriptionValue;
+        this.defaultValue = result.defaultValue;
+        this.placeholderValue = result.placeholderValue;
+        this.onEdit(result);
+      }
+    });
+  }
 }

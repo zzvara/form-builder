@@ -1,8 +1,9 @@
 import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
-import {inject} from "@angular/core";
+import {Directive, inject, OnInit} from "@angular/core";
 import {NZ_MODAL_DATA} from "ng-zorro-antd/modal";
 
-export abstract class AbstractEditForm<T> {
+@Directive()
+export abstract class AbstractEditForm<T> implements OnInit {
   protected readonly String = String.prototype;
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly nzModalData: T = inject(NZ_MODAL_DATA);
@@ -10,6 +11,9 @@ export abstract class AbstractEditForm<T> {
   formData!: FormGroup;
   initialValues!: T;
 
+  ngOnInit() {
+    this.initialValues = this.nzModalData;
+  }
 
   initializeFormValues() {
     if (this.initialValues) {
