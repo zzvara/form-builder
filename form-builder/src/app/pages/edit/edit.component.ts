@@ -56,14 +56,15 @@ export class EditComponent implements OnInit, OnChanges {
    * If a project and its form inputs are found, it updates the formInputs array with the project's form inputs.
    * @returns {void}
    */
-  private loadProjectFormInputs(): void {
+  private loadProject(): void {
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
-      if (project?.formInputs) {
-        //FIXME
-        // this.formInputs = [...project.formInputs];
-        this.undoRedoService.saveState(this.getAllFormInputs());
+      if (project?.sectionList) {
+        this.sectionList = [...project.sectionList];
+        this.undoRedoService.saveState(this.sectionList);
       }
+      console.log({ project});
+      
     }
   }
 
@@ -79,11 +80,11 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.loadProjectFormInputs();
+    this.loadProject();
   }
 
   ngOnInit() {
-    this.loadProjectFormInputs();
+    this.loadProject();
     this.initializeUndoRedo();
     this.sectionId = 0;
     this.sectionComponentId = 0;
@@ -180,6 +181,8 @@ export class EditComponent implements OnInit, OnChanges {
           existingIds.add(input.id);
         }
       }
+
+      project.sectionList = this.sectionList;
       this.projectService.update(this.projectId!, project);
     }
   }

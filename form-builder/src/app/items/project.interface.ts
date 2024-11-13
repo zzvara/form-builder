@@ -1,3 +1,4 @@
+import { SectionList } from '../pages/edit/interfaces/section-list';
 import { Question } from './question/questions.interface';
 
 export enum ProjectType {
@@ -27,6 +28,7 @@ export interface Project {
   created: string;
   modified: string;
   formInputs?: FormInput[];
+  sectionList?: SectionList[];
 }
 
 export interface ProjectVersion<T extends Project> {

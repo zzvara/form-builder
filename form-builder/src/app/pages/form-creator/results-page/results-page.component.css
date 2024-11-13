@@ -1,3 +1,11 @@
 nz-layout {
   background-color: transparent;
 }
+
+.button-group button {
+  margin-right: 8px;
+}
+
+.button-group button:last-child {
+  margin-right: 0;
+}
