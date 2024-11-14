@@ -1,12 +1,10 @@
-<div>
-  <nz-upload
-    [nzDisabled]="!inlineEdit.enabled"
-    [nzAction]="uploadToLocalStorage"
-    [nzHeaders]="{ authorization: 'authorization-text' }"
-    (nzChange)="onChange($event)">
-    <button nz-button>
-      <span nz-icon nzType="upload"></span>
-      Click to Upload
-    </button>
-  </nz-upload>
-</div>
+<nz-upload
+  [nzDisabled]="!inlineEdit.enabled"
+  [nzAction]="uploadToLocalStorage"
+  [nzHeaders]="{ authorization: 'authorization-text' }"
+  (nzChange)="onChange($event)">
+  <button nz-button>
+    <span nz-icon nzType="upload"></span>
+    Click to Upload
+  </button>
+</nz-upload>

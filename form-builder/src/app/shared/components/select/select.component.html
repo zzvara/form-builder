@@ -1,16 +1,14 @@
-<div>
-  <nz-select
-    [disabled]="!inlineEdit.enabled"
-    [nzMode]="data.isMultipleChoice ? 'multiple' : 'default'"
-    [(ngModel)]="data.defaultValue"
-    [nzPlaceHolder]="data.placeholderValue"
-    (ngModelChange)="onChange($event)"
-    (mousedown)="$event.stopPropagation()"
-    nzAllowClear>
-    <nz-option
-      *ngFor="let answerOption of data.selectOptions"
-      [nzValue]="answerOption"
-      [nzLabel]="answerOption"
-    ></nz-option>
-  </nz-select>
-</div>
+<nz-select
+  [disabled]="!inlineEdit.enabled"
+  [nzMode]="data.isMultipleChoice ? 'multiple' : 'default'"
+  [(ngModel)]="data.defaultValue"
+  [nzPlaceHolder]="data.placeholderValue"
+  (ngModelChange)="onChange($event)"
+  (mousedown)="$event.stopPropagation()"
+  nzAllowClear>
+  <nz-option
+    *ngFor="let answerOption of data.selectOptions"
+    [nzValue]="answerOption"
+    [nzLabel]="answerOption"
+  ></nz-option>
+</nz-select>

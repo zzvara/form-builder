@@ -11,6 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {FormBuilder, FormGroup, NgForm} from "@angular/forms";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
 import {FormInputData} from "../../interfaces/form-input-data";
 import {InputData} from "../../interfaces/input-data";
@@ -23,6 +24,7 @@ import {getInputGroups} from "../../../pages/edit/config/edit-data-config";
   styleUrls: ['./input-holder.component.css']
 })
 export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, AfterViewInit {
+  protected readonly formBuilder = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 
   @Input() formInput!: FormInputData<D, T>;
@@ -33,6 +35,7 @@ export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, 
   @Output() edited = new EventEmitter<D>();
   @Output() removeComponentEvent = new EventEmitter<string>();
 
+  @ViewChild('inputHolderForm') form!: NgForm;
   @ViewChild(NgComponentOutlet) inputOutlet!: NgComponentOutlet;
 
   componentInputs!: {
@@ -86,5 +89,12 @@ export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, 
 
   change() {
     this.edited.emit(this.inputData);
+  }
+
+  isValid() {
+    return this.form?.valid;
+  }
+  isPristine() {
+    return this.form?.pristine;
   }
 }

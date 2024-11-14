@@ -2,34 +2,56 @@
   [nzTitle]="titleTemplate"
   [nzExtra]="headerButtons"
   [nzBodyStyle]="{'padding-right': '24px', 'padding-left': '24px'}"
-  style="width: 100%">
-  <div style="padding-bottom: 10px">
-    <span *ngIf="!inlineEdit.enabled">{{ inputData.questionValue }}</span>
-    <input *ngIf="inlineEdit.enabled"
-           nz-input
-           nzSize="small"
-           (mousedown)="$event.stopPropagation()"
-           [placeholder]="inputData.placeholderValue"
-           [(ngModel)]="inputData.questionValue"
-           (ngModelChange)="change()"/>
-  </div>
-  <div style="padding-bottom: 10px">
-    <span style="white-space: pre-wrap" *ngIf="!inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
-    <textarea *ngIf="inlineEdit.enabled"
-           nz-input
-           nzAutosize
-           (mousedown)="$event.stopPropagation()"
-           [placeholder]="inputData.placeholderValue"
-           [(ngModel)]="inputData.descriptionValue"
-           (ngModelChange)="change()"></textarea>
-  </div>
-  <ng-container *ngComponentOutlet="formInput.type; inputs: componentInputs"/>
+  [ngClass]="{
+      'valid-style': inputHolderForm.valid,
+      'invalid-style': inputHolderForm.invalid
+  }">
+  <form #inputHolderForm="ngForm" nz-form>
+    <nz-form-item style="margin-bottom: 10px">
+      <nz-form-control nzErrorTip="Input question is mandatory!">
+        <span *ngIf="!inlineEdit.enabled">{{ inputData.questionValue }}</span>
+        <input *ngIf="inlineEdit.enabled"
+               nz-input
+               nzSize="small"
+               name="inputQuestion"
+               required
+               (mousedown)="$event.stopPropagation()"
+               [placeholder]="inputData.placeholderValue"
+               [(ngModel)]="inputData.questionValue"
+               (ngModelChange)="change()"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="margin-bottom: 10px">
+      <nz-form-control>
+        <span style="white-space: pre-wrap" *ngIf="!inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
+        <textarea *ngIf="inlineEdit.enabled"
+                  nz-input
+                  nzAutosize
+                  name="inputDescription"
+                  (mousedown)="$event.stopPropagation()"
+                  [placeholder]="inputData.placeholderValue"
+                  [(ngModel)]="inputData.descriptionValue"
+                  (ngModelChange)="change()"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <ng-container appInputValidator *ngComponentOutlet="formInput.type; inputs: componentInputs"/>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
   <span style="color: red">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
 </nz-card>
 <ng-template #titleTemplate>
-  <div>
     <span>{{ formInput.title }}</span>
-  </div>
+    <span *ngIf="inputHolderForm.invalid"
+          nz-tooltip
+          nzTooltipTitle="Invalid input!"
+          nzTooltipColor="red"
+          nz-icon
+          nzType="exclamation-circle"
+          nzTheme="outline"
+          style="color: red; margin-left: 20px"></span>
 </ng-template>
 <ng-template #headerButtons>
   <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>

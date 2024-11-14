@@ -17,10 +17,11 @@ import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzSelectModule} from 'ng-zorro-antd/select';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
-import {DatePickerEditComponent} from './components/date-picker/date-picker-edit/date-picker-edit.component';
 //Components
 import {DatePickerComponent} from './components/date-picker/date-picker.component';
+import {DatePickerEditComponent} from './components/date-picker/date-picker-edit/date-picker-edit.component';
 import {HeaderComponent} from './components/header/header.component';
 import {InputHolderComponent} from './components/input-holder/input-holder.component';
 import {InputEditComponent} from './components/input/input-edit/input-edit.component';
@@ -37,6 +38,7 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {TextareaEditComponent} from './components/textarea/textarea-edit/textarea-edit.component';
 import {TextareaComponent} from './components/textarea/textarea.component';
 import {MutateTextDirective} from './directives/mutate-text.directive';
+import { InputValidatorDirective } from './directives/input-validator.directive';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -61,7 +63,8 @@ const COMPONENTS = [
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    InputValidatorDirective,
   ],
   imports: [
     NzInputNumberModule,
@@ -84,7 +87,8 @@ const COMPONENTS = [
     NzCheckboxModule,
     NzListModule,
     ReactiveFormsModule,
-    NzFormModule
+    NzFormModule,
+    NzToolTipModule
   ],
   providers: [],
   exports: [...COMPONENTS, InputHolderComponent],
