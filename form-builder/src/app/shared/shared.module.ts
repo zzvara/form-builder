@@ -38,7 +38,6 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {TextareaEditComponent} from './components/textarea/textarea-edit/textarea-edit.component';
 import {TextareaComponent} from './components/textarea/textarea.component';
 import {MutateTextDirective} from './directives/mutate-text.directive';
-import { InputValidatorDirective } from './directives/input-validator.directive';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -64,7 +63,6 @@ const COMPONENTS = [
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    InputValidatorDirective,
   ],
   imports: [
     NzInputNumberModule,

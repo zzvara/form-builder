@@ -1,7 +1,24 @@
-<input nz-input
-       type="text"
-       [disabled]="!inlineEdit.enabled"
-       [placeholder]="data.placeholderValue"
-       [(ngModel)]="data.defaultValue"
-       (ngModelChange)="onChange($event)"
-       (mousedown)="$event.stopPropagation()"/>
+<nz-form-item>
+  <nz-form-control [nzErrorTip]="errorTemplate">
+    <nz-input-group [nzSuffix]="suffixTemplateCounter">
+      <input #inputComponent="ngModel"
+             nz-input
+             type="text"
+             [required]="data.required"
+             [minlength]="data.minLengthNumber"
+             [maxlength]="data.maxLengthNumber"
+             [disabled]="!inlineEdit.enabled"
+             [placeholder]="data.placeholderValue"
+             [(ngModel)]="data.defaultValue"
+             [ngModelOptions]="{updateOn: data.changeDetection}"
+             (ngModelChange)="onChange($event)"
+             (mousedown)="$event.stopPropagation()"/>
+    </nz-input-group>
+  </nz-form-control>
+</nz-form-item>
+<ng-template #errorTemplate let-control>
+  <span style="white-space: pre-wrap">{{getErrors(control)}}</span>
+</ng-template>
+<ng-template #suffixTemplateCounter>
+  <span *ngIf="data.maxLength && data.showCharacterCounter">{{(inputComponent.value ?? "").length}}/{{data.maxLengthNumber}}</span>
+</ng-template>

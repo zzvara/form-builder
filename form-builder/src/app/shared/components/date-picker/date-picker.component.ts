@@ -21,7 +21,13 @@ export class DatePickerComponent extends AbstractInput<DatePickerComponentData, 
         descriptionValue: this.data.descriptionValue,
         defaultValue:     this.data.defaultValue,
         placeholderValue: this.data.placeholderValue,
+        changeDetection:      this.data.changeDetection,
       }
-    }).subscribe(result => this.defaultValueSetter(result));
+    }).subscribe(result => {
+      if (result) {
+        this.defaultValueSetter(result)
+        this.onEdit(result);
+      }
+    });
   }
 }

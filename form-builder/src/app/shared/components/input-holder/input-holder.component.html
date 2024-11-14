@@ -34,11 +34,7 @@
                   (ngModelChange)="change()"></textarea>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
-      <nz-form-control>
-        <ng-container appInputValidator *ngComponentOutlet="formInput.type; inputs: componentInputs"/>
-      </nz-form-control>
-    </nz-form-item>
+    <ng-container *ngComponentOutlet="formInput.type; inputs: componentInputs"/>
   </form>
   <span style="color: red">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
 </nz-card>

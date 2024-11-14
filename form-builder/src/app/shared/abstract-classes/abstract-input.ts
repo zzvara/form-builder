@@ -12,14 +12,11 @@ export abstract class AbstractInput<D extends InputData<T>, T> implements FormCo
 
   abstract edit(): void;
 
-  defaultValueSetter(modifiedData: D | undefined) {
-    if (modifiedData) {
-      this.data.questionValue    = modifiedData.questionValue;
-      this.data.descriptionValue = modifiedData.descriptionValue;
-      this.data.defaultValue     = modifiedData.defaultValue;
-      this.data.placeholderValue = modifiedData.placeholderValue;
-      this.onEdit(modifiedData);
-    }
+  defaultValueSetter(modifiedData: D) {
+    this.data.questionValue    = modifiedData.questionValue;
+    this.data.descriptionValue = modifiedData.descriptionValue;
+    this.data.defaultValue     = modifiedData.defaultValue;
+    this.data.placeholderValue = modifiedData.placeholderValue;
   }
 
   onEdit(modifiedData: D) {
@@ -27,6 +24,6 @@ export abstract class AbstractInput<D extends InputData<T>, T> implements FormCo
   }
 
   onChange($event: any) {
-    this.onEdit(this.data)
+    this.onEdit(this.data);
   }
 }

@@ -1,7 +1,15 @@
-<input nz-input
-       type="number"
-       [disabled]="!inlineEdit.enabled"
-       [(ngModel)]="data.defaultValue"
-       [placeholder]="data.placeholderValue"
-       (ngModelChange)="onChange($event)"
-       (mousedown)="$event.stopPropagation()"/>
+<nz-form-item>
+  <nz-form-control [nzErrorTip]="errorTemplate">
+    <input nz-input
+           type="number"
+           [disabled]="!inlineEdit.enabled"
+           [placeholder]="data.placeholderValue"
+           [(ngModel)]="data.defaultValue"
+           [ngModelOptions]="{updateOn: data.changeDetection}"
+           (ngModelChange)="onChange($event)"
+           (mousedown)="$event.stopPropagation()"/>
+  </nz-form-control>
+</nz-form-item>
+<ng-template #errorTemplate let-control>
+  <span style="white-space: pre-wrap">{{control.errors | json}}</span>
+</ng-template>

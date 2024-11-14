@@ -24,7 +24,6 @@ import {getInputGroups} from "../../../pages/edit/config/edit-data-config";
   styleUrls: ['./input-holder.component.css']
 })
 export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, AfterViewInit {
-  protected readonly formBuilder = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 
   @Input() formInput!: FormInputData<D, T>;

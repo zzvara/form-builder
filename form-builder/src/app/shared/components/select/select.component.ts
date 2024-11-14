@@ -22,7 +22,8 @@ export class SelectComponent extends AbstractInput<SelectComponentData, string |
         selectOptions:    this.data.selectOptions,
         defaultValue:     this.data.defaultValue,
         placeholderValue: this.data.placeholderValue,
-        isMultipleChoice: this.data.isMultipleChoice
+        isMultipleChoice: this.data.isMultipleChoice,
+        changeDetection:      this.data.changeDetection,
       }
     }).subscribe(result => {
       if (result) {

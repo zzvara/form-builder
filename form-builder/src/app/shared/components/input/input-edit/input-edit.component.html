@@ -28,8 +28,73 @@
 
   <span>Set Default Value</span>
   <nz-form-item>
-    <nz-form-control>
+    <nz-form-control [nzErrorTip]="eeeeeeeeeeeeeeeeeee">
       <input nz-input placeholder="Default value" formControlName="defaultValue"/>
     </nz-form-control>
+    <ng-template #eeeeeeeeeeeeeeeeeee let-control>
+      <ng-container *ngIf="hasErrors(control, 'required')">Cannot be empty!</ng-container>
+    </ng-template>
   </nz-form-item>
+
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="required">Is Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('required')">
+      <span>Required error message</span>
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input
+                 formControlName="requiredMessage"
+                 placeholder="Required error message"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="minLength">Min length Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('minLength')">
+      <span>Max length number:</span>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-number formControlName="minLengthNumber"
+                           [nzMin]="0"
+                           [nzStep]="1"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+      <span>Min length error message</span>
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input
+                 formControlName="minLengthMessage"
+                 placeholder="Min length error message"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="maxLength">Max length Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('maxLength')">
+      <span>Max length number:</span>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-number formControlName="maxLengthNumber"
+                           [nzMin]="0"
+                           [nzStep]="1"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+      <span>Character counter</span>
+      <nz-form-item>
+        <nz-form-control>
+          <label nz-checkbox formControlName="showCharacterCounter">Show character counter?</label>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
 </form>

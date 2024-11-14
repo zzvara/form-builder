@@ -21,22 +21,34 @@ import {FormInputData} from "../../../shared/interfaces/form-input-data";
 const textInputOptions: InputComponentData = {
   questionValue: "Text Field question...",
   descriptionValue: "Question description...",
-  placeholderValue: ""
+  placeholderValue: "",
+  required: false,
+  requiredMessage: "Field cannot be empty!",
+  minLength: false,
+  minLengthMessage: "Field value cannot be shorter than: ",
+  minLengthNumber: null,
+  maxLength: false,
+  maxLengthNumber: null,
+  showCharacterCounter: false,
+  changeDetection: "change",
 };
 const numberInputOptions: NumberInputComponentData = {
   questionValue: "Number Field question...",
   descriptionValue: "Question description...",
-  placeholderValue: ""
+  placeholderValue: "",
+  changeDetection: "change",
 };
 const dateInputOptions: DatePickerComponentData = {
   questionValue: "Date Picker question...",
   descriptionValue: "Question description...",
-  placeholderValue: ""
+  placeholderValue: "",
+  changeDetection: "change",
 };
 const textAreaInputOptions: TextareaComponentData = {
   questionValue: "Text area question...",
   descriptionValue: "Question description...",
-  placeholderValue: ""
+  placeholderValue: "",
+  changeDetection: "change",
 };
 const pictureInputOptions: PictureInputComponentData = {
   questionValue: "Picture Input question...",
@@ -48,7 +60,8 @@ const selectInputOptions: SelectComponentData = {
   descriptionValue: "Question description...",
   placeholderValue: "",
   selectOptions: ["Option 1", "Option 2"],
-  isMultipleChoice: false
+  isMultipleChoice: false,
+  changeDetection: "change",
 };
 
 export function getInputGroups(): FormInputData<any, any>[] {

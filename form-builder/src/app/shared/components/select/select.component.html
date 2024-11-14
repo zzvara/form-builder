@@ -1,14 +1,22 @@
-<nz-select
-  [disabled]="!inlineEdit.enabled"
-  [nzMode]="data.isMultipleChoice ? 'multiple' : 'default'"
-  [(ngModel)]="data.defaultValue"
-  [nzPlaceHolder]="data.placeholderValue"
-  (ngModelChange)="onChange($event)"
-  (mousedown)="$event.stopPropagation()"
-  nzAllowClear>
-  <nz-option
-    *ngFor="let answerOption of data.selectOptions"
-    [nzValue]="answerOption"
-    [nzLabel]="answerOption"
-  ></nz-option>
-</nz-select>
+<nz-form-item>
+  <nz-form-control [nzErrorTip]="errorTemplate">
+    <nz-select
+      [disabled]="!inlineEdit.enabled"
+      [nzPlaceHolder]="data.placeholderValue"
+      [nzMode]="data.isMultipleChoice ? 'multiple' : 'default'"
+      [(ngModel)]="data.defaultValue"
+      [ngModelOptions]="{updateOn: data.changeDetection}"
+      (ngModelChange)="onChange($event)"
+      (mousedown)="$event.stopPropagation()"
+      nzAllowClear>
+      <nz-option
+        *ngFor="let answerOption of data.selectOptions"
+        [nzValue]="answerOption"
+        [nzLabel]="answerOption"
+      ></nz-option>
+    </nz-select>
+  </nz-form-control>
+</nz-form-item>
+<ng-template #errorTemplate let-control>
+  <span style="white-space: pre-wrap">{{control.errors | json}}</span>
+</ng-template>

@@ -48,6 +48,11 @@ export class PictureInputComponent extends AbstractInput<PictureInputComponentDa
         defaultValue:     this.data.defaultValue,
         placeholderValue: this.data.placeholderValue,
       }
-    }).subscribe(result => this.defaultValueSetter(result));
+    }).subscribe(result => {
+      if (result) {
+        this.defaultValueSetter(result)
+        this.onEdit(result);
+      }
+    });
   }
 }
