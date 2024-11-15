@@ -2,7 +2,7 @@
 import {CdkDrag, CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzCardModule} from 'ng-zorro-antd/card';
@@ -70,6 +70,7 @@ const COMPONENTS = [
     NzModalModule,
     NzCheckboxModule,
     NzListModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   exports: [...COMPONENTS],

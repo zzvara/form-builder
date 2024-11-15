@@ -1,6 +1,7 @@
 import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormInput } from 'src/app/items/project.interface';
+import { SearchService } from 'src/app/services/search.service';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 interface Panel {
@@ -18,7 +19,7 @@ interface Panels {
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
+  constructor(private undoRedoService: UndoRedoService<FormInput[]>, private searchService: SearchService) {}
   panels: Panels = {
     basic: {
       name: 'Basic inputs',
@@ -26,15 +27,14 @@ export class SidebarComponent {
     },
     selector: {
       name: 'Selectors',
-      active: true,
+      active: false,
     },
   };
-  @Input() formInputs: any[] = [];
-  @Input() sectionId!: string;
-  @Output() formInputsChange = new EventEmitter<any[]>();
 
-  onFormInputsChange(updatedFormInputs: any[]): void {
-    this.formInputs = updatedFormInputs;
-    this.formInputsChange.emit(this.formInputs);
+  searchQuery: string = '';
+
+  onSearch() {
+    this.searchService.setSearchQuery(this.searchQuery);
   }
+
 }

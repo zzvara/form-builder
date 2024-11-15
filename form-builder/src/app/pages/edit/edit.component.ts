@@ -12,6 +12,7 @@ import {SelectComponent} from "../../shared/components/select/select.component";
 import {TextareaComponent} from "../../shared/components/textarea/textarea.component";
 import {SectionList} from "./interfaces/section-list";
 import {LayoutEnum} from "./interfaces/layout-enum";
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-edit',
@@ -22,7 +23,11 @@ export class EditComponent implements OnInit, OnChanges {
   private readonly projectService = inject(ProjectService<Project>);
   private readonly undoRedoService = inject(UndoRedoService<FormInput[]>);
 
-  constructor() {}
+  constructor(private searchService: SearchService) {
+    this.searchService.searchQuery$.subscribe((query) => {
+      this.searchQuery = query;
+    });
+  }
 
   @Input() projectId: number | undefined;
 
@@ -50,6 +55,12 @@ export class EditComponent implements OnInit, OnChanges {
 
   sectionId!: number;
   sectionComponentId!: number;
+
+  searchQuery: string = '';
+
+  isItemVisible(itemName: string): boolean {
+    return itemName.toLowerCase().includes(this.searchQuery.toLowerCase());
+  }
 
   /**
    * Loads project form inputs based on the current project ID and version number.
