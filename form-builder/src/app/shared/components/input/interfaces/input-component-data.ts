@@ -1,16 +1,16 @@
-import {InputData} from "../../../interfaces/input-data";
+import {FieldLikeInputData} from "../../../interfaces/field-like-input-data";
 
-export interface InputComponentData extends InputData<string> {
-  required: boolean;
-  requiredMessage: string;
-
+export interface InputComponentData extends FieldLikeInputData<string> {
   minLength: boolean;
   minLengthNumber: number | null;
-  minLengthMessage: string;
+  minLengthMessage?: string;
 
   maxLength: boolean;
   maxLengthNumber: number | null;
 
   showCharacterCounter: boolean;
-  changeDetection: "change" | "blur";
+}
+
+export interface InputComponentEditData extends InputComponentData {
+  setDefaultValue: boolean;
 }

@@ -1,4 +1,6 @@
 import {Component, inject} from '@angular/core';
+import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
+import {UpdateOnStrategy} from "../../interfaces/update-on-strategy";
 import {SelectEditComponent} from "./select-edit/select-edit.component";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
 import {ModalServiceService} from "../../../services/modal/modal-service.service";
@@ -9,9 +11,7 @@ import {SelectComponentData} from "./interfaces/select-component-data";
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css']
 })
-export class SelectComponent extends AbstractInput<SelectComponentData, string | string[]> {
-  private readonly modalService: ModalServiceService<SelectEditComponent, SelectComponentData> = inject(ModalServiceService);
-
+export class SelectComponent extends AbstractFieldLikeInputs<SelectComponentData, SelectEditComponent, string | string[]> {
   override edit(): void {
     this.modalService.openModal({
       modalTitle: 'Edit Select Component Settings',
@@ -23,7 +23,10 @@ export class SelectComponent extends AbstractInput<SelectComponentData, string |
         defaultValue:     this.data.defaultValue,
         placeholderValue: this.data.placeholderValue,
         isMultipleChoice: this.data.isMultipleChoice,
-        changeDetection:      this.data.changeDetection,
+        showTooltip:      this.data.showTooltip,
+        tooltipText:      this.data.tooltipText,
+        required:         this.data.required,
+        requiredMessage:  this.data.requiredMessage,
       }
     }).subscribe(result => {
       if (result) {

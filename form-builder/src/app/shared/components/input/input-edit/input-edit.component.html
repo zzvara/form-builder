@@ -1,22 +1,19 @@
 <form id="inputEditFormID" nz-form [formGroup]="formData">
-  <span>Question</span>
+  <span>Question:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input placeholder="Question" formControlName="questionValue"/>
     </nz-form-control>
     <ng-template #questionErrors let-control>
-      <ng-container *ngIf="hasErrors(control, 'required')">Cannot be empty!</ng-container>
+      <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
     </ng-template>
   </nz-form-item>
 
-  <span>Description</span>
+  <span>Description:</span>
   <nz-form-item>
-    <nz-form-control [nzErrorTip]="descriptionErrors">
+    <nz-form-control>
       <textarea nz-input nzAutosize placeholder="Description" formControlName="descriptionValue"></textarea>
     </nz-form-control>
-    <ng-template #descriptionErrors let-control>
-      <ng-container *ngIf="hasErrors(control, 'required')">Cannot be empty!</ng-container>
-    </ng-template>
   </nz-form-item>
 
   <span>Set Placeholder Value</span>
@@ -26,17 +23,37 @@
     </nz-form-control>
   </nz-form-item>
 
-  <span>Set Default Value</span>
-  <nz-form-item>
-    <nz-form-control [nzErrorTip]="eeeeeeeeeeeeeeeeeee">
-      <input nz-input placeholder="Default value" formControlName="defaultValue"/>
-    </nz-form-control>
-    <ng-template #eeeeeeeeeeeeeeeeeee let-control>
-      <ng-container *ngIf="hasErrors(control, 'required')">Cannot be empty!</ng-container>
-    </ng-template>
-  </nz-form-item>
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="setDefaultValue">Set default value?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('setDefaultValue')">
+    <span>Set Default Value</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
+          <nz-input-group [nzSuffix]="suffixTemplateCounter">
+            <input #defaultValueComponent
+                   nz-input
+                   [maxLength]="getControlValue('maxLengthNumber') ?? maxDefaultCharacterCount"
+                   placeholder="Default value"
+                   formControlName="defaultValue"/>
+          </nz-input-group>
+        </nz-form-control>
+        <ng-template #defaultValueErrorTemplate let-control>
+          <div *ngFor="let message of getErrorMessages(control)">{{message}}</div>
+        </ng-template>
+        <ng-template #suffixTemplateCounter>
+          <span *ngIf="getControlValue('maxLength') && getControlValue('showCharacterCounter') && getControlValue('maxLengthNumber')">
+            {{defaultValueComponent.value.length}}/{{getControlValue('maxLengthNumber')}}
+          </span>
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">Is Required?</label>
@@ -45,11 +62,14 @@
     <div *ngIf="getControlValue('required')">
       <span>Required error message</span>
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
           <input nz-input
                  formControlName="requiredMessage"
                  placeholder="Required error message"/>
         </nz-form-control>
+        <ng-template #requiredErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">If the field is required the message cannot be empty!</div>
+        </ng-template>
       </nz-form-item>
     </div>
     <nz-form-item>
@@ -58,21 +78,30 @@
       </nz-form-control>
     </nz-form-item>
     <div *ngIf="getControlValue('minLength')">
-      <span>Max length number:</span>
+      <span>Min length number:</span>
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control [nzErrorTip]="minLengthNumberErrorMessageTemplate">
           <nz-input-number formControlName="minLengthNumber"
-                           [nzMin]="0"
+                           [nzMin]="1"
+                           [nzMax]="getControlValue('maxLength') && getControlValue('maxLengthNumber') ? getControlValue('maxLengthNumber') : maxDefaultCharacterCount"
                            [nzStep]="1"></nz-input-number>
         </nz-form-control>
+        <ng-template #minLengthNumberErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+          <div *ngIf="hasErrors(control, 'minError')">Cannot be lower than 1!</div>
+          <div *ngIf="hasErrors(control, 'minMaxError')">Cannot be higher than the set max value ({{control.errors['minMaxError']}})!</div>
+        </ng-template>
       </nz-form-item>
-      <span>Min length error message</span>
+      <span>Min length error message (use '&#123;*}' for min length):</span>
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control [nzErrorTip]="minLengthMessageErrorMessageTemplate">
           <input nz-input
                  formControlName="minLengthMessage"
                  placeholder="Min length error message"/>
         </nz-form-control>
+        <ng-template #minLengthMessageErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">If the field has set min length the message cannot be empty!</div>
+        </ng-template>
       </nz-form-item>
     </div>
     <nz-form-item>
@@ -83,17 +112,43 @@
     <div *ngIf="getControlValue('maxLength')">
       <span>Max length number:</span>
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control [nzErrorTip]="maxLengthNumberErrorMessageTemplate">
           <nz-input-number formControlName="maxLengthNumber"
-                           [nzMin]="0"
+                           [nzMin]="getControlValue('minLength') ? getControlValue('minLengthNumber') : 1"
                            [nzStep]="1"></nz-input-number>
         </nz-form-control>
+        <ng-template #maxLengthNumberErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+          <div *ngIf="hasErrors(control, 'maxError')">Cannot be lower than 1!</div>
+          <div *ngIf="hasErrors(control, 'maxMinError')">Cannot be lower than the set min value ({{control.errors['maxMinError']}})!</div>
+        </ng-template>
       </nz-form-item>
       <span>Character counter</span>
       <nz-form-item>
         <nz-form-control>
           <label nz-checkbox formControlName="showCharacterCounter">Show character counter?</label>
         </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="showTooltip">Show input tooltip?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('showTooltip')">
+      <span>Tooltip text:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
+          <input nz-input
+                 formControlName="tooltipText"
+                 placeholder="Tooltip text"/>
+        </nz-form-control>
+        <ng-template #tooltipTextErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Must provide a tooltip message!</div>
+        </ng-template>
       </nz-form-item>
     </div>
   </div>

@@ -11,8 +11,7 @@ import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit
   templateUrl: './picture-input.component.html',
   styleUrls: ['./picture-input.component.css'],
 })
-export class PictureInputComponent extends AbstractInput<PictureInputComponentData, string | null> {
-  private readonly modalService: ModalServiceService<PictureInputEditComponent, PictureInputComponentData> = inject(ModalServiceService);
+export class PictureInputComponent extends AbstractInput<PictureInputComponentData, PictureInputEditComponent, string | null> {
 
   onFileChange(event: any): void {
     this.data.file = event.target.files[0];

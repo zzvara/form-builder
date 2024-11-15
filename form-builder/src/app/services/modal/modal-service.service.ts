@@ -1,20 +1,21 @@
 import {inject, Injectable} from '@angular/core';
-import {NzModalService} from "ng-zorro-antd/modal";
-import {ModalData} from "../../shared/interfaces/modal-data";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
-import {AbstractEditForm} from "../../shared/abstract-classes/abstract-edit-form";
+import {NzModalService} from "ng-zorro-antd/modal";
 import {Observable} from "rxjs";
+import {AbstractEditForm} from "../../shared/abstract-classes/abstract-edit-form";
+import {InputData} from "../../shared/interfaces/input-data";
+import {ModalData} from "../../shared/interfaces/modal-data";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ModalServiceService<T extends AbstractEditForm<D>, D> {
+export class ModalServiceService<T extends AbstractEditForm<D>, D extends InputData<any>> {
   private readonly modal = inject(NzModalService);
 
   constructor() { }
 
-  openModal(component: ModalData<T, D>): Observable<D | undefined> {
-    const modal = this.modal.create<T,D,D>({
+  openModal<RetType extends D>(component: ModalData<T, D>): Observable<RetType | undefined> {
+    const modal = this.modal.create<T,D,RetType>({
       nzTitle: component.modalTitle,
       nzContent: component.modalContent,
       nzData: component.modalData,
@@ -42,7 +43,7 @@ export class ModalServiceService<T extends AbstractEditForm<D>, D> {
               if (contentComponentInstance?.isPristine()) {
                 modal.close();
               } else {
-                modal.close(contentComponentInstance?.getFormData());
+                modal.close(contentComponentInstance?.getFormData() as RetType);
               }
           }
       }

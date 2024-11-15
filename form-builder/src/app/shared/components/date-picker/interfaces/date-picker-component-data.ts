@@ -1,5 +1,4 @@
-import {InputData} from "../../../interfaces/input-data";
+import {FieldLikeInputData} from "../../../interfaces/field-like-input-data";
 
-export interface DatePickerComponentData extends InputData<Date> {
-  changeDetection: "change" | "blur";
+export interface DatePickerComponentData extends FieldLikeInputData<Date> {
 }

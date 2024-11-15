@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
+import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
+import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
 import {SelectComponentData} from "../interfaces/select-component-data";
 import {AbstractControl, FormArray, FormControl, Validators} from "@angular/forms";
 import {ListValidators} from "../../../validators/list-validators";
@@ -10,29 +12,21 @@ import {CustomValidators} from "../../../validators/custom-validators";
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.css']
 })
-export class SelectEditComponent extends AbstractEditForm<SelectComponentData> {
+export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectComponentData> {
+  override defaultValueUpdateOn = UpdateOnStrategy.CHANGE;
   newOption!: FormControl<string | null>;
 
   override ngOnInit(): void {
     super.ngOnInit();
-    this.formData = this.formBuilder.group({
-      selectOptions:      this.formBuilder.array([],
-        ListValidators.validateListNum(2)),
-      defaultValue: new FormControl(null, {
-        updateOn: "change"
-      }),
-      questionValue:      new FormControl(null, Validators.required),
-      descriptionValue:   new FormControl(null, Validators.required),
-      placeholderValue:   new FormControl(),
+    this.addControls({
+      selectOptions:      this.formBuilder.array([], ListValidators.validateListNum(2)),
       isMultipleChoice:   new FormControl(false, {
-        updateOn: "change"
+        updateOn: UpdateOnStrategy.CHANGE
       })
-    }, {
-      updateOn: "blur"
     });
 
     this.newOption = new FormControl(null, {
-      updateOn: "change",
+      updateOn: UpdateOnStrategy.CHANGE,
       validators: [
         Validators.required,
         CustomValidators.validateStringNotEmpty,
@@ -54,41 +48,43 @@ export class SelectEditComponent extends AbstractEditForm<SelectComponentData> {
   get options(): FormArray {
     return  this.formData.get('selectOptions') as FormArray;
   }
+
   get optionsValues(): string[] {
     if ( this.formData) {
       return this.options.controls.map(ctrl => ctrl.value);
     }
     return [];
   }
-
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
+
   set newOptionValue(value: string) {
     this.newOption.setValue(value);
   }
-
   get isMultipleChoice(): boolean {
     return  this.formData.get('isMultipleChoice')?.getRawValue();
   }
+
 //----------------------------------------------------------------------------------------------------------------------
 
   getDefaultValues(): string | string[] {
     return  this.formData.get("defaultValue")?.getRawValue();
   }
+
   setDefaultValue(values: string | string[]): void {
      this.formData.get("defaultValue")?.setValue(values);
   }
-
   // Add a new option
+
   addOption() {
     this.options.push(new FormControl(this.newOptionValue));
     this.newOptionValue = "";
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
-
   // Remove an existing option
+
   removeOption(option: AbstractControl<string>, optionIndex: number) {
     this.options.removeAt(optionIndex);
     if (Array.isArray(this.getDefaultValues())) {

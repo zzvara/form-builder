@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
+import {Component} from '@angular/core';
+import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
+import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
 import {DatePickerComponentData} from "../interfaces/date-picker-component-data";
 
 @Component({
@@ -8,15 +8,11 @@ import {DatePickerComponentData} from "../interfaces/date-picker-component-data"
   templateUrl: './date-picker-edit.component.html',
   styleUrls: ['./date-picker-edit.component.css']
 })
-export class DatePickerEditComponent extends AbstractEditForm<DatePickerComponentData>{
+export class DatePickerEditComponent extends AbstractFieldLikeEditForm<DatePickerComponentData>{
+  override defaultValueUpdateOn = UpdateOnStrategy.CHANGE;
+
   override ngOnInit(): void {
     super.ngOnInit();
-    this.formData = this.formBuilder.group({
-      questionValue:    new FormControl(null, Validators.required),
-      descriptionValue: new FormControl(null, Validators.required),
-      placeholderValue: new FormControl(),
-      defaultValue:     new FormControl()
-    });
     this.initializeFormValues();
   }
 }

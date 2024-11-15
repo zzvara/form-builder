@@ -1,6 +1,6 @@
 <nz-form-item>
   <nz-form-control [nzErrorTip]="errorTemplate">
-    <nz-input-group [nzSuffix]="suffixTemplateCounter">
+    <nz-input-group [nzPrefix]="prefixTemplate" [nzSuffix]="suffixTemplateCounter">
       <input #inputComponent="ngModel"
              nz-input
              type="text"
@@ -8,16 +8,18 @@
              [minlength]="data.minLengthNumber"
              [maxlength]="data.maxLengthNumber"
              [disabled]="!inlineEdit.enabled"
-             [placeholder]="data.placeholderValue"
+             [placeholder]="data.placeholderValue ?? ''"
              [(ngModel)]="data.defaultValue"
-             [ngModelOptions]="{updateOn: data.changeDetection}"
              (ngModelChange)="onChange($event)"
              (mousedown)="$event.stopPropagation()"/>
     </nz-input-group>
   </nz-form-control>
 </nz-form-item>
 <ng-template #errorTemplate let-control>
-  <span style="white-space: pre-wrap">{{getErrors(control)}}</span>
+  <div *ngFor="let message of getErrorMessages(control) ">{{message}}</div>
+</ng-template>
+<ng-template #prefixTemplate>
+  <span *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle"></span>
 </ng-template>
 <ng-template #suffixTemplateCounter>
   <span *ngIf="data.maxLength && data.showCharacterCounter">{{(inputComponent.value ?? "").length}}/{{data.maxLengthNumber}}</span>

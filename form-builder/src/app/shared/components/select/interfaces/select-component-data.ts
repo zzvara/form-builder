@@ -1,7 +1,6 @@
-import {InputData} from "../../../interfaces/input-data";
+import {FieldLikeInputData} from "../../../interfaces/field-like-input-data";
 
-export interface SelectComponentData extends InputData<string | string[]>{
+export interface SelectComponentData extends FieldLikeInputData<string | string[]>{
   selectOptions: string[];
   isMultipleChoice: boolean;
-  changeDetection: "change" | "blur";
 }

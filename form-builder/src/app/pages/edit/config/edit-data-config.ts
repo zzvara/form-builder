@@ -4,9 +4,7 @@ import {InputComponent} from "../../../shared/components/input/input.component";
 import {InputComponentData} from "../../../shared/components/input/interfaces/input-component-data";
 import {NumberInputComponentData} from "../../../shared/components/number-input/interfaces/number-input-component-data";
 import {NumberInputComponent} from "../../../shared/components/number-input/number-input.component";
-import {
-  PictureInputComponentData
-} from "../../../shared/components/picture-input/interfaces/picture-input-component-data";
+import {PictureInputComponentData} from "../../../shared/components/picture-input/interfaces/picture-input-component-data";
 import {PictureInputComponent} from "../../../shared/components/picture-input/picture-input.component";
 import {SectionComponent} from "../../../shared/components/section/section.component";
 import {SelectComponentData} from "../../../shared/components/select/interfaces/select-component-data";
@@ -14,56 +12,62 @@ import {SelectComponent} from "../../../shared/components/select/select.componen
 import {SidebarData} from "../../../shared/components/sidebar/interfaces/sidebar-data";
 import {TextareaComponentData} from "../../../shared/components/textarea/interfaces/textarea-component-data";
 import {TextareaComponent} from "../../../shared/components/textarea/textarea.component";
-import {EditComponent} from "../edit.component";
 import {FormInputData} from "../../../shared/interfaces/form-input-data";
+import {EditComponent} from "../edit.component";
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
   questionValue: "Text Field question...",
   descriptionValue: "Question description...",
-  placeholderValue: "",
   required: false,
   requiredMessage: "Field cannot be empty!",
   minLength: false,
-  minLengthMessage: "Field value cannot be shorter than: ",
+  minLengthMessage: "Field value cannot be shorter than: {*} characters!",
   minLengthNumber: null,
   maxLength: false,
   maxLengthNumber: null,
+  showTooltip: false,
   showCharacterCounter: false,
-  changeDetection: "change",
 };
 const numberInputOptions: NumberInputComponentData = {
   questionValue: "Number Field question...",
   descriptionValue: "Question description...",
-  placeholderValue: "",
-  changeDetection: "change",
+  required: false,
+  showTooltip: false,
 };
 const dateInputOptions: DatePickerComponentData = {
   questionValue: "Date Picker question...",
   descriptionValue: "Question description...",
-  placeholderValue: "",
-  changeDetection: "change",
+  required: false,
+  showTooltip: false,
 };
 const textAreaInputOptions: TextareaComponentData = {
-  questionValue: "Text area question...",
+  questionValue: "Textarea question...",
   descriptionValue: "Question description...",
-  placeholderValue: "",
-  changeDetection: "change",
+  required: false,
+  requiredMessage: "Field cannot be empty!",
+  minLength: false,
+  minLengthMessage: "Field value cannot be shorter than: {*} characters!",
+  minLengthNumber: null,
+  maxLength: false,
+  maxLengthNumber: null,
+  showTooltip: false,
+  showCharacterCounter: false,
 };
 const pictureInputOptions: PictureInputComponentData = {
   questionValue: "Picture Input question...",
   descriptionValue: "Question description...",
-  placeholderValue: ""
 };
 const selectInputOptions: SelectComponentData = {
   questionValue: "ComboBox question...",
   descriptionValue: "Question description...",
-  placeholderValue: "",
   selectOptions: ["Option 1", "Option 2"],
+  required: false,
+  showTooltip: false,
   isMultipleChoice: false,
-  changeDetection: "change",
 };
 
+//Used for resetting inputs
 export function getInputGroups(): FormInputData<any, any>[] {
   return [
     {

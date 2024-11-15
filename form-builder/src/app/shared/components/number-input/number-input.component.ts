@@ -1,5 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {ModalServiceService} from "../../../services/modal/modal-service.service";
+import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
 import {NumberInputComponentData} from "./interfaces/number-input-component-data";
 import {NumberInputEditComponent} from "./number-input-edit/number-input-edit.component";
@@ -9,9 +10,7 @@ import {NumberInputEditComponent} from "./number-input-edit/number-input-edit.co
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.css'],
 })
-export class NumberInputComponent extends AbstractInput<NumberInputComponentData, number> {
-  private readonly modalService: ModalServiceService<NumberInputEditComponent, NumberInputComponentData> = inject(ModalServiceService);
-
+export class NumberInputComponent extends AbstractFieldLikeInputs<NumberInputComponentData, NumberInputEditComponent, number> {
   override edit(): void {
     this.modalService.openModal({
       modalTitle: 'Edit Text Field Component Settings',
@@ -21,7 +20,10 @@ export class NumberInputComponent extends AbstractInput<NumberInputComponentData
         descriptionValue: this.data.descriptionValue,
         defaultValue:     this.data.defaultValue,
         placeholderValue: this.data.placeholderValue,
-        changeDetection:      this.data.changeDetection,
+        showTooltip:      this.data.showTooltip,
+        tooltipText:      this.data.tooltipText,
+        required:         this.data.required,
+        requiredMessage:  this.data.requiredMessage,
       }
     }).subscribe(result => {
       if (result) {

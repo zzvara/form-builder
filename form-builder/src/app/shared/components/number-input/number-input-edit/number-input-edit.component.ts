@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
+import {Component} from '@angular/core';
+import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
+import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
 import {NumberInputComponentData} from "../interfaces/number-input-component-data";
 
 @Component({
@@ -8,15 +8,9 @@ import {NumberInputComponentData} from "../interfaces/number-input-component-dat
   templateUrl: './number-input-edit.component.html',
   styleUrls: ['./number-input-edit.component.css']
 })
-export class NumberInputEditComponent extends AbstractEditForm<NumberInputComponentData> {
+export class NumberInputEditComponent extends AbstractFieldLikeEditForm<NumberInputComponentData> {
   override ngOnInit(): void {
     super.ngOnInit();
-    this.formData = this.formBuilder.group({
-      questionValue:    new FormControl(null, Validators.required),
-      descriptionValue: new FormControl(null, Validators.required),
-      placeholderValue: new FormControl(),
-      defaultValue:     new FormControl()
-    });
     this.initializeFormValues();
   }
 }

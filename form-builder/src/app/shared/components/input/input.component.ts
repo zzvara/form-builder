@@ -1,21 +1,16 @@
-import {Component, inject} from '@angular/core';
-import {ModalServiceService} from "../../../services/modal/modal-service.service";
-import {AbstractInput} from "../../abstract-classes/abstract-input";
+import {Component} from '@angular/core';
+import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
 import {InputEditComponent} from "./input-edit/input-edit.component";
-import {InputComponentData} from "./interfaces/input-component-data";
-import {HasValidation} from "../../interfaces/has-validation";
-import {AbstractControl} from "@angular/forms";
+import {InputComponentData, InputComponentEditData} from "./interfaces/input-component-data";
 
 @Component({
   selector: 'app-text-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent extends AbstractInput<InputComponentData, string> implements HasValidation<string>{
-  private readonly modalService: ModalServiceService<InputEditComponent, InputComponentData> = inject(ModalServiceService);
-
+export class InputComponent extends AbstractFieldLikeInputs<InputComponentData, InputEditComponent, string> {
   override edit(): void {
-    this.modalService.openModal({
+    this.modalService.openModal<InputComponentEditData>({
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: InputEditComponent,
       modalData: {
@@ -23,6 +18,8 @@ export class InputComponent extends AbstractInput<InputComponentData, string> im
         descriptionValue:     this.data.descriptionValue,
         defaultValue:         this.data.defaultValue,
         placeholderValue:     this.data.placeholderValue,
+        showTooltip:          this.data.showTooltip,
+        tooltipText:          this.data.tooltipText,
         required:             this.data.required,
         requiredMessage:      this.data.requiredMessage,
         minLength:            this.data.minLength,
@@ -31,37 +28,32 @@ export class InputComponent extends AbstractInput<InputComponentData, string> im
         maxLength:            this.data.maxLength,
         maxLengthNumber:      this.data.maxLengthNumber,
         showCharacterCounter: this.data.showCharacterCounter,
-        changeDetection:      this.data.changeDetection,
       }
     }).subscribe(result => {
       if (result) {
         this.defaultValueSetter(result);
-        this.data.required             = result.required;
-        if (result.required) {
-          this.data.requiredMessage    = result.requiredMessage;
-        }
-        this.data.minLength            = result.minLength;
+        this.data.minLength              = result.minLength;
         if (result.minLength) {
-          this.data.minLengthNumber    = result.minLengthNumber;
-          this.data.minLengthMessage   = result.minLengthMessage;
+          this.data.minLengthNumber      = result.minLengthNumber;
+          this.data.minLengthMessage     = result.minLengthMessage;
         }
-        this.data.maxLength            = result.maxLength;
+        this.data.maxLength              = result.maxLength;
         if (result.maxLength) {
           this.data.maxLengthNumber      = result.maxLengthNumber;
           this.data.showCharacterCounter = result.showCharacterCounter;
         }
-        this.data.changeDetection      = result.changeDetection;
+        if (!result.setDefaultValue) {
+          this.data.defaultValue = undefined;
+        }
         this.onEdit(result);
       }
     });
   }
 
-  getErrors(control: AbstractControl<string>): string {
-    return [
-      ["required", this.data.requiredMessage],
-      ["minlength", this.data.minLengthMessage + this.data.minLengthNumber + " characters"]]
-      .filter(error => control.hasError(error[0]))
-      .map(error => error[1])
-      .join("\n");
+  override errorList(): { validatorName: string; validationMessage: string }[] {
+    return super.errorList().concat([{
+      validatorName: "minlength",
+      validationMessage: this.data.minLengthMessage!.replace("{*}", String(this.data.minLengthNumber!)),
+    }]);
   }
 }

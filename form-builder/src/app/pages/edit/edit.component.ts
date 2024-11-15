@@ -5,6 +5,7 @@ import {ProjectService} from 'src/app/services/project.service';
 import {UndoRedoService} from 'src/app/services/undo-redo.service';
 import {SidebarData} from "../../shared/components/sidebar/interfaces/sidebar-data";
 import {FormInputData} from "../../shared/interfaces/form-input-data";
+import {InputData} from "../../shared/interfaces/input-data";
 import {getSideBarData} from "./config/edit-data-config";
 import {LayoutEnum} from "./interfaces/layout-enum";
 import {SectionList} from "./interfaces/section-list";
@@ -118,28 +119,30 @@ export class EditComponent implements OnInit, OnChanges {
    *
    * FIXME - It just doesnt work now... sorry :(
    */
-  onValueChanged(sect: SectionList | null, event: any): void {
-    if (sect) {
-      const inputValue = {
-        question: event.questionValue,
-        answer: event.answerValue,
-        description: event.descriptionValue,
-        id: event.id,
-      };
-
-      const index = sect.sectionInputs.findIndex((input) => input.data.id === event.id);
-
-      if (index !== -1) {
-        sect.sectionInputs[index].data.question = event.questionValue;
-        sect.sectionInputs[index].data.answer = event.answerValue;
-        sect.sectionInputs[index].data.description = event.descriptionValue;
-        this.undoRedoService.saveState(this.getAllFormInputs());
-
-        console.log({ formInputs: this.getAllFormInputs() });
-      } else {
-        console.error('Input not found');
-      }
-    }
+  onValueChanged<D extends InputData<T>, T>(sect: SectionList | null, event: D): void {
+    console.log("CHANGED! :D:D:D:D:D:D:D:D:D:D");
+    //FIXME:
+    // if (sect) {
+    //   const inputValue = {
+    //     question: event.questionValue,
+    //     answer: event.answerValue,
+    //     description: event.descriptionValue,
+    //     id: event.id,
+    //   };
+    //
+    //   const index = sect.sectionInputs.findIndex((input) => input.data.id === event.id);
+    //
+    //   if (index !== -1) {
+    //     sect.sectionInputs[index].data.question = event.questionValue;
+    //     sect.sectionInputs[index].data.answer = event.answerValue;
+    //     sect.sectionInputs[index].data.description = event.descriptionValue;
+    //     this.undoRedoService.saveState(this.getAllFormInputs());
+    //
+    //     console.log({ formInputs: this.getAllFormInputs() });
+    //   } else {
+    //     console.error('Input not found');
+    //   }
+    // }
   }
 
   /**

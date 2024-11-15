@@ -1,5 +1,4 @@
-import {InputData} from "../../../interfaces/input-data";
+import {FieldLikeInputData} from "../../../interfaces/field-like-input-data";
 
-export interface NumberInputComponentData extends InputData<number>{
-  changeDetection: "change" | "blur";
+export interface NumberInputComponentData extends FieldLikeInputData<number>{
 }

@@ -1,4 +1,4 @@
-import {AbstractControl} from "@angular/forms";
+import {AbstractControl, ValidatorFn} from "@angular/forms";
 
 export class CustomValidators {
 
@@ -24,6 +24,30 @@ export class CustomValidators {
     }
   }
 
+  static minLengthSupplier(minSupplier: () => number) {
+    return (control: AbstractControl) => {
+      const value: string = control.value;
+      if (value && value.trim().length < minSupplier()) {
+        return {
+          minlength: minSupplier()
+        };
+      }
+      return null;
+    }
+  }
+
+  static maxLengthSupplier(maxSupplier: () => number) {
+    return (control: AbstractControl) => {
+      const value: string = control.value;
+      if (value && value.trim().length > maxSupplier()) {
+        return {
+          maxlength: maxSupplier()
+        };
+      }
+      return null;
+    }
+  }
+
   static validateRequiredIf(ifPred: () => boolean) {
     return (control: AbstractControl) => {
       if (ifPred()) {
@@ -40,19 +64,19 @@ export class CustomValidators {
 
   static validateMinWithMaxIf(maxData: () => [boolean, number], ifPred: () => boolean) {
     return (control: AbstractControl) => {
-      if (ifPred()) {
+      const value: number = control.value;
+      if (value && ifPred()) {
         const maxOn = maxData()[0];
         const maxNum = maxData()[1];
-        const value: number = control.value;
-        const errors: {[key: string]: boolean} = {};
-        if (value < 0) {
-          errors["minError"] = true;
+        if (value < 1) {
+          return {
+            minError: true
+          };
         }
-        if (maxOn && value > maxNum) {
-          errors["maxMaxError"] = true;
-        }
-        if (Object.keys(errors).length > 0) {
-          return errors;
+        if (maxOn && maxNum && value > maxNum) {
+          return {
+            minMaxError: maxNum
+          };
         }
       }
       return null;
@@ -61,20 +85,40 @@ export class CustomValidators {
 
   static validateMaxWithMinIf(minData: () => [boolean, number], ifPred: () => boolean) {
     return (control: AbstractControl) => {
-      if (ifPred()) {
+      const value: number = control.value;
+      if (value && ifPred()) {
         const minOn = minData()[0];
         const minNum = minData()[1];
-        const value: number = control.value;
-        const errors: {[key: string]: boolean} = {};
         if (value < 1) {
-          errors["maxError"] = true;
+          return {
+            maxError: true
+          };
         }
-        if (minOn && value < minNum) {
-          errors["maxMaxError"] = true;
+        if (minOn && minNum && value < minNum) {
+          return {
+            maxMinError: minNum
+          }
         }
-        if (Object.keys(errors).length > 0) {
-          return errors;
+      }
+      return null;
+    }
+  }
+
+  static executeValidationsConditionally(validationConditions: {condition: () => boolean, validation: ValidatorFn}[]) {
+    return (control: AbstractControl) => {
+      const errors: {[key: string]: any} = {};
+      validationConditions.forEach(vc => {
+        if (vc.condition()) {
+          const error = vc.validation(control);
+          if (error) {
+            Object.keys(error).forEach(key => {
+              errors[key] = error[key];
+            });
+          }
         }
+      });
+      if (Object.keys(errors).length > 0) {
+        return errors;
       }
       return null;
     }

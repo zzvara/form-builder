@@ -7,24 +7,24 @@
       'invalid-style': inputHolderForm.invalid
   }">
   <form #inputHolderForm="ngForm" nz-form>
-    <nz-form-item style="margin-bottom: 10px">
-      <nz-form-control nzErrorTip="Input question is mandatory!">
-        <span *ngIf="!inlineEdit.enabled">{{ inputData.questionValue }}</span>
-        <input *ngIf="inlineEdit.enabled"
+    <nz-form-item [ngStyle]="!inlineEdit.enabled? {'border-bottom': '1px solid lightgray'} : {}" style="margin-bottom: 10px">
+      <nz-form-control  nzErrorTip="Input question is mandatory!">
+        <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
+        <input [hidden]="!inlineEdit.enabled"
                nz-input
                nzSize="small"
                name="inputQuestion"
                required
+               placeholder="Question"
                (mousedown)="$event.stopPropagation()"
-               [placeholder]="inputData.placeholderValue"
                [(ngModel)]="inputData.questionValue"
                (ngModelChange)="change()"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item style="margin-bottom: 10px">
       <nz-form-control>
-        <span style="white-space: pre-wrap" *ngIf="!inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
-        <textarea *ngIf="inlineEdit.enabled"
+        <span style="white-space: pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
+        <textarea [hidden]="!inlineEdit.enabled"
                   nz-input
                   nzAutosize
                   name="inputDescription"
