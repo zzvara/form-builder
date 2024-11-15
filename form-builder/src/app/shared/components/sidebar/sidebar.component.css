@@ -2,13 +2,18 @@ section {
   overflow-y: scroll;
   height: 500px;
 }
+
 .sticky-header {
-  position: fixed;
-  background-color: #f0f2f5;
-  z-index: 2;
-  width: 300px;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
 }
+
 .body {
   position: static;
-  margin-top: 80px;
+}
+
+.clear-icon:hover {
+  color: red;
 }

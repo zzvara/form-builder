@@ -37,4 +37,9 @@ export class SidebarComponent {
     this.searchService.setSearchQuery(this.searchQuery);
   }
 
+  clearSearch() {
+    this.searchQuery = '';
+    this.onSearch();
+  }
+
 }
