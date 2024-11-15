@@ -14,12 +14,13 @@ export class ResultsPageComponent implements OnInit {
   @Input() projectId: number | undefined;
   @Input() versionNum?: number | undefined;
   project: Project | undefined;
-
+  projectHistory: any;
   constructor(private projectService: ProjectService<Project>, private jsonService: JsonService) {}
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {
       this.project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
+      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
     }
   }
 
@@ -34,9 +35,8 @@ export class ResultsPageComponent implements OnInit {
 
   saveProjectWithHistoryToJson(): void {
     if (this.projectId !== undefined) {
-      const projectHistory = this.projectService.getProjectHistory(this.projectId);
       if (this.project) {
-        this.jsonService.saveProjectWithHistoryToJson(this.project, projectHistory);
+        this.jsonService.saveProjectWithHistoryToJson(this.project, this.projectHistory);
       }
     }
   }

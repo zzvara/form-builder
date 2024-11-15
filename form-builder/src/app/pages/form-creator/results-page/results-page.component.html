@@ -2,7 +2,7 @@
   <div>
     <nz-tabset>
       <nz-tab nzTitle="Project Information">
-        <div *ngIf="project">
+        <div *ngIf="project" class="project-container">
           <p><strong>Title:</strong> {{ project.title }}</p>
           <p><strong>Description:</strong> {{ project.description }}</p>
           <p><strong>Type:</strong> {{ project.type }}</p>
@@ -15,7 +15,7 @@
         </div>
       </nz-tab>
       <nz-tab nzTitle="Section Inputs">
-        <div *ngIf="project?.sectionList?.length">
+        <div *ngIf="project?.sectionList?.length" class="section-container">
           <div *ngFor="let section of project!.sectionList">
             <h3>Section: {{ section.sectionId }}</h3>
             <ul>
@@ -26,9 +26,16 @@
           </div>
         </div>
       </nz-tab>
-      <!-- <nz-tab nzTitle="Project JSON">
-        <pre *ngIf="project">{{ project | json }}</pre>
-      </nz-tab> -->
+      <nz-tab nzTitle="Project JSON" class="json">
+        <div class="json-container">
+          <pre *ngIf="project">{{ project | json }}</pre>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="Project History JSON" class="json">
+        <div class="json-container">
+          <pre *ngIf="project">{{ projectHistory | json }}</pre>
+        </div>
+      </nz-tab>
     </nz-tabset>
     <div nz-row nzJustify="end" nzAlign="bottom" id="footerdiv">
       <div nz-col nzSpan="22"></div>
