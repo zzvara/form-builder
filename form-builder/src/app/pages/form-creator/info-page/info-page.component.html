@@ -1,34 +1,45 @@
 <nz-layout>
   <div>
     <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <input nz-input type="text" class="formelement" id="title" formControlName="title" placeholder="Form Title" (change)="updateForm()" required />
-      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" formControlName="description" placeholder="Description" (change)="updateForm()" required></textarea>
+      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired nzTooltipTitle="Enter the Form title">Form title</nz-form-label>
+      <nz-form-control nz-col nzSpan="24">
+        <input nz-input type="text" id="title" formControlName="title" placeholder="My title" (change)="updateForm()" required [ngClass]="{'input-error': form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)}"/>
+        <div *ngIf="form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)">
+          <span class="error-message">Title is required</span>
+        </div>
+      </nz-form-control>
+      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="description-label" nzTooltipTitle="Enter the description">Description</nz-form-label>
+      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" placeholder="my description" formControlName="description" (change)="updateForm()" required></textarea>
       <hr class="formelement" />
       <nz-form-item class="formelement">
-        <label>Questionaire</label>
-        <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
-        <label>Test</label>
+        <label [nz-tooltip]="'Choose Questionaire'">Questionaire</label>
+        <nz-switch formControlName="type" id="switch" (change)="updateForm()" [nz-tooltip]="'Off state is Questionaire - On state is Test'"></nz-switch>
+        <label [nz-tooltip]="'Choose Test'">Test</label>
       </nz-form-item>
-      <nz-form-item class="formelement">
+      <nz-form-item>
         <label nz-checkbox formControlName="hasdeadline" style="margin-right: 10px;"></label>
-        <label style="margin-right: 10px;">Deadline</label>
+        <label style="margin-right: 10px;" [nz-tooltip]="'Choose Deadline'">Deadline</label>
         <nz-date-picker *ngIf="form.get('hasdeadline')?.value" id="deadline" formControlName="deadline" (change)="updateForm()" style="margin-top: -5px;"></nz-date-picker>
       </nz-form-item>
       <nz-form-item class="formelement">
         <label nz-checkbox formControlName="haslimit" style="margin-right: 10px;"></label>
-        <label style="margin-right: 10px;">Time limit</label>
-        <nz-time-picker *ngIf="form.get('haslimit')?.value" formControlName="limit" (change)="updateForm()" style="margin-top: -5px;"></nz-time-picker>
+        <label style="margin-right: 10px;" [nz-tooltip]="'Choose Deadline'">Time limit</label>
+        <nz-time-picker [nzFormat]="'HH:mm'" *ngIf="form.get('haslimit')?.value" formControlName="limit" (change)="updateForm()" style="margin-top: -5px;"></nz-time-picker>
       </nz-form-item>
-      <div nz-row id="footerdiv">
-        <div nz-col nzSpan="4" style="display: flex; align-items: center;">
-          <nz-form-label>Created</nz-form-label>
-          <label>{{ this.project.created }}</label>
+      <ng-container *ngIf="formExists">
+        <div nz-row>
+          <div nz-col nzSpan="4" style="display: flex; align-items: center;">
+            <nz-form-label>Created</nz-form-label>
+            <label>{{ project.created }}</label>
+          </div>
+          <div nz-col nzSpan="18" style="display: flex; align-items: center;">
+            <nz-form-label>Last modification</nz-form-label>
+            <label>{{ project.modified }}</label>
+          </div>
         </div>
-        <div nz-col nzSpan="18" style="display: flex; align-items: center;">
-          <nz-form-label>Last modification</nz-form-label>
-          <label>{{ this.project.modified }}</label>
-        </div>
-        <button nz-col nzSpan="2" id="btn" nz-button nzType="primary" type="submit">Save</button>
+      </ng-container>
+      <div class="saveBtn">
+        <button id="btn" nz-button nzType="primary" type="submit">Save</button>
       </div>
     </form>
   </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Project, ProjectType } from '../../../items/project.interface';
 import { ProjectService } from '../../../services/project.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ActivatedRoute } from '@angular/router';
 
@@ -33,7 +33,7 @@ export class InfoPageComponent implements OnInit {
   saveFailed = false;
 
   form = new FormGroup({
-    title: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
     description: new FormControl(''),
     type: new FormControl(false),
     deadline: new FormControl(''),
@@ -101,23 +101,19 @@ export class InfoPageComponent implements OnInit {
   }
 
   submitForm() {
+    if (this.form.invalid) {
+      this.saveFailed = true;
+      return;
+    }
     this.updateForm();
     if (this.formExists && this.formId !== 0) {
       this.projectService.update(this.formId, this.project);
     } else {
       this.projectService.add(this.project);
     }
-
     this.page! += 1;
     this.onsetPage(this.page!);
     this.saveFailed = false;
-
-    if (this.saveFailed) {
-      this.modal.error({
-        nzTitle: 'Failed to save form',
-        nzContent: 'Some fields are not filled properly, please check and try again!',
-      });
-    }
   }
 
   onsetPage(page: number): void {
