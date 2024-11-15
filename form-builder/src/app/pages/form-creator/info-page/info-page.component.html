@@ -11,11 +11,13 @@
       <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="description-label" nzTooltipTitle="Enter the description">Description</nz-form-label>
       <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" placeholder="my description" formControlName="description" (change)="updateForm()"></textarea>
       <hr class="formelement" />
+      <ng-container>
       <nz-form-item class="formelement">
-        <label [nz-tooltip]="'Choose Questionaire'">Questionaire</label>
+        <nz-form-label [nzFor]="'type'" class="title-label" nz-tooltip="Choose Questionaire">Questionaire</nz-form-label>
         <nz-switch formControlName="type" id="switch" (change)="updateForm()" [nz-tooltip]="'Off state is Questionaire - On state is Test'"></nz-switch>
-        <label [nz-tooltip]="'Choose Test'">Test</label>
+        <nz-form-label [nz-tooltip]="'Choose Test'">Test</nz-form-label>
       </nz-form-item>
+      </ng-container>
       <nz-form-item>
         <label nz-checkbox formControlName="hasdeadline" style="margin-right: 10px;"></label>
         <label style="margin-right: 10px;" [nz-tooltip]="'Choose Deadline'">Deadline</label>
@@ -41,6 +43,7 @@
       <div class="saveBtn">
         <button id="btn" nz-button nzType="primary" type="submit">Save</button>
       </div>
+
     </form>
   </div>
 </nz-layout>
