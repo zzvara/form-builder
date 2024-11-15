@@ -20,7 +20,7 @@
 <ng-template #footerTemplate>
   <div style="display: flex; justify-content: space-between">
     <div *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-top: auto; margin-bottom: auto"></div>
-    <div *ngIf="data.maxLength && data.showCharacterCounter" style="margin-top: auto; margin-bottom: auto">{{(inputComponent.value ?? "").length}}/{{data.maxLengthNumber}}</div>
+    <div *ngIf="data.maxLength && data.showCharacterCounter" style="margin-top: auto; margin-bottom: auto">{{inputComponent.value.length}}/{{data.maxLengthNumber}}</div>
   </div>
 </ng-template>
 
