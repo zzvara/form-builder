@@ -1,7 +1,6 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
 import {Observable, of} from 'rxjs';
-import {ModalServiceService} from "../../../services/modal/modal-service.service";
 import {AbstractInput} from "../../abstract-classes/abstract-input";
 import {PictureInputComponentData} from "./interfaces/picture-input-component-data";
 import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit.component";
@@ -41,16 +40,10 @@ export class PictureInputComponent extends AbstractInput<PictureInputComponentDa
     this.modalService.openModal({
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: PictureInputEditComponent,
-      modalData: {
-        questionValue:    this.data.questionValue,
-        descriptionValue: this.data.descriptionValue,
-        defaultValue:     this.data.defaultValue,
-        placeholderValue: this.data.placeholderValue,
-      }
+      modalData: this.data
     }).subscribe(result => {
       if (result) {
-        this.defaultValueSetter(result)
-        this.onEdit(result);
+        this.onEdit(this.data);
       }
     });
   }

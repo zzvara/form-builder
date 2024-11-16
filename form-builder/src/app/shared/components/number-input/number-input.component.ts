@@ -1,7 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {ModalServiceService} from "../../../services/modal/modal-service.service";
+import {Component} from '@angular/core';
 import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
-import {AbstractInput} from "../../abstract-classes/abstract-input";
 import {NumberInputComponentData} from "./interfaces/number-input-component-data";
 import {NumberInputEditComponent} from "./number-input-edit/number-input-edit.component";
 
@@ -15,20 +13,10 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<NumberInputCom
     this.modalService.openModal({
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: NumberInputEditComponent,
-      modalData: {
-        questionValue:    this.data.questionValue,
-        descriptionValue: this.data.descriptionValue,
-        defaultValue:     this.data.defaultValue,
-        placeholderValue: this.data.placeholderValue,
-        showTooltip:      this.data.showTooltip,
-        tooltipText:      this.data.tooltipText,
-        required:         this.data.required,
-        requiredMessage:  this.data.requiredMessage,
-      }
+      modalData: this.data
     }).subscribe(result => {
       if (result) {
-        this.defaultValueSetter(result)
-        this.onEdit(result);
+        this.onEdit(this.data);
       }
     });
   }

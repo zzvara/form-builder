@@ -58,6 +58,23 @@ export class InputEditComponent extends AbstractFieldLikeEditForm<InputComponent
     })
   }
 
+  override saveData() {
+    super.saveData();
+    this.initialValues.minLength              = this.rawFormData.minLength;
+    if (this.rawFormData.minLength) {
+      this.initialValues.minLengthNumber      = this.rawFormData.minLengthNumber;
+      this.initialValues.minLengthMessage     = this.rawFormData.minLengthMessage;
+    }
+    this.initialValues.maxLength              = this.rawFormData.maxLength;
+    if (this.rawFormData.maxLength) {
+      this.initialValues.maxLengthNumber      = this.rawFormData.maxLengthNumber;
+      this.initialValues.showCharacterCounter = this.rawFormData.showCharacterCounter;
+    }
+    if (!this.getControlValue("setDefaultValue")) {
+      this.initialValues.defaultValue = undefined;
+    }
+  }
+
   override getValidatorsForDefaultValue(): { condition: () => boolean; validation: ValidatorFn }[] {
     return super.getValidatorsForDefaultValue().concat([{
       condition: () => this.getControlValue<boolean>("minLength"),

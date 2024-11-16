@@ -14,11 +14,15 @@ export class ModalServiceService<T extends AbstractEditForm<D>, D extends InputD
 
   constructor() { }
 
-  openModal<RetType extends D>(component: ModalData<T, D>): Observable<RetType | undefined> {
-    const modal = this.modal.create<T,D,RetType>({
-      nzTitle: component.modalTitle,
-      nzContent: component.modalContent,
-      nzData: component.modalData,
+  openModal(modalData: ModalData<T, D>): Observable<boolean | undefined> {
+    return this.openModalAndGet<boolean>(modalData);
+  }
+
+  openModalAndGet<RetType>(modalData: ModalData<T, D>, dataGetter: ((instance: T) => RetType) | null = null): Observable<RetType | undefined> {
+    const modal = this.modal.create<T,D>({
+      nzTitle: modalData.modalTitle,
+      nzContent: modalData.modalContent,
+      nzData: modalData.modalData,
       nzFooter: [{
           label: "Close",
           shape: "round",
@@ -29,21 +33,22 @@ export class ModalServiceService<T extends AbstractEditForm<D>, D extends InputD
           label: "Reset",
           shape: "round",
           type: "dashed",
-          onClick: (contentComponentInstance?: T) => {
-            contentComponentInstance?.onReset();
+          onClick: (editComponentInstance?: T) => {
+            editComponentInstance?.onReset();
           }
       },{
           label: "Save",
           type: "primary",
-          disabled: (contentComponentInstance?: T) => {
+          disabled: (editComponentInstance?: T) => {
             //TODO: this gets called dozens of times with each change in the embedded component (could cause performance issues)
-            return contentComponentInstance?.isInvalid() ?? true;
+            return editComponentInstance?.isInvalid ?? true;
           },
-          onClick: (contentComponentInstance?: T): NzSafeAny | Promise<NzSafeAny> => {
-              if (contentComponentInstance?.isPristine()) {
-                modal.close();
+          onClick: (editComponentInstance?: T): NzSafeAny | Promise<NzSafeAny> => {
+              const saveSuccess = editComponentInstance?.onSave();
+              if (editComponentInstance && dataGetter) {
+                modal.close(dataGetter(editComponentInstance));
               } else {
-                modal.close(contentComponentInstance?.getFormData() as RetType);
+                modal.close(saveSuccess);
               }
           }
       }

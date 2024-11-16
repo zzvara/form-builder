@@ -14,11 +14,18 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
   protected readonly nzModalData: T = inject(NZ_MODAL_DATA);
 
   protected formUpdateOn: UpdateOnStrategy = UpdateOnStrategy.BLUR;
+  protected formValidators: ValidatorFn | ValidatorFn[] | null | undefined = null;
+
   protected defaultValueUpdateOn: UpdateOnStrategy = UpdateOnStrategy.BLUR;
+  protected defaultValueValidators: ValidatorFn | ValidatorFn[] | null | undefined = null;
+  protected defaultValueControl: FormControl = new FormControl(null, {
+    updateOn: this.defaultValueUpdateOn,
+    validators: this.defaultValueValidators
+  });
 
   protected readonly formData: FormGroup = this.formBuilder.group<{[key in InputDataKeys<T>]?: FormControl<any>}>({}, {
     updateOn: this.formUpdateOn,
-    validators: this.getFormValidators()
+    validators: this.formValidators
   });
 
   protected initialValues!: T;
@@ -29,10 +36,7 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
       questionValue: new FormControl(null, Validators.required),
       descriptionValue: new FormControl(),
       placeholderValue: new FormControl(),
-      defaultValue: new FormControl(null, {
-        updateOn: this.defaultValueUpdateOn,
-        validators: this.defaultValueValidations()
-      }),
+      defaultValue: this.defaultValueControl,
     });
   }
 
@@ -42,13 +46,30 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
     }
   };
 
-  protected getFormValidators(): ValidatorFn | ValidatorFn[] | null | undefined {
-    return null;
+  onReset() {
+    this.formData.reset(this.initialValues);
   }
 
-  protected defaultValueValidations(): ValidatorFn | ValidatorFn[] | null | undefined {
-    return null;
+  onSave(): boolean {
+    if (this.isDirty) {
+      this.saveData();
+      return true;
+    }
+    return false;
   }
+
+  saveData() {
+    this.initialValues.questionValue    = this.rawFormData.questionValue;
+    this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
+    this.initialValues.defaultValue     = this.rawFormData.defaultValue;
+    this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
+  }
+
+  get rawFormData(): T {
+    return this.formData.getRawValue();
+  };
+
+//---------FORM CONTROLS------------------------------------------------------------------------------------------------
 
   protected addControls(controls: {[key in InputDataKeys<T>]?: AbstractControl}) {
     this.addAnyControls(controls as {[key: string]: AbstractControl});
@@ -91,20 +112,24 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
     return this.formData?.get(control);
   }
 
-  isValid(): boolean {
+//---------FORM STATE---------------------------------------------------------------------------------------------------
+
+  get isValid(): boolean {
     return this.formData.valid;
   };
-  isInvalid(): boolean {
+  get isInvalid(): boolean {
     return this.formData.invalid;
   };
 
 
-  isPristine(): boolean {
+  get isPristine(): boolean {
     return this.formData.pristine;
   };
-  isDirty() : boolean {
+  get isDirty() : boolean {
     return this.formData.dirty;
   }
+
+//---------CONTROL ERRORS-----------------------------------------------------------------------------------------------
 
   hasErrors(control: AbstractControl, ...errors: string[]): boolean {
     return errors.reduce((acc, curr) => acc || control.hasError(curr), false);
@@ -128,13 +153,7 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
     return null;
   }
 
-  onReset() {
-    this.formData.reset(this.initialValues);
-  }
-
-  getFormData(): T {
-    return this.formData.getRawValue();
-  };
+//---------CONTROL CHANGE METHODS---------------------------------------------------------------------------------------
 
   setControlValuesBasedOnChanges(controls: {[key in InputDataKeys<T>]?: {name: InputDataKeys<T>, additionalData?: () => any}[]}) {
     this.setAnyControlValuesBasedOnChanges(controls as ControlConnection);

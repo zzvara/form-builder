@@ -16,13 +16,6 @@ export abstract class AbstractInput<D extends InputData<T>, E extends AbstractEd
 
   abstract edit(): void;
 
-  defaultValueSetter(modifiedData: D) {
-    this.data.questionValue    = modifiedData.questionValue;
-    this.data.descriptionValue = modifiedData.descriptionValue;
-    this.data.defaultValue     = modifiedData.defaultValue;
-    this.data.placeholderValue = modifiedData.placeholderValue;
-  }
-
   onEdit(modifiedData: D) {
     this.edited.emit(modifiedData);
   }

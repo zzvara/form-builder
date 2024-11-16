@@ -45,6 +45,24 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectCompone
     }
   }
 
+  override saveData() {
+    super.saveData();
+    this.initialValues.selectOptions = this.rawFormData.selectOptions;
+    this.initialValues.questionValue = this.rawFormData.questionValue;
+    this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
+    if (!this.rawFormData.defaultValue) {
+      if (this.rawFormData.isMultipleChoice) {
+        this.initialValues.defaultValue = [];
+      } else {
+        this.initialValues.defaultValue = "";
+      }
+    } else {
+      this.initialValues.defaultValue = this.rawFormData.defaultValue;
+    }
+    this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
+    this.initialValues.isMultipleChoice = this.rawFormData.isMultipleChoice;
+  }
+
   get options(): FormArray {
     return  this.formData.get('selectOptions') as FormArray;
   }

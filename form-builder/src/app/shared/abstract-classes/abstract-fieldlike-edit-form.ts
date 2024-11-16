@@ -8,6 +8,8 @@ import {AbstractEditForm} from "./abstract-edit-form";
 
 @Directive()
 export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any>> extends AbstractEditForm<T> {
+  override defaultValueValidators = CustomValidators.executeValidationsConditionally(this.getValidatorsForDefaultValue());
+
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
@@ -29,6 +31,25 @@ export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any
     this.setupDefaultValueCheckBox();
   }
 
+  override onReset() {
+    super.onReset();
+    this.getControl<boolean>("setDefaultValue")?.setValue(true);
+  }
+
+  override saveData() {
+    super.saveData();
+    this.initialValues.required = this.rawFormData.required;
+    if (this.rawFormData.required) {
+      this.initialValues.requiredMessage = this.rawFormData.requiredMessage;
+    }
+    this.initialValues.showTooltip = this.rawFormData.showTooltip;
+    if (this.rawFormData.showTooltip) {
+      this.initialValues.tooltipText = this.rawFormData.tooltipText;
+    }
+  }
+
+//----------------------------------------------------------------------------------------------------------------------
+
   setupDefaultValueCheckBox() {
     //Add custom form control
     this.addAnyControls({setDefaultValue: new FormControl<boolean>(true, {
@@ -39,7 +60,7 @@ export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(checked => {
         if (checked) {
-          this.getStrictControl<string>("defaultValue")?.setValidators(this.defaultValueValidations());
+          this.getStrictControl<string>("defaultValue")?.setValidators(this.defaultValueValidators);
         } else {
           this.getStrictControl<string>("defaultValue")?.clearValidators();
         }
@@ -49,10 +70,6 @@ export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any
     });
   }
 
-  override defaultValueValidations() {
-    return CustomValidators.executeValidationsConditionally(this.getValidatorsForDefaultValue());
-  }
-
   getValidatorsForDefaultValue(): {condition: () => boolean, validation: ValidatorFn}[] {
     return [{
         condition: () => this.getControlValue<boolean>("required"),
@@ -60,6 +77,8 @@ export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any
       }
     ];
   }
+
+//----------------------------------------------------------------------------------------------------------------------
 
   getErrorMessages(control: AbstractControl<string>): string[] {
     return this.errorList()
