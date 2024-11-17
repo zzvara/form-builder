@@ -19,7 +19,7 @@ export class InfoPageComponent implements OnInit {
     id: 0,
     title: '',
     description: '',
-    type: ProjectType.QUESTIONNAIRE,
+    type: ProjectType.QUESTIONNAIRE ,
     time_checkbox: false,
     deadline_checkbox: false,
     time_limit: 0,
@@ -61,9 +61,11 @@ export class InfoPageComponent implements OnInit {
         }
       }
       if (params['type']) {
-        if (this.project) {
-          this.project.type = params['type'];
-        }
+
+        this.project.type = params['type'] === 'TEST' ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.form.patchValue({
+          type: this.project.type === ProjectType.TEST
+        });
       }
     });
   }
