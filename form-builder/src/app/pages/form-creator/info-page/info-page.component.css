@@ -44,3 +44,12 @@ nz-layout {
 .input-error {
   border: 1px solid red;
 }
+.same_line{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.created_modifaction{
+  display: flex;
+  align-items: center;
+}

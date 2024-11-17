@@ -1,42 +1,52 @@
 <nz-layout>
   <div>
     <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired nzTooltipTitle="Enter the Form title">Form title</nz-form-label>
+      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>Form title
+        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Enter the form title" style="margin-left: 5px;"></i>
+      </nz-form-label>
       <nz-form-control nz-col nzSpan="24">
         <input nz-input type="text" id="title" formControlName="title" placeholder="My title" (change)="updateForm()" required [ngClass]="{'input-error': form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)}"/>
         <div *ngIf="form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)">
           <span class="error-message">Title is required</span>
         </div>
       </nz-form-control>
-      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="description-label" nzTooltipTitle="Enter the description">Description</nz-form-label>
+      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="description-label">Description
+        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle=" Enter the description" style="margin-left: 5px;"></i>
+      </nz-form-label>
       <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" placeholder="my description" formControlName="description" (change)="updateForm()"></textarea>
       <hr class="formelement" />
       <ng-container>
-      <nz-form-item class="formelement">
-        <nz-form-label [nzFor]="'type'" class="title-label" nz-tooltip="Choose Questionaire">Questionaire</nz-form-label>
-        <nz-switch formControlName="type" id="switch" (change)="updateForm()" [nz-tooltip]="'Off state is Questionaire - On state is Test'"></nz-switch>
-        <nz-form-label [nz-tooltip]="'Choose Test'">Test</nz-form-label>
+      <nz-form-item class="same_line">
+        <nz-form-label [nzNoColon]="true" >Questionaire</nz-form-label>
+        <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
+        <nz-form-label [nzNoColon]="true" >Test
+          <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Off state is Questionaire - On state is Test" style="margin-left: 10px;"></i>
+        </nz-form-label>
       </nz-form-item>
       </ng-container>
-      <nz-form-item>
-        <label nz-checkbox formControlName="hasdeadline" style="margin-right: 10px;"></label>
-        <label style="margin-right: 10px;" [nz-tooltip]="'Choose Deadline'">Deadline</label>
-        <nz-date-picker *ngIf="form.get('hasdeadline')?.value" id="deadline" formControlName="deadline" (change)="updateForm()" style="margin-top: -5px;"></nz-date-picker>
+      <nz-form-item class="same_line">
+        <label nz-checkbox formControlName="hasdeadline"></label>
+        <nz-form-label [nzNoColon]="true" >Deadline
+          <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Choose deadline" style="margin-left: 5px;"></i>
+        </nz-form-label>
+        <nz-date-picker *ngIf="form.get('hasdeadline')?.value" id="deadline" formControlName="deadline" (change)="updateForm()"></nz-date-picker>
       </nz-form-item>
-      <nz-form-item class="formelement">
-        <label nz-checkbox formControlName="haslimit" style="margin-right: 10px;"></label>
-        <label style="margin-right: 10px;" [nz-tooltip]="'Choose Deadline'">Time limit</label>
-        <nz-time-picker [nzFormat]="'HH:mm'" *ngIf="form.get('haslimit')?.value" formControlName="limit" (change)="updateForm()" style="margin-top: -5px;"></nz-time-picker>
+      <nz-form-item class="same_line" >
+        <label nz-checkbox formControlName="haslimit"></label>
+        <nz-form-label [nzNoColon]="true">Time limit
+          <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Choose time Limit"></i>
+        </nz-form-label>
+        <nz-time-picker [nzFormat]="'HH:mm'" *ngIf="form.get('haslimit')?.value" formControlName="limit" (change)="updateForm()"></nz-time-picker>
       </nz-form-item>
       <ng-container *ngIf="formExists">
         <div nz-row>
-          <div nz-col nzSpan="4" style="display: flex; align-items: center;">
+          <div nz-col nzSpan="4" class="created_modifaction" >
             <nz-form-label>Created</nz-form-label>
-            <label>{{ project.created }}</label>
+            <nz-form-label [nzNoColon]="true">{{ project.created }}</nz-form-label>
           </div>
-          <div nz-col nzSpan="18" style="display: flex; align-items: center;">
+          <div nz-col nzSpan="18" class="created_modifaction">
             <nz-form-label>Last modification</nz-form-label>
-            <label>{{ project.modified }}</label>
+            <nz-form-label [nzNoColon]="true">{{ project.modified }}</nz-form-label>
           </div>
         </div>
       </ng-container>
