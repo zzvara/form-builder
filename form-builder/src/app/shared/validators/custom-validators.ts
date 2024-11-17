@@ -62,21 +62,68 @@ export class CustomValidators {
     }
   }
 
+  static validateMinIf(ifPred: () => boolean, min: number) {
+    return (control: AbstractControl) => {
+      if (ifPred()) {
+        const value: number = control.value;
+        if (value && value < min) {
+          return {
+            minError: true
+          }
+        }
+      }
+      return null;
+    }
+  }
+
+  static validateMinPred(min: () => number) {
+    return (control: AbstractControl) => {
+      const value: number = control.value;
+      if (value && value < min()) {
+        return {
+          minError: true
+        }
+      }
+      return null;
+    }
+  }
+
   static validateMinWithMaxIf(maxData: () => [boolean, number], ifPred: () => boolean) {
     return (control: AbstractControl) => {
       const value: number = control.value;
       if (value && ifPred()) {
         const maxOn = maxData()[0];
         const maxNum = maxData()[1];
-        if (value < 1) {
-          return {
-            minError: true
-          };
-        }
         if (maxOn && maxNum && value > maxNum) {
           return {
             minMaxError: maxNum
           };
+        }
+      }
+      return null;
+    }
+  }
+
+  static validateMaxIf(ifPred: () => boolean, max: number) {
+    return (control: AbstractControl) => {
+      if (ifPred()) {
+        const value: number = control.value;
+        if (value && value > max) {
+          return {
+            maxError: true
+          }
+        }
+      }
+      return null;
+    }
+  }
+
+  static validateMaxPred(max: () => number) {
+    return (control: AbstractControl) => {
+      const value: number = control.value;
+      if (value && value > max()) {
+        return {
+          maxError: true
         }
       }
       return null;
@@ -89,14 +136,23 @@ export class CustomValidators {
       if (value && ifPred()) {
         const minOn = minData()[0];
         const minNum = minData()[1];
-        if (value < 1) {
-          return {
-            maxError: true
-          };
-        }
         if (minOn && minNum && value < minNum) {
           return {
             maxMinError: minNum
+          }
+        }
+      }
+      return null;
+    }
+  }
+
+  static validateContainsIf(ifPred: () => boolean, contains: string) {
+    return (control: AbstractControl) => {
+      if (ifPred()) {
+        const value: string = control.value;
+        if (value && !value.includes(contains)) {
+          return {
+            containsError: contains
           }
         }
       }

@@ -3,8 +3,8 @@
     <textarea #inputComponent
               nz-input
               [required]="data.required"
-              [minlength]="data.minLengthNumber"
-              [maxlength]="data.maxLengthNumber"
+              [minlength]="data.minLengthNumber ?? null"
+              [maxlength]="data.maxLengthNumber ?? null"
               [disabled]="!inlineEdit.enabled"
               [placeholder]="data.placeholderValue ?? ''"
               [(ngModel)]="data.defaultValue"

@@ -23,9 +23,7 @@ const textInputOptions: InputComponentData = {
   requiredMessage: "Field cannot be empty!",
   minLength: false,
   minLengthMessage: "Field value cannot be shorter than: {*} characters!",
-  minLengthNumber: null,
   maxLength: false,
-  maxLengthNumber: null,
   showTooltip: false,
   showCharacterCounter: false,
 };
@@ -34,6 +32,10 @@ const numberInputOptions: NumberInputComponentData = {
   descriptionValue: "Question description...",
   required: false,
   showTooltip: false,
+  max: false,
+  min: false,
+  stepNumber: 1,
+  format: false
 };
 const dateInputOptions: DatePickerComponentData = {
   questionValue: "Date Picker question...",
@@ -48,9 +50,7 @@ const textAreaInputOptions: TextareaComponentData = {
   requiredMessage: "Field cannot be empty!",
   minLength: false,
   minLengthMessage: "Field value cannot be shorter than: {*} characters!",
-  minLengthNumber: null,
   maxLength: false,
-  maxLengthNumber: null,
   showTooltip: false,
   showCharacterCounter: false,
 };

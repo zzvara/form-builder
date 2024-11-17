@@ -6,7 +6,7 @@ import {InputData} from "../interfaces/input-data";
 import {AbstractEditForm} from "./abstract-edit-form";
 
 @Directive()
-export abstract class AbstractInput<D extends InputData<T>, E extends AbstractEditForm<D>, T> implements FormComponentMarker {
+export abstract class AbstractInput<D extends InputData<T>, E extends AbstractEditForm<D, T>, T> implements FormComponentMarker {
   protected readonly modalService: ModalServiceService<E, D> = inject(ModalServiceService);
 
   @Input() data!: D;

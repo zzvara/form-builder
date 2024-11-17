@@ -8,11 +8,13 @@ import {DatePickerComponentData} from "../interfaces/date-picker-component-data"
   templateUrl: './date-picker-edit.component.html',
   styleUrls: ['./date-picker-edit.component.css']
 })
-export class DatePickerEditComponent extends AbstractFieldLikeEditForm<DatePickerComponentData>{
-  override defaultValueUpdateOn = UpdateOnStrategy.CHANGE;
-
+export class DatePickerEditComponent extends AbstractFieldLikeEditForm<DatePickerComponentData, Date>{
   override ngOnInit(): void {
     super.ngOnInit();
     this.initializeFormValues();
   }
+
+  override get defaultValueUpdateOn() {
+    return UpdateOnStrategy.CHANGE;
+  };
 }

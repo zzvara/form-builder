@@ -1,20 +1,24 @@
 <nz-form-item>
   <nz-form-control [nzErrorTip]="errorTemplate">
-    <nz-input-number-group [nzPrefix]="prefixTemplate">
-      <nz-input-number #inputComponent
-                       [required]="data.required"
-                       [disabled]="!inlineEdit.enabled"
-                       [nzPlaceHolder]="data.placeholderValue ?? ''"
-                       [(ngModel)]="data.defaultValue"
-                       (ngModelChange)="onChange($event)"
-                       (mousedown)="$event.stopPropagation()"
-                       [nzStep]="1"/>
-    </nz-input-number-group>
+    <ng-container *ngTemplateOutlet="prefixTemplate"/>
+    <nz-input-number #inputComponent
+                     [required]="data.required"
+                     [nzMin]="minNumber"
+                     [nzMax]="maxNumber"
+                     [nzFormatter]="inputFormatter"
+                     [nzParser]="inputParser"
+                     [disabled]="!inlineEdit.enabled"
+                     [nzPlaceHolder]="data.placeholderValue ?? ''"
+                     [(ngModel)]="data.defaultValue"
+                     (ngModelChange)="onChange($event)"
+                     (mousedown)="$event.stopPropagation()"
+                     [nzStep]="data.stepNumber"
+                     style="min-width: 50%"/>
   </nz-form-control>
 </nz-form-item>
 <ng-template #errorTemplate let-control>
   <div *ngFor="let message of getErrorMessages(control) ">{{message}}</div>
 </ng-template>
 <ng-template #prefixTemplate>
-  <span *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle"></span>
+  <span *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>
 </ng-template>

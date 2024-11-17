@@ -7,28 +7,23 @@ import {InputData, InputDataKeys} from "../interfaces/input-data";
 import {UpdateOnStrategy} from "../interfaces/update-on-strategy";
 
 @Directive()
-export abstract class AbstractEditForm<T extends InputData<any>> implements OnInit {
+export abstract class AbstractEditForm<D extends InputData<T>, T> implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
-  protected readonly String = String.prototype;
   protected readonly formBuilder = inject(FormBuilder);
-  protected readonly nzModalData: T = inject(NZ_MODAL_DATA);
+  protected readonly nzModalData: D = inject(NZ_MODAL_DATA);
+  protected readonly String = String.prototype;
 
-  protected formUpdateOn: UpdateOnStrategy = UpdateOnStrategy.BLUR;
-  protected formValidators: ValidatorFn | ValidatorFn[] | null | undefined = null;
-
-  protected defaultValueUpdateOn: UpdateOnStrategy = UpdateOnStrategy.BLUR;
-  protected defaultValueValidators: ValidatorFn | ValidatorFn[] | null | undefined = null;
-  protected defaultValueControl: FormControl = new FormControl(null, {
+  protected defaultValueControl: FormControl = new FormControl(this.getDefaultValueValue, {
     updateOn: this.defaultValueUpdateOn,
     validators: this.defaultValueValidators
   });
 
-  protected readonly formData: FormGroup = this.formBuilder.group<{[key in InputDataKeys<T>]?: FormControl<any>}>({}, {
+  protected readonly formData: FormGroup = this.formBuilder.group<{[key in InputDataKeys<D>]?: FormControl<any>}>({}, {
     updateOn: this.formUpdateOn,
     validators: this.formValidators
   });
 
-  protected initialValues!: T;
+  protected initialValues!: D;
 
   ngOnInit() {
     this.initialValues = this.nzModalData;
@@ -65,13 +60,30 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
     this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
   }
 
-  get rawFormData(): T {
+  get rawFormData(): D {
     return this.formData.getRawValue();
+  };
+
+  protected get formValidators(): ValidatorFn | ValidatorFn[] | null | undefined {
+    return null;
+  };
+  protected get formUpdateOn(): UpdateOnStrategy {
+    return UpdateOnStrategy.BLUR;
+  };
+
+  protected get defaultValueValidators(): ValidatorFn | ValidatorFn[] | null | undefined {
+    return null;
+  };
+  protected get defaultValueUpdateOn(): UpdateOnStrategy {
+    return UpdateOnStrategy.BLUR;
+  };
+  protected get getDefaultValueValue(): T | null {
+    return null;
   };
 
 //---------FORM CONTROLS------------------------------------------------------------------------------------------------
 
-  protected addControls(controls: {[key in InputDataKeys<T>]?: AbstractControl}) {
+  protected addControls(controls: {[key in InputDataKeys<D>]?: AbstractControl}) {
     this.addAnyControls(controls as {[key: string]: AbstractControl});
   }
   protected addAnyControls(controls: {[key: string]: AbstractControl}) {
@@ -80,7 +92,7 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
     })
   }
 
-  protected setControls(controls: {[key in InputDataKeys<T>]?: AbstractControl}) {
+  protected setControls(controls: {[key in InputDataKeys<D>]?: AbstractControl}) {
     this.setAnyControls(controls as {[key: string]: AbstractControl});
   }
   protected setAnyControls(controls: {[key: string]: AbstractControl}) {
@@ -89,7 +101,7 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
     })
   }
 
-  protected removeControls(controls: InputDataKeys<T>[]) {
+  protected removeControls(controls: InputDataKeys<D>[]) {
     this.removeAnyControls(controls as string[]);
   }
   protected removeAnyControls(controls: string[]) {
@@ -98,14 +110,14 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
     })
   }
 
-  getStrictControlValue<VType>(control: InputDataKeys<T>): VType {
+  getStrictControlValue<VType>(control: InputDataKeys<D>): VType {
     return this.getControlValue(control as string);
   }
   getControlValue<VType>(control: string): VType {
-    return this.formData?.get(control)?.value;
+    return this.formData?.get(control)?.getRawValue();
   }
 
-  getStrictControl<VType>(control: InputDataKeys<T>): AbstractControl<VType> | null {
+  getStrictControl<VType>(control: InputDataKeys<D>): AbstractControl<VType> | null {
     return this.getControl(control as string);
   }
   getControl<VType>(control: string): AbstractControl<VType> | null {
@@ -155,7 +167,7 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
 
 //---------CONTROL CHANGE METHODS---------------------------------------------------------------------------------------
 
-  setControlValuesBasedOnChanges(controls: {[key in InputDataKeys<T>]?: {name: InputDataKeys<T>, additionalData?: () => any}[]}) {
+  setControlValuesBasedOnChanges(controls: {[key in InputDataKeys<D>]?: {name: InputDataKeys<D>, additionalData?: () => any}[]}) {
     this.setAnyControlValuesBasedOnChanges(controls as ControlConnection);
   }
   setAnyControlValuesBasedOnChanges(controls: ControlConnection) {
@@ -171,7 +183,7 @@ export abstract class AbstractEditForm<T extends InputData<any>> implements OnIn
    *
    * @param controls
    */
-  connectValidations(controls: {[key in InputDataKeys<T>]?: {name: InputDataKeys<T>, recursiveCall?: boolean}[]}) {
+  connectValidations(controls: {[key in InputDataKeys<D>]?: {name: InputDataKeys<D>, recursiveCall?: boolean}[]}) {
     this.connectAnyValidations(controls as ControlConnection);
   }
   connectAnyValidations(controls: ControlConnection) {

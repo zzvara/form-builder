@@ -7,8 +7,8 @@ import {CustomValidators} from "../validators/custom-validators";
 import {AbstractEditForm} from "./abstract-edit-form";
 
 @Directive()
-export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any>> extends AbstractEditForm<T> {
-  override defaultValueValidators = CustomValidators.executeValidationsConditionally(this.getValidatorsForDefaultValue());
+export abstract class AbstractFieldLikeEditForm<D extends FieldLikeInputData<T>, T> extends AbstractEditForm<D, T> {
+  protected readonly Infinity = Infinity;
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -17,12 +17,12 @@ export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any
         updateOn: UpdateOnStrategy.CHANGE
       }),
       requiredMessage: new FormControl(null,
-        CustomValidators.validateRequiredIf(() => this.getControlValue<boolean>("required"))),
+        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>("required"))),
       showTooltip:     new FormControl(false, {
         updateOn: UpdateOnStrategy.CHANGE
       }),
       tooltipText:     new FormControl(null,
-        CustomValidators.validateRequiredIf(() => this.getControlValue<boolean>("showTooltip"))),
+        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>("showTooltip"))),
     });
     this.connectValidations({
       required: [{name: "requiredMessage"}, {name: "defaultValue"}],
@@ -70,9 +70,13 @@ export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any
     });
   }
 
+  override get defaultValueValidators(){
+    return CustomValidators.executeValidationsConditionally(this.getValidatorsForDefaultValue());
+  };
+
   getValidatorsForDefaultValue(): {condition: () => boolean, validation: ValidatorFn}[] {
     return [{
-        condition: () => this.getControlValue<boolean>("required"),
+        condition: () => this.getStrictControlValue<boolean>("required"),
         validation: Validators.required
       }
     ];
@@ -89,7 +93,7 @@ export abstract class AbstractFieldLikeEditForm<T extends FieldLikeInputData<any
   errorList(): {validatorName: string, validationMessage: string}[]  {
     return [{
       validatorName: "required",
-      validationMessage: this.getControlValue<string>("requiredMessage")
+      validationMessage: this.getStrictControlValue<string>("requiredMessage")
     }]
   }
 }

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
 import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
 import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
 import {SelectComponentData} from "../interfaces/select-component-data";
@@ -12,8 +11,7 @@ import {CustomValidators} from "../../../validators/custom-validators";
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.css']
 })
-export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectComponentData> {
-  override defaultValueUpdateOn = UpdateOnStrategy.CHANGE;
+export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectComponentData, string | string[]> {
   newOption!: FormControl<string | null>;
 
   override ngOnInit(): void {
@@ -62,6 +60,10 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectCompone
     this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
     this.initialValues.isMultipleChoice = this.rawFormData.isMultipleChoice;
   }
+
+  override get defaultValueUpdateOn(){
+    return UpdateOnStrategy.CHANGE;
+  };
 
   get options(): FormArray {
     return  this.formData.get('selectOptions') as FormArray;

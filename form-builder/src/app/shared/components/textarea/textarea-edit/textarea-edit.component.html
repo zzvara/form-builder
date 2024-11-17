@@ -37,7 +37,8 @@
           <textarea #defaultValueComponent
             nz-input
             nzAutosize
-            [maxLength]="getControlValue('maxLengthNumber') ?? maxDefaultCharacterCount"
+            [minlength]="minLengthOrNull"
+            [maxlength]="maxLengthOrNull"
             placeholder="Default value"
             formControlName="defaultValue"></textarea>
           <ng-container *ngTemplateOutlet="suffixTemplateCounter"/>
@@ -84,12 +85,12 @@
         <nz-form-control [nzErrorTip]="minLengthNumberErrorMessageTemplate">
           <nz-input-number formControlName="minLengthNumber"
                            [nzMin]="1"
-                           [nzMax]="getControlValue('maxLength') && getControlValue('maxLengthNumber') ? getControlValue('maxLengthNumber') : maxDefaultCharacterCount"
+                           [nzMax]="getControlValue('maxLength') && getControlValue('maxLengthNumber') ? getControlValue('maxLengthNumber') : Infinity"
                            [nzStep]="1"></nz-input-number>
         </nz-form-control>
         <ng-template #minLengthNumberErrorMessageTemplate let-control>
           <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
-          <div *ngIf="hasErrors(control, 'minError')">Cannot be lower than 1!</div>
+          <div *ngIf="hasErrors(control, 'minError')">Cannot be lower than {{control.errors['minError']}}!</div>
           <div *ngIf="hasErrors(control, 'minMaxError')">Cannot be higher than the set max value ({{control.errors['minMaxError']}})!</div>
         </ng-template>
       </nz-form-item>
@@ -120,7 +121,7 @@
         </nz-form-control>
         <ng-template #maxLengthNumberErrorMessageTemplate let-control>
           <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
-          <div *ngIf="hasErrors(control, 'maxError')">Cannot be lower than 1!</div>
+          <div *ngIf="hasErrors(control, 'minError')">Cannot be lower than {{control.errors['minError']}}!</div>
           <div *ngIf="hasErrors(control, 'maxMinError')">Cannot be lower than the set min value ({{control.errors['maxMinError']}})!</div>
         </ng-template>
       </nz-form-item>

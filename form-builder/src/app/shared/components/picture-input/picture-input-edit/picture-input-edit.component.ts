@@ -7,7 +7,7 @@ import {PictureInputComponentData} from "../interfaces/picture-input-component-d
   templateUrl: './picture-input-edit.component.html',
   styleUrls: ['./picture-input-edit.component.css']
 })
-export class PictureInputEditComponent extends AbstractEditForm<PictureInputComponentData>{
+export class PictureInputEditComponent extends AbstractEditForm<PictureInputComponentData, string | null>{
   override ngOnInit(): void {
     super.ngOnInit();
     this.initializeFormValues();
