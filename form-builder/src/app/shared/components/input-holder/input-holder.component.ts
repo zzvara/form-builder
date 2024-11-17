@@ -1,12 +1,12 @@
-import {NgComponentOutlet} from "@angular/common";
-import {AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {NgForm} from "@angular/forms";
-import {getInputGroups} from "../../../pages/edit/config/edit-data-config";
-import {AbstractInput} from "../../abstract-classes/abstract-input";
-import {FormInputData} from "../../interfaces/form-input-data";
-import {InlineEdit} from "../../interfaces/inline-edit";
-import {InputData} from "../../interfaces/input-data";
+import { ComponentRef, ViewContainerRef } from "@angular/core";
+import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { NgForm } from "@angular/forms";
+import { getInputGroups } from "../../../pages/edit/config/edit-data-config";
+import { AbstractInput } from "../../abstract-classes/abstract-input";
+import { FormInputData } from "../../interfaces/form-input-data";
+import { InlineEdit } from "../../interfaces/inline-edit";
+import { InputData } from "../../interfaces/input-data";
 
 @Component({
   selector: 'app-input-holder',
@@ -15,9 +15,10 @@ import {InputData} from "../../interfaces/input-data";
 })
 export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
+  private componentRef!: ComponentRef<AbstractInput<D, any, T>>;
 
   @Input() formInput!: FormInputData<D, T>;
-  get inputData() :D {
+  get inputData(): D {
     return this.formInput.data!;
   }
 
@@ -25,7 +26,7 @@ export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, 
   @Output() removeComponentEvent = new EventEmitter<string>();
 
   @ViewChild('inputHolderForm') form!: NgForm;
-  @ViewChild(NgComponentOutlet) inputOutlet!: NgComponentOutlet;
+  @ViewChild('inputOutlet', { read: ViewContainerRef, static: true }) inputOutlet!: ViewContainerRef;
 
   componentInputs!: {
     data: D,
@@ -35,7 +36,7 @@ export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, 
   inlineEdit: InlineEdit = { enabled: true };
 
   get embeddedComponent(): AbstractInput<D, any, T> {
-    return this.inputOutlet['_componentRef'].instance;
+    return this.componentRef.instance;
   }
 
   ngOnInit(): void {
@@ -47,6 +48,10 @@ export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, 
 
   ngAfterViewInit() {
     if (this.inputOutlet) {
+      this.componentRef = this.inputOutlet.createComponent(this.formInput.type) as ComponentRef<AbstractInput<D, any, T>>;
+      this.componentRef.instance.data = this.inputData;
+      this.componentRef.instance.inlineEdit = this.inlineEdit;
+
       this.embeddedComponent.edited
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((data: D) => {
@@ -71,7 +76,7 @@ export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, 
   }
 
   editComponent() {
-    if (this.inputOutlet) {
+    if (this.inputOutlet && this.embeddedComponent) {
       this.embeddedComponent.edit();
     }
   }
@@ -83,6 +88,7 @@ export class InputHolderComponent<D extends InputData<T>, T> implements OnInit, 
   isValid() {
     return this.form?.valid;
   }
+
   isPristine() {
     return this.form?.pristine;
   }

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Project, ProjectType } from '../../../items/project.interface';
 import { ProjectService } from '../../../services/project.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ActivatedRoute } from '@angular/router';
+import { Project, ProjectType } from 'src/app/interfaces/project';
 
 @Component({
   selector: 'app-info-page',

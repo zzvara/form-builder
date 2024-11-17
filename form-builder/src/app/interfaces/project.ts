@@ -1,18 +1,8 @@
-import { Question } from './question/questions.interface';
+import { SectionList } from "../pages/edit/interfaces/section-list";
 
 export enum ProjectType {
   QUESTIONNAIRE = 'questionnaire',
   TEST = 'test',
-}
-
-export interface FormInput {
-  component: string;
-  type?: string;
-  id: string;
-  sectionId: string;
-  question: string;
-  answer: string;
-  description: string;
 }
 
 export interface Project {
@@ -26,7 +16,7 @@ export interface Project {
   deadline: string;
   created: string;
   modified: string;
-  formInputs?: FormInput[];
+  sectionList?: SectionList[];
 }
 
 export interface ProjectVersion<T extends Project> {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Project } from 'src/app/items/project.interface';
+import { Project } from 'src/app/interfaces/project';
 import { JsonService } from 'src/app/services/json.service';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -36,22 +36,22 @@ export class ResultsPageComponent implements OnInit {
    * @returns {void}
    */
   private loadProjectFormInputs(): void {
-    if (this.projectId !== undefined) {
-      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
-      if (project && project.formInputs) {
-        this.formInputs = [...project.formInputs];
-      }
-    }
+    // if (this.projectId !== undefined) {
+    //   const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
+    //   if (project && project.formInputs) {
+    //     this.formInputs = [...project.formInputs];
+    //   }
+    // }
   }
 
   saveProjectWithHistoryToJson(): void {
-    if (this.projectId !== undefined) {
-      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
-      const projectHistory = this.projectService.getProjectHistory(this.projectId);
-      if (project) {
-        this.jsonService.saveProjectWithHistoryToJson(project, projectHistory);
-      }
-    }
+    // if (this.projectId !== undefined) {
+    //   const project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
+    //   const projectHistory = this.projectService.getProjectHistory(this.projectId);
+    //   if (project) {
+    //     this.jsonService.saveProjectWithHistoryToJson(project, projectHistory);
+    //   }
+    // }
   }
 
   saveProjectToJson(): void {

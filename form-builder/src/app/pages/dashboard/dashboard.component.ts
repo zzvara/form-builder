@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Questionnaire } from '../../items/questionnaire/questionnaire.interface';
-import { ProjectType } from '../../items/project.interface';
 import { ProjectService } from '../../services/project.service';
+import { ProjectType } from 'src/app/interfaces/project';
+import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
 
 @Component({
   selector: 'app-dashboard',

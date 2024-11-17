@@ -1,6 +1,6 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormInput } from 'src/app/items/project.interface';
+import { SectionList } from 'src/app/pages/edit/interfaces/section-list';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
   styleUrls: ['./redo-undo.component.css'],
 })
 export class RedoUndoComponent {
-  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
+  constructor(private undoRedoService: UndoRedoService<SectionList[]>) {}
 
   get canUndo(): boolean {
     return this.undoRedoService.canUndo();

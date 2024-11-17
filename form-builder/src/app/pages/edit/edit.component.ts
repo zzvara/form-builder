@@ -1,6 +1,5 @@
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
-import {FormInput, Project} from 'src/app/items/project.interface';
 import {ProjectService} from 'src/app/services/project.service';
 import {UndoRedoService} from 'src/app/services/undo-redo.service';
 import {SidebarData} from "../../shared/components/sidebar/interfaces/sidebar-data";
@@ -9,6 +8,7 @@ import {InputData} from "../../shared/interfaces/input-data";
 import {getSideBarData} from "./config/edit-data-config";
 import {LayoutEnum} from "./interfaces/layout-enum";
 import {SectionList} from "./interfaces/section-list";
+import { Project } from 'src/app/interfaces/project';
 
 @Component({
   selector: 'app-edit',
@@ -17,7 +17,7 @@ import {SectionList} from "./interfaces/section-list";
 })
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService = inject(ProjectService<Project>);
-  private readonly undoRedoService = inject(UndoRedoService<FormInput[]>);
+  private readonly undoRedoService = inject(UndoRedoService<SectionList[]>);
 
   constructor() {}
 
@@ -38,17 +38,20 @@ export class EditComponent implements OnInit, OnChanges {
    * If a project and its form inputs are found, it updates the formInputs array with the project's form inputs.
    * @returns {void}
    */
-  private loadProjectFormInputs(): void {
+  private loadProject(): void {
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
-      if (project?.formInputs) {
-        //FIXME
-        // this.formInputs = [...project.formInputs];
+      if (project?.sectionList) {
+        this.sectionList = project.sectionList.map(section => ({
+          sectionId: `${section.sectionId}`,
+          layout: LayoutEnum.VERTICAL,
+          sectionInputs: section.sectionInputs
+        }));
         this.undoRedoService.saveState(this.getAllFormInputs());
       }
     }
   }
-
+    
   /**
    * Initializes the undo/redo service by saving the current state of the form inputs.
    * @returns {void}
@@ -61,11 +64,11 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.loadProjectFormInputs();
+    this.loadProject();
   }
 
   ngOnInit() {
-    this.loadProjectFormInputs();
+    this.loadProject();
     this.initializeUndoRedo();
     this.sectionId = 0;
     this.sectionComponentId = 0;
@@ -153,23 +156,18 @@ export class EditComponent implements OnInit, OnChanges {
   saveForm(): void {
     const project = this.projectService.searchData(this.projectId!)[0];
     if (project) {
-      project.formInputs = project.formInputs || [];
-      const existingIds = new Set(project.formInputs.map((input) => input.id));
-      for (const input of this.getAllFormInputs()) {
-        if (existingIds.has(input.data.id)) {
-          const index = project.formInputs.findIndex((existingInput) => existingInput.id === input.data.id);
-          if (index !== -1) {
-            project.formInputs[index] = input.data;
-          }
-        } else {
-          project.formInputs.push(input.data);
-          existingIds.add(input.data.id);
-        }
+      project.sectionList = [];
+      for (const section of this.sectionList) {
+        project.sectionList.push({
+          sectionId: section.sectionId,
+          layout: section.layout,
+          sectionInputs: section.sectionInputs
+        });
       }
       this.projectService.update(this.projectId!, project);
     }
   }
-
+  
   onFormInputsChange(updatedFormInputs: any[]): void {
     //FIXME
     // this.formInputs = updatedFormInputs;
