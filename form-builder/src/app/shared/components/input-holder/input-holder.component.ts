@@ -36,7 +36,7 @@ export class InputHolderComponent<D extends InputData<T>, E extends AbstractEdit
   @Output() removeComponentEvent = new EventEmitter<string>();
 
   @ViewChild('inputHolderForm') form!: NgForm;
-  @ViewChild(NgComponentOutlet) inputOutlet!: NgComponentOutlet;
+  @ViewChild(NgComponentOutlet, {static: true}) inputOutlet!: NgComponentOutlet;
 
   componentInputs!: {
     data: D,

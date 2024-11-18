@@ -10,7 +10,7 @@ import {InputComponentData} from "../interfaces/input-component-data";
   templateUrl: './input-edit.component.html',
   styleUrls: ['./input-edit.component.css']
 })
-export class InputEditComponent extends AbstractFieldLikeEditForm<InputComponentData, string> {
+export class InputEditComponent<T extends InputComponentData> extends AbstractFieldLikeEditForm<T, string> {
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({

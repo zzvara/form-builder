@@ -14,6 +14,7 @@ import {TextareaComponentData} from "../../../shared/components/textarea/interfa
 import {TextareaComponent} from "../../../shared/components/textarea/textarea.component";
 import {FormInputData} from "../../../shared/interfaces/form-input-data";
 import {EditComponent} from "../edit.component";
+import {defaultDateFormats} from "../../../shared/components/date-picker/interfaces/default-date-formats";
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
@@ -42,6 +43,14 @@ const dateInputOptions: DatePickerComponentData = {
   descriptionValue: "Question description...",
   required: false,
   showTooltip: false,
+  dateFormat: defaultDateFormats.date,
+  timeFormat: defaultDateFormats.time,
+  inlineMode: false,
+  maxDate: false,
+  minDate: false,
+  mode: "date",
+  showTime: false,
+  showWeekNumber: false,
 };
 const textAreaInputOptions: TextareaComponentData = {
   questionValue: "Textarea question...",

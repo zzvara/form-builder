@@ -8,7 +8,7 @@ import {InputComponentData} from "./interfaces/input-component-data";
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent extends AbstractFieldLikeInputs<InputComponentData, InputEditComponent, string> {
+export class InputComponent extends AbstractFieldLikeInputs<InputComponentData, InputEditComponent<InputComponentData>, string> {
   override edit(): void {
     this.modalService.openModal({
       modalTitle: 'Edit Text Field Component Settings',

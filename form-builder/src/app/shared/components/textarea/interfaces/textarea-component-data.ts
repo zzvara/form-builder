@@ -1,12 +1,4 @@
-import {FieldLikeInputData} from "../../../interfaces/field-like-input-data";
+import {InputComponentData} from "../../input/interfaces/input-component-data";
 
-export interface TextareaComponentData extends FieldLikeInputData<string> {
-  minLength: boolean;
-  minLengthNumber?: number;
-  minLengthMessage?: string;
-
-  maxLength: boolean;
-  maxLengthNumber?: number;
-
-  showCharacterCounter: boolean;
+export interface TextareaComponentData extends InputComponentData {
 }
