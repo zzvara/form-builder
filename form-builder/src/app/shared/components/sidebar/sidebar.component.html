@@ -11,7 +11,7 @@
   <div class="body">
     <nz-collapse [nzBordered]="false">
       <nz-collapse-panel
-        *ngFor="let group of filteredData"
+        *ngFor="let group of filteredData; trackBy: identifySidebarData"
         [nzHeader]="group.groupName"
         [nzActive]="group.active"
         cdkDropList

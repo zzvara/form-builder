@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit {
   @Input() sidebarData!: SidebarData[];
 
   searchTerm: string = '';
-  filteredData: any[] = [];
+  filteredData: SidebarData[] = [];
 
   ngOnInit() {
     this.filteredData = this.sidebarData;
