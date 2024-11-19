@@ -1,16 +1,17 @@
 <section>
   <div class="sticky-header">
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="input search text" />
+      <input type="text" nz-input placeholder="input search text" [(ngModel)]="searchTerm" (ngModelChange)="filterItems()" />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
+      <span *ngIf="searchTerm" nz-icon nzType="close" nzTheme="outline" class="clear-icon" (click)="clearSearch()"></span>
     </ng-template>
   </div>
   <div class="body">
     <nz-collapse [nzBordered]="false">
       <nz-collapse-panel
-        *ngFor="let group of sidebarData"
+        *ngFor="let group of filteredData"
         [nzHeader]="group.groupName"
         [nzActive]="group.active"
         cdkDropList

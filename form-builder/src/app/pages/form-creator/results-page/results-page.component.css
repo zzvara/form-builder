@@ -1,3 +1,35 @@
 nz-layout {
   background-color: transparent;
+  height: 450px;
+}
+
+.button-group button {
+  margin-right: 8px;
+}
+
+.button-group button:last-child {
+  margin-right: 0;
+}
+
+.json {
+  white-space: pre-wrap;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.json-container {
+  overflow: auto;
+  max-height: 430px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.section-container {
+  height: 450px;
+}
+
+.project-container {
+  height: 450px;
 }
