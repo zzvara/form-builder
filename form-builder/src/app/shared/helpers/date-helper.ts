@@ -1,5 +1,5 @@
 import {DisabledTimeConfig, NzDateMode} from "ng-zorro-antd/date-picker";
-import {DatePickerComponentData} from "./date-picker-component-data";
+import {DatePickerComponentData} from "../components/date-picker/interfaces/date-picker-component-data";
 
 export type DefaultDateComparers = {
   [key in NzDateMode]: (date1: Date, date2: Date) => ComparisonType;
@@ -21,6 +21,14 @@ export function getDisabledDateConfig(data: DatePickerComponentData): (current: 
     }
     return !!(data.maxDate && data.maxDateValue && defaultDateComparers[data.mode](current, data.maxDateValue) > 0);
   };
+}
+
+export function getDisabledDatesForMaxDate(maxDate: Date, mode: NzDateMode): (current: Date) => boolean {
+  return (current: Date): boolean => maxDate && defaultDateComparers[mode](current, maxDate) > 0;
+}
+
+export function getDisabledDatesForMinDate(minDate: Date, mode: NzDateMode): (current: Date) => boolean {
+  return (current: Date): boolean => minDate && defaultDateComparers[mode](current, minDate) < 0;
 }
 
 export function getDisabledTimeConfig(data: DatePickerComponentData, currentDate: Date): DisabledTimeConfig {
@@ -88,6 +96,106 @@ export function getDisabledTimeConfig(data: DatePickerComponentData, currentDate
             return range(0, 60);
           } else if(comparison === 0) {
             seconds.push(...range(data.maxDateValue.getSeconds() + 1, 60));
+          }
+        }
+        return seconds;
+      }
+      return range(0, 60);
+    }
+  };
+}
+
+export function getDisabledTimeConfigForMaxDate(currentDate: Date, maxDate: Date): DisabledTimeConfig {
+  return {
+    nzDisabledHours: (): number[] => {
+      const hours: number[] = [];
+      if (currentDate) {
+        if (maxDate) {
+          const comparison = compareDatesFull(currentDate, maxDate);
+          if (comparison > 0) {
+            return range(0, 24);
+          } else if(comparison === 0) {
+            hours.push(...range(maxDate.getHours() + 1, 24));
+          }
+        }
+        return hours;
+      }
+      return range(0, 24);
+    },
+    nzDisabledMinutes: (hour: number): number[] => {
+      const minutes: number[] = [];
+      if (currentDate && hour) {
+        if (maxDate) {
+          const comparison = compareByHoursFull(currentDate, maxDate);
+          if (comparison > 0) {
+            return range(0, 60);
+          } else if(comparison === 0) {
+            minutes.push(...range(maxDate.getMinutes() + 1, 60));
+          }
+        }
+        return minutes;
+      }
+      return range(0, 60);
+    },
+    nzDisabledSeconds: (hour: number, minute: number): number[] => {
+      const seconds: number[] = [];
+      if (currentDate && hour && minute) {
+        if (maxDate) {
+          const comparison = compareByMinuteFull(currentDate, maxDate);
+          if (comparison > 0) {
+            return range(0, 60);
+          } else if(comparison === 0) {
+            seconds.push(...range(maxDate.getSeconds() + 1, 60));
+          }
+        }
+        return seconds;
+      }
+      return range(0, 60);
+    }
+  };
+}
+
+export function getDisabledTimeConfigForMinDate(currentDate: Date, minDate: Date): DisabledTimeConfig {
+  return {
+    nzDisabledHours: (): number[] => {
+      const hours: number[] = [];
+      if (currentDate) {
+        if (minDate) {
+          const comparison = compareDatesFull(currentDate, minDate);
+          if (comparison < 0) {
+            return range(0, 24);
+          } else if(comparison === 0) {
+            hours.push(...range(0, minDate.getHours()));
+          }
+        }
+        return hours;
+      }
+      return range(0, 24);
+    },
+    nzDisabledMinutes: (hour: number): number[] => {
+      const minutes: number[] = [];
+      if (currentDate && hour) {
+        if (minDate) {
+          const comparison = compareByHoursFull(currentDate, minDate);
+          if (comparison < 0) {
+            return range(0, 60);
+          } else if(comparison === 0) {
+            minutes.push(...range(0, minDate.getMinutes()));
+          }
+        }
+        return minutes;
+      }
+      return range(0, 60);
+    },
+    nzDisabledSeconds: (hour: number, minute: number): number[] => {
+      const seconds: number[] = [];
+      if (currentDate && hour && minute) {
+        if (minDate) {
+          const comparison = compareByMinuteFull(currentDate, minDate);
+          if (comparison < 0) {
+            return range(0, 60);
+          } else if(comparison === 0) {
+            seconds.push(...range(0, minDate.getSeconds()));
           }
         }
         return seconds;

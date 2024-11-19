@@ -23,14 +23,87 @@
     </nz-form-control>
   </nz-form-item>
 
-  <span>Set Default Value</span>
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="setDefaultValue">Set default value?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('setDefaultValue')">
+      <span>Set Default Value</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
+          <nz-date-picker
+            nzPlaceHolder="Select date"
+            formControlName="defaultValue"
+            [nzMode]="getControlValue('mode')"
+            [nzFormat]="getFullFormat"
+            [nzDisabledDate]="getDisabledDateConfig(rawFormData)"
+            [nzDisabledTime]="disabledTime"
+            [nzShowTime]="getTimeOptions"
+            [nzShowWeekNumber]="getControlValue('showWeekNumber')"
+            [nzShowToday]="true"
+            style="width: 100%"></nz-date-picker>
+        </nz-form-control>
+        <ng-template #defaultValueErrorTemplate let-control>
+          <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <span>DatePicker mode:</span>
   <nz-form-item>
-    <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-      <nz-date-picker nzPlaceHolder="Select date" formControlName="defaultValue"></nz-date-picker>
+    <nz-form-control>
+      <nz-select formControlName="mode" nzPlaceHolder="Mode">
+        <nz-option *ngFor="let item of datePickerModes; trackBy: identifyDatePickerModes" [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
+      </nz-select>
     </nz-form-control>
-    <ng-template #defaultValueErrorTemplate let-control>
-      <div *ngFor="let message of getErrorMessages(control) ">{{message}}</div>
+  </nz-form-item>
+
+  <span>Date format:</span>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="dateFormatErrors">
+      <input nz-input placeholder="Date format" formControlName="dateFormat"/>
+    </nz-form-control>
+    <ng-template #dateFormatErrors let-control>
+      <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
     </ng-template>
+  </nz-form-item>
+
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox
+               formControlName="showTime"
+               [nzDisabled]="getControlValue('mode') !== 'date'">Show time?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('showTime')">
+      <span>Time format:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="timeFormatErrors">
+          <input nz-input placeholder="Time format" formControlName="timeFormat"/>
+        </nz-form-control>
+        <ng-template #timeFormatErrors let-control>
+          <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <span>Week numbers</span>
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="showWeekNumber">Show week numbers?</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Inline component</span>
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="inlineMode">Show inline component?</label>
+    </nz-form-control>
   </nz-form-item>
 
   <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
@@ -49,6 +122,60 @@
         </nz-form-control>
         <ng-template #requiredErrorMessageTemplate let-control>
           <div *ngIf="hasErrors(control, 'required')">If the field is required the message cannot be empty!</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="minDate">Min date Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('minDate')">
+      <span>Min date:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="minDateErrorMessageTemplate">
+          <nz-date-picker
+            nzPlaceHolder="Select min date"
+            formControlName="minDateValue"
+            [nzMode]="getControlValue('mode')"
+            [nzFormat]="getFullFormat"
+            [nzDisabledDate]="getDisabledDatesForMin"
+            [nzDisabledTime]="disabledTimeConfigForMin"
+            [nzShowTime]="getTimeOptions"
+            [nzShowWeekNumber]="getControlValue('showWeekNumber')"
+            [nzShowToday]="true"
+            style="width: 100%"></nz-date-picker>
+        </nz-form-control>
+        <ng-template #minDateErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+          <div *ngIf="hasErrors(control, 'minMaxError')">Cannot be higher than the set max date ({{control.errors['minMaxError'] | date:getFullFormat}})!</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="maxDate">Max date Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('maxDate')">
+      <span>Max date:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
+          <nz-date-picker
+            nzPlaceHolder="Select min date"
+            formControlName="maxDateValue"
+            [nzMode]="getControlValue('mode')"
+            [nzFormat]="getFullFormat"
+            [nzDisabledDate]="getDisabledDatesForMax"
+            [nzDisabledTime]="disabledTimeConfigForMax"
+            [nzShowTime]="getTimeOptions"
+            [nzShowWeekNumber]="getControlValue('showWeekNumber')"
+            [nzShowToday]="true"
+            style="width: 100%"></nz-date-picker>
+        </nz-form-control>
+        <ng-template #maxDateErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+          <div *ngIf="hasErrors(control, 'maxMinError')">Cannot be lower than the set date ({{control.errors['maxMinError'] | date:getFullFormat}})!</div>
         </ng-template>
       </nz-form-item>
     </div>

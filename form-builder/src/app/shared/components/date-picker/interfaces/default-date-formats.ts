@@ -6,7 +6,7 @@ export type DefaultDateFormats = {
 
 export const defaultDateFormats: DefaultDateFormats = {
   date:   "yyyy-MM-dd",
-  decade: "yyyy",
+  decade: "yyyy'''s'",
   year:   "yyyy",
   month:  "yyyy-MM",
   week:   "yyyy-ww",

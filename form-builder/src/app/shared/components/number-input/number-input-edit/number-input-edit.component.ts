@@ -22,8 +22,10 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<NumberIn
         updateOn: UpdateOnStrategy.CHANGE,
         validators: [
           CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>("min")),
-          CustomValidators.validateMinWithMaxIf(() => [this.getStrictControlValue<boolean>("max"), this.getStrictControlValue<number>("maxNumber") ?? 0],
-            () => this.getStrictControlValue<boolean>("min"))
+          CustomValidators.validateMinWithMaxIf(() => ({
+            maxOn: this.getStrictControlValue<boolean>("max"),
+            maxNum: this.getStrictControlValue<number>("maxNumber") ?? 0
+            }), () => this.getStrictControlValue<boolean>("min"))
         ]
       }),
       max:        new FormControl(false, {
@@ -33,8 +35,10 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<NumberIn
         updateOn: UpdateOnStrategy.CHANGE,
         validators: [
           CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>("max")),
-          CustomValidators.validateMaxWithMinIf(() => [this.getStrictControlValue<boolean>("min"), this.getStrictControlValue<number>("minNumber") ?? 0],
-            () => this.getStrictControlValue<boolean>("max"))
+          CustomValidators.validateMaxWithMinIf(() => ({
+            minOn: this.getStrictControlValue<boolean>("min"),
+            minNum: this.getStrictControlValue<number>("minNumber") ?? 0
+          }), () => this.getStrictControlValue<boolean>("max"))
         ]
       }),
       stepNumber: new FormControl(null, [

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {SidebarData} from "./interfaces/sidebar-data";
+import {identifyGroupContents, identifySidebarData, SidebarData} from "./interfaces/sidebar-data";
 import {SectionComponent} from "../section/section.component";
 
 @Component({
@@ -9,9 +9,10 @@ import {SectionComponent} from "../section/section.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
+  protected readonly identifySidebarData = identifySidebarData;
+  protected readonly identifyGroupContents = identifyGroupContents;
   protected readonly SectionComponent = SectionComponent;
 
   constructor() {}
-
   @Input() sidebarData!: SidebarData[];
 }

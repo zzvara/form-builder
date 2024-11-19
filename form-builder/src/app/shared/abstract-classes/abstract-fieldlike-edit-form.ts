@@ -1,6 +1,8 @@
 import {Directive} from "@angular/core";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {AbstractControl, FormControl, ValidatorFn, Validators} from "@angular/forms";
+import {ErrorType, getErrorMessageList} from "../helpers/error-helper";
+import {identifyStringArray} from "../helpers/identification-helper";
 import {FieldLikeInputData} from "../interfaces/field-like-input-data";
 import {UpdateOnStrategy} from "../interfaces/update-on-strategy";
 import {CustomValidators} from "../validators/custom-validators";
@@ -46,6 +48,9 @@ export abstract class AbstractFieldLikeEditForm<D extends FieldLikeInputData<T>,
     if (this.rawFormData.showTooltip) {
       this.initialValues.tooltipText = this.rawFormData.tooltipText;
     }
+    if (!this.getControlValue("setDefaultValue")) {
+      this.initialValues.defaultValue = undefined;
+    }
   }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -84,16 +89,15 @@ export abstract class AbstractFieldLikeEditForm<D extends FieldLikeInputData<T>,
 
 //----------------------------------------------------------------------------------------------------------------------
 
+  protected readonly identifyErrorMessages = identifyStringArray;
   getErrorMessages(control: AbstractControl<string>): string[] {
-    return this.errorList()
-      .filter(error => control.hasError(error.validatorName))
-      .map(error => error.validationMessage);
+    return getErrorMessageList(control, this.errorList());
   }
 
-  errorList(): {validatorName: string, validationMessage: string}[]  {
+  errorList(): ErrorType[]  {
     return [{
-      validatorName: "required",
-      validationMessage: this.getStrictControlValue<string>("requiredMessage")
-    }]
+      errorName: "required",
+      errorMessage: this.getStrictControlValue<string>("requiredMessage")
+    }];
   }
 }

@@ -17,7 +17,7 @@
   </nz-form-control>
 </nz-form-item>
 <ng-template #errorTemplate let-control>
-  <div *ngFor="let message of getErrorMessages(control) ">{{message}}</div>
+  <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
 </ng-template>
 <ng-template #prefixTemplate>
   <span *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>

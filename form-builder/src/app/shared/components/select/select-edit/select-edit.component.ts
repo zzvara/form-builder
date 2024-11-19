@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
+import {identifyStringArray} from "../../../helpers/identification-helper";
 import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
 import {SelectComponentData} from "../interfaces/select-component-data";
 import {AbstractControl, FormArray, FormControl, Validators} from "@angular/forms";
@@ -12,6 +13,8 @@ import {CustomValidators} from "../../../validators/custom-validators";
   styleUrls: ['./select-edit.component.css']
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectComponentData, string | string[]> {
+  protected readonly identifyStringArray = identifyStringArray;
+
   newOption!: FormControl<string | null>;
 
   override ngOnInit(): void {
@@ -38,7 +41,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectCompone
     if (this.initialValues) {
       this.formData.patchValue(this.initialValues);
       this.initialValues.selectOptions.forEach(option => {
-        this.options.push(new FormControl(option));
+        this.options.push(new FormControl(option, Validators.required));
       });
     }
   }
@@ -66,7 +69,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectCompone
   };
 
   get options(): FormArray {
-    return  this.formData.get('selectOptions') as FormArray;
+    return this.formData.get('selectOptions') as FormArray;
   }
 
   get optionsValues(): string[] {
@@ -95,16 +98,16 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectCompone
   setDefaultValue(values: string | string[]): void {
      this.formData.get("defaultValue")?.setValue(values);
   }
-  // Add a new option
 
+  // Add a new option
   addOption() {
-    this.options.push(new FormControl(this.newOptionValue));
+    this.options.push(new FormControl(this.newOptionValue, Validators.required));
     this.newOptionValue = "";
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
-  // Remove an existing option
 
+  // Remove an existing option
   removeOption(option: AbstractControl<string>, optionIndex: number) {
     this.options.removeAt(optionIndex);
     if (Array.isArray(this.getDefaultValues())) {
@@ -126,7 +129,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectCompone
     this.newOption.reset();
     this.options.clear();
     this.initialValues.selectOptions.forEach(option => {
-      this.options.push(new FormControl(option));
+      this.options.push(new FormControl(option, Validators.required));
     });
   }
 }

@@ -6,3 +6,6 @@ export interface SectionList {
   layout: LayoutEnum,
   sectionInputs: FormInputData<any, any>[]
 }
+
+export const identifySectionList: (index: number, item: SectionList) => string = (_index, item) => item.sectionId;
+export const identifySectionInputs: (index: number, item: FormInputData<any, any>) => string = (_index, item) => item.data.id;

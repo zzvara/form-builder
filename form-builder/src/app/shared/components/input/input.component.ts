@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
+import {ErrorType} from "../../helpers/error-helper";
 import {InputEditComponent} from "./input-edit/input-edit.component";
 import {InputComponentData} from "./interfaces/input-component-data";
 
@@ -21,10 +22,10 @@ export class InputComponent extends AbstractFieldLikeInputs<InputComponentData, 
     });
   }
 
-  override errorList(): { validatorName: string; validationMessage: string }[] {
+  override errorList(): ErrorType[] {
     return super.errorList().concat([{
-      validatorName: "minlength",
-      validationMessage: this.data.minLengthMessage!.replace("{*}", String(this.data.minLengthNumber!)),
+      errorName: "minlength",
+      errorMessage: this.data.minLengthMessage!.replace("{*}", String(this.data.minLengthNumber!)),
     }]);
   }
 }

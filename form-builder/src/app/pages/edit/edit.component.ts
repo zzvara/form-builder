@@ -7,7 +7,7 @@ import {FormInputData} from "../../shared/interfaces/form-input-data";
 import {InputData} from "../../shared/interfaces/input-data";
 import {getSideBarData} from "./config/edit-data-config";
 import {LayoutEnum} from "./interfaces/layout-enum";
-import {SectionList} from "./interfaces/section-list";
+import {identifySectionInputs, identifySectionList, SectionList} from "./interfaces/section-list";
 import { Project } from 'src/app/interfaces/project';
 
 @Component({
@@ -18,6 +18,8 @@ import { Project } from 'src/app/interfaces/project';
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService = inject(ProjectService<Project>);
   private readonly undoRedoService = inject(UndoRedoService<SectionList[]>);
+  protected readonly identifySectionList = identifySectionList;
+  protected readonly identifySectionInputs = identifySectionInputs;
 
   constructor() {}
 
@@ -51,7 +53,7 @@ export class EditComponent implements OnInit, OnChanges {
       }
     }
   }
-    
+
   /**
    * Initializes the undo/redo service by saving the current state of the form inputs.
    * @returns {void}
@@ -167,7 +169,7 @@ export class EditComponent implements OnInit, OnChanges {
       this.projectService.update(this.projectId!, project);
     }
   }
-  
+
   onFormInputsChange(updatedFormInputs: any[]): void {
     //FIXME
     // this.formInputs = updatedFormInputs;

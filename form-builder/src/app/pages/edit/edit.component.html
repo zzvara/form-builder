@@ -11,7 +11,7 @@
            [cdkDropListData]="sectionList"
            style="width: 100%">
         <nz-card
-          *ngFor="let sect of sectionList"
+          *ngFor="let sect of sectionList; trackBy: identifySectionList"
           id="{{sect.sectionId}}"
           [nzTitle]="sectionTitle"
           [nzExtra]="sectionButtons"
@@ -49,7 +49,7 @@
 
           <app-input-holder
             class="element-box"
-            *ngFor="let item of sect.sectionInputs"
+            *ngFor="let item of sect.sectionInputs; trackBy: identifySectionInputs"
             cdkDrag
             [cdkDragData]="item"
             nz-card-grid

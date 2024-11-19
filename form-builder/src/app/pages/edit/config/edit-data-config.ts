@@ -32,6 +32,7 @@ const numberInputOptions: NumberInputComponentData = {
   questionValue: "Number Field question...",
   descriptionValue: "Question description...",
   required: false,
+  requiredMessage: "Field cannot be empty!",
   showTooltip: false,
   max: false,
   min: false,
@@ -42,6 +43,7 @@ const dateInputOptions: DatePickerComponentData = {
   questionValue: "Date Picker question...",
   descriptionValue: "Question description...",
   required: false,
+  requiredMessage: "Field cannot be empty!",
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
   timeFormat: defaultDateFormats.time,
@@ -72,6 +74,7 @@ const selectInputOptions: SelectComponentData = {
   descriptionValue: "Question description...",
   selectOptions: ["Option 1", "Option 2"],
   required: false,
+  requiredMessage: "Field cannot be empty!",
   showTooltip: false,
   isMultipleChoice: false,
 };

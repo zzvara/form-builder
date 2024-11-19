@@ -3,7 +3,7 @@ import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike
 import {DatePickerEditComponent} from "./date-picker-edit/date-picker-edit.component";
 import {DatePickerComponentData} from "./interfaces/date-picker-component-data";
 import {DisabledTimeConfig, DisabledTimeFn, SupportTimeOptions} from "ng-zorro-antd/date-picker";
-import {getDisabledDateConfig, getDisabledTimeConfig} from "./interfaces/date-helper";
+import {getDisabledDateConfig, getDisabledTimeConfig} from "../../helpers/date-helper";
 
 @Component({
   selector: 'app-date-picker',
@@ -32,17 +32,17 @@ export class DatePickerComponent extends AbstractFieldLikeInputs<DatePickerCompo
     return undefined;
   }
 
-  getTimeOptions(): SupportTimeOptions | null {
+  get getTimeOptions(): SupportTimeOptions | null {
     if (this.data.showTime) {
       return {
         nzFormat: this.data.timeFormat,
-        nzHideDisabledOptions: true
+        nzHideDisabledOptions: false
       };
     }
     return null;
   }
 
-  getFullFormat() {
+  get getFullFormat() {
     if (this.data.showTime) {
       return this.data.dateFormat + " " + this.data.timeFormat;
     }

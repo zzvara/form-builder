@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
+import {ErrorType} from "../../../helpers/error-helper";
 import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
 import {CustomValidators} from "../../../validators/custom-validators";
 import {InputComponentData} from "../interfaces/input-component-data";
@@ -22,8 +23,10 @@ export class InputEditComponent<T extends InputComponentData> extends AbstractFi
         validators: [
           CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>("minLength")),
           CustomValidators.validateMinIf(() => this.getStrictControlValue<boolean>("minLength"), 1),
-          CustomValidators.validateMinWithMaxIf(() => [this.getStrictControlValue<boolean>("maxLength"), this.getStrictControlValue<number>("maxLengthNumber") ?? 0],
-            () => this.getStrictControlValue<boolean>("minLength"))
+          CustomValidators.validateMinWithMaxIf(() => ({
+              maxOn: this.getStrictControlValue<boolean>("maxLength"),
+              maxNum: this.getStrictControlValue<number>("maxLengthNumber") ?? 0
+          }), () => this.getStrictControlValue<boolean>("minLength"))
         ]
       }),
       minLengthMessage:     new FormControl(null,
@@ -36,8 +39,10 @@ export class InputEditComponent<T extends InputComponentData> extends AbstractFi
         validators: [
           CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>("maxLength")),
           CustomValidators.validateMinIf(() => this.getStrictControlValue<boolean>("minLength"), 1),
-          CustomValidators.validateMaxWithMinIf(() => [this.getStrictControlValue<boolean>("minLength"), this.getStrictControlValue<number>("minLengthNumber") ?? 0],
-            () => this.getStrictControlValue<boolean>("maxLength"))
+          CustomValidators.validateMaxWithMinIf(() => ({
+            minOn: this.getStrictControlValue<boolean>("minLength"),
+            minNum: this.getStrictControlValue<number>("minLengthNumber") ?? 0
+          }), () => this.getStrictControlValue<boolean>("maxLength"))
         ]
       }),
       showCharacterCounter: new FormControl(false, {
@@ -72,9 +77,6 @@ export class InputEditComponent<T extends InputComponentData> extends AbstractFi
       this.initialValues.maxLengthNumber      = this.rawFormData.maxLengthNumber;
       this.initialValues.showCharacterCounter = this.rawFormData.showCharacterCounter;
     }
-    if (!this.getControlValue("setDefaultValue")) {
-      this.initialValues.defaultValue = undefined;
-    }
   }
 
   get maxLengthOrNull() {
@@ -84,10 +86,10 @@ export class InputEditComponent<T extends InputComponentData> extends AbstractFi
     return this.getStrictControlValue('minLength') && this.getStrictControlValue('minLengthNumber') ? this.getStrictControlValue<number>('minLengthNumber') : null
   }
 
-  override errorList(): { validatorName: string; validationMessage: string }[] {
+  override errorList(): ErrorType[] {
     return super.errorList().concat([{
-      validatorName: "minlength",
-      validationMessage: this.getStrictControlValue<string>("minLengthMessage").replace("{*}", String(this.getStrictControlValue<number>("minLengthNumber"))),
+      errorName: "minlength",
+      errorMessage: this.getStrictControlValue<string>("minLengthMessage").replace("{*}", String(this.getStrictControlValue<number>("minLengthNumber"))),
     }]);
   }
 }

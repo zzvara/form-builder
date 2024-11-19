@@ -54,7 +54,7 @@
                            style="width: 100%"/>
         </nz-form-control>
         <ng-template #defaultValueErrorTemplate let-control>
-          <div *ngFor="let message of getErrorMessages(control) ">{{message}}</div>
+          <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
         </ng-template>
       </nz-form-item>
     </div>

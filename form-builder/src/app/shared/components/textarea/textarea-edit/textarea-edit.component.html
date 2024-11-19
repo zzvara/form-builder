@@ -44,7 +44,7 @@
           <ng-container *ngTemplateOutlet="suffixTemplateCounter"/>
         </nz-form-control>
         <ng-template #defaultValueErrorTemplate let-control>
-          <div *ngFor="let message of getErrorMessages(control)">{{message}}</div>
+          <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
         </ng-template>
         <ng-template #suffixTemplateCounter>
           <div *ngIf="getControlValue('maxLength') && getControlValue('showCharacterCounter') && getControlValue('maxLengthNumber')" style="text-align: right">

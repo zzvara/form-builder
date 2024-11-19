@@ -43,7 +43,7 @@
           </nz-input-group>
         </nz-form-control>
         <ng-template #defaultValueErrorTemplate let-control>
-          <div *ngFor="let message of getErrorMessages(control)">{{message}}</div>
+          <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
         </ng-template>
         <ng-template #suffixTemplateCounter>
           <span *ngIf="getControlValue('maxLength') && getControlValue('showCharacterCounter') && getControlValue('maxLengthNumber')">

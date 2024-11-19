@@ -1,4 +1,6 @@
 import {AbstractControl, ValidatorFn} from "@angular/forms";
+import {NzDateMode} from "ng-zorro-antd/date-picker";
+import {defaultDateComparers} from "../helpers/date-helper";
 
 export class CustomValidators {
 
@@ -88,15 +90,27 @@ export class CustomValidators {
     }
   }
 
-  static validateMinWithMaxIf(maxData: () => [boolean, number], ifPred: () => boolean) {
+  static validateMinWithMaxIf(maxData: () => { maxOn: boolean, maxNum: number }, ifPred: () => boolean) {
     return (control: AbstractControl) => {
       const value: number = control.value;
       if (value && ifPred()) {
-        const maxOn = maxData()[0];
-        const maxNum = maxData()[1];
-        if (maxOn && maxNum && value > maxNum) {
+        if (maxData().maxOn && maxData().maxNum && value > maxData().maxNum) {
           return {
-            minMaxError: maxNum
+            minMaxError: maxData().maxNum
+          };
+        }
+      }
+      return null;
+    }
+  }
+
+  static validateDateMinWithMaxIf(maxData: () => { maxOn: boolean, maxDate: Date, mode: NzDateMode, showTime: boolean }, ifPred: () => boolean) {
+    return (control: AbstractControl) => {
+      const value: Date = control.value;
+      if (value && ifPred()) {
+        if (maxData().maxOn && maxData().maxDate && defaultDateComparers[maxData().showTime ? "time" : maxData().mode](value, maxData().maxDate) > 0) {
+          return {
+            minMaxError: maxData().maxDate
           };
         }
       }
@@ -130,16 +144,28 @@ export class CustomValidators {
     }
   }
 
-  static validateMaxWithMinIf(minData: () => [boolean, number], ifPred: () => boolean) {
+  static validateMaxWithMinIf(minData: () => { minOn: boolean, minNum: number }, ifPred: () => boolean) {
     return (control: AbstractControl) => {
       const value: number = control.value;
       if (value && ifPred()) {
-        const minOn = minData()[0];
-        const minNum = minData()[1];
-        if (minOn && minNum && value < minNum) {
+        if (minData().minOn && minData().minNum && value < minData().minNum) {
           return {
-            maxMinError: minNum
+            maxMinError: minData().minNum
           }
+        }
+      }
+      return null;
+    }
+  }
+
+  static validateDateMaxWithMinIf(minData: () => { minOn: boolean, minDate: Date, mode: NzDateMode, showTime: boolean }, ifPred: () => boolean) {
+    return (control: AbstractControl) => {
+      const value: Date = control.value;
+      if (value && ifPred()) {
+        if (minData().minOn && minData().minDate && defaultDateComparers[minData().showTime ? "time" : minData().mode](value, minData().minDate) < 0) {
+          return {
+            maxMinError: minData().minDate
+          };
         }
       }
       return null;
