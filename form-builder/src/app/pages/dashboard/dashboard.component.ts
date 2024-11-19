@@ -5,6 +5,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { ProjectService } from '../../services/project.service';
 import { ProjectType } from 'src/app/interfaces/project';
 import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
+import { JsonService } from '../../services/json.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly modal: NzModalService,
-    private readonly questionnaireService: ProjectService<Questionnaire>
+    private readonly questionnaireService: ProjectService<Questionnaire>,
+    private readonly jsonService: JsonService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +29,7 @@ export class DashboardComponent implements OnInit {
   }
 
   createProject(type: ProjectType): void {
+    this.jsonService.clearJsonData();
     this.router.navigate(['new'], { queryParams: { type } });
   }
 
@@ -45,5 +48,22 @@ export class DashboardComponent implements OnInit {
 
   editProject(id: number) {
     this.router.navigate(['edit'], { queryParams: { id } });
+  }
+
+  uploadJson(file: File): void {
+    this.jsonService.uploadJson(file).subscribe(data => {
+      this.jsonService.setJsonData(data);
+      this.router.navigate(['new'], {
+        queryParams: { type: data.type },
+        state: { projectData: data }
+      });
+    });
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.uploadJson(file);
+    }
   }
 }

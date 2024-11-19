@@ -37,6 +37,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     ReactiveFormsModule,
     BrowserModule,
     EditModule,
+    NzButtonModule,
     NzSelectModule,
   ],
   providers: [],
