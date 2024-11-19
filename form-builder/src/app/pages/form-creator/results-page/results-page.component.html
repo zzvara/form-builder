@@ -6,22 +6,21 @@
           <p><strong>Title:</strong> {{ project.title }}</p>
           <p><strong>Description:</strong> {{ project.description }}</p>
           <p><strong>Type:</strong> {{ project.type }}</p>
-          <p><strong>Time Checkbox:</strong> {{ project.time_checkbox }}</p>
-          <p><strong>Deadline Checkbox:</strong> {{ project.deadline_checkbox }}</p>
-          <p><strong>Time Limit:</strong> {{ project.time_limit }}</p>
-          <p><strong>Deadline:</strong> {{ project.deadline }}</p>
+          <p *ngIf="project?.time_checkbox"><strong>Time Checkbox:</strong> {{ project.time_checkbox }}</p>
+          <p *ngIf="project?.deadline_checkbox"><strong>Deadline Checkbox:</strong> {{ project.deadline_checkbox }}</p>
+          <p *ngIf="project?.time_limit"><strong>Time Limit:</strong> {{ project.time_limit }}</p>
+          <p *ngIf="project?.deadline"><strong>Deadline:</strong> {{ project.deadline }}</p>
           <p><strong>Created:</strong> {{ project.created }}</p>
           <p><strong>Modified:</strong> {{ project.modified }}</p>
         </div>
       </nz-tab>
       <nz-tab nzTitle="Section Inputs">
         <div *ngIf="project?.sectionList?.length" class="section-container">
-          <div *ngFor="let section of project!.sectionList">
-            <h3>Section: {{ section.sectionId }}</h3>
+          <div class="statistics">
+            <h3>Section Input Statistics</h3>
+            <p *ngIf="latestVersionNum !== undefined"><strong>Version:</strong> {{ latestVersionNum }}</p>
             <ul>
-              <li *ngFor="let input of section.sectionInputs">
-                <pre>{{ input | json }}</pre>
-              </li>
+              <li *ngFor="let stat of sectionInputStats | keyvalue">{{ stat.key }}: {{ stat.value }}</li>
             </ul>
           </div>
         </div>
@@ -57,7 +56,6 @@
           (nzOnConfirm)="saveProjectWithHistoryToJson()"
           nzPopconfirmPlacement="top"
           nz-button
-          nzType="default"
           nzType="default"
           type="button"
         >
