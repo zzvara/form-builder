@@ -74,7 +74,6 @@ export class InfoPageComponent implements OnInit {
         this.project = { ...this.project, ...data };
         this.initializeForm();
       }
-      console.log(data);
     });
   }
 
