@@ -1,13 +1,68 @@
 <nz-layout>
   <div>
-    Results page
-    <div nz-row id="footerdiv">
+    <nz-tabset>
+      <nz-tab nzTitle="Project Information">
+        <div *ngIf="project" class="project-container">
+          <p><strong>Title:</strong> {{ project.title }}</p>
+          <p><strong>Description:</strong> {{ project.description }}</p>
+          <p><strong>Type:</strong> {{ project.type }}</p>
+          <p *ngIf="project?.time_checkbox"><strong>Time Checkbox:</strong> {{ project.time_checkbox }}</p>
+          <p *ngIf="project?.deadline_checkbox"><strong>Deadline Checkbox:</strong> {{ project.deadline_checkbox }}</p>
+          <p *ngIf="project?.time_limit"><strong>Time Limit:</strong> {{ project.time_limit }}</p>
+          <p *ngIf="project?.deadline"><strong>Deadline:</strong> {{ project.deadline }}</p>
+          <p><strong>Created:</strong> {{ project.created }}</p>
+          <p><strong>Modified:</strong> {{ project.modified }}</p>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="Section Inputs">
+        <div *ngIf="project?.sectionList?.length" class="section-container">
+          <div class="statistics">
+            <h3>Section Input Statistics</h3>
+            <p *ngIf="latestVersionNum !== undefined"><strong>Version:</strong> {{ latestVersionNum }}</p>
+            <ul>
+              <li *ngFor="let stat of sectionInputStats | keyvalue">{{ stat.key }}: {{ stat.value }}</li>
+            </ul>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="Project JSON" class="json">
+        <div class="json-container">
+          <pre *ngIf="project">{{ project | json }}</pre>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="Project History JSON" class="json">
+        <div class="json-container">
+          <pre *ngIf="project">{{ projectHistory | json }}</pre>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+    <div nz-row nzJustify="end" nzAlign="bottom" id="footerdiv">
       <div nz-col nzSpan="22"></div>
-      <nz-button-group>
-        <button nz-button nzType="default" type="button" (click)="saveProjectToJson()">Download Project</button>
-        <button nz-button nzType="default" type="button" (click)="saveProjectWithHistoryToJson()">Download Project with History</button>
+      <div class="button-group">
+        <button
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure you want to download the project?"
+          (nzOnConfirm)="saveProjectToJson()"
+          nzPopconfirmPlacement="top"
+          nz-button
+          nzType="default"
+          type="button"
+        >
+          Download Project
+        </button>
+        <button
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure you want to download the project?"
+          (nzOnConfirm)="saveProjectWithHistoryToJson()"
+          nzPopconfirmPlacement="top"
+          nz-button
+          nzType="default"
+          type="button"
+        >
+          Download Project with History
+        </button>
         <button nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
-      </nz-button-group>
-  </div>
+      </div>
+    </div>
   </div>
 </nz-layout>

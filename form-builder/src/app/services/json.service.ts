@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Project, ProjectVersion } from '../interfaces/project';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JsonService {
+  private jsonDataSubject = new BehaviorSubject<any>(null);
+  jsonData$ = this.jsonDataSubject.asObservable();
+
   constructor() {}
 
   /**
@@ -29,7 +33,10 @@ export class JsonService {
    * @returns {void}
    */
   saveProjectToJson(project: Project): void {
-    const blob = this.createJsonBlob(project);
+    const data = {
+      project,
+    };
+    const blob = this.createJsonBlob(data);
     const url = this.createDownloadLink(blob);
     this.triggerDownload(url, `project_${project.id}.json`);
   }
@@ -65,5 +72,39 @@ export class JsonService {
     a.download = filename;
     a.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  /**
+   * Uploads a JSON file and parses its content.
+   * @param {File} file - The JSON file to upload.
+   * @returns {Observable<any>} - An observable with the parsed JSON content.
+   */
+  uploadJson(file: File): Observable<any> {
+    return new Observable((observer) => {
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        try {
+          const json = JSON.parse(event.target.result);
+          observer.next(json);
+          observer.complete();
+        } catch (e) {
+          observer.error(e);
+        }
+      };
+      reader.onerror = (error) => observer.error(error);
+      reader.readAsText(file);
+    });
+  }
+
+  setJsonData(data: any): void {
+    this.jsonDataSubject.next(data);
+  }
+
+  getJsonData(): Observable<any> {
+    return this.jsonData$;
+  }
+
+  clearJsonData(): void {
+    this.jsonDataSubject.next(null);
   }
 }
