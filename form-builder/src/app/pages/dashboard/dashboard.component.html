@@ -5,14 +5,14 @@
         <span nz-icon nzType="upload" nzTheme="outline"></span>
         Upload JSON
       </button>
-      <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;">
+      <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
     </div>
-    <div *ngIf="!isListView; else cardView" (click)="isListView = !isListView">
+    <div *ngIf="!isListView; else cardView" (click)="toggleView()">
       <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
       <span>List view</span>
     </div>
     <ng-template #cardView>
-      <div (click)="isListView = !isListView">
+      <div (click)="toggleView()">
         <span nz-icon nzType="appstore" nzTheme="outline"></span>
         <span>Card view</span>
       </div>
@@ -30,7 +30,7 @@
       (editProject)="editProject($event)"
       [projects]="projects$"
       [type]="projectTypes.QUESTIONNAIRE"
-    />
+    ></app-list-view>
     <div>
       <h3>Tests</h3>
       <button (click)="createProject(projectTypes.TEST)" nz-button><span nz-icon nzType="plus" nzTheme="outline"></span> New</button>
@@ -40,7 +40,7 @@
       (editProject)="editProject($event)"
       [projects]="projects$"
       [type]="projectTypes.TEST"
-    />
+    ></app-list-view>
   </div>
   <ng-template #cardViewComponent>
     <div class="view">

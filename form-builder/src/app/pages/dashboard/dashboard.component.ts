@@ -26,6 +26,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.projects$ = this.questionnaireService.list();
+    const savedView = localStorage.getItem('viewPreference');
+    if (savedView) {
+      this.isListView = savedView === 'list';
+    }
   }
 
   createProject(type: ProjectType): void {
@@ -65,5 +69,10 @@ export class DashboardComponent implements OnInit {
     if (file) {
       this.uploadJson(file);
     }
+  }
+
+  toggleView(): void {
+    this.isListView = !this.isListView;
+    localStorage.setItem('viewPreference', this.isListView ? 'list' : 'card');
   }
 }
