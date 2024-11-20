@@ -86,7 +86,7 @@ export class EditComponent implements OnInit, OnChanges {
   drop(event: CdkDragDrop<FormInputData<any, any>[], FormInputData<any, any>[], FormInputData<any, any>>): void {
     // console.log({ event, container: event.container });
     // console.log({ itemId: event.item.element.nativeElement.id });
-    console.log({ formInputs: this.getAllFormInputs() });
+    console.log({ sectionInputs: this.getAllFormInputs() });
 
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
@@ -112,7 +112,7 @@ export class EditComponent implements OnInit, OnChanges {
     }
     this.undoRedoService.saveState(this.getAllFormInputs());
 
-    console.log({ formInputs: this.getAllFormInputs() });
+    console.log({ sectionInputs: this.getAllFormInputs() });
   }
 
   /**
@@ -125,29 +125,22 @@ export class EditComponent implements OnInit, OnChanges {
    * FIXME - It just doesnt work now... sorry :(
    */
   onValueChanged<D extends InputData<T>, T>(sect: SectionList | null, event: D): void {
-    console.log("CHANGED! :D:D:D:D:D:D:D:D:D:D");
-    //FIXME:
-    // if (sect) {
-    //   const inputValue = {
-    //     question: event.questionValue,
-    //     answer: event.answerValue,
-    //     description: event.descriptionValue,
-    //     id: event.id,
-    //   };
-    //
-    //   const index = sect.sectionInputs.findIndex((input) => input.data.id === event.id);
-    //
-    //   if (index !== -1) {
-    //     sect.sectionInputs[index].data.question = event.questionValue;
-    //     sect.sectionInputs[index].data.answer = event.answerValue;
-    //     sect.sectionInputs[index].data.description = event.descriptionValue;
-    //     this.undoRedoService.saveState(this.getAllFormInputs());
-    //
-    //     console.log({ formInputs: this.getAllFormInputs() });
-    //   } else {
-    //     console.error('Input not found');
-    //   }
-    // }
+    if (sect) {
+      const index = sect.sectionInputs.findIndex(input => input.data.id === event.id);
+
+      if (index !== -1) {
+
+        sect.sectionInputs[index].data.question = event.questionValue;
+        sect.sectionInputs[index].data.answer = event.defaultValue;
+        sect.sectionInputs[index].data.description = event.descriptionValue;
+
+
+        this.undoRedoService.saveState(this.getAllFormInputs());
+      } else {
+        console.error('Input not found!');
+      }
+    }
+
   }
 
   /**
@@ -199,6 +192,7 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       moveItemInArray(this.sectionList, $event.previousIndex, $event.currentIndex);
     }
+    this.undoRedoService.saveState(this.getAllFormInputs());
   }
 
   sectionRemove(sect: SectionList) {

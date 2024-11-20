@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import { EditComponent } from '../../edit/edit.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project, ProjectVersion } from 'src/app/interfaces/project';
+import {SectionList} from "../../edit/interfaces/section-list";
 
 @Component({
   selector: 'app-components-page',
@@ -15,6 +16,8 @@ export class ComponentsPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();
+
+  sectionInputs: SectionList[] = [];
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
@@ -97,5 +100,8 @@ export class ComponentsPageComponent implements OnInit {
         console.error('Failed to revert to version', versionNum);
       }
     }
+  }
+  onSectionInputsChange(updatedSectionInputs: SectionList[]): void {
+    this.sectionInputs = updatedSectionInputs;
   }
 }

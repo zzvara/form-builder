@@ -25,7 +25,8 @@ export class RedoUndoComponent {
   undoBtn(): void {
     const previousState = this.undoRedoService.undo(this.sectionInputs);
     if (previousState) {
-      this.sectionInputs = previousState;
+      this.sectionInputs = [...previousState];
+      console.log("Undo action", this.sectionInputs);
       this.sectionInputsChange.emit(this.sectionInputs);
     }
   }
@@ -33,7 +34,8 @@ export class RedoUndoComponent {
   redoBtn(): void {
     const nextState = this.undoRedoService.redo(this.sectionInputs);
     if (nextState) {
-      this.sectionInputs = nextState;
+      this.sectionInputs = [...nextState];
+      console.log("Redo action", this.sectionInputs);
       this.sectionInputsChange.emit(this.sectionInputs);
     }
   }
