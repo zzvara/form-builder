@@ -15,12 +15,41 @@ nz-layout {
   font-size: 20px;
   border-radius: 10px;
   border-width: 2px;
+  margin-top: -5px;
 }
 
 #title {
   font-weight: bold;
+  margin-bottom: 10px;
 }
-
+.description-label {
+  font-weight: bold;
+}
+.title-label{
+  font-weight: bold;
+}
 .date-picker {
   margin-top: -5px;
+}
+.saveBtn{
+  float: right;
+}
+
+.error-message {
+  margin-top: 5px;
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+.input-error {
+  border: 1px solid red;
+}
+.same_line{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.created_modifaction{
+  display: flex;
+  align-items: center;
 }

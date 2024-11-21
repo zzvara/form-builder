@@ -10,18 +10,20 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 
 @NgModule({
   declarations: [DashboardComponent, CardViewComponent, ListViewComponent],
-  imports: [
-    BrowserModule,
-    NzTableModule,
-    NzIconModule,
-    NzLayoutModule,
-    NzGridModule,
-    NzButtonModule,
-    NzCardModule,
-  ],
+    imports: [
+        BrowserModule,
+        NzTableModule,
+        NzIconModule,
+        NzLayoutModule,
+        NzGridModule,
+        NzButtonModule,
+        NzCardModule,
+        NzToolTipModule,
+    ],
   providers: [NzModalService],
   exports: [NzLayoutModule],
 })

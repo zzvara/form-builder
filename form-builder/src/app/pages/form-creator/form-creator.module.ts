@@ -18,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { EditModule } from '../edit/edit.module';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import {SharedModule} from "../../shared/shared.module";
+import { NzToolTipModule } from "ng-zorro-antd/tooltip";
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -40,6 +41,7 @@ import {SharedModule} from "../../shared/shared.module";
     EditModule,
     NzButtonModule,
     NzSelectModule,
+    NzToolTipModule,
     SharedModule,
   ],
   providers: [],

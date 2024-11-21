@@ -34,7 +34,11 @@ export class DashboardComponent implements OnInit {
 
   createProject(type: ProjectType): void {
     this.jsonService.clearJsonData();
-    this.router.navigate(['new'], { queryParams: { type } });
+    if (type === ProjectType.TEST) {
+      this.router.navigate(['new'], { queryParams: { type: 'TEST' } });
+    } else {
+      this.router.navigate(['new'], { queryParams: { type: 'QUESTIONNAIRE' } });
+    }
   }
 
   deleteProject(id: number): void {

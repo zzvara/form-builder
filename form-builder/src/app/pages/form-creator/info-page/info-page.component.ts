@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ProjectService } from '../../../services/project.service';
@@ -20,7 +20,7 @@ export class InfoPageComponent implements OnInit {
     id: 0,
     title: '',
     description: '',
-    type: ProjectType.QUESTIONNAIRE,
+    type: ProjectType.QUESTIONNAIRE ,
     time_checkbox: false,
     deadline_checkbox: false,
     time_limit: 0,
@@ -34,7 +34,7 @@ export class InfoPageComponent implements OnInit {
   saveFailed = false;
 
   form = new FormGroup({
-    title: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
     description: new FormControl(''),
     type: new FormControl(false),
     deadline: new FormControl(''),
@@ -63,9 +63,11 @@ export class InfoPageComponent implements OnInit {
         }
       }
       if (params['type']) {
-        if (this.project) {
-          this.project.type = params['type'];
-        }
+
+        this.project.type = params['type'] === 'TEST' ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.form.patchValue({
+          type: this.project.type === ProjectType.TEST
+        });
       }
     });
 
@@ -110,23 +112,21 @@ export class InfoPageComponent implements OnInit {
   }
 
   submitForm() {
+    console.log('Form validity:', this.form.valid);
+    if (this.form.invalid) {
+      this.saveFailed = true;
+      console.log('Form is invalid, validation failed');
+      return;
+    }
     this.updateForm();
     if (this.formExists && this.formId !== 0) {
       this.projectService.update(this.formId, this.project);
     } else {
       this.projectService.add(this.project);
     }
-
     this.page! += 1;
     this.onsetPage(this.page!);
     this.saveFailed = false;
-
-    if (this.saveFailed) {
-      this.modal.error({
-        nzTitle: 'Failed to save form',
-        nzContent: 'Some fields are not filled properly, please check and try again!',
-      });
-    }
   }
 
   onsetPage(page: number): void {

@@ -10,11 +10,13 @@
     <div *ngIf="!isListView; else cardView" (click)="toggleView()">
       <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
       <span>List view</span>
+      <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="go to List view"></i>
     </div>
     <ng-template #cardView>
       <div (click)="toggleView()">
         <span nz-icon nzType="appstore" nzTheme="outline"></span>
         <span>Card view</span>
+        <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="go to Card view"></i>
       </div>
     </ng-template>
   </div>
