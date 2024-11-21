@@ -15,11 +15,7 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<NumberInputCom
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: NumberInputEditComponent,
       modalData: this.data
-    }).subscribe(result => {
-      if (result) {
-        this.onEdit(this.data);
-      }
-    });
+    }).subscribe(this.defaultOnEditSubscribeEvent);
   }
 
   get minNumber() {

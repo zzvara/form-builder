@@ -14,10 +14,6 @@ export class TextareaComponent extends AbstractFieldLikeInputs<TextareaComponent
       modalTitle: 'Edit Text Area Component Settings',
       modalContent: TextareaEditComponent,
       modalData: this.data
-    }).subscribe(result => {
-      if (result) {
-        this.onEdit(this.data);
-      }
-    });
+    }).subscribe(this.defaultOnEditSubscribeEvent);
   }
 }

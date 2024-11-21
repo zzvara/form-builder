@@ -168,7 +168,7 @@ export abstract class AbstractEditForm<D extends InputData<T>, T> implements OnI
 
 //---------CONTROL CHANGE METHODS---------------------------------------------------------------------------------------
 
-  setControlValuesBasedOnChanges(controls: {[key in InputDataKeys<D>]?: {name: InputDataKeys<D>, additionalData?: DataSetterType<any, any>}[]}) {
+  setControlValuesBasedOnChanges(controls: {[key in InputDataKeys<D>]?: {name: InputDataKeys<D>, additionalData?: DataSetterType}[]}) {
     this.setAnyControlValuesBasedOnChanges(controls as ControlConnection);
   }
   setAnyControlValuesBasedOnChanges(controls: ControlConnection) {

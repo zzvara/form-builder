@@ -80,7 +80,7 @@ const selectInputOptions: SelectComponentData = {
 };
 
 //Used for resetting inputs
-export function getInputGroups(): FormInputData<any, any>[] {
+export function getInputGroups(): FormInputData<any>[] {
   return [
     {
       title: "TEXT FIELD",

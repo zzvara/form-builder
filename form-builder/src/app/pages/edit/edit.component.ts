@@ -83,7 +83,7 @@ export class EditComponent implements OnInit, OnChanges {
    * @param {CdkDragDrop<any[]>} event  - The drag and drop event containing the current state and target of the dragged item.
    * @returns {void}
    */
-  drop(event: CdkDragDrop<FormInputData<any, any>[], FormInputData<any, any>[], FormInputData<any, any>>): void {
+  drop(event: CdkDragDrop<FormInputData[], FormInputData[], FormInputData>): void {
     // console.log({ event, container: event.container });
     // console.log({ itemId: event.item.element.nativeElement.id });
     console.log({ sectionInputs: this.getAllFormInputs() });
@@ -93,18 +93,18 @@ export class EditComponent implements OnInit, OnChanges {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      const droppedInput: FormInputData<any, any> = event.item.data;
+      const droppedInput: FormInputData = event.item.data;
       // Check if already in a section (has id)
-      if (droppedInput.data.id) {
+      if (droppedInput.data?.id) {
         droppedInput.data.sectionId = event.container.id;
 
         transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       } else {
         // Create a deep copy of the dropped item with updated ID
-        const newItem: FormInputData<any, any> = {...droppedInput};
+        const newItem: FormInputData = {...droppedInput};
         newItem.data = structuredClone(droppedInput.data);
-        newItem.data.id = "input-" + (++this.sectionComponentId);
-        newItem.data.sectionId = event.container.id;
+        newItem.data!.id = "input-" + (++this.sectionComponentId);
+        newItem.data!.sectionId = event.container.id;
 
         // Copy the item from a temporary container to the given section's (not very nice :( )
         copyArrayItem([newItem], event.container.data, 0, event.currentIndex);
@@ -125,22 +125,20 @@ export class EditComponent implements OnInit, OnChanges {
    * FIXME - It just doesnt work now... sorry :(
    */
   onValueChanged<D extends InputData<T>, T>(sect: SectionList | null, event: D): void {
+    console.log("CHAAAAAAANGED!");
     if (sect) {
-      const index = sect.sectionInputs.findIndex(input => input.data.id === event.id);
+      const index = sect.sectionInputs.findIndex(input => input.data!.id === event.id);
 
       if (index !== -1) {
-
-        sect.sectionInputs[index].data.question = event.questionValue;
-        sect.sectionInputs[index].data.answer = event.defaultValue;
-        sect.sectionInputs[index].data.description = event.descriptionValue;
-
+        sect.sectionInputs[index].data!.questionValue = event.questionValue;
+        sect.sectionInputs[index].data!.defaultValue = event.defaultValue;
+        sect.sectionInputs[index].data!.descriptionValue = event.descriptionValue;
 
         this.undoRedoService.saveState(this.getAllFormInputs());
       } else {
         console.error('Input not found!');
       }
     }
-
   }
 
   /**
@@ -169,7 +167,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   removeComponent(sect: SectionList, componentId: string) {
-    sect.sectionInputs = sect.sectionInputs.filter((input) => input.data.id !== componentId);
+    sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
   }
 
   sectionDrop($event: CdkDragDrop<any[]>) {
@@ -201,7 +199,7 @@ export class EditComponent implements OnInit, OnChanges {
 
   getSectionInputStyle(sect: SectionList) {
     const width = sect.layout === LayoutEnum.HORIZONTAL ?
-      (100 / sect.sectionInputs.filter((input) => input.data.sectionId === sect.sectionId).length) : 100;
+      (100 / sect.sectionInputs.filter((input) => input.data!.sectionId === sect.sectionId).length) : 100;
     return {
       'width': width.toString() + "%",
     };

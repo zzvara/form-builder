@@ -18,11 +18,7 @@ export class DatePickerComponent extends AbstractFieldLikeInputs<DatePickerCompo
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: DatePickerEditComponent,
       modalData: this.data
-    }).subscribe(result => {
-      if (result) {
-        this.onEdit(this.data);
-      }
-    });
+    }).subscribe(this.defaultOnEditSubscribeEvent);
   }
 
   disabledTime: DisabledTimeFn = (current: Date | Date[]): DisabledTimeConfig | undefined => {

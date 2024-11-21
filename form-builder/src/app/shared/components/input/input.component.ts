@@ -9,17 +9,13 @@ import {InputComponentData} from "./interfaces/input-component-data";
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent extends AbstractFieldLikeInputs<InputComponentData, InputEditComponent<InputComponentData>, string> {
+export class InputComponent extends AbstractFieldLikeInputs<InputComponentData, InputEditComponent, string> {
   override edit(): void {
     this.modalService.openModal({
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: InputEditComponent,
       modalData: this.data
-    }).subscribe(result => {
-      if (result) {
-        this.onEdit(this.data);
-      }
-    });
+    }).subscribe(this.defaultOnEditSubscribeEvent);
   }
 
   override errorList(): ErrorType[] {

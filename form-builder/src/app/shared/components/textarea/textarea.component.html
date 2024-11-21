@@ -8,7 +8,7 @@
               [disabled]="!inlineEdit.enabled"
               [placeholder]="data.placeholderValue ?? ''"
               [(ngModel)]="data.defaultValue"
-              (ngModelChange)="onChange($event)"
+              (blur)="onChange($event)"
               (mousedown)="$event.stopPropagation()"
               nzAutosize></textarea>
     <ng-container *ngTemplateOutlet="footerTemplate"/>

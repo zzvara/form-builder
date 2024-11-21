@@ -14,10 +14,6 @@ export class SelectComponent extends AbstractFieldLikeInputs<SelectComponentData
       modalTitle: 'Edit Select Component Settings',
       modalContent: SelectEditComponent,
       modalData: this.data
-    }).subscribe(result => {
-      if (result) {
-        this.onEdit(this.data);
-      }
-    });
+    }).subscribe(this.defaultOnEditSubscribeEvent);
   }
 }

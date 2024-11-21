@@ -41,10 +41,6 @@ export class PictureInputComponent extends AbstractInput<PictureInputComponentDa
       modalTitle: 'Edit Text Field Component Settings',
       modalContent: PictureInputEditComponent,
       modalData: this.data
-    }).subscribe(result => {
-      if (result) {
-        this.onEdit(this.data);
-      }
-    });
+    }).subscribe(this.defaultOnEditSubscribeEvent);
   }
 }

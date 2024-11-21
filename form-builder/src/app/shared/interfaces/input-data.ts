@@ -1,4 +1,4 @@
-export interface InputData<T> {
+export interface InputData<T = any> {
   id?: string;
   sectionId?: string;
   questionValue: string;
@@ -7,4 +7,4 @@ export interface InputData<T> {
   defaultValue?: T;
 }
 
-export type InputDataKeys<T extends InputData<any>> = keyof T;
+export type InputDataKeys<T extends InputData> = keyof T;

@@ -9,7 +9,7 @@ import {ModalData} from "../../shared/interfaces/modal-data";
 @Injectable({
   providedIn: 'root'
 })
-export class ModalServiceService<T extends AbstractEditForm<D, any>, D extends InputData<any>> {
+export class ModalServiceService<T extends AbstractEditForm<D, any>, D extends InputData> {
   private readonly modal = inject(NzModalService);
 
   constructor() { }
