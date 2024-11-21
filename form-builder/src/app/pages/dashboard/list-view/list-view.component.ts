@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ColumnItem } from '../dashboard.model';
-import { Questionnaire } from '../../../items/questionnaire/questionnaire.interface';
-import { ProjectType } from '../../../items/project.interface';
+import { ProjectType } from 'src/app/interfaces/project';
+import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
 
 @Component({
   selector: 'app-list-view',

@@ -1,22 +1,26 @@
-<app-input-layout
-  [componentId]="id"
-  [sectionId]="sectionId"
-  [questionValue]="questionValue"
-  [descriptionValue]="descriptionValue"
-  [inputPlaceholder]="inputPlaceholder"
-  [inputTemplate]="inputTemplate"
-  (questionValueChanged)="onQuestionValueChange($event)"
-  (descriptionValueChanged)="onDescriptionValueChange($event)"
-  (removeComponentEvent)="removeComponentEvent.emit($event)"
->
-</app-input-layout>
-
-<ng-template #inputTemplate>
-  <textarea
-    nz-input
-    [placeholder]="textareaPlaceholder"
-    [(ngModel)]="answerValue"
-    nzAutosize
-    (ngModelChange)="onAnswerValueChange($event)"
-  ></textarea>
+<nz-form-item>
+  <nz-form-control [nzErrorTip]="errorTemplate">
+    <textarea #inputComponent
+              nz-input
+              [required]="data.required"
+              [minlength]="data.minLengthNumber ?? null"
+              [maxlength]="data.maxLengthNumber ?? null"
+              [disabled]="!inlineEdit.enabled"
+              [placeholder]="data.placeholderValue ?? ''"
+              [(ngModel)]="data.defaultValue"
+              (ngModelChange)="onChange($event)"
+              (mousedown)="$event.stopPropagation()"
+              nzAutosize></textarea>
+    <ng-container *ngTemplateOutlet="footerTemplate"/>
+  </nz-form-control>
+</nz-form-item>
+<ng-template #errorTemplate let-control>
+  <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
 </ng-template>
+<ng-template #footerTemplate>
+  <div style="display: flex; justify-content: space-between">
+    <div *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-top: auto; margin-bottom: auto"></div>
+    <div *ngIf="data.maxLength && data.showCharacterCounter" style="margin-top: auto; margin-bottom: auto">{{inputComponent.value.length}}/{{data.maxLengthNumber}}</div>
+  </div>
+</ng-template>
+

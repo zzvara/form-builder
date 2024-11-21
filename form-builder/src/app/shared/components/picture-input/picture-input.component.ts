@@ -1,33 +1,22 @@
-import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { Observable, of } from 'rxjs';
+import {Component} from '@angular/core';
+import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
+import {Observable, of} from 'rxjs';
+import {AbstractInput} from "../../abstract-classes/abstract-input";
+import {PictureInputComponentData} from "./interfaces/picture-input-component-data";
+import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit.component";
 
 @Component({
   selector: 'app-picture-input',
   templateUrl: './picture-input.component.html',
   styleUrls: ['./picture-input.component.css'],
 })
-export class PictureInputComponent {
-  @Input() id!: string;
-  questionValue: string = 'Picture input';
-  descriptionValue: string = 'The input can be used for...';
-  answerValue: any = 'Picture ';
-  inputPlaceholder: string = 'Picture input value';
-  inputTemplate!: TemplateRef<any>;
-  type: string = 'text';
-  @Input() fileName!: string;
-  file: File | null = null;
-  uploadedFile: string | null = localStorage.getItem(this.fileName);
-
-  @Input() sectionId!: string;
-
-  @Output() removeComponentEvent = new EventEmitter<string>();
+export class PictureInputComponent extends AbstractInput<PictureInputComponentData, PictureInputEditComponent, string | null> {
 
   onFileChange(event: any): void {
-    this.file = event.target.files[0];
+    this.data.file = event.target.files[0];
   }
 
-  handleChange(info: NzUploadChangeParam): void {
+  override onChange(info: NzUploadChangeParam): void {
     if (info.file.status !== 'uploading') {
       console.log(info.file, info.fileList);
     }
@@ -46,4 +35,16 @@ export class PictureInputComponent {
     reader.readAsDataURL(file as any);
     return of('');
   };
+
+  override edit(): void {
+    this.modalService.openModal({
+      modalTitle: 'Edit Text Field Component Settings',
+      modalContent: PictureInputEditComponent,
+      modalData: this.data
+    }).subscribe(result => {
+      if (result) {
+        this.onEdit(this.data);
+      }
+    });
+  }
 }

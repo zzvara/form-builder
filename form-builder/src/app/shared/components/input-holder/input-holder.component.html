@@ -1,0 +1,75 @@
+<nz-card
+  [nzTitle]="titleTemplate"
+  [nzExtra]="headerButtons"
+  [nzBodyStyle]="{'padding-right': '24px', 'padding-left': '24px'}"
+  [ngClass]="{
+      'valid-style': inputHolderForm.valid,
+      'invalid-style': inputHolderForm.invalid
+  }">
+  <form #inputHolderForm="ngForm" nz-form>
+    <nz-form-item [ngStyle]="!inlineEdit.enabled? {'border-bottom': '1px solid lightgray'} : {}" style="margin-bottom: 10px">
+      <nz-form-control  nzErrorTip="Input question is mandatory!">
+        <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
+        <input [hidden]="!inlineEdit.enabled"
+               nz-input
+               nzSize="small"
+               name="inputQuestion"
+               required
+               placeholder="Question"
+               (mousedown)="$event.stopPropagation()"
+               [(ngModel)]="inputData.questionValue"
+               (ngModelChange)="change()"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="margin-bottom: 10px">
+      <nz-form-control>
+        <span style="white-space: pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
+        <textarea [hidden]="!inlineEdit.enabled"
+                  nz-input
+                  nzAutosize
+                  name="inputDescription"
+                  (mousedown)="$event.stopPropagation()"
+                  [placeholder]="inputData.placeholderValue"
+                  [(ngModel)]="inputData.descriptionValue"
+                  (ngModelChange)="change()"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-container *ngComponentOutlet="formInput.type; inputs: componentInputs"/>
+  </form>
+  <span style="color: red">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
+</nz-card>
+<ng-template #titleTemplate>
+    <span>{{ formInput.title }}</span>
+    <span *ngIf="inputHolderForm.invalid"
+          nz-tooltip
+          nzTooltipTitle="Invalid input!"
+          nzTooltipColor="red"
+          nz-icon
+          nzType="exclamation-circle"
+          nzTheme="outline"
+          style="color: red; margin-left: 20px"></span>
+</ng-template>
+<ng-template #headerButtons>
+  <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
+  <button
+    nz-button nzType="primary"
+    nzShape="circle"
+    (click)="editComponent()"
+    style="margin-left: 10px">
+    <span nz-icon nzType="edit" nzTheme="outline"></span>
+  </button>
+  <button
+    nz-button nzType="dashed"
+    nzShape="round"
+    (click)="resetComponent()"
+    style="margin-left: 10px">
+    <span>Reset</span>
+  </button>
+  <button
+    nz-button nzType="default" nzDanger
+    nzShape="circle"
+    (click)="removeComponent()"
+    style="margin-left: 10px">
+    <span nz-icon nzType="delete" nzTheme="outline"></span>
+  </button>
+</ng-template>

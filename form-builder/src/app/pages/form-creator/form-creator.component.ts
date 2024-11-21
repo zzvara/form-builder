@@ -1,9 +1,5 @@
-import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Questionnaire } from '../../items/questionnaire/questionnaire.interface';
-import { ProjectType } from '../../items/project.interface';
 
 @Component({
   selector: 'app-form-creator',

@@ -1,14 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Project, ProjectType } from '../../../items/project.interface';
-import { ProjectService } from '../../../services/project.service';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ProjectService } from '../../../services/project.service';
+import { JsonService } from '../../../services/json.service';
+import { Project, ProjectType } from 'src/app/interfaces/project';
 
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
-  styleUrls: ['./info-page.component.css'],
+  styleUrls: ['./info-page.component.css']
 })
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
@@ -46,7 +47,8 @@ export class InfoPageComponent implements OnInit {
   constructor(
     private readonly modal: NzModalService,
     private readonly route: ActivatedRoute,
-    private readonly projectService: ProjectService<Project>
+    private readonly projectService: ProjectService<Project>,
+    private readonly jsonService: JsonService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,13 @@ export class InfoPageComponent implements OnInit {
         this.form.patchValue({
           type: this.project.type === ProjectType.TEST
         });
+      }
+    });
+
+    this.jsonService.getJsonData().subscribe((data: any) => {
+      if (data) {
+        this.project = { ...this.project, ...data };
+        this.initializeForm();
       }
     });
   }

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Questionnaire } from '../../items/questionnaire/questionnaire.interface';
-import { ProjectType } from '../../items/project.interface';
 import { ProjectService } from '../../services/project.service';
+import { ProjectType } from 'src/app/interfaces/project';
+import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
+import { JsonService } from '../../services/json.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,14 +20,20 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly modal: NzModalService,
-    private readonly questionnaireService: ProjectService<Questionnaire>
+    private readonly questionnaireService: ProjectService<Questionnaire>,
+    private readonly jsonService: JsonService
   ) {}
 
   ngOnInit(): void {
     this.projects$ = this.questionnaireService.list();
+    const savedView = localStorage.getItem('viewPreference');
+    if (savedView) {
+      this.isListView = savedView === 'list';
+    }
   }
 
   createProject(type: ProjectType): void {
+    this.jsonService.clearJsonData();
     if (type === ProjectType.TEST) {
       this.router.navigate(['new'], { queryParams: { type: 'TEST' } });
     } else {
@@ -49,5 +56,27 @@ export class DashboardComponent implements OnInit {
 
   editProject(id: number) {
     this.router.navigate(['edit'], { queryParams: { id } });
+  }
+
+  uploadJson(file: File): void {
+    this.jsonService.uploadJson(file).subscribe(data => {
+      this.jsonService.setJsonData(data);
+      this.router.navigate(['new'], {
+        queryParams: { type: data.type },
+        state: { projectData: data }
+      });
+    });
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.uploadJson(file);
+    }
+  }
+
+  toggleView(): void {
+    this.isListView = !this.isListView;
+    localStorage.setItem('viewPreference', this.isListView ? 'list' : 'card');
   }
 }

@@ -1,19 +1,10 @@
-<app-input-layout
-  [componentId]="id"
-  [sectionId]="sectionId"
-  [questionValue]="questionValue"
-  [descriptionValue]="descriptionValue"
-  [inputPlaceholder]="inputPlaceholder"
-  [inputTemplate]="inputTemplate"
-  (removeComponentEvent)="removeComponentEvent.emit($event)"
->
-</app-input-layout>
-
-<ng-template #inputTemplate>
-  <nz-upload [nzAction]="uploadToLocalStorage" [nzHeaders]="{ authorization: 'authorization-text' }" (nzChange)="handleChange($event)">
-    <button nz-button>
-      <span nz-icon nzType="upload"></span>
-      Click to Upload
-    </button>
-  </nz-upload>
-</ng-template>
+<nz-upload
+  [nzDisabled]="!inlineEdit.enabled"
+  [nzAction]="uploadToLocalStorage"
+  [nzHeaders]="{ authorization: 'authorization-text' }"
+  (nzChange)="onChange($event)">
+  <button nz-button>
+    <span nz-icon nzType="upload"></span>
+    Click to Upload
+  </button>
+</nz-upload>

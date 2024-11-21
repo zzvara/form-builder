@@ -1,6 +1,6 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormInput } from 'src/app/items/project.interface';
+import { SectionList } from 'src/app/pages/edit/interfaces/section-list';
 import { UndoRedoService } from 'src/app/services/undo-redo.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
   styleUrls: ['./redo-undo.component.css'],
 })
 export class RedoUndoComponent {
-  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
+  constructor(private undoRedoService: UndoRedoService<SectionList[]>) {}
 
   get canUndo(): boolean {
     return this.undoRedoService.canUndo();
@@ -19,22 +19,24 @@ export class RedoUndoComponent {
     return this.undoRedoService.canRedo();
   }
 
-  @Input() formInputs: any[] = [];
-  @Output() formInputsChange = new EventEmitter<any[]>();
+  @Input() sectionInputs: SectionList[] = [];
+  @Output() sectionInputsChange = new EventEmitter<SectionList[]>();
 
   undoBtn(): void {
-    const previousState = this.undoRedoService.undo(this.formInputs);
+    const previousState = this.undoRedoService.undo(this.sectionInputs);
     if (previousState) {
-      this.formInputs = previousState;
-      this.formInputsChange.emit(this.formInputs);
+      this.sectionInputs = [...previousState];
+      console.log("Undo action", this.sectionInputs);
+      this.sectionInputsChange.emit(this.sectionInputs);
     }
   }
 
   redoBtn(): void {
-    const nextState = this.undoRedoService.redo(this.formInputs);
+    const nextState = this.undoRedoService.redo(this.sectionInputs);
     if (nextState) {
-      this.formInputs = nextState;
-      this.formInputsChange.emit(this.formInputs);
+      this.sectionInputs = [...nextState];
+      console.log("Redo action", this.sectionInputs);
+      this.sectionInputsChange.emit(this.sectionInputs);
     }
   }
 }

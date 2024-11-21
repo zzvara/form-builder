@@ -1,0 +1,25 @@
+<form id="pictureInputEditFormID" nz-form [formGroup]="formData">
+  <span>Question:</span>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="questionErrors">
+      <input nz-input placeholder="Question" formControlName="questionValue"/>
+    </nz-form-control>
+    <ng-template #questionErrors let-control>
+      <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+    </ng-template>
+  </nz-form-item>
+
+  <span>Description:</span>
+  <nz-form-item>
+    <nz-form-control>
+      <textarea nz-input nzAutosize placeholder="Description" formControlName="descriptionValue"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Set Placeholder Value</span>
+  <nz-form-item>
+    <nz-form-control>
+      <input nz-input placeholder="Placeholder" formControlName="placeholderValue"/>
+    </nz-form-control>
+  </nz-form-item>
+</form>

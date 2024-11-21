@@ -5,6 +5,7 @@ nz-content {
 .toolbar {
   margin: 5rem 0;
   display: flex;
+  justify-content: space-between;
 }
 
 .toolbar > :first-child {
@@ -12,7 +13,6 @@ nz-content {
 }
 
 .toolbar > div {
-  margin-left: auto;
   cursor: pointer;
 }
 

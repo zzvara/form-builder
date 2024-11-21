@@ -1,41 +1,23 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {Component} from '@angular/core';
+import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
+import {TextareaComponentData} from "./interfaces/textarea-component-data";
+import {TextareaEditComponent} from "./textarea-edit/textarea-edit.component";
 
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.css'],
 })
-export class TextareaComponent {
-  @Input() id!: string;
-  @Input() descriptionValue: string = 'The input can be used for...';
-  inputPlaceholder: string = 'Text area input value';
-  inputTemplate!: TemplateRef<any>;
-  @Input() type: string = 'text';
-  @Input() questionValue: string = 'Textarea input';
-  @Input() answerValue!: any;
-  @Input() textareaPlaceholder!: string;
-  @Input() sectionId!: string;
-
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string;descriptionValue: string; id: string }>();
-  @Output() removeComponentEvent = new EventEmitter<string>();
-
-  onQuestionValueChange(newValue: string) {
-    this.questionValue = newValue;
-    this.emitValueChanged();
+export class TextareaComponent extends AbstractFieldLikeInputs<TextareaComponentData, TextareaEditComponent, string> {
+  override edit(): void {
+    this.modalService.openModal({
+      modalTitle: 'Edit Text Area Component Settings',
+      modalContent: TextareaEditComponent,
+      modalData: this.data
+    }).subscribe(result => {
+      if (result) {
+        this.onEdit(this.data);
+      }
+    });
   }
-
-  onAnswerValueChange(newValue: string) {
-    this.answerValue = newValue;
-    this.emitValueChanged();
-  }
-
-  onDescriptionValueChange(newValue: string) {
-    this.descriptionValue = newValue;
-    this.emitValueChanged();
-  }
-
-  private emitValueChanged() {
-    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
-  }
-
 }

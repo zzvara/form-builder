@@ -1,41 +1,51 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {Component} from '@angular/core';
+import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
+import {NumberInputComponentData} from "./interfaces/number-input-component-data";
+import {NumberInputEditComponent} from "./number-input-edit/number-input-edit.component";
+import {identity} from "rxjs";
 
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.css'],
 })
-export class NumberInputComponent {
-  @Input() id!: string;
-  @Input() type!: string;
-  @Input() questionValue: string = 'Number Input';
-
-  @Input() descriptionValue: string = 'The input can be used for...';
-  @Input() answerValue: any = 0;
-  inputPlaceholder: string = 'Number input value';
-  inputTemplate!: TemplateRef<any>;
-  @Input() sectionId!: string;
-
-  @Output() valueChanged = new EventEmitter<{ questionValue: string; answerValue: string; descriptionValue: string; id: string }>();
-  @Output() removeComponentEvent = new EventEmitter<string>();
-
-  onQuestionValueChange(newValue: string) {
-    this.questionValue = newValue;
-    this.emitValueChanged();
+export class NumberInputComponent extends AbstractFieldLikeInputs<NumberInputComponentData, NumberInputEditComponent, number> {
+  override edit(): void {
+    this.modalService.openModal({
+      modalTitle: 'Edit Text Field Component Settings',
+      modalContent: NumberInputEditComponent,
+      modalData: this.data
+    }).subscribe(result => {
+      if (result) {
+        this.onEdit(this.data);
+      }
+    });
   }
 
-  onAnswerValueChange(newValue: string) {
-    this.answerValue = newValue;
-    this.emitValueChanged();
+  get minNumber() {
+    return this.data.min && this.data.minNumber ? this.data.minNumber : -Infinity;
+  }
+  get maxNumber() {
+    return this.data.max && this.data.maxNumber ? this.data.maxNumber : Infinity;
   }
 
-  onDescriptionValueChange(newValue: string) {
-    this.descriptionValue = newValue;
-    this.emitValueChanged();
+  get inputFormatter(): (value: number) => string {
+    if (this.data.format && this.data.formatter) {
+      return value => this.data.formatter!.replace("{*}", String(value));
+    }
+    return value => String(value);
   }
-
-  private emitValueChanged() {
-    this.valueChanged.emit({ questionValue: this.questionValue, answerValue: this.answerValue, descriptionValue: this.descriptionValue, id: this.id });
+  get inputParser(): (value: string) => string {
+    if (this.data.format && this.data.formatter) {
+      return value => {
+        const specIndex = this.data.formatter!.indexOf("{*}");
+        if (specIndex > -1) {
+          const [before, after] = [this.data.formatter!.substring(0, specIndex), this.data.formatter!.substring(specIndex + 3, this.data.formatter!.length)];
+          return value.replace(before, "").replace(after, "");
+        }
+        return value;
+      }
+    }
+    return identity;
   }
-
 }

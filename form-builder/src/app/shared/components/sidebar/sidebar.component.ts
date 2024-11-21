@@ -1,40 +1,45 @@
-import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormInput } from 'src/app/items/project.interface';
-import { UndoRedoService } from 'src/app/services/undo-redo.service';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {SectionComponent} from "../section/section.component";
+import {identifyGroupContents, identifySidebarData, SidebarData} from "./interfaces/sidebar-data";
 
-interface Panel {
-  active: boolean;
-  name: string;
-}
-
-interface Panels {
-  [key: string]: Panel;
-}
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarComponent {
-  constructor(private undoRedoService: UndoRedoService<FormInput[]>) {}
-  panels: Panels = {
-    basic: {
-      name: 'Basic inputs',
-      active: true,
-    },
-    selector: {
-      name: 'Selectors',
-      active: true,
-    },
-  };
-  @Input() formInputs: any[] = [];
-  @Input() sectionId!: string;
-  @Output() formInputsChange = new EventEmitter<any[]>();
+export class SidebarComponent implements OnInit {
+  protected readonly identifySidebarData = identifySidebarData;
+  protected readonly identifyGroupContents = identifyGroupContents;
+  protected readonly SectionComponent = SectionComponent;
 
-  onFormInputsChange(updatedFormInputs: any[]): void {
-    this.formInputs = updatedFormInputs;
-    this.formInputsChange.emit(this.formInputs);
+  constructor() {}
+
+  @Input() sidebarData!: SidebarData[];
+
+  searchTerm: string = '';
+  filteredData: SidebarData[] = [];
+
+  ngOnInit() {
+    this.filteredData = this.sidebarData;
+  }
+
+  filterItems() {
+    if (this.searchTerm) {
+      this.filteredData = this.sidebarData
+        .map((group) => ({
+          ...group,
+          groupContents: group.groupContents.filter((item) => item.title.toLowerCase().includes(this.searchTerm.toLowerCase())),
+        }))
+        .filter((group) => group.groupContents.length > 0);
+    } else {
+      this.filteredData = this.sidebarData;
+    }
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.filteredData = this.sidebarData;
   }
 }
