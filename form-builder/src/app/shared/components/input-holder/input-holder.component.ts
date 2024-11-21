@@ -70,7 +70,7 @@ export class InputHolderComponent<D extends InputData<T>, E extends AbstractEdit
         .forEach((key) => {
           this.inputData[key as keyof D] = defaultData.data![key as keyof D];
         });
-      this.changedEvent.emit(defaultData.data!);
+      this.changedEvent.emit(this.inputData);
     }
   }
 

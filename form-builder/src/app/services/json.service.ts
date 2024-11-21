@@ -9,8 +9,6 @@ export class JsonService {
   private jsonDataSubject = new BehaviorSubject<any>(null);
   jsonData$ = this.jsonDataSubject.asObservable();
 
-  constructor() {}
-
   /**
    * Saves the current project and its history to a JSON file and triggers a download.
    * @param {Project} project - The project to save.

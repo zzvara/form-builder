@@ -5,8 +5,6 @@ import { Project } from 'src/app/interfaces/project';
   providedIn: 'root',
 })
 export class StatisticsService {
-  constructor() {}
-
   calculateSectionInputStats(project: Project): { [key: string]: number } {
     if (!project?.sectionList) {
       return {};

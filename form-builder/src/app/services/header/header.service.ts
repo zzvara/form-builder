@@ -11,8 +11,6 @@ export class HeaderService {
     activeOptions: [],
   });
 
-  constructor() {}
-
   setOptions(options: MenuOption[], activeOptions: MenuOption[] = []): void {
     this.headerOptions.next({ options, activeOptions });
   }

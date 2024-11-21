@@ -49,7 +49,7 @@
 
           <app-input-holder
             class="element-box"
-            *ngFor="let item of sect.sectionInputs; trackBy: identifySectionInputs"
+            *ngFor="let item of sect.sectionInputs"
             cdkDrag
             [cdkDragData]="item"
             nz-card-grid
@@ -58,7 +58,7 @@
 
             [formInput]="item"
             (removeComponentEvent)="removeComponent(sect, $event)"
-            (changedEvent)="onValueChanged(sect, $event)"/>
+            (changedEvent)="onValueChanged($event)"/>
         </nz-card>
       </div>
     </nz-content>

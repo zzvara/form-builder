@@ -14,8 +14,6 @@ export class SidebarComponent implements OnInit {
   protected readonly identifyGroupContents = identifyGroupContents;
   protected readonly SectionComponent = SectionComponent;
 
-  constructor() {}
-
   @Input() sidebarData!: SidebarData[];
 
   searchTerm: string = '';

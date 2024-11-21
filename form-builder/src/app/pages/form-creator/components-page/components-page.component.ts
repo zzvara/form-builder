@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { EditComponent } from '../../edit/edit.component';
-import { ProjectService } from 'src/app/services/project.service';
-import { Project, ProjectVersion } from 'src/app/interfaces/project';
-import {SectionList} from "../../edit/interfaces/section-list";
+import {Component, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {EditComponent} from '../../edit/edit.component';
+import {ProjectService} from 'src/app/services/project.service';
+import {Project, ProjectVersion} from 'src/app/interfaces/project';
 
 @Component({
   selector: 'app-components-page',
@@ -10,6 +9,8 @@ import {SectionList} from "../../edit/interfaces/section-list";
   styleUrls: ['./components-page.component.css'],
 })
 export class ComponentsPageComponent implements OnInit {
+  private readonly projectService: ProjectService<Project> = inject(ProjectService);
+
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: number | undefined;
@@ -17,12 +18,8 @@ export class ComponentsPageComponent implements OnInit {
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();
 
-  sectionInputs: SectionList[] = [];
-
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
-
-  constructor(private projectService: ProjectService<Project>) {}
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -101,7 +98,8 @@ export class ComponentsPageComponent implements OnInit {
       }
     }
   }
-  onSectionInputsChange(updatedSectionInputs: SectionList[]): void {
-    this.sectionInputs = updatedSectionInputs;
+
+  onSectionInputsChange(undoRedoEvent: "UNDO" | "REDO"): void {
+    this.editComponent.undoRedo(undoRedoEvent);
   }
 }

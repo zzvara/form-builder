@@ -7,8 +7,8 @@ import {FormInputData} from "../../shared/interfaces/form-input-data";
 import {InputData} from "../../shared/interfaces/input-data";
 import {getSideBarData} from "./config/edit-data-config";
 import {LayoutEnum} from "./interfaces/layout-enum";
-import {identifySectionInputs, identifySectionList, SectionList} from "./interfaces/section-list";
-import { Project } from 'src/app/interfaces/project';
+import {identifySectionList, SectionList} from "./interfaces/section-list";
+import {Project} from 'src/app/interfaces/project';
 
 @Component({
   selector: 'app-edit',
@@ -16,12 +16,9 @@ import { Project } from 'src/app/interfaces/project';
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent implements OnInit, OnChanges {
-  private readonly projectService = inject(ProjectService<Project>);
-  private readonly undoRedoService = inject(UndoRedoService<SectionList[]>);
+  private readonly projectService: ProjectService<Project> = inject(ProjectService);
+  private readonly undoRedoService: UndoRedoService<SectionList[]> = inject(UndoRedoService);
   protected readonly identifySectionList = identifySectionList;
-  protected readonly identifySectionInputs = identifySectionInputs;
-
-  constructor() {}
 
   @Input() projectId: number | undefined;
   @Input() versionNum?: number;
@@ -34,6 +31,18 @@ export class EditComponent implements OnInit, OnChanges {
 
   sectionId!: number;
   sectionComponentId!: number;
+
+  ngOnChanges() {
+    this.loadProject();
+  }
+
+  ngOnInit() {
+    this.loadProject();
+    this.initializeUndoRedo();
+    this.sectionId = 0;
+    this.sectionComponentId = 0;
+    console.log({ formInputs: this.getAllFormInputs() });
+  }
 
   /**
    * Loads project form inputs based on the current project ID and version number.
@@ -49,7 +58,8 @@ export class EditComponent implements OnInit, OnChanges {
           layout: LayoutEnum.VERTICAL,
           sectionInputs: section.sectionInputs
         }));
-        this.undoRedoService.saveState(this.getAllFormInputs());
+        console.log("Project loaded (SAVE STATE)!");
+        this.undoRedoService.saveState(this.sectionList);
       }
     }
   }
@@ -61,22 +71,18 @@ export class EditComponent implements OnInit, OnChanges {
   private initializeUndoRedo(): void {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
       this.undoRedoService.clearHistory();
-      this.undoRedoService.saveState(this.getAllFormInputs());
+      console.log("Undo-redo initialized (SAVE STATE)!");
+      this.undoRedoService.saveState(this.sectionList);
     }
   }
 
-  ngOnChanges() {
-    this.loadProject();
+  undoRedo(undoRedoEvent: "UNDO" | "REDO") {
+    if (undoRedoEvent === "UNDO") {
+      this.sectionList = this.undoRedoService.undo() ?? [];
+    } else {
+      this.sectionList =  this.undoRedoService.redo() ?? [];
+    }
   }
-
-  ngOnInit() {
-    this.loadProject();
-    this.initializeUndoRedo();
-    this.sectionId = 0;
-    this.sectionComponentId = 0;
-    console.log({ formInputs: this.getAllFormInputs() });
-  }
-
 
   /**
    * Handles the drag and drop event for form elements.
@@ -84,8 +90,6 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   drop(event: CdkDragDrop<FormInputData[], FormInputData[], FormInputData>): void {
-    // console.log({ event, container: event.container });
-    // console.log({ itemId: event.item.element.nativeElement.id });
     console.log({ sectionInputs: this.getAllFormInputs() });
 
     // Check if the item was moved within the same container
@@ -110,7 +114,8 @@ export class EditComponent implements OnInit, OnChanges {
         copyArrayItem([newItem], event.container.data, 0, event.currentIndex);
       }
     }
-    this.undoRedoService.saveState(this.getAllFormInputs());
+    console.log("Input component added (SAVE STATE)!");
+    this.undoRedoService.saveState(this.sectionList);
 
     console.log({ sectionInputs: this.getAllFormInputs() });
   }
@@ -121,24 +126,10 @@ export class EditComponent implements OnInit, OnChanges {
    * @param sect
    * @param event - The event object containing the new value of the form input.
    * @returns {void}
-   *
-   * FIXME - It just doesnt work now... sorry :(
    */
-  onValueChanged<D extends InputData<T>, T>(sect: SectionList | null, event: D): void {
-    console.log("CHAAAAAAANGED!");
-    if (sect) {
-      const index = sect.sectionInputs.findIndex(input => input.data!.id === event.id);
-
-      if (index !== -1) {
-        sect.sectionInputs[index].data!.questionValue = event.questionValue;
-        sect.sectionInputs[index].data!.defaultValue = event.defaultValue;
-        sect.sectionInputs[index].data!.descriptionValue = event.descriptionValue;
-
-        this.undoRedoService.saveState(this.getAllFormInputs());
-      } else {
-        console.error('Input not found!');
-      }
-    }
+  onValueChanged<D extends InputData<T>, T>(event: D): void {
+    console.log("Input component changed/edited (SAVE STATE)!", event.id);
+    this.undoRedoService.saveState(this.sectionList);
   }
 
   /**
@@ -161,16 +152,13 @@ export class EditComponent implements OnInit, OnChanges {
     }
   }
 
-  onFormInputsChange(updatedFormInputs: any[]): void {
-    //FIXME
-    // this.formInputs = updatedFormInputs;
-  }
-
   removeComponent(sect: SectionList, componentId: string) {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
+    console.log("Input component in section removed (SAVE STATE)!");
+    this.undoRedoService.saveState(this.sectionList);
   }
 
-  sectionDrop($event: CdkDragDrop<any[]>) {
+  sectionDrop($event: CdkDragDrop<SectionList[]>) {
     const itemId = $event.item.element.nativeElement.id;
     // Check if the item is a section or belongs to a cdk-drop-list
     if (!itemId.includes("section")) {
@@ -190,11 +178,14 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       moveItemInArray(this.sectionList, $event.previousIndex, $event.currentIndex);
     }
-    this.undoRedoService.saveState(this.getAllFormInputs());
+    console.log("Section added (SAVE STATE)!");
+    this.undoRedoService.saveState(this.sectionList);
   }
 
   sectionRemove(sect: SectionList) {
     this.sectionList = this.sectionList.filter((section) => section !== sect);
+    console.log("Section removed (SAVE STATE)!");
+    this.undoRedoService.saveState(this.sectionList);
   }
 
   getSectionInputStyle(sect: SectionList) {
@@ -211,5 +202,7 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       sect.layout = LayoutEnum.VERTICAL;
     }
+    console.log("Section layout changed (SAVE STATE)!");
+    this.undoRedoService.saveState(this.sectionList);
   }
 }

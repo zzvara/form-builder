@@ -1,7 +1,6 @@
-import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SectionList } from 'src/app/pages/edit/interfaces/section-list';
-import { UndoRedoService } from 'src/app/services/undo-redo.service';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
+import {SectionList} from 'src/app/pages/edit/interfaces/section-list';
+import {UndoRedoService} from 'src/app/services/undo-redo.service';
 
 @Component({
   selector: 'app-redo-undo',
@@ -9,7 +8,7 @@ import { UndoRedoService } from 'src/app/services/undo-redo.service';
   styleUrls: ['./redo-undo.component.css'],
 })
 export class RedoUndoComponent {
-  constructor(private undoRedoService: UndoRedoService<SectionList[]>) {}
+  private readonly undoRedoService: UndoRedoService<SectionList[]> = inject(UndoRedoService);
 
   get canUndo(): boolean {
     return this.undoRedoService.canUndo();
@@ -19,24 +18,13 @@ export class RedoUndoComponent {
     return this.undoRedoService.canRedo();
   }
 
-  @Input() sectionInputs: SectionList[] = [];
-  @Output() sectionInputsChange = new EventEmitter<SectionList[]>();
+  @Output() sectionInputsChange = new EventEmitter<"UNDO" | "REDO">();
 
   undoBtn(): void {
-    const previousState = this.undoRedoService.undo(this.sectionInputs);
-    if (previousState) {
-      this.sectionInputs = [...previousState];
-      console.log("Undo action", this.sectionInputs);
-      this.sectionInputsChange.emit(this.sectionInputs);
-    }
+    this.sectionInputsChange.emit("UNDO");
   }
 
   redoBtn(): void {
-    const nextState = this.undoRedoService.redo(this.sectionInputs);
-    if (nextState) {
-      this.sectionInputs = [...nextState];
-      console.log("Redo action", this.sectionInputs);
-      this.sectionInputsChange.emit(this.sectionInputs);
-    }
+    this.sectionInputsChange.emit("REDO");
   }
 }

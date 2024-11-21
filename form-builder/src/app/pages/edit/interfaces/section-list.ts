@@ -8,4 +8,3 @@ export interface SectionList {
 }
 
 export const identifySectionList: (index: number, item: SectionList) => string = (_index, item) => item.sectionId;
-export const identifySectionInputs: (index: number, item: FormInputData) => string = (_index, item) => item.data!.id!;

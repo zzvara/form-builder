@@ -7,7 +7,7 @@ export interface SidebarData {
   groupName: string;
   active: boolean;
   dropListConnectedTo: () => (CdkDropList | string)[] | CdkDropList | string;
-  groupContents: FormInputData<any, any>[]
+  groupContents: FormInputData[]
 }
 
 // Így groupName-nek egyedinek kell lennie!!!
