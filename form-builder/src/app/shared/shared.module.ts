@@ -17,6 +17,7 @@ import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzSelectModule} from 'ng-zorro-antd/select';
+import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
 import {DatePickerEditComponent} from './components/date-picker/date-picker-edit/date-picker-edit.component';
@@ -40,6 +41,8 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {TextareaEditComponent} from './components/textarea/textarea-edit/textarea-edit.component';
 import {TextareaComponent} from './components/textarea/textarea.component';
 import {MutateTextDirective} from './directives/mutate-text.directive';
+import { TimePickerComponent } from './components/time-picker/time-picker.component';
+import { TimePickerEditComponent } from './components/time-picker/time-picker-edit/time-picker-edit.component';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -61,7 +64,9 @@ const COMPONENTS = [
   NumberInputEditComponent,
   DatePickerEditComponent,
   RangePickerComponent,
-  RangePickerEditComponent
+  RangePickerEditComponent,
+  TimePickerComponent,
+  TimePickerEditComponent,
 ];
 
 @NgModule({
@@ -90,7 +95,8 @@ const COMPONENTS = [
     NzListModule,
     ReactiveFormsModule,
     NzFormModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzTimePickerModule
   ],
   providers: [],
   exports: [...COMPONENTS, InputHolderComponent],

@@ -1,0 +1,210 @@
+<form id="datePickerEditFormID" nz-form [formGroup]="formData">
+  <span>Question:</span>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="questionErrors">
+      <input nz-input placeholder="Question" formControlName="questionValue"/>
+    </nz-form-control>
+    <ng-template #questionErrors let-control>
+      <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+    </ng-template>
+  </nz-form-item>
+
+  <span>Description:</span>
+  <nz-form-item>
+    <nz-form-control>
+      <textarea nz-input nzAutosize placeholder="Description" formControlName="descriptionValue"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Set Placeholder Value</span>
+  <nz-form-item>
+    <nz-form-control>
+      <input nz-input placeholder="Placeholder" formControlName="placeholderValue"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="setDefaultValue">Set default value?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('setDefaultValue')">
+      <span>Set Default Value</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
+          <nz-time-picker [nzFormat]="getControlValue('timeFormat')"
+                          [nzDisabledHours]="disabledHours(rawFormData)"
+                          [nzDisabledMinutes]="disabledMinutes(rawFormData)"
+                          [nzDisabledSeconds]="disabledSeconds(rawFormData)"
+                          [nzUse12Hours]="getControlValue('use12Hours')"
+                          [nzHideDisabledOptions]="getControlValue('hideDisabledOptions')"
+                          [nzHourStep]="getControlValue('hourStep')"
+                          [nzMinuteStep]="getControlValue('minuteStep')"
+                          [nzSecondStep]="getControlValue('secondStep')"
+                          nzPlaceHolder="Select default time"
+                          formControlName="defaultValue"
+                          style="width: 100%"></nz-time-picker>
+        </nz-form-control>
+        <ng-template #defaultValueErrorTemplate let-control>
+          <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <span>Time format:</span>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="timeFormatErrors">
+      <input nz-input placeholder="Time format" formControlName="timeFormat"/>
+    </nz-form-control>
+    <ng-template #timeFormatErrors let-control>
+      <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+    </ng-template>
+  </nz-form-item>
+
+  <span>12 hour format</span>
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="use12Hours">Use 12 hour format?</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <span>Hide disabled options</span>
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="hideDisabledOptions">Hide disabled options?</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+    <span>Set Hour Step number</span>
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="hourStepNumberErrors">
+        <nz-input-number formControlName="hourStep" [nzMin]="1" [nzMax]="24" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+      <ng-template #hourStepNumberErrors let-control>
+        <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+        <div *ngIf="hasErrors(control, 'maxError')">Cannot be larger than 24!</div>
+      </ng-template>
+    </nz-form-item>
+    <span>Set Minute Step number</span>
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="minuteStepNumberErrors">
+        <nz-input-number formControlName="minuteStep" [nzMin]="1" [nzMax]="60" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+      <ng-template #minuteStepNumberErrors let-control>
+        <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+        <div *ngIf="hasErrors(control, 'maxError')">Cannot be larger than 60!</div>
+      </ng-template>
+    </nz-form-item>
+    <span>Set Second Step number</span>
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="secondStepNumberErrors">
+        <nz-input-number formControlName="secondStep" [nzMin]="1" [nzMax]="60" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+      <ng-template #secondStepNumberErrors let-control>
+        <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+        <div *ngIf="hasErrors(control, 'maxError')">Cannot be larger than 60!</div>
+      </ng-template>
+    </nz-form-item>
+  </div>
+
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="required">Is Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('required')">
+      <span>Required error message</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
+          <input nz-input
+                 formControlName="requiredMessage"
+                 placeholder="Required error message"/>
+        </nz-form-control>
+        <ng-template #requiredErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">If the field is required the message cannot be empty!</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="minTime">Min time Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('minTime')">
+      <span>Min time:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="minTimeErrorMessageTemplate">
+          <nz-time-picker [nzFormat]="getControlValue('timeFormat')"
+                          [nzDisabledHours]="getDisabledMaxHours()"
+                          [nzDisabledMinutes]="getDisabledMaxMinutes()"
+                          [nzDisabledSeconds]="getDisabledMaxSeconds()"
+                          [nzUse12Hours]="getControlValue('use12Hours')"
+                          [nzHideDisabledOptions]="getControlValue('hideDisabledOptions')"
+                          [nzHourStep]="getControlValue('hourStep')"
+                          [nzMinuteStep]="getControlValue('minuteStep')"
+                          [nzSecondStep]="getControlValue('secondStep')"
+                          nzPlaceHolder="Select min time"
+                          formControlName="minTimeValue"
+                          style="width: 100%"></nz-time-picker>
+        </nz-form-control>
+        <ng-template #minTimeErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+          <div *ngIf="hasErrors(control, 'minMaxError')">Cannot be higher than the set max date ({{control.errors['minMaxError'] | date:getControlValue('timeFormat')}})!</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="maxTime">Max time Required?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('maxTime')">
+      <span>Max time:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
+          <nz-time-picker [nzFormat]="getControlValue('timeFormat')"
+                          [nzDisabledHours]="getDisabledMinHours()"
+                          [nzDisabledMinutes]="getDisabledMinMinutes()"
+                          [nzDisabledSeconds]="getDisabledMinSeconds()"
+                          [nzUse12Hours]="getControlValue('use12Hours')"
+                          [nzHideDisabledOptions]="getControlValue('hideDisabledOptions')"
+                          [nzHourStep]="getControlValue('hourStep')"
+                          [nzMinuteStep]="getControlValue('minuteStep')"
+                          [nzSecondStep]="getControlValue('secondStep')"
+                          nzPlaceHolder="Select max time"
+                          formControlName="maxTimeValue"
+                          style="width: 100%"></nz-time-picker>
+        </nz-form-control>
+        <ng-template #maxDateErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+          <div *ngIf="hasErrors(control, 'maxMinError')">Cannot be lower than the set date ({{control.errors['maxMinError'] | date:getControlValue('timeFormat')}})!</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="showTooltip">Show input tooltip?</label>
+      </nz-form-control>
+    </nz-form-item>
+    <div *ngIf="getControlValue('showTooltip')">
+      <span>Tooltip text:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
+          <input nz-input
+                 formControlName="tooltipText"
+                 placeholder="Tooltip text"/>
+        </nz-form-control>
+        <ng-template #tooltipTextErrorMessageTemplate let-control>
+          <div *ngIf="hasErrors(control, 'required')">Must provide a tooltip message!</div>
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

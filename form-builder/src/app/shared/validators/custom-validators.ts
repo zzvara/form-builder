@@ -1,6 +1,6 @@
 import {AbstractControl, ValidatorFn} from "@angular/forms";
 import {NzDateMode} from "ng-zorro-antd/date-picker";
-import {defaultDateComparers} from "../helpers/date-helper";
+import {compareTimeFull, defaultDateComparers} from "../helpers/date-helper";
 
 export class CustomValidators {
 
@@ -118,6 +118,20 @@ export class CustomValidators {
     }
   }
 
+  static validateTimeMinWithMaxIf(maxData: () => { maxOn: boolean, maxTime: Date }, ifPred: () => boolean) {
+    return (control: AbstractControl) => {
+      const value: Date = control.value;
+      if (value && ifPred()) {
+        if (maxData().maxOn && maxData().maxTime && compareTimeFull(value, maxData().maxTime) > 0) {
+          return {
+            minMaxError: maxData().maxTime
+          };
+        }
+      }
+      return null;
+    }
+  }
+
   static validateMaxIf(ifPred: () => boolean, max: number) {
     return (control: AbstractControl) => {
       if (ifPred()) {
@@ -165,6 +179,20 @@ export class CustomValidators {
         if (minData().minOn && minData().minDate && defaultDateComparers[minData().showTime ? "time" : minData().mode](value, minData().minDate) < 0) {
           return {
             maxMinError: minData().minDate
+          };
+        }
+      }
+      return null;
+    }
+  }
+
+  static validateTimeMaxWithMinIf(minData: () => { minOn: boolean, minTime: Date }, ifPred: () => boolean) {
+    return (control: AbstractControl) => {
+      const value: Date = control.value;
+      if (value && ifPred()) {
+        if (minData().minOn && minData().minTime && compareTimeFull(value, minData().minTime) < 0) {
+          return {
+            maxMinError: minData().minTime
           };
         }
       }

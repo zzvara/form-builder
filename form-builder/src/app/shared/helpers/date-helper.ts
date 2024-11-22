@@ -1,5 +1,6 @@
 import {DisabledTimeConfig, NzDateMode} from "ng-zorro-antd/date-picker";
 import {DatePickerComponentData} from "../components/date-picker/interfaces/date-picker-component-data";
+import {TimePickerComponentData} from "../components/time-picker/interfaces/time-picker-component-data";
 
 export type DefaultDateComparers = {
   [key in NzDateMode]: (date1: Date, date2: Date) => ComparisonType;
@@ -213,6 +214,115 @@ export function getDisabledTimeConfigForMinDate(currentDate: Date, minDate: Date
       return range(0, 60);
     }
   };
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
+export function disabledHours(data: TimePickerComponentData): (() => number[]) | undefined {
+  return () => {
+    const hours: number[] = [];
+    if (data.minTime && data.minTimeValue) {
+      hours.push(...disabledMinHours(data.minTimeValue)!());
+    }
+    if (data.maxTime && data.maxTimeValue) {
+      hours.push(...disabledMaxHours(data.maxTimeValue)!());
+    }
+    return hours;
+  };
+}
+export function disabledMinHours(minTime: Date): (() => number[]) | undefined {
+  return () => {
+    const hours: number[] = [];
+    hours.push(...range(0, minTime.getHours()));
+    return hours;
+  };
+}
+export function disabledMaxHours(maxTime: Date): (() => number[]) | undefined {
+  return () => {
+    const hours: number[] = [];
+    hours.push(...range(maxTime.getHours() + 1, 24));
+    return hours;
+  };
+}
+
+export function disabledMinutes(data: TimePickerComponentData): ((hour: number) => number[]) | undefined {
+  return (hour) => {
+    if (hour) {
+      const minutes: number[] = [];
+      if (data.minTime && data.minTimeValue) {
+        minutes.push(...disabledMinMinutes(data.minTimeValue)!(hour));
+      }
+      if (data.maxTime && data.maxTimeValue) {
+        minutes.push(...disabledMaxMinutes(data.maxTimeValue)!(hour));
+      }
+      return minutes;
+    }
+    return range(0, 60);
+  };
+}
+export function disabledMinMinutes(minTime: Date): ((hour: number) => number[]) | undefined {
+  return (hour) => {
+    if (hour) {
+      const minutes: number[] = [];
+      if (hour === minTime.getHours()) {
+        minutes.push(...range(0, minTime.getMinutes()));
+      }
+      return minutes;
+    }
+    return range(0, 60);
+  };
+}
+export function disabledMaxMinutes(maxTime: Date): ((hour: number) => number[]) | undefined {
+  return (hour) => {
+    if (hour) {
+      const minutes: number[] = [];
+      if (hour === maxTime.getHours()) {
+        minutes.push(...range(maxTime.getMinutes() + 1, 60));
+      }
+      return minutes;
+    }
+    return range(0, 60);
+  };
+}
+
+export function disabledSeconds(data: TimePickerComponentData): ((hour: number, minute: number) => number[]) | undefined {
+  return (hour, minute) => {
+    if (hour && minute) {
+      const seconds: number[] = [];
+      if (data.minTime && data.minTimeValue) {
+        seconds.push(...disabledMinSeconds(data.minTimeValue)!(hour, minute));
+      }
+      if (data.maxTime && data.maxTimeValue) {
+        seconds.push(...disabledMaxSeconds(data.maxTimeValue)!(hour, minute));
+      }
+      return seconds;
+    }
+    return range(0, 60);
+  }
+}
+export function disabledMinSeconds(minTime: Date): ((hour: number, minute: number) => number[]) | undefined {
+  return (hour, minute) => {
+    if (hour && minute) {
+      const seconds: number[] = [];
+      if (hour === minTime.getHours() && minute === minTime.getMinutes()) {
+        seconds.push(...range(0, minTime.getSeconds()));
+      }
+      return seconds;
+    }
+    return range(0, 60);
+  }
+}
+export function disabledMaxSeconds(maxTime: Date): ((hour: number, minute: number) => number[]) | undefined {
+  return (hour, minute) => {
+    if (hour && minute) {
+      const seconds: number[] = [];
+      if (hour === maxTime.getHours() && minute === maxTime.getMinutes()) {
+        seconds.push(...range(maxTime.getSeconds() + 1, 60));
+      }
+      return seconds;
+    }
+    return range(0, 60);
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------

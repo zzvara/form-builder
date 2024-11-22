@@ -1,5 +1,6 @@
 import {DatePickerComponent} from "../../../shared/components/date-picker/date-picker.component";
 import {DatePickerComponentData} from "../../../shared/components/date-picker/interfaces/date-picker-component-data";
+import {defaultDateFormats} from "../../../shared/components/date-picker/interfaces/default-date-formats";
 import {InputComponent} from "../../../shared/components/input/input.component";
 import {InputComponentData} from "../../../shared/components/input/interfaces/input-component-data";
 import {NumberInputComponentData} from "../../../shared/components/number-input/interfaces/number-input-component-data";
@@ -14,9 +15,10 @@ import {SelectComponent} from "../../../shared/components/select/select.componen
 import {SidebarData} from "../../../shared/components/sidebar/interfaces/sidebar-data";
 import {TextareaComponentData} from "../../../shared/components/textarea/interfaces/textarea-component-data";
 import {TextareaComponent} from "../../../shared/components/textarea/textarea.component";
+import {TimePickerComponentData} from "../../../shared/components/time-picker/interfaces/time-picker-component-data";
+import {TimePickerComponent} from "../../../shared/components/time-picker/time-picker.component";
 import {FormInputData} from "../../../shared/interfaces/form-input-data";
 import {EditComponent} from "../edit.component";
-import {defaultDateFormats} from "../../../shared/components/date-picker/interfaces/default-date-formats";
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
@@ -71,6 +73,21 @@ const rangeInputOptions: RangePickerComponentData = {
   showTime: false,
   showWeekNumber: false,
 };
+const timeInputOptions: TimePickerComponentData = {
+  questionValue: "Time Picker question...",
+  descriptionValue: "Question description...",
+  required: false,
+  requiredMessage: "Field cannot be empty!",
+  showTooltip: false,
+  maxTime: false,
+  minTime: false,
+  use12Hours: false,
+  timeFormat: defaultDateFormats.time,
+  hideDisabledOptions: false,
+  hourStep: 1,
+  minuteStep: 1,
+  secondStep: 1,
+};
 const textAreaInputOptions: TextareaComponentData = {
   questionValue: "Textarea question...",
   descriptionValue: "Question description...",
@@ -118,6 +135,11 @@ export function getInputGroups(): FormInputData<any>[] {
       title: "RANGE PICKER",
       type: RangePickerComponent,
       data: rangeInputOptions
+    },
+    {
+      title: "TIME PICKER",
+      type: TimePickerComponent,
+      data: timeInputOptions
     },
     {
       title: "TEXT AREA",
