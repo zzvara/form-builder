@@ -14,7 +14,7 @@ import { NgComponentOutlet } from '@angular/common';
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.css'],
 })
-export class InputHolderComponent<D extends InputData<T>, E extends AbstractEditForm<D, T>, T> implements OnInit, AfterViewInit {
+export class InputHolderComponent<D extends InputData<T>, E extends AbstractEditForm<T, D>, T> implements OnInit, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
 
   @Input() formInput!: FormInputData<D, T>;
@@ -35,7 +35,7 @@ export class InputHolderComponent<D extends InputData<T>, E extends AbstractEdit
 
   inlineEdit: InlineEdit = { enabled: true };
 
-  get embeddedComponent(): AbstractInput<D, E, T> {
+  get embeddedComponent(): AbstractInput<T, D, E> {
     return this.inputOutlet['_componentRef']?.instance;
   }
 

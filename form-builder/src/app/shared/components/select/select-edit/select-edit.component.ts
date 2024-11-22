@@ -12,7 +12,7 @@ import {CustomValidators} from "../../../validators/custom-validators";
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.css']
 })
-export class SelectEditComponent extends AbstractFieldLikeEditForm<SelectComponentData, string | string[]> {
+export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
   protected readonly identifyStringArray = identifyStringArray;
 
   newOption!: FormControl<string | null>;

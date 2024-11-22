@@ -8,7 +8,7 @@ import {SelectComponentData} from "./interfaces/select-component-data";
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css']
 })
-export class SelectComponent extends AbstractFieldLikeInputs<SelectComponentData, SelectEditComponent, string | string[]> {
+export class SelectComponent extends AbstractFieldLikeInputs<string | string[], SelectComponentData, SelectEditComponent> {
   override edit(): void {
     this.modalService.openModal({
       modalTitle: 'Edit Select Component Settings',

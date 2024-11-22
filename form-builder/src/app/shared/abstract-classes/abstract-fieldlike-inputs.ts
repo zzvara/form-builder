@@ -8,7 +8,7 @@ import {AbstractInput} from "./abstract-input";
 
 
 @Directive()
-export abstract class AbstractFieldLikeInputs<D extends FieldLikeInputData<T>, E extends AbstractFieldLikeEditForm<D, T>, T> extends AbstractInput<D, E, T> {
+export abstract class AbstractFieldLikeInputs<T, D extends FieldLikeInputData<T>, E extends AbstractFieldLikeEditForm<T, D>> extends AbstractInput<T, D, E> {
   protected readonly identifyErrorMessages = identifyStringArray;
   getErrorMessages(control: AbstractControl<string>): string[]{
     return getErrorMessageList(control, this.errorList());

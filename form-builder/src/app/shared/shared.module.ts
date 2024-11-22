@@ -19,9 +19,9 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
+import {DatePickerEditComponent} from './components/date-picker/date-picker-edit/date-picker-edit.component';
 //Components
 import {DatePickerComponent} from './components/date-picker/date-picker.component';
-import {DatePickerEditComponent} from './components/date-picker/date-picker-edit/date-picker-edit.component';
 import {HeaderComponent} from './components/header/header.component';
 import {InputHolderComponent} from './components/input-holder/input-holder.component';
 import {InputEditComponent} from './components/input/input-edit/input-edit.component';
@@ -30,6 +30,8 @@ import {NumberInputEditComponent} from './components/number-input/number-input-e
 import {NumberInputComponent} from './components/number-input/number-input.component';
 import {PictureInputEditComponent} from './components/picture-input/picture-input-edit/picture-input-edit.component';
 import {PictureInputComponent} from './components/picture-input/picture-input.component';
+import {RangePickerEditComponent} from "./components/range-picker/range-picker-edit/range-picker-edit.component";
+import {RangePickerComponent} from "./components/range-picker/range-picker.component";
 import {RedoUndoComponent} from './components/redo-undo/redo-undo.component';
 import {SectionComponent} from './components/section/section.component';
 import {SelectEditComponent} from "./components/select/select-edit/select-edit.component";
@@ -58,6 +60,8 @@ const COMPONENTS = [
   PictureInputEditComponent,
   NumberInputEditComponent,
   DatePickerEditComponent,
+  RangePickerComponent,
+  RangePickerEditComponent
 ];
 
 @NgModule({

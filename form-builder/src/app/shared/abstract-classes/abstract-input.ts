@@ -6,8 +6,8 @@ import {InputData} from "../interfaces/input-data";
 import {AbstractEditForm} from "./abstract-edit-form";
 
 @Directive()
-export abstract class AbstractInput<D extends InputData<T>, E extends AbstractEditForm<D, T>, T> implements FormComponentMarker, OnInit {
-  protected readonly modalService: ModalServiceService<E, D> = inject(ModalServiceService);
+export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>> implements FormComponentMarker, OnInit {
+  protected readonly modalService: ModalServiceService<T, D, E> = inject(ModalServiceService);
 
   @Input() data!: D;
   @Input() inlineEdit: InlineEdit = { enabled: true };

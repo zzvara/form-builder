@@ -6,6 +6,8 @@ import {NumberInputComponentData} from "../../../shared/components/number-input/
 import {NumberInputComponent} from "../../../shared/components/number-input/number-input.component";
 import {PictureInputComponentData} from "../../../shared/components/picture-input/interfaces/picture-input-component-data";
 import {PictureInputComponent} from "../../../shared/components/picture-input/picture-input.component";
+import {RangePickerComponentData} from "../../../shared/components/range-picker/interfaces/range-picker-component-data";
+import {RangePickerComponent} from "../../../shared/components/range-picker/range-picker.component";
 import {SectionComponent} from "../../../shared/components/section/section.component";
 import {SelectComponentData} from "../../../shared/components/select/interfaces/select-component-data";
 import {SelectComponent} from "../../../shared/components/select/select.component";
@@ -46,7 +48,22 @@ const dateInputOptions: DatePickerComponentData = {
   requiredMessage: "Field cannot be empty!",
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
-  timeFormat: defaultDateFormats.time,
+  timeFormat: " " + defaultDateFormats.time,
+  inlineMode: false,
+  maxDate: false,
+  minDate: false,
+  mode: "date",
+  showTime: false,
+  showWeekNumber: false,
+};
+const rangeInputOptions: RangePickerComponentData = {
+  questionValue: "Range Picker question...",
+  descriptionValue: "Question description...",
+  required: false,
+  requiredMessage: "Field cannot be empty!",
+  showTooltip: false,
+  dateFormat: defaultDateFormats.date,
+  timeFormat: " " + defaultDateFormats.time,
   inlineMode: false,
   maxDate: false,
   minDate: false,
@@ -96,6 +113,11 @@ export function getInputGroups(): FormInputData<any>[] {
       title: "DATE PICKER",
       type: DatePickerComponent,
       data: dateInputOptions
+    },
+    {
+      title: "RANGE PICKER",
+      type: RangePickerComponent,
+      data: rangeInputOptions
     },
     {
       title: "TEXT AREA",

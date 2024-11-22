@@ -11,7 +11,7 @@ import {identity} from "rxjs";
   templateUrl: './number-input-edit.component.html',
   styleUrls: ['./number-input-edit.component.css']
 })
-export class NumberInputEditComponent extends AbstractFieldLikeEditForm<NumberInputComponentData, number> {
+export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, NumberInputComponentData> {
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({

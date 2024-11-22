@@ -9,10 +9,10 @@ import {identity} from "rxjs";
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.css'],
 })
-export class NumberInputComponent extends AbstractFieldLikeInputs<NumberInputComponentData, NumberInputEditComponent, number> {
+export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
   override edit(): void {
     this.modalService.openModal({
-      modalTitle: 'Edit Text Field Component Settings',
+      modalTitle: 'Edit Number Input Component Settings',
       modalContent: NumberInputEditComponent,
       modalData: this.data
     }).subscribe(this.defaultOnEditSubscribeEvent);

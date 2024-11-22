@@ -14,7 +14,17 @@ export const defaultDateComparers: DefaultDateComparers = {
   time:   compareDateTimeFull
 };
 
-export function getDisabledDateConfig(data: DatePickerComponentData): (current: Date) => boolean {
+export interface MinMaxDateable {
+  minDate: boolean;
+  minDateValue?: Date;
+
+  maxDate: boolean;
+  maxDateValue?: Date;
+
+  mode: NzDateMode;
+}
+
+export function getDisabledDateConfig(data: MinMaxDateable): (current: Date) => boolean {
   return (current: Date): boolean => {
     if (data.minDate && data.minDateValue && defaultDateComparers[data.mode](current, data.minDateValue) < 0) {
       return true;
@@ -31,7 +41,7 @@ export function getDisabledDatesForMinDate(minDate: Date, mode: NzDateMode): (cu
   return (current: Date): boolean => minDate && defaultDateComparers[mode](current, minDate) < 0;
 }
 
-export function getDisabledTimeConfig(data: DatePickerComponentData, currentDate: Date): DisabledTimeConfig {
+export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): DisabledTimeConfig {
   return {
     nzDisabledHours: (): number[] => {
       const hours: number[] = [];

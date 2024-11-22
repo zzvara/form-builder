@@ -7,7 +7,7 @@ import {InputData, InputDataKeys} from "../interfaces/input-data";
 import {UpdateOnStrategy} from "../interfaces/update-on-strategy";
 
 @Directive()
-export abstract class AbstractEditForm<D extends InputData<T>, T> implements OnInit {
+export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly nzModalData: D = inject(NZ_MODAL_DATA);

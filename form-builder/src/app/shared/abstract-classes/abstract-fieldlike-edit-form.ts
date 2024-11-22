@@ -9,7 +9,7 @@ import {CustomValidators} from "../validators/custom-validators";
 import {AbstractEditForm} from "./abstract-edit-form";
 
 @Directive()
-export abstract class AbstractFieldLikeEditForm<D extends FieldLikeInputData<T>, T> extends AbstractEditForm<D, T> {
+export abstract class AbstractFieldLikeEditForm<T, D extends FieldLikeInputData<T>> extends AbstractEditForm<T, D> {
   protected readonly Infinity = Infinity;
 
   override ngOnInit(): void {

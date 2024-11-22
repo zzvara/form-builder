@@ -10,7 +10,7 @@ import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit
   templateUrl: './picture-input.component.html',
   styleUrls: ['./picture-input.component.css'],
 })
-export class PictureInputComponent extends AbstractInput<PictureInputComponentData, PictureInputEditComponent, string | null> {
+export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
 
   onFileChange(event: any): void {
     this.data.file = event.target.files[0];
@@ -38,7 +38,7 @@ export class PictureInputComponent extends AbstractInput<PictureInputComponentDa
 
   override edit(): void {
     this.modalService.openModal({
-      modalTitle: 'Edit Text Field Component Settings',
+      modalTitle: 'Edit Picture Input Component Settings',
       modalContent: PictureInputEditComponent,
       modalData: this.data
     }).subscribe(this.defaultOnEditSubscribeEvent);

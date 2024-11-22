@@ -20,7 +20,7 @@ import {defaultDateFormats} from "../interfaces/default-date-formats";
   templateUrl: './date-picker-edit.component.html',
   styleUrls: ['./date-picker-edit.component.css']
 })
-export class DatePickerEditComponent extends AbstractFieldLikeEditForm<DatePickerComponentData, Date> {
+export class DatePickerEditComponent<T extends Date | Date[] = Date, D extends DatePickerComponentData<T> = DatePickerComponentData<T>> extends AbstractFieldLikeEditForm<T, D> {
   identifyDatePickerModes: (index: number, item: {mode: NzDateMode, label: string}) => NzDateMode = (_index, item) => item.mode;
   datePickerModes: {mode: NzDateMode, label: string}[] = [
     {mode: "decade", label: "Decade"},
@@ -152,9 +152,9 @@ export class DatePickerEditComponent extends AbstractFieldLikeEditForm<DatePicke
 
   get getFullFormat(): string {
     if (this.getStrictControlValue("showTime")) {
-      return this.getStrictControlValue("dateFormat") + " " + this.getStrictControlValue("timeFormat");
+      return this.getStrictControlValue<string>("dateFormat") + this.getStrictControlValue<string>("timeFormat");
     }
-    return this.getStrictControlValue("dateFormat");
+    return this.getStrictControlValue<string>("dateFormat");
   }
 
   get getDisabledDatesForMin() {

@@ -9,17 +9,17 @@ import {ModalData} from "../../shared/interfaces/modal-data";
 @Injectable({
   providedIn: 'root'
 })
-export class ModalServiceService<T extends AbstractEditForm<D, any>, D extends InputData> {
+export class ModalServiceService<T, D extends InputData, E extends AbstractEditForm<T, D>> {
   private readonly modal = inject(NzModalService);
 
   constructor() { }
 
-  openModal(modalData: ModalData<T, D>): Observable<boolean | undefined> {
+  openModal(modalData: ModalData<D, E>): Observable<boolean | undefined> {
     return this.openModalAndGet<boolean>(modalData);
   }
 
-  openModalAndGet<RetType>(modalData: ModalData<T, D>, dataGetter: ((instance: T) => RetType) | null = null): Observable<RetType | undefined> {
-    const modal = this.modal.create<T,D>({
+  openModalAndGet<RetType>(modalData: ModalData<D, E>, dataGetter: ((instance: E) => RetType) | null = null): Observable<RetType | undefined> {
+    const modal = this.modal.create<E, D>({
       nzTitle: modalData.modalTitle,
       nzContent: modalData.modalContent,
       nzData: modalData.modalData,
@@ -33,17 +33,17 @@ export class ModalServiceService<T extends AbstractEditForm<D, any>, D extends I
           label: "Reset",
           shape: "round",
           type: "dashed",
-          onClick: (editComponentInstance?: T) => {
+          onClick: (editComponentInstance?: E) => {
             editComponentInstance?.onReset();
           }
       },{
           label: "Save",
           type: "primary",
-          disabled: (editComponentInstance?: T) => {
+          disabled: (editComponentInstance?: E) => {
             //TODO: this gets called dozens of times with each change in the embedded component (could cause performance issues)
             return editComponentInstance?.isInvalid ?? true;
           },
-          onClick: (editComponentInstance?: T): NzSafeAny | Promise<NzSafeAny> => {
+          onClick: (editComponentInstance?: E): NzSafeAny | Promise<NzSafeAny> => {
               const saveSuccess = editComponentInstance?.onSave();
               if (editComponentInstance && dataGetter) {
                 modal.close(dataGetter(editComponentInstance));

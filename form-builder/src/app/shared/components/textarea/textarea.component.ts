@@ -8,7 +8,7 @@ import {TextareaEditComponent} from "./textarea-edit/textarea-edit.component";
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.css'],
 })
-export class TextareaComponent extends AbstractFieldLikeInputs<TextareaComponentData, TextareaEditComponent, string> {
+export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaComponentData, TextareaEditComponent> {
   override edit(): void {
     this.modalService.openModal({
       modalTitle: 'Edit Text Area Component Settings',
