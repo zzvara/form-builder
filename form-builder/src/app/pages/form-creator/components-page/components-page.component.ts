@@ -102,4 +102,9 @@ export class ComponentsPageComponent implements OnInit {
   onSectionInputsChange(undoRedoEvent: "UNDO" | "REDO"): void {
     this.editComponent.undoRedo(undoRedoEvent);
   }
+
+  get isNextButtonDisabled(): boolean {
+
+    return this.editComponent ? this.editComponent.isFormInvalid() : true;
+  }
 }

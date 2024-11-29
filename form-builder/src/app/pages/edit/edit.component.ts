@@ -205,4 +205,8 @@ export class EditComponent implements OnInit, OnChanges {
     console.log("Section layout changed (SAVE STATE)!");
     this.undoRedoService.saveState(this.sectionList);
   }
+
+  isFormInvalid(): boolean {
+    return this.getAllFormInputs().length === 0
+  }
 }

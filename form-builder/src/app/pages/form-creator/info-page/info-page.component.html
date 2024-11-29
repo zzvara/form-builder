@@ -16,13 +16,13 @@
       <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" placeholder="Please take a few minutes to complete this survey. Your feedback will remain confidential and will be used to improve the quality of our teaching." formControlName="description" (change)="updateForm()"></textarea>
       <hr class="formelement" />
       <ng-container>
-      <nz-form-item class="same_line">
-        <nz-form-label [nzNoColon]="true" >Questionaire</nz-form-label>
-        <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
-        <nz-form-label [nzNoColon]="true" >Test
-          <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Off state is Questionaire - On state is Test" style="margin-left: 10px;"></i>
-        </nz-form-label>
-      </nz-form-item>
+        <nz-form-item class="same_line">
+          <nz-form-label [nzNoColon]="true" >Questionaire</nz-form-label>
+          <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
+          <nz-form-label [nzNoColon]="true" >Test
+            <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Off state is Questionaire - On state is Test" style="margin-left: 10px;"></i>
+          </nz-form-label>
+        </nz-form-item>
       </ng-container>
       <nz-form-item class="same_line">
         <label nz-checkbox formControlName="hasdeadline"></label>
@@ -51,8 +51,17 @@
         </div>
       </ng-container>
       <div class="saveBtn">
-        <button id="btn" nz-button nzType="primary" type="submit">Save</button>
+        <button
+          id="btn"
+          nz-button
+          [nzType]="form.valid ? 'primary' : 'default'"
+          type="submit"
+          [disabled]="form.controls['title'].invalid"
+          [nz-tooltip]="form.controls['title'].invalid ? 'Please enter the form title before proceeding.' : ''">
+          Next
+        </button>
       </div>
+
 
     </form>
   </div>
