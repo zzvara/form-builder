@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {cloneDeep} from "lodash-es";
+import { Injectable } from '@angular/core';
+import { cloneDeep } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +8,7 @@ export class UndoRedoService<T> {
   private undoStack: T[] = [];
   private redoStack: T[] = [];
   private hasInitialStateSaved = false;
+  private readonly MAX_STACK_SIZE = 10;
 
   /**
    * Method to clone the state to avoid reference issues.
@@ -24,7 +25,7 @@ export class UndoRedoService<T> {
    * @returns {boolean} - True if the state is different, false otherwise.
    */
   private isStateDifferent(state: T): boolean {
-    // Compare it with the on before last, because the last state is the current one
+    // Compare it with the one before last, because the last state is the current one
     return JSON.stringify(this.undoStack[this.undoStack.length - 2]) !== JSON.stringify(state);
   }
 
@@ -35,10 +36,14 @@ export class UndoRedoService<T> {
    */
   saveState(state: T): void {
     if (!this.hasInitialStateSaved || this.undoStack.length === 0 || this.isStateDifferent(state)) {
+      if (this.undoStack.length >= this.MAX_STACK_SIZE) {
+        // Remove the oldest state if the stack size exceeds the limit
+        this.undoStack.shift();
+      }
       this.undoStack.push(this.cloneState(state));
       this.redoStack = [];
       this.hasInitialStateSaved = true;
-      console.log("SAVE STATES:", this.undoStack);
+      console.log('SAVE STATES:', this.undoStack);
     }
   }
 
@@ -49,10 +54,10 @@ export class UndoRedoService<T> {
    */
   undo(): T | null {
     if (this.canUndo()) {
-      console.log("UNDO happened!");
-      //Current state is at the top of the undoStack (CLONE STATE IMPORTANT!)
+      console.log('UNDO happened!');
+      // Current state is at the top of the undoStack (CLONE STATE IMPORTANT!)
       this.redoStack.push(this.cloneState(this.undoStack.pop()!));
-      //Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
+      // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
       return this.cloneState(this.undoStack[this.undoStack.length - 1]);
     }
     return null;
@@ -60,16 +65,15 @@ export class UndoRedoService<T> {
 
   /**
    * Method to redo the last undone action and return the next state.
-   * @param {T} currentState - The current state before redoing.
    * @returns {T | null} - The next state if redo is possible, otherwise null.
    */
   redo(): T | null {
     if (this.canRedo()) {
-      console.log("REDO happened!");
-      //Current state is at the top of the redoStack (CLONE STATE IMPORTANT!)
-      this.undoStack.push(this.cloneState(this.redoStack[this.redoStack.length - 1]));
-      //Return the last redoStack (CLONE STATE IMPORTANT!)
-      return this.cloneState(this.redoStack.pop()!);
+      console.log('REDO happened!');
+      // Current state is at the top of the redoStack (CLONE STATE IMPORTANT!)
+      this.undoStack.push(this.cloneState(this.redoStack.pop()!));
+      // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
+      return this.cloneState(this.undoStack[this.undoStack.length - 1]);
     }
     return null;
   }
@@ -89,7 +93,7 @@ export class UndoRedoService<T> {
    * @returns {boolean} - True if undo is possible, false otherwise.
    */
   canUndo(): boolean {
-    return this.undoStack.length > 0;
+    return this.undoStack.length > 1;
   }
 
   /**

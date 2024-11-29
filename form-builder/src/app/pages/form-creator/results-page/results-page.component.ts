@@ -44,18 +44,14 @@ export class ResultsPageComponent implements OnInit {
   }
 
   saveProjectWithHistoryToJson(): void {
-    if (this.projectId !== undefined) {
-      if (this.project) {
-        this.jsonService.saveProjectWithHistoryToJson(this.project, this.projectHistory);
-      }
+    if (this.project) {
+      this.jsonService.saveProjectWithHistoryToJson(this.project, this.projectHistory);
     }
   }
 
   saveProjectToJson(): void {
-    if (this.projectId !== undefined) {
-      if (this.project) {
-        this.jsonService.saveProjectToJson(this.project);
-      }
+    if (this.project) {
+      this.jsonService.saveProjectToJson(this.project);
     }
   }
 
