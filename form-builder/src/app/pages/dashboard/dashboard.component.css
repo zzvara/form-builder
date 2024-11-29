@@ -1,11 +1,13 @@
 nz-content {
   padding: 0 5rem;
+  box-sizing: border-box;
 }
 
 .toolbar {
   margin: 5rem 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .toolbar > :first-child {
@@ -33,4 +35,61 @@ nz-content {
 
 .view > div > h3 {
   margin: auto 1rem auto 0;
+}
+@media (max-width: 1024px) {
+  nz-content {
+    padding: 0 2rem;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 1rem;
+  }
+
+  .view > div {
+    flex-direction: column;
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .view > div:last-of-type {
+    margin-top: 1rem;
+  }
+
+  .view > div > h3 {
+    margin: 0 0 0.5rem 0;
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  nz-content {
+    padding: 0 1rem;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar > div {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
+
+  .view {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .view > div > h3 {
+    font-size: 1.1rem;
+  }
+}
+body, html {
+  overflow-x: hidden;
 }
