@@ -10,5 +10,6 @@ export const defaultDateFormats: DefaultDateFormats = {
   year:   "yyyy",
   month:  "yyyy-MM",
   week:   "yyyy-ww",
-  time:   "HH:mm:ss"
+  time:   "HH:mm:ss",
+  quarter: "yyyy-Q",
 }
