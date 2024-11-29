@@ -93,7 +93,7 @@
           <div *ngIf="hasErrors(control, 'minMaxError')">Cannot be higher than the set max value ({{control.errors['minMaxError']}})!</div>
         </ng-template>
       </nz-form-item>
-      <span>Min length error message (use '&#123;*}' for min length):</span>
+      <span>Min length error message (use '&#123;*&#125;' for min length):</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minLengthMessageErrorMessageTemplate">
           <input nz-input

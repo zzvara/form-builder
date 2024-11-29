@@ -12,7 +12,8 @@ export const defaultDateComparers: DefaultDateComparers = {
   month:  compareByMonth,
   week:   compareByWeek,
   date:   compareDatesFull,
-  time:   compareDateTimeFull
+  time:   compareDateTimeFull,
+  quarter: compareByYear
 };
 
 export interface MinMaxDateable {
