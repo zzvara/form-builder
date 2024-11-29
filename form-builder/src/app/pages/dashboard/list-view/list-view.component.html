@@ -22,7 +22,14 @@
         <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline"></span>
       </td>
       <td>
-        <span (click)="onDeleteProject(data.id)" nz-icon nzType="delete" nzTheme="outline"></span>
+        <span 
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure you want to delete this project?"
+          (nzOnConfirm)="onDeleteProject(data.id)"
+          nz-icon
+          nzType="delete"
+          nzTheme="outline">
+        </span>
       </td>
     </tr>
   </tbody>

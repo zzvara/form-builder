@@ -21,6 +21,8 @@ import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
 import {DatePickerEditComponent} from './components/date-picker/date-picker-edit/date-picker-edit.component';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+
 //Components
 import {DatePickerComponent} from './components/date-picker/date-picker.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -96,7 +98,8 @@ const COMPONENTS = [
     ReactiveFormsModule,
     NzFormModule,
     NzToolTipModule,
-    NzTimePickerModule
+    NzTimePickerModule,
+    NzPopconfirmModule
   ],
   providers: [],
   exports: [...COMPONENTS, InputHolderComponent],

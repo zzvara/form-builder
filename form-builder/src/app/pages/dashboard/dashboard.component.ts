@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly modal: NzModalService,
     private readonly questionnaireService: ProjectService<Questionnaire>,
     private readonly jsonService: JsonService
   ) {}
@@ -42,16 +41,7 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteProject(id: number): void {
-    this.modal.confirm({
-      nzTitle: 'Are you sure delete this project?',
-      nzOkText: 'Yes',
-      nzOkType: 'primary',
-      nzOkDanger: true,
-      nzOnOk: () => {
-        this.questionnaireService.remove(id);
-      },
-      nzCancelText: 'No',
-    });
+    this.questionnaireService.remove(id);
   }
 
   editProject(id: number) {
@@ -59,11 +49,11 @@ export class DashboardComponent implements OnInit {
   }
 
   uploadJson(file: File): void {
-    this.jsonService.uploadJson(file).subscribe(data => {
+    this.jsonService.uploadJson(file).subscribe((data) => {
       this.jsonService.setJsonData(data);
       this.router.navigate(['new'], {
         queryParams: { type: data.type },
-        state: { projectData: data }
+        state: { projectData: data },
       });
     });
   }
