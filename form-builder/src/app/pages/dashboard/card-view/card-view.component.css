@@ -26,3 +26,11 @@ nz-card :last-child {
   justify-content: center;
   align-items: center;
 }
+
+.edit-icon:hover {
+  color: blue !important;
+}
+
+.delete-icon:hover {
+  color: red !important;
+}

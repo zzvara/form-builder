@@ -1,17 +1,26 @@
 <div nz-row [nzGutter]="[16, 16]">
   <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6" *ngFor="let project of projectList">
-    <nz-card [nzTitle]="project.title">
-      <p>Created: {{ project.created }}</p>
-      <p>Modified: {{ project.modified }}</p>
-      <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline"></span>
-      <span 
+    <nz-card [nzActions]="[actionEdit, actionDelete ]">
+      <nz-card-meta [nzTitle]="project.title" [nzDescription]="project.description"></nz-card-meta>
+      <div>
+        <p>Created: {{ project.created }}</p>
+        <p>Modified: {{ project.modified }}</p>
+      </div>
+      <ng-template #actionEdit>
+        <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
+      </ng-template>
+      <ng-template #actionDelete>
+        <span
           nz-popconfirm
           nzPopconfirmTitle="Are you sure you want to delete this project?"
           (nzOnConfirm)="onDeleteProject(project.id)"
           nz-icon
           nzType="delete"
-          nzTheme="outline">
+          nzTheme="outline"
+          class="delete-icon"
+        >
         </span>
+      </ng-template>
     </nz-card>
   </div>
   <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
