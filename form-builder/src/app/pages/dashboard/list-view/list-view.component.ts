@@ -30,6 +30,12 @@ export class ListViewComponent implements OnInit {
       sortDirections: ['ascend', 'descend', null],
     },
     {
+      title: 'Description',
+      sortOrder: null,
+      sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
+      sortDirections: ['ascend', 'descend', null],
+    },
+    {
       title: 'Created',
       sortOrder: 'descend',
       sortFn: (a: Questionnaire, b: Questionnaire) => a.created.localeCompare(b.created),
