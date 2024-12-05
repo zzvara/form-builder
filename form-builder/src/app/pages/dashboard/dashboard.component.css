@@ -1,6 +1,8 @@
 nz-content {
-  padding: 0 5rem;
+  padding: 0 2rem 0 1rem;
   box-sizing: border-box;
+  text-align: left;
+  overflow-x: hidden;
 }
 
 .toolbar {
@@ -27,6 +29,7 @@ nz-content {
   align-items: center;
   text-decoration: underline;
   margin-bottom: 0.5rem;
+  justify-content: flex-start;
 }
 
 .view > div:last-of-type {
@@ -35,10 +38,12 @@ nz-content {
 
 .view > div > h3 {
   margin: auto 1rem auto 0;
+  text-align: left;
 }
+
 @media (max-width: 1024px) {
   nz-content {
-    padding: 0 2rem;
+    padding: 0 1.5rem 0 0.5rem;
   }
 
   .toolbar {
@@ -51,6 +56,7 @@ nz-content {
     flex-direction: column;
     text-decoration: none;
     margin-bottom: 1rem;
+    align-items: flex-start;
   }
 
   .view > div:last-of-type {
@@ -65,7 +71,7 @@ nz-content {
 
 @media (max-width: 768px) {
   nz-content {
-    padding: 0 1rem;
+    padding: 0 1.5rem 0 0.5rem;
   }
 
   .toolbar {
@@ -86,7 +92,42 @@ nz-content {
     width: 100%;
   }
 
+  .view > div {
+    align-items: flex-start;
+    text-align: left;
+  }
+
   .view > div > h3 {
     font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 320px) {
+  nz-content {
+    padding: 0 0.2rem;
+    overflow-x: hidden;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar > div {
+    width: 100%;
+    justify-content: flex-start;
+    margin: 0.3rem 0;
+  }
+
+  .view > div {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    max-width: 100%;
+  }
+
+  .view > div > h3 {
+    font-size: 0.9rem;
   }
 }
