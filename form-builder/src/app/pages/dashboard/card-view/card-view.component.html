@@ -4,7 +4,14 @@
       <p>Created: {{ project.created }}</p>
       <p>Modified: {{ project.modified }}</p>
       <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline"></span>
-      <span (click)="onDeleteProject(project.id)" nz-icon nzType="delete" nzTheme="outline"></span>
+      <span 
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure you want to delete this project?"
+          (nzOnConfirm)="onDeleteProject(project.id)"
+          nz-icon
+          nzType="delete"
+          nzTheme="outline">
+        </span>
     </nz-card>
   </div>
   <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
