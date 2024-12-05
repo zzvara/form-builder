@@ -2,21 +2,21 @@
   <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="page">
     <nz-step nzTitle="Form info"
              (click)="toInfoPage()"
-             [nzStatus]="page >= 0 ? 'finish' : 'error'"
+             [nzStatus]="page >= 0 ? 'finish' : 'wait'"
              [nzDisabled]="page < 0">
     </nz-step>
 
     <nz-step
       nzTitle="Components"
       (click)="toCompPage()"
-      [nzStatus]="page >= 1 ? 'finish' : 'error'"
+      [nzStatus]="page >= 1 ? 'finish' : 'wait'"
       [nzDisabled]="page < 1">
     </nz-step>
 
     <nz-step
       nzTitle="Answers"
       (click)="toAnswPage()"
-      [nzStatus]="page >= 2 ? 'finish' : 'error'"
+      [nzStatus]="page >= 2 ? 'finish' : 'wait'"
       [nzDisabled]="page < 2">
     </nz-step>
   </nz-steps>
