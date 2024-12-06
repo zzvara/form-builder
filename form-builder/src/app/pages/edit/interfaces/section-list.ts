@@ -7,4 +7,6 @@ export interface SectionList {
   sectionInputs: FormInputData[]
 }
 
-export const identifySectionList: (index: number, item: SectionList) => string = (_index, item) => item.sectionId;
+export function instanceOfSectionList(object: any): object is SectionList {
+  return object && 'sectionId' in object && 'layout' in object && 'sectionInputs' in object;
+}

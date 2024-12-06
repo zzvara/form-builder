@@ -165,7 +165,7 @@ export function getSideBarData(component: EditComponent): SidebarData[] {
     {
       groupName: "Basic inputs",
       active: true,
-      dropListConnectedTo: () => component.getSectionIds(),
+      dropListConnectedTo: () => component.getSectionIds().concat(["sectionDropList"]),
       groupContents: getInputGroups()
     },{
       groupName: "Sections",
