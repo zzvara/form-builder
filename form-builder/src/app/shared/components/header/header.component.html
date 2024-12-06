@@ -14,14 +14,21 @@
       ></span>
     </div>
     <div>
-      <span
-        *ngIf="headerOptions.includes(options.SETTINGS)"
-        [ngClass]="activeOptions.includes(options.SETTINGS) ? 'is-active' : ''"
-        (click)="changeMenuItemState(options.SETTINGS)"
-        nz-icon
-        nzType="setting"
-        nzTheme="outline"
-      ></span>
+      <ul nz-menu nzMode="horizontal"  nzIcon="setting">
+        <li nz-submenu nzPlacement="bottomCenter" nzIcon="setting">
+          <ul>
+            <li nz-submenu nzPlacement="bottomCenter" [nzTitle]="'LANGUAGE' | translate">
+              <ul>
+                <li nz-menu-item  (click)="setLanguage('en')">
+                  <span class="fi fi-gb"></span> English
+                </li>
+                <li nz-menu-item (click)="setLanguage('hu')">
+                  <span class="fi fi-hu"></span> Magyar
+                </li>
+                </ul>
+            </li>
+          </ul>
+      </ul>
     </div>
     <h1>Form Builder</h1>
   </div>

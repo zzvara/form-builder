@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuOption } from '../../models/menu-option.model';
 import { HeaderService } from '../../../services/header/header.service';
 import { Subscription } from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   options = MenuOption;
   optionsSub?: Subscription;
 
-  constructor(private readonly router: Router, private readonly headerService: HeaderService) {}
+  constructor(private readonly router: Router, private readonly headerService: HeaderService,  private readonly translate: TranslateService) {}
 
   ngOnInit(): void {
     this.optionsSub = this.headerService
@@ -41,4 +42,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.optionsSub?.unsubscribe();
   }
+  setLanguage(lang: string): void {
+    this.translate.use(lang);
+  }
+
 }

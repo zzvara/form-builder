@@ -5,15 +5,17 @@
       <div nz-col nzSpan="22"></div>
       <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
         <div>
-          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)" > </app-redo-undo>
+          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
         </div>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px;">Previous Version</button>
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px;">
+            {{ 'PREVIOUS_VERSION' | translate }}
+          </button>
         </div>
 
         <div>
-          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="revertToVersion($event)" nzPlaceHolder="Select Version" style="margin-right: 8px;">
+          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="revertToVersion($event)" nzPlaceHolder="{{ 'SELECT_VERSION' | translate }}" style="margin-right: 8px;">
             <nz-option
               *ngFor="let version of projectHistory"
               [nzValue]="version.versionNum"
@@ -23,11 +25,15 @@
         </div>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px;">Next Version</button>
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px;">
+            {{ 'NEXT_VERSION' | translate }}
+          </button>
         </div>
 
         <div>
-          <button nz-button nzType="primary" type="submit" (click)="nextPage()" style="margin-left: 8px;">Save</button>
+          <button nz-button nzType="primary" type="submit" (click)="nextPage()" style="margin-left: 8px;">
+            {{ 'NEXT' | translate }}
+          </button>
         </div>
       </div>
     </div>

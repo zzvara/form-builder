@@ -1,8 +1,8 @@
 <nz-layout>
   <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="page">
-    <nz-step nzTitle="Form info" (click)="toInfoPage()"></nz-step>
-    <nz-step nzTitle="Components" (click)="toCompPage()"></nz-step>
-    <nz-step nzTitle="Answers" (click)="toAnswPage()"></nz-step>
+    <nz-step [nzTitle]="'FORM_INFO' | translate" (click)="toInfoPage()"></nz-step>
+    <nz-step [nzTitle]="'COMPONENTS' | translate" (click)="toCompPage()"></nz-step>
+    <nz-step [nzTitle]="'ANSWER' | translate" (click)="toAnswPage()"></nz-step>
   </nz-steps>
   <div class="form-container">
     <div class="page" *ngIf="page == 0">
