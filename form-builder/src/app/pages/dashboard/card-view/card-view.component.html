@@ -3,8 +3,8 @@
     <nz-card [nzActions]="[actionEdit, actionDelete ]">
       <nz-card-meta [nzTitle]="project.title" [nzDescription]="project.description"></nz-card-meta>
       <div>
-        <p>{{'CREATED' | translate}}: {{ project.created }}</p>
-        <p>{{'MODIFIED' | translate}}: {{ project.modified }}</p>
+        <p>{{'general.CREATED' | translate}}: {{ project.created }}</p>
+        <p>{{'general.MODIFIED' | translate}}: {{ project.modified }}</p>
       </div>
       <ng-template #actionEdit>
         <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
@@ -12,7 +12,7 @@
       <ng-template #actionDelete>
         <span
           nz-popconfirm
-          [nzPopconfirmTitle]="'DELETE_CONFIRMATION' | translate"
+          [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
           (nzOnConfirm)="onDeleteProject(project.id)"
           nz-icon
           nzType="delete"

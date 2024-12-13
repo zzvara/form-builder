@@ -10,12 +10,12 @@
 
         <div>
           <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px;">
-            {{ 'PREVIOUS_VERSION' | translate }}
+            {{ 'components.PREVIOUS_VERSION' | translate }}
           </button>
         </div>
 
         <div>
-          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="revertToVersion($event)" nzPlaceHolder="{{ 'SELECT_VERSION' | translate }}" style="margin-right: 8px;">
+          <nz-select [(ngModel)]="currentVersionNum" (ngModelChange)="revertToVersion($event)" nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}" style="margin-right: 8px;">
             <nz-option
               *ngFor="let version of projectHistory"
               [nzValue]="version.versionNum"
@@ -26,13 +26,13 @@
 
         <div>
           <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px;">
-            {{ 'NEXT_VERSION' | translate }}
+            {{ 'components.NEXT_VERSION' | translate }}
           </button>
         </div>
 
         <div>
           <button nz-button nzType="primary" type="submit" (click)="nextPage()" style="margin-left: 8px;">
-            {{ 'NEXT' | translate }}
+            {{ 'components.NEXT' | translate }}
           </button>
         </div>
       </div>

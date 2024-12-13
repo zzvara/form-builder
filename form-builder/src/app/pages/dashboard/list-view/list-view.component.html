@@ -9,7 +9,7 @@
       >
         {{ column.title }}
       </th>
-      <th nzWidth="100px">{{'ACTION' | translate}}</th>
+      <th nzWidth="100px">{{'dashboard.ACTION' | translate}}</th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +22,9 @@
         <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
         <span
           nz-popconfirm
-          [nzPopconfirmTitle]="'DELETE_CONFIRMATION' | translate"
+          [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
+          [nzCancelText]="'general.CANCEL' | translate"
+          [nzOkText]="'general.OK' | translate"
           (nzOnConfirm)="onDeleteProject(data.id)"
           nz-icon
           nzType="delete"
