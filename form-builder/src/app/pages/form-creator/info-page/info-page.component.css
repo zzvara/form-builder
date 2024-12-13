@@ -1,5 +1,6 @@
 nz-layout {
     background-color: transparent;
+    display: flex;
 }
 
 .formelement {
@@ -52,3 +53,23 @@ nz-layout {
   display: flex;
   align-items: center;
 }
+@media (max-width: 768px) {
+  .formelement {
+    margin-bottom: 2px;
+  }
+  #title, #description {
+    font-size: 10px;
+    border-radius: 8px;
+    margin-bottom: 2px;
+  }
+  .same_line {
+    flex-direction: column;
+    gap: 1px;
+    padding: -30px;
+  }
+  .saveBtn {
+    float: none;
+    text-align: center;
+  }
+}
+
