@@ -2,7 +2,75 @@
   "components": {
     "NEXT_VERSION": "Következő verzió",
     "PREVIOUS_VERSION": "Előző verzió",
-    "SELECT_VERSION": "Válassz verziót"
+    "SELECT_VERSION": "Válassz verziót",
+    "COMPONENT_QUESTION": "Kérdés",
+    "COMPONENT_DESCRIPTION": "Leírás",
+    "SET_PLACEHOLDER_VALUE": "Helyőrző érték beállítása",
+    "PLACEHOLDER": "Helyörző",
+    "CANNOT_BE_EMPTY": "Nem lehet üres!",
+    "input_holder": {
+      "INLINE_EDIT": "Inline szerkesztés",
+      "RESET": "Újrakezdés",
+      "POP_RESET": "Biztosan vissza akarja állítani a komponenseket?",
+      "POP_REMOVE": "Biztosan eltávolítja a komponenseket?"
+
+    },
+    "picture_input": {
+      "CLICK_TO_UPLOAD": "Kattintson a feltöltéshez"
+    },
+    "range_picker": {
+      "SET_PLACEHOLDER_VALUE_RANGE": "Helyőrző érték beállítása (Használd a '|'  helyőrző értékeinek beállításához)"
+    },
+    "date_picker": {
+      "SET_DEFAULT_VALUE?": "Beállítja az alapméretezett értéket?",
+      "SET_DEFAULT_VALUE": "Alapméretezett érték beállítása",
+      "SELECT_DATE": "Válasz dátumot",
+      "DATE_PICKER_MODE": "Dátum mód választása",
+      "DECADE": "Évtized",
+      "YEAR": "Év",
+      "MONTH": "Hónap",
+      "WEEK": "Hét",
+      "FULL_DATE": "Egész dátum",
+      "DATE_FORMAT": "Dátum formátum",
+      "SHOW_TIME?": "Mutassa az időt?",
+      "PLACEHOLDER_TIME_FORMAT": "Idő formátum",
+      "WEEK_NUMBERS": "Heti számok",
+      "WEEK_NUMBERS?": "Mutassa a heti számokat?",
+      "INLINE_COMPONENT": "Inline komponens",
+      "INLINE_COMPONENT?": "Mutassa az inline komponenst?",
+      "IS_REQUIRED": "Kötelező?",
+      "PLACEHOLDER_ERROR_REQUIRED": "Kötelező hibaüzenet",
+      "IS_FIELD_REQUIRED": "Ha a mező kötelező akkor az  üzenet nem lehet üres",
+      "MIN_DATE_REQUIRED": "Kell min. dátum?",
+      "MIN_DATE": "Minimum Dátum:",
+      "SELECT_MIN_DATE": "Válasz minimum dátumot",
+      "MIN_ERROR":"Nem lehet magasabb, mint a beállított maximális dátum",
+      "MAX_DATE_REQUIRED": "Kötelező a maximum dátum?",
+      "MAX_DATE": "Max Dátum:",
+      "SELECT_MAX_DATE": "Válasz maximum dátumot",
+      "MAX_ERROR": "Nem lehet alacsonyabb a beállított dátumnál",
+      "INPUT_TOOLTIP": "Beviteli eszköztipp megjelenítése?",
+      "TOOLTIP_TEXT": "Tooltip szöveg",
+      "PROVIDE_TOOLTIP": "Eszköztipp üzenetet kell megadni!"
+    },
+    "time_picker": {
+      "TIME_FORMAT": "Idő formátum",
+      "12_HOUR_FORMAT": "12 órás formátum",
+      "12_HOUR_FORMAT?": "12 órás formátum?",
+      "HIDE_DISABLED_OPTIONS": "Letiltott lehetőségek elrejtése",
+      "SET_HOUR_STEP": "Óralépés számának beállítása",
+      "SET_MINUTE_STEP": "Perclépés számának beállítása",
+      "SET_SECOND_STEP": "Másodperclépés számának beállítása",
+      "MIN_TIME_REQUIRED": "Kell Minimális idő?",
+      "MIN_TIME": "Minimum idő:",
+      "SELECT_MIN_TIME": "Minimum idő kiválasztása",
+      "MIN_TIME_LIMIT": "Nem lehet magasabb, mint a beállított maximális dátum",
+      "MAX_TIME_REQUIRED": "Maximális idő szükséges?",
+      "SELECT_MAX_TIME": "Válassza ki a maximális időt",
+      "MAX_TIME_LIMIT": "Nem lehet alacsonyabb a beállított dátumnál",
+      "LARGER_THAN_24": "Nem lehet nagyobb mint 24!",
+      "LARGER_THAN_60": "Nem lehet nagyobb mint 60!"
+    }
   },
   "dashboard": {
     "ACTION": "Művelet",
@@ -33,7 +101,7 @@
     "TITLE_REQUIRED": "A cím megadása kötelező"
   },
   "general": {
-    "CANCEL": "Mégsem",
+    "CANCEL": "Mégse",
     "CREATED": "Létrehozva",
     "DEADLINE": "Határidő",
     "DELETE_CONFIRMATION": "Biztosan törölni szeretné ezt a projektet?",

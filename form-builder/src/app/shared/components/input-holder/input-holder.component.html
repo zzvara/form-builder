@@ -59,13 +59,15 @@
   ></span>
 </ng-template>
 <ng-template #headerButtons>
-  <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
+  <label nz-checkbox [(ngModel)]="inlineEdit.enabled">{{'components.input_holder.INLINE_EDIT' | translate}}</label>
   <button nz-button nzType="primary" nzShape="circle" (click)="editComponent()" style="margin-left: 10px">
     <span nz-icon nzType="edit" nzTheme="outline"></span>
   </button>
   <button
     nz-popconfirm
-    nzPopconfirmTitle="Are you sure you want to reset the component?"
+    nzPopconfirmTitle="{{'components.input_holder.POP_RESET' | translate}}"
+    [nzCancelText]="'general.CANCEL' | translate"
+    [nzOkText]="'general.OK' | translate"
     (nzOnConfirm)="resetComponent()"
     nzPopconfirmPlacement="top"
     nz-button
@@ -73,11 +75,13 @@
     nzShape="round"
     style="margin-left: 10px"
   >
-    <span>Reset</span>
+    <span>{{'components.input_holder.RESET' | translate}}</span>
   </button>
   <button
     nz-popconfirm
-    nzPopconfirmTitle="Are you sure you want to remove the component?"
+    nzPopconfirmTitle="{{'components.input_holder.POP_REMOVE' | translate}}"
+    [nzCancelText]="'general.CANCEL' | translate"
+    [nzOkText]="'general.OK' | translate"
     (nzOnConfirm)="removeComponent()"
     nzPopconfirmPlacement="top"
     nz-button

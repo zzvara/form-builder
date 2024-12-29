@@ -2,7 +2,76 @@
   "components": {
     "NEXT_VERSION": "Next Version",
     "PREVIOUS_VERSION": "Previous Version",
-    "SELECT_VERSION": "Select Version"
+    "SELECT_VERSION": "Select Version",
+    "COMPONENT_QUESTION": "Question",
+    "COMPONENT_DESCRIPTION": "Description,",
+    "SET_PLACEHOLDER_VALUE": "Set Placeholder Value",
+    "PLACEHOLDER": "Placeholder",
+    "CANNOT_BE_EMPTY": "Cannot be empty!",
+    "input_holder": {
+      "INLINE_EDIT": "Inline Edit",
+      "RESET": "Reset",
+      "POP_RESET": "Are you sure you want to reset the component?",
+      "POP_REMOVE": "Are you sure you want to remove the component?"
+
+    },
+    "picture_input": {
+      "CLICK_TO_UPLOAD": "Click to Upload"
+    },
+    "range_picker": {
+      "SET_PLACEHOLDER_VALUE_RANGE": "Set Placeholder Value (use '|' to set the placeholder values)"
+    },
+
+    "date_picker": {
+      "SET_DEFAULT_VALUE?": "Set default value?",
+      "SET_DEFAULT_VALUE": "Set default value",
+      "SELECT_DATE": "Select Date",
+      "DATE_PICKER_MODE": "DatePicker mode",
+      "DECADE": "Decade",
+      "YEAR": "Year",
+      "MONTH": "Month",
+      "WEEK":" Week",
+      "FULL_DATE": "Full Date",
+      "DATE_FORMAT": "Date format",
+      "SHOW_TIME?": "Show time?",
+      "PLACEHOLDER_TIME_FORMAT": "Time format",
+      "WEEK_NUMBERS": "Week numbers",
+      "WEEK_NUMBERS?": "Show week numbers?",
+      "INLINE_COMPONENT": "Inline component",
+      "INLINE_COMPONENT?": "Show inline component?",
+      "IS_REQUIRED": "Is Required?",
+      "PLACEHOLDER_ERROR_REQUIRED": "Required error message",
+      "IS_FIELD_REQUIRED": "If the field is required the message cannot be empty",
+      "MIN_DATE_REQUIRED": "Min date Required?",
+      "MIN_DATE": "Minimum Date:",
+      "SELECT_MIN_DATE": "Select minimum date",
+      "MIN_ERROR": "Cannot be higher than the set max date",
+      "MAX_DATE_REQUIRED": "Max Date Required?",
+      "MAX_DATE": "Max Date:",
+      "SELECT_MAX_DATE": "Select maximum date",
+      "MAX_ERROR": "Cannot be lower than the set date",
+      "INPUT_TOOLTIP": "Show input tooltip?",
+      "TOOLTIP_TEXT": "Tooltip text",
+      "PROVIDE_TOOLTIP": "Must provide a tooltip message!"
+    },
+    "time_picker": {
+      "TIME_FORMAT": "Time format",
+      "12_HOUR_FORMAT": "12 hour format",
+      "12_HOUR_FORMAT?": "12 hour format?",
+      "HIDE_DISABLED_OPTIONS": "Hide disabled options",
+      "SET_HOUR_STEP": "Set Hour Step number",
+      "SET_MINUTE_STEP": "Set Minute Step number",
+      "SET_SECOND_STEP": "Set Second Step number",
+      "MIN_TIME_REQUIRED": "Minimal time required?",
+      "MIN_TIME": "Min time:",
+      "SELECT_MIN_TIME": "select min time",
+      "MIN_TIME_LIMIT": "Cannot be higher than the set max date",
+      "MAX_TIME_REQUIRED": "Max time required?",
+      "SELECT_MAX_TIME": "Select max time",
+      "MAX_TIME_LIMIT": "Cannot be lower than the set date",
+      "LARGER_THAN_24": "Cannot be larger than 24!",
+      "LARGER_THAN_60": "Cannot be larger than 60!"
+    }
   },
   "dashboard": {
     "ACTION": "Action",
