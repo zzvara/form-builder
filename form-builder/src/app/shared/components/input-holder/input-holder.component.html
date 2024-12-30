@@ -17,7 +17,7 @@
           nzSize="small"
           name="inputQuestion"
           required
-          placeholder="Question"
+          placeholder="{{'components.PLACEHOLDER_QUESTION' | translate}}"
           (mousedown)="$event.stopPropagation()"
           [(ngModel)]="inputData.questionValue"
           [ngModelOptions]="{ updateOn: 'blur' }"
@@ -50,7 +50,7 @@
   <span
     *ngIf="inputHolderForm.invalid"
     nz-tooltip
-    nzTooltipTitle="Invalid input!"
+    nzTooltipTitle="{{'components.input_holder.INVALID_INPUT' | translate}}"
     nzTooltipColor="red"
     nz-icon
     nzType="exclamation-circle"

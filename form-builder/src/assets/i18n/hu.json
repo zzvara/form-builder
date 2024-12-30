@@ -8,11 +8,16 @@
     "SET_PLACEHOLDER_VALUE": "Helyőrző érték beállítása",
     "PLACEHOLDER": "Helyörző",
     "CANNOT_BE_EMPTY": "Nem lehet üres!",
+    "DEFAULT_VALUE": "Alapméretezett érték",
+    "PLACEHOLDER_QUESTION": "Kérdés",
+    "PLACEHOLDER_DESCRIPTION": "Leírás",
+
     "input_holder": {
       "INLINE_EDIT": "Inline szerkesztés",
       "RESET": "Újrakezdés",
       "POP_RESET": "Biztosan vissza akarja állítani a komponenseket?",
-      "POP_REMOVE": "Biztosan eltávolítja a komponenseket?"
+      "POP_REMOVE": "Biztosan eltávolítja a komponenseket?",
+      "INVALID_INPUT": "Érvénytelen bevitel"
 
     },
     "picture_input": {
@@ -70,6 +75,46 @@
       "MAX_TIME_LIMIT": "Nem lehet alacsonyabb a beállított dátumnál",
       "LARGER_THAN_24": "Nem lehet nagyobb mint 24!",
       "LARGER_THAN_60": "Nem lehet nagyobb mint 60!"
+    },
+    "text_area": {
+      "MIN_LENGTH_REQUIRED?": "Minimális hossz szükséges?",
+      "MIN_LENGTH_NUMBER": "Minimális hossz száma:",
+      "CANNOT_BE_LOWER_THAN": "Nem lehet alacsonyabb, mint",
+      "MIN_VALUE_LIMIT": "Nem lehet magasabb, mint a beállított maximális érték",
+      "MIN_LENGTH_ERROR_MESSAGE": "Minimális hossz hibaüzenet",
+      "MIN_LENGTH_ERROR_MESSAGE_HELP": "Minimális hossz hibaüzenet használja ezeket a minimális hosszhoz: ",
+      "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Ha a mező minimális hosszt állított be, az üzenet nem lehet üres!",
+      "MAX_LENGTH_REQUIRED?": "Maximális hossz szükséges?",
+      "MAX_LENGTH_NUMBER": "Maximum hossz szám:",
+      "MAX_VALUE_LIMIT": "Nem lehet alacsonyabb a beállított minimális értéknél",
+      "CHARACTER_COUNTER": "Karakterszámláló",
+      "SHOW_CHARACTER_COUNTER": "Megjeleníti a karakterszámlálót?"
+    },
+    "number_field":
+    {
+      "SET_STEP_NUMBER": "Lépésszám beállítása",
+      "LARGER_THAN_SET_STEP_NUMBER": "Nem lehet nagyobb, mint (max. szám) - (min. szám)!",
+      "MIN_NUMBER_REQUIRED": "Minimális szám szükséges?",
+      "MIN_NUMBER": "Minimális szám:",
+      "MIN_NUMBER_LIMIT": "Nem lehet magasabb, mint a beállított maximális érték",
+      "MAX_NUMBER_REQUIRED": "Maximális szám szükséges?",
+      "MAX_NUMBER": "Maximális szám:",
+      "MAX_NUMBER_LIMIT": "Nem lehet alacsonyabb a beállított minimális értéknél",
+      "FORMAT_INPUT": "Formázza a bemenetet?",
+      "PLACEHOLDER_INPUT_NUMBER_FORMATTER": "Input Number Formatter",
+      "MUST_CONTAIN": "Tartalmaznia kell a következő szimbólumot: ",
+      "FORMAT_PATTERN": "Formázási minta – a bemeneti számhoz használja a következőket:"
+    },
+    "combobox": {
+      "CHOICES_VALUES": "Választások/értékek",
+      "COMBOBOX_REMOVE": "Eltávolítás",
+      "RECORD_MORE_OPTION": "Kérjük, rögzítsen legalább több lehetőséget: ",
+      "NEW_OPTION": "Új lehetőség",
+      "ADD_OPTION": "Lehetőség hozzáadása",
+      "OPTION_ALREADY": "Az opció már szerepel a listában:",
+      "IS_MULTIPLE_CHOICE": "Többszörös választás?",
+      "MULTIPLE": "Többszörös",
+      "SELECT_DEFAULT_VALUE": "Kérem válasszon alapméretezett értéket"
     }
   },
   "dashboard": {

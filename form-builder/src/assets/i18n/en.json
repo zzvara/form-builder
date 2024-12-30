@@ -8,11 +8,16 @@
     "SET_PLACEHOLDER_VALUE": "Set Placeholder Value",
     "PLACEHOLDER": "Placeholder",
     "CANNOT_BE_EMPTY": "Cannot be empty!",
+    "DEFAULT_VALUE": "Default value",
+    "PLACEHOLDER_QUESTION": "Question",
+    "PLACEHOLDER_DESCRIPTION": "Description",
+
     "input_holder": {
       "INLINE_EDIT": "Inline Edit",
       "RESET": "Reset",
       "POP_RESET": "Are you sure you want to reset the component?",
-      "POP_REMOVE": "Are you sure you want to remove the component?"
+      "POP_REMOVE": "Are you sure you want to remove the component?",
+      "INVALID_INPUT": "Invalid Input"
 
     },
     "picture_input": {
@@ -71,6 +76,48 @@
       "MAX_TIME_LIMIT": "Cannot be lower than the set date",
       "LARGER_THAN_24": "Cannot be larger than 24!",
       "LARGER_THAN_60": "Cannot be larger than 60!"
+    },
+    "text_area": {
+      "MIN_LENGTH_REQUIRED?": "Min Length required?",
+      "MIN_LENGTH_NUMBER": "Min Length number:",
+      "CANNOT_BE_LOWER_THAN": "Cannot be lower than",
+      "MIN_VALUE_LIMIT": "Cannot be higher than the set max value",
+      "MIN_LENGTH_ERROR_MESSAGE": "Min length error message",
+      "MIN_LENGTH_ERROR_MESSAGE_HELP": "Min length error message use these for min length: ",
+      "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "If the field has set min length the message cannot be empty!",
+      "MAX_LENGTH_REQUIRED?": "Max length required?",
+      "MAX_LENGTH_NUMBER": "Max length number:",
+      "MAX_VALUE_LIMIT": "Cannot be lower than the set min value",
+      "CHARACTER_COUNTER": "Character counter",
+      "SHOW_CHARACTER_COUNTER": "Show character counter?"
+
+    },
+    "number_field":
+    {
+      "SET_STEP_NUMBER": "Set Step Number",
+      "LARGER_THAN_SET_STEP_NUMBER": "Cannot be larger than (max number) - (min number)!",
+      "MIN_NUMBER_REQUIRED": "Min Number required?",
+      "MIN_NUMBER": "Min number:",
+      "MIN_NUMBER_LIMIT": "Cannot be higher than the set max value",
+      "MAX_NUMBER_REQUIRED": "Max number required?",
+      "MAX_NUMBER": "Max number:",
+      "MAX_NUMBER_LIMIT": "Cannot be lower than the set min value",
+      "FORMAT_INPUT": "Format input?",
+      "PLACEHOLDER_INPUT_NUMBER_FORMATTER": "Input Number Formatter",
+      "MUST_CONTAIN": "Must contain the symbol:  ",
+      "FORMAT_PATTERN": "Format pattern - use for the input number these:"
+    },
+    "combobox": {
+      "CHOICES_VALUES": "Choices/Values",
+      "COMBOBOX_REMOVE": "Remove",
+      "RECORD_MORE_OPTION": "Please record more options at least: ",
+      "NEW_OPTION": "New Option",
+      "ADD_OPTION": "Add Option",
+      "OPTION_ALREADY": "Option already in the list:",
+      "IS_MULTIPLE_CHOICE": "Is Multiple choice?",
+      "MULTIPLE": "Multiple",
+      "SELECT_DEFAULT_VALUE": "Please select default value"
+
     }
   },
   "dashboard": {

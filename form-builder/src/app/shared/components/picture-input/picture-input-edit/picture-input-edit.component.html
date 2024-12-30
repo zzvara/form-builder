@@ -2,17 +2,17 @@
   <span>{{'components.COMPONENT_QUESTION' | translate}}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="Question" formControlName="questionValue"/>
+      <input nz-input placeholder="{{'components.PLACEHOLDER_QUESTION' | translate}}" formControlName="questionValue"/>
     </nz-form-control>
     <ng-template #questionErrors let-control>
-      <div *ngIf="hasErrors(control, 'required')">Cannot be empty!</div>
+      <div *ngIf="hasErrors(control, 'required')">{{'components.CANNOT_BE_EMPTY' | translate}}</div>
     </ng-template>
   </nz-form-item>
 
   <span>{{'components.COMPONENT_DESCRIPTION' | translate}}:</span>
   <nz-form-item>
     <nz-form-control>
-      <textarea nz-input nzAutosize placeholder="Description" formControlName="descriptionValue"></textarea>
+      <textarea nz-input nzAutosize placeholder="{{'components.PLACEHOLDER_DESCRIPTION' | translate}}" formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
