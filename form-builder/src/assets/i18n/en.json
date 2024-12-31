@@ -11,6 +11,15 @@
     "DEFAULT_VALUE": "Default value",
     "PLACEHOLDER_QUESTION": "Question",
     "PLACEHOLDER_DESCRIPTION": "Description",
+    "TEXT_FIELD": "TEXT FIELD",
+    "NUMBER_FIELD": "NUMBER FIELD",
+    "DATE_PICKER": "DATE PICKER",
+    "RANGE_PICKER": "RANGE PICKER",
+    "TIME_PICKER": "TIME PICKER",
+    "TEXT_AREA": "TEXT AREA",
+    "PICTURE_INPUT": "PICTURE INPUT",
+    "COMBOBOX": "COMBOBOX",
+    "SECTION": "SECTION",
 
     "input_holder": {
       "INLINE_EDIT": "Inline Edit",
@@ -157,7 +166,8 @@
     "NEXT": "Next",
     "OK": "Ok",
     "TIME_LIMIT": "Time limit",
-    "TITLE": "Title"
+    "TITLE": "Title",
+    "FORM_BUILDER": "Form Builder"
   },
   "project": {
     "DEADLINE_CHECKBOX": "Deadline Checkbox",

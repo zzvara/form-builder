@@ -15,7 +15,7 @@
     </div>
     <div>
       <ul nz-menu nzMode="horizontal" *ngIf="headerOptions.includes(options.SETTINGS)" class="setting">
-        <li nz-submenu nzPlacement="bottomCenter"  nzIcon="setting">
+        <li nz-submenu nzPlacement="bottomCenter" nzIcon="setting">
           <ul>
             <li nz-submenu nzPlacement="bottomCenter" [nzTitle]="'dashboard.LANGUAGE' | translate">
               <ul>
@@ -30,7 +30,8 @@
           </ul>
         </li>
       </ul>
+
     </div>
-    <h1>Form Builder</h1>
+    <h1>{{"general.FORM_BUILDER" | translate}}</h1>
   </div>
 </nz-header>

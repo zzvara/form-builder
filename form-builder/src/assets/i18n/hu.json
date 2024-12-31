@@ -11,6 +11,15 @@
     "DEFAULT_VALUE": "Alapméretezett érték",
     "PLACEHOLDER_QUESTION": "Kérdés",
     "PLACEHOLDER_DESCRIPTION": "Leírás",
+    "TEXT_FIELD": "SZÖVEGES MEZŐ",
+    "NUMBER_FIELD": "SZÁM MEZŐ",
+    "DATE_PICKER": "DÁTUM VÁLASZTÓ",
+    "RANGE_PICKER": "TARTOMÁNY VÁLASZTÓ",
+    "TIME_PICKER": "IDŐ VÁLASZTÓ",
+    "TEXT_AREA": "SZÖVEGTERÜLET",
+    "PICTURE_INPUT": "KÉP FELTÖLTŐ",
+    "COMBOBOX": "LEGÖRDÜLŐ LISTA",
+    "SECTION": "SZEKCIÓ",
 
     "input_holder": {
       "INLINE_EDIT": "Inline szerkesztés",
@@ -156,7 +165,8 @@
     "NEXT": "Következő",
     "OK": "Ok",
     "TIME_LIMIT": "Időkorlát",
-    "TITLE": "Cím"
+    "TITLE": "Cím",
+    "FORM_BUILDER": "Űrlap készítő"
   },
   "project": {
     "DEADLINE_CHECKBOX": "Határidő a jelölőnégyzete",
