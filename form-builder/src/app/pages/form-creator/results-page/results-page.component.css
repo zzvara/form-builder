@@ -26,6 +26,26 @@ nz-layout {
   margin-bottom: 20px;
 }
 
+.section-inputs-container {
+  position: relative;
+  height: 430px;
+  padding: 1rem;
+}
+
+.section-inputs-scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.input-item {
+  margin-bottom: 1rem;
+}
+
 .section-container {
   height: 450px;
 }

@@ -15,13 +15,12 @@
         </div>
       </nz-tab>
       <nz-tab nzTitle="Section Inputs">
-        <div *ngIf="project?.editList?.length" class="section-container">
-          <div class="statistics">
-            <h3>Section Input Statistics</h3>
-            <p *ngIf="latestVersionNum !== undefined"><strong>Version:</strong> {{ latestVersionNum }}</p>
-            <ul>
-              <li *ngFor="let stat of sectionInputStats | keyvalue">{{ stat.key }}: {{ stat.value }}</li>
-            </ul>
+        <div class="section-inputs-container">
+          <div class="section-inputs-scroll">
+            <div *ngFor="let input of sectionInputs" class="input-item">
+              <h4>Input ID: {{ input.data.id }}</h4>
+              <p><strong>Question:</strong> {{ input.data.questionValue }}</p>
+            </div>
           </div>
         </div>
       </nz-tab>
