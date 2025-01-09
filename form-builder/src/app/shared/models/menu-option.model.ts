@@ -4,6 +4,7 @@ export enum MenuOption {
   SAVE = 'SAVE',
   SIDEBAR = 'SIDEBAR',
   SETTINGS = 'SETTINGS',
+  UPLOAD_JSON = 'UPLOAD_JSON',
 }
 
 export interface MenuState {
