@@ -7,11 +7,11 @@ import { RoutePath } from '../models/route-path.model';
 const HEADER_CONFIGS = [
   {
     path: RoutePath.DASHBOARD,
-    menuOptions: [MenuOption.HOME, MenuOption.SETTINGS],
+    menuOptions: [MenuOption.UPLOAD_JSON, MenuOption.SETTINGS],
   },
   {
     path: RoutePath.EDIT,
-    menuOptions: [MenuOption.HOME, MenuOption.SETTINGS, MenuOption.SAVE, MenuOption.UNDO],
+    menuOptions: [MenuOption.HOME, MenuOption.SETTINGS],
   },
   {
     path: RoutePath.NEW,
@@ -23,7 +23,7 @@ export const headerResolver: ResolveFn<null> = (route: ActivatedRouteSnapshot, s
   const headerService = inject(HeaderService);
 
   headerService.setOptions(
-    HEADER_CONFIGS.find((config) => config.path === route.routeConfig?.path?.match(/([^/]+)$/)?.[0] ?? '')?.menuOptions ??
+    HEADER_CONFIGS.find((config) => config.path === route.routeConfig?.path?.match(/([^/]+)$/)?.[0])?.menuOptions ??
       HEADER_CONFIGS.find((config) => config.path === RoutePath.DASHBOARD)!.menuOptions
   );
 

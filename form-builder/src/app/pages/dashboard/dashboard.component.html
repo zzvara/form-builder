@@ -1,12 +1,12 @@
 <nz-content>
   <div class="toolbar">
-    <div>
+    <!-- <div>
       <button nz-button (click)="fileInput.click()">
         <span nz-icon nzType="upload" nzTheme="outline"></span>
         Upload JSON
       </button>
       <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
-    </div>
+    </div> -->
     <div *ngIf="!isListView; else cardView" (click)="toggleView()">
       <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
       <span>List view</span>

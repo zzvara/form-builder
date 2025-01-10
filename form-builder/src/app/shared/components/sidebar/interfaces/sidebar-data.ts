@@ -13,4 +13,4 @@ export interface SidebarData {
 // Így groupName-nek egyedinek kell lennie!!!
 export const identifySidebarData: (index: number, item: SidebarData) => string = (_index, item) => item.groupName;
 // Mivel ID-juk még nincs az inputoknak, ezért a típusuk szerint azonosítja be őket a sideBar
-export const identifyGroupContents: (index: number, item: FormInputData<any, any>) => Type<FormComponentMarker> = (_index, item) => item.type;
+export const identifyGroupContents: (index: number, item: FormInputData<any>) => Type<FormComponentMarker> = (_index, item) => item.type;

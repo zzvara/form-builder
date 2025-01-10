@@ -7,59 +7,76 @@
       <div class="form-container"
            id="sectionDropList"
            cdkDropList
-           (cdkDropListDropped)="sectionDrop($event)"
-           [cdkDropListData]="sectionList"
+           (cdkDropListDropped)="dropIntoEdit($event)"
+           [cdkDropListData]="editList"
+           [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
            style="width: 100%">
-        <nz-card
-          *ngFor="let sect of sectionList; trackBy: identifySectionList"
-          id="{{sect.sectionId}}"
-          [nzTitle]="sectionTitle"
-          [nzExtra]="sectionButtons"
-          cdkDrag
-          cdkDropList
-          [cdkDropListOrientation]="sect.layout"
-          [cdkDropListConnectedTo]="getSectionIds()"
-          [cdkDropListData]="sect.sectionInputs"
-          (cdkDropListDropped)="drop($event)"
-          class="element-list p-3"
-          style="padding: 0; width: 900px"
-          [nzBodyStyle]="{'padding-bottom':'24px'}"
-        >
-          <ng-template #sectionTitle>
-            <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
-              Section
-              <span style="color: red"> [ID: {{sect.sectionId}} | Layout: {{sect.layout}}]</span>
-            </div>
-          </ng-template>
-          <ng-template #sectionButtons>
-            <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">
-              <button
-                nz-button nzType="default"
-                nzShape="circle"
-                (click)="sectionLayoutChange(sect)"
-              ><span nz-icon nzType="redo" nzTheme="outline"></span></button>
-              <button
-                style="margin-left: 10px"
-                nz-button nzType="default" nzDanger
-                nzShape="circle"
-                (click)="sectionRemove(sect)"
-              ><span nz-icon nzType="delete" nzTheme="outline"></span></button>
-            </div>
-          </ng-template>
+        <ng-container *ngFor="let edit of editList">
+          <ng-container *ngIf="instanceOfSectionList(edit.data)">
+            <nz-card
+              id="{{edit.data.sectionId}}"
+              [nzTitle]="sectionTitle"
+              [nzExtra]="sectionButtons"
+              cdkDrag
+              cdkDropList
+              [cdkDropListOrientation]="edit.data.layout"
+              [cdkDropListConnectedTo]="getSectionDropListConnectedTo(edit.data)"
+              [cdkDropListData]="edit.data.sectionInputs"
+              [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
+              (cdkDropListDropped)="dropIntoSection($event)"
+              class="element-list p-3"
+              style="padding: 0; width: 900px"
+              [nzBodyStyle]="{'padding-bottom':'24px'}"
+            >
+              <ng-template #sectionTitle>
+                <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
+                  Section
+                  <span style="color: red"> [ID: {{edit.data.sectionId}} | Layout: {{edit.data.layout}}]</span>
+                </div>
+              </ng-template>
+              <ng-template #sectionButtons>
+                <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">
+                  <button
+                    nz-button nzType="default"
+                    nzShape="circle"
+                    (click)="sectionLayoutChange(edit.data)"
+                  ><span nz-icon nzType="redo" nzTheme="outline"></span></button>
+                  <button
+                    style="margin-left: 10px"
+                    nz-button nzType="default" nzDanger
+                    nzShape="circle"
+                    (click)="removeEditComponent(edit)"
+                  ><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+                </div>
+              </ng-template>
 
-          <app-input-holder
-            class="element-box"
-            *ngFor="let item of sect.sectionInputs"
-            cdkDrag
-            [cdkDragData]="item"
-            nz-card-grid
-            style="padding: 0"
-            [ngStyle]="getSectionInputStyle(sect)"
+              <app-input-holder
+                class="element-box"
+                *ngFor="let item of edit.data.sectionInputs"
+                cdkDrag
+                [cdkDragData]="item"
+                nz-card-grid
+                style="padding: 0"
+                [ngStyle]="getSectionInputStyle(edit.data)"
 
-            [formInput]="item"
-            (removeComponentEvent)="removeComponent(sect, $event)"
-            (changedEvent)="onValueChanged($event)"/>
-        </nz-card>
+                [formInput]="item"
+                (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
+                (changedEvent)="onValueChanged($event)"/>
+            </nz-card>
+          </ng-container>
+          <ng-container *ngIf="instanceOfFormInputData(edit.data)">
+            <app-input-holder
+              class="element-box"
+              cdkDrag
+              [cdkDragData]="edit"
+              nz-card-grid
+              style="padding: 0; width: 900px; border: 1px solid lightgray"
+
+              [formInput]="edit.data"
+              (removeComponentEvent)="removeEditComponent(edit)"
+              (changedEvent)="onValueChanged($event)"/>
+          </ng-container>
+        </ng-container>
       </div>
     </nz-content>
   </nz-layout>

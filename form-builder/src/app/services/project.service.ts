@@ -68,15 +68,21 @@ export class ProjectService<T extends Project> {
 
   /**
    * Removes a project by its ID from the list and updates local storage.
+   * It also removes the project's history from local storage.
    * It filters out the project with the given ID from the internal list, updates the observable,
    * and persists the updated list to local storage.
    * @param {number} id - The ID of the project to remove.
    * @returns {void}
    */
-  remove(id: number): void {
-    this.items = this.items.filter((item) => item.id !== id);
+  remove(projectId: number): void {
+    // Remove the project from the list
+    this.items = this.items.filter((item) => item.id !== projectId);
     this.itemsSubject.next([...this.items]);
     localStorage.setItem(this.storageKey, JSON.stringify(this.items));
+
+    // Remove the project's history from local storage
+    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
+    localStorage.removeItem(projectHistoryKey);
   }
 
   /**

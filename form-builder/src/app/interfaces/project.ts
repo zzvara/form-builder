@@ -1,4 +1,4 @@
-import { SectionList } from "../pages/edit/interfaces/section-list";
+import {EditList} from "../pages/edit/interfaces/edit-list";
 
 export enum ProjectType {
   QUESTIONNAIRE = 'questionnaire',
@@ -16,7 +16,7 @@ export interface Project {
   deadline: string;
   created: string;
   modified: string;
-  sectionList?: SectionList[];
+  editList?: EditList[];
 }
 
 export interface ProjectVersion<T extends Project> {

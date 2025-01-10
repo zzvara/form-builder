@@ -5,7 +5,7 @@ nz-content {
 .toolbar {
   margin: 5rem 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
 }
 
 .toolbar > :first-child {
