@@ -19,7 +19,7 @@
             <nz-option
               *ngFor="let version of projectHistory"
               [nzValue]="version.versionNum"
-              [nzLabel]="'Version ' + version.versionNum"
+              [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"
             ></nz-option>
           </nz-select>
         </div>

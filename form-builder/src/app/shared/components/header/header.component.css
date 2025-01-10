@@ -80,9 +80,7 @@ nz-header {
 .setting {
   background-color: #908d8d;
   color: black;
-}
-.setting nz-submenu nz-icon {
-  font-size: 1000px;
+  font-size: 1.5rem;
 }
 
 
