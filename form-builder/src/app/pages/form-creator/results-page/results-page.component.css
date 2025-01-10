@@ -1,14 +1,12 @@
 nz-layout {
   background-color: transparent;
-  height: 450px;
+  height: auto;
+  padding: 10px;
 }
 
-.button-group button {
-  margin-right: 8px;
-}
-
-.button-group button:last-child {
-  margin-right: 0;
+.project-container,
+.section-container {
+  height: auto;
 }
 
 .json {
@@ -26,10 +24,76 @@ nz-layout {
   margin-bottom: 20px;
 }
 
-.section-container {
-  height: 450px;
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
-.project-container {
-  height: 450px;
+.button-group button {
+  margin: 0;
+}
+
+.button-group button:last-child {
+  margin-right: 0;
+}
+
+/* Média lekérdezések */
+@media (max-width: 1024px) {
+  .json {
+    max-height: 350px;
+  }
+
+  .json-container {
+    max-height: 370px;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+
+  .button-group button {
+    flex: 1 1 calc(33% - 16px);
+  }
+}
+
+@media (max-width: 768px) {
+  nz-layout {
+    padding: 5px;
+  }
+
+  .json {
+    max-height: 300px;
+  }
+
+  .json-container {
+    max-height: 320px;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+
+  .button-group button {
+    flex: 1 1 calc(50% - 16px);
+  }
+}
+
+@media (max-width: 320px) {
+  .json {
+    max-height: 250px;
+  }
+
+  .json-container {
+    max-height: 280px;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+
+  .button-group button {
+    flex: 1 1 100%;
+  }
 }

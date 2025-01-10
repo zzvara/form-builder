@@ -1,15 +1,16 @@
 nz-content {
-  padding: 0 2rem 0 1rem;
+  padding: 0 0.5rem;
   box-sizing: border-box;
   text-align: left;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .toolbar {
-  margin: 5rem 0;
+  margin: 2rem 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .toolbar > :first-child {
@@ -18,10 +19,17 @@ nz-content {
 
 .toolbar > div {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .toolbar > div > :first-child {
-  margin-right: 0.15rem;
+  margin-right: 0.3rem;
+}
+
+.view {
+  display: grid;
+  gap: 2rem;
 }
 
 .view > div {
@@ -30,6 +38,7 @@ nz-content {
   text-decoration: underline;
   margin-bottom: 0.5rem;
   justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .view > div:last-of-type {
@@ -37,86 +46,91 @@ nz-content {
 }
 
 .view > div > h3 {
-  margin: auto 1rem auto 0;
+  margin: 0 1rem 0 0;
   text-align: left;
 }
 
 @media (max-width: 1024px) {
   nz-content {
-    padding: 0 1.5rem 0 0.5rem;
+    padding: 0 0.5rem;
   }
 
   .toolbar {
     flex-wrap: wrap;
-    justify-content: left;
+    justify-content: flex-start;
     gap: 1rem;
   }
 
+  .view {
+    gap: 1.5rem;
+  }
+
   .view > div {
-    flex-direction: column;
-    text-decoration: none;
-    margin-bottom: 1rem;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
   }
 
   .view > div:last-of-type {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 
   .view > div > h3 {
-    margin: 0 0 0.5rem 0;
-    text-align: left;
+    margin: 0 0.5rem 0 0;
   }
 }
 
 @media (max-width: 768px) {
   nz-content {
-    padding: 0 1.5rem 0 0.5rem;
+    padding: 0 0.5rem;
+    overflow-x: auto;
   }
 
   .toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.8rem;
   }
 
   .toolbar > div {
-    display: flex;
     justify-content: center;
-    margin: 0.5rem 0;
   }
 
   .view {
-    display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
-    width: 100%;
+    gap: 1.5rem;
   }
 
   .view > div {
+    flex-direction: column;
     align-items: flex-start;
-    text-align: left;
   }
 
   .view > div > h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
   }
 }
 
 @media (max-width: 320px) {
   nz-content {
     padding: 0 0.2rem;
-    overflow-x: hidden;
+    overflow-x: auto;
   }
 
   .toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.5rem;
   }
 
   .toolbar > div {
     width: 100%;
     justify-content: flex-start;
-    margin: 0.3rem 0;
+    margin: 0.2rem 0;
+  }
+
+  .view {
+    gap: 1rem;
   }
 
   .view > div {
@@ -128,6 +142,11 @@ nz-content {
   }
 
   .view > div > h3 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .toolbar > div > :first-child {
+    margin-right: 0.2rem;
   }
 }
