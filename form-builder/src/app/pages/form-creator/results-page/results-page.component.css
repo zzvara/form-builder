@@ -1,99 +1,173 @@
 nz-layout {
   background-color: transparent;
-  height: auto;
-  padding: 10px;
-}
-
-.project-container,
-.section-container {
-  height: auto;
-}
-
-.json {
-  white-space: pre-wrap;
-  overflow-y: auto;
-  max-height: 400px;
-}
-
-.json-container {
-  overflow: auto;
-  max-height: 430px;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
-
-.button-group {
   display: flex;
+  flex-direction: column;
+  padding: 0 30px;
+}
+
+.formelement {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+#switch {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#title, #description {
+  font-size: 20px;
+  border-radius: 10px;
+  border-width: 2px;
+  margin-top: -5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#title {
+  margin-bottom: 10px;
+}
+
+.description-label, .title-label {
+  font-weight: bold;
+}
+
+.date-picker {
+  margin-top: -5px;
+}
+
+.saveBtn {
+  float: right;
+}
+
+.error-message {
+  margin-top: 5px;
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.input-error {
+  border: 1px solid red;
+}
+
+.same_line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
 }
 
-.button-group button {
-  margin: 0;
+.created_modifaction {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row;
 }
 
-.button-group button:last-child {
-  margin-right: 0;
-}
-
-/* Média lekérdezések */
 @media (max-width: 1024px) {
-  .json {
-    max-height: 350px;
+  .formelement {
+    margin-bottom: 20px;
   }
 
-  .json-container {
-    max-height: 370px;
+  #title, #description {
+    font-size: 18px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
   }
 
-  .button-group {
-    justify-content: center;
+  .same_line {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
   }
 
-  .button-group button {
-    flex: 1 1 calc(33% - 16px);
+  .saveBtn {
+    float: none;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .created_modifaction {
+    width: 100%;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  nz-layout {
+    padding: 0 20px;
   }
 }
 
 @media (max-width: 768px) {
+  .formelement {
+    margin-bottom: 15px;
+  }
+
+  #title, #description {
+    font-size: 14px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .same_line {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .saveBtn {
+    float: none;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .created_modifaction {
+    width: 100%;
+    flex-direction: column;
+    gap: 5px;
+  }
+
   nz-layout {
-    padding: 5px;
-  }
-
-  .json {
-    max-height: 300px;
-  }
-
-  .json-container {
-    max-height: 320px;
-  }
-
-  .button-group {
-    justify-content: center;
-  }
-
-  .button-group button {
-    flex: 1 1 calc(50% - 16px);
+    padding: 0 15px;
   }
 }
 
 @media (max-width: 320px) {
-  .json {
-    max-height: 250px;
+  #title, #description {
+    font-size: 12px;
+    padding: 6px;
+    margin-bottom: 10px;
   }
 
-  .json-container {
-    max-height: 280px;
+  .formelement {
+    margin-bottom: 10px;
   }
 
-  .button-group {
-    justify-content: center;
+  .same_line {
+    flex-direction: column;
+    gap: 5px;
   }
 
-  .button-group button {
-    flex: 1 1 100%;
+  .saveBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .created_modifaction {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .input-error {
+    font-size: 10px;
   }
 }
