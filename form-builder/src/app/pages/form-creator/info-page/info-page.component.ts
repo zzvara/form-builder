@@ -9,7 +9,7 @@ import { Project, ProjectType } from 'src/app/interfaces/project';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
-  styleUrls: ['./info-page.component.css']
+  styleUrls: ['./info-page.component.css'],
 })
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
@@ -20,7 +20,7 @@ export class InfoPageComponent implements OnInit {
     id: 0,
     title: '',
     description: '',
-    type: ProjectType.QUESTIONNAIRE ,
+    type: ProjectType.QUESTIONNAIRE,
     time_checkbox: false,
     deadline_checkbox: false,
     time_limit: 0,
@@ -63,17 +63,16 @@ export class InfoPageComponent implements OnInit {
         }
       }
       if (params['type']) {
-
         this.project.type = params['type'] === 'TEST' ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
         this.form.patchValue({
-          type: this.project.type === ProjectType.TEST
+          type: this.project.type === ProjectType.TEST,
         });
       }
     });
 
-    this.jsonService.getJsonData().subscribe((data: any) => {
+    this.jsonService.getJsonData().subscribe((data) => {
       if (data) {
-        this.project = { ...this.project, ...data };
+        this.project = { ...this.project, ...data.project };
         this.initializeForm();
       }
     });
@@ -89,6 +88,8 @@ export class InfoPageComponent implements OnInit {
       haslimit: this.project.time_checkbox || false,
       limit: this.project.time_limit || 0,
     });
+
+    console.log('Form initialized:', this.form.value);
   }
 
   updateForm() {
