@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, SimpleChanges} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -50,6 +50,10 @@ export class InfoPageComponent implements OnInit {
     private readonly projectService: ProjectService<Project>,
     private readonly jsonService: JsonService
   ) {}
+
+  /*ngOnChanges(changes: SimpleChanges): void {
+
+  }*/
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {

@@ -1,8 +1,24 @@
 <nz-layout>
   <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="page">
-    <nz-step nzTitle="Form info" (click)="toInfoPage()"></nz-step>
-    <nz-step nzTitle="Components" (click)="toCompPage()"></nz-step>
-    <nz-step nzTitle="Answers" (click)="toAnswPage()"></nz-step>
+    <nz-step nzTitle="Form info"
+             (click)="toInfoPage()"
+             [nzStatus]="page >= 0 ? 'finish' : 'wait'"
+             [nzDisabled]="page < 0">
+    </nz-step>
+
+    <nz-step
+      nzTitle="Components"
+      (click)="toCompPage()"
+      [nzStatus]="page >= 1 ? 'finish' : 'wait'"
+      [nzDisabled]="page < 1">
+    </nz-step>
+
+    <nz-step
+      nzTitle="Answers"
+      (click)="toAnswPage()"
+      [nzStatus]="page >= 2 ? 'finish' : 'wait'"
+      [nzDisabled]="page < 2">
+    </nz-step>
   </nz-steps>
   <div class="form-container">
     <div class="page" *ngIf="page == 0">
@@ -16,3 +32,4 @@
     </div>
   </div>
 </nz-layout>
+
