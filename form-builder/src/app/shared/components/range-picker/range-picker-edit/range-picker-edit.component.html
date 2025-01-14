@@ -26,15 +26,15 @@
   <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="setDefaultValue">{{'components.date_picker.SET_DEFAULT_VALUE?' | translate}}</label>
+        <label nz-checkbox formControlName="setDefaultValue">{{'components.SET_DEFAULT_VALUE?' | translate}}</label>
       </nz-form-control>
     </nz-form-item>
     <div *ngIf="getControlValue('setDefaultValue')">
-      <span>{{'components.date_picker.SET_DEFAULT_VALUE' | translate}}</span>
+      <span>{{'components.SET_DEFAULT_VALUE' | translate}}</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
           <nz-date-picker
-            nzPlaceHolder="{{'components.date_picker.SELECT_DATE' | translate}}"
+            nzPlaceHolder="{{'components.SELECT_DATE' | translate}}"
             formControlName="defaultValue"
             [nzMode]="getControlValue('mode')"
             [nzFormat]="getFullFormat"
@@ -52,19 +52,19 @@
     </div>
   </div>
 
-  <span>{{'components.date_picker.DATE_PICKER_MODE' | translate}}:</span>
+  <span>{{'components.DATE_PICKER_MODE' | translate}}:</span>
   <nz-form-item>
     <nz-form-control>
-      <nz-select formControlName="mode" nzPlaceHolder="{{'components.date_picker.MODE' | translate}}">
+      <nz-select formControlName="mode" nzPlaceHolder="{{'components.MODE' | translate}}">
         <nz-option *ngFor="let item of datePickerModes; trackBy: identifyDatePickerModes" [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{'components.date_picker.DATE_FORMAT' | translate}}:</span>
+  <span>{{'components.DATE_FORMAT' | translate}}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="dateFormatErrors">
-      <input nz-input placeholder="{{'components.date_picker.DATE_FORMAT_PLACEHOLDER' | translate}}" formControlName="dateFormat"/>
+      <input nz-input placeholder="{{'components.DATE_FORMAT_PLACEHOLDER' | translate}}" formControlName="dateFormat"/>
     </nz-form-control>
     <ng-template #dateFormatErrors let-control>
       <div *ngIf="hasErrors(control, 'required')">{{'components.CANNOT_BE_EMPTY' | translate}}</div>
@@ -76,14 +76,14 @@
       <nz-form-control>
         <label nz-checkbox
                formControlName="showTime"
-               [nzDisabled]="getControlValue('mode') !== 'date'">{{'components.date_picker.SHOW_TIME?' | translate}}</label>
+               [nzDisabled]="getControlValue('mode') !== 'date'">{{'components.SHOW_TIME?' | translate}}</label>
       </nz-form-control>
     </nz-form-item>
     <div *ngIf="getControlValue('showTime')">
       <span>{{'components.date_picker.TIME_FORMAT' | translate}}:</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="timeFormatErrors">
-          <input nz-input placeholder="{{'components.date_picker.PLACEHOLDER_TIME_FORMAT' | translate}}" formControlName="timeFormat"/>
+          <input nz-input placeholder="{{'components.PLACEHOLDER_TIME_FORMAT' | translate}}" formControlName="timeFormat"/>
         </nz-form-control>
         <ng-template #timeFormatErrors let-control>
           <div *ngIf="hasErrors(control, 'required')">{{'components.CANNOT_BE_EMPTY' | translate}}</div>
@@ -95,30 +95,30 @@
   <span>{{'components.date_picker.WEEK_NUMBERS' | translate}}:</span>
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="showWeekNumber">{{'components.date_picker.WEEK_NUMBERS?' | translate}}</label>
+      <label nz-checkbox formControlName="showWeekNumber">{{'components.WEEK_NUMBERS?' | translate}}</label>
     </nz-form-control>
   </nz-form-item>
 
   <span>{{'components.date_picker.INLINE_COMPONENT' | translate}}:</span>
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="inlineMode">{{'components.date_picker.INLINE_COMPONENT?' | translate}}</label>
+      <label nz-checkbox formControlName="inlineMode">{{'components.INLINE_COMPONENT?' | translate}}</label>
     </nz-form-control>
   </nz-form-item>
 
   <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">{{'components.date_picker.IS_REQUIRED' | translate}}</label>
+        <label nz-checkbox formControlName="required">{{'components.IS_REQUIRED' | translate}}</label>
       </nz-form-control>
     </nz-form-item>
     <div *ngIf="getControlValue('required')">
-      <span>{{'components.date_picker.REQUIRED_MESSAGE' | translate}}</span>
+      <span>{{'components.REQUIRED_MESSAGE' | translate}}</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
           <input nz-input
                  formControlName="requiredMessage"
-                 placeholder="{{'components.date_picker.PLACEHOLDER_ERROR_REQUIRED' | translate}}"/>
+                 placeholder="{{'components.PLACEHOLDER_ERROR_REQUIRED' | translate}}"/>
         </nz-form-control>
         <ng-template #requiredErrorMessageTemplate let-control>
           <div *ngIf="hasErrors(control, 'required')">{{'components.date_picker.REQUIRED_MESSAGE_ERROR' | translate}}</div>

@@ -45,9 +45,10 @@ import {TextareaComponent} from './components/textarea/textarea.component';
 import {MutateTextDirective} from './directives/mutate-text.directive';
 import { TimePickerComponent } from './components/time-picker/time-picker.component';
 import { TimePickerEditComponent } from './components/time-picker/time-picker-edit/time-picker-edit.component';
-import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from "ng-zorro-antd/menu";
+import {NzMenuDirective, NzMenuItemComponent, NzMenuModule, NzSubMenuComponent} from "ng-zorro-antd/menu";
 import {NzTypographyComponent} from "ng-zorro-antd/typography";
 import {TranslatePipe} from "@ngx-translate/core";
+import {NzDropdownMenuComponent, NzDropDownModule} from "ng-zorro-antd/dropdown";
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -107,7 +108,10 @@ const COMPONENTS = [
     NzMenuItemComponent,
     NzSubMenuComponent,
     NzTypographyComponent,
-    TranslatePipe
+    TranslatePipe,
+    NzDropdownMenuComponent,
+    NzMenuModule,
+    NzDropDownModule
   ],
   providers: [],
   exports: [...COMPONENTS, InputHolderComponent],

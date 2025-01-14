@@ -14,23 +14,20 @@
       ></span>
     </div>
     <div>
-      <ul nz-menu nzMode="horizontal" *ngIf="headerOptions.includes(options.SETTINGS)" class="setting">
-        <li nz-submenu nzPlacement="bottomCenter" nzIcon="setting" >
-          <ul>
-            <li nz-submenu nzPlacement="bottomCenter" [nzTitle]="'dashboard.LANGUAGE' | translate">
-              <ul>
-                <li nz-menu-item (click)="setLanguage('en')">
-                  <span class="fi fi-gb"></span> English
-                </li>
-                <li nz-menu-item (click)="setLanguage('hu')">
-                  <span class="fi fi-hu"></span> Magyar
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <a nz-dropdown [nzDropdownMenu]="menu">
+        <span nz-icon nzType="setting" nzTheme="outline" class="setting" ></span>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-submenu [nzTitle]="'dashboard.LANGUAGE' | translate" class="language">
+          <li nz-menu-item (click)="setLanguage('en')">
+            <span class="fi fi-gb"></span> English
+          </li>
+          <li nz-menu-item (click)="setLanguage('hu')">
+            <span class="fi fi-hu"></span> Magyar
+          </li>
+        </ul>
 
+      </nz-dropdown-menu>
     </div>
     <h1>{{"general.FORM_BUILDER" | translate}}</h1>
   </div>
