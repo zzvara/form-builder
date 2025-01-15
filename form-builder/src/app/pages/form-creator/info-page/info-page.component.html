@@ -39,12 +39,12 @@
         <nz-time-picker [nzFormat]="'HH:mm'" *ngIf="form.get('haslimit')?.value" formControlName="limit" (change)="updateForm()"></nz-time-picker>
       </nz-form-item>
       <ng-container *ngIf="formExists">
-        <div nz-row>
-          <div nz-col nzSpan="4" class="created_modifaction" >
+        <div>
+          <div>
             <nz-form-label>Created</nz-form-label>
             <nz-form-label [nzNoColon]="true">{{ project.created }}</nz-form-label>
           </div>
-          <div nz-col nzSpan="18" class="created_modifaction">
+          <div>
             <nz-form-label>Last modification</nz-form-label>
             <nz-form-label [nzNoColon]="true">{{ project.modified }}</nz-form-label>
           </div>
