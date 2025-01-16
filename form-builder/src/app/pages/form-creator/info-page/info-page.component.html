@@ -47,12 +47,12 @@
       </nz-form-item>
 
       <ng-container *ngIf="formExists">
-        <div nz-row>
-          <div nz-col nzSpan="4" class="created_modifaction">
+        <div>
+          <div>
             <nz-form-label>{{ 'general.CREATED' | translate }}</nz-form-label>
             <nz-form-label [nzNoColon]="true">{{ project.created }}</nz-form-label>
           </div>
-          <div nz-col nzSpan="18" class="created_modifaction">
+          <div>
             <nz-form-label>{{ 'form.LAST_MODIFIED' | translate }}</nz-form-label>
             <nz-form-label [nzNoColon]="true">{{ project.modified }}</nz-form-label>
           </div>

@@ -1,14 +1,18 @@
 nz-layout {
-    background-color: transparent;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
 }
 
 .formelement {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
 #switch {
-    margin-left: 10px;
-    margin-right: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 #title, #description {
@@ -16,21 +20,23 @@ nz-layout {
   border-radius: 10px;
   border-width: 2px;
   margin-top: -5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #title {
   margin-bottom: 10px;
 }
-.description-label {
+
+.description-label, .title-label {
   font-weight: bold;
 }
-.title-label{
-  font-weight: bold;
-}
+
 .date-picker {
   margin-top: -5px;
 }
-.saveBtn{
+
+.saveBtn {
   float: right;
 }
 
@@ -40,15 +46,76 @@ nz-layout {
   font-size: 12px;
   font-weight: bold;
 }
+
 .input-error {
   border: 1px solid red;
 }
-.same_line{
+
+.same_line {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
-.created_modifaction{
-  display: flex;
-  align-items: center;
+
+@media (max-width: 1024px) {
+  nz-layout {
+    padding: 0 20px;
+  }
+
+  .formelement {
+    margin-bottom: 20px;
+  }
+
+  #title, #description {
+    font-size: 18px;
+  }
+
+  .saveBtn {
+    float: none;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  nz-layout {
+    padding: 0 15px;
+  }
+
+  #title, #description {
+    font-size: 16px;
+  }
+  .formelement {
+    margin-bottom: 15px;
+  }
+
+  .same_line {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .saveBtn {
+    float: none;
+    width: 100%;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 320px) {
+  nz-layout {
+    padding: 0 10px;
+  }
+
+  #title, #description {
+    font-size: 14px;
+  }
+
+  .formelement {
+    margin-bottom: 10px;
+  }
+
+  .saveBtn {
+    width: 100%;
+    font-size: 14px;
+  }
 }
