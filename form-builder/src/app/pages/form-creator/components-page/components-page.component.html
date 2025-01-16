@@ -36,14 +36,9 @@
           (click)="nextPage()"
           style="margin-left: 8px;"
           [disabled]="isNextButtonDisabled"
-          [nz-tooltip]="isNextButtonDisabled ? 'Please put the components in the edit section before proceeding.' : ''">
-          Next
+          nz-tooltip="{{'components.NEXT_TOOLTIP' | translate}}">
+          {{ 'general.NEXT' | translate }}
         </button>
-        <div>
-          <button nz-button nzType="primary" type="submit" (click)="nextPage()" style="margin-left: 8px;">
-            {{ 'general.NEXT' | translate }}
-          </button>
-        </div>
       </div>
     </div>
   </div>

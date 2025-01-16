@@ -22,6 +22,7 @@
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "If the field has set min length the message cannot be empty!",
     "MIN_VALUE_LIMIT": "Cannot be higher than the set max value",
     "MODE": "Mode",
+    "NEXT_TOOLTIP": "Please put the components in the edit section before proceeding.",
     "NEXT_VERSION": "Next Version",
     "NUMBER_FIELD": "NUMBER FIELD",
     "PICTURE_INPUT": "PICTURE INPUT",

@@ -22,6 +22,7 @@
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Ha a mező minimális hosszúságot határoz meg, az üzenet nem lehet üres!",
     "MIN_VALUE_LIMIT": "Nem lehet magasabb, mint a beállított maximális érték",
     "MODE": "Mód",
+    "NEXT_TOOLTIP": "Kérjük, helyezze el a komponenseket a szerkesztési szakaszba a folytatás előtt.",
     "NEXT_VERSION": "Következő verzió",
     "NUMBER_FIELD": "SZÁMMEZŐ",
     "PICTURE_INPUT": "KÉPBEMENET",
