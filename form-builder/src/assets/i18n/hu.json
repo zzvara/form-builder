@@ -158,14 +158,14 @@
     "FORM_DESCRIPTION_TOOLTIP": "Adja meg a leírást",
     "FORM_TITLE": "Űrlap címe",
     "FORM_TITLE_TOOLTIP": "Adja meg az űrlap címét",
+    "LAST_MODIFIED": "Utoljára módosítva",
     "PLACEHOLDER_DESCRIPTION": "Kérjük, szánjon néhány percet ennek a kérdőívnek a kitöltésére. Az Ön visszajelzése bizalmas marad, és a tanítási minőség javítására használjuk.",
     "PLACEHOLDER_TITLE": "Tanfolyam visszajelzési kérdőív",
     "QUESTIONNAIRE": "Kérdőív",
     "SWITCH_TOOLTIP": "Kikapcsolva kérdőív - Bekapcsolva teszt",
     "TEST": "Teszt",
     "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.",
-    "TITLE_REQUIRED": "A cím kötelező",
-    "LAST_MODIFIED": "Utoljára módosítva"
+    "TITLE_REQUIRED": "A cím kötelező"
   },
   "general": {
     "CANCEL": "Mégse",

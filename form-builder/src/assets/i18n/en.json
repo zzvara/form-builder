@@ -158,14 +158,14 @@
     "FORM_DESCRIPTION_TOOLTIP": "Enter the description",
     "FORM_TITLE": "Form title",
     "FORM_TITLE_TOOLTIP": "Enter the form title",
+    "LAST_MODIFIED": "Last Modified",
     "PLACEHOLDER_DESCRIPTION": "Please take a few minutes to complete this survey. Your feedback will remain confidential and will be used to improve the quality of our teaching.",
     "PLACEHOLDER_TITLE": "Course Feedback Survey",
     "QUESTIONNAIRE": "Questionnaire",
     "SWITCH_TOOLTIP": "Off state is Questionaire - On state is Test",
     "TEST": "Test",
     "TIME_LIMIT_TOOLTIP": "Determines how much time a user has to complete the form once it has been started.",
-    "TITLE_REQUIRED": "Title is required",
-    "LAST_MODIFIED": "Last Modified"
+    "TITLE_REQUIRED": "Title is required"
   },
   "general": {
     "CANCEL": "Cancel",
