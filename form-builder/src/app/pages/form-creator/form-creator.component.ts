@@ -38,12 +38,18 @@ export class FormCreatorComponent implements OnInit {
     }
   }
   toInfoPage() {
-    this.page = 0;
+    if (this.page >= 0) {
+      this.page = 0;
+    }
   }
   toCompPage() {
-    this.page = 1;
+    if (this.page >= 1) {
+      this.page = 1;
+    }
   }
   toAnswPage() {
-    this.page = 2;
+    if (this.page >= 2) {
+      this.page = 2;
+    }
   }
 }

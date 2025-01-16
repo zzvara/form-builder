@@ -207,6 +207,9 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
+  isFormInvalid(): boolean {
+    return this.getAllFormInputs().length === 0
+  }
   /**
    * Handles the event when the value of a form input changes.
    * This method updates the corresponding form input's value based on the selection made by the user.

@@ -3,6 +3,8 @@ import { Project, ProjectVersion } from 'src/app/interfaces/project';
 import { JsonService } from 'src/app/services/json.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { StatisticsService } from './services/statistics.service';
+import { ColumnItem } from '../../dashboard/dashboard.model';
+import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
 
 @Component({
   selector: 'app-results-page',
@@ -18,12 +20,28 @@ export class ResultsPageComponent implements OnInit {
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
   latestVersionNum: number | undefined;
+  sectionInputs: any[] = [];
 
   constructor(
     private projectService: ProjectService<Project>,
     private jsonService: JsonService,
     private statisticsService: StatisticsService
   ) {}
+
+  columnsConfig: ColumnItem[] = [
+    {
+      title: 'Question',
+      sortOrder: null,
+      sortFn: (a: Questionnaire, b: Questionnaire) => a.title.localeCompare(b.title),
+      sortDirections: ['ascend', 'descend', null],
+    },
+    {
+      title: 'Description',
+      sortOrder: null,
+      sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
+      sortDirections: ['ascend', 'descend', null],
+    }
+  ];
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {
@@ -32,6 +50,17 @@ export class ResultsPageComponent implements OnInit {
       this.latestVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : undefined;
       this.calculateSectionInputStats();
     }
+
+    this.project?.editList!.forEach((section) => {
+      if ('sectionInputs' in section.data) {
+        section.data.sectionInputs!.forEach((input) => {
+          this.sectionInputs.push(input);
+        });
+      }
+    });
+
+    console.log(this.sectionInputs);
+    
   }
 
   nextPage() {
