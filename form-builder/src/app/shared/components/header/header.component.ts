@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MenuOption } from '../../models/menu-option.model';
 import { HeaderService } from '../../../services/header/header.service';
-import { Subscription } from 'rxjs';
 import {TranslateService} from "@ngx-translate/core";
 import { JsonService } from '../../../services/json.service';
 import { ContextAction } from './header.model';
