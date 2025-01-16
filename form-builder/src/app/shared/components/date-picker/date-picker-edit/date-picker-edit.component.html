@@ -193,7 +193,7 @@
         <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
           <input nz-input
                  formControlName="tooltipText"
-                 placeholder="{{'components.date_picker.TOOLTIP_TEXT' | translate}}"/>
+                 placeholder="{{'components.TOOLTIP_TEXT' | translate}}"/>
         </nz-form-control>
         <ng-template #tooltipTextErrorMessageTemplate let-control>
           <div *ngIf="hasErrors(control, 'required')">{{'components.PROVIDE_TOOLTIP' | translate}}</div>

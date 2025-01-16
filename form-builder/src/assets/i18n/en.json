@@ -126,6 +126,7 @@
       "HIDE_DISABLED_OPTIONS": "Hide disabled options",
       "LARGER_THAN_24": "Cannot be larger than 24!",
       "LARGER_THAN_60": "Cannot be larger than 60!",
+      "MAX_TIME": "Max time:",
       "MAX_TIME_LIMIT": "Cannot be lower than the set date",
       "MAX_TIME_REQUIRED": "Max time required?",
       "MIN_TIME": "Min time:",

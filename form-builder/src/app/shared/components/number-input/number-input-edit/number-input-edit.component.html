@@ -85,7 +85,7 @@
       </nz-form-control>
     </nz-form-item>
     <div *ngIf="getControlValue('min')">
-      <span>{{'components.text_area.MIN_NUMBER' | translate}}</span>
+      <span>{{'components.number_field.MIN_NUMBER' | translate}}</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minNumberErrorMessageTemplate">
           <nz-input-number formControlName="minNumber"

@@ -163,7 +163,7 @@
       </nz-form-control>
     </nz-form-item>
     <div *ngIf="getControlValue('maxTime')">
-      <span>Max time:</span>
+      <span>{{'components.time_picker.MAX_TIME' | translate}}:</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
           <nz-time-picker [nzFormat]="getControlValue('timeFormat')"
@@ -194,7 +194,7 @@
       </nz-form-control>
     </nz-form-item>
     <div *ngIf="getControlValue('showTooltip')">
-      <span>{{'components.date_picker.TOOLTIP_TEXT' | translate}}:</span>
+      <span>{{'components.TOOLTIP_TEXT' | translate}}:</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
           <input nz-input
