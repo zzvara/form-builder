@@ -6,6 +6,7 @@ import { ProjectService } from '../../services/project.service';
 import { ProjectType } from 'src/app/interfaces/project';
 import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
 import { JsonService } from '../../services/json.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly questionnaireService: ProjectService<Questionnaire>,
+    private readonly translateService: TranslateService
     // private readonly jsonService: JsonService
   ) {}
 
@@ -29,6 +31,8 @@ export class DashboardComponent implements OnInit {
     if (savedView) {
       this.isListView = savedView === 'list';
     }
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    this.translateService.use(savedLanguage);
   }
 
   createProject(type: ProjectType): void {

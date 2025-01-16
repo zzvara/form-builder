@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
-import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
-import {Observable, of} from 'rxjs';
-import {AbstractInput} from "../../abstract-classes/abstract-input";
-import {PictureInputComponentData} from "./interfaces/picture-input-component-data";
-import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit.component";
+import { Component } from '@angular/core';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { Observable, of } from 'rxjs';
+import { AbstractInput } from "../../abstract-classes/abstract-input";
+import { PictureInputComponentData } from "./interfaces/picture-input-component-data";
+import { PictureInputEditComponent } from "./picture-input-edit/picture-input-edit.component";
+import { TranslateService } from '@ngx-translate/core';  // Import TranslateService
 
 @Component({
   selector: 'app-picture-input',
@@ -11,6 +12,13 @@ import {PictureInputEditComponent} from "./picture-input-edit/picture-input-edit
   styleUrls: ['./picture-input.component.css'],
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
+
+  title: string;
+
+  constructor(private translate: TranslateService) {
+    super();
+    this.title = this.translate.instant('components.picture_input.MODEL_TITLE_PICTURE_INPUT');
+  }
 
   onFileChange(event: any): void {
     this.data.file = event.target.files[0];
@@ -38,7 +46,7 @@ export class PictureInputComponent extends AbstractInput<string | null, PictureI
 
   override edit(): void {
     this.modalService.openModal({
-      modalTitle: 'Edit Picture Input Component Settings',
+      modalTitle: this.title,  // Use the translated title here
       modalContent: PictureInputEditComponent,
       modalData: this.data
     }).subscribe(this.defaultOnEditSubscribeEvent);

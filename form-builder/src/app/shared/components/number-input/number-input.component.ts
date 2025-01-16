@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
-import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
-import {NumberInputComponentData} from "./interfaces/number-input-component-data";
-import {NumberInputEditComponent} from "./number-input-edit/number-input-edit.component";
-import {identity} from "rxjs";
+import { Component } from '@angular/core';
+import { AbstractFieldLikeInputs } from "../../abstract-classes/abstract-fieldlike-inputs";
+import { NumberInputComponentData } from "./interfaces/number-input-component-data";
+import { NumberInputEditComponent } from "./number-input-edit/number-input-edit.component";
+import { TranslateService } from '@ngx-translate/core';
+import { identity } from "rxjs";
 
 @Component({
   selector: 'app-number-input',
@@ -10,9 +11,17 @@ import {identity} from "rxjs";
   styleUrls: ['./number-input.component.css'],
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
+
+  title: string;
+
+  constructor(private translate: TranslateService) {
+    super();
+    this.title = this.translate.instant('components.number_input.MODEL_TITLE_NUMBER_INPUT');
+  }
+
   override edit(): void {
     this.modalService.openModal({
-      modalTitle: 'Edit Number Input Component Settings',
+      modalTitle: this.title,
       modalContent: NumberInputEditComponent,
       modalData: this.data
     }).subscribe(this.defaultOnEditSubscribeEvent);

@@ -12,6 +12,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [DashboardComponent, CardViewComponent, ListViewComponent],
@@ -24,7 +25,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
         NzButtonModule,
         NzCardModule,
         NzToolTipModule,
-        NzPopconfirmModule
+        NzPopconfirmModule,
+        TranslatePipe
     ],
   providers: [NzModalService],
   exports: [NzLayoutModule],

@@ -20,30 +20,32 @@ import { EditModule } from '../edit/edit.module';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { SharedModule } from "../../shared/shared.module";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
-  imports: [
-    NzFormModule,
-    NzInputModule,
-    NzLayoutModule,
-    NzSwitchModule,
-    NzDatePickerModule,
-    NzTimePickerModule,
-    NzCheckboxModule,
-    NzStepsModule,
-    NzButtonModule,
-    NzTabsModule,
-    NzPopconfirmModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserModule,
-    EditModule,
-    NzButtonModule,
-    NzSelectModule,
-    NzToolTipModule,
-    SharedModule,
-  ],
+    imports: [
+        NzFormModule,
+        NzInputModule,
+        NzLayoutModule,
+        NzSwitchModule,
+        NzDatePickerModule,
+        NzTimePickerModule,
+        NzCheckboxModule,
+        NzStepsModule,
+        NzButtonModule,
+        NzTabsModule,
+        NzPopconfirmModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
+        EditModule,
+        NzButtonModule,
+        NzSelectModule,
+        NzToolTipModule,
+        SharedModule,
+        TranslatePipe,
+    ],
   providers: [],
   exports: [],
 })

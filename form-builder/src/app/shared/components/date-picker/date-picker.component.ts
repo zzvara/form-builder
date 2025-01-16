@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {AbstractDatePickerComponent} from "../../abstract-classes/abstract-date-picker-input";
-import {DatePickerEditComponent} from "./date-picker-edit/date-picker-edit.component";
-import {DatePickerComponentData} from "./interfaces/date-picker-component-data";
+import { Component } from '@angular/core';
+import { AbstractDatePickerComponent } from "../../abstract-classes/abstract-date-picker-input";
+import { DatePickerEditComponent } from "./date-picker-edit/date-picker-edit.component";
+import { DatePickerComponentData } from "./interfaces/date-picker-component-data";
+import { TranslateService } from '@ngx-translate/core';  // Import TranslateService
 
 @Component({
   selector: 'app-date-picker',
@@ -9,9 +10,17 @@ import {DatePickerComponentData} from "./interfaces/date-picker-component-data";
   styleUrls: ['./date-picker.component.css'],
 })
 export class DatePickerComponent extends AbstractDatePickerComponent<Date, DatePickerComponentData, DatePickerEditComponent> {
+
+  title: string;  // Declare title variable
+
+  constructor(private translate: TranslateService) {
+    super();
+    this.title = this.translate.instant('components.date_picker.MODEL_TITLE_DATE_PICKER');
+  }
+
   override edit(): void {
     this.modalService.openModal({
-      modalTitle: 'Edit Date Picker Component Settings',
+      modalTitle: this.title,
       modalContent: DatePickerEditComponent,
       modalData: this.data
     }).subscribe(this.defaultOnEditSubscribeEvent);

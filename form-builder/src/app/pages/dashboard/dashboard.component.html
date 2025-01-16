@@ -3,40 +3,46 @@
     <!-- <div>
       <button nz-button (click)="fileInput.click()">
         <span nz-icon nzType="upload" nzTheme="outline"></span>
-        Upload JSON
+        {{ 'dashboard.UPLOAD_JSON' | translate }}
       </button>
       <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
     </div> -->
     <div *ngIf="!isListView; else cardView" (click)="toggleView()">
       <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
-      <span>List view</span>
-      <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="go to List view"></i>
+      <span>{{ 'dashboard.LIST_VIEW' | translate }}</span>
+      <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'dashboard.LIST_VIEW_TOOLTIP' | translate }}"></i>
     </div>
     <ng-template #cardView>
       <div (click)="toggleView()">
         <span nz-icon nzType="appstore" nzTheme="outline"></span>
-        <span>Card view</span>
-        <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="go to Card view"></i>
+        <span>{{ 'dashboard.CARD_VIEW' | translate }}</span>
+        <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'dashboard.CARD_VIEW_TOOLTIP' | translate }}"></i>
       </div>
     </ng-template>
   </div>
+
   <div class="view" *ngIf="isListView; else cardViewComponent">
     <div>
-      <h3>Questionnaires</h3>
+      <h3>{{ 'dashboard.QUESTIONNAIRES' | translate }}</h3>
       <button (click)="createProject(projectTypes.QUESTIONNAIRE)" nz-button>
-        <span nz-icon nzType="plus" nzTheme="outline"></span> New
+        <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW' | translate }}
       </button>
     </div>
+
     <app-list-view
       (deleteProject)="deleteProject($event)"
       (editProject)="editProject($event)"
       [projects]="projects$"
       [type]="projectTypes.QUESTIONNAIRE"
     ></app-list-view>
+
     <div>
-      <h3>Tests</h3>
-      <button (click)="createProject(projectTypes.TEST)" nz-button><span nz-icon nzType="plus" nzTheme="outline"></span> New</button>
+      <h3>{{ 'dashboard.TESTS' | translate }}</h3>
+      <button (click)="createProject(projectTypes.TEST)" nz-button>
+        <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW' | translate }}
+      </button>
     </div>
+
     <app-list-view
       (deleteProject)="deleteProject($event)"
       (editProject)="editProject($event)"
@@ -44,11 +50,13 @@
       [type]="projectTypes.TEST"
     ></app-list-view>
   </div>
+
   <ng-template #cardViewComponent>
     <div class="view">
       <div>
-        <h3>Questionnaires</h3>
+        <h3>{{ 'dashboard.QUESTIONNAIRES' | translate }}</h3>
       </div>
+
       <app-card-view
         [projects]="projects$"
         [type]="projectTypes.QUESTIONNAIRE"
@@ -56,9 +64,11 @@
         (deleteProject)="deleteProject($event)"
         (editProject)="editProject($event)"
       ></app-card-view>
+
       <div>
-        <h3>Tests</h3>
+        <h3>{{ 'dashboard.TESTS' | translate }}</h3>
       </div>
+
       <app-card-view
         [projects]="projects$"
         [type]="projectTypes.TEST"

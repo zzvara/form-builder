@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MenuOption } from '../../models/menu-option.model';
 import { HeaderService } from '../../../services/header/header.service';
+import { Subscription } from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
 import { JsonService } from '../../../services/json.service';
 import { ContextAction } from './header.model';
 
@@ -19,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private optionsSub?: Subscription;
   private actionsSub?: Subscription;
 
-  constructor(private readonly router: Router, private readonly headerService: HeaderService, private readonly jsonService: JsonService) {}
+  constructor(private readonly router: Router, private readonly headerService: HeaderService, private readonly jsonService: JsonService,  private readonly translate: TranslateService) {}
 
   ngOnInit(): void {
     this.jsonService.clearJsonData();
@@ -78,4 +80,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.optionsSub?.unsubscribe();
     this.actionsSub?.unsubscribe();
   }
+  setLanguage(lang: string): void {
+    this.translate.use(lang);
+  }
+
 }
