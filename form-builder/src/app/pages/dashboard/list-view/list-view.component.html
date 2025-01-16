@@ -9,20 +9,32 @@
       >
         {{ column.title }}
       </th>
-      <th></th>
-      <th></th>
+      <th nzWidth="100px">{{'dashboard.ACTION' | translate}}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let data of table.data">
       <td>{{ data.title }}</td>
+      <td>{{ data.description }}</td>
       <td>{{ data.created }}</td>
       <td>{{ data.modified }}</td>
-      <td class="icon-row">
-        <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline"></span>
-      </td>
       <td>
-        <span 
+        <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
+        <span
+          nz-popconfirm
+          [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
+          [nzCancelText]="'general.CANCEL' | translate"
+          [nzOkText]="'general.OK' | translate"
+          (nzOnConfirm)="onDeleteProject(data.id)"
+          nz-icon
+          nzType="delete"
+          nzTheme="outline"
+          class="delete-icon"
+        >
+        </span>
+      </td>
+      <!-- <td>
+        <span
           nz-popconfirm
           nzPopconfirmTitle="Are you sure you want to delete this project?"
           (nzOnConfirm)="onDeleteProject(data.id)"
@@ -30,7 +42,7 @@
           nzType="delete"
           nzTheme="outline">
         </span>
-      </td>
+      </td> -->
     </tr>
   </tbody>
 </nz-table>

@@ -14,6 +14,7 @@ import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
 import {CustomValidators} from "../../../validators/custom-validators";
 import {DatePickerComponentData} from "../interfaces/date-picker-component-data";
 import {defaultDateFormats} from "../interfaces/default-date-formats";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-date-picker-edit',
@@ -21,14 +22,18 @@ import {defaultDateFormats} from "../interfaces/default-date-formats";
   styleUrls: ['./date-picker-edit.component.css']
 })
 export class DatePickerEditComponent<T extends Date | Date[] = Date, D extends DatePickerComponentData<T> = DatePickerComponentData<T>> extends AbstractFieldLikeEditForm<T, D> {
+  constructor(private translate: TranslateService) {
+    super();
+  }
   identifyDatePickerModes: (index: number, item: {mode: NzDateMode, label: string}) => NzDateMode = (_index, item) => item.mode;
   datePickerModes: {mode: NzDateMode, label: string}[] = [
-    {mode: "decade", label: "Decade"},
-    {mode: "year", label: "Year"},
-    {mode: "month", label: "Month"},
-    {mode: "week", label: "Week"},
-    {mode: "date", label: "Full Date"},
+    {mode: "decade", label: this.translate.instant('components.date_picker.DECADE')},
+    {mode: "year", label: this.translate.instant('components.date_picker.YEAR')},
+    {mode: "month", label: this.translate.instant('components.date_picker.MONTH')},
+    {mode: "week", label: this.translate.instant('components.date_picker.WEEK')},
+    {mode: "date", label: this.translate.instant('components.date_picker.FULL_DATE')},
   ];
+
 
   override ngOnInit(): void {
     super.ngOnInit();

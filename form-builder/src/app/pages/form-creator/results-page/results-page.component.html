@@ -1,36 +1,36 @@
 <nz-layout>
   <div>
     <nz-tabset>
-      <nz-tab nzTitle="Project Information">
+      <nz-tab nzTitle="{{ 'project.PROJECT_INFORMATION' | translate }}">
         <div *ngIf="project" class="project-container">
-          <p><strong>Title:</strong> {{ project.title }}</p>
-          <p><strong>Description:</strong> {{ project.description }}</p>
-          <p><strong>Type:</strong> {{ project.type }}</p>
-          <p *ngIf="project?.time_checkbox"><strong>Time Checkbox:</strong> {{ project.time_checkbox }}</p>
-          <p *ngIf="project?.deadline_checkbox"><strong>Deadline Checkbox:</strong> {{ project.deadline_checkbox }}</p>
-          <p *ngIf="project?.time_limit"><strong>Time Limit:</strong> {{ project.time_limit }}</p>
-          <p *ngIf="project?.deadline"><strong>Deadline:</strong> {{ project.deadline }}</p>
-          <p><strong>Created:</strong> {{ project.created }}</p>
-          <p><strong>Modified:</strong> {{ project.modified }}</p>
+          <p><strong>{{ 'general.TITLE' | translate }}:</strong> {{ project.title }}</p>
+          <p><strong>{{ 'general.DESCRIPTION' | translate }}:</strong> {{ project.description }}</p>
+          <p><strong>{{ 'project.TYPE' | translate }}:</strong> {{ project.type }}</p>
+          <p *ngIf="project?.time_checkbox"><strong>{{ 'project.TIME_CHECKBOX' | translate }}:</strong> {{ project.time_checkbox }}</p>
+          <p *ngIf="project?.deadline_checkbox"><strong>{{ 'project.DEADLINE_CHECKBOX' | translate }}:</strong> {{ project.deadline_checkbox }}</p>
+          <p *ngIf="project?.time_limit"><strong>{{ 'general.TIME_LIMIT' | translate }}:</strong> {{ project.time_limit }}</p>
+          <p *ngIf="project?.deadline"><strong>{{ 'general.DEADLINE' | translate }}:</strong> {{ project.deadline }}</p>
+          <p><strong>{{ 'general.CREATED' | translate }}:</strong> {{ project.created }}</p>
+          <p><strong>{{ 'general.MODIFIED' | translate }}:</strong> {{ project.modified }}</p>
         </div>
       </nz-tab>
-      <nz-tab nzTitle="Section Inputs">
-        <div *ngIf="project?.sectionList?.length" class="section-container">
+      <nz-tab nzTitle="{{ 'project.SECTION_INPUTS' | translate }}">
+        <div *ngIf="project?.editList?.length" class="section-container">
           <div class="statistics">
-            <h3>Section Input Statistics</h3>
-            <p *ngIf="latestVersionNum !== undefined"><strong>Version:</strong> {{ latestVersionNum }}</p>
+            <h3>{{ 'project.SECTION_INPUTS_STATISTICS' | translate }}</h3>
+            <p *ngIf="latestVersionNum !== undefined"><strong>{{ 'project.VERSION' | translate }}:</strong> {{ latestVersionNum }}</p>
             <ul>
               <li *ngFor="let stat of sectionInputStats | keyvalue">{{ stat.key }}: {{ stat.value }}</li>
             </ul>
           </div>
         </div>
       </nz-tab>
-      <nz-tab nzTitle="Project JSON" class="json">
+      <nz-tab nzTitle="{{ 'project.PROJECT_JSON' | translate }}" class="json">
         <div class="json-container">
           <pre *ngIf="project">{{ project | json }}</pre>
         </div>
       </nz-tab>
-      <nz-tab nzTitle="Project History JSON" class="json">
+      <nz-tab nzTitle="{{ 'project.PROJECT_HISTORY_JSON' | translate }}" class="json">
         <div class="json-container">
           <pre *ngIf="project">{{ projectHistory | json }}</pre>
         </div>
@@ -41,27 +41,31 @@
       <div class="button-group">
         <button
           nz-popconfirm
-          nzPopconfirmTitle="Are you sure you want to download the project?"
+          nzPopconfirmTitle="{{ 'general.DOWNLOAD_CONFIRMATION' | translate }}"
+          [nzCancelText]="'general.CANCEL' | translate"
+          [nzOkText]="'general.OK' | translate"
           (nzOnConfirm)="saveProjectToJson()"
           nzPopconfirmPlacement="top"
           nz-button
           nzType="default"
           type="button"
         >
-          Download Project
+          {{ 'project.DOWNLOAD_PROJECT' | translate }}
         </button>
         <button
           nz-popconfirm
-          nzPopconfirmTitle="Are you sure you want to download the project?"
+          nzPopconfirmTitle="{{ 'general.DOWNLOAD_CONFIRMATION' | translate }}"
+          [nzCancelText]="'general.CANCEL' | translate"
+          [nzOkText]="'general.OK' | translate"
           (nzOnConfirm)="saveProjectWithHistoryToJson()"
           nzPopconfirmPlacement="top"
           nz-button
           nzType="default"
           type="button"
         >
-          Download Project with History
+          {{ 'project.DOWNLOAD_PROJECT_WITH_HISTORY' | translate }}
         </button>
-        <button nz-button nzType="primary" type="submit" (click)="nextPage()">Save</button>
+        <button nz-button nzType="primary" type="submit" (click)="nextPage()">{{ 'project.SAVE' | translate }}</button>
       </div>
     </div>
   </div>

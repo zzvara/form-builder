@@ -1,58 +1,68 @@
 <nz-layout>
   <div>
     <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>Form title
-        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Enter the form title" style="margin-left: 5px;"></i>
+      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>
+        {{ 'form.FORM_TITLE' | translate }}
+        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'form.FORM_TITLE_TOOLTIP' | translate }}" style="margin-left: 5px;"></i>
       </nz-form-label>
       <nz-form-control nz-col nzSpan="24">
-        <input nz-input type="text" id="title" formControlName="title" placeholder="Course Feedback Survey" (change)="updateForm()" required [ngClass]="{'input-error': form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)}"/>
+        <input nz-input type="text" id="title" formControlName="title" placeholder="{{ 'form.PLACEHOLDER_TITLE' | translate }}" (change)="updateForm()" required [ngClass]="{'input-error': form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)}"/>
         <div *ngIf="form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)">
-          <span class="error-message">Title is required</span>
+          <span class="error-message">{{ 'form.TITLE_REQUIRED' | translate }}</span>
         </div>
       </nz-form-control>
-      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="description-label">Description
-        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle=" Enter the description" style="margin-left: 5px;"></i>
+
+      <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
+        {{ 'form.FORM_DESCRIPTION' | translate }}
+        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'form.FORM_DESCRIPTION_TOOLTIP' | translate }}" style="margin-left: 5px;"></i>
       </nz-form-label>
-      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" placeholder="Please take a few minutes to complete this survey. Your feedback will remain confidential and will be used to improve the quality of our teaching." formControlName="description" (change)="updateForm()"></textarea>
+      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 6 }" class="formelement" id="description" placeholder="{{ 'form.PLACEHOLDER_DESCRIPTION' | translate }}" formControlName="description" (change)="updateForm()"></textarea>
+
       <hr class="formelement" />
+
       <ng-container>
-      <nz-form-item class="same_line">
-        <nz-form-label [nzNoColon]="true" >Questionaire</nz-form-label>
-        <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
-        <nz-form-label [nzNoColon]="true" >Test
-          <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Off state is Questionaire - On state is Test" style="margin-left: 10px;"></i>
-        </nz-form-label>
-      </nz-form-item>
+        <nz-form-item class="same_line">
+          <nz-form-label [nzNoColon]="true">{{ 'form.QUESTIONNAIRE' | translate }}</nz-form-label>
+          <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
+          <nz-form-label [nzNoColon]="true">{{ 'form.TEST' | translate }}
+            <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'form.SWITCH_TOOLTIP' | translate }}" style="margin-left: 10px;"></i>
+          </nz-form-label>
+        </nz-form-item>
       </ng-container>
+
       <nz-form-item class="same_line">
         <label nz-checkbox formControlName="hasdeadline"></label>
-        <nz-form-label [nzNoColon]="true" >Deadline
-          <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="It determines how long the form can be submitted. This is a fixed date and time after which the form can no longer be accessed or submitted." style="margin-left: 5px;"></i>
+        <nz-form-label [nzNoColon]="true">{{ 'general.DEADLINE' | translate }}
+          <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'form.DEADLINE_TOOLTIP' | translate }}" style="margin-left: 5px;"></i>
         </nz-form-label>
         <nz-date-picker *ngIf="form.get('hasdeadline')?.value" id="deadline" formControlName="deadline" (change)="updateForm()"></nz-date-picker>
       </nz-form-item>
-      <nz-form-item class="same_line" >
+
+      <nz-form-item class="same_line">
         <label nz-checkbox formControlName="haslimit"></label>
-        <nz-form-label [nzNoColon]="true">Time limit
-          <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="Determines how much time a user has to complete the form once it has been started."></i>
+        <nz-form-label [nzNoColon]="true">{{ 'general.TIME_LIMIT' | translate }}
+          <i style="margin-left: 5px" nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'form.TIME_LIMIT_TOOLTIP' | translate }}"></i>
         </nz-form-label>
         <nz-time-picker [nzFormat]="'HH:mm'" *ngIf="form.get('haslimit')?.value" formControlName="limit" (change)="updateForm()"></nz-time-picker>
       </nz-form-item>
+
       <ng-container *ngIf="formExists">
         <div>
           <div>
-            <nz-form-label>Created</nz-form-label>
+            <nz-form-label>{{ 'general.CREATED' | translate }}</nz-form-label>
             <nz-form-label [nzNoColon]="true">{{ project.created }}</nz-form-label>
           </div>
           <div>
-            <nz-form-label>Last modification</nz-form-label>
+            <nz-form-label>{{ 'form.LAST_MODIFIED' | translate }}</nz-form-label>
             <nz-form-label [nzNoColon]="true">{{ project.modified }}</nz-form-label>
           </div>
         </div>
       </ng-container>
+
       <div class="saveBtn">
-        <button id="btn" nz-button nzType="primary" type="submit">Save</button>
+        <button id="btn" nz-button nzType="primary" type="submit">{{ 'general.NEXT' | translate }}</button>
       </div>
+
 
     </form>
   </div>

@@ -1,5 +1,13 @@
-.icon-row {
-  text-align: end;
+.edit-icon {
+  margin-right: 25px;
+}
+
+.edit-icon:hover {
+  color: blue;
+}
+
+.delete-icon:hover {
+  color: red;
 }
 
 tr > td span {

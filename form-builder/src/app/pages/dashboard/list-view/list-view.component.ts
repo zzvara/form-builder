@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { ColumnItem } from '../dashboard.model';
 import { ProjectType } from 'src/app/interfaces/project';
 import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-list-view',
@@ -17,31 +18,47 @@ export class ListViewComponent implements OnInit {
   @Output() editProject = new EventEmitter<number>();
 
   projectList: Questionnaire[] = [];
+  columnsConfig: ColumnItem[] = [];
+
+  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-    this.projects.subscribe((projects) => (this.projectList = projects.filter((project) => project.type === this.type)));
+    this.projects.subscribe((projects) => {
+      this.projectList = projects.filter((project) => project.type === this.type);
+    });
+
+    this.setColumnsConfig();
+    this.translate.onLangChange.subscribe(() => this.setColumnsConfig());
   }
 
-  columnsConfig: ColumnItem[] = [
-    {
-      title: 'Title',
-      sortOrder: null,
-      sortFn: (a: Questionnaire, b: Questionnaire) => a.title.localeCompare(b.title),
-      sortDirections: ['ascend', 'descend', null],
-    },
-    {
-      title: 'Created',
-      sortOrder: 'descend',
-      sortFn: (a: Questionnaire, b: Questionnaire) => a.created.localeCompare(b.created),
-      sortDirections: ['ascend', 'descend', null],
-    },
-    {
-      title: 'Modified',
-      sortOrder: null,
-      sortFn: (a: Questionnaire, b: Questionnaire) => a.modified.localeCompare(b.modified),
-      sortDirections: ['ascend', 'descend', null],
-    },
-  ];
+  setColumnsConfig(): void {
+    this.columnsConfig = [
+      {
+        title: this.translate.instant('general.TITLE'),
+        sortOrder: null,
+        sortFn: (a: Questionnaire, b: Questionnaire) => a.title.localeCompare(b.title),
+        sortDirections: ['ascend', 'descend', null],
+      },
+      {
+        title: this.translate.instant('general.DESCRIPTION'),
+        sortOrder: null,
+        sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
+        sortDirections: ['ascend', 'descend', null],
+      },
+      {
+        title: this.translate.instant('general.CREATED'),
+        sortOrder: 'descend',
+        sortFn: (a: Questionnaire, b: Questionnaire) => a.created.localeCompare(b.created),
+        sortDirections: ['ascend', 'descend', null],
+      },
+      {
+        title: this.translate.instant('general.MODIFIED'),
+        sortOrder: null,
+        sortFn: (a: Questionnaire, b: Questionnaire) => a.modified.localeCompare(b.modified),
+        sortDirections: ['ascend', 'descend', null],
+      },
+    ];
+  }
 
   onDeleteProject(id: number): void {
     this.deleteProject.emit(id);

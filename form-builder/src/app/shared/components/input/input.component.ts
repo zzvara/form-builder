@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
-import {AbstractFieldLikeInputs} from "../../abstract-classes/abstract-fieldlike-inputs";
-import {ErrorType} from "../../helpers/error-helper";
-import {InputEditComponent} from "./input-edit/input-edit.component";
-import {InputComponentData} from "./interfaces/input-component-data";
+import { Component } from '@angular/core';
+import { AbstractFieldLikeInputs } from "../../abstract-classes/abstract-fieldlike-inputs";
+import { ErrorType } from "../../helpers/error-helper";
+import { InputEditComponent } from "./input-edit/input-edit.component";
+import { InputComponentData } from "./interfaces/input-component-data";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-text-input',
@@ -10,9 +11,17 @@ import {InputComponentData} from "./interfaces/input-component-data";
   styleUrls: ['./input.component.css'],
 })
 export class InputComponent extends AbstractFieldLikeInputs<string, InputComponentData, InputEditComponent> {
+
+  title: string;
+
+  constructor(private translate: TranslateService) {
+    super();
+    this.title = this.translate.instant('components.input.MODEL_TITLE_TEXT_INPUT');
+  }
+
   override edit(): void {
     this.modalService.openModal({
-      modalTitle: 'Edit Text Field Component Settings',
+      modalTitle: this.title,
       modalContent: InputEditComponent,
       modalData: this.data
     }).subscribe(this.defaultOnEditSubscribeEvent);

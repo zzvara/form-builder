@@ -33,3 +33,11 @@ nz-header {
 .is-active {
   color: #fff;
 }
+
+.setting {
+  background-color: #908d8d;
+  color: black;
+}
+.language{
+  background-color: white;
+}
