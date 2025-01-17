@@ -9,14 +9,11 @@ nz-steps {
 
 .form-container {
   background-color: white;
-  width: 80%;
+  width: 100%;
   height: auto;
-  min-height: 100vh;
   margin: auto;
-  margin-top: 0px;
-  padding: 40px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
   overflow: auto;
 }
 
