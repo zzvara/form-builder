@@ -1,3 +1,4 @@
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {Component} from '@angular/core';
 import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
 import {identifyStringArray} from "../../../helpers/identification-helper";
@@ -16,6 +17,28 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   protected readonly identifyStringArray = identifyStringArray;
 
   newOption!: FormControl<string | null>;
+
+  get options(): FormArray {
+    return this.formData.get('selectOptions') as FormArray;
+  }
+
+  get optionsValues(): string[] {
+    if ( this.formData) {
+      return this.options.controls.map(ctrl => ctrl.value);
+    }
+    return [];
+  }
+
+  get newOptionValue(): string | null {
+    return this.newOption.getRawValue();
+  }
+  set newOptionValue(value: string) {
+    this.newOption.setValue(value);
+  }
+
+  get isMultipleChoice(): boolean {
+    return  this.formData.get('isMultipleChoice')?.getRawValue();
+  }
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -51,7 +74,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     this.initialValues.selectOptions = this.rawFormData.selectOptions;
     this.initialValues.questionValue = this.rawFormData.questionValue;
     this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
-    if (!this.rawFormData.defaultValue) {
+    if (!this.getControlValue("setDefaultValue") || !this.rawFormData.defaultValue) {
       if (this.rawFormData.isMultipleChoice) {
         this.initialValues.defaultValue = [];
       } else {
@@ -67,27 +90,6 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   override get defaultValueUpdateOn(){
     return UpdateOnStrategy.CHANGE;
   };
-
-  get options(): FormArray {
-    return this.formData.get('selectOptions') as FormArray;
-  }
-
-  get optionsValues(): string[] {
-    if ( this.formData) {
-      return this.options.controls.map(ctrl => ctrl.value);
-    }
-    return [];
-  }
-  get newOptionValue(): string | null {
-    return this.newOption.getRawValue();
-  }
-
-  set newOptionValue(value: string) {
-    this.newOption.setValue(value);
-  }
-  get isMultipleChoice(): boolean {
-    return  this.formData.get('isMultipleChoice')?.getRawValue();
-  }
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -131,5 +133,9 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     this.initialValues.selectOptions.forEach(option => {
       this.options.push(new FormControl(option, Validators.required));
     });
+  }
+
+  drop(event: CdkDragDrop<AbstractControl[]>) {
+    moveItemInArray(this.options.controls, event.previousIndex, event.currentIndex);
   }
 }

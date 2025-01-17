@@ -16,12 +16,16 @@ import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
 import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NzRadioGroupComponent, NzRadioModule} from "ng-zorro-antd/radio";
 import {NzSelectModule} from 'ng-zorro-antd/select';
+import {NzTableModule} from "ng-zorro-antd/table";
 import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
+import {CheckboxGroupEditComponent} from './components/checkbox-group/checkbox-group-edit/checkbox-group-edit.component';
+import {CheckboxGroupComponent} from './components/checkbox-group/checkbox-group.component';
 import {DatePickerEditComponent} from './components/date-picker/date-picker-edit/date-picker-edit.component';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 //Components
 import {DatePickerComponent} from './components/date-picker/date-picker.component';
@@ -33,6 +37,8 @@ import {NumberInputEditComponent} from './components/number-input/number-input-e
 import {NumberInputComponent} from './components/number-input/number-input.component';
 import {PictureInputEditComponent} from './components/picture-input/picture-input-edit/picture-input-edit.component';
 import {PictureInputComponent} from './components/picture-input/picture-input.component';
+import {RadioGroupEditComponent} from './components/radio-group/radio-group-edit/radio-group-edit.component';
+import {RadioGroupComponent} from './components/radio-group/radio-group.component';
 import {RangePickerEditComponent} from "./components/range-picker/range-picker-edit/range-picker-edit.component";
 import {RangePickerComponent} from "./components/range-picker/range-picker.component";
 import {RedoUndoComponent} from './components/redo-undo/redo-undo.component';
@@ -42,9 +48,9 @@ import {SelectComponent} from './components/select/select.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {TextareaEditComponent} from './components/textarea/textarea-edit/textarea-edit.component';
 import {TextareaComponent} from './components/textarea/textarea.component';
+import {TimePickerEditComponent} from './components/time-picker/time-picker-edit/time-picker-edit.component';
+import {TimePickerComponent} from './components/time-picker/time-picker.component';
 import {MutateTextDirective} from './directives/mutate-text.directive';
-import { TimePickerComponent } from './components/time-picker/time-picker.component';
-import { TimePickerEditComponent } from './components/time-picker/time-picker-edit/time-picker-edit.component';
 import {NzMenuDirective, NzMenuItemComponent, NzMenuModule, NzSubMenuComponent} from "ng-zorro-antd/menu";
 import {NzTypographyComponent} from "ng-zorro-antd/typography";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -73,12 +79,14 @@ const COMPONENTS = [
   RangePickerEditComponent,
   TimePickerComponent,
   TimePickerEditComponent,
+  RadioGroupComponent,
+  RadioGroupEditComponent,
+  CheckboxGroupComponent,
+  CheckboxGroupEditComponent
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS,
-  ],
+  declarations: [...COMPONENTS],
   imports: [
     NzInputNumberModule,
     NzUploadModule,
@@ -104,6 +112,9 @@ const COMPONENTS = [
     NzToolTipModule,
     NzTimePickerModule,
     NzPopconfirmModule,
+    NzRadioGroupComponent,
+    NzRadioModule,
+    NzTableModule,
     NzMenuDirective,
     NzMenuItemComponent,
     NzSubMenuComponent,
@@ -114,6 +125,6 @@ const COMPONENTS = [
     NzDropDownModule
   ],
   providers: [],
-  exports: [...COMPONENTS, InputHolderComponent],
+  exports: [...COMPONENTS],
 })
 export class SharedModule {}

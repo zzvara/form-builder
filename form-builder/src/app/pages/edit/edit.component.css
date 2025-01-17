@@ -22,7 +22,6 @@ nz-sider {
   display: flex;
   justify-content: center;
   overflow-y: scroll;
-  height: 500px;
 }
 
 .form-container {

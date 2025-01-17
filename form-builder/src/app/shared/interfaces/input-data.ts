@@ -1,9 +1,8 @@
 export interface InputData<T = any> {
   id?: string;
   sectionId?: string;
-  questionValue: string;
+  questionValue?: string;
   descriptionValue?: string;
-  placeholderValue?: string;
   defaultValue?: T;
 }
 

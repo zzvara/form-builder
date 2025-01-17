@@ -7,17 +7,19 @@
     'invalid-style': inputHolderForm.invalid
   }"
 >
-  <form #inputHolderForm="ngForm" nz-form>
+  <form #inputHolderForm="ngForm" nz-form style="width: 100%">
+    <span>Question:</span>
     <nz-form-item [ngStyle]="!inlineEdit.enabled ? { 'border-bottom': '1px solid lightgray' } : {}" style="margin-bottom: 10px">
       <nz-form-control nzErrorTip="Input question is mandatory!">
         <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
         <input
+          #questionInput="ngModel"
           [hidden]="!inlineEdit.enabled"
           nz-input
           nzSize="small"
           name="inputQuestion"
           required
-          placeholder="{{'components.PLACEHOLDER_QUESTION' | translate}}"
+          [placeholder]="formInput.questionPlaceholder"
           (mousedown)="$event.stopPropagation()"
           [(ngModel)]="inputData.questionValue"
           [ngModelOptions]="{ updateOn: 'blur' }"
@@ -25,6 +27,7 @@
         />
       </nz-form-control>
     </nz-form-item>
+    <span>Question description:</span>
     <nz-form-item style="margin-bottom: 10px">
       <nz-form-control>
         <span style="white-space: pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
@@ -34,32 +37,33 @@
           nzAutosize
           name="inputDescription"
           (mousedown)="$event.stopPropagation()"
-          [placeholder]="inputData.placeholderValue"
+          [placeholder]="formInput.descriptionPlaceholder"
           [(ngModel)]="inputData.descriptionValue"
           [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="change()"
         ></textarea>
       </nz-form-control>
     </nz-form-item>
+    <div>Input preview:</div>
     <ng-container *ngComponentOutlet="formInput.type; inputs: componentInputs" />
   </form>
   <span style="color: red">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
 </nz-card>
 <ng-template #titleTemplate>
   <span>{{ formInput.title }}</span>
-  <span
-    *ngIf="inputHolderForm.invalid"
-    nz-tooltip
-    nzTooltipTitle="{{'components.input_holder.INVALID_INPUT' | translate}}"
-    nzTooltipColor="red"
-    nz-icon
-    nzType="exclamation-circle"
-    nzTheme="outline"
-    style="color: red; margin-left: 20px"
-  ></span>
+  @if (inputHolderForm.invalid) {
+    <span
+      nz-tooltip
+      nzTooltipTitle="{{'components.input_holder.INVALID_INPUT' | translate}}"
+      nzTooltipColor="red"
+      nz-icon
+      nzType="exclamation-circle"
+      nzTheme="outline"
+      style="color: red; margin-left: 20px"
+    ></span>
+  }
 </ng-template>
 <ng-template #headerButtons>
-  <label nz-checkbox [(ngModel)]="inlineEdit.enabled">{{'components.input_holder.INLINE_EDIT' | translate}}</label>
   <button nz-button nzType="primary" nzShape="circle" (click)="editComponent()" style="margin-left: 10px">
     <span nz-icon nzType="edit" nzTheme="outline"></span>
   </button>
@@ -73,8 +77,7 @@
     nz-button
     nzType="dashed"
     nzShape="round"
-    style="margin-left: 10px"
-  >
+    style="margin-left: 10px">
     <span>{{'components.input_holder.RESET' | translate}}</span>
   </button>
   <button
@@ -88,8 +91,7 @@
     nzType="default"
     nzDanger
     nzShape="circle"
-    style="margin-left: 10px"
-  >
+    style="margin-left: 10px">
     <span nz-icon nzType="delete" nzTheme="outline"></span>
   </button>
 </ng-template>

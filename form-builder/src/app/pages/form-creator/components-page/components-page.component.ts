@@ -1,4 +1,5 @@
 import {Component, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {InlineEdit} from "../../../shared/interfaces/inline-edit";
 import {EditComponent} from '../../edit/edit.component';
 import {ProjectService} from 'src/app/services/project.service';
 import {Project, ProjectVersion} from 'src/app/interfaces/project';
@@ -17,6 +18,8 @@ export class ComponentsPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();
+
+  inlineEdit: InlineEdit = { enabled: true };
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
@@ -104,7 +107,6 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   get isNextButtonDisabled(): boolean {
-
     return this.editComponent ? this.editComponent.isFormInvalid() : true;
   }
 }

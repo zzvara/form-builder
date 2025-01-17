@@ -10,7 +10,7 @@ import {UpdateOnStrategy} from "../interfaces/update-on-strategy";
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly formBuilder = inject(FormBuilder);
-  protected readonly nzModalData: D = inject(NZ_MODAL_DATA);
+  private readonly nzModalData: D = inject(NZ_MODAL_DATA);
   protected readonly String = String.prototype;
 
   protected readonly formData: FormGroup = this.formBuilder.group<{[key in InputDataKeys<D>]?: FormControl<any>}>({}, {
@@ -25,9 +25,9 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     this.addControls({
       questionValue: new FormControl(null, Validators.required),
       descriptionValue: new FormControl(),
-      placeholderValue: new FormControl(),
       defaultValue: this.defaultValueControl,
     });
+    this.getStrictControl("questionValue")?.markAsTouched();
   }
 
   protected initializeFormValues() {
@@ -52,7 +52,6 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     this.initialValues.questionValue    = this.rawFormData.questionValue;
     this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
     this.initialValues.defaultValue     = this.rawFormData.defaultValue;
-    this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
   }
 
   get rawFormData(): D {
@@ -66,7 +65,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return UpdateOnStrategy.BLUR;
   };
 
-  protected get defaultValueControl(): FormControl {
+  protected get defaultValueControl(): AbstractControl {
     return new FormControl(this.getDefaultValueValue, {
       updateOn: this.defaultValueUpdateOn,
       validators: this.defaultValueValidators

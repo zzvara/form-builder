@@ -1,11 +1,15 @@
 <nz-layout>
   <div>
-    <app-edit [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
+    <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
     <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
       <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
-        <div>
-          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
+        <div style="margin-right: 20px">
+          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
+        </div>
+
+        <div style="margin-right: 20px">
+          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)" > </app-redo-undo>
         </div>
 
         <div>

@@ -30,23 +30,21 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
       nzTitle: modalData.modalTitle,
       nzContent: modalData.modalContent,
       nzData: modalData.modalData,
-      nzFooter: [
-        {
+      nzWidth: "600px",
+      nzFooter: [{
           label: closeLabel,
           shape: "round",
           onClick: () => {
             modal.close();
           }
-        },
-        {
+        }, {
           label: resetLabel,
           shape: "round",
           type: "dashed",
           onClick: (editComponentInstance?: E) => {
             editComponentInstance?.onReset();
           }
-        },
-        {
+      },{
           label: saveLabel,
           type: "primary",
           disabled: (editComponentInstance?: E) => {
@@ -61,7 +59,7 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
               modal.close(saveSuccess);
             }
           }
-        }
+      }
       ]
     });
 

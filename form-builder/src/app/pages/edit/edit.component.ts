@@ -1,11 +1,13 @@
 import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {cloneDeep} from "lodash-es";
 import {Project} from 'src/app/interfaces/project';
 import {ProjectService} from 'src/app/services/project.service';
 import {UndoRedoService} from 'src/app/services/undo-redo.service';
+import {InputHolderComponent} from "../../shared/components/input-holder/input-holder.component";
 import {SidebarData} from "../../shared/components/sidebar/interfaces/sidebar-data";
 import {FormInputData, instanceOfFormInputData} from "../../shared/interfaces/form-input-data";
+import {InlineEdit} from "../../shared/interfaces/inline-edit";
 import {InputData} from "../../shared/interfaces/input-data";
 import {getSideBarData} from "./config/edit-data-config";
 import {EditList} from "./interfaces/edit-list";
@@ -21,8 +23,11 @@ export class EditComponent implements OnInit, OnChanges {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
   private readonly undoRedoService: UndoRedoService<EditList[]> = inject(UndoRedoService);
 
+  @Input() inlineEdit!: InlineEdit;
   @Input() projectId: number | undefined;
   @Input() versionNum?: number;
+
+  @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>
 
   sideBarData: SidebarData[] = getSideBarData(this);
 
@@ -124,6 +129,7 @@ export class EditComponent implements OnInit, OnChanges {
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
     } else if(instanceOfFormInputData(event.item.data)) {
+      event.item.data.data!.sectionId = event.container.id;
       const transferredInput: EditList = {
         id: event.item.data.data!.id!,
         data: event.item.data
@@ -156,6 +162,7 @@ export class EditComponent implements OnInit, OnChanges {
       transferArrayItem(event.previousContainer.data as FormInputData[], event.container.data, event.previousIndex, event.currentIndex);
     } else {
       const transferredInput = event.item.data.data as FormInputData;
+      transferredInput.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
@@ -208,7 +215,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   isFormInvalid(): boolean {
-    return this.getAllFormInputs().length === 0
+    return this.getAllFormInputs().length === 0 || this.inputComponents.some(inp => !inp.isValid());
   }
   /**
    * Handles the event when the value of a form input changes.

@@ -1,10 +1,11 @@
 import {Type} from "@angular/core";
-import {SectionList} from "../../pages/edit/interfaces/section-list";
-import {InputData} from "./input-data";
 import {FormComponentMarker} from "./form-component-marker";
+import {InputData} from "./input-data";
 
 export interface FormInputData<D extends InputData<T> = InputData, T = any> {
   title: string;
+  questionPlaceholder?: string;
+  descriptionPlaceholder?: string;
   type: Type<FormComponentMarker>
   data: D | null;
 }

@@ -1,3 +1,5 @@
+import {CheckboxGroupComponent} from "../../../shared/components/checkbox-group/checkbox-group.component";
+import {CheckboxGroupData} from "../../../shared/components/checkbox-group/interfaces/checkbox-group-data";
 import {DatePickerComponent} from "../../../shared/components/date-picker/date-picker.component";
 import {DatePickerComponentData} from "../../../shared/components/date-picker/interfaces/date-picker-component-data";
 import {defaultDateFormats} from "../../../shared/components/date-picker/interfaces/default-date-formats";
@@ -7,6 +9,8 @@ import {NumberInputComponentData} from "../../../shared/components/number-input/
 import {NumberInputComponent} from "../../../shared/components/number-input/number-input.component";
 import {PictureInputComponentData} from "../../../shared/components/picture-input/interfaces/picture-input-component-data";
 import {PictureInputComponent} from "../../../shared/components/picture-input/picture-input.component";
+import {RadioGroupData} from "../../../shared/components/radio-group/interfaces/radio-group-data";
+import {RadioGroupComponent} from "../../../shared/components/radio-group/radio-group.component";
 import {RangePickerComponentData} from "../../../shared/components/range-picker/interfaces/range-picker-component-data";
 import {RangePickerComponent} from "../../../shared/components/range-picker/range-picker.component";
 import {SectionComponent} from "../../../shared/components/section/section.component";
@@ -22,8 +26,6 @@ import {EditComponent} from "../edit.component";
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
-  questionValue: "Text Field question...",
-  descriptionValue: "Question description...",
   required: false,
   requiredMessage: "Field cannot be empty!",
   minLength: false,
@@ -33,8 +35,6 @@ const textInputOptions: InputComponentData = {
   showCharacterCounter: false,
 };
 const numberInputOptions: NumberInputComponentData = {
-  questionValue: "Number Field question...",
-  descriptionValue: "Question description...",
   required: false,
   requiredMessage: "Field cannot be empty!",
   showTooltip: false,
@@ -44,8 +44,6 @@ const numberInputOptions: NumberInputComponentData = {
   format: false
 };
 const dateInputOptions: DatePickerComponentData = {
-  questionValue: "Date Picker question...",
-  descriptionValue: "Question description...",
   required: false,
   requiredMessage: "Field cannot be empty!",
   showTooltip: false,
@@ -59,8 +57,6 @@ const dateInputOptions: DatePickerComponentData = {
   showWeekNumber: false,
 };
 const rangeInputOptions: RangePickerComponentData = {
-  questionValue: "Range Picker question...",
-  descriptionValue: "Question description...",
   required: false,
   requiredMessage: "Field cannot be empty!",
   showTooltip: false,
@@ -74,8 +70,6 @@ const rangeInputOptions: RangePickerComponentData = {
   showWeekNumber: false,
 };
 const timeInputOptions: TimePickerComponentData = {
-  questionValue: "Time Picker question...",
-  descriptionValue: "Question description...",
   required: false,
   requiredMessage: "Field cannot be empty!",
   showTooltip: false,
@@ -89,8 +83,6 @@ const timeInputOptions: TimePickerComponentData = {
   secondStep: 1,
 };
 const textAreaInputOptions: TextareaComponentData = {
-  questionValue: "Textarea question...",
-  descriptionValue: "Question description...",
   required: false,
   requiredMessage: "Field cannot be empty!",
   minLength: false,
@@ -100,17 +92,32 @@ const textAreaInputOptions: TextareaComponentData = {
   showCharacterCounter: false,
 };
 const pictureInputOptions: PictureInputComponentData = {
-  questionValue: "Picture Input question...",
-  descriptionValue: "Question description...",
 };
 const selectInputOptions: SelectComponentData = {
-  questionValue: "ComboBox question...",
-  descriptionValue: "Question description...",
   selectOptions: ["Option 1", "Option 2"],
   required: false,
   requiredMessage: "Field cannot be empty!",
   showTooltip: false,
   isMultipleChoice: false,
+};
+const radioGroupInputOptions : RadioGroupData = {
+  required: false,
+  requiredMessage: "Do not leave empty!",
+  isButton: false,
+  options: [
+    {option_id: 1, option_description: "Option 1"},
+    {option_id: 2, option_description: "Option 2"},
+    {option_id: 3, option_description: "Option 3"}
+  ],
+};
+const checkboxGroupInputOptions : CheckboxGroupData = {
+  required: false,
+  requiredMessage: "Do not leave empty!",
+  defaultValue: [
+    {label: "Option 1", value: 1},
+    {label: "Option 2", value: 2},
+    {label: "Option 3", value: 3},
+  ]
 };
 
 //Used for resetting inputs
@@ -118,43 +125,73 @@ export function getInputGroups(): FormInputData<any>[] {
   return [
     {
       title: "TEXT FIELD",
+      questionPlaceholder: "Text Field question...",
+      descriptionPlaceholder: "Question description...",
       type: InputComponent,
       data: textInputOptions
     },
     {
       title: "NUMBER FIELD",
+      questionPlaceholder: "Number Field question...",
+      descriptionPlaceholder: "Question description...",
       type: NumberInputComponent,
       data: numberInputOptions
     },
     {
       title: "DATE PICKER",
+      questionPlaceholder: "Date Picker question...",
+      descriptionPlaceholder: "Question description...",
       type: DatePickerComponent,
       data: dateInputOptions
     },
     {
       title: "RANGE PICKER",
+      questionPlaceholder: "Range Picker question...",
+      descriptionPlaceholder: "Question description...",
       type: RangePickerComponent,
       data: rangeInputOptions
     },
     {
       title: "TIME PICKER",
+      questionPlaceholder: "Time Picker question...",
+      descriptionPlaceholder: "Question description...",
       type: TimePickerComponent,
       data: timeInputOptions
     },
     {
       title: "TEXT AREA",
+      questionPlaceholder: "Textarea question...",
+      descriptionPlaceholder: "Question description...",
       type: TextareaComponent,
       data: textAreaInputOptions
     },
     {
       title: "PICTURE INPUT",
+      questionPlaceholder: "Picture Input question...",
+      descriptionPlaceholder: "Question description...",
       type: PictureInputComponent,
       data: pictureInputOptions
     },
     {
       title: "COMBOBOX",
+      questionPlaceholder: "ComboBox question...",
+      descriptionPlaceholder: "Question description...",
       type: SelectComponent,
       data: selectInputOptions
+    },
+    {
+      title: "RADIO GROUP",
+      questionPlaceholder: "Radio group question...",
+      descriptionPlaceholder: "Question description...",
+      type: RadioGroupComponent,
+      data: radioGroupInputOptions
+    },
+    {
+      title: "CHECKBOX GROUP",
+      questionPlaceholder: "Checkbox group question...",
+      descriptionPlaceholder: "Question description...",
+      type: CheckboxGroupComponent,
+      data: checkboxGroupInputOptions
     },
   ];
 }

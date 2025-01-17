@@ -11,8 +11,8 @@
            [cdkDropListData]="editList"
            [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
            style="width: 100%">
-        <ng-container *ngFor="let edit of editList">
-          <ng-container *ngIf="instanceOfSectionList(edit.data)">
+        @for (edit of editList; track edit) {
+          @if (instanceOfSectionList(edit.data)) {
             <nz-card
               id="{{edit.data.sectionId}}"
               [nzTitle]="sectionTitle"
@@ -25,7 +25,7 @@
               [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
               (cdkDropListDropped)="dropIntoSection($event)"
               class="element-list p-3"
-              style="padding: 0; width: 900px"
+              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px"
               [nzBodyStyle]="{'padding-bottom':'24px'}"
             >
               <ng-template #sectionTitle>
@@ -50,33 +50,35 @@
                 </div>
               </ng-template>
 
-              <app-input-holder
-                class="element-box"
-                *ngFor="let item of edit.data.sectionInputs"
-                cdkDrag
-                [cdkDragData]="item"
-                nz-card-grid
-                style="padding: 0"
-                [ngStyle]="getSectionInputStyle(edit.data)"
+              @for (item of edit.data.sectionInputs; track item) {
+                <app-input-holder
+                  class="element-box"
+                  cdkDrag
+                  [cdkDragData]="item"
+                  nz-card-grid
+                  style="margin-bottom: 10px; padding: 0"
+                  [ngStyle]="getSectionInputStyle(edit.data)"
 
-                [formInput]="item"
-                (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
-                (changedEvent)="onValueChanged($event)"/>
+                  [formInput]="item"
+                  [inlineEdit]="inlineEdit"
+                  (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
+                  (changedEvent)="onValueChanged($event)"/>
+              }
             </nz-card>
-          </ng-container>
-          <ng-container *ngIf="instanceOfFormInputData(edit.data)">
+          } @else if (instanceOfFormInputData(edit.data)) {
             <app-input-holder
               class="element-box"
               cdkDrag
               [cdkDragData]="edit"
               nz-card-grid
-              style="padding: 0; width: 900px; border: 1px solid lightgray"
+              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px; border: 1px solid lightgray"
 
               [formInput]="edit.data"
+              [inlineEdit]="inlineEdit"
               (removeComponentEvent)="removeEditComponent(edit)"
               (changedEvent)="onValueChanged($event)"/>
-          </ng-container>
-        </ng-container>
+          }
+        }
       </div>
     </nz-content>
   </nz-layout>
