@@ -13,6 +13,8 @@ export class AppComponent implements OnInit, OnDestroy {
   optionsSub?: Subscription;
   options = MenuOption;
 
+  title = 'form-builder';
+
   constructor(private readonly headerService: HeaderService) {}
 
   ngOnInit(): void {

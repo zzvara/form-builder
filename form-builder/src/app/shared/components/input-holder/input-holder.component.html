@@ -52,15 +52,15 @@
 <ng-template #titleTemplate>
   <span>{{ formInput.title }}</span>
   @if (inputHolderForm.invalid) {
-    <span
-      nz-tooltip
-      nzTooltipTitle="{{'components.input_holder.INVALID_INPUT' | translate}}"
-      nzTooltipColor="red"
-      nz-icon
-      nzType="exclamation-circle"
-      nzTheme="outline"
-      style="color: red; margin-left: 20px"
-    ></span>
+  <span
+    nz-tooltip
+    nzTooltipTitle="{{ 'components.input_holder.INVALID_INPUT' | translate }}"
+    nzTooltipColor="red"
+    nz-icon
+    nzType="exclamation-circle"
+    nzTheme="outline"
+    style="color: red; margin-left: 20px"
+  ></span>
   }
 </ng-template>
 <ng-template #headerButtons>
@@ -69,7 +69,7 @@
   </button>
   <button
     nz-popconfirm
-    nzPopconfirmTitle="{{'components.input_holder.POP_RESET' | translate}}"
+    nzPopconfirmTitle="{{ 'components.input_holder.POP_RESET' | translate }}"
     [nzCancelText]="'general.CANCEL' | translate"
     [nzOkText]="'general.OK' | translate"
     (nzOnConfirm)="resetComponent()"
@@ -77,12 +77,13 @@
     nz-button
     nzType="dashed"
     nzShape="round"
-    style="margin-left: 10px">
-    <span>{{'components.input_holder.RESET' | translate}}</span>
+    style="margin-left: 10px"
+  >
+    <span>{{ 'components.input_holder.RESET' | translate }}</span>
   </button>
   <button
     nz-popconfirm
-    nzPopconfirmTitle="{{'components.input_holder.POP_REMOVE' | translate}}"
+    nzPopconfirmTitle="{{ 'components.input_holder.POP_REMOVE' | translate }}"
     [nzCancelText]="'general.CANCEL' | translate"
     [nzOkText]="'general.OK' | translate"
     (nzOnConfirm)="removeComponent()"
@@ -91,7 +92,8 @@
     nzType="default"
     nzDanger
     nzShape="circle"
-    style="margin-left: 10px">
+    style="margin-left: 10px"
+  >
     <span nz-icon nzType="delete" nzTheme="outline"></span>
   </button>
 </ng-template>

@@ -1,4 +1,4 @@
-import {InputData} from "../../../interfaces/input-data";
+import { InputData } from '@shared/interfaces/input-data';
 
 export interface RadioGroupData extends InputData<number> {
   required: boolean;
@@ -8,5 +8,6 @@ export interface RadioGroupData extends InputData<number> {
 
   options: {
     option_id: number;
-    option_description: string; }[];
+    option_description: string;
+  }[];
 }

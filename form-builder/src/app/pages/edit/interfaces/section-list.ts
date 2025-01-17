@@ -1,10 +1,10 @@
-import {FormInputData} from "../../../shared/interfaces/form-input-data";
-import {LayoutEnum} from "./layout-enum";
+import { FormInputData } from "@app/shared/interfaces/form-input-data";
+import { LayoutEnum } from "@pages/edit/interfaces/layout-enum";
 
 export interface SectionList {
-  sectionId: string,
-  layout: LayoutEnum,
-  sectionInputs: FormInputData[]
+  sectionId: string;
+  layout: LayoutEnum;
+  sectionInputs: FormInputData[];
 }
 
 export function instanceOfSectionList(object: any): object is SectionList {

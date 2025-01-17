@@ -1,5 +1,5 @@
-import { Project, ProjectType } from "../project";
+import { Project, ProjectType } from '@interfaces/project';
 
 export interface Test extends Project {
-    type: ProjectType.TEST;
+  type: ProjectType.TEST;
 }

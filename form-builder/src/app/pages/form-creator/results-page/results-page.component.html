@@ -3,22 +3,42 @@
     <nz-tabset>
       <nz-tab nzTitle="{{ 'project.PROJECT_INFORMATION' | translate }}">
         <div *ngIf="project" class="project-container">
-          <p><strong>{{ 'general.TITLE' | translate }}:</strong> {{ project.title }}</p>
-          <p><strong>{{ 'general.DESCRIPTION' | translate }}:</strong> {{ project.description }}</p>
-          <p><strong>{{ 'project.TYPE' | translate }}:</strong> {{ project.type }}</p>
-          <p *ngIf="project?.time_checkbox"><strong>{{ 'project.TIME_CHECKBOX' | translate }}:</strong> {{ project.time_checkbox }}</p>
-          <p *ngIf="project?.deadline_checkbox"><strong>{{ 'project.DEADLINE_CHECKBOX' | translate }}:</strong> {{ project.deadline_checkbox }}</p>
-          <p *ngIf="project?.time_limit"><strong>{{ 'general.TIME_LIMIT' | translate }}:</strong> {{ project.time_limit }}</p>
-          <p *ngIf="project?.deadline"><strong>{{ 'general.DEADLINE' | translate }}:</strong> {{ project.deadline }}</p>
-          <p><strong>{{ 'general.CREATED' | translate }}:</strong> {{ project.created }}</p>
-          <p><strong>{{ 'general.MODIFIED' | translate }}:</strong> {{ project.modified }}</p>
+          <p>
+            <strong>{{ 'general.TITLE' | translate }}:</strong> {{ project.title }}
+          </p>
+          <p>
+            <strong>{{ 'general.DESCRIPTION' | translate }}:</strong> {{ project.description }}
+          </p>
+          <p>
+            <strong>{{ 'project.TYPE' | translate }}:</strong> {{ project.type }}
+          </p>
+          <p *ngIf="project?.time_checkbox">
+            <strong>{{ 'project.TIME_CHECKBOX' | translate }}:</strong> {{ project.time_checkbox }}
+          </p>
+          <p *ngIf="project?.deadline_checkbox">
+            <strong>{{ 'project.DEADLINE_CHECKBOX' | translate }}:</strong> {{ project.deadline_checkbox }}
+          </p>
+          <p *ngIf="project?.time_limit">
+            <strong>{{ 'general.TIME_LIMIT' | translate }}:</strong> {{ project.time_limit }}
+          </p>
+          <p *ngIf="project?.deadline">
+            <strong>{{ 'general.DEADLINE' | translate }}:</strong> {{ project.deadline }}
+          </p>
+          <p>
+            <strong>{{ 'general.CREATED' | translate }}:</strong> {{ project.created }}
+          </p>
+          <p>
+            <strong>{{ 'general.MODIFIED' | translate }}:</strong> {{ project.modified }}
+          </p>
         </div>
       </nz-tab>
       <nz-tab nzTitle="{{ 'project.SECTION_INPUTS' | translate }}">
         <div *ngIf="project?.editList?.length" class="section-container">
           <div class="statistics">
             <h3>{{ 'project.SECTION_INPUTS_STATISTICS' | translate }}</h3>
-            <p *ngIf="latestVersionNum !== undefined"><strong>{{ 'project.VERSION' | translate }}:</strong> {{ latestVersionNum }}</p>
+            <p *ngIf="latestVersionNum !== undefined">
+              <strong>{{ 'project.VERSION' | translate }}:</strong> {{ latestVersionNum }}
+            </p>
             <ul>
               <li *ngFor="let stat of sectionInputStats | keyvalue">{{ stat.key }}: {{ stat.value }}</li>
             </ul>

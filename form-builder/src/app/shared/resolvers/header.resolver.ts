@@ -1,8 +1,8 @@
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { MenuOption } from '../models/menu-option.model';
+import { MenuOption } from '@models/menu-option.model';
 import { inject } from '@angular/core';
-import { HeaderService } from 'src/app/services/header/header.service';
-import { RoutePath } from '../models/route-path.model';
+import { HeaderService } from '@app/services/header/header.service';
+import { RoutePath } from '@models/route-path.model';
 
 const HEADER_CONFIGS = [
   {

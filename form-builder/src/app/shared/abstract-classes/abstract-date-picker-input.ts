@@ -1,10 +1,14 @@
-import {DisabledTimeConfig, DisabledTimeFn, SupportTimeOptions} from "ng-zorro-antd/date-picker";
-import {DatePickerEditComponent} from "../components/date-picker/date-picker-edit/date-picker-edit.component";
-import {DatePickerComponentData} from "../components/date-picker/interfaces/date-picker-component-data";
-import {getDisabledDateConfig, getDisabledTimeConfig} from "../helpers/date-helper";
-import {AbstractFieldLikeInputs} from "./abstract-fieldlike-inputs";
+import { DisabledTimeConfig, DisabledTimeFn, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
+import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
+import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
+import { getDisabledDateConfig, getDisabledTimeConfig } from '@helpers/date-helper';
+import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 
-export abstract class AbstractDatePickerComponent<T extends Date | Date[], D extends DatePickerComponentData<T>, E extends DatePickerEditComponent<T, D>> extends AbstractFieldLikeInputs<T, D, E> {
+export abstract class AbstractDatePickerComponent<
+  T extends Date | Date[],
+  D extends DatePickerComponentData<T>,
+  E extends DatePickerEditComponent<T, D>
+> extends AbstractFieldLikeInputs<T, D, E> {
   protected readonly getDisabledDateConfig = getDisabledDateConfig;
 
   disabledTime: DisabledTimeFn = (current: Date | Date[]): DisabledTimeConfig | undefined => {
@@ -12,13 +16,13 @@ export abstract class AbstractDatePickerComponent<T extends Date | Date[], D ext
       return getDisabledTimeConfig(this.data, current as Date);
     }
     return undefined;
-  }
+  };
 
   get getTimeOptions(): SupportTimeOptions | null {
     if (this.data.showTime) {
       return {
         nzFormat: this.data.timeFormat,
-        nzHideDisabledOptions: false
+        nzHideDisabledOptions: false,
       };
     }
     return null;

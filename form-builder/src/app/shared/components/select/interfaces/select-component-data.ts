@@ -1,6 +1,6 @@
-import {FieldLikeInputData} from "../../../interfaces/field-like-input-data";
+import { FieldLikeInputData } from '@shared/interfaces/field-like-input-data';
 
-export interface SelectComponentData extends FieldLikeInputData<string | string[]>{
+export interface SelectComponentData extends FieldLikeInputData<string | string[]> {
   selectOptions: string[];
   isMultipleChoice: boolean;
 }

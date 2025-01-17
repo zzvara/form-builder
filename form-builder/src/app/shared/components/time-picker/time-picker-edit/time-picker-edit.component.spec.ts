@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimePickerEditComponent } from './time-picker-edit.component';
+import { TimePickerEditComponent } from '@components/time-picker/time-picker-edit/time-picker-edit.component';
 
 describe('TimePickerEditComponent', () => {
   let component: TimePickerEditComponent;
@@ -8,7 +8,7 @@ describe('TimePickerEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TimePickerEditComponent]
+      declarations: [TimePickerEditComponent],
     });
     fixture = TestBed.createComponent(TimePickerEditComponent);
     component = fixture.componentInstance;

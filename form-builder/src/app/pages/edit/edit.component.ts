@@ -1,18 +1,18 @@
-import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {cloneDeep} from "lodash-es";
-import {Project} from 'src/app/interfaces/project';
-import {ProjectService} from 'src/app/services/project.service';
-import {UndoRedoService} from 'src/app/services/undo-redo.service';
-import {InputHolderComponent} from "../../shared/components/input-holder/input-holder.component";
-import {SidebarData} from "../../shared/components/sidebar/interfaces/sidebar-data";
-import {FormInputData, instanceOfFormInputData} from "../../shared/interfaces/form-input-data";
-import {InlineEdit} from "../../shared/interfaces/inline-edit";
-import {InputData} from "../../shared/interfaces/input-data";
-import {getSideBarData} from "./config/edit-data-config";
-import {EditList} from "./interfaces/edit-list";
-import {LayoutEnum} from "./interfaces/layout-enum";
-import {instanceOfSectionList, SectionList} from "./interfaces/section-list";
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Project } from '@app/interfaces/project';
+import { ProjectService } from '@app/services/project.service';
+import { UndoRedoService } from '@app/services/undo-redo.service';
+import { cloneDeep } from 'lodash-es';
+import { EditList } from '@pages/edit/interfaces/edit-list';
+import { InlineEdit } from '@app/shared/interfaces/inline-edit';
+import { InputHolderComponent } from '@app/shared/components/input-holder/input-holder.component';
+import { SidebarData } from '@app/shared/components/sidebar/interfaces/sidebar-data';
+import { getSideBarData } from '@pages/edit/config/edit-data-config';
+import { instanceOfSectionList, SectionList } from '@pages/edit/interfaces/section-list';
+import { FormInputData, instanceOfFormInputData } from '@app/shared/interfaces/form-input-data';
+import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
+import { InputData } from '@app/shared/interfaces/input-data';
 
 @Component({
   selector: 'app-edit',
@@ -27,24 +27,23 @@ export class EditComponent implements OnInit, OnChanges {
   @Input() projectId: number | undefined;
   @Input() versionNum?: number;
 
-  @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>
+  @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;
 
   sideBarData: SidebarData[] = getSideBarData(this);
 
   editList: EditList[] = [];
-  getSectionIds = () => this.editList
-    .filter(edit => instanceOfSectionList(edit.data))
-    .map(sect => (sect.data as SectionList).sectionId);
-  getAllFormInputs = () => this.editList
-    .flatMap(edit => {
+  getSectionIds = () =>
+    this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
+  getAllFormInputs = () =>
+    this.editList.flatMap((edit) => {
       if (instanceOfSectionList(edit.data)) {
         return edit.data.sectionInputs;
       }
       return edit.data;
     });
 
-  sectionDropListEnterPredicate: (item: CdkDrag<EditList | FormInputData>, list: CdkDropList<FormInputData[]>) => boolean =
-    (item, _list) => item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
+  sectionDropListEnterPredicate: (item: CdkDrag<EditList | FormInputData>, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
+    item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
 
   sectionId!: number;
   sectionComponentId!: number;
@@ -71,7 +70,7 @@ export class EditComponent implements OnInit, OnChanges {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       if (project?.editList) {
         this.editList = cloneDeep(project.editList);
-        console.log("Project loaded (SAVE STATE)!");
+        console.log('Project loaded (SAVE STATE)!');
         this.undoRedoService.saveState(this.editList);
       }
     }
@@ -84,16 +83,16 @@ export class EditComponent implements OnInit, OnChanges {
   private initializeUndoRedo(): void {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
       this.undoRedoService.clearHistory();
-      console.log("Undo-redo initialized (SAVE STATE)!");
+      console.log('Undo-redo initialized (SAVE STATE)!');
       this.undoRedoService.saveState(this.editList);
     }
   }
 
-  undoRedo(undoRedoEvent: "UNDO" | "REDO") {
-    if (undoRedoEvent === "UNDO") {
+  undoRedo(undoRedoEvent: 'UNDO' | 'REDO') {
+    if (undoRedoEvent === 'UNDO') {
       this.editList = this.undoRedoService.undo() ?? [];
     } else {
-      this.editList =  this.undoRedoService.redo() ?? [];
+      this.editList = this.undoRedoService.redo() ?? [];
     }
   }
 
@@ -103,46 +102,45 @@ export class EditComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if(instanceOfFormInputData(event.item.data) && !(event.item.data.data?.id)) {
+    } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
       const droppedInput: FormInputData = event.item.data;
-      if (droppedInput.title === "SECTION") {
+      if (droppedInput.title === 'SECTION') {
         const newSectionId = `section-${++this.sectionId}`;
         const newSectionEdit: EditList = {
           id: newSectionId,
           data: {
             sectionId: newSectionId,
             layout: LayoutEnum.VERTICAL,
-            sectionInputs: []
-          }
+            sectionInputs: [],
+          },
         };
         event.container.data.splice(event.currentIndex, 0, newSectionEdit);
       } else {
         // Create a deep copy of the dropped item with updated ID
-        const newItemId = "input-" + (++this.sectionComponentId);
+        const newItemId = 'input-' + ++this.sectionComponentId;
         const newItem: FormInputData = cloneDeep(droppedInput);
         newItem.data!.id = newItemId;
         newItem.data!.sectionId = event.container.id;
         const newInputEdit: EditList = {
           id: newItemId,
-          data: newItem
+          data: newItem,
         };
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
-    } else if(instanceOfFormInputData(event.item.data)) {
+    } else if (instanceOfFormInputData(event.item.data)) {
       event.item.data.data!.sectionId = event.container.id;
       const transferredInput: EditList = {
         id: event.item.data.data!.id!,
-        data: event.item.data
+        data: event.item.data,
       };
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
-    console.log("Input components modified (SAVE STATE)!");
+    console.log('Input components modified (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
 
     console.log({ sectionInputs: this.getAllFormInputs() });
   }
-
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
     console.log({ sectionInputs: this.getAllFormInputs() });
@@ -150,10 +148,10 @@ export class EditComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if(instanceOfFormInputData(event.item.data) && !(event.item.data.data?.id)) {
+    } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
       const droppedInput: FormInputData = event.item.data;
       // Create a deep copy of the dropped item with updated ID
-      const newItemId = "input-" + (++this.sectionComponentId);
+      const newItemId = 'input-' + ++this.sectionComponentId;
       const newItem: FormInputData = cloneDeep(droppedInput);
       newItem.data!.id = newItemId;
       newItem.data!.sectionId = event.container.id;
@@ -166,7 +164,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
-    console.log("Input components modified (SAVE STATE)!");
+    console.log('Input components modified (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
 
     console.log({ sectionInputs: this.getAllFormInputs() });
@@ -177,30 +175,32 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionDropListConnectedTo(sect: SectionList) {
-    return this.getSectionIds().filter(sectionId => sectionId !== sect.sectionId).concat(["sectionDropList"]);
+    return this.getSectionIds()
+      .filter((sectionId) => sectionId !== sect.sectionId)
+      .concat(['sectionDropList']);
   }
 
   removeEditComponent(edit: EditList) {
-    this.editList = this.editList.filter(e => e.id !== edit.id);
-    console.log("Edit component removed (SAVE STATE)!");
+    this.editList = this.editList.filter((e) => e.id !== edit.id);
+    console.log('Edit component removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
   removeSectionComponent(sect: SectionList, componentId: string) {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
-    console.log("Input component in section removed (SAVE STATE)!");
+    console.log('Input component in section removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
   getSectionInputStyle(sect: SectionList) {
     let width: number = 0;
-    if (sect.sectionInputs.some(edit => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
+    if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
     } else {
       width = 100 / sect.sectionInputs.length;
     }
     return {
-      'width': width.toString() + "%",
+      width: width.toString() + '%',
     };
   }
 
@@ -210,12 +210,12 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       sect.layout = LayoutEnum.VERTICAL;
     }
-    console.log("Section layout changed (SAVE STATE)!");
+    console.log('Section layout changed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
   isFormInvalid(): boolean {
-    return this.getAllFormInputs().length === 0 || this.inputComponents.some(inp => !inp.isValid());
+    return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
   }
   /**
    * Handles the event when the value of a form input changes.
@@ -225,7 +225,7 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   onValueChanged<D extends InputData<T>, T>(event: D): void {
-    console.log("Input component changed/edited (SAVE STATE)!", event.id);
+    console.log('Input component changed/edited (SAVE STATE)!', event.id);
     this.undoRedoService.saveState(this.editList);
   }
   /**

@@ -1,14 +1,13 @@
-import {AbstractControl, ValidatorFn} from "@angular/forms";
-import {NzDateMode} from "ng-zorro-antd/date-picker";
-import {compareTimeFull, defaultDateComparers} from "../helpers/date-helper";
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { NzDateMode } from 'ng-zorro-antd/date-picker';
+import { compareTimeFull, defaultDateComparers } from '@helpers/date-helper';
 
 export class CustomValidators {
-
   static validateStringNotEmpty(control: AbstractControl) {
     const value = control.value as string;
     if (value && value.trim().length === 0) {
       return {
-        fieldIsEmpty: true
+        fieldIsEmpty: true,
       };
     }
     return null;
@@ -17,13 +16,13 @@ export class CustomValidators {
   static validateIsInList(list: () => any[]) {
     return (control: AbstractControl) => {
       const value = control.value;
-      if (list().some(val => val === value)) {
+      if (list().some((val) => val === value)) {
         return {
-          listContainsItem: value
+          listContainsItem: value,
         };
       }
       return null;
-    }
+    };
   }
 
   static minLengthSupplier(minSupplier: () => number) {
@@ -31,11 +30,11 @@ export class CustomValidators {
       const value: string = control.value;
       if (value && value.trim().length < minSupplier()) {
         return {
-          minlength: minSupplier()
+          minlength: minSupplier(),
         };
       }
       return null;
-    }
+    };
   }
 
   static maxLengthSupplier(maxSupplier: () => number) {
@@ -43,11 +42,11 @@ export class CustomValidators {
       const value: string = control.value;
       if (value && value.trim().length > maxSupplier()) {
         return {
-          maxlength: maxSupplier()
+          maxlength: maxSupplier(),
         };
       }
       return null;
-    }
+    };
   }
 
   static validateRequiredIf(ifPred: () => boolean) {
@@ -56,12 +55,12 @@ export class CustomValidators {
         const value = control.value;
         if (!value) {
           return {
-            required: true
-          }
+            required: true,
+          };
         }
       }
       return null;
-    }
+    };
   }
 
   static validateMinIf(ifPred: () => boolean, min: number) {
@@ -70,12 +69,12 @@ export class CustomValidators {
         const value: number = control.value;
         if (value && value < min) {
           return {
-            minError: true
-          }
+            minError: true,
+          };
         }
       }
       return null;
-    }
+    };
   }
 
   static validateMinPred(min: () => number) {
@@ -83,53 +82,60 @@ export class CustomValidators {
       const value: number = control.value;
       if (value && value < min()) {
         return {
-          minError: true
-        }
+          minError: true,
+        };
       }
       return null;
-    }
+    };
   }
 
-  static validateMinWithMaxIf(maxData: () => { maxOn: boolean, maxNum: number }, ifPred: () => boolean) {
+  static validateMinWithMaxIf(maxData: () => { maxOn: boolean; maxNum: number }, ifPred: () => boolean) {
     return (control: AbstractControl) => {
       const value: number = control.value;
       if (value && ifPred()) {
         if (maxData().maxOn && maxData().maxNum && value > maxData().maxNum) {
           return {
-            minMaxError: maxData().maxNum
+            minMaxError: maxData().maxNum,
           };
         }
       }
       return null;
-    }
+    };
   }
 
-  static validateDateMinWithMaxIf(maxData: () => { maxOn: boolean, maxDate: Date, mode: NzDateMode, showTime: boolean }, ifPred: () => boolean) {
+  static validateDateMinWithMaxIf(
+    maxData: () => { maxOn: boolean; maxDate: Date; mode: NzDateMode; showTime: boolean },
+    ifPred: () => boolean
+  ) {
     return (control: AbstractControl) => {
       const value: Date = control.value;
       if (value && ifPred()) {
-        if (maxData().maxOn && maxData().maxDate && defaultDateComparers[maxData().showTime ? "time" : maxData().mode](value, maxData().maxDate) > 0) {
+        if (
+          maxData().maxOn &&
+          maxData().maxDate &&
+          defaultDateComparers[maxData().showTime ? 'time' : maxData().mode](value, maxData().maxDate) > 0
+        ) {
           return {
-            minMaxError: maxData().maxDate
+            minMaxError: maxData().maxDate,
           };
         }
       }
       return null;
-    }
+    };
   }
 
-  static validateTimeMinWithMaxIf(maxData: () => { maxOn: boolean, maxTime: Date }, ifPred: () => boolean) {
+  static validateTimeMinWithMaxIf(maxData: () => { maxOn: boolean; maxTime: Date }, ifPred: () => boolean) {
     return (control: AbstractControl) => {
       const value: Date = control.value;
       if (value && ifPred()) {
         if (maxData().maxOn && maxData().maxTime && compareTimeFull(value, maxData().maxTime) > 0) {
           return {
-            minMaxError: maxData().maxTime
+            minMaxError: maxData().maxTime,
           };
         }
       }
       return null;
-    }
+    };
   }
 
   static validateMaxIf(ifPred: () => boolean, max: number) {
@@ -138,12 +144,12 @@ export class CustomValidators {
         const value: number = control.value;
         if (value && value > max) {
           return {
-            maxError: true
-          }
+            maxError: true,
+          };
         }
       }
       return null;
-    }
+    };
   }
 
   static validateMaxPred(max: () => number) {
@@ -151,53 +157,60 @@ export class CustomValidators {
       const value: number = control.value;
       if (value && value > max()) {
         return {
-          maxError: true
-        }
+          maxError: true,
+        };
       }
       return null;
-    }
+    };
   }
 
-  static validateMaxWithMinIf(minData: () => { minOn: boolean, minNum: number }, ifPred: () => boolean) {
+  static validateMaxWithMinIf(minData: () => { minOn: boolean; minNum: number }, ifPred: () => boolean) {
     return (control: AbstractControl) => {
       const value: number = control.value;
       if (value && ifPred()) {
         if (minData().minOn && minData().minNum && value < minData().minNum) {
           return {
-            maxMinError: minData().minNum
-          }
-        }
-      }
-      return null;
-    }
-  }
-
-  static validateDateMaxWithMinIf(minData: () => { minOn: boolean, minDate: Date, mode: NzDateMode, showTime: boolean }, ifPred: () => boolean) {
-    return (control: AbstractControl) => {
-      const value: Date = control.value;
-      if (value && ifPred()) {
-        if (minData().minOn && minData().minDate && defaultDateComparers[minData().showTime ? "time" : minData().mode](value, minData().minDate) < 0) {
-          return {
-            maxMinError: minData().minDate
+            maxMinError: minData().minNum,
           };
         }
       }
       return null;
-    }
+    };
   }
 
-  static validateTimeMaxWithMinIf(minData: () => { minOn: boolean, minTime: Date }, ifPred: () => boolean) {
+  static validateDateMaxWithMinIf(
+    minData: () => { minOn: boolean; minDate: Date; mode: NzDateMode; showTime: boolean },
+    ifPred: () => boolean
+  ) {
+    return (control: AbstractControl) => {
+      const value: Date = control.value;
+      if (value && ifPred()) {
+        if (
+          minData().minOn &&
+          minData().minDate &&
+          defaultDateComparers[minData().showTime ? 'time' : minData().mode](value, minData().minDate) < 0
+        ) {
+          return {
+            maxMinError: minData().minDate,
+          };
+        }
+      }
+      return null;
+    };
+  }
+
+  static validateTimeMaxWithMinIf(minData: () => { minOn: boolean; minTime: Date }, ifPred: () => boolean) {
     return (control: AbstractControl) => {
       const value: Date = control.value;
       if (value && ifPred()) {
         if (minData().minOn && minData().minTime && compareTimeFull(value, minData().minTime) < 0) {
           return {
-            maxMinError: minData().minTime
+            maxMinError: minData().minTime,
           };
         }
       }
       return null;
-    }
+    };
   }
 
   static validateContainsIf(ifPred: () => boolean, contains: string) {
@@ -206,22 +219,22 @@ export class CustomValidators {
         const value: string = control.value;
         if (value && !value.includes(contains)) {
           return {
-            containsError: contains
-          }
+            containsError: contains,
+          };
         }
       }
       return null;
-    }
+    };
   }
 
-  static executeValidationsConditionally(validationConditions: {condition: () => boolean, validation: ValidatorFn}[]) {
+  static executeValidationsConditionally(validationConditions: { condition: () => boolean; validation: ValidatorFn }[]) {
     return (control: AbstractControl) => {
-      const errors: {[key: string]: any} = {};
-      validationConditions.forEach(vc => {
+      const errors: { [key: string]: any } = {};
+      validationConditions.forEach((vc) => {
         if (vc.condition()) {
           const error = vc.validation(control);
           if (error) {
-            Object.keys(error).forEach(key => {
+            Object.keys(error).forEach((key) => {
               errors[key] = error[key];
             });
           }
@@ -231,6 +244,6 @@ export class CustomValidators {
         return errors;
       }
       return null;
-    }
+    };
   }
 }

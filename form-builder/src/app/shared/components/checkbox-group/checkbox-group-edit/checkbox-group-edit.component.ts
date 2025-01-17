@@ -1,19 +1,18 @@
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Component} from '@angular/core';
-import {AbstractControl, FormArray, FormControl, Validators} from "@angular/forms";
-import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
-import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
-import {CustomValidators} from "../../../validators/custom-validators";
-import {ListValidators} from "../../../validators/list-validators";
-import {CheckboxGroupData, CheckboxOptions} from "../interfaces/checkbox-group-data";
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component } from '@angular/core';
+import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
+import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
+import { CustomValidators } from '@validators/custom-validators';
+import { ListValidators } from '@validators/list-validators';
+import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
 
 @Component({
   selector: 'app-checkbox-group-edit',
   templateUrl: './checkbox-group-edit.component.html',
-  styleUrl: './checkbox-group-edit.component.css'
+  styleUrl: './checkbox-group-edit.component.css',
 })
 export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions[], CheckboxGroupData> {
-
   newOption!: FormControl<string | null>;
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
@@ -23,18 +22,18 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
   }
 
   get options(): FormArray {
-    return this.formData.get("defaultValue") as FormArray;
+    return this.formData.get('defaultValue') as FormArray;
   }
 
   get optionIds(): number[] {
     if (this.formData) {
-      return this.options.controls.map(ctrl => ctrl.value.value);
+      return this.options.controls.map((ctrl) => ctrl.value.value);
     }
     return [];
   }
   get optionDescriptions(): string[] {
-    if ( this.formData) {
-      return this.options.controls.map(ctrl => ctrl.value.label);
+    if (this.formData) {
+      return this.options.controls.map((ctrl) => ctrl.value.label);
     }
     return [];
   }
@@ -42,15 +41,17 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
-      required:        new FormControl(false, {
-        updateOn: UpdateOnStrategy.CHANGE
+      required: new FormControl(false, {
+        updateOn: UpdateOnStrategy.CHANGE,
       }),
-      requiredMessage: new FormControl(null,
-        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>("required"))),
-    })
+      requiredMessage: new FormControl(
+        null,
+        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('required'))
+      ),
+    });
 
     this.connectValidations({
-      required: [{name: "requiredMessage"}],
+      required: [{ name: 'requiredMessage' }],
     });
 
     this.initializeFormValues();
@@ -60,7 +61,8 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
       validators: [
         Validators.required,
         CustomValidators.validateStringNotEmpty,
-        CustomValidators.validateIsInList(() => this.optionDescriptions)]
+        CustomValidators.validateIsInList(() => this.optionDescriptions),
+      ],
     });
   }
 
@@ -71,29 +73,33 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
   override initializeFormValues() {
     if (this.initialValues) {
       this.formData.patchValue(this.initialValues);
-      this.initialValues.defaultValue?.forEach(option => {
-        this.options.push(this.formBuilder.group({
-          label:    new FormControl(option.label, Validators.required),
-          value:    new FormControl(option.value, Validators.required),
-          disabled: new FormControl(option.disabled),
-          checked:  new FormControl(option.checked),
-        }));
+      this.initialValues.defaultValue?.forEach((option) => {
+        this.options.push(
+          this.formBuilder.group({
+            label: new FormControl(option.label, Validators.required),
+            value: new FormControl(option.value, Validators.required),
+            disabled: new FormControl(option.disabled),
+            checked: new FormControl(option.checked),
+          })
+        );
       });
     }
   }
 
   override onReset() {
     super.onReset();
-    this.getControl<boolean>("setDefaultValue")?.setValue(true);
+    this.getControl<boolean>('setDefaultValue')?.setValue(true);
     this.newOption.reset();
     this.options.clear();
-    this.initialValues.defaultValue?.forEach(option => {
-      this.options.push(this.formBuilder.group({
-        label:    new FormControl(option.label, Validators.required),
-        value:    new FormControl(option.value, Validators.required),
-        disabled: new FormControl(option.disabled),
-        checked:  new FormControl(option.checked),
-      }));
+    this.initialValues.defaultValue?.forEach((option) => {
+      this.options.push(
+        this.formBuilder.group({
+          label: new FormControl(option.label, Validators.required),
+          value: new FormControl(option.value, Validators.required),
+          disabled: new FormControl(option.disabled),
+          checked: new FormControl(option.checked),
+        })
+      );
     });
   }
 
@@ -105,7 +111,7 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
     }
   }
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
 
   getNextId() {
     return Math.max(...this.optionIds.concat(0)) + 1;
@@ -113,13 +119,15 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
 
   // Add a new option
   addOption() {
-    this.options.push(this.formBuilder.group({
-      label:    new FormControl(this.newOptionValue, Validators.required),
-      value:    new FormControl(this.getNextId(), Validators.required),
-      disabled: new FormControl(false),
-      checked:  new FormControl(false),
-    }));
-    this.newOptionValue = "";
+    this.options.push(
+      this.formBuilder.group({
+        label: new FormControl(this.newOptionValue, Validators.required),
+        value: new FormControl(this.getNextId(), Validators.required),
+        disabled: new FormControl(false),
+        checked: new FormControl(false),
+      })
+    );
+    this.newOptionValue = '';
     this.options.markAsDirty();
     this.options.markAsTouched();
   }

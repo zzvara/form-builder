@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CheckboxGroupComponent } from './checkbox-group.component';
+import { CheckboxGroupComponent } from '@components/checkbox-group/checkbox-group.component';
 
 describe('CheckboxGroupComponent', () => {
   let component: CheckboxGroupComponent;
@@ -8,9 +8,8 @@ describe('CheckboxGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CheckboxGroupComponent]
-    })
-    .compileComponents();
+      declarations: [CheckboxGroupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CheckboxGroupComponent);
     component = fixture.componentInstance;

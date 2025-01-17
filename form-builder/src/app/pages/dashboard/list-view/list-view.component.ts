@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ColumnItem } from '../dashboard.model';
-import { ProjectType } from 'src/app/interfaces/project';
-import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.interface';
+import { ProjectType } from '@app/interfaces/project';
+import { ColumnItem } from '@pages/dashboard/dashboard.model';
 
 @Component({
   selector: 'app-list-view',

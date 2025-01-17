@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RedoUndoComponent } from './redo-undo.component';
+import { RedoUndoComponent } from '@components/redo-undo/redo-undo.component';
 
 describe('RedoUndoComponent', () => {
   let component: RedoUndoComponent;
@@ -8,7 +8,7 @@ describe('RedoUndoComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RedoUndoComponent]
+      declarations: [RedoUndoComponent],
     });
     fixture = TestBed.createComponent(RedoUndoComponent);
     component = fixture.componentInstance;

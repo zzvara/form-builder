@@ -1,20 +1,22 @@
-import {NgComponentOutlet} from '@angular/common';
-import {AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {NgForm, NgModel} from '@angular/forms';
-import {getInputGroups} from '../../../pages/edit/config/edit-data-config';
-import {AbstractEditForm} from '../../abstract-classes/abstract-edit-form';
-import {AbstractInput} from '../../abstract-classes/abstract-input';
-import {FormInputData} from '../../interfaces/form-input-data';
-import {InlineEdit} from '../../interfaces/inline-edit';
-import {InputData} from '../../interfaces/input-data';
+import { NgComponentOutlet } from '@angular/common';
+import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgForm, NgModel } from '@angular/forms';
+import { getInputGroups } from '@pages/edit/config/edit-data-config';
+import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import { AbstractInput } from '@abstract-classes/abstract-input';
+import { FormInputData } from '@shared/interfaces/form-input-data';
+import { InlineEdit } from '@shared/interfaces/inline-edit';
+import { InputData } from '@shared/interfaces/input-data';
 
 @Component({
   selector: 'app-input-holder',
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.css'],
 })
-export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>> implements OnInit, AfterViewInit {
+export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>
+  implements OnInit, AfterViewInit
+{
   private readonly destroyRef = inject(DestroyRef);
 
   @Input() formInput!: FormInputData<D, T>;

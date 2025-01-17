@@ -1,11 +1,7 @@
 <nz-radio-group [(ngModel)]="data.defaultValue" [disabled]="!inlineEdit.enabled">
-  @if (data.isButton) {
-    @for (item of data.options; track item) {
-      <label nz-radio-button [nzValue]="item.option_id">{{ item.option_description }}</label>
-    }
-  } @else {
-    @for (item of data.options; track item) {
-      <label nz-radio [nzValue]="item.option_id">{{ item.option_description }}</label>
-    }
-  }
+  @if (data.isButton) { @for (item of data.options; track item) {
+  <label nz-radio-button [nzValue]="item.option_id">{{ item.option_description }}</label>
+  } } @else { @for (item of data.options; track item) {
+  <label nz-radio [nzValue]="item.option_id">{{ item.option_description }}</label>
+  } }
 </nz-radio-group>

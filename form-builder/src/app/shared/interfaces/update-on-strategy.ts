@@ -1,5 +1,5 @@
 export enum UpdateOnStrategy {
-  CHANGE = "change",
-  BLUR = "blur",
-  SUBMIT = "submit",
+  CHANGE = 'change',
+  BLUR = 'blur',
+  SUBMIT = 'submit',
 }

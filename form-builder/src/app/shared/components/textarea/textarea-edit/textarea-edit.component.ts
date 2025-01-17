@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
-import {TextareaComponentData} from "../interfaces/textarea-component-data";
-import {InputEditComponent} from "../../input/input-edit/input-edit.component";
+import { Component } from '@angular/core';
+import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
+import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 
 @Component({
   selector: 'app-textarea-edit',
   templateUrl: './textarea-edit.component.html',
-  styleUrls: ['./textarea-edit.component.css']
+  styleUrls: ['./textarea-edit.component.css'],
 })
-export class TextareaEditComponent extends InputEditComponent<TextareaComponentData> {
-}
+export class TextareaEditComponent extends InputEditComponent<TextareaComponentData> {}

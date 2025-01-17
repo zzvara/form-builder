@@ -1,4 +1,3 @@
-import {DatePickerComponentData} from "../../date-picker/interfaces/date-picker-component-data";
+import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 
-export interface RangePickerComponentData extends DatePickerComponentData<Date[]>{
-}
+export interface RangePickerComponentData extends DatePickerComponentData<Date[]> {}

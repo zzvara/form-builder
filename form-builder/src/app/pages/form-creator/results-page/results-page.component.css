@@ -15,7 +15,8 @@ nz-layout {
   margin-right: 10px;
 }
 
-#title, #description {
+#title,
+#description {
   font-size: 20px;
   border-radius: 10px;
   border-width: 2px;
@@ -28,7 +29,8 @@ nz-layout {
   margin-bottom: 10px;
 }
 
-.description-label, .title-label {
+.description-label,
+.title-label {
   font-weight: bold;
 }
 
@@ -80,7 +82,8 @@ nz-layout {
     margin-bottom: 20px;
   }
 
-  #title, #description {
+  #title,
+  #description {
     font-size: 18px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -117,7 +120,8 @@ nz-layout {
     margin-bottom: 15px;
   }
 
-  #title, #description {
+  #title,
+  #description {
     font-size: 14px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -154,7 +158,8 @@ nz-layout {
 }
 
 @media (max-width: 320px) {
-  #title, #description {
+  #title,
+  #description {
     font-size: 12px;
     padding: 6px;
     margin-bottom: 10px;

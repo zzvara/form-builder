@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { AbstractFieldLikeInputs } from "../../abstract-classes/abstract-fieldlike-inputs";
-import { SelectEditComponent } from "./select-edit/select-edit.component";
-import { SelectComponentData } from "./interfaces/select-component-data";
+import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
+import { SelectEditComponent } from '@components/select/select-edit/select-edit.component';
+import { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.css']
+  styleUrls: ['./select.component.css'],
 })
 export class SelectComponent extends AbstractFieldLikeInputs<string | string[], SelectComponentData, SelectEditComponent> {
-
   title: string;
 
   constructor(private translate: TranslateService) {
@@ -19,10 +18,12 @@ export class SelectComponent extends AbstractFieldLikeInputs<string | string[], 
   }
 
   override edit(): void {
-    this.modalService.openModal({
-      modalTitle: this.title,
-      modalContent: SelectEditComponent,
-      modalData: this.data
-    }).subscribe(this.defaultOnEditSubscribeEvent);
+    this.modalService
+      .openModal({
+        modalTitle: this.title,
+        modalContent: SelectEditComponent,
+        modalData: this.data,
+      })
+      .subscribe(this.defaultOnEditSubscribeEvent);
   }
 }

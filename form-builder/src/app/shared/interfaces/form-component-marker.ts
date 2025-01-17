@@ -1,3 +1,2 @@
-
 //Marks the draggable form components
-export interface FormComponentMarker { }
+export interface FormComponentMarker {}

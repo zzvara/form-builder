@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PictureInputComponent } from './picture-input.component';
+import { PictureInputComponent } from '@components/picture-input/picture-input.component';
 
 describe('PictureInputComponent', () => {
   let component: PictureInputComponent;
@@ -8,7 +8,7 @@ describe('PictureInputComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PictureInputComponent]
+      declarations: [PictureInputComponent],
     });
     fixture = TestBed.createComponent(PictureInputComponent);
     component = fixture.componentInstance;

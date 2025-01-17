@@ -17,24 +17,29 @@
         cdkDropList
         [cdkDropListData]="group.groupContents"
         [cdkDropListConnectedTo]="group.dropListConnectedTo()"
-        [cdkDropListSortingDisabled]="true">
-          <nz-card *ngFor="let item of group.groupContents; trackBy: identifyGroupContents"
-                   cdkDrag
-                   [cdkDragData]="item"
-                   [nzBordered]="true"
-                   style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px">
-            <span><b>{{ item.title }}</b></span>
-            <ng-container [ngSwitch]="item.type" *cdkDragPlaceholder>
-              <nz-card
-                *ngSwitchCase="SectionComponent"
-                nzTitle="Section: section | Layout: vertical"
-                [nzBodyStyle]="{padding: '10px'}"
-                class="element-list p-3"
-                style="margin: auto; padding: 0; width: 900px; border: 1px solid lightgray"
-              ></nz-card>
-              <app-input-holder *ngSwitchDefault [formInput]="item"/>
-            </ng-container>
-          </nz-card>
+        [cdkDropListSortingDisabled]="true"
+      >
+        <nz-card
+          *ngFor="let item of group.groupContents; trackBy: identifyGroupContents"
+          cdkDrag
+          [cdkDragData]="item"
+          [nzBordered]="true"
+          style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px"
+        >
+          <span
+            ><b>{{ item.title }}</b></span
+          >
+          <ng-container [ngSwitch]="item.type" *cdkDragPlaceholder>
+            <nz-card
+              *ngSwitchCase="SectionComponent"
+              nzTitle="Section: section | Layout: vertical"
+              [nzBodyStyle]="{ padding: '10px' }"
+              class="element-list p-3"
+              style="margin: auto; padding: 0; width: 900px; border: 1px solid lightgray"
+            ></nz-card>
+            <app-input-holder *ngSwitchDefault [formInput]="item" />
+          </ng-container>
+        </nz-card>
       </nz-collapse-panel>
     </nz-collapse>
   </div>

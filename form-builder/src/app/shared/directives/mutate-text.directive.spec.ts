@@ -1,4 +1,4 @@
-import { MutateTextDirective } from './mutate-text.directive';
+import { MutateTextDirective } from '@directives/mutate-text.directive';
 
 describe('MutateTextDirective', () => {
   it('should create an instance', () => {

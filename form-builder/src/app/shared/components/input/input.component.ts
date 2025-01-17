@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AbstractFieldLikeInputs } from "../../abstract-classes/abstract-fieldlike-inputs";
-import { ErrorType } from "../../helpers/error-helper";
-import { InputEditComponent } from "./input-edit/input-edit.component";
-import { InputComponentData } from "./interfaces/input-component-data";
+import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
+import { ErrorType } from '@helpers/error-helper';
+import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
+import { InputComponentData } from '@components/input/interfaces/input-component-data';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -11,7 +11,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./input.component.css'],
 })
 export class InputComponent extends AbstractFieldLikeInputs<string, InputComponentData, InputEditComponent> {
-
   title: string;
 
   constructor(private translate: TranslateService) {
@@ -20,17 +19,21 @@ export class InputComponent extends AbstractFieldLikeInputs<string, InputCompone
   }
 
   override edit(): void {
-    this.modalService.openModal({
-      modalTitle: this.title,
-      modalContent: InputEditComponent,
-      modalData: this.data
-    }).subscribe(this.defaultOnEditSubscribeEvent);
+    this.modalService
+      .openModal({
+        modalTitle: this.title,
+        modalContent: InputEditComponent,
+        modalData: this.data,
+      })
+      .subscribe(this.defaultOnEditSubscribeEvent);
   }
 
   override errorList(): ErrorType[] {
-    return super.errorList().concat([{
-      errorName: "minlength",
-      errorMessage: this.data.minLengthMessage!.replace("{*}", String(this.data.minLengthNumber!)),
-    }]);
+    return super.errorList().concat([
+      {
+        errorName: 'minlength',
+        errorMessage: this.data.minLengthMessage!.replace('{*}', String(this.data.minLengthNumber!)),
+      },
+    ]);
   }
 }

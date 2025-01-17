@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MenuOption } from '../../models/menu-option.model';
-import { HeaderService } from '../../../services/header/header.service';
-import {TranslateService} from "@ngx-translate/core";
-import { JsonService } from '../../../services/json.service';
-import { ContextAction } from './header.model';
+import { MenuOption } from '@models/menu-option.model';
+import { HeaderService } from '@services/header/header.service';
+import { TranslateService } from '@ngx-translate/core';
+import { JsonService } from '@services/json.service';
+import { ContextAction } from '@components/header/header.model';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private optionsSub?: Subscription;
   private actionsSub?: Subscription;
 
-  constructor(private readonly router: Router, private readonly headerService: HeaderService, private readonly jsonService: JsonService,  private readonly translate: TranslateService) {}
+  constructor(
+    private readonly router: Router,
+    private readonly headerService: HeaderService,
+    private readonly jsonService: JsonService,
+    private readonly translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.jsonService.clearJsonData();

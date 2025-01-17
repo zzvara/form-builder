@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TextareaEditComponent } from './textarea-edit.component';
+import { TextareaEditComponent } from '@components/textarea/textarea-edit/textarea-edit.component';
 
 describe('TextareaEditComponent', () => {
   let component: TextareaEditComponent;
@@ -8,7 +8,7 @@ describe('TextareaEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TextareaEditComponent]
+      declarations: [TextareaEditComponent],
     });
     fixture = TestBed.createComponent(TextareaEditComponent);
     component = fixture.componentInstance;

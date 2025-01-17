@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { ProjectService } from '../../services/project.service';
-import { ProjectType } from 'src/app/interfaces/project';
-import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
+import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.interface';
+import { ProjectType } from '@app/interfaces/project';
+import { ProjectService } from '@app/services/project.service';
 
 @Component({
   selector: 'app-dashboard',

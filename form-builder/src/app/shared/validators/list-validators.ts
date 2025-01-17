@@ -1,33 +1,31 @@
-import {AbstractControl, FormArray} from "@angular/forms";
+import { AbstractControl, FormArray } from '@angular/forms';
 
 export class ListValidators {
-
-
   //Form group level validator
   static validateListNum(minNum?: number, maxNum?: number) {
     return (listControl: AbstractControl) => {
       const controls = (listControl as FormArray).controls;
       const error: {
         minLengthError?: {
-          min: number,
-          current: number
-        },
+          min: number;
+          current: number;
+        };
         maxLengthError?: {
-          max: number,
-          current: number
-        }
+          max: number;
+          current: number;
+        };
       } = {};
 
       if (minNum && controls.length < minNum) {
         error.minLengthError = {
           min: minNum,
-          current: controls.length
+          current: controls.length,
         };
       }
       if (maxNum && controls.length > maxNum) {
         error.maxLengthError = {
           max: maxNum,
-          current: controls.length
+          current: controls.length,
         };
       }
 
@@ -35,18 +33,18 @@ export class ListValidators {
         return error;
       }
       return null;
-    }
+    };
   }
 
   static validateListContains(item: () => any) {
     return (listControl: AbstractControl) => {
       const controls = (listControl as FormArray).controls;
-      if (controls.map(ctrl => ctrl.getRawValue()).some(val => val === item())) {
+      if (controls.map((ctrl) => ctrl.getRawValue()).some((val) => val === item())) {
         return {
-          listContainsItem: item()
+          listContainsItem: item(),
         };
       }
       return null;
-    }
+    };
   }
 }

@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { AbstractDatePickerComponent } from "../../abstract-classes/abstract-date-picker-input";
-import { RangePickerComponentData } from "./interfaces/range-picker-component-data";
-import { RangePickerEditComponent } from "./range-picker-edit/range-picker-edit.component";
+import { AbstractDatePickerComponent } from '@abstract-classes/abstract-date-picker-input';
+import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
+import { RangePickerEditComponent } from '@components/range-picker/range-picker-edit/range-picker-edit.component';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-range-picker',
   templateUrl: './range-picker.component.html',
-  styleUrls: ['./range-picker.component.css']
+  styleUrls: ['./range-picker.component.css'],
 })
 export class RangePickerComponent extends AbstractDatePickerComponent<Date[], RangePickerComponentData, RangePickerEditComponent> {
-
   title: string;
 
   constructor(private translate: TranslateService) {
@@ -19,16 +18,18 @@ export class RangePickerComponent extends AbstractDatePickerComponent<Date[], Ra
   }
 
   override edit(): void {
-    this.modalService.openModal({
-      modalTitle: this.title,
-      modalContent: RangePickerEditComponent,
-      modalData: this.data
-    }).subscribe(this.defaultOnEditSubscribeEvent);
+    this.modalService
+      .openModal({
+        modalTitle: this.title,
+        modalContent: RangePickerEditComponent,
+        modalData: this.data,
+      })
+      .subscribe(this.defaultOnEditSubscribeEvent);
   }
 
   getPlaceholder(): string[] {
     if (this.data.placeholderValue) {
-      return this.data.placeholderValue.split("|", 2);
+      return this.data.placeholderValue.split('|', 2);
     }
     return [];
   }

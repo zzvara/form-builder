@@ -15,7 +15,8 @@ nz-layout {
   margin-right: 10px;
 }
 
-#title, #description {
+#title,
+#description {
   font-size: 20px;
   border-radius: 10px;
   border-width: 2px;
@@ -28,7 +29,8 @@ nz-layout {
   margin-bottom: 10px;
 }
 
-.description-label, .title-label {
+.description-label,
+.title-label {
   font-weight: bold;
 }
 
@@ -67,7 +69,8 @@ nz-layout {
     margin-bottom: 20px;
   }
 
-  #title, #description {
+  #title,
+  #description {
     font-size: 18px;
   }
 
@@ -82,7 +85,8 @@ nz-layout {
     padding: 0 15px;
   }
 
-  #title, #description {
+  #title,
+  #description {
     font-size: 16px;
   }
   .formelement {
@@ -106,7 +110,8 @@ nz-layout {
     padding: 0 10px;
   }
 
-  #title, #description {
+  #title,
+  #description {
     font-size: 14px;
   }
 

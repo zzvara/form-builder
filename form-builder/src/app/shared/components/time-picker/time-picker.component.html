@@ -1,29 +1,38 @@
 <nz-form-item>
   <nz-form-control [nzErrorTip]="errorTemplate">
-    <ng-container *ngTemplateOutlet="prefixTemplate"/>
-    <nz-time-picker #inputComponent
-                    [nzFormat]="data.timeFormat"
-                    [required]="data.required"
-                    [nzDisabledHours]="disabledHours(data)"
-                    [nzDisabledMinutes]="disabledMinutes(data)"
-                    [nzDisabledSeconds]="disabledSeconds(data)"
-                    [nzUse12Hours]="data.use12Hours"
-                    [nzHideDisabledOptions]="data.hideDisabledOptions"
-                    [nzHourStep]="data.hourStep"
-                    [nzMinuteStep]="data.minuteStep"
-                    [nzSecondStep]="data.secondStep"
-                    [disabled]="!inlineEdit.enabled"
-                    [nzPlaceHolder]="data.placeholderValue ?? ''"
-                    [(ngModel)]="data.defaultValue"
-                    (ngModelChange)="onChange($event)"
-                    (mousedown)="$event.stopPropagation()"
-                    style="width: 50%">
+    <ng-container *ngTemplateOutlet="prefixTemplate" />
+    <nz-time-picker
+      #inputComponent
+      [nzFormat]="data.timeFormat"
+      [required]="data.required"
+      [nzDisabledHours]="disabledHours(data)"
+      [nzDisabledMinutes]="disabledMinutes(data)"
+      [nzDisabledSeconds]="disabledSeconds(data)"
+      [nzUse12Hours]="data.use12Hours"
+      [nzHideDisabledOptions]="data.hideDisabledOptions"
+      [nzHourStep]="data.hourStep"
+      [nzMinuteStep]="data.minuteStep"
+      [nzSecondStep]="data.secondStep"
+      [disabled]="!inlineEdit.enabled"
+      [nzPlaceHolder]="data.placeholderValue ?? ''"
+      [(ngModel)]="data.defaultValue"
+      (ngModelChange)="onChange($event)"
+      (mousedown)="$event.stopPropagation()"
+      style="width: 50%"
+    >
     </nz-time-picker>
   </nz-form-control>
 </nz-form-item>
 <ng-template #errorTemplate let-control>
-  <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
+  <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{ message }}</div>
 </ng-template>
 <ng-template #prefixTemplate>
-  <span *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>
+  <span
+    *ngIf="data.showTooltip"
+    nz-icon
+    nz-tooltip
+    [nzTooltipTitle]="data.tooltipText"
+    nzType="info-circle"
+    style="margin-right: 10px"
+  ></span>
 </ng-template>

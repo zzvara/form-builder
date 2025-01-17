@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RangePickerEditComponent } from './range-picker-edit.component';
+import { RangePickerEditComponent } from '@components/range-picker/range-picker-edit/range-picker-edit.component';
 
 describe('RangePickerEditComponent', () => {
   let component: RangePickerEditComponent;
@@ -8,7 +8,7 @@ describe('RangePickerEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RangePickerEditComponent]
+      declarations: [RangePickerEditComponent],
     });
     fixture = TestBed.createComponent(RangePickerEditComponent);
     component = fixture.componentInstance;

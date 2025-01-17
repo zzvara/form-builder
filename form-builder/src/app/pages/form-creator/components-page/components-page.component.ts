@@ -1,8 +1,8 @@
-import {Component, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {InlineEdit} from "../../../shared/interfaces/inline-edit";
-import {EditComponent} from '../../edit/edit.component';
-import {ProjectService} from 'src/app/services/project.service';
-import {Project, ProjectVersion} from 'src/app/interfaces/project';
+import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Project, ProjectVersion } from '@app/interfaces/project';
+import { EditComponent } from '@app/pages/edit/edit.component';
+import { ProjectService } from '@app/services/project.service';
+import { InlineEdit } from '@app/shared/interfaces/inline-edit';
 
 @Component({
   selector: 'app-components-page',
@@ -102,7 +102,7 @@ export class ComponentsPageComponent implements OnInit {
     }
   }
 
-  onSectionInputsChange(undoRedoEvent: "UNDO" | "REDO"): void {
+  onSectionInputsChange(undoRedoEvent: 'UNDO' | 'REDO'): void {
     this.editComponent.undoRedo(undoRedoEvent);
   }
 

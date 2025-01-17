@@ -19,20 +19,15 @@
     </div>
     <div>
       <a nz-dropdown [nzDropdownMenu]="menu">
-        <span nz-icon nzType="setting" nzTheme="outline" class="setting" ></span>
+        <span nz-icon nzType="setting" nzTheme="outline" class="setting"></span>
       </a>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-submenu [nzTitle]="'dashboard.LANGUAGE' | translate" class="language">
-          <li nz-menu-item (click)="setLanguage('en')">
-            <span class="fi fi-gb"></span> English
-          </li>
-          <li nz-menu-item (click)="setLanguage('hu')">
-            <span class="fi fi-hu"></span> Magyar
-          </li>
+          <li nz-menu-item (click)="setLanguage('en')"><span class="fi fi-gb"></span> English</li>
+          <li nz-menu-item (click)="setLanguage('hu')"><span class="fi fi-hu"></span> Magyar</li>
         </ul>
-
       </nz-dropdown-menu>
     </div>
-    <h1>{{"general.FORM_BUILDER" | translate}}</h1>
+    <h1>{{ 'general.FORM_BUILDER' | translate }}</h1>
   </div>
 </nz-header>

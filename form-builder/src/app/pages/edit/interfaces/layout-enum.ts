@@ -1,4 +1,4 @@
 export enum LayoutEnum {
-  HORIZONTAL = "horizontal",
-  VERTICAL = "vertical",
+  HORIZONTAL = 'horizontal',
+  VERTICAL = 'vertical',
 }

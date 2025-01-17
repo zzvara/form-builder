@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputHolderComponent } from './input-holder.component';
+import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 
 describe('InputHolderComponent', () => {
   let component: InputHolderComponent;
@@ -8,7 +8,7 @@ describe('InputHolderComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [InputHolderComponent]
+      declarations: [InputHolderComponent],
     });
     fixture = TestBed.createComponent(InputHolderComponent);
     component = fixture.componentInstance;

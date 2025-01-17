@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ResultsPageComponent } from './results-page.component';
+import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
 
 describe('InfoPageComponent', () => {
   let component: ResultsPageComponent;
@@ -7,7 +7,7 @@ describe('InfoPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ResultsPageComponent]
+      declarations: [ResultsPageComponent],
     });
     fixture = TestBed.createComponent(ResultsPageComponent);
     component = fixture.componentInstance;

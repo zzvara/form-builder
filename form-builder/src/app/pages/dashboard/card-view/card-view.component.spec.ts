@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CardViewComponent } from './card-view.component';
+import { CardViewComponent } from '@pages/dashboard/card-view/card-view.component';
 
 describe('CardViewComponent', () => {
   let component: CardViewComponent;
@@ -8,7 +8,7 @@ describe('CardViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CardViewComponent]
+      declarations: [CardViewComponent],
     });
     fixture = TestBed.createComponent(CardViewComponent);
     component = fixture.componentInstance;

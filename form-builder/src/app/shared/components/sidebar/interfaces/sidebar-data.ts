@@ -1,13 +1,13 @@
-import {CdkDropList} from "@angular/cdk/drag-drop";
-import {Type} from "@angular/core";
-import {FormComponentMarker} from "../../../interfaces/form-component-marker";
-import {FormInputData} from "../../../interfaces/form-input-data";
+import { CdkDropList } from '@angular/cdk/drag-drop';
+import { Type } from '@angular/core';
+import { FormComponentMarker } from '@shared/interfaces/form-component-marker';
+import { FormInputData } from '@shared/interfaces/form-input-data';
 
 export interface SidebarData {
   groupName: string;
   active: boolean;
   dropListConnectedTo: () => (CdkDropList | string)[] | CdkDropList | string;
-  groupContents: FormInputData[]
+  groupContents: FormInputData[];
 }
 
 // Így groupName-nek egyedinek kell lennie!!!

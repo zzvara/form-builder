@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {SectionComponent} from "../section/section.component";
-import {identifyGroupContents, identifySidebarData, SidebarData} from "./interfaces/sidebar-data";
-
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { SectionComponent } from '@components/section/section.component';
+import { identifyGroupContents, identifySidebarData, SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 
 @Component({
   selector: 'app-sidebar',

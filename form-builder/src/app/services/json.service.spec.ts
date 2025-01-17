@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JsonService } from './json.service';
+import { JsonService } from '@services/json.service';
 
 describe('JsonService', () => {
   let service: JsonService;

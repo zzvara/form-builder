@@ -1,7 +1,8 @@
 <nz-form-item>
   <nz-form-control [nzErrorTip]="errorTemplate">
-    <ng-container *ngTemplateOutlet="prefixTemplate"/>
-    <nz-date-picker #inputComponent
+    <ng-container *ngTemplateOutlet="prefixTemplate" />
+    <nz-date-picker
+      #inputComponent
       [nzMode]="data.mode"
       [nzFormat]="getFullFormat"
       [nzInline]="data.inlineMode"
@@ -16,17 +17,25 @@
       [(ngModel)]="data.defaultValue"
       (ngModelChange)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
-      style="width: 50%">
+      style="width: 50%"
+    >
     </nz-date-picker>
-    <ng-container *ngTemplateOutlet="suffixTemplate"/>
+    <ng-container *ngTemplateOutlet="suffixTemplate" />
   </nz-form-control>
 </nz-form-item>
 <ng-template #errorTemplate let-control>
-  <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{message}}</div>
+  <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{ message }}</div>
 </ng-template>
 <ng-template #prefixTemplate>
-  <span *ngIf="data.showTooltip" nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>
+  <span
+    *ngIf="data.showTooltip"
+    nz-icon
+    nz-tooltip
+    [nzTooltipTitle]="data.tooltipText"
+    nzType="info-circle"
+    style="margin-right: 10px"
+  ></span>
 </ng-template>
 <ng-template #suffixTemplate>
-  <div *ngIf="data.inlineMode" style="margin-top: 10px">Selected date: {{data.defaultValue | date:getFullFormat}}</div>
+  <div *ngIf="data.inlineMode" style="margin-top: 10px">Selected date: {{ data.defaultValue | date : getFullFormat }}</div>
 </ng-template>

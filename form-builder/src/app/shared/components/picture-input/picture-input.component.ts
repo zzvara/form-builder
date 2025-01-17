@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, of } from 'rxjs';
-import { AbstractInput } from "../../abstract-classes/abstract-input";
-import { PictureInputComponentData } from "./interfaces/picture-input-component-data";
-import { PictureInputEditComponent } from "./picture-input-edit/picture-input-edit.component";
-import { TranslateService } from '@ngx-translate/core';  // Import TranslateService
+import { AbstractInput } from '@abstract-classes/abstract-input';
+import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
+import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
+import { TranslateService } from '@ngx-translate/core'; // Import TranslateService
 
 @Component({
   selector: 'app-picture-input',
@@ -12,7 +12,6 @@ import { TranslateService } from '@ngx-translate/core';  // Import TranslateServ
   styleUrls: ['./picture-input.component.css'],
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
-
   title: string;
 
   constructor(private translate: TranslateService) {
@@ -45,10 +44,12 @@ export class PictureInputComponent extends AbstractInput<string | null, PictureI
   };
 
   override edit(): void {
-    this.modalService.openModal({
-      modalTitle: this.title,  // Use the translated title here
-      modalContent: PictureInputEditComponent,
-      modalData: this.data
-    }).subscribe(this.defaultOnEditSubscribeEvent);
+    this.modalService
+      .openModal({
+        modalTitle: this.title, // Use the translated title here
+        modalContent: PictureInputEditComponent,
+        modalData: this.data,
+      })
+      .subscribe(this.defaultOnEditSubscribeEvent);
   }
 }

@@ -1,17 +1,17 @@
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Component} from '@angular/core';
-import {AbstractFieldLikeEditForm} from "../../../abstract-classes/abstract-fieldlike-edit-form";
-import {identifyStringArray} from "../../../helpers/identification-helper";
-import {UpdateOnStrategy} from "../../../interfaces/update-on-strategy";
-import {SelectComponentData} from "../interfaces/select-component-data";
-import {AbstractControl, FormArray, FormControl, Validators} from "@angular/forms";
-import {ListValidators} from "../../../validators/list-validators";
-import {CustomValidators} from "../../../validators/custom-validators";
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component } from '@angular/core';
+import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import { identifyStringArray } from '@helpers/identification-helper';
+import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
+import { SelectComponentData } from '@components/select/interfaces/select-component-data';
+import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
+import { ListValidators } from '@validators/list-validators';
+import { CustomValidators } from '@validators/custom-validators';
 
 @Component({
   selector: 'app-select-edit',
   templateUrl: './select-edit.component.html',
-  styleUrls: ['./select-edit.component.css']
+  styleUrls: ['./select-edit.component.css'],
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
   protected readonly identifyStringArray = identifyStringArray;
@@ -23,8 +23,8 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   }
 
   get optionsValues(): string[] {
-    if ( this.formData) {
-      return this.options.controls.map(ctrl => ctrl.value);
+    if (this.formData) {
+      return this.options.controls.map((ctrl) => ctrl.value);
     }
     return [];
   }
@@ -37,16 +37,16 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   }
 
   get isMultipleChoice(): boolean {
-    return  this.formData.get('isMultipleChoice')?.getRawValue();
+    return this.formData.get('isMultipleChoice')?.getRawValue();
   }
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
-      selectOptions:      this.formBuilder.array([], ListValidators.validateListNum(2)),
-      isMultipleChoice:   new FormControl(false, {
-        updateOn: UpdateOnStrategy.CHANGE
-      })
+      selectOptions: this.formBuilder.array([], ListValidators.validateListNum(2)),
+      isMultipleChoice: new FormControl(false, {
+        updateOn: UpdateOnStrategy.CHANGE,
+      }),
     });
 
     this.newOption = new FormControl(null, {
@@ -54,7 +54,8 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
       validators: [
         Validators.required,
         CustomValidators.validateStringNotEmpty,
-        CustomValidators.validateIsInList(() => this.optionsValues)]
+        CustomValidators.validateIsInList(() => this.optionsValues),
+      ],
     });
 
     this.initializeFormValues();
@@ -63,7 +64,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   override initializeFormValues() {
     if (this.initialValues) {
       this.formData.patchValue(this.initialValues);
-      this.initialValues.selectOptions.forEach(option => {
+      this.initialValues.selectOptions.forEach((option) => {
         this.options.push(new FormControl(option, Validators.required));
       });
     }
@@ -74,11 +75,11 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     this.initialValues.selectOptions = this.rawFormData.selectOptions;
     this.initialValues.questionValue = this.rawFormData.questionValue;
     this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
-    if (!this.getControlValue("setDefaultValue") || !this.rawFormData.defaultValue) {
+    if (!this.getControlValue('setDefaultValue') || !this.rawFormData.defaultValue) {
       if (this.rawFormData.isMultipleChoice) {
         this.initialValues.defaultValue = [];
       } else {
-        this.initialValues.defaultValue = "";
+        this.initialValues.defaultValue = '';
       }
     } else {
       this.initialValues.defaultValue = this.rawFormData.defaultValue;
@@ -87,24 +88,24 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     this.initialValues.isMultipleChoice = this.rawFormData.isMultipleChoice;
   }
 
-  override get defaultValueUpdateOn(){
+  override get defaultValueUpdateOn() {
     return UpdateOnStrategy.CHANGE;
-  };
+  }
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
 
   getDefaultValues(): string | string[] {
-    return  this.formData.get("defaultValue")?.getRawValue();
+    return this.formData.get('defaultValue')?.getRawValue();
   }
 
   setDefaultValue(values: string | string[]): void {
-     this.formData.get("defaultValue")?.setValue(values);
+    this.formData.get('defaultValue')?.setValue(values);
   }
 
   // Add a new option
   addOption() {
     this.options.push(new FormControl(this.newOptionValue, Validators.required));
-    this.newOptionValue = "";
+    this.newOptionValue = '';
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
@@ -113,9 +114,9 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   removeOption(option: AbstractControl<string>, optionIndex: number) {
     this.options.removeAt(optionIndex);
     if (Array.isArray(this.getDefaultValues())) {
-      this.setDefaultValue((this.getDefaultValues() as string[]).filter(opt => opt !== option.value));
+      this.setDefaultValue((this.getDefaultValues() as string[]).filter((opt) => opt !== option.value));
     } else {
-      this.setDefaultValue("");
+      this.setDefaultValue('');
     }
     this.options.markAsDirty();
     this.options.markAsTouched();
@@ -130,7 +131,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     super.onReset();
     this.newOption.reset();
     this.options.clear();
-    this.initialValues.selectOptions.forEach(option => {
+    this.initialValues.selectOptions.forEach((option) => {
       this.options.push(new FormControl(option, Validators.required));
     });
   }

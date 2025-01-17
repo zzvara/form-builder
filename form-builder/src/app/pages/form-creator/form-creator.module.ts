@@ -1,8 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormCreatorComponent } from './form-creator.component';
-import { InfoPageComponent } from './info-page/info-page.component';
-import { ComponentsPageComponent } from './components-page/components-page.component';
-import { ResultsPageComponent } from './results-page/results-page.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -16,36 +12,40 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { EditModule } from '../edit/edit.module';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzToolTipModule } from "ng-zorro-antd/tooltip";
-import { SharedModule } from "../../shared/shared.module";
-import {TranslatePipe} from "@ngx-translate/core";
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
+import { FormCreatorComponent } from '@pages/form-creator/form-creator.component';
+import { InfoPageComponent } from '@pages/form-creator/info-page/info-page.component';
+import { ComponentsPageComponent } from '@pages/form-creator/components-page/components-page.component';
+import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
+import { EditModule } from '@pages/edit/edit.module';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
-    imports: [
-        NzFormModule,
-        NzInputModule,
-        NzLayoutModule,
-        NzSwitchModule,
-        NzDatePickerModule,
-        NzTimePickerModule,
-        NzCheckboxModule,
-        NzStepsModule,
-        NzButtonModule,
-        NzTabsModule,
-        NzPopconfirmModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserModule,
-        EditModule,
-        NzButtonModule,
-        NzSelectModule,
-        NzToolTipModule,
-        SharedModule,
-        TranslatePipe,
-    ],
+  imports: [
+    NzFormModule,
+    NzInputModule,
+    NzLayoutModule,
+    NzSwitchModule,
+    NzDatePickerModule,
+    NzTimePickerModule,
+    NzCheckboxModule,
+    NzStepsModule,
+    NzButtonModule,
+    NzTabsModule,
+    NzPopconfirmModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserModule,
+    EditModule,
+    NzButtonModule,
+    NzSelectModule,
+    NzToolTipModule,
+    SharedModule,
+    TranslatePipe,
+  ],
   providers: [],
   exports: [],
 })

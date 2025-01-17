@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ContextAction } from '@app/shared/components/header/header.model';
+import { MenuOption, MenuState } from '@app/shared/models/menu-option.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ContextAction } from 'src/app/shared/components/header/header.model';
-import { MenuOption, MenuState } from 'src/app/shared/models/menu-option.model';
 
 @Injectable({
   providedIn: 'root',

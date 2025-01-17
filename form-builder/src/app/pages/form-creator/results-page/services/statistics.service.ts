@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Project } from 'src/app/interfaces/project';
-import {instanceOfFormInputData} from "../../../../shared/interfaces/form-input-data";
+import { Project } from '@app/interfaces/project';
+import { instanceOfFormInputData } from '@app/shared/interfaces/form-input-data';
 
 @Injectable({
   providedIn: 'root',

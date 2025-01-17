@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListViewComponent } from './list-view.component';
+import { ListViewComponent } from '@pages/dashboard/list-view/list-view.component';
 
 describe('ListViewComponent', () => {
   let component: ListViewComponent;
@@ -8,7 +8,7 @@ describe('ListViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ListViewComponent]
+      declarations: [ListViewComponent],
     });
     fixture = TestBed.createComponent(ListViewComponent);
     component = fixture.componentInstance;

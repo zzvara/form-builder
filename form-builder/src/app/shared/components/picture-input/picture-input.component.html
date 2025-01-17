@@ -2,9 +2,10 @@
   [nzDisabled]="!inlineEdit.enabled"
   [nzAction]="uploadToLocalStorage"
   [nzHeaders]="{ authorization: 'authorization-text' }"
-  (nzChange)="onChange($event)">
+  (nzChange)="onChange($event)"
+>
   <button nz-button>
     <span nz-icon nzType="upload"></span>
-    {{"components.picture_input.CLICK_TO_UPLOAD" | translate}}
+    {{ 'components.picture_input.CLICK_TO_UPLOAD' | translate }}
   </button>
 </nz-upload>

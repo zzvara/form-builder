@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Project, ProjectVersion } from 'src/app/interfaces/project';
-import { JsonService } from 'src/app/services/json.service';
-import { ProjectService } from 'src/app/services/project.service';
-import { StatisticsService } from './services/statistics.service';
-import { ColumnItem } from '../../dashboard/dashboard.model';
-import { Questionnaire } from 'src/app/interfaces/questionnaire/questionnaire.interface';
+import { Project, ProjectVersion } from '@app/interfaces/project';
+import { JsonService } from '@app/services/json.service';
+import { ProjectService } from '@app/services/project.service';
+import { ColumnItem } from '@app/pages/dashboard/dashboard.model';
+import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.interface';
+import { StatisticsService } from '@app/pages/form-creator/results-page/services/statistics.service';
 
 @Component({
   selector: 'app-results-page',

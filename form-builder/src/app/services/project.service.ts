@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Project, ProjectVersion } from '../interfaces/project';
+import { Project, ProjectVersion } from '@app/interfaces/project';
 
 @Injectable({
   providedIn: 'root',

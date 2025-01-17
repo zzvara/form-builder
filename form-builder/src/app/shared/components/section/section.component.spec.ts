@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SectionComponent } from './section.component';
+import { SectionComponent } from '@components/section/section.component';
 
 describe('SectionComponent', () => {
   let component: SectionComponent;
@@ -8,7 +8,7 @@ describe('SectionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SectionComponent]
+      declarations: [SectionComponent],
     });
     fixture = TestBed.createComponent(SectionComponent);
     component = fixture.componentInstance;

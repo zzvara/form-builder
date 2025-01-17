@@ -1,10 +1,10 @@
-import {Component, OnInit, Input, Output, EventEmitter, SimpleChanges} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Project, ProjectType } from '@app/interfaces/project';
+import { JsonService } from '@app/services/json.service';
+import { ProjectService } from '@app/services/project.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { ProjectService } from '../../../services/project.service';
-import { JsonService } from '../../../services/json.service';
-import { Project, ProjectType } from 'src/app/interfaces/project';
 
 @Component({
   selector: 'app-info-page',

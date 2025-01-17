@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputComponent } from './input.component';
+import { NumberInputComponent } from '@components/number-input/number-input.component';
 
 xdescribe('TextInputComponent', () => {
-    let component: InputComponent;
-    let fixture: ComponentFixture<InputComponent>;
+  let component: NumberInputComponent;
+  let fixture: ComponentFixture<NumberInputComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [InputComponent]
-        });
-        fixture = TestBed.createComponent(InputComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [NumberInputComponent],
     });
+    fixture = TestBed.createComponent(NumberInputComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

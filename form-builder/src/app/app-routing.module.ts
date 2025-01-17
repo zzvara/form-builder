@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { FormCreatorComponent } from './pages/form-creator/form-creator.component';
-import { headerResolver } from './shared/resolvers/header.resolver';
+import { DashboardComponent } from '@pages/dashboard/dashboard.component';
+import { FormCreatorComponent } from '@pages/form-creator/form-creator.component';
+import { headerResolver } from '@resolvers/header.resolver';
 
 const routes: Routes = [
   {

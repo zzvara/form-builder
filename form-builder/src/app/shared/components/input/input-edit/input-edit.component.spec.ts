@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputEditComponent } from './input-edit.component';
+import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 
 describe('InputEditComponent', () => {
   let component: InputEditComponent;
@@ -8,7 +8,7 @@ describe('InputEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [InputEditComponent]
+      declarations: [InputEditComponent],
     });
     fixture = TestBed.createComponent(InputEditComponent);
     component = fixture.componentInstance;

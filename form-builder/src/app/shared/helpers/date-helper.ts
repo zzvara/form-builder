@@ -1,6 +1,5 @@
-import {DisabledTimeConfig, NzDateMode} from "ng-zorro-antd/date-picker";
-import {DatePickerComponentData} from "../components/date-picker/interfaces/date-picker-component-data";
-import {TimePickerComponentData} from "../components/time-picker/interfaces/time-picker-component-data";
+import { DisabledTimeConfig, NzDateMode } from 'ng-zorro-antd/date-picker';
+import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 
 export type DefaultDateComparers = {
   [key in NzDateMode]: (date1: Date, date2: Date) => ComparisonType;
@@ -8,12 +7,12 @@ export type DefaultDateComparers = {
 
 export const defaultDateComparers: DefaultDateComparers = {
   decade: compareByYear,
-  year:   compareByYear,
-  month:  compareByMonth,
-  week:   compareByWeek,
-  date:   compareDatesFull,
-  time:   compareDateTimeFull,
-  quarter: compareByYear
+  year: compareByYear,
+  month: compareByMonth,
+  week: compareByWeek,
+  date: compareDatesFull,
+  time: compareDateTimeFull,
+  quarter: compareByYear,
 };
 
 export interface MinMaxDateable {
@@ -52,7 +51,7 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           const comparison = compareDatesFull(currentDate, data.minDateValue);
           if (comparison < 0) {
             return range(0, 24);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             hours.push(...range(0, data.minDateValue.getHours()));
           }
         }
@@ -60,7 +59,7 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           const comparison = compareDatesFull(currentDate, data.maxDateValue);
           if (comparison > 0) {
             return range(0, 24);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             hours.push(...range(data.maxDateValue.getHours() + 1, 24));
           }
         }
@@ -75,7 +74,7 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           const comparison = compareByHoursFull(currentDate, data.minDateValue);
           if (comparison < 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             minutes.push(...range(0, data.minDateValue.getMinutes()));
           }
         }
@@ -83,7 +82,7 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           const comparison = compareByHoursFull(currentDate, data.maxDateValue);
           if (comparison > 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             minutes.push(...range(data.maxDateValue.getMinutes() + 1, 60));
           }
         }
@@ -98,7 +97,7 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           const comparison = compareByMinuteFull(currentDate, data.minDateValue);
           if (comparison < 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             seconds.push(...range(0, data.minDateValue.getSeconds()));
           }
         }
@@ -106,14 +105,14 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           const comparison = compareByMinuteFull(currentDate, data.maxDateValue);
           if (comparison > 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             seconds.push(...range(data.maxDateValue.getSeconds() + 1, 60));
           }
         }
         return seconds;
       }
       return range(0, 60);
-    }
+    },
   };
 }
 
@@ -126,7 +125,7 @@ export function getDisabledTimeConfigForMaxDate(currentDate: Date, maxDate: Date
           const comparison = compareDatesFull(currentDate, maxDate);
           if (comparison > 0) {
             return range(0, 24);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             hours.push(...range(maxDate.getHours() + 1, 24));
           }
         }
@@ -141,7 +140,7 @@ export function getDisabledTimeConfigForMaxDate(currentDate: Date, maxDate: Date
           const comparison = compareByHoursFull(currentDate, maxDate);
           if (comparison > 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             minutes.push(...range(maxDate.getMinutes() + 1, 60));
           }
         }
@@ -156,14 +155,14 @@ export function getDisabledTimeConfigForMaxDate(currentDate: Date, maxDate: Date
           const comparison = compareByMinuteFull(currentDate, maxDate);
           if (comparison > 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             seconds.push(...range(maxDate.getSeconds() + 1, 60));
           }
         }
         return seconds;
       }
       return range(0, 60);
-    }
+    },
   };
 }
 
@@ -176,7 +175,7 @@ export function getDisabledTimeConfigForMinDate(currentDate: Date, minDate: Date
           const comparison = compareDatesFull(currentDate, minDate);
           if (comparison < 0) {
             return range(0, 24);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             hours.push(...range(0, minDate.getHours()));
           }
         }
@@ -191,7 +190,7 @@ export function getDisabledTimeConfigForMinDate(currentDate: Date, minDate: Date
           const comparison = compareByHoursFull(currentDate, minDate);
           if (comparison < 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             minutes.push(...range(0, minDate.getMinutes()));
           }
         }
@@ -206,14 +205,14 @@ export function getDisabledTimeConfigForMinDate(currentDate: Date, minDate: Date
           const comparison = compareByMinuteFull(currentDate, minDate);
           if (comparison < 0) {
             return range(0, 60);
-          } else if(comparison === 0) {
+          } else if (comparison === 0) {
             seconds.push(...range(0, minDate.getSeconds()));
           }
         }
         return seconds;
       }
       return range(0, 60);
-    }
+    },
   };
 }
 
@@ -299,7 +298,7 @@ export function disabledSeconds(data: TimePickerComponentData): ((hour: number, 
       return seconds;
     }
     return range(0, 60);
-  }
+  };
 }
 export function disabledMinSeconds(minTime: Date): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
@@ -311,7 +310,7 @@ export function disabledMinSeconds(minTime: Date): ((hour: number, minute: numbe
       return seconds;
     }
     return range(0, 60);
-  }
+  };
 }
 export function disabledMaxSeconds(maxTime: Date): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
@@ -323,7 +322,7 @@ export function disabledMaxSeconds(maxTime: Date): ((hour: number, minute: numbe
       return seconds;
     }
     return range(0, 60);
-  }
+  };
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -359,7 +358,7 @@ function getWeekNumber(date: Date): number {
 
   // If this is not a Thursday, set the target to the next Thursday
   if (tempDate.getDay() !== 4) {
-    tempDate.setMonth(0, 1 + ((4 - tempDate.getDay()) + 7) % 7);
+    tempDate.setMonth(0, 1 + ((4 - tempDate.getDay() + 7) % 7));
   }
 
   // The weeknumber is the number of weeks between the first Thursday of the year

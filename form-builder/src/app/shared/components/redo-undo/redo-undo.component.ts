@@ -1,6 +1,6 @@
-import {Component, EventEmitter, inject, Output} from '@angular/core';
-import {SectionList} from 'src/app/pages/edit/interfaces/section-list';
-import {UndoRedoService} from 'src/app/services/undo-redo.service';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { SectionList } from '@pages/edit/interfaces/section-list';
+import { UndoRedoService } from '@services/undo-redo.service';
 
 @Component({
   selector: 'app-redo-undo',
@@ -18,13 +18,13 @@ export class RedoUndoComponent {
     return this.undoRedoService.canRedo();
   }
 
-  @Output() sectionInputsChange = new EventEmitter<"UNDO" | "REDO">();
+  @Output() sectionInputsChange = new EventEmitter<'UNDO' | 'REDO'>();
 
   undoBtn(): void {
-    this.sectionInputsChange.emit("UNDO");
+    this.sectionInputsChange.emit('UNDO');
   }
 
   redoBtn(): void {
-    this.sectionInputsChange.emit("REDO");
+    this.sectionInputsChange.emit('REDO');
   }
 }
