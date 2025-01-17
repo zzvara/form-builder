@@ -9,9 +9,6 @@ import { Project, ProjectVersion } from '../interfaces/project';
 /**
  * This service provides functionality to manage a collection of projects.
  * Projects are generic, allowing for flexibility in the types of projects managed.
- *
- * Usage example in a component:
- * const projectService = new ProjectService<Type>();
  */
 export class ProjectService<T extends Project> {
   private items: T[] = []; // Holds the current list of projects

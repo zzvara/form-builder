@@ -78,9 +78,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.optionsSub?.unsubscribe();
     this.actionsSub?.unsubscribe();
+    this.jsonService.destroy();
   }
+
   setLanguage(lang: string): void {
     this.translate.use(lang);
   }
-
 }

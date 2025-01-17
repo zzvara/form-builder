@@ -40,7 +40,7 @@ export class ResultsPageComponent implements OnInit {
       sortOrder: null,
       sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
       sortDirections: ['ascend', 'descend', null],
-    }
+    },
   ];
 
   ngOnInit(): void {
@@ -60,7 +60,6 @@ export class ResultsPageComponent implements OnInit {
     });
 
     console.log(this.sectionInputs);
-    
   }
 
   nextPage() {
@@ -88,5 +87,9 @@ export class ResultsPageComponent implements OnInit {
     if (this.project) {
       this.sectionInputStats = this.statisticsService.calculateSectionInputStats(this.project);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.jsonService.destroy();
   }
 }

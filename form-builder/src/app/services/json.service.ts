@@ -2,12 +2,27 @@ import { Injectable } from '@angular/core';
 import { Project, ProjectVersion } from '../interfaces/project';
 import { Observable, BehaviorSubject } from 'rxjs';
 
+interface ProjectData {
+  project: Project;
+  history?: ProjectVersion<Project>[];
+  type?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class JsonService {
-  private jsonDataSubject = new BehaviorSubject<any>(null);
+  private jsonDataSubject = new BehaviorSubject<ProjectData | null>(null);
   jsonData$ = this.jsonDataSubject.asObservable();
+
+  /**
+   * Validates if a project has the required properties.
+   * @param {Project} project - The project to validate.
+   * @returns {boolean} - True if project is valid, false otherwise.
+   */
+  private validateProject(project: Project): boolean {
+    return project && project.id !== undefined;
+  }
 
   /**
    * Saves the current project and its history to a JSON file and triggers a download.
@@ -16,7 +31,11 @@ export class JsonService {
    * @returns {void}
    */
   saveProjectWithHistoryToJson(project: Project, projectHistory: ProjectVersion<Project>[]): void {
-    const data = {
+    if (!this.validateProject(project)) {
+      throw new Error('Invalid project data');
+    }
+
+    const data: ProjectData = {
       project,
       history: projectHistory,
     };
@@ -31,9 +50,14 @@ export class JsonService {
    * @returns {void}
    */
   saveProjectToJson(project: Project): void {
-    const data = {
+    if (!this.validateProject(project)) {
+      throw new Error('Invalid project data');
+    }
+
+    const data: ProjectData = {
       project,
     };
+
     const blob = this.createJsonBlob(data);
     const url = this.createDownloadLink(blob);
     this.triggerDownload(url, `project_${project.id}.json`);
@@ -65,46 +89,84 @@ export class JsonService {
    * @returns {void}
    */
   private triggerDownload(url: string, filename: string): void {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    try {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+    } finally {
+      window.URL.revokeObjectURL(url);
+    }
   }
 
   /**
    * Uploads a JSON file and parses its content.
    * @param {File} file - The JSON file to upload.
-   * @returns {Observable<any>} - An observable with the parsed JSON content.
+   * @returns {Observable<ProjectData>} - An observable with the parsed JSON content.
    */
-  uploadJson(file: File): Observable<any> {
+  uploadJson(file: File): Observable<ProjectData> {
     return new Observable((observer) => {
+      if (!file.type.includes('application/json')) {
+        observer.error(new Error('Invalid file type. Please upload a JSON file.'));
+        return;
+      }
+
       const reader = new FileReader();
-      reader.onload = (event: any) => {
+      reader.onload = (event: ProgressEvent<FileReader>) => {
         try {
-          const json = JSON.parse(event.target.result);
+          const target = event.target;
+          if (!target || typeof target.result !== 'string') {
+            throw new Error('No file content found');
+          }
+
+          const json = JSON.parse(target.result) as ProjectData;
+
+          if (!this.validateProject(json.project)) {
+            throw new Error('Invalid project data');
+          }
+
           observer.next(json);
           observer.complete();
         } catch (e) {
-          observer.error(e);
+          observer.error(new Error('Failed to parse JSON file. Please ensure the file is valid.'));
         }
       };
-      reader.onerror = (error) => observer.error(error);
+      reader.onerror = () => observer.error(new Error('Failed to read file'));
       reader.readAsText(file);
     });
   }
 
-  setJsonData(data: any): void {
+  /**
+   * Updates the JSON data in the BehaviorSubject.
+   * @param {ProjectData} data - The new JSON data to set.
+   * @returns {void}
+   */
+  setJsonData(data: ProjectData): void {
     this.jsonDataSubject.next(data);
   }
 
-  getJsonData(): Observable<any> {
+  /**
+   * Retrieves the current JSON data as an Observable.
+   * @returns {Observable<ProjectData | null>} - Observable of the current JSON data.
+   */
+  getJsonData(): Observable<ProjectData | null> {
     return this.jsonData$;
   }
 
+  /**
+   * Clears the current JSON data by setting it to null.
+   * @returns {void}
+   */
   clearJsonData(): void {
     this.jsonDataSubject.next(null);
+  }
+
+  /**
+   * Performs cleanup by completing the BehaviorSubject.
+   * Should be called when the service is no longer needed.
+   * @returns {void}
+   */
+  destroy(): void {
+    this.jsonDataSubject.complete();
   }
 }
