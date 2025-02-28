@@ -6,7 +6,53 @@ Open-source form-builder based on Angular and NG-zorro.
 
 ## Role definitions
 
+### Engineer
+
+The **Engineer** is responsible for designing, developing, testing, and maintaining software systems.
+Engineers work closely with other team members, including UI/UX experts, Shepherds, and Taskmasters, to ensure high-quality deliverables that meet business and user requirements.
+
+### Shepherd
+
+The **Shepherd** serves as a guide and reviewer for the engineering team, ensuring all work adheres to quality standards, architectural guidelines, and coding conventions.
+This role focuses on mentoring, reviewing work, and helping engineers grow while ensuring consistency and maintainability of the codebase.
+
+### Taskmaster
+
+The **Taskmaster** is responsible for transforming meeting outcomes, project discussions, and stakeholder feedback into actionable, well-defined tasks for the engineering team.
+The Taskmaster ensures tasks are clear, prioritized, and assigned appropriately.
+
+### UI/UX expert
+
+The **UI/UX Expert** is responsible for designing user interfaces and user experiences that align with modern design principles and user expectations.
+This role ensures products are not only functional but also aesthetically pleasing and intuitive.
+
 ## Role responsibilities
+
+### Engineer
+- Develop high-quality, maintainable, and efficient code.
+- Collaborate with designer and other engineers.
+- Participate in code reviews and contribute to best practices.
+- Debug and resolve technical issues.
+- Write unit tests.
+
+### Shepherd
+- Conduct thorough code reviews for engineers' work.
+- Provide constructive feedback to improve code quality and adherence to standards.
+- Assist in technical decision-making and resolving conflicts.
+
+### Taskmaster
+- Attend team meetings, planning sessions, and stakeholder discussions.
+- Capture, document, and break down high-level ideas into specific tasks.
+- Define task descriptions and acceptance criteria.
+- Maintain and groom the product backlog.
+- Work closely with engineers and designers to clarify requirements.
+- Track the status of tasks and identify potential blockers.
+
+### UI/UX expert
+- Stay updated with modern design trends and tools.
+- Advocate for user-centric design across the project.
+- Collaborate with engineers to ensure designs are feasible and implemented correctly.
+- Implement simple design improvements.
 
 # Development guide
 
