@@ -4,6 +4,17 @@ Open-source yet another form-builder based on Angular and [NG-Zorro](https://ng.
 
 # Project roles
 
+## Role assignments
+
+| Role | Members |
+|-|-|
+| Stakeholder | Barnabás Balázs, Zoltán Zvara |
+| Shepherd | |
+| Taskmaster | |
+| UI/UX master | |
+| Engineer | |
+
+
 ## Role definitions
 
 ### Engineer
