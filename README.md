@@ -95,3 +95,31 @@ We prioritize user experience by adhering to the NG-Zorro design system, ensurin
 - **Color**: Adhere to the NG-Zorro color scheme for accessibility and visual harmony.
 - **Reusability**: Build modular components that can be reused across multiple screens.
 - **Devices and media**: Ensure responsiveness and adaptability across different screen sizes and devices.
+
+#### Examples of good quality in UI/UX
+
+To illustrate what a well-designed UI/UX looks like when adhering to best practices, we provide the following examples:
+- [Enlink](https://themeforest.net/item/enlink-angular-admin-template/23804615#)
+- [Egret](https://themeforest.net/item/egret-angular-4-material-design-admin-template/20161805)
+- [Cuba](https://themeforest.net/item/cuba-bootstrap-responsive-admin-dashboard-template/27530933)
+
+These examples are not meant to be copied, nor should their design systems be replicated verbatim. Instead, they serve as a **benchmark** for how a well-structured UI/UX implementation looks when it follows key principles such as **consistency, clarity, responsiveness, and efficiency**.
+
+#### UI/UX principles and code optimization
+
+A program that adheres to strong UI/UX principles naturally leads to a well-optimized codebase. This is because:
+
+- High standardization → The use of reusable components, design tokens, and predefined patterns reduces redundancy and complexity.
+- Minimalistic stylesheets → A well-designed UI avoids unnecessary custom CSS and inline styles, keeping stylesheets small and efficient.
+- Optimized JS → Consistent and modular UI elements prevent excessive DOM manipulations and unnecessary script bloat.
+- Better compression & caching → Standardized UI frameworks result in well-structured, easily compressible files, leading to better performance.
+
+#### UI/UX and code quality: A synergistic relationship
+
+Good UI/UX design and code quality go hand in hand:
+
+- A clean, structured UI reflects an equally well-structured codebase with modular and reusable components.
+- Adhering to design principles reduces technical debt, as the interface remains scalable and easy to maintain.
+- A well-designed system improves performance, ensuring smooth rendering, fast loading times, and optimal responsiveness.
+
+By following these principles, we ensure that user experience and development efficiency remain at the highest level.
