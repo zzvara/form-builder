@@ -1,6 +1,6 @@
 # YAFB
 
-Open-source form-builder based on Angular and NG-zorro.
+Open-source yet another form-builder based on Angular and [NG-Zorro](https://ng.ant.design/components/overview/en).
 
 # Project roles
 
@@ -14,7 +14,7 @@ Engineers work closely with other team members, including UI/UX experts, Shepher
 ### Shepherd
 
 The **Shepherd** serves as a guide and reviewer for the engineering team, ensuring all work adheres to quality standards, architectural guidelines, and coding conventions.
-This role focuses on mentoring, reviewing work, and helping engineers grow while ensuring consistency and maintainability of the codebase.
+This role focuses on mentoring, reviewing work, and helping engineers grow while ensuring the consistency and maintainability of the codebase.
 
 ### Taskmaster
 
@@ -24,13 +24,13 @@ The Taskmaster ensures tasks are clear, prioritized, and assigned appropriately.
 ### UI/UX expert
 
 The **UI/UX Expert** is responsible for designing user interfaces and user experiences that align with modern design principles and user expectations.
-This role ensures products are not only functional but also aesthetically pleasing and intuitive.
+This role ensures products are functional, aesthetically pleasing, and intuitive.
 
 ## Role responsibilities
 
 ### Engineer
 - Develop high-quality, maintainable, and efficient code.
-- Collaborate with designer and other engineers.
+- Collaborate with designers and other engineers.
 - Participate in code reviews and contribute to best practices.
 - Debug and resolve technical issues.
 - Write unit tests.
@@ -49,10 +49,17 @@ This role ensures products are not only functional but also aesthetically pleasi
 - Track the status of tasks and identify potential blockers.
 
 ### UI/UX expert
+- Strictly follow the [NG-Zorro design system](https://ng.ant.design/components/overview/en).
+- Ensure that the UI/UX of the form-builder looks mistakenly as an example or part of the NG-Zorro component library.
+- Ensure that only NG-Zorro standard components, icons, and styles are used, and the Stakeholder must approve any deviation from the standard.
 - Stay updated with modern design trends and tools.
 - Advocate for user-centric design across the project.
 - Collaborate with engineers to ensure designs are feasible and implemented correctly.
 - Implement simple design improvements.
+
+### Stakeholder
+
+...
 
 # Development guide
 
