@@ -47,6 +47,10 @@
     "TIME_PICKER": "IDŐVÁLASZTÓ",
     "TOOLTIP_TEXT": "Súgó szöveg",
     "WEEK_NUMBERS?": "Hetek száma?",
+    "checkbox_group": {
+      "CHECKED?": "Ellenőrizve?",
+      "DISABLED?": "Letiltva?"
+    },
     "combobox": {
       "ADD_OPTION": "Lehetőség hozzáadása",
       "CHOICES_VALUES": "Lehetőségek/Értékek",
@@ -108,6 +112,12 @@
     "picture_input": {
       "CLICK_TO_UPLOAD": "Kattintson a feltöltéshez",
       "MODEL_TITLE_PICTURE_INPUT": "Képbemeneti komponens beállításainak szerkesztése"
+    },
+    "radio_group": {
+      "CHOICES_OR_VALUES": "Lehetőségek és értékek",
+      "OPTION_ALREADY": "Az opció már a listában van",
+      "OPTION_ATLEAST": "Kérjük, legalább ennyi lehetőséget rögzítsen",
+      "SHOW_AS_BUTTON": "Mutasd gombként?"
     },
     "range_picker": {
       "MODEL_TITLE_RANGE_PICKER": "Tartományválasztó komponens beállításainak szerkesztése",
