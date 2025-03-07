@@ -15,7 +15,7 @@ export class ResultsPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Input() projectId: number | undefined;
-  @Input() versionNum?: number | undefined;
+  @Input() versionNum?: number;
   project: Project | undefined;
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
@@ -23,9 +23,9 @@ export class ResultsPageComponent implements OnInit {
   sectionInputs: any[] = [];
 
   constructor(
-    private projectService: ProjectService<Project>,
-    private jsonService: JsonService,
-    private statisticsService: StatisticsService
+    private readonly projectService: ProjectService<Project>,
+    private readonly jsonService: JsonService,
+    private readonly statisticsService: StatisticsService
   ) {}
 
   columnsConfig: ColumnItem[] = [
@@ -45,7 +45,7 @@ export class ResultsPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {
-      this.project = this.projectService.getProjectVersion(this.projectId, this.versionNum || 1);
+      this.project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       this.projectHistory = this.projectService.getProjectHistory(this.projectId);
       this.latestVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : undefined;
       this.calculateSectionInputStats();

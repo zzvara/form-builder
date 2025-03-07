@@ -13,6 +13,7 @@ import { instanceOfSectionList, SectionList } from '@pages/edit/interfaces/secti
 import { FormInputData, instanceOfFormInputData } from '@app/shared/interfaces/form-input-data';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
 import { InputData } from '@app/shared/interfaces/input-data';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-edit',
@@ -49,16 +50,11 @@ export class EditComponent implements OnInit, OnChanges {
   sectionDropListEnterPredicate: (item: CdkDrag<EditList | FormInputData>, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
     item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
 
-  sectionId!: number;
-  sectionComponentId!: number;
-
   ngOnChanges() {
     this.loadProject();
   }
 
   ngOnInit() {
-    this.sectionId = 0;
-    this.sectionComponentId = 0;
     this.loadProject();
     this.initializeUndoRedo();
     console.log({ formInputs: this.getAllFormInputs() });
@@ -92,11 +88,6 @@ export class EditComponent implements OnInit, OnChanges {
         this.editList = cloneDeep(project.editList);
         console.log('Project loaded (SAVE STATE)!');
         this.undoRedoService.saveState(this.editList);
-        this.sectionId = Math.max(0, ...this.editList
-          .filter(ed => instanceOfSectionList(ed.data))
-          .map(ed => parseInt(ed.id.replace("section-", ""))));
-        this.sectionComponentId = Math.max(0, ...this.getAllFormInputs()
-          .map(inp => parseInt(inp.data!.id!.replace("input-", ""))));
       }
     }
   }
@@ -130,7 +121,7 @@ export class EditComponent implements OnInit, OnChanges {
     } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
       const droppedInput: FormInputData = event.item.data;
       if (droppedInput.title === 'SECTION') {
-        const newSectionId = `section-${++this.sectionId}`;
+        const newSectionId = uuidv4();
         const newSectionEdit: EditList = {
           id: newSectionId,
           data: {
@@ -142,7 +133,7 @@ export class EditComponent implements OnInit, OnChanges {
         event.container.data.splice(event.currentIndex, 0, newSectionEdit);
       } else {
         // Create a deep copy of the dropped item with updated ID
-        const newItemId = 'input-' + ++this.sectionComponentId;
+        const newItemId = uuidv4();
         const newItem: FormInputData = cloneDeep(droppedInput);
         newItem.data!.id = newItemId;
         newItem.data!.sectionId = event.container.id;
@@ -176,7 +167,7 @@ export class EditComponent implements OnInit, OnChanges {
     } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
       const droppedInput: FormInputData = event.item.data;
       // Create a deep copy of the dropped item with updated ID
-      const newItemId = 'input-' + ++this.sectionComponentId;
+      const newItemId = uuidv4();
       const newItem: FormInputData = cloneDeep(droppedInput);
       newItem.data!.id = newItemId;
       newItem.data!.sectionId = event.container.id;

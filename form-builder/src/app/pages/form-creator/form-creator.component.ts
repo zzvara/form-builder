@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./form-creator.component.css'],
 })
 export class FormCreatorComponent implements OnInit {
-  constructor(private readonly router: Router, private cdr: ChangeDetectorRef) {
+  constructor(private readonly router: Router, private readonly cdr: ChangeDetectorRef) {
     this.projectId = 0;
   }
 
@@ -26,11 +26,11 @@ export class FormCreatorComponent implements OnInit {
   handleFormData(data: string) {
     this.projectType = data;
     this.cdr.detectChanges();
-    
+
     console.log('Project type:', this.projectType);
   }
 
-  ngOnInit() {}
+  ngOnInit() { /* TODO document why this method 'ngOnInit' is empty */ }
 
   page = 0;
 
