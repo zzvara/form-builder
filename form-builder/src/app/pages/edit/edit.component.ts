@@ -3,7 +3,7 @@ import { Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren } 
 import { Project } from '@app/interfaces/project';
 import { ProjectService } from '@app/services/project.service';
 import { UndoRedoService } from '@app/services/undo-redo.service';
-import { cloneDeep } from 'lodash-es';
+import {cloneDeep, parseInt} from 'lodash-es';
 import { EditList } from '@pages/edit/interfaces/edit-list';
 import { InlineEdit } from '@app/shared/interfaces/inline-edit';
 import { InputHolderComponent } from '@app/shared/components/input-holder/input-holder.component';
@@ -23,6 +23,9 @@ export class EditComponent implements OnInit, OnChanges {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
   private readonly undoRedoService: UndoRedoService<EditList[]> = inject(UndoRedoService);
 
+  protected readonly instanceOfSectionList = instanceOfSectionList;
+  protected readonly instanceOfFormInputData = instanceOfFormInputData;
+
   @Input() inlineEdit!: InlineEdit;
   @Input() projectId: number | undefined;
   @Input() versionNum?: number;
@@ -32,6 +35,7 @@ export class EditComponent implements OnInit, OnChanges {
   sideBarData: SidebarData[] = getSideBarData(this);
 
   editList: EditList[] = [];
+
   getSectionIds = () =>
     this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
   getAllFormInputs = () =>
@@ -53,11 +57,27 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.loadProject();
-    this.initializeUndoRedo();
     this.sectionId = 0;
     this.sectionComponentId = 0;
+    this.loadProject();
+    this.initializeUndoRedo();
     console.log({ formInputs: this.getAllFormInputs() });
+  }
+
+  /**
+   * Saves the current state of the form inputs to the project.
+   * It then calls the project service to persist the updated project data.
+   * @returns {void}
+   */
+  saveForm(): void {
+    const project = this.projectService.searchData(this.projectId!)[0];
+    if (project) {
+      project.editList = [];
+      for (const edit of this.editList) {
+        project.editList.push(cloneDeep(edit));
+      }
+      this.projectService.update(this.projectId!, project);
+    }
   }
 
   /**
@@ -72,6 +92,11 @@ export class EditComponent implements OnInit, OnChanges {
         this.editList = cloneDeep(project.editList);
         console.log('Project loaded (SAVE STATE)!');
         this.undoRedoService.saveState(this.editList);
+        this.sectionId = Math.max(0, ...this.editList
+          .filter(ed => instanceOfSectionList(ed.data))
+          .map(ed => parseInt(ed.id.replace("section-", ""))));
+        this.sectionComponentId = Math.max(0, ...this.getAllFormInputs()
+          .map(inp => parseInt(inp.data!.id!.replace("input-", ""))));
       }
     }
   }
@@ -217,6 +242,7 @@ export class EditComponent implements OnInit, OnChanges {
   isFormInvalid(): boolean {
     return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
   }
+
   /**
    * Handles the event when the value of a form input changes.
    * This method updates the corresponding form input's value based on the selection made by the user.
@@ -228,22 +254,4 @@ export class EditComponent implements OnInit, OnChanges {
     console.log('Input component changed/edited (SAVE STATE)!', event.id);
     this.undoRedoService.saveState(this.editList);
   }
-  /**
-   * Saves the current state of the form inputs to the project.
-   * It then calls the project service to persist the updated project data.
-   * @returns {void}
-   */
-  saveForm(): void {
-    const project = this.projectService.searchData(this.projectId!)[0];
-    if (project) {
-      project.editList = [];
-      for (const edit of this.editList) {
-        project.editList.push(cloneDeep(edit));
-      }
-      this.projectService.update(this.projectId!, project);
-    }
-  }
-
-  protected readonly instanceOfSectionList = instanceOfSectionList;
-  protected readonly instanceOfFormInputData = instanceOfFormInputData;
 }

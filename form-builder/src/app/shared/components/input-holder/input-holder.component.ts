@@ -1,10 +1,11 @@
 import { NgComponentOutlet } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, Type, ViewChild} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgForm, NgModel } from '@angular/forms';
-import { getInputGroups } from '@pages/edit/config/edit-data-config';
+import {getInputGroups, translateComponentType} from '@pages/edit/config/edit-data-config';
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { AbstractInput } from '@abstract-classes/abstract-input';
+import {FormComponentMarker} from "@shared/interfaces/form-component-marker";
 import { FormInputData } from '@shared/interfaces/form-input-data';
 import { InlineEdit } from '@shared/interfaces/inline-edit';
 import { InputData } from '@shared/interfaces/input-data';
@@ -37,6 +38,10 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
     data: D;
     inlineEdit: InlineEdit;
   };
+
+  get componentType(): Type<FormComponentMarker> {
+    return translateComponentType[this.formInput.type];
+  }
 
   get embeddedComponent(): AbstractInput<T, D, E> {
     return this.inputOutlet['_componentRef']?.instance;

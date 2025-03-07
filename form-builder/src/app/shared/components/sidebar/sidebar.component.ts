@@ -11,7 +11,6 @@ import { identifyGroupContents, identifySidebarData, SidebarData } from '@compon
 export class SidebarComponent implements OnInit {
   protected readonly identifySidebarData = identifySidebarData;
   protected readonly identifyGroupContents = identifyGroupContents;
-  protected readonly SectionComponent = SectionComponent;
 
   @Input() sidebarData!: SidebarData[];
 

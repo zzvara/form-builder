@@ -31,7 +31,7 @@
           >
           <ng-container [ngSwitch]="item.type" *cdkDragPlaceholder>
             <nz-card
-              *ngSwitchCase="SectionComponent"
+              *ngSwitchCase="'SectionComponent'"
               nzTitle="Section: section | Layout: vertical"
               [nzBodyStyle]="{ padding: '10px' }"
               class="element-list p-3"

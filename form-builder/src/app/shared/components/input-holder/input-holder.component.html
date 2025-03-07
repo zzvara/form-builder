@@ -45,7 +45,7 @@
       </nz-form-control>
     </nz-form-item>
     <div>Input preview:</div>
-    <ng-container *ngComponentOutlet="formInput.type; inputs: componentInputs" />
+    <ng-container *ngComponentOutlet="componentType; inputs: componentInputs" />
   </form>
   <span style="color: red">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
 </nz-card>
