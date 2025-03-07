@@ -2,11 +2,11 @@
   <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="page">
     <nz-step [nzTitle]="'steps.FORM_INFO' | translate" (click)="toInfoPage()"></nz-step>
     <nz-step [nzTitle]="'steps.COMPONENTS' | translate" (click)="toCompPage()"></nz-step>
-    <nz-step [nzTitle]="'steps.ANSWER' | translate" (click)="toAnswPage()"></nz-step>
+    <nz-step [nzTitle]="(projectType === 'test' ? 'steps.ANSWER' : 'steps.RESULTS') | translate" (click)="toAnswPage()"></nz-step>
   </nz-steps>
   <div class="form-container">
     <div class="page" *ngIf="page == 0">
-      <app-info-page [page]="page" (setPage)="setPage($event)" (projectId)="setProjectId($event)" />
+      <app-info-page [page]="page" (setPage)="setPage($event)" (projectId)="setProjectId($event)" (formData)="handleFormData($event)" />
     </div>
     <div class="page" *ngIf="page == 1">
       <app-components-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" (versionChange)="setVersionNum($event)" />

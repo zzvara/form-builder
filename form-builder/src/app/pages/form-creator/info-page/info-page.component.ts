@@ -15,6 +15,7 @@ export class InfoPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() projectId = new EventEmitter<number>();
+  @Output() formData = new EventEmitter<string>();
 
   project = {
     id: 0,
@@ -74,6 +75,8 @@ export class InfoPageComponent implements OnInit {
       }
     });
 
+    this.formData.emit(this.project.type);
+
     this.jsonService.getJsonData().subscribe((data) => {
       if (data) {
         this.project = { ...this.project, ...data.project };
@@ -106,6 +109,7 @@ export class InfoPageComponent implements OnInit {
     if (this.project.time_checkbox) {
       this.project.time_limit = this.form.controls['limit'].value!;
     }
+    this.formData.emit(this.project.type);
   }
 
   ngOnDestroy() {

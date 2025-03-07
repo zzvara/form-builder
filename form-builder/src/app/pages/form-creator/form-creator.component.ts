@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,12 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./form-creator.component.css'],
 })
 export class FormCreatorComponent implements OnInit {
-  constructor(private readonly router: Router) {
+  constructor(private readonly router: Router, private cdr: ChangeDetectorRef) {
     this.projectId = 0;
   }
 
   projectId: number;
   currentVersionNum?: number;
+  projectType: string = '';
 
   setProjectId(id: number) {
     this.projectId = id;
@@ -20,6 +21,13 @@ export class FormCreatorComponent implements OnInit {
 
   setVersionNum(versionNum: number) {
     this.currentVersionNum = versionNum;
+  }
+
+  handleFormData(data: string) {
+    this.projectType = data;
+    this.cdr.detectChanges();
+    
+    console.log('Project type:', this.projectType);
   }
 
   ngOnInit() {}

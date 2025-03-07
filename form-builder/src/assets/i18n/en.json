@@ -201,6 +201,7 @@
   },
   "steps": {
     "ANSWER": "Answer",
+    "RESULTS": "Results",
     "COMPONENTS": "Components",
     "FORM_INFO": "Form info"
   }
