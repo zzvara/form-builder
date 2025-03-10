@@ -45,9 +45,10 @@ export class ResultsPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {
-      this.project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       this.projectHistory = this.projectService.getProjectHistory(this.projectId);
       this.latestVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : undefined;
+      this.project = this.projectService.getProjectVersion(this.projectId, this.latestVersionNum ?? 1);
+
       this.calculateSectionInputStats();
     }
 
