@@ -25,7 +25,7 @@
             nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
             style="margin-right: 8px"
           >
-            @for (version of projectHistory; track version) {
+            @for (version of projectHistory; track $index) {
               <nz-option
                 [nzValue]="version.versionNum"
                 [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"

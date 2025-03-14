@@ -48,18 +48,18 @@
               </ng-template>
 
               @for (item of edit.data.sectionInputs; track item) {
-              <app-input-holder
-                class="element-box"
-                cdkDrag
-                [cdkDragData]="item"
-                nz-card-grid
-                style="margin-bottom: 10px; padding: 0"
-                [ngStyle]="getSectionInputStyle(edit.data)"
-                [formInput]="item"
-                [inlineEdit]="inlineEdit"
-                (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
-                (changedEvent)="onValueChanged($event)"
-              />
+                <app-input-holder
+                  class="element-box"
+                  cdkDrag
+                  [cdkDragData]="item"
+                  nz-card-grid
+                  style="margin-bottom: 10px; padding: 0"
+                  [ngStyle]="getSectionInputStyle(edit.data)"
+                  [formInput]="item"
+                  [inlineEdit]="inlineEdit"
+                  (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
+                  (changedEvent)="onValueChanged($event)"
+                />
               }
             </nz-card>
           } @else if (instanceOfFormInputData(edit.data)) {
