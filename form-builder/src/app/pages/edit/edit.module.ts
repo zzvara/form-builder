@@ -7,9 +7,11 @@ import { NzWaveModule } from 'ng-zorro-antd/core/wave';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { EditComponent } from '@pages/edit/edit.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { SectionComponent } from '@app/shared/components/section/section.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [EditComponent],
@@ -23,6 +25,8 @@ import { SectionComponent } from '@app/shared/components/section/section.compone
     NzCardModule,
     NzButtonModule,
     NzWaveModule,
+    NzPopconfirmModule,
+    TranslatePipe,
   ],
   providers: [SectionComponent],
   exports: [NzIconModule, EditComponent],
