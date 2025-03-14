@@ -6,10 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { identity } from 'rxjs';
 
 @Component({
-    selector: 'app-number-input',
-    templateUrl: './number-input.component.html',
-    styleUrls: ['./number-input.component.css'],
-    standalone: false
+  selector: 'app-number-input',
+  templateUrl: './number-input.component.html',
+  styleUrls: ['./number-input.component.css'],
+  standalone: false,
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
   title: string;
@@ -42,7 +42,8 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
     }
     return (value) => String(value);
   }
-  get inputParser(): (value: string) => string {
+
+  get inputParser(): (value: string) => number {
     if (this.data.format && this.data.formatter) {
       return (value) => {
         const specIndex = this.data.formatter!.indexOf('{*}');
@@ -51,11 +52,12 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
             this.data.formatter!.substring(0, specIndex),
             this.data.formatter!.substring(specIndex + 3, this.data.formatter!.length),
           ];
-          return value.replace(before, '').replace(after, '');
+          const parsedValue = value.replace(before, '').replace(after, '');
+          return parseFloat(parsedValue);
         }
-        return value;
+        return parseFloat(value);
       };
     }
-    return identity;
+    return (value) => parseFloat(value);
   }
 }

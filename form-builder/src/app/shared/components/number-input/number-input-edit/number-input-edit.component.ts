@@ -7,10 +7,10 @@ import { CustomValidators } from '../../../validators/custom-validators';
 import { identity } from 'rxjs';
 
 @Component({
-    selector: 'app-number-input-edit',
-    templateUrl: './number-input-edit.component.html',
-    styleUrls: ['./number-input-edit.component.css'],
-    standalone: false
+  selector: 'app-number-input-edit',
+  templateUrl: './number-input-edit.component.html',
+  styleUrls: ['./number-input-edit.component.css'],
+  standalone: false,
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, NumberInputComponentData> {
   override ngOnInit(): void {
@@ -111,7 +111,8 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
     }
     return (value) => String(value);
   }
-  get inputParser(): (value: string) => string {
+  
+  get inputParser(): (value: string) => number {
     if (this.getStrictControlValue('format') && this.getStrictControlValue('formatter')) {
       return (value) => {
         const specIndex = this.getStrictControlValue<string>('formatter').indexOf('{*}');
@@ -123,11 +124,12 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
               this.getStrictControlValue<string>('formatter').length
             ),
           ];
-          return value.replace(before, '').replace(after, '');
+          const parsedValue = value.replace(before, '').replace(after, '');
+          return parseFloat(parsedValue);
         }
-        return value;
+        return parseFloat(value);
       };
     }
-    return identity;
+    return (value) => parseFloat(value);
   }
 }
