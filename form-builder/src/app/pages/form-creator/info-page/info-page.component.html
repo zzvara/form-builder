@@ -81,11 +81,7 @@
           ></i>
         </nz-form-label>
         @if (form.get('hasdeadline')?.value) {
-          <nz-date-picker
-            id="deadline"
-            formControlName="deadline"
-            (change)="updateForm()"
-          ></nz-date-picker>
+          <nz-date-picker id="deadline" formControlName="deadline" (change)="updateForm()"></nz-date-picker>
         }
       </nz-form-item>
 
@@ -102,11 +98,7 @@
           ></i>
         </nz-form-label>
         @if (form.get('haslimit')?.value) {
-          <nz-time-picker
-            [nzFormat]="'HH:mm'"
-            formControlName="limit"
-            (change)="updateForm()"
-          ></nz-time-picker>
+          <nz-time-picker [nzFormat]="'HH:mm'" formControlName="limit" (change)="updateForm()"></nz-time-picker>
         }
       </nz-form-item>
 

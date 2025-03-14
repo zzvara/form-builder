@@ -1,14 +1,14 @@
-import {AbstractDatePickerComponent} from '@abstract-classes/abstract-date-picker-input';
-import {Component} from '@angular/core';
-import {DatePickerEditComponent} from '@components/date-picker/date-picker-edit/date-picker-edit.component';
-import {DatePickerComponentData} from '@components/date-picker/interfaces/date-picker-component-data';
-import {TranslateService} from '@ngx-translate/core'; // Import TranslateService
+import { AbstractDatePickerComponent } from '@abstract-classes/abstract-date-picker-input';
+import { Component } from '@angular/core';
+import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
+import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
+import { TranslateService } from '@ngx-translate/core'; // Import TranslateService
 
 @Component({
-    selector: 'app-date-picker',
-    templateUrl: './date-picker.component.html',
-    styleUrls: ['./date-picker.component.css'],
-    standalone: false
+  selector: 'app-date-picker',
+  templateUrl: './date-picker.component.html',
+  styleUrls: ['./date-picker.component.css'],
+  standalone: false,
 })
 export class DatePickerComponent extends AbstractDatePickerComponent<Date, DatePickerComponentData, DatePickerEditComponent> {
   title: string; // Declare title variable

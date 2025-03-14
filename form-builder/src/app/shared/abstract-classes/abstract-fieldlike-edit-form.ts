@@ -1,11 +1,11 @@
-import {AbstractEditForm} from '@abstract-classes/abstract-edit-form';
-import {Directive} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
-import {ErrorType, getErrorMessageList} from '@helpers/error-helper';
-import {FieldLikeInputData} from '@shared/interfaces/field-like-input-data';
-import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
-import {CustomValidators} from '@validators/custom-validators';
+import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import { Directive } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
+import { FieldLikeInputData } from '@interfaces/field-like-input-data';
+import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { CustomValidators } from '@validators/custom-validators';
 
 @Directive()
 export abstract class AbstractFieldLikeEditForm<T, D extends FieldLikeInputData<T>> extends AbstractEditForm<T, D> {

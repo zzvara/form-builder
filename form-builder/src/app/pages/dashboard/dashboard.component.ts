@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.interface';
-import { ProjectType } from '@app/interfaces/project';
-import { ProjectService } from '@app/services/project.service';
+import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import { ProjectType } from '@interfaces/project';
+import { ProjectService } from '@services/project.service';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css'],
-    standalone: false
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
+  standalone: false,
 })
 export class DashboardComponent implements OnInit {
   projects$: Observable<Questionnaire[]> = of([]);

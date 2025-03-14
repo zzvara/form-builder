@@ -41,15 +41,15 @@
         <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-          <textarea
-            #defaultValueComponent
-            nz-input
-            nzAutosize
-            [minlength]="minLengthOrNull"
-            [maxlength]="maxLengthOrNull"
-            placeholder="{{ 'components.DEFAULT_VALUE' | translate }}"
-            formControlName="defaultValue"
-          ></textarea>
+            <textarea
+              #defaultValueComponent
+              nz-input
+              nzAutosize
+              [minlength]="minLengthOrNull"
+              [maxlength]="maxLengthOrNull"
+              placeholder="{{ 'components.DEFAULT_VALUE' | translate }}"
+              formControlName="defaultValue"
+            ></textarea>
             <ng-container *ngTemplateOutlet="suffixTemplateCounter" />
           </nz-form-control>
           <ng-template #defaultValueErrorTemplate let-control>
@@ -59,9 +59,7 @@
           </ng-template>
           <ng-template #suffixTemplateCounter>
             @if (getControlValue('maxLength') && getControlValue('showCharacterCounter') && getControlValue('maxLengthNumber')) {
-              <div style="text-align: right">
-                {{ defaultValueComponent.value.length }}/{{ getControlValue('maxLengthNumber') }}
-              </div>
+              <div style="text-align: right">{{ defaultValueComponent.value.length }}/{{ getControlValue('maxLengthNumber') }}</div>
             }
           </ng-template>
         </nz-form-item>

@@ -1,6 +1,6 @@
-import {AbstractControl, ValidatorFn} from '@angular/forms';
-import {compareTimeFull, defaultDateComparers} from '@helpers/date-helper';
-import {NzDateMode} from 'ng-zorro-antd/date-picker';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { compareTimeFull, defaultDateComparers } from '@helpers/date-helper';
+import { NzDateMode } from 'ng-zorro-antd/date-picker';
 
 export class CustomValidators {
   static validateStringNotEmpty(control: AbstractControl) {

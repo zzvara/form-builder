@@ -1,9 +1,9 @@
-import {AbstractEditForm} from '@abstract-classes/abstract-edit-form';
-import {Directive, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
-import {ModalServiceService} from '@app/services/modal/modal-service.service';
-import {FormComponentMarker} from '@shared/interfaces/form-component-marker';
-import {InlineEdit} from '@shared/interfaces/inline-edit';
-import {InputData} from '@shared/interfaces/input-data';
+import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import { Directive, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ModalServiceService } from '@services/modal/modal-service.service';
+import { FormComponentMarker } from '@interfaces/form-component-marker';
+import { InlineEdit } from '@interfaces/inline-edit';
+import { InputData } from '@interfaces/input-data';
 
 @Directive()
 export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>> implements FormComponentMarker, OnInit {

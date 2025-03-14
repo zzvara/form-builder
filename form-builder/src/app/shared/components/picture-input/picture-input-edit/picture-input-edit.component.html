@@ -1,27 +1,32 @@
 <form id="pictureInputEditFormID" nz-form [formGroup]="formData">
-  <span>{{'components.COMPONENT_QUESTION' | translate}}:</span>
+  <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="{{'components.PLACEHOLDER_QUESTION' | translate}}" formControlName="questionValue"/>
+      <input nz-input placeholder="{{ 'components.PLACEHOLDER_QUESTION' | translate }}" formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
-        <div>{{'components.CANNOT_BE_EMPTY' | translate}}</div>
+        <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
       }
     </ng-template>
   </nz-form-item>
 
-  <span>{{'components.COMPONENT_DESCRIPTION' | translate}}:</span>
+  <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
-      <textarea nz-input nzAutosize placeholder="{{'components.PLACEHOLDER_DESCRIPTION' | translate}}" formControlName="descriptionValue"></textarea>
+      <textarea
+        nz-input
+        nzAutosize
+        placeholder="{{ 'components.PLACEHOLDER_DESCRIPTION' | translate }}"
+        formControlName="descriptionValue"
+      ></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{'components.SET_PLACEHOLDER_VALUE' | translate}}</span>
+  <span>{{ 'components.SET_PLACEHOLDER_VALUE' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
-      <input nz-input placeholder="{{'components.PLACEHOLDER' | translate}}" formControlName="placeholderValue"/>
+      <input nz-input placeholder="{{ 'components.PLACEHOLDER' | translate }}" formControlName="placeholderValue" />
     </nz-form-control>
   </nz-form-item>
 </form>

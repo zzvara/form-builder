@@ -2,13 +2,16 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-form-creator',
-    templateUrl: './form-creator.component.html',
-    styleUrls: ['./form-creator.component.css'],
-    standalone: false
+  selector: 'app-form-creator',
+  templateUrl: './form-creator.component.html',
+  styleUrls: ['./form-creator.component.css'],
+  standalone: false,
 })
 export class FormCreatorComponent implements OnInit {
-  constructor(private readonly router: Router, private readonly cdr: ChangeDetectorRef) {
+  constructor(
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef
+  ) {
     this.projectId = '';
   }
 
@@ -31,7 +34,9 @@ export class FormCreatorComponent implements OnInit {
     console.log('Project type:', this.projectType);
   }
 
-  ngOnInit() { /* TODO document why this method 'ngOnInit' is empty */ }
+  ngOnInit() {
+    /* TODO document why this method 'ngOnInit' is empty */
+  }
 
   page = 0;
 

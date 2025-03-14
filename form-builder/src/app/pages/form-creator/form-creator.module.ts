@@ -20,7 +20,7 @@ import { InfoPageComponent } from '@pages/form-creator/info-page/info-page.compo
 import { ComponentsPageComponent } from '@pages/form-creator/components-page/components-page.component';
 import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
 import { EditModule } from '@pages/edit/edit.module';
-import { SharedModule } from '@app/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],

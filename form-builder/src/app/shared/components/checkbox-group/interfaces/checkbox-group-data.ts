@@ -1,4 +1,4 @@
-import {InputData} from '@app/shared/interfaces/input-data';
+import { InputData } from '@interfaces/input-data';
 
 export interface CheckboxGroupData extends InputData<CheckboxOptions[]> {
   required: boolean;

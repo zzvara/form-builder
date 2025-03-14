@@ -30,17 +30,11 @@
 </ng-template>
 <ng-template #prefixTemplate>
   @if (data.showTooltip) {
-    <span
-      nz-icon
-      nz-tooltip
-      [nzTooltipTitle]="data.tooltipText"
-      nzType="info-circle"
-      style="margin-right: 10px"
-    ></span>
+    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>
   }
 </ng-template>
 <ng-template #suffixTemplate>
   @if (data.inlineMode) {
-    <div style="margin-top: 10px">Selected date: {{ data.defaultValue | date : getFullFormat }}</div>
+    <div style="margin-top: 10px">Selected date: {{ data.defaultValue | date: getFullFormat }}</div>
   }
 </ng-template>

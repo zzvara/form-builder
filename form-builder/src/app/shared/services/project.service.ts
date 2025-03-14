@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Project, ProjectVersion } from '@app/interfaces/project';
 import { v4 as uuidv4 } from 'uuid';
+import { Project, ProjectVersion } from '@interfaces/project';
 
 @Injectable({
   providedIn: 'root',
@@ -25,14 +25,13 @@ export class ProjectService<T extends Project> {
     }
   }
 
-    /**
+  /**
    * Generates a unique ID for a new project using UUID.
    * @returns {string} - The generated UUID.
    */
-    private generateNextId(): string {
-      return uuidv4();
-    }
-  
+  private generateNextId(): string {
+    return uuidv4();
+  }
 
   /**
    * This method returns an observable that emits the current list of projects.

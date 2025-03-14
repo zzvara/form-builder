@@ -1,12 +1,12 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {SidebarData} from '@components/sidebar/interfaces/sidebar-data';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 
 @Component({
-    selector: 'app-sidebar',
-    templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SidebarComponent implements OnInit {
   @Input() sidebarData!: SidebarData[];

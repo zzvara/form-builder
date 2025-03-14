@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Project, ProjectVersion } from '@app/interfaces/project';
+import { Project, ProjectVersion } from '@interfaces/project';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 interface ProjectData {

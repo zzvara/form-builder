@@ -22,13 +22,10 @@
           [cdkDropListSortingDisabled]="true"
         >
           @for (item of group.groupContents; track item.type) {
-            <nz-card
-              cdkDrag
-              [cdkDragData]="item"
-              [nzBordered]="true"
-              style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px"
-            >
-              <span><b>{{ item.title }}</b></span>
+            <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true" style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px">
+              <span
+                ><b>{{ item.title }}</b></span
+              >
 
               <ng-container *cdkDragPlaceholder>
                 @switch (item.type) {

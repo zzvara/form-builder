@@ -8,8 +8,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { EditComponent } from '@pages/edit/edit.component';
-import { SharedModule } from '@app/shared/shared.module';
-import { SectionComponent } from '@app/shared/components/section/section.component';
+import { SharedModule } from '@shared/shared.module';
+import { SectionComponent } from '@components/section/section.component';
 
 @NgModule({
   declarations: [EditComponent],

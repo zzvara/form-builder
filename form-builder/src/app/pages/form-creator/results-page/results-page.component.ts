@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Project, ProjectVersion } from '@app/interfaces/project';
-import { JsonService } from '@app/services/json.service';
-import { ProjectService } from '@app/services/project.service';
-import { ColumnItem } from '@app/pages/dashboard/dashboard.model';
-import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.interface';
-import { StatisticsService } from '@app/pages/form-creator/results-page/services/statistics.service';
+import { Project, ProjectVersion } from '@interfaces/project';
+import { JsonService } from '@services/json.service';
+import { ProjectService } from '@services/project.service';
+import { ColumnItem } from '@pages/dashboard/dashboard.model';
+import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
+import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 
 @Component({
-    selector: 'app-results-page',
-    templateUrl: './results-page.component.html',
-    styleUrls: ['./results-page.component.css'],
-    standalone: false
+  selector: 'app-results-page',
+  templateUrl: './results-page.component.html',
+  styleUrls: ['./results-page.component.css'],
+  standalone: false,
 })
 export class ResultsPageComponent implements OnInit {
   @Input() page?: number;
