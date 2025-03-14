@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { SectionList } from '@pages/edit/interfaces/section-list';
-import { UndoRedoService } from '@services/undo-redo.service';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
+import {SectionList} from '@pages/edit/interfaces/section-list';
+import {UndoRedoService} from '@services/undo-redo.service';
 
 @Component({
     selector: 'app-redo-undo',

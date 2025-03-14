@@ -17,20 +17,25 @@
   </nz-form-control>
 </nz-form-item>
 <ng-template #errorTemplate let-control>
-  <div *ngFor="let message of getErrorMessages(control); trackBy: identifyErrorMessages">{{ message }}</div>
+  @for (message of getErrorMessages(control); track message) {
+    <div>{{ message }}</div>
+  }
 </ng-template>
 <ng-template #footerTemplate>
   <div style="display: flex; justify-content: space-between">
-    <div
-      *ngIf="data.showTooltip"
-      nz-icon
-      nz-tooltip
-      [nzTooltipTitle]="data.tooltipText"
-      nzType="info-circle"
-      style="margin-top: auto; margin-bottom: auto"
-    ></div>
-    <div *ngIf="data.maxLength && data.showCharacterCounter" style="margin-top: auto; margin-bottom: auto">
-      {{ inputComponent.value.length }}/{{ data.maxLengthNumber }}
-    </div>
+    @if (data.showTooltip) {
+      <div
+        nz-icon
+        nz-tooltip
+        [nzTooltipTitle]="data.tooltipText"
+        nzType="info-circle"
+        style="margin-top: auto; margin-bottom: auto"
+      ></div>
+    }
+    @if (data.maxLength && data.showCharacterCounter) {
+      <div style="margin-top: auto; margin-bottom: auto">
+        {{ inputComponent.value.length }}/{{ data.maxLengthNumber }}
+      </div>
+    }
   </div>
 </ng-template>

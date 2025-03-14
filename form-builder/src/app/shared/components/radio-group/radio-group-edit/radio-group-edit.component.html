@@ -6,21 +6,22 @@
     <nz-form-control formArrayName="options">
       <ul nz-list cdkDropList (cdkDropListDropped)="drop($event)" nzBordered [nzHeader]="listHeader">
         @for (option of options.controls; track option.value.option_id; let i = $index) {
-        <li nz-list-item cdkDrag [cdkDragData]="option">
-          <ul nz-list-item-actions>
-            <nz-list-item-action>
-              <button nz-button nzType="link" nzDanger (click)="removeOption(i)">Remove</button>
-            </nz-list-item-action>
-          </ul>
-          <p style="max-width: 300px">{{ option.value.option_description }}</p>
-        </li>
+          <li nz-list-item cdkDrag [cdkDragData]="option">
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
+                <button nz-button nzType="link" nzDanger (click)="removeOption(i)">Remove</button>
+              </nz-list-item-action>
+            </ul>
+            <p style="max-width: 300px">{{ option.value.option_description }}</p>
+          </li>
         }
       </ul>
       @if (options.invalid) {
-      <span style="color: red">Please record at least {{ getMinOptions() }} more options!</span>
+        <span style="color: red">Please record at least {{ getMinOptions() }} more options!</span>
       }
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-control [nzErrorTip]="newOptionErrors">
       <nz-input-group nzSearch [nzAddOnAfter]="addOptionButton">
@@ -31,9 +32,10 @@
       </ng-template>
       <ng-template #newOptionErrors let-control>
         @if (hasErrors(control, 'required', 'fieldIsEmpty')) {
-        <div>Cannot be empty!</div>
-        } @if (hasErrors(control, 'listContainsItem')) {
-        <div>Option already in the list: {{ control.errors['listContainsItem'] }}!</div>
+          <div>Cannot be empty!</div>
+        }
+        @if (hasErrors(control, 'listContainsItem')) {
+          <div>Option already in the list: {{ control.errors['listContainsItem'] }}!</div>
         }
       </ng-template>
     </nz-form-control>
@@ -46,7 +48,7 @@
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
-      <div>Cannot be empty!</div>
+        <div>Cannot be empty!</div>
       }
     </ng-template>
   </nz-form-item>
@@ -65,21 +67,21 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
-    <span>Set Default Value</span>
-    <nz-form-item>
-      <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-        <nz-select formControlName="defaultValue" [nzPlaceHolder]="'Please select default value'" nzAllowClear>
-          @for (option of optionObjects; track option.option_id) {
-          <nz-option [nzLabel]="option.option_description" [nzValue]="option.option_id"></nz-option>
+      <span>Set Default Value</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
+          <nz-select formControlName="defaultValue" [nzPlaceHolder]="'Please select default value'" nzAllowClear>
+            @for (option of optionObjects; track option.option_id) {
+              <nz-option [nzLabel]="option.option_description" [nzValue]="option.option_id"></nz-option>
+            }
+          </nz-select>
+        </nz-form-control>
+        <ng-template #defaultValueErrorTemplate let-control>
+          @for (message of getErrorMessages(control); track message) {
+            <div>{{ message }}</div>
           }
-        </nz-select>
-      </nz-form-control>
-      <ng-template #defaultValueErrorTemplate let-control>
-        @for (message of getErrorMessages(control); track message) {
-        <div>{{ message }}</div>
-        }
-      </ng-template>
-    </nz-form-item>
+        </ng-template>
+      </nz-form-item>
     }
   </div>
 
@@ -90,17 +92,17 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
-    <span>Required error message</span>
-    <nz-form-item>
-      <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-        <input nz-input formControlName="requiredMessage" placeholder="Required error message" />
-      </nz-form-control>
-      <ng-template #requiredErrorMessageTemplate let-control>
-        @if (hasErrors(control, 'required')) {
-        <div>If the field is required the message cannot be empty!</div>
-        }
-      </ng-template>
-    </nz-form-item>
+      <span>Required error message</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
+          <input nz-input formControlName="requiredMessage" placeholder="Required error message" />
+        </nz-form-control>
+        <ng-template #requiredErrorMessageTemplate let-control>
+          @if (hasErrors(control, 'required')) {
+            <div>If the field is required the message cannot be empty!</div>
+          }
+        </ng-template>
+      </nz-form-item>
     }
   </div>
 

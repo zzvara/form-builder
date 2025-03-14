@@ -1,5 +1,5 @@
-import { FormInputData } from "@app/shared/interfaces/form-input-data";
-import { LayoutEnum } from "@pages/edit/interfaces/layout-enum";
+import {FormInputData} from "@app/shared/interfaces/form-input-data";
+import {LayoutEnum} from "@pages/edit/interfaces/layout-enum";
 
 export interface SectionList {
   sectionId: string;

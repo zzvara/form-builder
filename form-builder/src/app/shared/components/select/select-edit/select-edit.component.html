@@ -6,20 +6,20 @@
     <nz-form-control formArrayName="selectOptions">
       <ul nz-list cdkDropList (cdkDropListDropped)="drop($event)" nzBordered [nzHeader]="listHeader">
         @for (option of options.controls; track option.value; let i = $index) {
-        <li nz-list-item cdkDrag [cdkDragData]="option">
-          <ul nz-list-item-actions>
-            <nz-list-item-action>
-              <button nz-button nzType="link" nzDanger (click)="removeOption(option, i)">
-                {{ 'components.combobox.COMBOBOX_REMOVE' | translate }}
-              </button>
-            </nz-list-item-action>
-          </ul>
-          <p style="max-width: 300px">{{ option.value }}</p>
-        </li>
+          <li nz-list-item cdkDrag [cdkDragData]="option">
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
+                <button nz-button nzType="link" nzDanger (click)="removeOption(option, i)">
+                  {{ 'components.combobox.COMBOBOX_REMOVE' | translate }}
+                </button>
+              </nz-list-item-action>
+            </ul>
+            <p style="max-width: 300px">{{ option.value }}</p>
+          </li>
         }
       </ul>
       @if (options.invalid) {
-      <span style="color: red">{{ 'components.combobox.RECORD_MORE_OPTION' | translate }} {{ getMinOptions() }}</span>
+        <span style="color: red">{{ 'components.combobox.RECORD_MORE_OPTION' | translate }} {{ getMinOptions() }}</span>
       }
     </nz-form-control>
   </nz-form-item>
@@ -41,9 +41,10 @@
       </ng-template>
       <ng-template #newOptionErrors let-control>
         @if (hasErrors(control, 'required', 'fieldIsEmpty')) {
-        <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
-        } @if (hasErrors(control, 'listContainsItem')) {
-        <div>{{ 'components.combobox.OPTION_ALREADY' | translate }}{{ control.errors['listContainsItem'] }}!</div>
+          <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
+        }
+        @if (hasErrors(control, 'listContainsItem')) {
+          <div>{{ 'components.combobox.OPTION_ALREADY' | translate }}{{ control.errors['listContainsItem'] }}!</div>
         }
       </ng-template>
     </nz-form-control>
@@ -56,7 +57,7 @@
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
-      <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
+        <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
       }
     </ng-template>
   </nz-form-item>
@@ -82,26 +83,26 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
-    <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span>
-    <nz-form-item>
-      <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-        <nz-select
-          formControlName="defaultValue"
-          [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
-          nzPlaceHolder="{{ 'components.combobox.SELECT_DEFAULT_VALUE' | translate }}"
-          nzAllowClear
-        >
-          @for (option of optionsValues; track option) {
-          <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+      <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
+          <nz-select
+            formControlName="defaultValue"
+            [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
+            nzPlaceHolder="{{ 'components.combobox.SELECT_DEFAULT_VALUE' | translate }}"
+            nzAllowClear
+          >
+            @for (option of optionsValues; track option) {
+              <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+            }
+          </nz-select>
+        </nz-form-control>
+        <ng-template #defaultValueErrorTemplate let-control>
+          @for (message of getErrorMessages(control); track message) {
+            <div>{{ message }}</div>
           }
-        </nz-select>
-      </nz-form-control>
-      <ng-template #defaultValueErrorTemplate let-control>
-        @for (message of getErrorMessages(control); track message) {
-        <div>{{ message }}</div>
-        }
-      </ng-template>
-    </nz-form-item>
+        </ng-template>
+      </nz-form-item>
     }
   </div>
 
@@ -140,17 +141,17 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
-    <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span>
-    <nz-form-item>
-      <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
-        <input nz-input formControlName="tooltipText" placeholder="{{ 'components.TOOLTIP_TEXT' | translate }}" />
-      </nz-form-control>
-      <ng-template #tooltipTextErrorMessageTemplate let-control>
-        @if (hasErrors(control, 'required')) {
-        <div>{{ 'components.PROVIDE_TOOLTIP' | translate }}</div>
-        }
-      </ng-template>
-    </nz-form-item>
+      <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
+          <input nz-input formControlName="tooltipText" placeholder="{{ 'components.TOOLTIP_TEXT' | translate }}" />
+        </nz-form-control>
+        <ng-template #tooltipTextErrorMessageTemplate let-control>
+          @if (hasErrors(control, 'required')) {
+            <div>{{ 'components.PROVIDE_TOOLTIP' | translate }}</div>
+          }
+        </ng-template>
+      </nz-form-item>
     }
   </div>
 </form>

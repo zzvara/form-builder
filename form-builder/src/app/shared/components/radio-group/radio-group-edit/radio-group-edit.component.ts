@@ -1,12 +1,12 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
-import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
-import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
-import { CustomValidators } from '@validators/custom-validators';
-import { ListValidators } from '@validators/list-validators';
-import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
+import {AbstractEditForm} from '@abstract-classes/abstract-edit-form';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Component} from '@angular/core';
+import {AbstractControl, FormArray, FormControl, Validators} from '@angular/forms';
+import {RadioGroupData} from '@components/radio-group/interfaces/radio-group-data';
+import {ErrorType, getErrorMessageList} from '@helpers/error-helper';
+import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
+import {CustomValidators} from '@validators/custom-validators';
+import {ListValidators} from '@validators/list-validators';
 
 @Component({
     selector: 'app-radio-group-edit',

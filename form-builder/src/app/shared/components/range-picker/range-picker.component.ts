@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { AbstractDatePickerComponent } from '@abstract-classes/abstract-date-picker-input';
-import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
-import { RangePickerEditComponent } from '@components/range-picker/range-picker-edit/range-picker-edit.component';
-import { TranslateService } from '@ngx-translate/core';
+import {AbstractDatePickerComponent} from '@abstract-classes/abstract-date-picker-input';
+import {Component} from '@angular/core';
+import {RangePickerComponentData} from '@components/range-picker/interfaces/range-picker-component-data';
+import {RangePickerEditComponent} from '@components/range-picker/range-picker-edit/range-picker-edit.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-range-picker',

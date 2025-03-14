@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
-import { disabledHours, disabledMinutes, disabledSeconds } from '@helpers/date-helper';
-import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
-import { TimePickerEditComponent } from '@components/time-picker/time-picker-edit/time-picker-edit.component';
-import { TranslateService } from '@ngx-translate/core';
+import {AbstractFieldLikeInputs} from '@abstract-classes/abstract-fieldlike-inputs';
+import {Component} from '@angular/core';
+import {TimePickerComponentData} from '@components/time-picker/interfaces/time-picker-component-data';
+import {TimePickerEditComponent} from '@components/time-picker/time-picker-edit/time-picker-edit.component';
+import {disabledHours, disabledMinutes, disabledSeconds} from '@helpers/date-helper';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-time-picker',

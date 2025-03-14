@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
-import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
+import {Component} from '@angular/core';
+import {InputEditComponent} from '@components/input/input-edit/input-edit.component';
+import {TextareaComponentData} from '@components/textarea/interfaces/textarea-component-data';
 
 @Component({
     selector: 'app-textarea-edit',

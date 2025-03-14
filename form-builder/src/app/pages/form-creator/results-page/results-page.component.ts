@@ -15,12 +15,12 @@ import { StatisticsService } from '@app/pages/form-creator/results-page/services
 export class ResultsPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
-  @Input() projectId: number | undefined;
+  @Input() projectId?: number;
   @Input() versionNum?: number;
-  project: Project | undefined;
+  project?: Project;
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
-  latestVersionNum: number | undefined;
+  latestVersionNum?: number;
   sectionInputs: any[] = [];
 
   constructor(

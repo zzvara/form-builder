@@ -1,5 +1,5 @@
-import { Directive, HostListener, inject, Input } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import {Directive, HostListener, inject, Input} from '@angular/core';
+import {NgControl} from '@angular/forms';
 
 @Directive({
     selector: '[appMutateText]',

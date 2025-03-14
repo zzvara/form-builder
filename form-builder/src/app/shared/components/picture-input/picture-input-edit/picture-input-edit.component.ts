@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractEditForm} from "../../../abstract-classes/abstract-edit-form";
+import {AbstractEditForm} from "@abstract-classes/abstract-edit-form";
 import {PictureInputComponentData} from "../interfaces/picture-input-component-data";
 
 @Component({

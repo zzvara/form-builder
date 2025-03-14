@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { AbstractControl, FormControl, Validators } from '@angular/forms';
-import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
-import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import {AbstractFieldLikeEditForm} from '@abstract-classes/abstract-fieldlike-edit-form';
+import {Component} from '@angular/core';
+import {AbstractControl, FormControl, Validators} from '@angular/forms';
+import {DatePickerComponentData} from '@components/date-picker/interfaces/date-picker-component-data';
+import {defaultDateFormats} from '@components/date-picker/interfaces/default-date-formats';
 import {
   getDisabledDateConfig,
   getDisabledDatesForMaxDate,
@@ -10,11 +11,10 @@ import {
   getDisabledTimeConfigForMaxDate,
   getDisabledTimeConfigForMinDate,
 } from '@helpers/date-helper';
-import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
-import { CustomValidators } from '@validators/custom-validators';
-import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
-import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
+import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
+import {CustomValidators} from '@validators/custom-validators';
+import {DisabledTimeConfig, DisabledTimeFn, NzDateMode, SupportTimeOptions} from 'ng-zorro-antd/date-picker';
 
 @Component({
     selector: 'app-date-picker-edit',
@@ -22,14 +22,11 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./date-picker-edit.component.css'],
     standalone: false
 })
-export class DatePickerEditComponent<
-  T extends Date | Date[] = Date,
-  D extends DatePickerComponentData<T> = DatePickerComponentData<T>
-> extends AbstractFieldLikeEditForm<T, D> {
+export class DatePickerEditComponent< T extends Date | Date[] = Date,  D extends DatePickerComponentData<T> = DatePickerComponentData<T> > extends AbstractFieldLikeEditForm<T, D> {
   constructor(private readonly translate: TranslateService) {
     super();
   }
-  identifyDatePickerModes: (index: number, item: { mode: NzDateMode; label: string }) => NzDateMode = (_index, item) => item.mode;
+
   datePickerModes: { mode: NzDateMode; label: string }[] = [
     { mode: 'decade', label: this.translate.instant('components.date_picker.DECADE') },
     { mode: 'year', label: this.translate.instant('components.date_picker.YEAR') },

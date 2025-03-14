@@ -1,10 +1,10 @@
-import { DestroyRef, Directive, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
-import { ControlConnection, ControlConnectionData, DataSetterType } from '@shared/interfaces/control-connection';
-import { InputData, InputDataKeys } from '@shared/interfaces/input-data';
-import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
+import {DestroyRef, Directive, inject, OnInit} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {ControlConnection, ControlConnectionData, DataSetterType} from '@shared/interfaces/control-connection';
+import {InputData, InputDataKeys} from '@shared/interfaces/input-data';
+import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
+import {NZ_MODAL_DATA} from 'ng-zorro-antd/modal';
 
 @Directive()
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {

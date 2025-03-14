@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormComponentMarker } from '@shared/interfaces/form-component-marker';
+import {Component} from '@angular/core';
+import {FormComponentMarker} from '@shared/interfaces/form-component-marker';
 
 @Component({
     selector: 'app-section',

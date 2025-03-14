@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
-import { SelectEditComponent } from '@components/select/select-edit/select-edit.component';
-import { SelectComponentData } from '@components/select/interfaces/select-component-data';
-import { TranslateService } from '@ngx-translate/core';
+import {AbstractFieldLikeInputs} from '@abstract-classes/abstract-fieldlike-inputs';
+import {Component} from '@angular/core';
+import {SelectComponentData} from '@components/select/interfaces/select-component-data';
+import {SelectEditComponent} from '@components/select/select-edit/select-edit.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-select',
