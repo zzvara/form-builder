@@ -5,14 +5,22 @@
     <nz-step [nzTitle]="(projectType === 'test' ? 'steps.ANSWER' : 'steps.RESULTS') | translate" (click)="toAnswPage()"></nz-step>
   </nz-steps>
   <div class="form-container">
-    <div class="page" *ngIf="page == 0">
-      <app-info-page [page]="page" (setPage)="setPage($event)" (projectId)="setProjectId($event)" (formData)="handleFormData($event)" />
-    </div>
-    <div class="page" *ngIf="page == 1">
-      <app-components-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" (versionChange)="setVersionNum($event)" />
-    </div>
-    <div class="page" *ngIf="page == 2">
-      <app-results-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" [versionNum]="currentVersionNum" />
-    </div>
+    @switch (page) {
+      @case (0) {
+        <div class="page">
+          <app-info-page [page]="page" (setPage)="setPage($event)" (projectId)="setProjectId($event)" (formData)="handleFormData($event)" />
+        </div>
+      }
+      @case (1) {
+        <div class="page">
+          <app-components-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" (versionChange)="setVersionNum($event)" />
+        </div>
+      }
+      @case (2) {
+        <div class="page">
+          <app-results-page [page]="page" (setPage)="setPage($event)" [projectId]="projectId" [versionNum]="currentVersionNum" />
+        </div>
+      }
+    }
   </div>
 </nz-layout>

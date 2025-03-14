@@ -1,17 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { SectionComponent } from '@components/section/section.component';
-import { identifyGroupContents, identifySidebarData, SidebarData } from '@components/sidebar/interfaces/sidebar-data';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {SidebarData} from '@components/sidebar/interfaces/sidebar-data';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SidebarComponent implements OnInit {
-  protected readonly identifySidebarData = identifySidebarData;
-  protected readonly identifyGroupContents = identifyGroupContents;
-
   @Input() sidebarData!: SidebarData[];
 
   searchTerm: string = '';

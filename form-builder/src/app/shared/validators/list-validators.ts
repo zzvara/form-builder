@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray } from '@angular/forms';
+import {AbstractControl, FormArray} from '@angular/forms';
 
 export class ListValidators {
   //Form group level validator

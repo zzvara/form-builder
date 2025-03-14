@@ -5,16 +5,17 @@ import { ProjectService } from '@app/services/project.service';
 import { InlineEdit } from '@app/shared/interfaces/inline-edit';
 
 @Component({
-  selector: 'app-components-page',
-  templateUrl: './components-page.component.html',
-  styleUrls: ['./components-page.component.css'],
+    selector: 'app-components-page',
+    templateUrl: './components-page.component.html',
+    styleUrls: ['./components-page.component.css'],
+    standalone: false
 })
 export class ComponentsPageComponent implements OnInit {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
 
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
-  @Input() projectId: number | undefined;
+  @Input() projectId: string | undefined;
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();

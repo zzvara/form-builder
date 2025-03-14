@@ -1,48 +1,41 @@
 <nz-table #table [nzData]="projectList" nzTableLayout="auto" nzPaginationType="small">
   <thead>
     <tr>
-      <th
-        *ngFor="let column of columnsConfig"
-        [nzSortOrder]="column.sortOrder"
-        [nzSortFn]="column.sortFn"
-        [nzSortDirections]="column.sortDirections"
-      >
-        {{ column.title }}
-      </th>
+      @for (column of columnsConfig; track $index) {
+        <th
+          [nzSortOrder]="column.sortOrder"
+          [nzSortFn]="column.sortFn"
+          [nzSortDirections]="column.sortDirections"
+        >
+          {{ column.title }}
+        </th>
+      }
       <th nzWidth="100px">{{ 'dashboard.ACTION' | translate }}</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of table.data">
-      <td>{{ data.title }}</td>
-      <td>{{ data.description }}</td>
-      <td>{{ data.created }}</td>
-      <td>{{ data.modified }}</td>
-      <td>
-        <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
-        <span
-          nz-popconfirm
-          [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
-          [nzCancelText]="'general.CANCEL' | translate"
-          [nzOkText]="'general.OK' | translate"
-          (nzOnConfirm)="onDeleteProject(data.id)"
-          nz-icon
-          nzType="delete"
-          nzTheme="outline"
-          class="delete-icon"
-        >
+    @for (data of table.data; track $index) {
+      <tr>
+        <td>{{ data.title }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.created }}</td>
+        <td>{{ data.modified }}</td>
+        <td>
+          <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
+          <span
+            nz-popconfirm
+            [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
+            [nzCancelText]="'general.CANCEL' | translate"
+            [nzOkText]="'general.OK' | translate"
+            (nzOnConfirm)="onDeleteProject(data.id)"
+            nz-icon
+            nzType="delete"
+            nzTheme="outline"
+            class="delete-icon"
+          >
         </span>
-      </td>
-      <!-- <td>
-        <span
-          nz-popconfirm
-          nzPopconfirmTitle="Are you sure you want to delete this project?"
-          (nzOnConfirm)="onDeleteProject(data.id)"
-          nz-icon
-          nzType="delete"
-          nzTheme="outline">
-        </span>
-      </td> -->
-    </tr>
+        </td>
+      </tr>
+    }
   </tbody>
 </nz-table>

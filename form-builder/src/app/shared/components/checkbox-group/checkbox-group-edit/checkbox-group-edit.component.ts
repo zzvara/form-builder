@@ -1,16 +1,17 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
-import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
-import { CustomValidators } from '@validators/custom-validators';
-import { ListValidators } from '@validators/list-validators';
-import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
+import {AbstractEditForm} from '@abstract-classes/abstract-edit-form';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Component} from '@angular/core';
+import {AbstractControl, FormArray, FormControl, Validators} from '@angular/forms';
+import {CheckboxGroupData, CheckboxOptions} from '@components/checkbox-group/interfaces/checkbox-group-data';
+import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
+import {CustomValidators} from '@validators/custom-validators';
+import {ListValidators} from '@validators/list-validators';
 
 @Component({
-  selector: 'app-checkbox-group-edit',
-  templateUrl: './checkbox-group-edit.component.html',
-  styleUrl: './checkbox-group-edit.component.css',
+    selector: 'app-checkbox-group-edit',
+    templateUrl: './checkbox-group-edit.component.html',
+    styleUrl: './checkbox-group-edit.component.css',
+    standalone: false
 })
 export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions[], CheckboxGroupData> {
   newOption!: FormControl<string | null>;

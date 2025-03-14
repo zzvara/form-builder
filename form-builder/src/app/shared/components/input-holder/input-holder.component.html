@@ -52,15 +52,15 @@
 <ng-template #titleTemplate>
   <span>{{ formInput.title }}</span>
   @if (inputHolderForm.invalid) {
-  <span
-    nz-tooltip
-    nzTooltipTitle="{{ 'components.input_holder.INVALID_INPUT' | translate }}"
-    nzTooltipColor="red"
-    nz-icon
-    nzType="exclamation-circle"
-    nzTheme="outline"
-    style="color: red; margin-left: 20px"
-  ></span>
+    <span
+      nz-tooltip
+      nzTooltipTitle="{{ 'components.input_holder.INVALID_INPUT' | translate }}"
+      nzTooltipColor="red"
+      nz-icon
+      nzType="exclamation-circle"
+      nzTheme="outline"
+      style="color: red; margin-left: 20px"
+    ></span>
   }
 </ng-template>
 <ng-template #headerButtons>

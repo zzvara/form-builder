@@ -1,16 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { MenuOption } from '@models/menu-option.model';
-import { HeaderService } from '@services/header/header.service';
-import { TranslateService } from '@ngx-translate/core';
-import { JsonService } from '@services/json.service';
-import { ContextAction } from '@components/header/header.model';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ContextAction} from '@components/header/header.model';
+import {MenuOption} from '@models/menu-option.model';
+import {TranslateService} from '@ngx-translate/core';
+import {HeaderService} from '@services/header/header.service';
+import {JsonService} from '@services/json.service';
+import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   headerOptions: MenuOption[] = [];

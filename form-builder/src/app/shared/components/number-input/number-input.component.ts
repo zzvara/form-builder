@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
-import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
-import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
-import { TranslateService } from '@ngx-translate/core';
-import { identity } from 'rxjs';
+import {AbstractFieldLikeInputs} from '@abstract-classes/abstract-fieldlike-inputs';
+import {Component} from '@angular/core';
+import {NumberInputComponentData} from '@components/number-input/interfaces/number-input-component-data';
+import {NumberInputEditComponent} from '@components/number-input/number-input-edit/number-input-edit.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.css'],
+  standalone: false,
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.number_input.MODEL_TITLE_NUMBER_INPUT');
   }
@@ -41,7 +41,8 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
     }
     return (value) => String(value);
   }
-  get inputParser(): (value: string) => string {
+
+  get inputParser(): (value: string) => number {
     if (this.data.format && this.data.formatter) {
       return (value) => {
         const specIndex = this.data.formatter!.indexOf('{*}');
@@ -50,11 +51,11 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
             this.data.formatter!.substring(0, specIndex),
             this.data.formatter!.substring(specIndex + 3, this.data.formatter!.length),
           ];
-          return value.replace(before, '').replace(after, '');
+          return Number(value.replace(before, '').replace(after, ''));
         }
-        return value;
+        return Number(value);
       };
     }
-    return identity;
+    return (value) => Number(value);
   }
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import {AbstractFieldLikeEditForm} from '@abstract-classes/abstract-fieldlike-edit-form';
+import {Component} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+import {TimePickerComponentData} from '@components/time-picker/interfaces/time-picker-component-data';
 import {
   disabledHours,
   disabledMaxHours,
@@ -12,14 +13,14 @@ import {
   disabledMinutes,
   disabledSeconds,
 } from '@helpers/date-helper';
-import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
-import { CustomValidators } from '@validators/custom-validators';
-import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
+import {CustomValidators} from '@validators/custom-validators';
 
 @Component({
-  selector: 'app-time-picker-edit',
-  templateUrl: './time-picker-edit.component.html',
-  styleUrls: ['./time-picker-edit.component.css'],
+    selector: 'app-time-picker-edit',
+    templateUrl: './time-picker-edit.component.html',
+    styleUrls: ['./time-picker-edit.component.css'],
+    standalone: false
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, TimePickerComponentData> {
   override ngOnInit(): void {

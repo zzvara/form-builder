@@ -7,19 +7,20 @@ import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.inter
 import { StatisticsService } from '@app/pages/form-creator/results-page/services/statistics.service';
 
 @Component({
-  selector: 'app-results-page',
-  templateUrl: './results-page.component.html',
-  styleUrls: ['./results-page.component.css'],
+    selector: 'app-results-page',
+    templateUrl: './results-page.component.html',
+    styleUrls: ['./results-page.component.css'],
+    standalone: false
 })
 export class ResultsPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
-  @Input() projectId: number | undefined;
+  @Input() projectId: string | undefined;
   @Input() versionNum?: number;
-  project: Project | undefined;
+  project?: Project;
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
-  latestVersionNum: number | undefined;
+  latestVersionNum?: number;
   sectionInputs: any[] = [];
 
   constructor(

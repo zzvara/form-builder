@@ -1,20 +1,19 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
-import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { identifyStringArray } from '@helpers/identification-helper';
-import { UpdateOnStrategy } from '@shared/interfaces/update-on-strategy';
-import { SelectComponentData } from '@components/select/interfaces/select-component-data';
-import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
-import { ListValidators } from '@validators/list-validators';
-import { CustomValidators } from '@validators/custom-validators';
+import {AbstractFieldLikeEditForm} from '@abstract-classes/abstract-fieldlike-edit-form';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Component} from '@angular/core';
+import {AbstractControl, FormArray, FormControl, Validators} from '@angular/forms';
+import {SelectComponentData} from '@components/select/interfaces/select-component-data';
+import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
+import {CustomValidators} from '@validators/custom-validators';
+import {ListValidators} from '@validators/list-validators';
 
 @Component({
-  selector: 'app-select-edit',
-  templateUrl: './select-edit.component.html',
-  styleUrls: ['./select-edit.component.css'],
+    selector: 'app-select-edit',
+    templateUrl: './select-edit.component.html',
+    styleUrls: ['./select-edit.component.css'],
+    standalone: false
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
-  protected readonly identifyStringArray = identifyStringArray;
 
   newOption!: FormControl<string | null>;
 

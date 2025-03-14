@@ -5,42 +5,50 @@
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
-      <span *ngIf="searchTerm" nz-icon nzType="close" nzTheme="outline" class="clear-icon" (click)="clearSearch()"></span>
+      @if (searchTerm) {
+        <span nz-icon nzType="close" nzTheme="outline" class="clear-icon" (click)="clearSearch()"></span>
+      }
     </ng-template>
   </div>
   <div class="body">
     <nz-collapse [nzBordered]="false">
-      <nz-collapse-panel
-        *ngFor="let group of filteredData; trackBy: identifySidebarData"
-        [nzHeader]="group.groupName"
-        [nzActive]="group.active"
-        cdkDropList
-        [cdkDropListData]="group.groupContents"
-        [cdkDropListConnectedTo]="group.dropListConnectedTo()"
-        [cdkDropListSortingDisabled]="true"
-      >
-        <nz-card
-          *ngFor="let item of group.groupContents; trackBy: identifyGroupContents"
-          cdkDrag
-          [cdkDragData]="item"
-          [nzBordered]="true"
-          style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px"
+      @for (group of filteredData; track group.groupName) {
+        <nz-collapse-panel
+          [nzHeader]="group.groupName"
+          [nzActive]="group.active"
+          cdkDropList
+          [cdkDropListData]="group.groupContents"
+          [cdkDropListConnectedTo]="group.dropListConnectedTo()"
+          [cdkDropListSortingDisabled]="true"
         >
-          <span
-            ><b>{{ item.title }}</b></span
-          >
-          <ng-container [ngSwitch]="item.type" *cdkDragPlaceholder>
+          @for (item of group.groupContents; track item.type) {
             <nz-card
-              *ngSwitchCase="'SectionComponent'"
-              nzTitle="Section: section | Layout: vertical"
-              [nzBodyStyle]="{ padding: '10px' }"
-              class="element-list p-3"
-              style="margin: auto; padding: 0; width: 900px; border: 1px solid lightgray"
-            ></nz-card>
-            <app-input-holder *ngSwitchDefault [formInput]="item" />
-          </ng-container>
-        </nz-card>
-      </nz-collapse-panel>
+              cdkDrag
+              [cdkDragData]="item"
+              [nzBordered]="true"
+              style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px"
+            >
+              <span><b>{{ item.title }}</b></span>
+
+              <ng-container *cdkDragPlaceholder>
+                @switch (item.type) {
+                  @case ('SectionComponent') {
+                    <nz-card
+                      nzTitle="Section: section | Layout: vertical"
+                      [nzBodyStyle]="{ padding: '10px' }"
+                      class="element-list p-3"
+                      style="margin: auto; padding: 0; width: 900px; border: 1px solid lightgray"
+                    ></nz-card>
+                  }
+                  @default {
+                    <app-input-holder [formInput]="item" />
+                  }
+                }
+              </ng-container>
+            </nz-card>
+          }
+        </nz-collapse-panel>
+      }
     </nz-collapse>
   </div>
 </section>

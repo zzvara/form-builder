@@ -6,21 +6,22 @@ import { ProjectType } from '@app/interfaces/project';
 import { ColumnItem } from '@pages/dashboard/dashboard.model';
 
 @Component({
-  selector: 'app-list-view',
-  templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.css'],
+    selector: 'app-list-view',
+    templateUrl: './list-view.component.html',
+    styleUrls: ['./list-view.component.css'],
+    standalone: false
 })
 export class ListViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);
   @Input() type?: ProjectType;
 
-  @Output() deleteProject = new EventEmitter<number>();
-  @Output() editProject = new EventEmitter<number>();
+  @Output() deleteProject = new EventEmitter<string>();
+  @Output() editProject = new EventEmitter<string>();
 
   projectList: Questionnaire[] = [];
   columnsConfig: ColumnItem[] = [];
 
-  constructor(private translate: TranslateService) {}
+  constructor(private readonly translate: TranslateService) {}
 
   ngOnInit(): void {
     this.projects.subscribe((projects) => {
@@ -60,11 +61,11 @@ export class ListViewComponent implements OnInit {
     ];
   }
 
-  onDeleteProject(id: number): void {
+  onDeleteProject(id: string): void {
     this.deleteProject.emit(id);
   }
 
-  onEditProject(id: number): void {
+  onEditProject(id: string): void {
     this.editProject.emit(id);
   }
 }

@@ -22,9 +22,11 @@
           required
           [ngClass]="{ 'input-error': form.get('title')?.invalid && (form.get('title')?.touched || saveFailed) }"
         />
-        <div *ngIf="form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)">
-          <span class="error-message">{{ 'form.TITLE_REQUIRED' | translate }}</span>
-        </div>
+        @if (form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)) {
+          <div>
+            <span class="error-message">{{ 'form.TITLE_REQUIRED' | translate }}</span>
+          </div>
+        }
       </nz-form-control>
 
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
@@ -78,12 +80,13 @@
             style="margin-left: 5px"
           ></i>
         </nz-form-label>
-        <nz-date-picker
-          *ngIf="form.get('hasdeadline')?.value"
-          id="deadline"
-          formControlName="deadline"
-          (change)="updateForm()"
-        ></nz-date-picker>
+        @if (form.get('hasdeadline')?.value) {
+          <nz-date-picker
+            id="deadline"
+            formControlName="deadline"
+            (change)="updateForm()"
+          ></nz-date-picker>
+        }
       </nz-form-item>
 
       <nz-form-item class="same_line">
@@ -98,26 +101,29 @@
             nzTooltipTitle="{{ 'form.TIME_LIMIT_TOOLTIP' | translate }}"
           ></i>
         </nz-form-label>
-        <nz-time-picker
-          [nzFormat]="'HH:mm'"
-          *ngIf="form.get('haslimit')?.value"
-          formControlName="limit"
-          (change)="updateForm()"
-        ></nz-time-picker>
+        @if (form.get('haslimit')?.value) {
+          <nz-time-picker
+            [nzFormat]="'HH:mm'"
+            formControlName="limit"
+            (change)="updateForm()"
+          ></nz-time-picker>
+        }
       </nz-form-item>
 
-      <ng-container *ngIf="formExists">
-        <div>
+      @if (formExists) {
+        <ng-container>
           <div>
-            <nz-form-label>{{ 'general.CREATED' | translate }}</nz-form-label>
-            <nz-form-label [nzNoColon]="true">{{ project.created }}</nz-form-label>
+            <div>
+              <nz-form-label>{{ 'general.CREATED' | translate }}</nz-form-label>
+              <nz-form-label [nzNoColon]="true">{{ project.created }}</nz-form-label>
+            </div>
+            <div>
+              <nz-form-label>{{ 'form.LAST_MODIFIED' | translate }}</nz-form-label>
+              <nz-form-label [nzNoColon]="true">{{ project.modified }}</nz-form-label>
+            </div>
           </div>
-          <div>
-            <nz-form-label>{{ 'form.LAST_MODIFIED' | translate }}</nz-form-label>
-            <nz-form-label [nzNoColon]="true">{{ project.modified }}</nz-form-label>
-          </div>
-        </div>
-      </ng-container>
+        </ng-container>
+      }
 
       <div class="saveBtn">
         <button id="btn" nz-button nzType="primary" type="submit">{{ 'general.NEXT' | translate }}</button>

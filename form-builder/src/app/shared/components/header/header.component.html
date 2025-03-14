@@ -1,21 +1,30 @@
 <nz-header>
   <div class="header">
     <div>
-      <span *ngIf="headerOptions.includes(options.HOME)" (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline"></span>
-      <span *ngIf="headerOptions.includes(options.UNDO)" (click)="handleUndo()" nz-icon nzType="rollback" nzTheme="outline"></span>
-      <span *ngIf="headerOptions.includes(options.SAVE)" (click)="handleSave()" nz-icon nzType="save" nzTheme="outline"></span>
-      <span
-        *ngIf="headerOptions.includes(options.SIDEBAR)"
-        [ngClass]="activeOptions.includes(options.SIDEBAR) ? 'is-active' : ''"
-        (click)="changeMenuItemState(options.SIDEBAR)"
-        nz-icon
-        nzType="menu"
-        nzTheme="outline"
-      ></span>
-      <span *ngIf="headerOptions.includes(options.UPLOAD_JSON)">
-        <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
-        <span (click)="fileInput.click()" nz-icon nzType="upload" nzTheme="outline"></span>
-      </span>
+      @if (headerOptions.includes(options.HOME)) {
+        <span (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline"></span>
+      }
+      @if (headerOptions.includes(options.UNDO)) {
+        <span (click)="handleUndo()" nz-icon nzType="rollback" nzTheme="outline"></span>
+      }
+      @if (headerOptions.includes(options.SAVE)) {
+        <span (click)="handleSave()" nz-icon nzType="save" nzTheme="outline"></span>
+      }
+      @if (headerOptions.includes(options.SIDEBAR)) {
+        <span
+          [ngClass]="activeOptions.includes(options.SIDEBAR) ? 'is-active' : ''"
+          (click)="changeMenuItemState(options.SIDEBAR)"
+          nz-icon
+          nzType="menu"
+          nzTheme="outline"
+        ></span>
+      }
+      @if (headerOptions.includes(options.UPLOAD_JSON)) {
+        <span>
+          <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
+          <span (click)="fileInput.click()" nz-icon nzType="upload" nzTheme="outline"></span>
+        </span>
+      }
     </div>
     <div>
       <a nz-dropdown [nzDropdownMenu]="menu">

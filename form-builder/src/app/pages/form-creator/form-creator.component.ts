@@ -2,20 +2,21 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-form-creator',
-  templateUrl: './form-creator.component.html',
-  styleUrls: ['./form-creator.component.css'],
+    selector: 'app-form-creator',
+    templateUrl: './form-creator.component.html',
+    styleUrls: ['./form-creator.component.css'],
+    standalone: false
 })
 export class FormCreatorComponent implements OnInit {
   constructor(private readonly router: Router, private readonly cdr: ChangeDetectorRef) {
-    this.projectId = 0;
+    this.projectId = '';
   }
 
-  projectId: number;
+  projectId: string;
   currentVersionNum?: number;
   projectType: string = '';
 
-  setProjectId(id: number) {
+  setProjectId(id: string) {
     this.projectId = id;
   }
 
