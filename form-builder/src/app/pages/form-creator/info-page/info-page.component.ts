@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Project, ProjectType } from '@app/interfaces/project';
-import { JsonService } from '@app/services/json.service';
-import { ProjectService } from '@app/services/project.service';
+import { Project, ProjectType } from '@interfaces/project';
+import { JsonService } from '@services/json.service';
+import { ProjectService } from '@services/project.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-    selector: 'app-info-page',
-    templateUrl: './info-page.component.html',
-    styleUrls: ['./info-page.component.css'],
-    standalone: false
+  selector: 'app-info-page',
+  templateUrl: './info-page.component.html',
+  styleUrls: ['./info-page.component.css'],
+  standalone: false,
 })
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
@@ -62,7 +62,7 @@ export class InfoPageComponent implements OnInit {
       this.params = params;
       if (params['id']) {
         this.formExists = true;
-        this.formId = params['id']; 
+        this.formId = params['id'];
         this.project = this.projectService.searchData(this.formId)?.[0] || null;
         if (this.project) {
           this.initializeForm();

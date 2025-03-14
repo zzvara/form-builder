@@ -25,12 +25,6 @@
 </ng-template>
 <ng-template #prefixTemplate>
   @if (data.showTooltip) {
-    <span
-      nz-icon
-      nz-tooltip
-      [nzTooltipTitle]="data.tooltipText"
-      nzType="info-circle"
-      style="margin-right: 10px"
-    ></span>
+    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>
   }
 </ng-template>

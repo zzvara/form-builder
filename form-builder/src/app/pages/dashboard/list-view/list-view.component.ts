@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.interface';
-import { ProjectType } from '@app/interfaces/project';
+import { ProjectType } from '@interfaces/project';
 import { ColumnItem } from '@pages/dashboard/dashboard.model';
+import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 
 @Component({
-    selector: 'app-list-view',
-    templateUrl: './list-view.component.html',
-    styleUrls: ['./list-view.component.css'],
-    standalone: false
+  selector: 'app-list-view',
+  templateUrl: './list-view.component.html',
+  styleUrls: ['./list-view.component.css'],
+  standalone: false,
 })
 export class ListViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);

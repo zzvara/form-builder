@@ -1,26 +1,29 @@
 import { inject, Injectable } from '@angular/core';
-import { NzSafeAny } from "ng-zorro-antd/core/types";
-import { NzModalService } from "ng-zorro-antd/modal";
-import { Observable } from "rxjs";
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { InputData } from '@app/shared/interfaces/input-data';
-import { AbstractEditForm } from '@app/shared/abstract-classes/abstract-edit-form';
-import { ModalData } from '@app/shared/interfaces/modal-data';
+import { InputData } from '@interfaces/input-data';
+import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import { ModalData } from '@interfaces/modal-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModalServiceService<T, D extends InputData, E extends AbstractEditForm<T, D>> {
   private readonly modal = inject(NzModalService);
   private readonly translate = inject(TranslateService);
 
-  constructor() { }
+  constructor() {}
 
   openModal(modalData: ModalData<D, E>): Observable<boolean | undefined> {
     return this.openModalAndGet<boolean>(modalData);
   }
 
-  openModalAndGet<RetType>(modalData: ModalData<D, E>, dataGetter: ((instance: E) => RetType) | null = null): Observable<RetType | undefined> {
+  openModalAndGet<RetType>(
+    modalData: ModalData<D, E>,
+    dataGetter: ((instance: E) => RetType) | null = null
+  ): Observable<RetType | undefined> {
     // Get the translated button labels
     const closeLabel = this.translate.instant('general.CANCEL');
     const resetLabel = this.translate.instant('general.RESET');
@@ -30,23 +33,26 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
       nzTitle: modalData.modalTitle,
       nzContent: modalData.modalContent,
       nzData: modalData.modalData,
-      nzWidth: "600px",
-      nzFooter: [{
+      nzWidth: '600px',
+      nzFooter: [
+        {
           label: closeLabel,
-          shape: "round",
+          shape: 'round',
           onClick: () => {
             modal.close();
-          }
-        }, {
+          },
+        },
+        {
           label: resetLabel,
-          shape: "round",
-          type: "dashed",
+          shape: 'round',
+          type: 'dashed',
           onClick: (editComponentInstance?: E) => {
             editComponentInstance?.onReset();
-          }
-      },{
+          },
+        },
+        {
           label: saveLabel,
-          type: "primary",
+          type: 'primary',
           disabled: (editComponentInstance?: E) => {
             //TODO: this gets called dozens of times with each change in the embedded component (could cause performance issues)
             return editComponentInstance?.isInvalid ?? true;
@@ -58,9 +64,9 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
             } else {
               modal.close(saveSuccess);
             }
-          }
-      }
-      ]
+          },
+        },
+      ],
     });
 
     return modal.afterClose.asObservable();

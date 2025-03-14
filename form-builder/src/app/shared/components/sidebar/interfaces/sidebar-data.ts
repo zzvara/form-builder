@@ -1,5 +1,5 @@
-import {CdkDropList} from '@angular/cdk/drag-drop';
-import {FormInputData} from '@shared/interfaces/form-input-data';
+import { CdkDropList } from '@angular/cdk/drag-drop';
+import { FormInputData } from '@interfaces/form-input-data';
 
 export interface SidebarData {
   groupName: string;

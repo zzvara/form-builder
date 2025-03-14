@@ -1,16 +1,16 @@
-import {AbstractFieldLikeEditForm} from '@abstract-classes/abstract-fieldlike-edit-form';
-import {Component} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {InputComponentData} from '@components/input/interfaces/input-component-data';
-import {ErrorType} from '@helpers/error-helper';
-import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
-import {CustomValidators} from '@validators/custom-validators';
+import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { InputComponentData } from '@components/input/interfaces/input-component-data';
+import { ErrorType } from '@helpers/error-helper';
+import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { CustomValidators } from '@validators/custom-validators';
 
 @Component({
-    selector: 'app-input-edit',
-    templateUrl: './input-edit.component.html',
-    styleUrls: ['./input-edit.component.css'],
-    standalone: false
+  selector: 'app-input-edit',
+  templateUrl: './input-edit.component.html',
+  styleUrls: ['./input-edit.component.css'],
+  standalone: false,
 })
 export class InputEditComponent<T extends InputComponentData = InputComponentData> extends AbstractFieldLikeEditForm<string, T> {
   override ngOnInit(): void {

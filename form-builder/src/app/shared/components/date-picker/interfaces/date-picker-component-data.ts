@@ -1,5 +1,5 @@
-import {MinMaxDateable} from '@helpers/date-helper';
-import {FieldLikeInputData} from '@shared/interfaces/field-like-input-data';
+import { MinMaxDateable } from '@helpers/date-helper';
+import { FieldLikeInputData } from '@interfaces/field-like-input-data';
 
 export interface DatePickerComponentData<T = Date> extends FieldLikeInputData<T>, MinMaxDateable {
   dateFormat: string;

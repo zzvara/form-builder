@@ -1,25 +1,25 @@
-import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {Project} from '@app/interfaces/project';
-import {ProjectService} from '@app/services/project.service';
-import {UndoRedoService} from '@app/services/undo-redo.service';
-import {InputHolderComponent} from '@app/shared/components/input-holder/input-holder.component';
-import {SidebarData} from '@app/shared/components/sidebar/interfaces/sidebar-data';
-import {FormInputData, instanceOfFormInputData} from '@app/shared/interfaces/form-input-data';
-import {InlineEdit} from '@app/shared/interfaces/inline-edit';
-import {InputData} from '@app/shared/interfaces/input-data';
-import {getSideBarData} from '@pages/edit/config/edit-data-config';
-import {EditList} from '@pages/edit/interfaces/edit-list';
-import {LayoutEnum} from '@pages/edit/interfaces/layout-enum';
-import {instanceOfSectionList, SectionList} from '@pages/edit/interfaces/section-list';
-import {cloneDeep} from 'lodash-es';
-import {v4 as uuidv4} from 'uuid';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Project, ProjectVersion } from '@interfaces/project';
+import { ProjectService } from '@services/project.service';
+import { UndoRedoService } from '@services/undo-redo.service';
+import { InputHolderComponent } from '@components/input-holder/input-holder.component';
+import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
+import { FormInputData, instanceOfFormInputData } from '@interfaces/form-input-data';
+import { InlineEdit } from '@interfaces/inline-edit';
+import { InputData } from '@interfaces/input-data';
+import { getSideBarData } from '@pages/edit/config/edit-data-config';
+import { EditList } from '@pages/edit/interfaces/edit-list';
+import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
+import { instanceOfSectionList, SectionList } from '@pages/edit/interfaces/section-list';
+import { cloneDeep } from 'lodash-es';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-    selector: 'app-edit',
-    templateUrl: './edit.component.html',
-    styleUrls: ['./edit.component.css'],
-    standalone: false
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.css'],
+  standalone: false,
 })
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);

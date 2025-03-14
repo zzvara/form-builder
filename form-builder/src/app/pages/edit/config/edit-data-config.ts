@@ -1,28 +1,28 @@
-import {CheckboxGroupComponent} from '@components/checkbox-group/checkbox-group.component';
-import {CheckboxGroupData} from '@components/checkbox-group/interfaces/checkbox-group-data';
-import {DatePickerComponent} from '@components/date-picker/date-picker.component';
-import {DatePickerComponentData} from '@components/date-picker/interfaces/date-picker-component-data';
-import {defaultDateFormats} from '@components/date-picker/interfaces/default-date-formats';
-import {InputComponent} from '@components/input/input.component';
-import {InputComponentData} from '@components/input/interfaces/input-component-data';
-import {NumberInputComponentData} from '@components/number-input/interfaces/number-input-component-data';
-import {NumberInputComponent} from '@components/number-input/number-input.component';
-import {PictureInputComponentData} from '@components/picture-input/interfaces/picture-input-component-data';
-import {PictureInputComponent} from '@components/picture-input/picture-input.component';
-import {RadioGroupData} from '@components/radio-group/interfaces/radio-group-data';
-import {RadioGroupComponent} from '@components/radio-group/radio-group.component';
-import {RangePickerComponentData} from '@components/range-picker/interfaces/range-picker-component-data';
-import {RangePickerComponent} from '@components/range-picker/range-picker.component';
-import {SectionComponent} from '@components/section/section.component';
-import {SelectComponentData} from '@components/select/interfaces/select-component-data';
-import {SelectComponent} from '@components/select/select.component';
-import {SidebarData} from '@components/sidebar/interfaces/sidebar-data';
-import {TextareaComponentData} from '@components/textarea/interfaces/textarea-component-data';
-import {TextareaComponent} from '@components/textarea/textarea.component';
-import {TimePickerComponentData} from '@components/time-picker/interfaces/time-picker-component-data';
-import {TimePickerComponent} from '@components/time-picker/time-picker.component';
-import {EditComponent} from '@pages/edit/edit.component';
-import {FormInputData} from '@shared/interfaces/form-input-data';
+import { CheckboxGroupComponent } from '@components/checkbox-group/checkbox-group.component';
+import { CheckboxGroupData } from '@components/checkbox-group/interfaces/checkbox-group-data';
+import { DatePickerComponent } from '@components/date-picker/date-picker.component';
+import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
+import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
+import { InputComponent } from '@components/input/input.component';
+import { InputComponentData } from '@components/input/interfaces/input-component-data';
+import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import { NumberInputComponent } from '@components/number-input/number-input.component';
+import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
+import { PictureInputComponent } from '@components/picture-input/picture-input.component';
+import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
+import { RadioGroupComponent } from '@components/radio-group/radio-group.component';
+import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
+import { RangePickerComponent } from '@components/range-picker/range-picker.component';
+import { SectionComponent } from '@components/section/section.component';
+import { SelectComponentData } from '@components/select/interfaces/select-component-data';
+import { SelectComponent } from '@components/select/select.component';
+import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
+import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
+import { TextareaComponent } from '@components/textarea/textarea.component';
+import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import { TimePickerComponent } from '@components/time-picker/time-picker.component';
+import { EditComponent } from '@pages/edit/edit.component';
+import { FormInputData } from '@interfaces/form-input-data';
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
@@ -126,70 +126,70 @@ export function getInputGroups(): FormInputData<any>[] {
       title: 'TEXT FIELD',
       questionPlaceholder: 'Text Field question...',
       descriptionPlaceholder: 'Question description...',
-      type: "InputComponent",
+      type: 'InputComponent',
       data: textInputOptions,
     },
     {
       title: 'NUMBER FIELD',
       questionPlaceholder: 'Number Field question...',
       descriptionPlaceholder: 'Question description...',
-      type: "NumberInputComponent",
+      type: 'NumberInputComponent',
       data: numberInputOptions,
     },
     {
       title: 'DATE PICKER',
       questionPlaceholder: 'Date Picker question...',
       descriptionPlaceholder: 'Question description...',
-      type: "DatePickerComponent",
+      type: 'DatePickerComponent',
       data: dateInputOptions,
     },
     {
       title: 'RANGE PICKER',
       questionPlaceholder: 'Range Picker question...',
       descriptionPlaceholder: 'Question description...',
-      type: "RangePickerComponent",
+      type: 'RangePickerComponent',
       data: rangeInputOptions,
     },
     {
       title: 'TIME PICKER',
       questionPlaceholder: 'Time Picker question...',
       descriptionPlaceholder: 'Question description...',
-      type: "TimePickerComponent",
+      type: 'TimePickerComponent',
       data: timeInputOptions,
     },
     {
       title: 'TEXT AREA',
       questionPlaceholder: 'Textarea question...',
       descriptionPlaceholder: 'Question description...',
-      type: "TextareaComponent",
+      type: 'TextareaComponent',
       data: textAreaInputOptions,
     },
     {
       title: 'PICTURE INPUT',
       questionPlaceholder: 'Picture Input question...',
       descriptionPlaceholder: 'Question description...',
-      type: "PictureInputComponent",
+      type: 'PictureInputComponent',
       data: pictureInputOptions,
     },
     {
       title: 'COMBOBOX',
       questionPlaceholder: 'ComboBox question...',
       descriptionPlaceholder: 'Question description...',
-      type: "SelectComponent",
+      type: 'SelectComponent',
       data: selectInputOptions,
     },
     {
       title: 'RADIO GROUP',
       questionPlaceholder: 'Radio group question...',
       descriptionPlaceholder: 'Question description...',
-      type: "RadioGroupComponent",
+      type: 'RadioGroupComponent',
       data: radioGroupInputOptions,
     },
     {
       title: 'CHECKBOX GROUP',
       questionPlaceholder: 'Checkbox group question...',
       descriptionPlaceholder: 'Question description...',
-      type: "CheckboxGroupComponent",
+      type: 'CheckboxGroupComponent',
       data: checkboxGroupInputOptions,
     },
   ];
@@ -211,7 +211,7 @@ export function getSideBarData(component: EditComponent): SidebarData[] {
       groupContents: [
         {
           title: 'SECTION',
-          type: "SectionComponent",
+          type: 'SectionComponent',
           data: null,
         },
       ],
@@ -220,15 +220,15 @@ export function getSideBarData(component: EditComponent): SidebarData[] {
 }
 
 export const translateComponentType = {
-  InputComponent:         InputComponent,
-  NumberInputComponent:   NumberInputComponent,
-  DatePickerComponent:    DatePickerComponent,
-  RangePickerComponent:   RangePickerComponent,
-  TimePickerComponent:    TimePickerComponent,
-  TextareaComponent:      TextareaComponent,
-  PictureInputComponent:  PictureInputComponent,
-  SelectComponent:        SelectComponent,
-  RadioGroupComponent:    RadioGroupComponent,
+  InputComponent: InputComponent,
+  NumberInputComponent: NumberInputComponent,
+  DatePickerComponent: DatePickerComponent,
+  RangePickerComponent: RangePickerComponent,
+  TimePickerComponent: TimePickerComponent,
+  TextareaComponent: TextareaComponent,
+  PictureInputComponent: PictureInputComponent,
+  SelectComponent: SelectComponent,
+  RadioGroupComponent: RadioGroupComponent,
   CheckboxGroupComponent: CheckboxGroupComponent,
-  SectionComponent:       SectionComponent
-}
+  SectionComponent: SectionComponent,
+};

@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ProjectType } from '@app/interfaces/project';
-import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.interface';
+import { ProjectType } from '@interfaces/project';
+import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { Observable, of } from 'rxjs';
 
 @Component({
-    selector: 'app-card-view',
-    templateUrl: './card-view.component.html',
-    styleUrls: ['./card-view.component.css'],
-    standalone: false
+  selector: 'app-card-view',
+  templateUrl: './card-view.component.html',
+  styleUrls: ['./card-view.component.css'],
+  standalone: false,
 })
 export class CardViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);

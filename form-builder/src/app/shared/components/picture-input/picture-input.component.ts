@@ -1,16 +1,16 @@
-import {AbstractInput} from '@abstract-classes/abstract-input';
-import {Component} from '@angular/core';
-import {PictureInputComponentData} from '@components/picture-input/interfaces/picture-input-component-data';
-import {PictureInputEditComponent} from '@components/picture-input/picture-input-edit/picture-input-edit.component';
-import {TranslateService} from '@ngx-translate/core'; // Import TranslateService
-import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
-import {Observable, of} from 'rxjs';
+import { AbstractInput } from '@abstract-classes/abstract-input';
+import { Component } from '@angular/core';
+import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
+import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
+import { TranslateService } from '@ngx-translate/core'; // Import TranslateService
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { Observable, of } from 'rxjs';
 
 @Component({
-    selector: 'app-picture-input',
-    templateUrl: './picture-input.component.html',
-    styleUrls: ['./picture-input.component.css'],
-    standalone: false
+  selector: 'app-picture-input',
+  templateUrl: './picture-input.component.html',
+  styleUrls: ['./picture-input.component.css'],
+  standalone: false,
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
   title: string;
