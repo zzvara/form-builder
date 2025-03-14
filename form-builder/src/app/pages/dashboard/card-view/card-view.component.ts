@@ -4,9 +4,10 @@ import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.inter
 import { Observable, of } from 'rxjs';
 
 @Component({
-  selector: 'app-card-view',
-  templateUrl: './card-view.component.html',
-  styleUrls: ['./card-view.component.css'],
+    selector: 'app-card-view',
+    templateUrl: './card-view.component.html',
+    styleUrls: ['./card-view.component.css'],
+    standalone: false
 })
 export class CardViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);

@@ -7,9 +7,10 @@ import { CustomValidators } from '@validators/custom-validators';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
 
 @Component({
-  selector: 'app-input-edit',
-  templateUrl: './input-edit.component.html',
-  styleUrls: ['./input-edit.component.css'],
+    selector: 'app-input-edit',
+    templateUrl: './input-edit.component.html',
+    styleUrls: ['./input-edit.component.css'],
+    standalone: false
 })
 export class InputEditComponent<T extends InputComponentData = InputComponentData> extends AbstractFieldLikeEditForm<string, T> {
   override ngOnInit(): void {

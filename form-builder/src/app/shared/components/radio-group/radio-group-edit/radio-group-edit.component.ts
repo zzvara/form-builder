@@ -9,9 +9,10 @@ import { ListValidators } from '@validators/list-validators';
 import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
 
 @Component({
-  selector: 'app-radio-group-edit',
-  templateUrl: './radio-group-edit.component.html',
-  styleUrl: './radio-group-edit.component.css',
+    selector: 'app-radio-group-edit',
+    templateUrl: './radio-group-edit.component.html',
+    styleUrl: './radio-group-edit.component.css',
+    standalone: false
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {
   newOption!: FormControl<string | null>;

@@ -5,9 +5,10 @@ import { DatePickerComponentData } from '@components/date-picker/interfaces/date
 import { TranslateService } from '@ngx-translate/core'; // Import TranslateService
 
 @Component({
-  selector: 'app-date-picker',
-  templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.css'],
+    selector: 'app-date-picker',
+    templateUrl: './date-picker.component.html',
+    styleUrls: ['./date-picker.component.css'],
+    standalone: false
 })
 export class DatePickerComponent extends AbstractDatePickerComponent<Date, DatePickerComponentData, DatePickerEditComponent> {
   title: string; // Declare title variable

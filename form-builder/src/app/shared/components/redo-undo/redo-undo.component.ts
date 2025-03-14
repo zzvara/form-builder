@@ -3,9 +3,10 @@ import { SectionList } from '@pages/edit/interfaces/section-list';
 import { UndoRedoService } from '@services/undo-redo.service';
 
 @Component({
-  selector: 'app-redo-undo',
-  templateUrl: './redo-undo.component.html',
-  styleUrls: ['./redo-undo.component.css'],
+    selector: 'app-redo-undo',
+    templateUrl: './redo-undo.component.html',
+    styleUrls: ['./redo-undo.component.css'],
+    standalone: false
 })
 export class RedoUndoComponent {
   private readonly undoRedoService: UndoRedoService<SectionList[]> = inject(UndoRedoService);

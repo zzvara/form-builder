@@ -4,9 +4,10 @@ import { CheckboxGroupEditComponent } from '@components/checkbox-group/checkbox-
 import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
 
 @Component({
-  selector: 'app-checkbox-group',
-  templateUrl: './checkbox-group.component.html',
-  styleUrl: './checkbox-group.component.css',
+    selector: 'app-checkbox-group',
+    templateUrl: './checkbox-group.component.html',
+    styleUrl: './checkbox-group.component.css',
+    standalone: false
 })
 export class CheckboxGroupComponent extends AbstractInput<CheckboxOptions[], CheckboxGroupData, CheckboxGroupEditComponent> {
   override edit(): void {

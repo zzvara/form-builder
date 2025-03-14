@@ -5,9 +5,10 @@ import { RangePickerEditComponent } from '@components/range-picker/range-picker-
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-range-picker',
-  templateUrl: './range-picker.component.html',
-  styleUrls: ['./range-picker.component.css'],
+    selector: 'app-range-picker',
+    templateUrl: './range-picker.component.html',
+    styleUrls: ['./range-picker.component.css'],
+    standalone: false
 })
 export class RangePickerComponent extends AbstractDatePickerComponent<Date[], RangePickerComponentData, RangePickerEditComponent> {
   title: string;

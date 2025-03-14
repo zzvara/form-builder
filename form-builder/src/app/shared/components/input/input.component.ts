@@ -6,9 +6,10 @@ import { InputComponentData } from '@components/input/interfaces/input-component
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-text-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css'],
+    selector: 'app-text-input',
+    templateUrl: './input.component.html',
+    styleUrls: ['./input.component.css'],
+    standalone: false
 })
 export class InputComponent extends AbstractFieldLikeInputs<string, InputComponentData, InputEditComponent> {
   title: string;

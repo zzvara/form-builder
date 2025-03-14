@@ -5,9 +5,10 @@ import { TextareaEditComponent } from '@components/textarea/textarea-edit/textar
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-textarea',
-  templateUrl: './textarea.component.html',
-  styleUrls: ['./textarea.component.css'],
+    selector: 'app-textarea',
+    templateUrl: './textarea.component.html',
+    styleUrls: ['./textarea.component.css'],
+    standalone: false
 })
 export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaComponentData, TextareaEditComponent> {
   title: string;

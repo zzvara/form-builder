@@ -6,9 +6,10 @@ import { ProjectType } from '@app/interfaces/project';
 import { ColumnItem } from '@pages/dashboard/dashboard.model';
 
 @Component({
-  selector: 'app-list-view',
-  templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.css'],
+    selector: 'app-list-view',
+    templateUrl: './list-view.component.html',
+    styleUrls: ['./list-view.component.css'],
+    standalone: false
 })
 export class ListViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);

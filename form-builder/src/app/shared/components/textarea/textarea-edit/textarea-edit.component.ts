@@ -3,8 +3,9 @@ import { TextareaComponentData } from '@components/textarea/interfaces/textarea-
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 
 @Component({
-  selector: 'app-textarea-edit',
-  templateUrl: './textarea-edit.component.html',
-  styleUrls: ['./textarea-edit.component.css'],
+    selector: 'app-textarea-edit',
+    templateUrl: './textarea-edit.component.html',
+    styleUrls: ['./textarea-edit.component.css'],
+    standalone: false
 })
 export class TextareaEditComponent extends InputEditComponent<TextareaComponentData> {}

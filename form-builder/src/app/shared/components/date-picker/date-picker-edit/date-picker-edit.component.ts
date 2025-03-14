@@ -17,9 +17,10 @@ import { defaultDateFormats } from '@components/date-picker/interfaces/default-d
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-date-picker-edit',
-  templateUrl: './date-picker-edit.component.html',
-  styleUrls: ['./date-picker-edit.component.css'],
+    selector: 'app-date-picker-edit',
+    templateUrl: './date-picker-edit.component.html',
+    styleUrls: ['./date-picker-edit.component.css'],
+    standalone: false
 })
 export class DatePickerEditComponent<
   T extends Date | Date[] = Date,

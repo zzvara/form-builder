@@ -7,9 +7,10 @@ import { CustomValidators } from '../../../validators/custom-validators';
 import { identity } from 'rxjs';
 
 @Component({
-  selector: 'app-number-input-edit',
-  templateUrl: './number-input-edit.component.html',
-  styleUrls: ['./number-input-edit.component.css'],
+    selector: 'app-number-input-edit',
+    templateUrl: './number-input-edit.component.html',
+    styleUrls: ['./number-input-edit.component.css'],
+    standalone: false
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, NumberInputComponentData> {
   override ngOnInit(): void {

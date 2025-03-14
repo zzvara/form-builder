@@ -7,9 +7,10 @@ import { PictureInputEditComponent } from '@components/picture-input/picture-inp
 import { TranslateService } from '@ngx-translate/core'; // Import TranslateService
 
 @Component({
-  selector: 'app-picture-input',
-  templateUrl: './picture-input.component.html',
-  styleUrls: ['./picture-input.component.css'],
+    selector: 'app-picture-input',
+    templateUrl: './picture-input.component.html',
+    styleUrls: ['./picture-input.component.css'],
+    standalone: false
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
   title: string;

@@ -2,9 +2,10 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-form-creator',
-  templateUrl: './form-creator.component.html',
-  styleUrls: ['./form-creator.component.css'],
+    selector: 'app-form-creator',
+    templateUrl: './form-creator.component.html',
+    styleUrls: ['./form-creator.component.css'],
+    standalone: false
 })
 export class FormCreatorComponent implements OnInit {
   constructor(private readonly router: Router, private readonly cdr: ChangeDetectorRef) {

@@ -9,9 +9,10 @@ import { ListValidators } from '@validators/list-validators';
 import { CustomValidators } from '@validators/custom-validators';
 
 @Component({
-  selector: 'app-select-edit',
-  templateUrl: './select-edit.component.html',
-  styleUrls: ['./select-edit.component.css'],
+    selector: 'app-select-edit',
+    templateUrl: './select-edit.component.html',
+    styleUrls: ['./select-edit.component.css'],
+    standalone: false
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
   protected readonly identifyStringArray = identifyStringArray;

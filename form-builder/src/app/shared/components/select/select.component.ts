@@ -5,9 +5,10 @@ import { SelectComponentData } from '@components/select/interfaces/select-compon
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.css'],
+    selector: 'app-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.css'],
+    standalone: false
 })
 export class SelectComponent extends AbstractFieldLikeInputs<string | string[], SelectComponentData, SelectEditComponent> {
   title: string;

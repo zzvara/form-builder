@@ -3,10 +3,11 @@ import { SectionComponent } from '@components/section/section.component';
 import { identifyGroupContents, identifySidebarData, SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SidebarComponent implements OnInit {
   protected readonly identifySidebarData = identifySidebarData;

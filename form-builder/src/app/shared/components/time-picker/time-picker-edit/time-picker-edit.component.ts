@@ -17,9 +17,10 @@ import { CustomValidators } from '@validators/custom-validators';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 
 @Component({
-  selector: 'app-time-picker-edit',
-  templateUrl: './time-picker-edit.component.html',
-  styleUrls: ['./time-picker-edit.component.css'],
+    selector: 'app-time-picker-edit',
+    templateUrl: './time-picker-edit.component.html',
+    styleUrls: ['./time-picker-edit.component.css'],
+    standalone: false
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, TimePickerComponentData> {
   override ngOnInit(): void {
