@@ -14,7 +14,7 @@ import { identity } from 'rxjs';
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.number_input.MODEL_TITLE_NUMBER_INPUT');
   }
@@ -52,12 +52,11 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
             this.data.formatter!.substring(0, specIndex),
             this.data.formatter!.substring(specIndex + 3, this.data.formatter!.length),
           ];
-          const parsedValue = value.replace(before, '').replace(after, '');
-          return parseFloat(parsedValue);
+          return Number(value.replace(before, '').replace(after, ''));
         }
-        return parseFloat(value);
+        return Number(value);
       };
     }
-    return (value) => parseFloat(value);
+    return (value) => Number(value);
   }
 }

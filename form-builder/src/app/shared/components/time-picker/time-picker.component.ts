@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class TimePickerComponent extends AbstractFieldLikeInputs<Date, TimePickerComponentData, TimePickerEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.time_picker.MODEL_TITLE_TIME_PICKER');
   }

@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaComponentData, TextareaEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.text_area.MODEL_TITLE_TEXTAREA');
   }

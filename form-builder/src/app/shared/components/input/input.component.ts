@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class InputComponent extends AbstractFieldLikeInputs<string, InputComponentData, InputEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.input.MODEL_TITLE_TEXT_INPUT');
   }

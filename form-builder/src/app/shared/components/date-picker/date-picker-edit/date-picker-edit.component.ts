@@ -26,7 +26,7 @@ export class DatePickerEditComponent<
   T extends Date | Date[] = Date,
   D extends DatePickerComponentData<T> = DatePickerComponentData<T>
 > extends AbstractFieldLikeEditForm<T, D> {
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
   }
   identifyDatePickerModes: (index: number, item: { mode: NzDateMode; label: string }) => NzDateMode = (_index, item) => item.mode;

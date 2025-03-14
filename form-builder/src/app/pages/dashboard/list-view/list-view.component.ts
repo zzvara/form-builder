@@ -21,7 +21,7 @@ export class ListViewComponent implements OnInit {
   projectList: Questionnaire[] = [];
   columnsConfig: ColumnItem[] = [];
 
-  constructor(private translate: TranslateService) {}
+  constructor(private readonly translate: TranslateService) {}
 
   ngOnInit(): void {
     this.projects.subscribe((projects) => {

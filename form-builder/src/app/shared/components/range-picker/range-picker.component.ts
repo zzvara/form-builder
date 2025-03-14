@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class RangePickerComponent extends AbstractDatePickerComponent<Date[], RangePickerComponentData, RangePickerEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.range_picker.MODEL_TITLE_RANGE_PICKER');
   }

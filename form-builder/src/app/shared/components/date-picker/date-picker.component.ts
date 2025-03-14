@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core'; // Import TranslateServi
 export class DatePickerComponent extends AbstractDatePickerComponent<Date, DatePickerComponentData, DatePickerEditComponent> {
   title: string; // Declare title variable
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.date_picker.MODEL_TITLE_DATE_PICKER');
   }

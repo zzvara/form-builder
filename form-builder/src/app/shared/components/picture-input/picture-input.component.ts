@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core'; // Import TranslateServi
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.picture_input.MODEL_TITLE_PICTURE_INPUT');
   }

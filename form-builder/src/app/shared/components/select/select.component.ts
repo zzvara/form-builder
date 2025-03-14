@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class SelectComponent extends AbstractFieldLikeInputs<string | string[], SelectComponentData, SelectEditComponent> {
   title: string;
 
-  constructor(private translate: TranslateService) {
+  constructor(private readonly translate: TranslateService) {
     super();
     this.title = this.translate.instant('components.combobox.MODEL_TITLE_SELECT');
   }
