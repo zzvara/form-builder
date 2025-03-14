@@ -41,11 +41,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  deleteProject(id: number): void {
+  deleteProject(id: string): void {
     this.questionnaireService.remove(id);
   }
 
-  editProject(id: number) {
+  editProject(id: string) {
     this.router.navigate(['edit'], { queryParams: { id } });
   }
 

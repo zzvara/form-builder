@@ -15,8 +15,8 @@ export class ListViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);
   @Input() type?: ProjectType;
 
-  @Output() deleteProject = new EventEmitter<number>();
-  @Output() editProject = new EventEmitter<number>();
+  @Output() deleteProject = new EventEmitter<string>();
+  @Output() editProject = new EventEmitter<string>();
 
   projectList: Questionnaire[] = [];
   columnsConfig: ColumnItem[] = [];
@@ -61,11 +61,11 @@ export class ListViewComponent implements OnInit {
     ];
   }
 
-  onDeleteProject(id: number): void {
+  onDeleteProject(id: string): void {
     this.deleteProject.emit(id);
   }
 
-  onEditProject(id: number): void {
+  onEditProject(id: string): void {
     this.editProject.emit(id);
   }
 }
