@@ -42,7 +42,7 @@
               </button>
               <button
                 nz-popconfirm
-                [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
+                nzPopconfirmTitle="{{ 'components.input_holder.POP_RESET' | translate }}"
                 [nzCancelText]="'general.CANCEL' | translate"
                 [nzOkText]="'general.OK' | translate"
                 (nzOnConfirm)="removeEditComponent(edit)"
