@@ -7,10 +7,10 @@ import { Questionnaire } from '@app/interfaces/questionnaire/questionnaire.inter
 import { StatisticsService } from '@app/pages/form-creator/results-page/services/statistics.service';
 
 @Component({
-    selector: 'app-results-page',
-    templateUrl: './results-page.component.html',
-    styleUrls: ['./results-page.component.css'],
-    standalone: false
+  selector: 'app-results-page',
+  templateUrl: './results-page.component.html',
+  styleUrls: ['./results-page.component.less'],
+  standalone: false,
 })
 export class ResultsPageComponent implements OnInit {
   @Input() page?: number;

@@ -1,3 +1,7 @@
+@breakpoint-tablet: 1024px;
+@breakpoint-mobile: 768px;
+@breakpoint-small: 320px;
+
 nz-layout {
   background-color: transparent;
   display: flex;
@@ -77,7 +81,8 @@ nz-layout {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-@media (max-width: 1024px) {
+
+@media (max-width: @breakpoint-tablet) {
   .formelement {
     margin-bottom: 20px;
   }
@@ -115,7 +120,7 @@ nz-layout {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: @breakpoint-mobile) {
   .formelement {
     margin-bottom: 15px;
   }
@@ -157,7 +162,7 @@ nz-layout {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: @breakpoint-small) {
   #title,
   #description {
     font-size: 12px;

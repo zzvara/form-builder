@@ -1,3 +1,7 @@
+@breakpoint-tablet: 1024px;
+@breakpoint-mobile: 768px;
+@breakpoint-small: 320px;
+
 nz-layout {
   background-color: transparent;
   display: flex;
@@ -60,7 +64,7 @@ nz-layout {
   flex-wrap: wrap;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: @breakpoint-tablet) {
   nz-layout {
     padding: 0 20px;
   }
@@ -80,7 +84,7 @@ nz-layout {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: @breakpoint-mobile) {
   nz-layout {
     padding: 0 15px;
   }
@@ -105,7 +109,7 @@ nz-layout {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: @breakpoint-small) {
   nz-layout {
     padding: 0 10px;
   }

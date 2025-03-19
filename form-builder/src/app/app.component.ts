@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs';
 import { HeaderService } from './services/header/header.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.less'],
+  standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
   activeOptions: MenuOption[] = [];

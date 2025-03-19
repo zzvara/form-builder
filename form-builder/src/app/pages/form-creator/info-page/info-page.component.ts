@@ -7,10 +7,10 @@ import { ProjectService } from '@app/services/project.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-    selector: 'app-info-page',
-    templateUrl: './info-page.component.html',
-    styleUrls: ['./info-page.component.css'],
-    standalone: false
+  selector: 'app-info-page',
+  templateUrl: './info-page.component.html',
+  styleUrls: ['./info-page.component.less'],
+  standalone: false,
 })
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
@@ -62,7 +62,7 @@ export class InfoPageComponent implements OnInit {
       this.params = params;
       if (params['id']) {
         this.formExists = true;
-        this.formId = params['id']; 
+        this.formId = params['id'];
         this.project = this.projectService.searchData(this.formId)?.[0] || null;
         if (this.project) {
           this.initializeForm();

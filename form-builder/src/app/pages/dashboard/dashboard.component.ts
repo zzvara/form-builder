@@ -7,10 +7,10 @@ import { ProjectType } from '@app/interfaces/project';
 import { ProjectService } from '@app/services/project.service';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css'],
-    standalone: false
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.less'],
+  standalone: false,
 })
 export class DashboardComponent implements OnInit {
   projects$: Observable<Questionnaire[]> = of([]);

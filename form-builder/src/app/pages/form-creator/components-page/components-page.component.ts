@@ -5,10 +5,10 @@ import { ProjectService } from '@app/services/project.service';
 import { InlineEdit } from '@app/shared/interfaces/inline-edit';
 
 @Component({
-    selector: 'app-components-page',
-    templateUrl: './components-page.component.html',
-    styleUrls: ['./components-page.component.css'],
-    standalone: false
+  selector: 'app-components-page',
+  templateUrl: './components-page.component.html',
+  styleUrls: ['./components-page.component.less'],
+  standalone: false,
 })
 export class ComponentsPageComponent implements OnInit {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);

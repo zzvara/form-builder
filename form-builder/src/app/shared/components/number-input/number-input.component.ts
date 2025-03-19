@@ -1,13 +1,13 @@
-import {AbstractFieldLikeInputs} from '@abstract-classes/abstract-fieldlike-inputs';
-import {Component} from '@angular/core';
-import {NumberInputComponentData} from '@components/number-input/interfaces/number-input-component-data';
-import {NumberInputEditComponent} from '@components/number-input/number-input-edit/number-input-edit.component';
-import {TranslateService} from '@ngx-translate/core';
+import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
+import { Component } from '@angular/core';
+import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.css'],
+  styleUrls: ['./number-input.component.less'],
   standalone: false,
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {

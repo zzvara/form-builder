@@ -1,15 +1,15 @@
-import {AbstractFieldLikeInputs} from '@abstract-classes/abstract-fieldlike-inputs';
-import {Component} from '@angular/core';
-import {InputEditComponent} from '@components/input/input-edit/input-edit.component';
-import {InputComponentData} from '@components/input/interfaces/input-component-data';
-import {ErrorType} from '@helpers/error-helper';
-import {TranslateService} from '@ngx-translate/core';
+import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
+import { Component } from '@angular/core';
+import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
+import { InputComponentData } from '@components/input/interfaces/input-component-data';
+import { ErrorType } from '@helpers/error-helper';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-text-input',
-    templateUrl: './input.component.html',
-    styleUrls: ['./input.component.css'],
-    standalone: false
+  selector: 'app-text-input',
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.less'],
+  standalone: false,
 })
 export class InputComponent extends AbstractFieldLikeInputs<string, InputComponentData, InputEditComponent> {
   title: string;

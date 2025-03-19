@@ -1,0 +1,23 @@
+.hover-color(@color) {
+  &:hover {
+    color: @color;
+  }
+}
+
+.edit-icon {
+  margin-right: 25px;
+  .hover-color(blue);
+}
+
+.delete-icon {
+  .hover-color(red);
+}
+
+tr {
+  td {
+    span {
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+  }
+}

@@ -1,3 +1,7 @@
+@breakpoint-tablet: 1024px;
+@breakpoint-mobile: 768px;
+@breakpoint-small: 320px;
+
 nz-layout {
   margin-top: 100px;
 }
@@ -17,7 +21,7 @@ nz-steps {
   overflow: auto;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: @breakpoint-tablet) {
   nz-layout {
     margin-top: 150px;
   }
@@ -31,7 +35,7 @@ nz-steps {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: @breakpoint-mobile) {
   nz-layout {
     margin-top: 120px;
   }
@@ -45,7 +49,7 @@ nz-steps {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: @breakpoint-small) {
   nz-layout {
     margin-top: 80px;
   }

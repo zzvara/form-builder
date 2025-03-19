@@ -1,0 +1,158 @@
+@padding-small: 0 0.5rem;
+@gap-small: 1rem;
+@breakpoint-tablet: 1024px;
+@breakpoint-mobile: 768px;
+@breakpoint-small: 320px;
+
+nz-content {
+  padding: @padding-small;
+  box-sizing: border-box;
+  text-align: left;
+  overflow-x: auto;
+}
+
+.toolbar {
+  margin: 5rem 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: @gap-small;
+
+  > :first-child {
+    margin-right: 1rem;
+  }
+
+  > div {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    > :first-child {
+      margin-right: 0.3rem;
+    }
+  }
+}
+
+.view {
+  display: grid;
+  gap: 2rem;
+
+  > div {
+    display: flex;
+    align-items: center;
+    text-decoration: underline;
+    margin-bottom: 0.5rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    &:last-of-type {
+      margin-top: 2rem;
+    }
+
+    > h3 {
+      margin: 0 1rem 0 0;
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: @breakpoint-tablet) {
+  nz-content {
+    padding: @padding-small;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: @gap-small;
+  }
+
+  .view {
+    gap: 1.5rem;
+
+    > div {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &:last-of-type {
+      margin-top: 1.5rem;
+    }
+
+    > h3 {
+      margin: 0 0.5rem 0 0;
+    }
+  }
+}
+
+@media (max-width: @breakpoint-mobile) {
+  nz-content {
+    padding: @padding-small;
+    overflow-x: auto;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+
+    > div {
+      justify-content: center;
+    }
+  }
+
+  .view {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    > div {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    > h3 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+  }
+}
+
+@media (max-width: @breakpoint-small) {
+  nz-content {
+    padding: 0 0.2rem;
+    overflow-x: auto;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+
+    > div {
+      width: 100%;
+      justify-content: flex-start;
+      margin: 0.2rem 0;
+    }
+  }
+
+  .view {
+    gap: 1rem;
+
+    > div {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      margin-bottom: 0.5rem;
+      max-width: 100%;
+
+      > h3 {
+        font-size: 0.85rem;
+        margin-bottom: 0.2rem;
+      }
+    }
+  }
+
+  .toolbar > div > :first-child {
+    margin-right: 0.2rem;
+  }
+}

@@ -1,0 +1,42 @@
+.hover-color(@color) {
+  &:hover {
+    color: @color !important;
+  }
+}
+
+p {
+  font-size: 0.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+nz-card {
+  min-height: 12rem;
+
+  span {
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  :last-child {
+    margin-left: 0.5rem;
+  }
+}
+
+.create-card {
+  cursor: pointer;
+  font-size: 4rem;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-icon {
+  .hover-color(blue);
+}
+
+.delete-icon {
+  .hover-color(red);
+}
