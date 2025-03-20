@@ -19,7 +19,7 @@ import { CustomValidators } from '@validators/custom-validators';
 @Component({
   selector: 'app-time-picker-edit',
   templateUrl: './time-picker-edit.component.html',
-  styleUrls: ['./time-picker-edit.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, TimePickerComponentData> {

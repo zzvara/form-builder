@@ -5,7 +5,7 @@ import { PictureInputComponentData } from '../interfaces/picture-input-component
 @Component({
   selector: 'app-picture-input-edit',
   templateUrl: './picture-input-edit.component.html',
-  styleUrls: ['./picture-input-edit.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class PictureInputEditComponent extends AbstractEditForm<string | null, PictureInputComponentData> {

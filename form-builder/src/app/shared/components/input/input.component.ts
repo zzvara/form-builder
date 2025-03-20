@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-text-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class InputComponent extends AbstractFieldLikeInputs<string, InputComponentData, InputEditComponent> {

@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 @Component({
   selector: 'app-picture-input',
   templateUrl: './picture-input.component.html',
-  styleUrls: ['./picture-input.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {

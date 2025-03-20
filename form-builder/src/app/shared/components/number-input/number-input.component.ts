@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {

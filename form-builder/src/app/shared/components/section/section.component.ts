@@ -4,7 +4,7 @@ import { FormComponentMarker } from '@shared/interfaces/form-component-marker';
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class SectionComponent implements FormComponentMarker {

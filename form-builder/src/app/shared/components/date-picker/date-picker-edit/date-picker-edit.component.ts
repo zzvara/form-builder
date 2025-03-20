@@ -19,7 +19,7 @@ import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, SupportTimeOptions } fr
 @Component({
   selector: 'app-date-picker-edit',
   templateUrl: './date-picker-edit.component.html',
-  styleUrls: ['./date-picker-edit.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class DatePickerEditComponent<

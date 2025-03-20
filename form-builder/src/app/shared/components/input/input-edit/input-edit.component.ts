@@ -9,7 +9,7 @@ import { CustomValidators } from '@validators/custom-validators';
 @Component({
   selector: 'app-input-edit',
   templateUrl: './input-edit.component.html',
-  styleUrls: ['./input-edit.component.less'],
+  styleUrls: [],
   standalone: false,
 })
 export class InputEditComponent<T extends InputComponentData = InputComponentData> extends AbstractFieldLikeEditForm<string, T> {
