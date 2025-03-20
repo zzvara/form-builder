@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.translate.use(localStorage.getItem('language') || 'en');
     this.jsonService.clearJsonData();
     this.optionsSub = this.headerService
       .getOptions()
@@ -89,5 +90,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   setLanguage(lang: string): void {
     this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 }
