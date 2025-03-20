@@ -1,4 +1,9 @@
 {
+  "title": {
+    "dashboard": "Kezdőlap",
+    "newform" : "Új űrlap",
+    "editform": "Űrlap szerkesztése"
+  },
   "components": {
     "CANNOT_BE_EMPTY": "Nem lehet üres!",
     "CANNOT_BE_LOWER_THAN": "Nem lehet alacsonyabb, mint",
