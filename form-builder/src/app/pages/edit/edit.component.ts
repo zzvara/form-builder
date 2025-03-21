@@ -215,7 +215,7 @@ export class EditComponent implements OnInit, OnChanges {
     if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
     } else {
-      width = 100 / sect.sectionInputs.length;
+      width = (100 / sect.sectionInputs.length) - 1;
     }
     return {
       width: width.toString() + '%',
