@@ -1,14 +1,14 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Project, ProjectVersion } from '@app/interfaces/project';
-import { EditComponent } from '@app/pages/edit/edit.component';
-import { ProjectService } from '@app/services/project.service';
-import { InlineEdit } from '@app/shared/interfaces/inline-edit';
+import { Project, ProjectVersion } from '@interfaces/project';
+import { EditComponent } from '@pages/edit/edit.component';
+import { ProjectService } from '@services/project.service';
+import { InlineEdit } from '@interfaces/inline-edit';
 
 @Component({
-    selector: 'app-components-page',
-    templateUrl: './components-page.component.html',
-    styleUrls: ['./components-page.component.css'],
-    standalone: false
+  selector: 'app-components-page',
+  templateUrl: './components-page.component.html',
+  styleUrls: ['./components-page.component.css'],
+  standalone: false,
 })
 export class ComponentsPageComponent implements OnInit {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);

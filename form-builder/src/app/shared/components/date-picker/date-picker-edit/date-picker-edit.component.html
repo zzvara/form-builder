@@ -64,10 +64,7 @@
     <nz-form-control>
       <nz-select formControlName="mode" nzPlaceHolder="Mode">
         @for (item of datePickerModes; track item.mode) {
-          <nz-option
-            [nzValue]="item.mode"
-            [nzLabel]="item.label"
-          ></nz-option>
+          <nz-option [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
         }
       </nz-select>
     </nz-form-control>
@@ -174,7 +171,7 @@
               <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
             }
             @if (hasErrors(control, 'minMaxError')) {
-              <div>{{ 'components.date_picker.MIN_ERROR' | translate }} ({{ control.errors['minMaxError'] | date : getFullFormat }})!</div>
+              <div>{{ 'components.date_picker.MIN_ERROR' | translate }} ({{ control.errors['minMaxError'] | date: getFullFormat }})!</div>
             }
           </ng-template>
         </nz-form-item>
@@ -209,7 +206,7 @@
               <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
             }
             @if (hasErrors(control, 'maxMinError')) {
-              <div>{{ 'components.date_picker.MAX_ERROR' | translate }} ({{ control.errors['maxMinError'] | date : getFullFormat }})!</div>
+              <div>{{ 'components.date_picker.MAX_ERROR' | translate }} ({{ control.errors['maxMinError'] | date: getFullFormat }})!</div>
             }
           </ng-template>
         </nz-form-item>

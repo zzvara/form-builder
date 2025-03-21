@@ -8,7 +8,7 @@ describe('PictureInputEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PictureInputEditComponent]
+      declarations: [PictureInputEditComponent],
     });
     fixture = TestBed.createComponent(PictureInputEditComponent);
     component = fixture.componentInstance;

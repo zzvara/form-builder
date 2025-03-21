@@ -7,7 +7,7 @@ import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from '@pages/dashboard/dashboard.module';
 import { EditModule } from '@pages/edit/edit.module';
@@ -41,7 +41,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     EditModule,
     SharedModule,
     FormCreatorModule,
-    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

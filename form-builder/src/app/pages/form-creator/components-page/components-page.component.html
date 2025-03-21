@@ -26,10 +26,7 @@
             style="margin-right: 8px"
           >
             @for (version of projectHistory; track $index) {
-              <nz-option
-                [nzValue]="version.versionNum"
-                [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"
-              ></nz-option>
+              <nz-option [nzValue]="version.versionNum" [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"></nz-option>
             }
           </nz-select>
         </div>

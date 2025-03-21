@@ -1,4 +1,4 @@
-import {NzDateMode} from 'ng-zorro-antd/date-picker';
+import { NzDateMode } from 'ng-zorro-antd/date-picker';
 
 export type DefaultDateFormats = {
   [key in NzDateMode]: string;

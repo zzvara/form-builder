@@ -1,9 +1,9 @@
-import {AbstractFieldLikeEditForm} from '@abstract-classes/abstract-fieldlike-edit-form';
-import {Component} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import {NumberInputComponentData} from '@components/number-input/interfaces/number-input-component-data';
-import {UpdateOnStrategy} from '@shared/interfaces/update-on-strategy';
-import {CustomValidators} from '@validators/custom-validators';
+import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { CustomValidators } from '@validators/custom-validators';
 
 @Component({
   selector: 'app-number-input-edit',

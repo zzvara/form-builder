@@ -120,17 +120,17 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
-    <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
-    <nz-form-item>
-      <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-        <input nz-input formControlName="requiredMessage" placeholder="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}e" />
-      </nz-form-control>
-      <ng-template #requiredErrorMessageTemplate let-control>
-        @if (hasErrors(control, 'required')) {
-        <div>{{ 'components.IS_FIELD_REQUIRED' | translate }}</div>
-        }
-      </ng-template>
-    </nz-form-item>
+      <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
+          <input nz-input formControlName="requiredMessage" placeholder="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}e" />
+        </nz-form-control>
+        <ng-template #requiredErrorMessageTemplate let-control>
+          @if (hasErrors(control, 'required')) {
+            <div>{{ 'components.IS_FIELD_REQUIRED' | translate }}</div>
+          }
+        </ng-template>
+      </nz-form-item>
     }
   </div>
 

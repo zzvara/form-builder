@@ -53,7 +53,7 @@
                 </p>
               }
               <ul>
-                @for (stat of sectionInputStats | keyvalue; track stat.key; ) {
+                @for (stat of sectionInputStats | keyvalue; track stat.key) {
                   <li>{{ stat.key }}: {{ stat.value }}</li>
                 }
               </ul>

@@ -56,9 +56,7 @@
               style="width: 100%"
             ></nz-time-picker>
           </nz-form-control>
-          <ng-template #defaultValueErrorTemplate let-control>
-            helpers
-          </ng-template>
+          <ng-template #defaultValueErrorTemplate let-control> helpers </ng-template>
         </nz-form-item>
       </div>
     }
@@ -191,7 +189,11 @@
               <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
             }
             @if (hasErrors(control, 'minMaxError')) {
-              <div>{{ 'components.time_picker.MIN_TIME_LIMIT' | translate }} ({{ control.errors['minMaxError'] | date : getControlValue('timeFormat') }})!</div>
+              <div>
+                {{ 'components.time_picker.MIN_TIME_LIMIT' | translate }} ({{
+                  control.errors['minMaxError'] | date: getControlValue('timeFormat')
+                }})!
+              </div>
             }
           </ng-template>
         </nz-form-item>
@@ -228,7 +230,11 @@
               <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
             }
             @if (hasErrors(control, 'maxMinError')) {
-              <div>{{ 'components.time_picker.MAX_TIME_LIMIT' | translate }}({{ control.errors['maxMinError'] | date : getControlValue('timeFormat') }})!</div>
+              <div>
+                {{ 'components.time_picker.MAX_TIME_LIMIT' | translate }}({{
+                  control.errors['maxMinError'] | date: getControlValue('timeFormat')
+                }})!
+              </div>
             }
           </ng-template>
         </nz-form-item>

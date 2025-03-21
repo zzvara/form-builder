@@ -1,5 +1,5 @@
-import {TimePickerComponentData} from '@components/time-picker/interfaces/time-picker-component-data';
-import {DisabledTimeConfig, NzDateMode} from 'ng-zorro-antd/date-picker';
+import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import { DisabledTimeConfig, NzDateMode } from 'ng-zorro-antd/date-picker';
 
 export type DefaultDateComparers = {
   [key in NzDateMode]: (date1: Date, date2: Date) => ComparisonType;

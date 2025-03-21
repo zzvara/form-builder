@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ContextAction } from '@app/shared/components/header/header.model';
-import { MenuOption, MenuState } from '@app/shared/models/menu-option.model';
+import { ContextAction } from '@components/header/header.model';
+import { MenuOption, MenuState } from '@models/menu-option.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
