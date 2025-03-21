@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-range-picker',
   templateUrl: './range-picker.component.html',
-  styleUrls: ['./range-picker.component.css'],
+  styleUrls: [],
   standalone: false,
 })
 export class RangePickerComponent extends AbstractDatePickerComponent<Date[], RangePickerComponentData, RangePickerEditComponent> {

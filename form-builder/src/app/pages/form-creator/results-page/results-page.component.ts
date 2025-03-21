@@ -9,7 +9,7 @@ import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface
 @Component({
   selector: 'app-results-page',
   templateUrl: './results-page.component.html',
-  styleUrls: ['./results-page.component.css'],
+  styleUrls: ['./results-page.component.less'],
   standalone: false,
 })
 export class ResultsPageComponent implements OnInit {

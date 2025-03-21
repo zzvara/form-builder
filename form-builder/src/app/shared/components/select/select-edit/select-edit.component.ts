@@ -10,7 +10,7 @@ import { ListValidators } from '@validators/list-validators';
 @Component({
   selector: 'app-select-edit',
   templateUrl: './select-edit.component.html',
-  styleUrls: ['./select-edit.component.css'],
+  styleUrls: ['./select-edit.component.less'],
   standalone: false,
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {

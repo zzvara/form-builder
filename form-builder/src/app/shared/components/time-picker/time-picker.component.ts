@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-time-picker',
   templateUrl: './time-picker.component.html',
-  styleUrls: ['./time-picker.component.css'],
+  styleUrls: [],
   standalone: false,
 })
 export class TimePickerComponent extends AbstractFieldLikeInputs<Date, TimePickerComponentData, TimePickerEditComponent> {

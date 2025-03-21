@@ -28,7 +28,7 @@
                 "output": "/assets/"
               }
             ],
-            "styles": ["src/theme.less", "src/styles.css"],
+            "styles": ["src/theme.less", "src/styles.less"],
             "scripts": [],
             "browser": "src/main.ts"
           },
@@ -81,7 +81,7 @@
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
+            "styles": ["src/styles.less"],
             "scripts": []
           }
         }

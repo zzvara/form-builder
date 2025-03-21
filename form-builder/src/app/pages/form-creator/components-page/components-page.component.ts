@@ -7,7 +7,7 @@ import { InlineEdit } from '@interfaces/inline-edit';
 @Component({
   selector: 'app-components-page',
   templateUrl: './components-page.component.html',
-  styleUrls: ['./components-page.component.css'],
+  styleUrls: ['./components-page.component.less'],
   standalone: false,
 })
 export class ComponentsPageComponent implements OnInit {

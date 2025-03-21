@@ -4,7 +4,7 @@ import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
+  styleUrls: ['./sidebar.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })

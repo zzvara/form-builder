@@ -6,7 +6,7 @@ import { MenuOption } from '@models/menu-option.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.less'],
   standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {

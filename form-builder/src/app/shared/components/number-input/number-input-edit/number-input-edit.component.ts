@@ -8,7 +8,7 @@ import { CustomValidators } from '@validators/custom-validators';
 @Component({
   selector: 'app-number-input-edit',
   templateUrl: './number-input-edit.component.html',
-  styleUrls: ['./number-input-edit.component.css'],
+  styleUrls: [],
   standalone: false,
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, NumberInputComponentData> {

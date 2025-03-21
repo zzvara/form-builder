@@ -5,7 +5,7 @@ import { UndoRedoService } from '@services/undo-redo.service';
 @Component({
   selector: 'app-redo-undo',
   templateUrl: './redo-undo.component.html',
-  styleUrls: ['./redo-undo.component.css'],
+  styleUrls: [],
   standalone: false,
 })
 export class RedoUndoComponent {

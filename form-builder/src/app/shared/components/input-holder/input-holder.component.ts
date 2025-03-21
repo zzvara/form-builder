@@ -13,7 +13,7 @@ import { InputData } from '@interfaces/input-data';
 @Component({
   selector: 'app-input-holder',
   templateUrl: './input-holder.component.html',
-  styleUrls: ['./input-holder.component.css'],
+  styleUrls: ['./input-holder.component.less'],
   standalone: false,
 })
 export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>

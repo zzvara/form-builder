@@ -11,7 +11,7 @@ import { ListValidators } from '@validators/list-validators';
 @Component({
   selector: 'app-radio-group-edit',
   templateUrl: './radio-group-edit.component.html',
-  styleUrl: './radio-group-edit.component.css',
+  styleUrls: [],
   standalone: false,
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {

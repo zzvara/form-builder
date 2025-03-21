@@ -5,7 +5,7 @@ import { RangePickerComponentData } from '@components/range-picker/interfaces/ra
 @Component({
   selector: 'app-range-picker-edit',
   templateUrl: './range-picker-edit.component.html',
-  styleUrls: ['./range-picker-edit.component.css'],
+  styleUrls: [],
   standalone: false,
 })
 export class RangePickerEditComponent extends DatePickerEditComponent<Date[], RangePickerComponentData> {}

@@ -17,10 +17,10 @@ import { NgStyleInterface } from "ng-zorro-antd/core/types";
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-    selector: 'app-edit',
-    templateUrl: './edit.component.html',
-    styleUrls: ['./edit.component.css'],
-    standalone: false
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.less'],
+  standalone: false,
 })
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);

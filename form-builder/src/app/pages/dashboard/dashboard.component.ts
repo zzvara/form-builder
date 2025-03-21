@@ -9,7 +9,7 @@ import { ProjectService } from '@services/project.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.less'],
   standalone: false,
 })
 export class DashboardComponent implements OnInit {

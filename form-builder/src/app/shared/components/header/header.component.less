@@ -9,25 +9,25 @@ nz-header {
 .header {
   display: flex;
   justify-content: space-between;
-}
 
-.header > h1 {
-  color: #fff;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  > h1 {
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-.header > div {
-  font-size: 2rem;
-}
+  > div {
+    font-size: 2rem;
 
-.header > div > span {
-  cursor: pointer;
-}
+    > span {
+      cursor: pointer;
+    }
+  }
 
-.header > div :not(:last-child) {
-  margin-right: 1rem;
+  > div :not(:last-child) {
+    margin-right: 1rem;
+  }
 }
 
 .is-active {

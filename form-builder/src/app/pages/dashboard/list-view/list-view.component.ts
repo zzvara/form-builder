@@ -8,7 +8,7 @@ import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.css'],
+  styleUrls: ['./list-view.component.less'],
   standalone: false,
 })
 export class ListViewComponent implements OnInit {

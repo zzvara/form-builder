@@ -6,7 +6,7 @@ import { RadioGroupEditComponent } from '@components/radio-group/radio-group-edi
 @Component({
   selector: 'app-radio-group',
   templateUrl: './radio-group.component.html',
-  styleUrl: './radio-group.component.css',
+  styleUrl: './radio-group.component.less',
   standalone: false,
 })
 export class RadioGroupComponent extends AbstractInput<number, RadioGroupData, RadioGroupEditComponent> {

@@ -10,7 +10,7 @@ import { ListValidators } from '@validators/list-validators';
 @Component({
   selector: 'app-checkbox-group-edit',
   templateUrl: './checkbox-group-edit.component.html',
-  styleUrl: './checkbox-group-edit.component.css',
+  styleUrls: [],
   standalone: false,
 })
 export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions[], CheckboxGroupData> {

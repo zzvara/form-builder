@@ -19,13 +19,10 @@ import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, SupportTimeOptions } fr
 @Component({
   selector: 'app-date-picker-edit',
   templateUrl: './date-picker-edit.component.html',
-  styleUrls: ['./date-picker-edit.component.css'],
+  styleUrls: [],
   standalone: false,
 })
-export class DatePickerEditComponent<
-  T extends Date | Date[] = Date,
-  D extends DatePickerComponentData<T> = DatePickerComponentData<T>,
-> extends AbstractFieldLikeEditForm<T, D> {
+export class DatePickerEditComponent< T extends Date | Date[] = Date,  D extends DatePickerComponentData<T> = DatePickerComponentData<T> > extends AbstractFieldLikeEditForm<T, D> {
   constructor(private readonly translate: TranslateService) {
     super();
   }

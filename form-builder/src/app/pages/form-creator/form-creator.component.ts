@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-form-creator',
   templateUrl: './form-creator.component.html',
-  styleUrls: ['./form-creator.component.css'],
+  styleUrls: ['./form-creator.component.less'],
   standalone: false,
 })
 export class FormCreatorComponent implements OnInit {
