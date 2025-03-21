@@ -14,6 +14,7 @@ import {LayoutEnum} from '@pages/edit/interfaces/layout-enum';
 import {instanceOfSectionList, SectionList} from '@pages/edit/interfaces/section-list';
 import {cloneDeep} from 'lodash-es';
 import {v4 as uuidv4} from 'uuid';
+import { HostListener } from '@angular/core';
 
 @Component({
     selector: 'app-edit',
@@ -158,7 +159,34 @@ export class EditComponent implements OnInit, OnChanges {
 
     console.log({ sectionInputs: this.getAllFormInputs() });
   }
+     scrollPercent: number = 0;
+     progressColor: string = '#007bff';
+     isDeleted: boolean = false;
 
+     @HostListener('scroll', ['$event'])
+     onScroll(event: Event): void {
+       const container = event.target as HTMLElement;
+       const scrollTop = container.scrollTop;
+       const scrollHeight = container.scrollHeight;
+       const clientHeight = container.clientHeight;
+       if (scrollHeight <= clientHeight) {
+         this.scrollPercent = 0;
+       } else {
+         this.scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
+         if (this.scrollPercent >= 100) {
+           this.progressColor = 'green';
+         } else {
+           this.progressColor = '#007bff';
+         }
+       }
+     }
+     onDelete() {
+       this.isDeleted = true;
+       setTimeout(() => {
+         this.isDeleted = false;
+         this.progressColor = '#007bff';
+       }, 300);
+     }
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
     console.log({ sectionInputs: this.getAllFormInputs() });
     // Check if the item was moved within the same container
@@ -200,12 +228,14 @@ export class EditComponent implements OnInit, OnChanges {
   removeEditComponent(edit: EditList) {
     this.editList = this.editList.filter((e) => e.id !== edit.id);
     console.log('Edit component removed (SAVE STATE)!');
+    this.onDelete();
     this.undoRedoService.saveState(this.editList);
   }
 
   removeSectionComponent(sect: SectionList, componentId: string) {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
     console.log('Input component in section removed (SAVE STATE)!');
+    this.onDelete();
     this.undoRedoService.saveState(this.editList);
   }
 

@@ -10,6 +10,8 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { EditComponent } from '@pages/edit/edit.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { SectionComponent } from '@app/shared/components/section/section.component';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+
 
 @NgModule({
   declarations: [EditComponent],
@@ -23,6 +25,7 @@ import { SectionComponent } from '@app/shared/components/section/section.compone
     NzCardModule,
     NzButtonModule,
     NzWaveModule,
+    NzProgressModule,
   ],
   providers: [SectionComponent],
   exports: [NzIconModule, EditComponent],

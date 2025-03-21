@@ -3,7 +3,7 @@
     <app-sidebar [sidebarData]="sideBarData" />
   </nz-sider>
   <nz-layout class="inner-layout">
-    <nz-content>
+    <nz-content (scroll)="onScroll($event)">
       <div
         class="form-container"
         id="sectionDropList"
@@ -78,5 +78,13 @@
         }
       </div>
     </nz-content>
+    <nz-progress
+      [nzPercent]="scrollPercent"
+      [nzShowInfo]="false"
+      [nzStrokeWidth]="8"
+      [nzStrokeColor]="isDeleted ? 'red' : progressColor"
+      [nzStatus]="'active'"
+      style="margin-bottom: 20px;"
+    ></nz-progress>
   </nz-layout>
 </nz-layout>
