@@ -28,7 +28,7 @@
               (cdkDropListDropped)="dropIntoSection($event)"
               class="element-list p-3"
               style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px"
-              [nzBodyStyle]="{ 'padding-bottom': '24px' }"
+              [nzBodyStyle]="getSectionStyle(edit.data)"
             >
               <ng-template #sectionTitle>
                 <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
@@ -52,8 +52,7 @@
                   class="element-box"
                   cdkDrag
                   [cdkDragData]="item"
-                  nz-card-grid
-                  style="margin-bottom: 10px; padding: 0"
+                  style="margin: 5px; padding: 0"
                   [ngStyle]="getSectionInputStyle(edit.data)"
                   [formInput]="item"
                   [inlineEdit]="inlineEdit"
@@ -67,7 +66,6 @@
               class="element-box"
               cdkDrag
               [cdkDragData]="edit"
-              nz-card-grid
               style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px; border: 1px solid lightgray"
               [formInput]="edit.data"
               [inlineEdit]="inlineEdit"

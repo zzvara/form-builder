@@ -13,6 +13,7 @@ import {EditList} from '@pages/edit/interfaces/edit-list';
 import {LayoutEnum} from '@pages/edit/interfaces/layout-enum';
 import {instanceOfSectionList, SectionList} from '@pages/edit/interfaces/section-list';
 import {cloneDeep} from 'lodash-es';
+import {NgStyleInterface} from "ng-zorro-antd/core/types";
 import {v4 as uuidv4} from 'uuid';
 
 @Component({
@@ -210,7 +211,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionInputStyle(sect: SectionList) {
-    let width: number = 0;
+    let width: number;
     if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
     } else {
@@ -218,6 +219,20 @@ export class EditComponent implements OnInit, OnChanges {
     }
     return {
       width: width.toString() + '%',
+    };
+  }
+
+  getSectionStyle(sect: SectionList): NgStyleInterface {
+    if (sect.layout === LayoutEnum.HORIZONTAL) {
+      return {
+        "display": "flex",
+        "padding": "15px",
+        "padding-bottom": "24px"
+      }
+    }
+    return {
+      "padding": "15px",
+      "padding-bottom": "24px"
     };
   }
 
