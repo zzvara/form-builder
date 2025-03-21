@@ -7,14 +7,14 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class HeaderService {
-  private headerOptions: BehaviorSubject<MenuState> = new BehaviorSubject<MenuState>({
+  private readonly headerOptions: BehaviorSubject<MenuState> = new BehaviorSubject<MenuState>({
     options: [MenuOption.HOME, MenuOption.SETTINGS],
     activeOptions: [],
   });
 
-  private contextActions: BehaviorSubject<ContextAction[]> = new BehaviorSubject<ContextAction[]>([]);
-  private saveTriggered: Subject<void> = new Subject<void>();
-  private undoTriggered: Subject<void> = new Subject<void>();
+  private readonly contextActions: BehaviorSubject<ContextAction[]> = new BehaviorSubject<ContextAction[]>([]);
+  private readonly saveTriggered: Subject<void> = new Subject<void>();
+  private readonly undoTriggered: Subject<void> = new Subject<void>();
 
   setOptions(options: MenuOption[], activeOptions: MenuOption[] = []): void {
     this.headerOptions.next({ options, activeOptions });

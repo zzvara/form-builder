@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { CheckboxGroupEditComponent } from '@components/checkbox-group/checkbox-group-edit/checkbox-group-edit.component';
+import { CheckboxGroupComponent } from '@components/checkbox-group/checkbox-group.component';
+import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 
 //Components
 import { DatePickerComponent } from '@components/date-picker/date-picker.component';
@@ -52,9 +55,6 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
-import { CheckboxGroupEditComponent } from '@components/checkbox-group/checkbox-group-edit/checkbox-group-edit.component';
-import { CheckboxGroupComponent } from '@components/checkbox-group/checkbox-group.component';
-import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 
 const COMPONENTS = [
   DatePickerComponent,

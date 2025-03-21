@@ -7,10 +7,10 @@ import { ProjectService } from '@services/project.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'app-info-page',
-  templateUrl: './info-page.component.html',
-  styleUrls: ['./info-page.component.css'],
-  standalone: false,
+    selector: 'app-info-page',
+    templateUrl: './info-page.component.html',
+    styleUrls: ['./info-page.component.css'],
+    standalone: false
 })
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
