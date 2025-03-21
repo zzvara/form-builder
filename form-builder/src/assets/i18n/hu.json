@@ -206,6 +206,7 @@
   },
   "steps": {
     "ANSWER": "Válasz",
+    "RESULTS" : "Eredmény",
     "COMPONENTS": "Komponensek",
     "FORM_INFO": "Űrlap információ"
   }
