@@ -15,7 +15,7 @@ export class ComponentsPageComponent implements OnInit {
 
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
-  @Input() projectId?: number;
+  @Input() projectId: string | undefined;
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();

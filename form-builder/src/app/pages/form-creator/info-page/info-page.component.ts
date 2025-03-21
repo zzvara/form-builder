@@ -15,11 +15,11 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
-  @Output() projectId = new EventEmitter<number>();
+  @Output() projectId = new EventEmitter<string>();
   @Output() formData = new EventEmitter<string>();
 
   project = {
-    id: 0,
+    id: '',
     title: '',
     description: '',
     type: ProjectType.QUESTIONNAIRE,
@@ -32,7 +32,7 @@ export class InfoPageComponent implements OnInit {
   };
 
   formExists = false;
-  formId = 0;
+  formId = '';
   saveFailed = false;
 
   form = new FormGroup({
@@ -62,8 +62,8 @@ export class InfoPageComponent implements OnInit {
       this.params = params;
       if (params['id']) {
         this.formExists = true;
-        this.formId = Number(params['id']);
-        this.project = this.projectService.searchData(this.formId)[0] || null;
+        this.formId = params['id']; 
+        this.project = this.projectService.searchData(this.formId)?.[0] || null;
         if (this.project) {
           this.initializeForm();
         }
@@ -114,7 +114,7 @@ export class InfoPageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.formExists && this.formId !== 0) {
+    if (this.formExists && this.formId !== '') {
       this.projectId.emit(this.formId);
     } else {
       this.projectId.emit(this.project.id);
@@ -129,7 +129,7 @@ export class InfoPageComponent implements OnInit {
       return;
     }
     this.updateForm();
-    if (this.formExists && this.formId !== 0) {
+    if (this.formExists && this.formId !== '') {
       this.projectService.update(this.formId, this.project);
     } else {
       this.projectService.add(this.project);

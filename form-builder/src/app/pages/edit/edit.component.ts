@@ -30,7 +30,7 @@ export class EditComponent implements OnInit, OnChanges {
   protected readonly instanceOfFormInputData = instanceOfFormInputData;
 
   @Input() inlineEdit!: InlineEdit;
-  @Input() projectId?: number;
+  @Input() projectId: string | undefined;
   @Input() versionNum?: number;
 
   @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;

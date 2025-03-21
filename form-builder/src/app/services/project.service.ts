@@ -1,6 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Project, ProjectVersion } from '@app/interfaces/project';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -24,20 +25,14 @@ export class ProjectService<T extends Project> {
     }
   }
 
-  /**
-   * Generates a unique ID for a new project.
-   * It finds the highest current ID and adds one to it to ensure uniqueness.
-   * If there are no projects, it starts with ID 1.
-   * @returns {number} - The next unique ID for a new project.
+    /**
+   * Generates a unique ID for a new project using UUID.
+   * @returns {string} - The generated UUID.
    */
-  private generateNextId(): number {
-    if (this.items.length === 0) {
-      return 1;
+    private generateNextId(): string {
+      return uuidv4();
     }
-    const ids = this.items.map((item) => item.id);
-    const maxId = Math.max(...ids);
-    return maxId + 1;
-  }
+  
 
   /**
    * This method returns an observable that emits the current list of projects.
@@ -56,8 +51,7 @@ export class ProjectService<T extends Project> {
    * @returns {void}
    */
   add(data: T): void {
-    const nextId = this.generateNextId();
-    data.id = nextId;
+    data.id = this.generateNextId();
     this.items.push(data);
     this.itemsSubject.next([...this.items]);
     localStorage.setItem(this.storageKey, JSON.stringify(this.items));
@@ -71,7 +65,7 @@ export class ProjectService<T extends Project> {
    * @param {number} id - The ID of the project to remove.
    * @returns {void}
    */
-  remove(projectId: number): void {
+  remove(projectId: string): void {
     // Remove the project from the list
     this.items = this.items.filter((item) => item.id !== projectId);
     this.itemsSubject.next([...this.items]);
@@ -89,7 +83,7 @@ export class ProjectService<T extends Project> {
    * @param {number} projectId - The ID of the project whose history is to be retrieved.
    * @returns {ProjectVersion<T>[]} An array of project versions, which are of generic type T.
    */
-  getProjectHistory(projectId: number): ProjectVersion<T>[] {
+  getProjectHistory(projectId: string): ProjectVersion<T>[] {
     const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
     const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
     return projectHistory;
@@ -103,7 +97,7 @@ export class ProjectService<T extends Project> {
    * @param {number} versionNum - The version number of the project to retrieve.
    * @returns {T | undefined} The project data of the specified version if found, otherwise undefined.
    */
-  getProjectVersion(projectId: number, versionNum: number): T | undefined {
+  getProjectVersion(projectId: string, versionNum: number): T | undefined {
     const projectHistory = this.getProjectHistory(projectId);
     const version = projectHistory.find((v) => v.versionNum === versionNum);
     return version ? version.project : undefined;
@@ -117,7 +111,7 @@ export class ProjectService<T extends Project> {
    * @param {number} versionNum - The version number of the project to revert to.
    * @returns {boolean} True if the project is successfully reverted, false otherwise.
    */
-  revertToVersion(projectId: number, versionNum: number): boolean {
+  revertToVersion(projectId: string, versionNum: number): boolean {
     const projectHistory = this.getProjectHistory(projectId);
     const version = projectHistory.find((v) => v.versionNum === versionNum);
 
@@ -142,7 +136,7 @@ export class ProjectService<T extends Project> {
    * @param {T} data - The updated project data.
    * @returns {boolean} True if the project is successfully updated, false otherwise.
    */
-  update(id: number, data: T): boolean {
+  update(id: string, data: T): boolean {
     const index = this.items.findIndex((item) => item.id === id);
     if (index !== -1) {
       const previousVersion = { ...this.items[index] };
@@ -178,7 +172,7 @@ export class ProjectService<T extends Project> {
    * @param {number} id - The ID of the project to search for.
    * @returns {T[]} An array of projects that match the specified ID.
    */
-  searchData(id: number): T[] {
+  searchData(id: string): T[] {
     return this.items.filter((item) => item.id === id);
   }
 }

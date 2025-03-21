@@ -15,7 +15,7 @@ import { StatisticsService } from '@app/pages/form-creator/results-page/services
 export class ResultsPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
-  @Input() projectId?: number;
+  @Input() projectId: string | undefined;
   @Input() versionNum?: number;
   project?: Project;
   projectHistory: ProjectVersion<Project>[] = [];
