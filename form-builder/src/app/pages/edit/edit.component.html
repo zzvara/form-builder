@@ -1,5 +1,5 @@
 <nz-layout>
-  <nz-sider nzWidth="300px" nzTheme="light">
+  <nz-sider nzWidth="300px" nzTheme="light" style="height: fit-content; position: sticky; top: 64px; padding-top: 20px">
     <app-sidebar [sidebarData]="sideBarData" />
   </nz-sider>
   <nz-layout class="inner-layout">
@@ -11,7 +11,7 @@
         (cdkDropListDropped)="dropIntoEdit($event)"
         [cdkDropListData]="editList"
         [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
-        style="width: 100%"
+        style="width: 100%; margin-bottom: 50px"
       >
         @for (edit of editList; track edit) {
           @if (instanceOfSectionList(edit.data)) {
@@ -38,7 +38,14 @@
               </ng-template>
               <ng-template #sectionButtons>
                 <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">
-                  <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)">
+                  <span>Reorder enabled: </span>
+                  <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
+                  <button
+                    nz-button
+                    nzType="default"
+                    nzShape="circle"
+                    (click)="sectionLayoutChange(edit.data)"
+                    style="margin-left: 10px">
                     <span nz-icon nzType="redo" nzTheme="outline"></span>
                   </button>
                   <button

@@ -39,9 +39,9 @@ export class EditComponent implements OnInit, OnChanges {
 
   editList: EditList[] = [];
 
-  getSectionIds = () =>
+  getSectionIds: () => string[] = () =>
     this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
-  getAllFormInputs = () =>
+  getAllFormInputs: () => FormInputData[] = () =>
     this.editList.flatMap((edit) => {
       if (instanceOfSectionList(edit.data)) {
         return edit.data.sectionInputs;
@@ -49,7 +49,7 @@ export class EditComponent implements OnInit, OnChanges {
       return edit.data;
     });
 
-  sectionDropListEnterPredicate: (item: CdkDrag<EditList | FormInputData>, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
+  sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
     item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
 
   ngOnChanges() {
@@ -106,7 +106,7 @@ export class EditComponent implements OnInit, OnChanges {
     }
   }
 
-  undoRedo(undoRedoEvent: 'UNDO' | 'REDO') {
+  undoRedo(undoRedoEvent: 'UNDO' | 'REDO'): void {
     if (undoRedoEvent === 'UNDO') {
       this.editList = this.undoRedoService.undo() ?? [];
     } else {
@@ -129,6 +129,7 @@ export class EditComponent implements OnInit, OnChanges {
           data: {
             sectionId: newSectionId,
             layout: LayoutEnum.VERTICAL,
+            reorderEnabled: false,
             sectionInputs: [],
           },
         };
@@ -188,29 +189,30 @@ export class EditComponent implements OnInit, OnChanges {
     console.log({ sectionInputs: this.getAllFormInputs() });
   }
 
-  getEditDropListConnectedTo() {
+  getEditDropListConnectedTo(): string[] {
     return this.getSectionIds();
   }
 
-  getSectionDropListConnectedTo(sect: SectionList) {
-    return this.getSectionIds()
-      .filter((sectionId) => sectionId !== sect.sectionId)
-      .concat(['sectionDropList']);
+  getSectionDropListConnectedTo(sect: SectionList): string[] {
+    if (sect.reorderEnabled) {
+      return [];
+    }
+    return this.getSectionIds().concat(['sectionDropList']);
   }
 
-  removeEditComponent(edit: EditList) {
+  removeEditComponent(edit: EditList): void {
     this.editList = this.editList.filter((e) => e.id !== edit.id);
     console.log('Edit component removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
-  removeSectionComponent(sect: SectionList, componentId: string) {
+  removeSectionComponent(sect: SectionList, componentId: string): void {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
     console.log('Input component in section removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList) {
+  getSectionInputStyle(sect: SectionList): {[p: string]: any} {
     let width: number;
     if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
@@ -236,7 +238,7 @@ export class EditComponent implements OnInit, OnChanges {
     };
   }
 
-  sectionLayoutChange(sect: SectionList) {
+  sectionLayoutChange(sect: SectionList): void {
     if (sect.layout === LayoutEnum.VERTICAL) {
       sect.layout = LayoutEnum.HORIZONTAL;
     } else {
