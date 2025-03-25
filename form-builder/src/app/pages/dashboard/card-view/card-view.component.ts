@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ProjectType } from '@interfaces/project';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { Observable, of } from 'rxjs';
@@ -8,6 +8,7 @@ import { Observable, of } from 'rxjs';
   templateUrl: './card-view.component.html',
   styleUrls: ['./card-view.component.less'],
   standalone: false,
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class CardViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);
