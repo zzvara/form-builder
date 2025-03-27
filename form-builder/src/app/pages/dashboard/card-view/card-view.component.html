@@ -1,32 +1,34 @@
 <div nz-row [nzGutter]="[16, 16]">
   @for (project of projectList; track $index) {
-    <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
-      <nz-card [nzActions]="[actionEdit, actionDelete]">
-        <nz-card-meta [nzTitle]="project.title" [nzDescription]="project.description"></nz-card-meta>
-        <div>
-          <p>{{ 'general.CREATED' | translate }}: {{ project.created }}</p>
-          <p>{{ 'general.MODIFIED' | translate }}: {{ project.modified }}</p>
-        </div>
-        <ng-template #actionEdit>
-          <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
-        </ng-template>
-        <ng-template #actionDelete>
-        <span
-          nz-popconfirm
-          [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
-          (nzOnConfirm)="onDeleteProject(project.id)"
-          nz-icon
-          nzType="delete"
-          nzTheme="outline"
-          class="delete-icon"
-        >
-        </span>
-        </ng-template>
-      </nz-card>
-    </div>
+  <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
+    <nz-card [nzActions]="[actionEdit, actionDelete]" class="project-card">
+      <div class="description">
+      <nz-card-meta [nzTitle]="project.title" [nzDescription]="project.description"></nz-card-meta>
+      </div>
+      <div class="card-footer">
+        <p>{{ 'general.CREATED' | translate }}: {{ project.created }}</p>
+        <p>{{ 'general.MODIFIED' | translate }}: {{ project.modified }}</p>
+      </div>
+      <ng-template #actionEdit>
+        <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
+      </ng-template>
+      <ng-template #actionDelete>
+          <span
+            nz-popconfirm
+            [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
+            (nzOnConfirm)="onDeleteProject(project.id)"
+            nz-icon
+            nzType="delete"
+            nzTheme="outline"
+            class="delete-icon"
+          >
+          </span>
+      </ng-template>
+    </nz-card>
+  </div>
   }
   <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
-    <nz-card (click)="onCreateProject(type!)" class="create-card" [nzTitle]="">
+    <nz-card (click)="onCreateProject(type!)" class="create-card project-card" [nzTitle]="">
       <div nz-icon nzType="plus" nzTheme="outline"></div>
     </nz-card>
   </div>

@@ -1,36 +1,45 @@
 p {
-  font-size: 0.75rem;
-  padding: 0;
-  margin: 0;
+    font-size: 0.75rem;
+    padding: 0;
+    margin: 0;
+  }
+.description{
+    min-height:3rem;
 }
+.project-card {
+    min-height: 14rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+.card-header {
+    min-height: 0rem;
+  }
 
-nz-card {
-  min-height: 12rem;
-}
+.card-footer {
+    margin-top: auto;
+  }
 
 nz-card span {
-  cursor: pointer;
-  font-size: 1.2rem;
-  margin-top: 0.5rem;
-}
-
-nz-card :last-child {
-  margin-left: 0.5rem;
-}
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
 
 .create-card {
-  cursor: pointer;
-  font-size: 4rem;
-  color: grey;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    cursor: pointer;
+    font-size: 4rem;
+    color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 14rem;
+  }
 
 .edit-icon:hover {
-  color: blue !important;
-}
+    color: blue !important;
+  }
 
 .delete-icon:hover {
-  color: red !important;
-}
+    color: red !important;
+  }
