@@ -18,7 +18,7 @@ nz-sider {
   padding-left: 2rem;
 }
 
-.inner-layout > nz-content {
+.inner-layout>nz-content {
   display: flex;
   justify-content: center;
   overflow-y: scroll;

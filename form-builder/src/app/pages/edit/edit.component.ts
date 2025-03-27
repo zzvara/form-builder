@@ -1,26 +1,26 @@
-import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {Project} from '@app/interfaces/project';
-import {ProjectService} from '@app/services/project.service';
-import {UndoRedoService} from '@app/services/undo-redo.service';
-import {InputHolderComponent} from '@app/shared/components/input-holder/input-holder.component';
-import {SidebarData} from '@app/shared/components/sidebar/interfaces/sidebar-data';
-import {FormInputData, instanceOfFormInputData} from '@app/shared/interfaces/form-input-data';
-import {InlineEdit} from '@app/shared/interfaces/inline-edit';
-import {InputData} from '@app/shared/interfaces/input-data';
-import {getSideBarData} from '@pages/edit/config/edit-data-config';
-import {EditList} from '@pages/edit/interfaces/edit-list';
-import {LayoutEnum} from '@pages/edit/interfaces/layout-enum';
-import {instanceOfSectionList, SectionList} from '@pages/edit/interfaces/section-list';
-import {cloneDeep} from 'lodash-es';
-import {v4 as uuidv4} from 'uuid';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Project } from '@app/interfaces/project';
+import { ProjectService } from '@app/services/project.service';
+import { UndoRedoService } from '@app/services/undo-redo.service';
+import { InputHolderComponent } from '@app/shared/components/input-holder/input-holder.component';
+import { SidebarData } from '@app/shared/components/sidebar/interfaces/sidebar-data';
+import { FormInputData, instanceOfFormInputData } from '@app/shared/interfaces/form-input-data';
+import { InlineEdit } from '@app/shared/interfaces/inline-edit';
+import { InputData } from '@app/shared/interfaces/input-data';
+import { getSideBarData } from '@pages/edit/config/edit-data-config';
+import { EditList } from '@pages/edit/interfaces/edit-list';
+import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
+import { instanceOfSectionList, SectionList } from '@pages/edit/interfaces/section-list';
+import { cloneDeep } from 'lodash-es';
+import { v4 as uuidv4 } from 'uuid';
 import { HostListener } from '@angular/core';
 
 @Component({
-    selector: 'app-edit',
-    templateUrl: './edit.component.html',
-    styleUrls: ['./edit.component.css'],
-    standalone: false
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.css'],
+  standalone: false
 })
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
@@ -159,34 +159,34 @@ export class EditComponent implements OnInit, OnChanges {
 
     console.log({ sectionInputs: this.getAllFormInputs() });
   }
-     scrollPercent: number = 0;
-     progressColor: string = '#007bff';
-     isDeleted: boolean = false;
+  scrollPercent: number = 0;
+  progressColor: string = '#007bff';
+  isDeleted: boolean = false;
 
-     @HostListener('scroll', ['$event'])
-     onScroll(event: Event): void {
-       const container = event.target as HTMLElement;
-       const scrollTop = container.scrollTop;
-       const scrollHeight = container.scrollHeight;
-       const clientHeight = container.clientHeight;
-       if (scrollHeight <= clientHeight) {
-         this.scrollPercent = 0;
-       } else {
-         this.scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
-         if (this.scrollPercent >= 100) {
-           this.progressColor = 'green';
-         } else {
-           this.progressColor = '#007bff';
-         }
-       }
-     }
-     onDelete() {
-       this.isDeleted = true;
-       setTimeout(() => {
-         this.isDeleted = false;
-         this.progressColor = '#007bff';
-       }, 300);
-     }
+  @HostListener('scroll', ['$event'])
+  onScroll(event: Event): void {
+    const container = event.target as HTMLElement;
+    const scrollTop = container.scrollTop;
+    const scrollHeight = container.scrollHeight;
+    const clientHeight = container.clientHeight;
+    if (scrollHeight <= clientHeight) {
+      this.scrollPercent = 0;
+    } else {
+      this.scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
+      if (this.scrollPercent >= 100) {
+        this.progressColor = 'green';
+      } else {
+        this.progressColor = '#007bff';
+      }
+    }
+  }
+  onDelete() {
+    this.isDeleted = true;
+    setTimeout(() => {
+      this.isDeleted = false;
+      this.progressColor = '#007bff';
+    }, 300);
+  }
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
     console.log({ sectionInputs: this.getAllFormInputs() });
     // Check if the item was moved within the same container
