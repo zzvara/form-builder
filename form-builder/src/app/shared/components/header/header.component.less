@@ -1,0 +1,68 @@
+nz-header {
+  background-color: #908d8d;
+  padding: 0 5rem;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  >h1 {
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  >div {
+    font-size: 2rem;
+
+    >span {
+      cursor: pointer;
+    }
+  }
+
+  >div :not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.is-active {
+  color: #fff;
+}
+
+.setting {
+  background-color: #908d8d;
+  color: black;
+}
+
+.language {
+  background-color: white;
+}
+
+.language-switcher {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0px;
+
+  span {
+    padding: 0px 0px;
+    transition: 0.3s;
+
+    &:hover {
+      color: #007bff;
+    }
+  }
+
+  .separator {
+    padding: 0 0px;
+    font-weight: normal;
+    color: #666;
+  }
+}
