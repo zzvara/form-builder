@@ -36,6 +36,7 @@ export class FormCreatorComponent implements OnInit {
 
   ngOnInit() {
     /* TODO document why this method 'ngOnInit' is empty */
+    // @todo Yes, this is weird. Can't we just delete it?
   }
 
   page = 0;

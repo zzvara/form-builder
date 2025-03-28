@@ -15,6 +15,7 @@ export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaC
 
   constructor(private readonly translate: TranslateService) {
     super();
+    // @todo Unnecessary title component variable
     this.title = this.translate.instant('components.text_area.MODEL_TITLE_TEXTAREA');
   }
 

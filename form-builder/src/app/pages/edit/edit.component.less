@@ -1,3 +1,4 @@
+// @todo Color variables should be moved to a file (`variables.less` or `colors.less`) and we should import them when needed.
 @background-white: #fff;
 @background-light: #f0f2f5;
 
@@ -5,6 +6,7 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+// @todo Similarly to achieve a uniform design, we should generalize what we can. We might use completely different box shadows in different parts of the projects, since everything is component-specific.
 .box-shadow {
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
@@ -41,6 +43,7 @@ nz-sider {
   position: static;
 }
 
+// @todo We alternately use pixels and rem for defining margins and padding. We should stick with one. For margins/paddings/font-sizes rem would be better.
 .p-3 {
   padding: 3rem;
 }

@@ -4,6 +4,7 @@
   </nz-sider>
   <nz-layout class="inner-layout">
     <nz-content>
+      <!-- @todo Hacky styling, "margin-bottom: 50px" is rarely intended and could cause issues. -->
       <div
         class="form-container"
         id="sectionDropList"
@@ -15,6 +16,7 @@
       >
         @for (edit of editList; track edit) {
           @if (instanceOfSectionList(edit.data)) {
+            <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
             <nz-card
               id="{{ edit.data.sectionId }}"
               [nzTitle]="sectionTitle"
@@ -31,8 +33,10 @@
               [nzBodyStyle]="getSectionStyle(edit.data)"
             >
               <ng-template #sectionTitle>
+                <!-- @todo Colors should only come from a common variable set for the change to easily modify them if needed and to achieve a uniform design. -->
                 <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
                   Section
+                  <!-- @todo Same. I won't mark all the relevant places, please check them all. -->
                   <span style="color: red"> [ID: {{ edit.data.sectionId }} | Layout: {{ edit.data.layout }}]</span>
                 </div>
               </ng-template>
@@ -48,6 +52,7 @@
                     style="margin-left: 10px">
                     <span nz-icon nzType="redo" nzTheme="outline"></span>
                   </button>
+                  <!-- @todo The templates are filled with different margins. These must be uniform as well, maybe we should prefer classes, such as m-l-10? -->
                   <button
                     nz-popconfirm
                     nzPopconfirmTitle="{{ 'components.input_holder.POP_REMOVE' | translate }}"
@@ -81,6 +86,7 @@
               }
             </nz-card>
           } @else if (instanceOfFormInputData(edit.data)) {
+            <!-- @todo Again, a large built-in width and lots of margins, the code should be reviewed for similar cases. -->
             <app-input-holder
               class="element-box"
               cdkDrag

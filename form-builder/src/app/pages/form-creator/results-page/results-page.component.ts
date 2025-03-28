@@ -91,6 +91,7 @@ export class ResultsPageComponent implements OnInit {
     }
   }
 
+  // @todo ngOnDestroy function without the OnDestroy lifecycle hook.
   ngOnDestroy(): void {
     this.jsonService.destroy();
   }

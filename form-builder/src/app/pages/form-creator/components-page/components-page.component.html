@@ -2,7 +2,12 @@
   <div>
     <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
 
-    <div nz-row id="footerdiv" style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; background: white; border-top: 1px solid lightgray">
+    <!-- @todo Styling generalization needed in this file as well. -->
+    <div
+      nz-row
+      id="footerdiv"
+      style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; background: white; border-top: 1px solid lightgray"
+    >
       <div nz-col nzSpan="22"></div>
       <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
         <div style="margin-right: 20px">
@@ -37,6 +42,7 @@
             {{ 'components.NEXT_VERSION' | translate }}
           </button>
         </div>
+        <!-- @todo Generalize margins. -->
         <button
           nz-button
           nzType="primary"

@@ -1,6 +1,7 @@
 <nz-form-item>
   <nz-form-control [nzErrorTip]="errorTemplate">
     <ng-container *ngTemplateOutlet="prefixTemplate" />
+    <!-- @todo Grid instead of min-width: 50%? Will this be responsive enough like this? -->
     <nz-input-number
       #inputComponent
       [required]="data.required"

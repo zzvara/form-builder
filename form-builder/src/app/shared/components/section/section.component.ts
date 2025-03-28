@@ -9,4 +9,5 @@ import { FormComponentMarker } from '@interfaces/form-component-marker';
 })
 export class SectionComponent implements FormComponentMarker {
   // Egyelőre ennek a komponensnek nincs semmi értelme, mivel az edit.component saját maga generálja le és tárolja a section-ök adatait
+  // @todo In that case can we destroy it?
 }

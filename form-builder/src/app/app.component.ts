@@ -3,6 +3,10 @@ import { Subscription } from 'rxjs';
 import { HeaderService } from '@services/header/header.service';
 import { MenuOption } from '@models/menu-option.model';
 
+/**
+ * @todo It seems as if this component doesn't contain logic that's actually useful at this point in time.
+ * It should be simplified. Details below.
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,11 +14,11 @@ import { MenuOption } from '@models/menu-option.model';
   standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  activeOptions: MenuOption[] = [];
-  optionsSub?: Subscription;
-  options = MenuOption;
+  activeOptions: MenuOption[] = []; // @todo Unused variable. A value is given, but never used.
+  optionsSub?: Subscription; // @todo Unused variable.
+  options = MenuOption; // @todo Unused variable.
 
-  title = 'form-builder';
+  title = 'form-builder'; // @todo Unused variable. The related test must be aligned after changing this.
 
   constructor(private readonly headerService: HeaderService) {}
 
@@ -23,6 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.optionsSub?.unsubscribe();
+    this.optionsSub?.unsubscribe(); // @todo Unnecessary lifecycle hook.
   }
 }

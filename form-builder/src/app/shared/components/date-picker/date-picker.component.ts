@@ -15,6 +15,7 @@ export class DatePickerComponent extends AbstractDatePickerComponent<Date, DateP
 
   constructor(private readonly translate: TranslateService) {
     super();
+    // @todo We could do without this variable, since it's only used in one place. Could "modalTitle: this.translate.instant('components.date_picker.MODEL_TITLE_DATE_PICKER')" work?
     this.title = this.translate.instant('components.date_picker.MODEL_TITLE_DATE_PICKER');
   }
 

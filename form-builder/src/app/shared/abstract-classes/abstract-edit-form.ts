@@ -179,6 +179,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     });
   }
 
+  // @todo Please use English comments everywhere.
   /**
    * A különböző, kapcsolatbanlévő FormControl-ok változásait összekötő metódus
    * FONTOS: rekurzív hívás/frissítés esetén pontosan az EGYIK hívásnál jelölni kell, hogy az rekurzív volt (alreadyCalled = false, vagy üres maradjon!)

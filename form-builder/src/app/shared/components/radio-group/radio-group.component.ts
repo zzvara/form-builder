@@ -11,6 +11,7 @@ import { RadioGroupEditComponent } from '@components/radio-group/radio-group-edi
 })
 export class RadioGroupComponent extends AbstractInput<number, RadioGroupData, RadioGroupEditComponent> {
   override edit(): void {
+    // @todo Missing translation
     this.modalService
       .openModal({
         modalTitle: 'Edit Radio Group Settings',

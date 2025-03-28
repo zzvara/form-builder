@@ -15,6 +15,7 @@ export class MutateTextDirective {
 
   @HostListener('blur', ['$event'])
   onBlur(): void {
+    // @todo I see there are multiple ignored errors in the following like. Are we sure these won't cause issues?
     // @ts-ignore
     this.control.control.setValue(this.appMutateText.call(this.control.value, ...this.mutateParameters));
   }
