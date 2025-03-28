@@ -13,8 +13,8 @@ import { v4 as uuidv4 } from 'uuid';
  */
 export class ProjectService<T extends Project> {
   private items: T[] = []; // Holds the current list of projects
-  private itemsSubject = new BehaviorSubject<T[]>([]);
-  private storageKey: string = 'project';
+  private readonly itemsSubject = new BehaviorSubject<T[]>([]);
+  private readonly storageKey: string = 'project';
 
   constructor() {
     // Attempt to load saved projects from local storage
@@ -61,8 +61,8 @@ export class ProjectService<T extends Project> {
    * It also removes the project's history from local storage.
    * It filters out the project with the given ID from the internal list, updates the observable,
    * and persists the updated list to local storage.
-   * @param {number} id - The ID of the project to remove.
    * @returns {void}
+   * @param projectId
    */
   remove(projectId: string): void {
     // Remove the project from the list
@@ -84,8 +84,7 @@ export class ProjectService<T extends Project> {
    */
   getProjectHistory(projectId: string): ProjectVersion<T>[] {
     const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
-    const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
-    return projectHistory;
+    return JSON.parse(localStorage.getItem(projectHistoryKey) ?? '[]');
   }
 
   /**
