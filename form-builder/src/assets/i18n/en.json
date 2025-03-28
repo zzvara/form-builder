@@ -1,4 +1,9 @@
 {
+  "title": {
+    "dashboard": "Dashboard",
+    "newform" : "New Form",
+    "editform": "Edit Form"
+  },
   "components": {
     "CANNOT_BE_EMPTY": "Cannot be empty!",
     "CANNOT_BE_LOWER_THAN": "Cannot be lower than",
