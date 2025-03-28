@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren, EventEmitter, Output } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 import { FormInputData, instanceOfFormInputData } from '@interfaces/form-input-data';
@@ -13,7 +13,7 @@ import { instanceOfSectionList, SectionList } from '@pages/edit/interfaces/secti
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
-import { NgStyleInterface } from "ng-zorro-antd/core/types";
+import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -25,6 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
   private readonly undoRedoService: UndoRedoService<EditList[]> = inject(UndoRedoService);
+  @Output() usedComponentsChange = new EventEmitter<{ title: string; id: string; parentId?: string }[]>();
 
   protected readonly instanceOfSectionList = instanceOfSectionList;
   protected readonly instanceOfFormInputData = instanceOfFormInputData;
@@ -48,6 +49,34 @@ export class EditComponent implements OnInit, OnChanges {
       }
       return edit.data;
     });
+
+  emitUsedComponents(): void {
+    const componentEntries: { title: string; id: string; parentId?: string }[] = [];
+
+    this.editList.forEach((edit) => {
+      if (this.instanceOfSectionList(edit.data)) {
+        const section = edit.data as SectionList;
+
+        componentEntries.push({ title: 'SECTION', id: section.sectionId });
+
+        section.sectionInputs.forEach((input) => {
+          if (input.data?.id) {
+            componentEntries.push({
+              title: input.title,
+              id: input.data.id,
+              parentId: section.sectionId,
+            });
+          }
+        });
+      } else if (this.instanceOfFormInputData(edit.data)) {
+        if (edit.data.data?.id) {
+          componentEntries.push({ title: edit.data.title, id: edit.data.data.id });
+        }
+      }
+    });
+
+    this.usedComponentsChange.emit(componentEntries);
+  }
 
   sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
     item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
@@ -147,18 +176,34 @@ export class EditComponent implements OnInit, OnChanges {
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
     } else if (instanceOfFormInputData(event.item.data)) {
-      event.item.data.data!.sectionId = event.container.id;
+      const movedId = event.item.data.data?.id;
+
+      for (const section of this.editList) {
+        if (instanceOfSectionList(section.data)) {
+          const index = section.data.sectionInputs.findIndex((input) => input.data?.id === movedId);
+          if (index !== -1) {
+            section.data.sectionInputs.splice(index, 1);
+            break;
+          }
+        }
+      }
+
       const transferredInput: EditList = {
         id: event.item.data.data!.id!,
         data: event.item.data,
       };
+
+      (transferredInput.data as FormInputData).data!.sectionId = undefined;
+
       event.container.data.splice(event.currentIndex, 0, transferredInput);
-      event.previousContainer.data.splice(event.previousIndex, 1);
     }
+
     console.log('Input components modified (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
 
     console.log({ sectionInputs: this.getAllFormInputs() });
+
+    this.emitUsedComponents();
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
@@ -176,6 +221,9 @@ export class EditComponent implements OnInit, OnChanges {
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else if (instanceOfFormInputData(event.item.data)) {
+      const input: FormInputData = event.item.data;
+      input.data!.sectionId = event.container.id;
+
       transferArrayItem(event.previousContainer.data as FormInputData[], event.container.data, event.previousIndex, event.currentIndex);
     } else {
       const transferredInput = event.item.data.data as FormInputData;
@@ -187,6 +235,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
 
     console.log({ sectionInputs: this.getAllFormInputs() });
+    this.emitUsedComponents();
   }
 
   getEditDropListConnectedTo(): string[] {
@@ -204,20 +253,22 @@ export class EditComponent implements OnInit, OnChanges {
     this.editList = this.editList.filter((e) => e.id !== edit.id);
     console.log('Edit component removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
+    this.emitUsedComponents();
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
     console.log('Input component in section removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
+    this.emitUsedComponents();
   }
 
-  getSectionInputStyle(sect: SectionList): {[p: string]: any} {
+  getSectionInputStyle(sect: SectionList): { [p: string]: any } {
     let width: number;
     if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
     } else {
-      width = (100 / sect.sectionInputs.length) - 1;
+      width = 100 / sect.sectionInputs.length - 1;
     }
     return {
       width: width.toString() + '%',
@@ -227,14 +278,14 @@ export class EditComponent implements OnInit, OnChanges {
   getSectionStyle(sect: SectionList): NgStyleInterface {
     if (sect.layout === LayoutEnum.HORIZONTAL) {
       return {
-        "display": "flex",
-        "padding": "15px",
-        "padding-bottom": "24px"
-      }
+        display: 'flex',
+        padding: '15px',
+        'padding-bottom': '24px',
+      };
     }
     return {
-      "padding": "15px",
-      "padding-bottom": "24px"
+      padding: '15px',
+      'padding-bottom': '24px',
     };
   }
 

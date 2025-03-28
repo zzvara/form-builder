@@ -1,54 +1,83 @@
-<nz-layout>
-  <div>
-    <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
+<nz-layout class="components-layout">
+  <div class="content-area">
+    <app-edit
+      [inlineEdit]="inlineEdit"
+      [projectId]="projectId"
+      [versionNum]="currentVersionNum"
+      (usedComponentsChange)="onUsedComponentsChange($event)"
+    ></app-edit>
+  </div>
 
-    <div nz-row id="footerdiv" style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; background: white; border-top: 1px solid lightgray">
-      <div nz-col nzSpan="22"></div>
-      <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
-        <div style="margin-right: 20px">
-          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
-        </div>
-
-        <div style="margin-right: 20px">
-          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
-        </div>
-
-        <div>
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
-            {{ 'components.PREVIOUS_VERSION' | translate }}
-          </button>
-        </div>
-
-        <div>
-          <nz-select
-            [(ngModel)]="currentVersionNum"
-            (ngModelChange)="revertToVersion($event)"
-            nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
-            style="margin-right: 8px"
-          >
-            @for (version of projectHistory; track $index) {
-              <nz-option [nzValue]="version.versionNum" [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"></nz-option>
-            }
-          </nz-select>
-        </div>
-
-        <div>
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
-            {{ 'components.NEXT_VERSION' | translate }}
-          </button>
-        </div>
-        <button
-          nz-button
-          nzType="primary"
-          type="submit"
-          (click)="nextPage()"
-          style="margin-left: 8px"
-          [disabled]="isNextButtonDisabled"
-          nz-tooltip="{{ 'components.NEXT_TOOLTIP' | translate }}"
+  <aside class="right-sidebar" cdkDropList [cdkDropListData]="usedComponents" (cdkDropListDropped)="onDrop($event)">
+    <h3>Used Components</h3>
+    <ul>
+      <li *ngFor="let component of usedComponents" cdkDrag [cdkDragData]="component">
+        <div
+          [ngClass]="{
+            'component-item': true,
+            'child-component': component.parentId,
+            'parent-component': !component.parentId
+          }"
         >
-          {{ 'general.NEXT' | translate }}
+          {{ component.parentId ? '↳ ' : '' }}{{ component.title }}
+        </div>
+      </li>
+    </ul>
+  </aside>
+
+  <div
+    nz-row
+    id="footerdiv"
+    style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; background: white; border-top: 1px solid lightgray"
+  >
+    <div nz-col nzSpan="22"></div>
+    <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
+      <div style="margin-right: 20px">
+        <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
+      </div>
+
+      <div style="margin-right: 20px">
+        <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
+      </div>
+
+      <div>
+        <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
+          {{ 'components.PREVIOUS_VERSION' | translate }}
         </button>
       </div>
+
+      <div>
+        <nz-select
+          [(ngModel)]="currentVersionNum"
+          (ngModelChange)="revertToVersion($event)"
+          nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
+          style="margin-right: 8px"
+        >
+          <nz-option
+            *ngFor="let version of projectHistory; let i = index"
+            [nzValue]="version.versionNum"
+            [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"
+          >
+          </nz-option>
+        </nz-select>
+      </div>
+
+      <div>
+        <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
+          {{ 'components.NEXT_VERSION' | translate }}
+        </button>
+      </div>
+      <button
+        nz-button
+        nzType="primary"
+        type="submit"
+        (click)="nextPage()"
+        style="margin-left: 8px"
+        [disabled]="isNextButtonDisabled"
+        nz-tooltip="{{ 'components.NEXT_TOOLTIP' | translate }}"
+      >
+        {{ 'general.NEXT' | translate }}
+      </button>
     </div>
   </div>
 </nz-layout>

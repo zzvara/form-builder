@@ -1,8 +1,13 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
 import { InlineEdit } from '@interfaces/inline-edit';
+import { EditList } from '@pages/edit/interfaces/edit-list';
+import { instanceOfSectionList } from '@pages/edit/interfaces/section-list';
+import { instanceOfFormInputData } from '@interfaces/form-input-data';
+import { cloneDeep } from 'lodash-es';
 
 @Component({
   selector: 'app-components-page',
@@ -24,6 +29,8 @@ export class ComponentsPageComponent implements OnInit {
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
+
+  usedComponents: { title: string; id: string; parentId?: string }[] = [];
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -109,5 +116,64 @@ export class ComponentsPageComponent implements OnInit {
 
   get isNextButtonDisabled(): boolean {
     return this.editComponent ? this.editComponent.isFormInvalid() : true;
+  }
+
+  onUsedComponentsChange(components: { title: string; id: string; parentId?: string }[]): void {
+    this.usedComponents = components;
+  }
+
+  onDrop(event: CdkDragDrop<{ title: string; id: string }[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.usedComponents, event.previousIndex, event.currentIndex);
+      this.reorderEditListBasedOnUsedComponents();
+    }
+  }
+
+  private reorderEditListBasedOnUsedComponents(): void {
+    const newEditList: EditList[] = [];
+    const sectionMap = new Map<string, EditList>();
+
+    for (const component of this.usedComponents) {
+      if (!component.parentId) {
+        const match = this.editComponent.editList.find((edit) => {
+          if (instanceOfSectionList(edit.data)) {
+            return edit.data.sectionId === component.id;
+          }
+          if (instanceOfFormInputData(edit.data)) {
+            return edit.data.data?.id === component.id;
+          }
+          return false;
+        });
+
+        if (match) {
+          const copy = cloneDeep(match);
+
+          if (instanceOfSectionList(copy.data)) {
+            copy.data.sectionInputs = [];
+            sectionMap.set(copy.data.sectionId, copy);
+          }
+
+          newEditList.push(copy);
+        }
+      }
+    }
+
+    for (const component of this.usedComponents) {
+      if (component.parentId) {
+        const parent = sectionMap.get(component.parentId);
+
+        if (parent && instanceOfSectionList(parent.data)) {
+          const match = this.editComponent.editList
+            .flatMap((edit) => (instanceOfSectionList(edit.data) ? edit.data.sectionInputs : []))
+            .find((input) => input.data?.id === component.id);
+
+          if (match) {
+            parent.data.sectionInputs.push(cloneDeep(match));
+          }
+        }
+      }
+    }
+
+    this.editComponent.editList = newEditList;
   }
 }

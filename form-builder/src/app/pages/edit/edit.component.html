@@ -13,86 +13,79 @@
         [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
         style="width: 100%; margin-bottom: 50px"
       >
-        @for (edit of editList; track edit) {
-          @if (instanceOfSectionList(edit.data)) {
-            <nz-card
-              id="{{ edit.data.sectionId }}"
-              [nzTitle]="sectionTitle"
-              [nzExtra]="sectionButtons"
-              cdkDrag
-              cdkDropList
-              [cdkDropListOrientation]="edit.data.layout"
-              [cdkDropListConnectedTo]="getSectionDropListConnectedTo(edit.data)"
-              [cdkDropListData]="edit.data.sectionInputs"
-              [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
-              (cdkDropListDropped)="dropIntoSection($event)"
-              class="element-list p-3"
-              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px"
-              [nzBodyStyle]="getSectionStyle(edit.data)"
-            >
-              <ng-template #sectionTitle>
-                <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
-                  Section
-                  <span style="color: red"> [ID: {{ edit.data.sectionId }} | Layout: {{ edit.data.layout }}]</span>
-                </div>
-              </ng-template>
-              <ng-template #sectionButtons>
-                <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">
-                  <span>Reorder enabled: </span>
-                  <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
-                  <button
-                    nz-button
-                    nzType="default"
-                    nzShape="circle"
-                    (click)="sectionLayoutChange(edit.data)"
-                    style="margin-left: 10px">
-                    <span nz-icon nzType="redo" nzTheme="outline"></span>
-                  </button>
-                  <button
-                    nz-popconfirm
-                    nzPopconfirmTitle="{{ 'components.input_holder.POP_REMOVE' | translate }}"
-                    [nzCancelText]="'general.CANCEL' | translate"
-                    [nzOkText]="'general.OK' | translate"
-                    (nzOnConfirm)="removeEditComponent(edit)"
-                    nzPopconfirmPlacement="top"
-                    nz-button
-                    nzType="default"
-                    nzDanger
-                    nzShape="circle"
-                    style="margin-left: 10px"
-                  >
-                    <span nz-icon nzType="delete" nzTheme="outline"></span>
-                  </button>
-                </div>
-              </ng-template>
+        @for (edit of editList; track edit) { @if (instanceOfSectionList(edit.data)) {
+        <nz-card
+          id="{{ edit.data.sectionId }}"
+          [nzTitle]="sectionTitle"
+          [nzExtra]="sectionButtons"
+          cdkDrag
+          cdkDropList
+          [cdkDropListOrientation]="edit.data.layout"
+          [cdkDropListConnectedTo]="getSectionDropListConnectedTo(edit.data)"
+          [cdkDropListData]="edit.data.sectionInputs"
+          [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
+          (cdkDropListDropped)="dropIntoSection($event)"
+          class="element-list p-3"
+          style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0"
+          [nzBodyStyle]="getSectionStyle(edit.data)"
+        >
+          <ng-template #sectionTitle>
+            <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
+              Section
+              <span style="color: red"> [ID: {{ edit.data.sectionId }} | Layout: {{ edit.data.layout }}]</span>
+            </div>
+          </ng-template>
+          <ng-template #sectionButtons>
+            <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">
+              <span>Reorder enabled: </span>
+              <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
+              <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)" style="margin-left: 10px">
+                <span nz-icon nzType="redo" nzTheme="outline"></span>
+              </button>
+              <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'components.input_holder.POP_REMOVE' | translate }}"
+                [nzCancelText]="'general.CANCEL' | translate"
+                [nzOkText]="'general.OK' | translate"
+                (nzOnConfirm)="removeEditComponent(edit)"
+                nzPopconfirmPlacement="top"
+                nz-button
+                nzType="default"
+                nzDanger
+                nzShape="circle"
+                style="margin-left: 10px"
+              >
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+              </button>
+            </div>
+          </ng-template>
 
-              @for (item of edit.data.sectionInputs; track item) {
-                <app-input-holder
-                  class="element-box"
-                  cdkDrag
-                  [cdkDragData]="item"
-                  style="margin: 5px; padding: 0"
-                  [ngStyle]="getSectionInputStyle(edit.data)"
-                  [formInput]="item"
-                  [inlineEdit]="inlineEdit"
-                  (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
-                  (changedEvent)="onValueChanged($event)"
-                />
-              }
-            </nz-card>
-          } @else if (instanceOfFormInputData(edit.data)) {
-            <app-input-holder
-              class="element-box"
-              cdkDrag
-              [cdkDragData]="edit"
-              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px; border: 1px solid lightgray"
-              [formInput]="edit.data"
-              [inlineEdit]="inlineEdit"
-              (removeComponentEvent)="removeEditComponent(edit)"
-              (changedEvent)="onValueChanged($event)"
-            />
+          @for (item of edit.data.sectionInputs; track item) {
+          <app-input-holder
+            class="element-box"
+            cdkDrag
+            [cdkDragData]="item"
+            style="margin: 5px; padding: 0"
+            [ngStyle]="getSectionInputStyle(edit.data)"
+            [formInput]="item"
+            [inlineEdit]="inlineEdit"
+            (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
+            (changedEvent)="onValueChanged($event)"
+          />
           }
-        }
+        </nz-card>
+        } @else if (instanceOfFormInputData(edit.data)) {
+        <app-input-holder
+          class="element-box"
+          cdkDrag
+          [cdkDragData]="edit"
+          style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px; border: 1px solid lightgray"
+          [formInput]="edit.data"
+          [inlineEdit]="inlineEdit"
+          (removeComponentEvent)="removeEditComponent(edit)"
+          (changedEvent)="onValueChanged($event)"
+        />
+        } }
       </div>
     </nz-content>
   </nz-layout>

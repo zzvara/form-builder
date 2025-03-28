@@ -14,6 +14,7 @@ import { EditModule } from '@pages/edit/edit.module';
 import { FormCreatorModule } from '@pages/form-creator/form-creator.module';
 import { SharedModule } from '@shared/shared.module';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       },
     }),
     NzCheckboxModule,
+    DragDropModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, provideHttpClient(withInterceptorsFromDi()), { provide: NZ_ICONS, useValue: icons }],
 })

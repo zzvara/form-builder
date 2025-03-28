@@ -1,7 +1,92 @@
+.components-layout {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  position: relative;
+}
+
+.content-area {
+  flex: 1;
+  padding-right: 1rem;
+  min-width: 0;
+}
+
 nz-layout {
+  display: flex;
+  flex-wrap: nowrap;
   background-color: transparent;
+  height: 100%;
+}
+
+nz-row {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.form-container {
+  flex: 1;
+  max-width: 70%;
+  margin: 0 auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #fff;
+  min-height: 100px;
 }
 
 #footerdiv {
   margin-top: 1rem;
+}
+
+.right-sidebar {
+  flex-shrink: 0;
+  padding: 1rem;
+  background: white;
+  border-left: 1px solid #eee;
+  overflow-y: auto;
+
+  h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 5px;
+    font-size: 14px;
+
+    div {
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: #f6f6f6;
+      border: 1px solid #e2e2e2;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .child-component {
+      margin-left: 16px;
+      font-size: 13px;
+      color: #666;
+      background: #fafafa;
+    }
+
+    .parent-component {
+      font-weight: 600;
+    }
+  }
+}
+
+drag-preview {
+  background: #fff;
+  border: 1px solid #999;
+  z-index: 1000;
+}
+
+.cdk-drag-placeholder {
+  border: 1px dashed #aaa;
+  background-color: #f5f5f5;
 }

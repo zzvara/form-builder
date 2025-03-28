@@ -11,8 +11,10 @@
 
 nz-content {
   background: @background-light;
-  padding: 2rem;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem 0;
 }
 
 nz-sider {
@@ -35,10 +37,13 @@ nz-sider {
 }
 
 .form-container {
-  max-width: 100%;
-  display: inline-block;
-  vertical-align: top;
-  position: static;
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .p-3 {
@@ -50,23 +55,28 @@ nz-sider {
 }
 
 .element-list {
-  border: solid 1px #ccc;
+  border: 1px solid #ccc;
   background: @background-white;
-  border-radius: 4px;
-  overflow: hidden;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 20px;
+  box-sizing: border-box;
   display: block;
+  padding: 0 !important;
 }
 
 .element-box {
   color: rgba(0, 0, 0, 0.87);
-  padding-bottom: 2rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
   background: @background-white;
+  width: 100%;
+  max-width: 900px;
+  margin: 10px auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 
 .cdk-drag-preview {
