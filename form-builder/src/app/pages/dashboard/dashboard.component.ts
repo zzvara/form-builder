@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from '@services/project.service';
@@ -20,7 +19,6 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly questionnaireService: ProjectService<Questionnaire>,
-    private readonly translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -29,8 +27,7 @@ export class DashboardComponent implements OnInit {
     if (savedView) {
       this.isListView = savedView === 'list';
     }
-    const savedLanguage = localStorage.getItem('language') || 'en';
-    this.translateService.use(savedLanguage);
+
   }
 
   createProject(type: ProjectType): void {
