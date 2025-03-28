@@ -30,7 +30,7 @@
           type="text"
           nz-input
           placeholder="{{ 'components.combobox.NEW_OPTION' | translate }}"
-          [appMutateText]="String.trim"
+          [appMutateText]="trimString"
           [formControl]="newOption"
         />
       </nz-input-group>

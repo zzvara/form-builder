@@ -25,7 +25,7 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="newOptionErrors">
       <nz-input-group nzSearch [nzAddOnAfter]="addOptionButton">
-        <input type="text" nz-input placeholder="New Option" [appMutateText]="String.trim" [formControl]="newOption" />
+        <input type="text" nz-input placeholder="New Option" [appMutateText]="trimString" [formControl]="newOption" />
       </nz-input-group>
       <ng-template #addOptionButton>
         <button nz-button nzType="primary" [disabled]="newOption.invalid" (click)="addOption()">Add Option</button>

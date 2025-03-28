@@ -2,7 +2,6 @@ import { AbstractInput } from '@abstract-classes/abstract-input';
 import { Component } from '@angular/core';
 import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
-import { TranslateService } from '@ngx-translate/core'; // Import TranslateService
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, of } from 'rxjs';
 
@@ -13,13 +12,6 @@ import { Observable, of } from 'rxjs';
   standalone: false,
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
-  title: string;
-
-  constructor(private readonly translate: TranslateService) {
-    super();
-    this.title = this.translate.instant('components.picture_input.MODEL_TITLE_PICTURE_INPUT');
-  }
-
   onFileChange(event: any): void {
     this.data.file = event.target.files[0];
   }
@@ -47,7 +39,7 @@ export class PictureInputComponent extends AbstractInput<string | null, PictureI
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.title, // Use the translated title here
+        modalTitle: this.translate.instant('components.picture_input.MODEL_TITLE_PICTURE_INPUT'), // Use the translated title here
         modalContent: PictureInputEditComponent,
         modalData: this.data,
       })

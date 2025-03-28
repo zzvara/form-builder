@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -12,7 +12,7 @@ import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface
   styleUrls: ['./results-page.component.less'],
   standalone: false,
 })
-export class ResultsPageComponent implements OnInit {
+export class ResultsPageComponent implements OnInit, OnDestroy {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Input() projectId: string | undefined;
@@ -55,7 +55,7 @@ export class ResultsPageComponent implements OnInit {
 
     this.project?.editList!.forEach((section) => {
       if ('sectionInputs' in section.data) {
-        section.data.sectionInputs!.forEach((input) => {
+        section.data.sectionInputs.forEach((input) => {
           this.sectionInputs.push(input);
         });
       }
@@ -91,7 +91,6 @@ export class ResultsPageComponent implements OnInit {
     }
   }
 
-  // @todo ngOnDestroy function without the OnDestroy lifecycle hook.
   ngOnDestroy(): void {
     this.jsonService.destroy();
   }

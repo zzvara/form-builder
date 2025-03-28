@@ -1,5 +1,6 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { Directive, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ModalServiceService } from '@services/modal/modal-service.service';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { InlineEdit } from '@interfaces/inline-edit';
@@ -8,6 +9,7 @@ import { InputData } from '@interfaces/input-data';
 @Directive()
 export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>> implements FormComponentMarker, OnInit {
   protected readonly modalService: ModalServiceService<T, D, E> = inject(ModalServiceService);
+  protected readonly translate: TranslateService = inject(TranslateService);
 
   @Input() data!: D;
   @Input() inlineEdit: InlineEdit = { enabled: true };

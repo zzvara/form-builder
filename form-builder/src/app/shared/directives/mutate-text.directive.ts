@@ -9,14 +9,11 @@ export class MutateTextDirective {
   private readonly control: NgControl = inject(NgControl);
 
   @Input() appMutateText: (value: string) => string = (value) => value;
-  @Input() mutateParameters: any[] = [];
 
   constructor() {}
 
   @HostListener('blur', ['$event'])
   onBlur(): void {
-    // @todo I see there are multiple ignored errors in the following like. Are we sure these won't cause issues?
-    // @ts-ignore
-    this.control.control.setValue(this.appMutateText.call(this.control.value, ...this.mutateParameters));
+    this.control.control?.setValue(this.appMutateText(this.control.value));
   }
 }

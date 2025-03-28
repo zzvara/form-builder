@@ -59,7 +59,6 @@
           </ng-template>
           <ng-template #suffixTemplateCounter>
             @if (getControlValue('maxLength') && getControlValue('showCharacterCounter') && getControlValue('maxLengthNumber')) {
-              <!-- @todo Unresolved variable length -->
               <div style="text-align: right">{{ defaultValueComponent.value.length }}/{{ getControlValue('maxLengthNumber') }}</div>
             }
           </ng-template>

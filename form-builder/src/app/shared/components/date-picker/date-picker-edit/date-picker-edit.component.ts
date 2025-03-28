@@ -11,7 +11,6 @@ import {
   getDisabledTimeConfigForMaxDate,
   getDisabledTimeConfigForMinDate,
 } from '@helpers/date-helper';
-import { TranslateService } from '@ngx-translate/core';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
@@ -22,11 +21,10 @@ import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, SupportTimeOptions } fr
   styleUrls: [],
   standalone: false,
 })
-export class DatePickerEditComponent< T extends Date | Date[] = Date,  D extends DatePickerComponentData<T> = DatePickerComponentData<T> > extends AbstractFieldLikeEditForm<T, D> {
-  constructor(private readonly translate: TranslateService) {
-    super();
-  }
-
+export class DatePickerEditComponent<
+  T extends Date | Date[] = Date,
+  D extends DatePickerComponentData<T> = DatePickerComponentData<T>,
+> extends AbstractFieldLikeEditForm<T, D> {
   datePickerModes: { mode: NzDateMode; label: string }[] = [
     { mode: 'decade', label: this.translate.instant('components.date_picker.DECADE') },
     { mode: 'year', label: this.translate.instant('components.date_picker.YEAR') },

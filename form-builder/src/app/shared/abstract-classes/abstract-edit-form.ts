@@ -4,14 +4,17 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Vali
 import { ControlConnection, ControlConnectionData, DataSetterType } from '@interfaces/control-connection';
 import { InputData, InputDataKeys } from '@interfaces/input-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslateService } from '@ngx-translate/core';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 
 @Directive()
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly formBuilder = inject(FormBuilder);
+  protected readonly translate: TranslateService = inject(TranslateService);
   private readonly nzModalData: D = inject(NZ_MODAL_DATA);
-  protected readonly String = String.prototype;
+
+  protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
   protected readonly formData: FormGroup = this.formBuilder.group<{ [key in InputDataKeys<D>]?: FormControl<any> }>(
     {},
@@ -179,10 +182,9 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     });
   }
 
-  // @todo Please use English comments everywhere.
   /**
-   * A különböző, kapcsolatbanlévő FormControl-ok változásait összekötő metódus
-   * FONTOS: rekurzív hívás/frissítés esetén pontosan az EGYIK hívásnál jelölni kell, hogy az rekurzív volt (alreadyCalled = false, vagy üres maradjon!)
+   * This method can be used to connect different FormControl's validations. WHen one control changes the connected controls are revalidated as well.
+   * IMPORTANT: on a recursive call / connection you must specify it on exactly one connection / pair (alreadyCalled = false, or empty!)
    *
    * @param controls
    */
@@ -192,7 +194,6 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   connectAnyValidations(controls: ControlConnection) {
     this.executeBasedOnChanges(controls, (connData) => {
       const control = this.getControl<any>(connData.name);
-      // A sorrend KEGYETLEN fontos... órákat **** el vele :(
       control?.markAsDirty();
       if (connData.recursiveCall) {
         if (connData.alreadyCalled) {

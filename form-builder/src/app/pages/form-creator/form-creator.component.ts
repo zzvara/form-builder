@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./form-creator.component.less'],
   standalone: false,
 })
-export class FormCreatorComponent implements OnInit {
+export class FormCreatorComponent {
   constructor(
     private readonly router: Router,
     private readonly cdr: ChangeDetectorRef
@@ -32,11 +32,6 @@ export class FormCreatorComponent implements OnInit {
     this.cdr.detectChanges();
 
     console.log('Project type:', this.projectType);
-  }
-
-  ngOnInit() {
-    /* TODO document why this method 'ngOnInit' is empty */
-    // @todo Yes, this is weird. Can't we just delete it?
   }
 
   page = 0;

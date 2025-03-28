@@ -2,7 +2,6 @@ import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-in
 import { Component } from '@angular/core';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-number-input',
@@ -11,17 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
-  title: string;
-
-  constructor(private readonly translate: TranslateService) {
-    super();
-    this.title = this.translate.instant('components.number_input.MODEL_TITLE_NUMBER_INPUT');
-  }
-
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.title,
+        modalTitle: this.translate.instant('components.number_input.MODEL_TITLE_NUMBER_INPUT'),
         modalContent: NumberInputEditComponent,
         modalData: this.data,
       })
