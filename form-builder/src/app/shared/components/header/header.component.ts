@@ -29,16 +29,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.translate.use(localStorage.getItem('language') || 'en');
     this.jsonService.clearJsonData();
     this.optionsSub = this.headerService
       .getOptions()
       .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
 
     this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
-    const savedLanguage = localStorage.getItem('selectedLanguage');
-    if (savedLanguage) {
-      this.translate.use(savedLanguage);
-    }
   }
 
   navigateToHome(): void {
@@ -92,8 +89,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   setLanguage(lang: string): void {
-    localStorage.setItem('selectedLanguage', lang);
     this.translate.use(lang);
-    console.log(lang);
+    localStorage.setItem('language', lang);
   }
 }
