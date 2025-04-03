@@ -7,22 +7,9 @@
       (usedComponentsChange)="onUsedComponentsChange($event)"
     ></app-edit>
   </div>
-
-  <aside class="right-sidebar" cdkDropList [cdkDropListData]="usedComponents" (cdkDropListDropped)="onDrop($event)">
+  <aside class="right-sidebar">
     <h3>Used Components</h3>
-    <ul>
-      <li *ngFor="let component of usedComponents" cdkDrag [cdkDragData]="component">
-        <div
-          [ngClass]="{
-            'component-item': true,
-            'child-component': component.parentId,
-            'parent-component': !component.parentId
-          }"
-        >
-          {{ component.parentId ? '↳ ' : '' }}{{ component.title }}
-        </div>
-      </li>
-    </ul>
+    <nz-tree [nzData]="treeNodes" [nzDraggable]="true" nzBlockNode (nzOnDrop)="onDrop($event)"> </nz-tree>
   </aside>
 
   <div

@@ -8,6 +8,23 @@ import { EditList } from '@pages/edit/interfaces/edit-list';
 import { instanceOfSectionList } from '@pages/edit/interfaces/section-list';
 import { instanceOfFormInputData } from '@interfaces/form-input-data';
 import { cloneDeep } from 'lodash-es';
+import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
+
+interface TreeNode {
+  name: string;
+  id: string;
+  disabled?: boolean;
+  children?: TreeNode[];
+}
+
+interface FlatNode {
+  expandable: boolean;
+  name: string;
+  id: string;
+  level: number;
+  disabled: boolean;
+}
 
 @Component({
   selector: 'app-components-page',
@@ -31,6 +48,8 @@ export class ComponentsPageComponent implements OnInit {
   currentVersionNum?: number;
 
   usedComponents: { title: string; id: string; parentId?: string }[] = [];
+
+  treeNodes: NzTreeNodeOptions[] = [];
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -110,6 +129,28 @@ export class ComponentsPageComponent implements OnInit {
     }
   }
 
+  getTreeData(): TreeNode[] {
+    const map = new Map<string, TreeNode>();
+    const roots: TreeNode[] = [];
+
+    for (const comp of this.usedComponents) {
+      const node: TreeNode = { name: comp.title, id: comp.id, disabled: false };
+      map.set(comp.id, node);
+
+      if (comp.parentId) {
+        const parent = map.get(comp.parentId);
+        if (parent) {
+          parent.children = parent.children || [];
+          parent.children.push(node);
+        }
+      } else {
+        roots.push(node);
+      }
+    }
+
+    return roots;
+  }
+
   onSectionInputsChange(undoRedoEvent: 'UNDO' | 'REDO'): void {
     this.editComponent.undoRedo(undoRedoEvent);
   }
@@ -120,60 +161,84 @@ export class ComponentsPageComponent implements OnInit {
 
   onUsedComponentsChange(components: { title: string; id: string; parentId?: string }[]): void {
     this.usedComponents = components;
+    this.treeNodes = this.buildTreeData();
   }
 
-  onDrop(event: CdkDragDrop<{ title: string; id: string }[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(this.usedComponents, event.previousIndex, event.currentIndex);
-      this.reorderEditListBasedOnUsedComponents();
-    }
-  }
+  buildTreeData(): NzTreeNodeOptions[] {
+    const map = new Map<string, NzTreeNodeOptions>();
+    const roots: NzTreeNodeOptions[] = [];
 
-  private reorderEditListBasedOnUsedComponents(): void {
-    const newEditList: EditList[] = [];
-    const sectionMap = new Map<string, EditList>();
+    const hasChild = (id: string): boolean => {
+      return this.usedComponents.some((c) => c.parentId === id);
+    };
 
-    for (const component of this.usedComponents) {
-      if (!component.parentId) {
-        const match = this.editComponent.editList.find((edit) => {
-          if (instanceOfSectionList(edit.data)) {
-            return edit.data.sectionId === component.id;
-          }
-          if (instanceOfFormInputData(edit.data)) {
-            return edit.data.data?.id === component.id;
-          }
-          return false;
-        });
+    for (const comp of this.usedComponents) {
+      const node: NzTreeNodeOptions = {
+        title: comp.title,
+        key: comp.id,
+        children: [],
+        isLeaf: !(comp.title === 'SECTION' && hasChild(comp.id)), // csak akkor nem levél, ha van gyereke
+      };
 
-        if (match) {
-          const copy = cloneDeep(match);
+      map.set(comp.id, node);
 
-          if (instanceOfSectionList(copy.data)) {
-            copy.data.sectionInputs = [];
-            sectionMap.set(copy.data.sectionId, copy);
-          }
-
-          newEditList.push(copy);
+      if (comp.parentId) {
+        const parent = map.get(comp.parentId);
+        if (parent) {
+          parent.children = parent.children || [];
+          parent.children.push(node);
         }
+      } else {
+        roots.push(node);
       }
     }
 
-    for (const component of this.usedComponents) {
-      if (component.parentId) {
-        const parent = sectionMap.get(component.parentId);
+    return roots;
+  }
 
-        if (parent && instanceOfSectionList(parent.data)) {
-          const match = this.editComponent.editList
-            .flatMap((edit) => (instanceOfSectionList(edit.data) ? edit.data.sectionInputs : []))
-            .find((input) => input.data?.id === component.id);
+  onDrop(event: NzFormatEmitEvent): void {
+    const dragNode = event.dragNode;
+    const targetNode = event.node;
+    const pos = (event as any).pos;
 
-          if (match) {
-            parent.data.sectionInputs.push(cloneDeep(match));
-          }
-        }
-      }
+    if (!dragNode || !targetNode || pos === undefined) return;
+
+    const dragged = this.usedComponents.find((c) => c.id === dragNode.key);
+    const target = this.usedComponents.find((c) => c.id === targetNode.key);
+
+    if (!dragged || !target) return;
+
+    if (pos === 0) {
+      dragged.parentId = target.id;
+    } else {
+      dragged.parentId = target.parentId;
     }
 
-    this.editComponent.editList = newEditList;
+    this.treeNodes = this.buildTreeData();
+
+    this.reorderEditListBasedOnUsedComponents();
+  }
+
+  reorderEditListBasedOnUsedComponents(): void {
+    const idToComponent = new Map<string, any>();
+
+    for (const comp of this.editComponent.editList) {
+      idToComponent.set(comp.id, comp);
+    }
+
+    const buildTree = (parentId?: string): any[] => {
+      return this.usedComponents
+        .filter((c) => c.parentId === parentId)
+        .map((c) => {
+          const comp = idToComponent.get(c.id);
+          if (comp) {
+            comp.children = buildTree(c.id);
+          }
+          return comp;
+        })
+        .filter(Boolean);
+    };
+
+    this.editComponent.editList = buildTree(undefined);
   }
 }

@@ -22,6 +22,8 @@ import { ResultsPageComponent } from '@pages/form-creator/results-page/results-p
 import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { NzTreeModule } from 'ng-zorro-antd/tree';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -47,6 +49,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     SharedModule,
     TranslatePipe,
     DragDropModule,
+    NzTreeViewModule,
+    NzTreeModule,
   ],
   providers: [],
   exports: [],
