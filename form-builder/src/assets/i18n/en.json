@@ -1,15 +1,10 @@
 {
-  "title": {
-    "dashboard": "Dashboard",
-    "newform" : "New Form",
-    "editform": "Edit Form"
-  },
   "components": {
     "CANNOT_BE_EMPTY": "Cannot be empty!",
     "CANNOT_BE_LOWER_THAN": "Cannot be lower than",
     "CHARACTER_COUNTER": "Character counter",
     "COMBOBOX": "COMBOBOX",
-    "COMPONENT_DESCRIPTION": "Description,",
+    "COMPONENT_DESCRIPTION": "Description",
     "COMPONENT_QUESTION": "Question",
     "DATE_FORMAT": "Date format",
     "DATE_FORMAT_PLACEHOLDER": "Date Format...",
@@ -52,6 +47,10 @@
     "TIME_PICKER": "TIME PICKER",
     "TOOLTIP_TEXT": "Tooltip text",
     "WEEK_NUMBERS?": "Show week numbers?",
+    "checkbox_group": {
+      "CHECKED?": "Checked?",
+      "DISABLED?": "Disabled?"
+    },
     "combobox": {
       "ADD_OPTION": "Add Option",
       "CHOICES_VALUES": "Choices/Values",
@@ -113,6 +112,12 @@
     "picture_input": {
       "CLICK_TO_UPLOAD": "Click to Upload",
       "MODEL_TITLE_PICTURE_INPUT": "Edit Picture Input Component Settings"
+    },
+    "radio_group": {
+      "CHOICES_OR_VALUES": "Choices or Values",
+      "OPTION_ALREADY": "Option already in the list",
+      "OPTION_ATLEAST": "Please record at least this amount of option",
+      "SHOW_AS_BUTTON": "Show as button?"
     },
     "range_picker": {
       "MODEL_TITLE_RANGE_PICKER": "Edit Range Picker Component Settings",
@@ -206,7 +211,6 @@
   },
   "steps": {
     "ANSWER": "Answer",
-    "RESULTS": "Results",
     "COMPONENTS": "Components",
     "FORM_INFO": "Form info"
   }

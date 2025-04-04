@@ -1,9 +1,4 @@
 {
-  "title": {
-    "dashboard": "Kezdőlap",
-    "newform" : "Új űrlap",
-    "editform": "Űrlap szerkesztése"
-  },
   "components": {
     "CANNOT_BE_EMPTY": "Nem lehet üres!",
     "CANNOT_BE_LOWER_THAN": "Nem lehet alacsonyabb, mint",
@@ -52,6 +47,10 @@
     "TIME_PICKER": "IDŐVÁLASZTÓ",
     "TOOLTIP_TEXT": "Súgó szöveg",
     "WEEK_NUMBERS?": "Hetek száma?",
+    "checkbox_group": {
+      "CHECKED?": "Ellenőrizve?",
+      "DISABLED?": "Letiltva?"
+    },
     "combobox": {
       "ADD_OPTION": "Lehetőség hozzáadása",
       "CHOICES_VALUES": "Lehetőségek/Értékek",
@@ -94,7 +93,7 @@
       "RESET": "Visszaállítás"
     },
     "number_field": {
-      "FORMAT_INPUT": "Bemenet formázása?",
+      "FORMAT_INPUT": "Bemenet formázása",
       "FORMAT_PATTERN": "Formátum minta - ezekhez használható a bemeneti szám:",
       "LARGER_THAN_SET_STEP_NUMBER": "Nem lehet nagyobb, mint (maximális szám) - (minimális szám)!",
       "MAX_NUMBER": "Maximális szám:",
@@ -113,6 +112,12 @@
     "picture_input": {
       "CLICK_TO_UPLOAD": "Kattintson a feltöltéshez",
       "MODEL_TITLE_PICTURE_INPUT": "Képbemeneti komponens beállításainak szerkesztése"
+    },
+    "radio_group": {
+      "CHOICES_OR_VALUES": "Lehetőségek és értékek",
+      "OPTION_ALREADY": "Az opció már a listában van",
+      "OPTION_ATLEAST": "Kérjük, legalább ennyi lehetőséget rögzítsen",
+      "SHOW_AS_BUTTON": "Mutasd gombként?"
     },
     "range_picker": {
       "MODEL_TITLE_RANGE_PICKER": "Tartományválasztó komponens beállításainak szerkesztése",
@@ -206,7 +211,6 @@
   },
   "steps": {
     "ANSWER": "Válasz",
-    "RESULTS" : "Eredmény",
     "COMPONENTS": "Komponensek",
     "FORM_INFO": "Űrlap információ"
   }

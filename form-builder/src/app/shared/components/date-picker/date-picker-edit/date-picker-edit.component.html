@@ -6,7 +6,7 @@
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
-        <div>Cannot be empty!</div>
+        <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
       }
     </ng-template>
   </nz-form-item>
@@ -92,7 +92,7 @@
     </nz-form-item>
     @if (getControlValue('showTime')) {
       <div>
-        <span>Time format:</span>
+        <span>"{{ 'components.date_picker.PLACEHOLDER_TIME_FORMAT' | translate }}":</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="timeFormatErrors">
             <input nz-input placeholder="{{ 'components.date_picker.PLACEHOLDER_TIME_FORMAT' | translate }}" formControlName="timeFormat" />
