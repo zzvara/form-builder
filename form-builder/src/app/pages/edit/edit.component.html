@@ -1,5 +1,5 @@
 <nz-layout>
-  <nz-sider nzWidth="300px" nzTheme="light" style="height: fit-content; position: sticky; top: 64px; padding-top: 20px">
+  <nz-sider nzWidth="300px" nzTheme="light" style="height: calc(100vh - 64px); position: sticky; top: 64px">
     <app-sidebar [sidebarData]="sideBarData" />
   </nz-sider>
   <nz-layout class="inner-layout">
@@ -29,7 +29,7 @@
               [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
               (cdkDropListDropped)="dropIntoSection($event)"
               class="element-list p-3"
-              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px"
+              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0"
               [nzBodyStyle]="getSectionStyle(edit.data)"
             >
               <ng-template #sectionTitle>
@@ -91,7 +91,7 @@
               class="element-box"
               cdkDrag
               [cdkDragData]="edit"
-              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px; border: 1px solid lightgray"
+              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; border: 1px solid lightgray"
               [formInput]="edit.data"
               [inlineEdit]="inlineEdit"
               (removeComponentEvent)="removeEditComponent(edit)"
@@ -102,4 +102,54 @@
       </div>
     </nz-content>
   </nz-layout>
+  <nz-sider nzWidth="300px" nzTheme="light" class="right-sider">
+    <h3>Components</h3>
+    <div class="items-container">
+      <div class="item">
+        <span>Alma1</span>
+      </div>
+      <div class="item">
+        <span>Alma2</span>
+      </div>
+      <div class="item">
+        <span>Alma3</span>
+      </div>
+      <div class="item">
+        <span>Alma4</span>
+      </div>
+      <div class="item">
+        <span>Alma5</span>
+      </div>
+      <div class="item">
+        <span>Alma6</span>
+      </div>
+      <div class="item">
+        <span>Alma7</span>
+      </div>
+      <div class="item">
+        <span>Alma8</span>
+      </div>
+      <div class="item">
+        <span>Alma9</span>
+      </div>
+      <div class="item">
+        <span>Alma10</span>
+      </div>
+      <div class="item">
+        <span>Alma11</span>
+      </div>
+      <div class="item">
+        <span>Alma12</span>
+      </div>
+      <div class="item">
+        <span>Alma13</span>
+      </div>
+      <div class="item">
+        <span>Alma14</span>
+      </div>
+      <div class="item">
+        <span>Alma15</span>
+      </div>
+    </div>
+  </nz-sider>
 </nz-layout>
