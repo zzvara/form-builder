@@ -15,6 +15,7 @@ import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
 import { NgStyleInterface } from "ng-zorro-antd/core/types";
 import { v4 as uuidv4 } from 'uuid';
+import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 @Component({
   selector: 'app-edit',
@@ -39,6 +40,8 @@ export class EditComponent implements OnInit, OnChanges {
 
   editList: EditList[] = [];
 
+  treeData: NzTreeNodeOptions[] = [];
+
   getSectionIds: () => string[] = () =>
     this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
   getAllFormInputs: () => FormInputData[] = () =>
@@ -60,6 +63,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.loadProject();
     this.initializeUndoRedo();
     console.log({ formInputs: this.getAllFormInputs() });
+    this.updateTreeData();
   }
 
   /**
@@ -90,6 +94,7 @@ export class EditComponent implements OnInit, OnChanges {
         this.editList = cloneDeep(project.editList);
         console.log('Project loaded (SAVE STATE)!');
         this.undoRedoService.saveState(this.editList);
+        this.updateTreeData();
       }
     }
   }
@@ -159,6 +164,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
 
     console.log({ sectionInputs: this.getAllFormInputs() });
+    this.updateTreeData();
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
@@ -175,13 +181,16 @@ export class EditComponent implements OnInit, OnChanges {
       newItem.data!.id = newItemId;
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
+      this.updateTreeData();
     } else if (instanceOfFormInputData(event.item.data)) {
       transferArrayItem(event.previousContainer.data as FormInputData[], event.container.data, event.previousIndex, event.currentIndex);
+      this.updateTreeData();
     } else {
       const transferredInput = event.item.data.data as FormInputData;
       transferredInput.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
+      this.updateTreeData();
     }
     console.log('Input components modified (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
@@ -204,12 +213,14 @@ export class EditComponent implements OnInit, OnChanges {
     this.editList = this.editList.filter((e) => e.id !== edit.id);
     console.log('Edit component removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
+    this.updateTreeData();
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
     console.log('Input component in section removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
+    this.updateTreeData();
   }
 
   getSectionInputStyle(sect: SectionList): {[p: string]: any} {
@@ -260,7 +271,76 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   onValueChanged<D extends InputData<T>, T>(event: D): void {
-    console.log('Input component changed/edited (SAVE STATE)!', event.id);
     this.undoRedoService.saveState(this.editList);
+  }
+
+  updateTreeData() {
+    this.treeData = this.editList.map(edit => {
+      if (this.instanceOfSectionList(edit.data)) {
+        const sectionNode = {
+          title: `Section [${edit.data.sectionId}]`,
+          key: edit.data.sectionId,
+          expanded: true,
+          isLeaf: false,
+          children: edit.data.sectionInputs.map(input => ({
+            title: input.title || input.type,
+            key: input.data?.id || uuidv4(),
+            isLeaf: true
+          }))
+        };
+        return sectionNode;
+      } else if (this.instanceOfFormInputData(edit.data)) {
+        return {
+          title: edit.data.title || edit.data.type,
+          key: edit.data.data?.id || uuidv4(),
+          isLeaf: true
+        };
+      }
+      return {
+        title: 'Unknown',
+        key: 'unknown',
+        isLeaf: true
+      };
+    });
+  }
+
+  onDrop(event: NzFormatEmitEvent): void {
+    const dragNode = event.dragNode!;
+    const node = event.node!;
+
+    if (dragNode && node) {
+      if (node.origin.children) {
+        const sectionId = node.origin.key;
+        const section = this.editList.find(edit =>
+          this.instanceOfSectionList(edit.data) && edit.data.sectionId === sectionId
+        );
+
+        if (section && this.instanceOfSectionList(section.data)) {
+          const newItemId = uuidv4();
+          const component = this.sideBarData[0].groupContents.find(c => c.type === dragNode.origin.key);
+          if (component) {
+            const newItem: FormInputData = cloneDeep(component);
+            newItem.data = { ...newItem.data, id: newItemId, sectionId: sectionId };
+            section.data.sectionInputs.push(newItem);
+            this.undoRedoService.saveState(this.editList);
+            this.updateTreeData();
+          }
+        }
+      } else {
+        const component = this.sideBarData[0].groupContents.find(c => c.type === dragNode.origin.key);
+        if (component) {
+          const newItemId = uuidv4();
+          const newItem: FormInputData = cloneDeep(component);
+          newItem.data = { ...newItem.data, id: newItemId };
+          const newInputEdit: EditList = {
+            id: newItemId,
+            data: newItem,
+          };
+          this.editList.push(newInputEdit);
+          this.undoRedoService.saveState(this.editList);
+          this.updateTreeData();
+        }
+      }
+    }
   }
 }

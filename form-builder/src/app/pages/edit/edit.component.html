@@ -104,52 +104,12 @@
   </nz-layout>
   <nz-sider nzWidth="300px" nzTheme="light" class="right-sider">
     <h3>Components</h3>
-    <div class="items-container">
-      <div class="item">
-        <span>Alma1</span>
-      </div>
-      <div class="item">
-        <span>Alma2</span>
-      </div>
-      <div class="item">
-        <span>Alma3</span>
-      </div>
-      <div class="item">
-        <span>Alma4</span>
-      </div>
-      <div class="item">
-        <span>Alma5</span>
-      </div>
-      <div class="item">
-        <span>Alma6</span>
-      </div>
-      <div class="item">
-        <span>Alma7</span>
-      </div>
-      <div class="item">
-        <span>Alma8</span>
-      </div>
-      <div class="item">
-        <span>Alma9</span>
-      </div>
-      <div class="item">
-        <span>Alma10</span>
-      </div>
-      <div class="item">
-        <span>Alma11</span>
-      </div>
-      <div class="item">
-        <span>Alma12</span>
-      </div>
-      <div class="item">
-        <span>Alma13</span>
-      </div>
-      <div class="item">
-        <span>Alma14</span>
-      </div>
-      <div class="item">
-        <span>Alma15</span>
-      </div>
-    </div>
+    <nz-tree
+      class="draggable-tree"
+      [nzData]="treeData"
+      [nzBlockNode]="true"
+      [nzDraggable]="true"
+      (nzOnDrop)="onDrop($event)"
+    ></nz-tree>
   </nz-sider>
 </nz-layout>

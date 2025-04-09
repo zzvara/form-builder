@@ -14,6 +14,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSwitchModule } from "ng-zorro-antd/switch";
+import { NzTreeModule } from 'ng-zorro-antd/tree';
 
 @NgModule({
   declarations: [EditComponent],
@@ -30,7 +31,8 @@ import { NzSwitchModule } from "ng-zorro-antd/switch";
     NzPopconfirmModule,
     TranslatePipe,
     NzSwitchModule,
-    FormsModule
+    FormsModule,
+    NzTreeModule
   ],
   providers: [SectionComponent],
   exports: [NzIconModule, EditComponent],
