@@ -4,7 +4,7 @@
 @breakpoint-small: 320px;
 
 nz-layout {
-  background-color: transparent;
+  background-color: @transparent;
   display: flex;
   flex-direction: column;
   padding: 0 30px;
@@ -49,13 +49,13 @@ nz-layout {
 
 .error-message {
   margin-top: 5px;
-  color: red;
+  color: @accent-danger;
   font-size: 12px;
   font-weight: bold;
 }
 
 .input-error {
-  border: 1px solid red;
+  border: 1px solid @accent-danger;
 }
 
 .same_line {

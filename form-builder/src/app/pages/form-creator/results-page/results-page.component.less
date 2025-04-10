@@ -3,7 +3,7 @@
 @breakpoint-small: 320px;
 
 nz-layout {
-  background-color: transparent;
+  background-color: @transparent;
   display: flex;
   width: 100%;
   padding: 0 30px;
@@ -48,13 +48,13 @@ nz-layout {
 
 .error-message {
   margin-top: 5px;
-  color: red;
+  color: @accent-danger;
   font-size: 12px;
   font-weight: bold;
 }
 
 .input-error {
-  border: 1px solid red;
+  border: 1px solid @accent-danger;
 }
 
 .same_line {
@@ -77,8 +77,8 @@ nz-layout {
   word-break: break-word;
   font-family: monospace;
   padding: 10px;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
+  background-color: @background-light;
+  border: 1px solid @border-light;
   border-radius: 5px;
 }
 

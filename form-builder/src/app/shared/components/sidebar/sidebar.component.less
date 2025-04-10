@@ -1,4 +1,3 @@
-// @todo Built-in colors and such.
 section {
   overflow-y: scroll;
   height: 75vh; // @todo Is this responsive enough for mobile resolution as well?
@@ -7,7 +6,7 @@ section {
 .sticky-header {
   position: sticky;
   top: 0;
-  background: white;
+  background: @background-white;
   z-index: 10;
 }
 
@@ -16,5 +15,5 @@ section {
 }
 
 .clear-icon:hover {
-  color: red;
+  color: @accent-danger;
 }
