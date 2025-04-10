@@ -9,7 +9,7 @@
   style="height: 100%"
 >
   <form #inputHolderForm="ngForm" nz-form style="width: 100%">
-    <span>Question:</span>
+      <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
     <nz-form-item [ngStyle]="!inlineEdit.enabled ? { 'border-bottom': '1px solid lightgray' } : {}" style="margin-bottom: 10px">
       <nz-form-control nzErrorTip="Input question is mandatory!">
         <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
@@ -51,6 +51,7 @@
   <span style="color: red">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
 </nz-card>
 <ng-template #titleTemplate>
+
   <span>{{ formInput.title }}</span>
   @if (inputHolderForm.invalid) {
     <span
