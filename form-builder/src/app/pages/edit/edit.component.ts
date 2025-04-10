@@ -15,7 +15,17 @@ import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
 import { NgStyleInterface } from "ng-zorro-antd/core/types";
 import { v4 as uuidv4 } from 'uuid';
-import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
+
+interface TreeNode {
+  title: string;
+  key: string;
+  expanded?: boolean;
+  children?: TreeNode[];
+  parentKey?: string;
+  isLeaf?: boolean;
+  origin?: FormInputData | SectionList;
+}
 
 @Component({
   selector: 'app-edit',
@@ -40,7 +50,7 @@ export class EditComponent implements OnInit, OnChanges {
 
   editList: EditList[] = [];
 
-  treeData: NzTreeNodeOptions[] = [];
+  treeData: TreeNode[] = [];
 
   getSectionIds: () => string[] = () =>
     this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
@@ -181,20 +191,18 @@ export class EditComponent implements OnInit, OnChanges {
       newItem.data!.id = newItemId;
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
-      this.updateTreeData();
     } else if (instanceOfFormInputData(event.item.data)) {
       transferArrayItem(event.previousContainer.data as FormInputData[], event.container.data, event.previousIndex, event.currentIndex);
-      this.updateTreeData();
     } else {
       const transferredInput = event.item.data.data as FormInputData;
       transferredInput.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
-      this.updateTreeData();
     }
+
     console.log('Input components modified (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
-
+    this.updateTreeData();
     console.log({ sectionInputs: this.getAllFormInputs() });
   }
 
@@ -275,72 +283,117 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   updateTreeData() {
-    this.treeData = this.editList.map(edit => {
-      if (this.instanceOfSectionList(edit.data)) {
-        const sectionNode = {
-          title: `Section [${edit.data.sectionId}]`,
-          key: edit.data.sectionId,
-          expanded: true,
-          isLeaf: false,
-          children: edit.data.sectionInputs.map(input => ({
-            title: input.title || input.type,
-            key: input.data?.id || uuidv4(),
-            isLeaf: true
-          }))
-        };
-        return sectionNode;
-      } else if (this.instanceOfFormInputData(edit.data)) {
-        return {
-          title: edit.data.title || edit.data.type,
-          key: edit.data.data?.id || uuidv4(),
-          isLeaf: true
-        };
-      }
-      return {
-        title: 'Unknown',
-        key: 'unknown',
-        isLeaf: true
-      };
-    });
+    this.treeData = this.editList
+      .map((edit, index) => {
+        if (this.instanceOfSectionList(edit.data)) {
+          const section = edit.data as SectionList;
+          return {
+            title: `Section ${index + 1}`,
+            key: section.sectionId,
+            expanded: true,
+            children: section.sectionInputs.map((input, inputIndex) => ({
+              title: input.title || `Item`,
+              key: input.data?.id || '',
+              parentKey: section.sectionId,
+              isLeaf: true,
+              origin: input,
+              index: inputIndex
+            })).sort((a, b) => a.index - b.index)
+          };
+        } else if (this.instanceOfFormInputData(edit.data)) {
+          return {
+            title: edit.data.title || `Item ${index + 1}`,
+            key: edit.id,
+            isLeaf: true,
+            origin: edit.data
+          };
+        }
+        return null;
+      })
+      .filter((node): node is NonNullable<typeof node> => node !== null);
+
+    console.log('Updated tree data:', this.treeData);
   }
 
   onDrop(event: NzFormatEmitEvent): void {
-    const dragNode = event.dragNode!;
-    const node = event.node!;
+    if (!event.dragNode || !event.node) {
+      return;
+    }
 
-    if (dragNode && node) {
-      if (node.origin.children) {
-        const sectionId = node.origin.key;
-        const section = this.editList.find(edit =>
-          this.instanceOfSectionList(edit.data) && edit.data.sectionId === sectionId
+    const dragNode = event.dragNode;
+    const node = event.node;
+
+    // Check if we're dealing with section items
+    if (dragNode.origin?.['parentKey'] && node.origin?.['parentKey'] &&
+        dragNode.origin['parentKey'] === node.origin['parentKey']) {
+      // Both items are in the same section
+      const sectionId = dragNode.origin['parentKey'];
+      const section = this.editList.find(edit =>
+        this.instanceOfSectionList(edit.data) && edit.data.sectionId === sectionId
+      );
+
+      if (section && this.instanceOfSectionList(section.data)) {
+        // Find indices within the section using the direct IDs
+        const dragIndex = section.data.sectionInputs.findIndex(input =>
+          input.data?.id === dragNode.key
+        );
+        const dropIndex = section.data.sectionInputs.findIndex(input =>
+          input.data?.id === node.key
         );
 
-        if (section && this.instanceOfSectionList(section.data)) {
-          const newItemId = uuidv4();
-          const component = this.sideBarData[0].groupContents.find(c => c.type === dragNode.origin.key);
-          if (component) {
-            const newItem: FormInputData = cloneDeep(component);
-            newItem.data = { ...newItem.data, id: newItemId, sectionId: sectionId };
-            section.data.sectionInputs.push(newItem);
-            this.undoRedoService.saveState(this.editList);
-            this.updateTreeData();
-          }
-        }
-      } else {
-        const component = this.sideBarData[0].groupContents.find(c => c.type === dragNode.origin.key);
-        if (component) {
-          const newItemId = uuidv4();
-          const newItem: FormInputData = cloneDeep(component);
-          newItem.data = { ...newItem.data, id: newItemId };
-          const newInputEdit: EditList = {
-            id: newItemId,
-            data: newItem,
-          };
-          this.editList.push(newInputEdit);
+        if (dragIndex > -1 && dropIndex > -1) {
+          // Reorder within section
+          moveItemInArray(section.data.sectionInputs, dragIndex, dropIndex);
           this.undoRedoService.saveState(this.editList);
           this.updateTreeData();
+          return;
         }
       }
+    }
+
+    // Ha szekcióból húzunk ki elemet
+    if (dragNode.origin?.['parentKey']) {
+      const sectionId = dragNode.origin['parentKey'];
+      const section = this.editList.find(edit =>
+        this.instanceOfSectionList(edit.data) && edit.data.sectionId === sectionId
+      );
+
+      if (section && this.instanceOfSectionList(section.data)) {
+        const dragIndex = section.data.sectionInputs.findIndex(input =>
+          input.data?.id === dragNode.key
+        );
+
+        if (dragIndex > -1) {
+          const [movedItem] = section.data.sectionInputs.splice(dragIndex, 1);
+          const transferredInput: EditList = {
+            id: movedItem.data!.id!,
+            data: movedItem
+          };
+
+          const dropIndex = this.editList.findIndex(edit =>
+            edit.id === node.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === node.key)
+          );
+
+          this.editList.splice(dropIndex, 0, transferredInput);
+          this.undoRedoService.saveState(this.editList);
+          this.updateTreeData();
+          return;
+        }
+      }
+    }
+
+    // Handle top-level reordering
+    const dragIndex = this.editList.findIndex(edit =>
+      edit.id === dragNode.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === dragNode.key)
+    );
+    const dropIndex = this.editList.findIndex(edit =>
+      edit.id === node.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === node.key)
+    );
+
+    if (dragIndex > -1 && dropIndex > -1) {
+      moveItemInArray(this.editList, dragIndex, dropIndex);
+      this.undoRedoService.saveState(this.editList);
+      this.updateTreeData();
     }
   }
 }
