@@ -1,8 +1,8 @@
 <nz-layout>
   <div>
     <form nz-form (ngSubmit)="submitForm()" [formGroup]="form">
-      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>
-        {{ 'form.FORM_TITLE' | translate }}
+      <nz-form-label h1 [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>
+        <h2>{{ 'form.FORM_TITLE' | translate }}</h2>
         <i
           nz-icon
           nzType="question-circle"
@@ -30,7 +30,7 @@
       </nz-form-control>
 
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
-        {{ 'form.FORM_DESCRIPTION' | translate }} {{ 'form.OPTIONAL' | translate }}
+        <h3> {{ 'form.FORM_DESCRIPTION' | translate }} {{ 'form.OPTIONAL' | translate }}</h3>
         <i
           nz-icon
           nzType="question-circle"
