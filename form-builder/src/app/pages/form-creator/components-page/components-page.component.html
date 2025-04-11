@@ -9,18 +9,22 @@
       style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; background: white; border-top: 1px solid lightgray"
     >
       <div nz-col nzSpan="22"></div>
-      <div nz-row nzJustify="end" nzAlign="middle" style="width: 100%">
-        <div style="margin-right: 20px">
-          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
-        </div>
-
-        <div style="margin-right: 20px">
-          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
-        </div>
+      <div nz-row nzJustify="start" nzAlign="middle" style="width: 100%">
+        <button
+          nz-button
+          nzType="primary"
+          type="submit"
+          (click)="nextPage()"
+          style="margin-left: 8px"
+          [disabled]="isNextButtonDisabled"
+          nz-tooltip="{{ 'components.NEXT_TOOLTIP' | translate }}"
+        >
+          {{ 'general.NEXT' | translate }}
+        </button>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
-            {{ 'components.PREVIOUS_VERSION' | translate }}
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
+            {{ 'components.NEXT_VERSION' | translate }}
           </button>
         </div>
 
@@ -38,22 +42,18 @@
         </div>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
-            {{ 'components.NEXT_VERSION' | translate }}
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
+            {{ 'components.PREVIOUS_VERSION' | translate }}
           </button>
         </div>
-        <!-- @todo Generalize margins. -->
-        <button
-          nz-button
-          nzType="primary"
-          type="submit"
-          (click)="nextPage()"
-          style="margin-left: 8px"
-          [disabled]="isNextButtonDisabled"
-          nz-tooltip="{{ 'components.NEXT_TOOLTIP' | translate }}"
-        >
-          {{ 'general.NEXT' | translate }}
-        </button>
+
+        <div style="margin-right: 20px">
+          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
+        </div>
+
+        <div style="margin-right: 20px">
+          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
+        </div>
       </div>
     </div>
   </div>
