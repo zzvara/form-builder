@@ -316,33 +316,42 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   onDrop(event: NzFormatEmitEvent): void {
-    if (!event.dragNode || !event.node) {
+    const dragNode = event.dragNode;
+    const dropNode = event.node;
+    const dropPos = (event.event as any)?.pos;
+    console.log('pos:', (event as any).pos);
+
+    if (!dragNode || !dropNode) {
       return;
     }
 
-    const dragNode = event.dragNode;
-    const node = event.node;
+    if (dragNode.origin?.['parentKey'] && dropNode.origin?.['parentKey'] &&
+        dragNode.origin['parentKey'] === dropNode.origin['parentKey']) {
 
-    // Check if we're dealing with section items
-    if (dragNode.origin?.['parentKey'] && node.origin?.['parentKey'] &&
-        dragNode.origin['parentKey'] === node.origin['parentKey']) {
-      // Both items are in the same section
       const sectionId = dragNode.origin['parentKey'];
       const section = this.editList.find(edit =>
         this.instanceOfSectionList(edit.data) && edit.data.sectionId === sectionId
       );
 
       if (section && this.instanceOfSectionList(section.data)) {
-        // Find indices within the section using the direct IDs
         const dragIndex = section.data.sectionInputs.findIndex(input =>
           input.data?.id === dragNode.key
         );
-        const dropIndex = section.data.sectionInputs.findIndex(input =>
-          input.data?.id === node.key
+        let dropIndex = section.data.sectionInputs.findIndex(input =>
+          input.data?.id === dropNode.key
         );
 
+        if (dragIndex === dropIndex) {
+          return;
+        }
+
+        if (dropPos === -1) {
+          dropIndex = dropIndex;
+        } else if (dropPos === 1) {
+          dropIndex = dropIndex + 1;
+        }
+
         if (dragIndex > -1 && dropIndex > -1) {
-          // Reorder within section
           moveItemInArray(section.data.sectionInputs, dragIndex, dropIndex);
           this.undoRedoService.saveState(this.editList);
           this.updateTreeData();
@@ -351,7 +360,6 @@ export class EditComponent implements OnInit, OnChanges {
       }
     }
 
-    // Ha szekcióból húzunk ki elemet
     if (dragNode.origin?.['parentKey']) {
       const sectionId = dragNode.origin['parentKey'];
       const section = this.editList.find(edit =>
@@ -370,9 +378,19 @@ export class EditComponent implements OnInit, OnChanges {
             data: movedItem
           };
 
-          const dropIndex = this.editList.findIndex(edit =>
-            edit.id === node.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === node.key)
+          let dropIndex = this.editList.findIndex(edit =>
+            edit.id === dropNode.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === dropNode.key)
           );
+
+          if (dragIndex === dropIndex) {
+            return;
+          }
+
+          if (dropPos === -1) {
+            dropIndex = dropIndex;
+          } else if (dropPos === 1) {
+            dropIndex = dropIndex + 1;
+          }
 
           this.editList.splice(dropIndex, 0, transferredInput);
           this.undoRedoService.saveState(this.editList);
@@ -382,13 +400,22 @@ export class EditComponent implements OnInit, OnChanges {
       }
     }
 
-    // Handle top-level reordering
     const dragIndex = this.editList.findIndex(edit =>
       edit.id === dragNode.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === dragNode.key)
     );
-    const dropIndex = this.editList.findIndex(edit =>
-      edit.id === node.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === node.key)
+    let dropIndex = this.editList.findIndex(edit =>
+      edit.id === dropNode.key || (this.instanceOfSectionList(edit.data) && edit.data.sectionId === dropNode.key)
     );
+
+    if (dragIndex === dropIndex) {
+      return;
+    }
+
+    if (dropPos === -1) {
+      dropIndex = dropIndex;
+    } else if (dropPos === 1) {
+      dropIndex = dropIndex + 1;
+    }
 
     if (dragIndex > -1 && dropIndex > -1) {
       moveItemInArray(this.editList, dragIndex, dropIndex);
