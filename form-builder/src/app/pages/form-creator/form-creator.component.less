@@ -1,8 +1,5 @@
-@import '../../../../src/colors.less';
-
-@breakpoint-tablet: 1024px;
-@breakpoint-mobile: 768px;
-@breakpoint-small: 320px;
+@import '../../../breakpoints.less';
+@import '../../../colors.less';
 
 nz-layout {
   margin-top: 100px;
@@ -22,7 +19,6 @@ nz-steps {
   padding-right: 40px;
 }
 
-// @todo Could we use https://ng.ant.design/components/grid/en instead of creating our own breakpoints?
 @media (max-width: @breakpoint-tablet) {
   nz-layout {
     margin-top: 150px;
