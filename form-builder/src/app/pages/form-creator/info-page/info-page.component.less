@@ -2,6 +2,7 @@
 @breakpoint-tablet: 1024px;
 @breakpoint-mobile: 768px;
 @breakpoint-small: 320px;
+@border-dark: #444;
 
 nz-layout {
   background-color: transparent;
@@ -25,6 +26,7 @@ nz-layout {
   font-size: 20px;
   border-radius: 10px;
   border-width: 2px;
+  border-color: @border-dark;
   margin-top: -5px;
   width: 100%;
   box-sizing: border-box;
@@ -55,7 +57,7 @@ nz-layout {
 }
 
 .input-error {
-  border: 1px solid red;
+  border: 1px solid red !important;
 }
 
 .same_line {
@@ -94,6 +96,7 @@ nz-layout {
   #description {
     font-size: 16px;
   }
+
   .formelement {
     margin-bottom: 15px;
   }
