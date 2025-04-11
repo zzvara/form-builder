@@ -2,7 +2,7 @@
   <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="{{ 'components.PLACEHOLDER_QUESTION' | translate }}" formControlName="questionValue" />
+      <input nz-input formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -17,7 +17,6 @@
       <textarea
         nz-input
         nzAutosize
-        placeholder="{{ 'components.PLACEHOLDER_DESCRIPTION' | translate }}"
         formControlName="descriptionValue"
       ></textarea>
     </nz-form-control>
@@ -26,7 +25,7 @@
   <span>{{ 'components.SET_PLACEHOLDER_VALUE' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
-      <input nz-input placeholder="{{ 'components.PLACEHOLDER' | translate }}" formControlName="placeholderValue" />
+      <input nz-input formControlName="placeholderValue" />
     </nz-form-control>
   </nz-form-item>
 </form>

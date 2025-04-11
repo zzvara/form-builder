@@ -14,7 +14,6 @@ export abstract class AbstractFieldLikeEditForm<T, D extends FieldLikeInputData<
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
-      placeholderValue: new FormControl(),
       required: new FormControl(false, {
         updateOn: UpdateOnStrategy.CHANGE,
       }),

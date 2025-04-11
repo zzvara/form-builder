@@ -28,7 +28,6 @@
           <nz-select
             [(ngModel)]="currentVersionNum"
             (ngModelChange)="revertToVersion($event)"
-            nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
             style="margin-right: 8px"
           >
             @for (version of projectHistory; track $index) {

@@ -2,7 +2,7 @@
   <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="{{ 'components.PLACEHOLDER_QUESTION' | translate }}" formControlName="questionValue" />
+      <input nz-input zformControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -14,14 +14,14 @@
   <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
-      <textarea nz-input nzAutosize placeholder="Description" formControlName="descriptionValue"></textarea>
+      <textarea nz-input nzAutosize  formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
   <span>{{ 'components.SET_PLACEHOLDER_VALUE' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
-      <input nz-input placeholder="{{ 'components.PLACEHOLDER' | translate }}" formControlName="placeholderValue" />
+      <input nz-input  formControlName="placeholderValue" />
     </nz-form-control>
   </nz-form-item>
 
@@ -37,7 +37,6 @@
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <nz-date-picker
-              nzPlaceHolder="{{ 'components.SELECT_DATE' | translate }}"
               formControlName="defaultValue"
               [nzMode]="getControlValue('mode')"
               [nzFormat]="getFullFormat"
@@ -62,7 +61,7 @@
   <span>{{ 'components.DATE_PICKER_MODE' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
-      <nz-select formControlName="mode" nzPlaceHolder="Mode">
+      <nz-select formControlName="mode">
         @for (item of datePickerModes; track item.mode) {
           <nz-option [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
         }
@@ -73,7 +72,7 @@
   <span>{{ 'components.DATE_FORMAT' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="dateFormatErrors">
-      <input nz-input placeholder="Date format" formControlName="dateFormat" />
+      <input nz-input formControlName="dateFormat" />
     </nz-form-control>
     <ng-template #dateFormatErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -95,7 +94,7 @@
         <span>Time format:</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="timeFormatErrors">
-            <input nz-input placeholder="{{ 'components.date_picker.PLACEHOLDER_TIME_FORMAT' | translate }}" formControlName="timeFormat" />
+            <input nz-input formControlName="timeFormat" />
           </nz-form-control>
           <ng-template #timeFormatErrors let-control>
             @if (hasErrors(control, 'required')) {
@@ -132,7 +131,7 @@
         <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-            <input nz-input formControlName="requiredMessage" placeholder="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}" />
+            <input nz-input formControlName="requiredMessage" />
           </nz-form-control>
           <ng-template #requiredErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
@@ -154,7 +153,6 @@
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minDateErrorMessageTemplate">
             <nz-date-picker
-              nzPlaceHolder="{{ 'components.date_picker.SELECT_MIN_DATE' | translate }}"
               formControlName="minDateValue"
               [nzMode]="getControlValue('mode')"
               [nzFormat]="getFullFormat"
@@ -189,7 +187,6 @@
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
             <nz-date-picker
-              nzPlaceHolder="{{ 'components.date_picker.SELECT_MAX_DATE' | translate }}"
               formControlName="maxDateValue"
               [nzMode]="getControlValue('mode')"
               [nzFormat]="getFullFormat"
@@ -225,7 +222,7 @@
         <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
-            <input nz-input formControlName="tooltipText" placeholder="{{ 'components.TOOLTIP_TEXT' | translate }}" />
+            <input nz-input formControlName="tooltipText" />
           </nz-form-control>
           <ng-template #tooltipTextErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {

@@ -14,7 +14,6 @@
       [nzShowWeekNumber]="data.showWeekNumber"
       [nzShowToday]="true"
       [disabled]="!inlineEdit.enabled"
-      [nzPlaceHolder]="getPlaceholder()"
       [(ngModel)]="data.defaultValue"
       (ngModelChange)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
