@@ -2,35 +2,32 @@
   <div class="header">
     <div>
       @if (headerOptions.includes(options.HOME)) {
-      <span (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline"></span>
+        <span (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline"></span>
       }
       @if (headerOptions.includes(options.UNDO)) {
-      <span (click)="handleUndo()" nz-icon nzType="rollback" nzTheme="outline"></span>
+        <span (click)="handleUndo()" nz-icon nzType="rollback" nzTheme="outline"></span>
       }
       @if (headerOptions.includes(options.SAVE)) {
-      <span (click)="handleSave()" nz-icon nzType="save" nzTheme="outline"></span>
+        <span (click)="handleSave()" nz-icon nzType="save" nzTheme="outline"></span>
       }
       @if (headerOptions.includes(options.SIDEBAR)) {
-      <span [ngClass]="activeOptions.includes(options.SIDEBAR) ? 'is-active' : ''"
-        (click)="changeMenuItemState(options.SIDEBAR)" nz-icon nzType="menu" nzTheme="outline"></span>
+        <span
+          [ngClass]="activeOptions.includes(options.SIDEBAR) ? 'is-active' : ''"
+          (click)="changeMenuItemState(options.SIDEBAR)"
+          nz-icon nzType="menu" nzTheme="outline">
+        </span>
       }
       @if (headerOptions.includes(options.UPLOAD_JSON)) {
-      <span>
-        <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
-        <span (click)="fileInput.click()" nz-icon nzType="upload" nzTheme="outline"></span>
-      </span>
+        <span>
+          <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
+          <span (click)="fileInput.click()" nz-icon nzType="upload" nzTheme="outline"></span>
+        </span>
       }
     </div>
     <div>
-      <div class="language-switcher">
-        <span (click)="setLanguage('hu')">
-          HU
-        </span>
-        <span class="separator">|</span>
-        <span (click)="setLanguage('en')">
-          EN
-        </span>
-      </div>
+      <button nz-button nzType="default" nzSize="large" (click)="setLanguage(currentLanguage === 'hu' ? 'en' : 'hu')">
+        {{ currentLanguage === 'en' ? 'Magyar' : 'English' }}
+      </button>
     </div>
     <h1>{{ 'general.FORM_BUILDER' | translate }}</h1>
   </div>
