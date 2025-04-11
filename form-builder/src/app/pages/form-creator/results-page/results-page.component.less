@@ -81,6 +81,16 @@ nz-layout {
   border-radius: 5px;
 }
 
+.button-group {
+  display: flex;
+  gap: 16px; // <-- Gombok közötti távolság nagyobb lett
+  align-items: center;
+}
+
+#footerdiv {
+  margin-top: 30px; // <-- Gombcsoport felső távolság, opcionális
+}
+
 @media (max-width: @breakpoint-tablet) {
   .formelement {
     margin-bottom: 20px;
@@ -145,6 +155,7 @@ nz-layout {
     gap: 10px;
     align-items: stretch;
   }
+
   .saveBtn {
     order: 3;
     width: 100%;
