@@ -1,3 +1,5 @@
+@import '../../../../colors.less';
+
 .hover-color(@color) {
   &:hover {
     color: @color;
@@ -6,11 +8,11 @@
 
 .edit-icon {
   margin-right: 25px;
-  .hover-color(blue);
+  .hover-color(@accent-info);
 }
 
 .delete-icon {
-  .hover-color(red);
+  .hover-color(@accent-danger);
 }
 
 tr {
