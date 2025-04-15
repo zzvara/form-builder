@@ -1,8 +1,10 @@
 {
   "components": {
+    "BASIC_INPUTS": "Alap bemenetek",
     "CANNOT_BE_EMPTY": "Nem lehet üres!",
     "CANNOT_BE_LOWER_THAN": "Nem lehet alacsonyabb, mint",
     "CHARACTER_COUNTER": "Karakter számláló",
+    "CHECKBOX_GROUP": "JELÖLŐNÉGYZET CSOPORT",
     "COMBOBOX": "KOMBINÁLT LISTA",
     "COMPONENT_DESCRIPTION": "Leírás",
     "COMPONENT_QUESTION": "Kérdés",
@@ -33,8 +35,10 @@
     "PLACEHOLDER_TIME_FORMAT": "Időformátum",
     "PREVIOUS_VERSION": "Előző verzió",
     "PROVIDE_TOOLTIP": "Meg kell adni egy súgó üzenetet!",
+    "RADIO_GROUP": "RÁDIÓCSOPORT",
     "RANGE_PICKER": "TARTOMÁNYVÁLASZTÓ",
     "SECTION": "SZEKCIÓ",
+    "SECTIONS": "Szekciók",
     "SELECT_DATE": "Dátum kiválasztása",
     "SELECT_VERSION": "Verzió kiválasztása",
     "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",

@@ -1,8 +1,10 @@
 {
   "components": {
+    "BASIC_INPUTS": "Basic inputs",
     "CANNOT_BE_EMPTY": "Cannot be empty!",
     "CANNOT_BE_LOWER_THAN": "Cannot be lower than",
     "CHARACTER_COUNTER": "Character counter",
+    "CHECKBOX GROUP": "CHECKBOX GROUP",
     "COMBOBOX": "COMBOBOX",
     "COMPONENT_DESCRIPTION": "Description",
     "COMPONENT_QUESTION": "Question",
@@ -33,8 +35,10 @@
     "PLACEHOLDER_TIME_FORMAT": "Time format",
     "PREVIOUS_VERSION": "Previous Version",
     "PROVIDE_TOOLTIP": "Must provide a tooltip message!",
+    "RADIO GROUP": "RADIO GROUP",
     "RANGE_PICKER": "RANGE PICKER",
     "SECTION": "SECTION",
+    "SECTIONS": "Sections",
     "SELECT_DATE": "Select Date",
     "SELECT_VERSION": "Select Version",
     "SET_DEFAULT_VALUE": "Set default value",
