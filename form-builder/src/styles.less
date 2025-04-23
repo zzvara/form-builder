@@ -1,3 +1,60 @@
 @import 'theme.less';
+@import 'breakpoints.less';
+@import 'colors.less';
 
 /* You can add global styles to this file, and also import other style files */
+
+@h1-size: 44px;
+@h2-size: 36px;
+@h3-size: 28px;
+@h4-size: 22px;
+@body-size: 18px;
+@small-size: 15px;
+
+@bold: bold;
+@regular: normal;
+
+h1 {
+  font-size: @h1-size;
+  font-weight: @bold;
+  color: @text-color;
+}
+
+h2 {
+  font-size: @h2-size;
+  font-weight: @bold;
+  color: @text-color;
+}
+
+h3 {
+  font-size: @h3-size;
+  font-weight: @bold;
+  color: @text-color;
+}
+
+h4 {
+  font-size: @h4-size;
+  font-weight: @bold;
+  color: @text-color;
+}
+
+
+
+
+@media (max-width: 768px) {
+    @h1-size: 36px;
+    @h2-size: 30px;
+    @h3-size: 24px;
+    @h4-size: 20px;
+    @body-size: 16px;
+    @small-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    @h1-size: 32px;
+    @h2-size: 28px;
+    @h3-size: 22px;
+    @h4-size: 18px;
+    @body-size: 14px;
+    @small-size: 12px;
+  }

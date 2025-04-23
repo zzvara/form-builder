@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '@services/header/header.service';
 import { JsonService } from '@services/json.service';
 import { Subscription } from 'rxjs';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   activeOptions: MenuOption[] = [];
   contextActions: ContextAction[] = [];
   options = MenuOption;
+  currentLanguage: string = 'en';
   private optionsSub?: Subscription;
   private actionsSub?: Subscription;
 
@@ -29,7 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.translate.use(localStorage.getItem('language') || 'en');
+    this.currentLanguage = localStorage.getItem('language') || 'en';
+    this.translate.use(this.currentLanguage);
     this.jsonService.clearJsonData();
     this.optionsSub = this.headerService
       .getOptions()
@@ -89,6 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   setLanguage(lang: string): void {
+    this.currentLanguage = lang;
     this.translate.use(lang);
     localStorage.setItem('language', lang);
   }

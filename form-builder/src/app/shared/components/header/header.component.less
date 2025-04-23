@@ -1,6 +1,7 @@
-// @todo Built-in color galore.
+@import '../../../../colors.less';
+
 nz-header {
-  background-color: #908d8d;
+  background-color: @gray-dark;
   padding: 0 5rem;
   position: fixed;
   width: 100%;
@@ -12,33 +13,58 @@ nz-header {
   justify-content: space-between;
 
   > h1 {
-    color: #fff;
+    color: @white-text;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
   }
 
-  > div {
+  >div {
     font-size: 2rem;
 
-    > span {
+    >span {
       cursor: pointer;
     }
   }
 
-  > div :not(:last-child) {
+  >div :not(:last-child) {
     margin-right: 1rem;
   }
 }
 
 .is-active {
-  color: #fff;
+  color: @white-text;
 }
 
 .setting {
-  background-color: #908d8d;
+  background-color: @gray-dark;
   color: black;
 }
+
 .language {
-  background-color: white;
+  background-color: @background-white;
+}
+
+.language-switcher {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0px;
+
+  span {
+    padding: 0px 0px;
+    transition: 0.3s;
+
+    &:hover {
+      color: #007bff;
+    }
+  }
+
+  .separator {
+    padding: 0 0px;
+    font-weight: normal;
+    color: #666;
+  }
 }

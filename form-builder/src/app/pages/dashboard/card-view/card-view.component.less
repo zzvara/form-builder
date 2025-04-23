@@ -1,12 +1,14 @@
+@import '../../../../colors.less';
+
 :host {
   display: block;
   overflow-x: hidden;
-  overflow-y: hidden; 
+  overflow-y: hidden;
 }
 
 * {
   overflow-x: hidden;
-  overflow-y: hidden; 
+  overflow-y: hidden;
 }
 
 .hover-color(@color) {
@@ -23,7 +25,7 @@ p {
 
 nz-card {
   min-height: 12rem;
-  
+
   span {
     cursor: pointer;
     font-size: 1.2rem;
@@ -38,16 +40,42 @@ nz-card {
 .create-card {
   cursor: pointer;
   font-size: 4rem;
-  color: grey;
+  color: @gray;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .edit-icon {
-  .hover-color(blue);
+  .hover-color(@accent-info);
 }
 
 .delete-icon {
-  .hover-color(red);
+  .hover-color(@accent-danger);
+}
+
+.description {
+  min-height: 3rem;
+}
+
+.card-footer {
+  p {
+    margin: 0;
+    text-align: left;
+  }
+}
+
+.project-card {
+  min-height: 14rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-header {
+  min-height: 0rem;
+}
+
+.card-footer {
+  margin-top: auto;
 }

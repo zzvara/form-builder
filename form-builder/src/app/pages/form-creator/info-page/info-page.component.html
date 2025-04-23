@@ -17,7 +17,6 @@
           type="text"
           id="title"
           formControlName="title"
-          placeholder="{{ 'form.PLACEHOLDER_TITLE' | translate }}"
           (change)="updateForm()"
           required
           [ngClass]="{ 'input-error': form.get('title')?.invalid && (form.get('title')?.touched || saveFailed) }"
@@ -44,11 +43,10 @@
         [nzAutosize]="{ minRows: 4, maxRows: 6 }"
         class="formelement"
         id="description"
-        placeholder="{{ 'form.PLACEHOLDER_DESCRIPTION' | translate }}"
         formControlName="description"
         (change)="updateForm()"
       ></textarea>
-
+      
       <hr class="formelement" />
 
       <ng-container>
@@ -88,7 +86,7 @@
       <nz-form-item class="same_line">
         <label nz-checkbox formControlName="haslimit"></label>
         <nz-form-label [nzNoColon]="true"
-          >{{ 'general.TIME_LIMIT' | translate }}
+        >{{ 'general.TIME_LIMIT' | translate }}
           <i
             style="margin-left: 5px"
             nz-icon
