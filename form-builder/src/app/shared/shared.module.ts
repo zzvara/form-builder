@@ -55,6 +55,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -95,6 +96,7 @@ const COMPONENTS = [
     CommonModule,
     NzDatePickerModule,
     NzInputModule,
+    NzDividerModule,
     NzSelectModule,
     FormsModule,
     NzLayoutModule,

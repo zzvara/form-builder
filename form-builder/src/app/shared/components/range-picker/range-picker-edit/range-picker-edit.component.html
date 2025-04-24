@@ -29,8 +29,8 @@
       <input nz-input placeholder="{{ 'components.PLACEHOLDER' | translate }}" formControlName="placeholderValue" />
     </nz-form-control>
   </nz-form-item>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+<nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="setDefaultValue">{{ 'components.SET_DEFAULT_VALUE?' | translate }}</label>
@@ -63,7 +63,7 @@
       </div>
     }
   </div>
-
+  <nz-divider></nz-divider>
   <span>{{ 'components.DATE_PICKER_MODE' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
@@ -86,8 +86,8 @@
       }
     </ng-template>
   </nz-form-item>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTime" [nzDisabled]="getControlValue('mode') !== 'date'">
@@ -111,7 +111,7 @@
       </div>
     }
   </div>
-
+  <nz-divider></nz-divider>
   <span>{{ 'components.date_picker.WEEK_NUMBERS' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
@@ -125,8 +125,8 @@
       <label nz-checkbox formControlName="inlineMode">{{ 'components.INLINE_COMPONENT?' | translate }}</label>
     </nz-form-control>
   </nz-form-item>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
@@ -219,7 +219,7 @@
     }
   </div>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+  <div style="padding-left: 10px; padding-right: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTooltip">{{ 'components.INPUT_TOOLTIP' | translate }}</label>

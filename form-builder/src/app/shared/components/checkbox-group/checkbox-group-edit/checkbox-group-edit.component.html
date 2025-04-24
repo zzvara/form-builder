@@ -48,7 +48,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <span>Question:</span>
+  <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input placeholder="Question" formControlName="questionValue" />
@@ -60,17 +60,17 @@
     </ng-template>
   </nz-form-item>
 
-  <span>Description:</span>
+  <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize placeholder="Description" formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">Is Required?</label>
+        <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {

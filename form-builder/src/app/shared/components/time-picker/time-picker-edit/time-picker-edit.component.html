@@ -29,8 +29,8 @@
       <input nz-input placeholder="{{ 'components.PLACEHOLDER' | translate }}" formControlName="placeholderValue" />
     </nz-form-control>
   </nz-form-item>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="setDefaultValue">{{ 'components.SET_DEFAULT_VALUE?' | translate }}</label>
@@ -61,7 +61,7 @@
       </div>
     }
   </div>
-
+  <nz-divider></nz-divider>
   <span>{{ 'components.time_picker.TIME_FORMAT' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="timeFormatErrors">
@@ -87,8 +87,8 @@
       <label nz-checkbox formControlName="hideDisabledOptions">{{ 'components.time_picker.HIDE_DISABLED_OPTIONS' | translate }}?</label>
     </nz-form-control>
   </nz-form-item>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <span>{{ 'components.time_picker.SET_HOUR_STEP' | translate }}</span>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="hourStepNumberErrors">
@@ -132,8 +132,8 @@
       </ng-template>
     </nz-form-item>
   </div>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
@@ -241,8 +241,8 @@
       </div>
     }
   </div>
-
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+  <nz-divider></nz-divider>
+  <div style="padding-left: 10px; padding-right: 10px">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTooltip">{{ 'components.INPUT_TOOLTIP' | translate }}</label>
