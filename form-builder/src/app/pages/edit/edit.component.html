@@ -104,12 +104,48 @@
   </nz-layout>
   <nz-sider nzWidth="300px" nzTheme="light" class="right-sider">
     <h3>Components</h3>
-    <nz-tree
-      class="draggable-tree"
-      [nzData]="treeData"
-      [nzBlockNode]="true"
-      [nzDraggable]="true"
-      (nzOnDrop)="onDrop($event)"
-    ></nz-tree>
+    <div class="components-list"
+         id="structureList"
+         cdkDropList
+         [cdkDropListConnectedTo]="getSectionIds()"
+         (cdkDropListDropped)="dropIntoEdit($event)"
+         [cdkDropListData]="editList">
+        @for (edit of editList; track edit) {
+            @if (instanceOfSectionList(edit.data)) {
+                <div class="component-item section-item"
+                     cdkDrag
+                     [cdkDragData]="edit">
+                    <div class="section-header">
+                        <span nz-icon nzType="layout" nzTheme="outline"></span>
+                        <span class="component-title">Section [{{ edit.data.sectionId }}]</span>
+                    </div>
+                    <div class="section-items"
+                         cdkDropList
+                         [id]="edit.data.sectionId"
+                         [cdkDropListData]="edit.data.sectionInputs"
+                         [cdkDropListOrientation]="edit.data.layout"
+                         [cdkDropListConnectedTo]="[edit.data.sectionId]"
+                         [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
+                         (cdkDropListDropped)="dropIntoSection($event)">
+                        @for (item of edit.data.sectionInputs; track item) {
+                            <div class="component-item child-item"
+                                 cdkDrag
+                                 [cdkDragData]="item">
+                                <span nz-icon nzType="form" nzTheme="outline"></span>
+                                <span class="component-title">{{ item.title }}</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            } @else if (instanceOfFormInputData(edit.data)) {
+                <div class="component-item"
+                     cdkDrag
+                     [cdkDragData]="edit">
+                    <span nz-icon nzType="form" nzTheme="outline"></span>
+                    <span class="component-title">{{ edit.data.title }}</span>
+                </div>
+            }
+        }
+    </div>
   </nz-sider>
 </nz-layout>
