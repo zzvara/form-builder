@@ -149,15 +149,17 @@
   },
   "dashboard": {
     "ACTION": "Művelet",
-    "CARD_VIEW": "Kártya nézet",
+    "CARD_VIEW": "Kártyás elrendezés",
     "CARD_VIEW_TOOLTIP": "Váltás kártya nézetre",
     "LANGUAGE": "Nyelv kiválasztása",
-    "LIST_VIEW": "Lista nézet",
+    "LIST_VIEW": "Listás elrendezés",
     "LIST_VIEW_TOOLTIP": "Váltás lista nézetre",
     "NEW": "Új",
     "QUESTIONNAIRES": "Kérdőívek",
     "TESTS": "Teszt",
-    "UPLOAD_JSON": "JSON feltöltése"
+    "UPLOAD_JSON": "JSON feltöltése",
+    "NEW_QUESTIONNAIRE": "Új kérdőív létrehozása",
+    "NEW_TEST": "Új teszt létrehozása"
   },
   "form": {
     "DEADLINE_TOOLTIP": "Ez határozza meg, hogy meddig nyújtható be az űrlap. Ez egy fix dátum és idő, amely után az űrlap már nem érhető el vagy nyújtható be.",
@@ -168,16 +170,16 @@
     "LAST_MODIFIED": "Utoljára módosítva",
     "PLACEHOLDER_DESCRIPTION": "Kérjük, szánjon néhány percet ennek a kérdőívnek a kitöltésére. Az Ön visszajelzése bizalmas marad, és a tanítási minőség javítására használjuk.",
     "PLACEHOLDER_TITLE": "Tanfolyam visszajelzési kérdőív",
-    "QUESTIONNAIRE": "Kérdőív",
+    "QUESTIONNAIRE": "Kérdőív változat",
     "SWITCH_TOOLTIP": "Kikapcsolva kérdőív - Bekapcsolva teszt",
-    "TEST": "Teszt",
+    "TEST": "Teszt változat",
     "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.",
     "TITLE_REQUIRED": "A cím kötelező"
   },
   "general": {
     "CANCEL": "Mégse",
     "CREATED": "Létrehozva",
-    "DEADLINE": "Határidő",
+    "DEADLINE": "Beadási határidő",
     "DELETE_CONFIRMATION": "Biztosan törli ezt a projektet?",
     "DESCRIPTION": "Leírás",
     "DOWNLOAD_CONFIRMATION": "Biztosan letölti a projektet?",
@@ -187,7 +189,7 @@
     "OK": "Igen",
     "RESET": "Visszaállítás",
     "SAVE": "Mentés",
-    "TIME_LIMIT": "Időkorlát",
+    "TIME_LIMIT": "Időkorlát az űrlap kitöltéséhez",
     "TITLE": "Cím"
   },
   "project": {
