@@ -19,3 +19,18 @@ section {
 .clear-icon:hover {
   color: @accent-danger;
 }
+
+:host ::ng-deep {
+  .ant-card {
+    width: 100%;
+    border: 1px solid @border-gray;
+    margin-bottom: 20px;
+  }
+
+  .element-list {
+    margin: auto;
+    padding: 0;
+    width: 900px;
+    border: 1px solid @border-gray;
+  }
+}

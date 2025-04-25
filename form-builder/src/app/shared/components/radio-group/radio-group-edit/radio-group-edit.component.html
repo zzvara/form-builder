@@ -1,7 +1,7 @@
 <form id="selectEditFormID" nz-form [formGroup]="formData">
   <nz-form-item>
     <ng-template #listHeader>
-      <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">Choices/Values</div>
+      <div class="list-header">Choices/Values</div>
     </ng-template>
     <nz-form-control formArrayName="options">
       <ul nz-list cdkDropList (cdkDropListDropped)="drop($event)" nzBordered [nzHeader]="listHeader">
@@ -12,12 +12,12 @@
                 <button nz-button nzType="link" nzDanger (click)="removeOption(i)">Remove</button>
               </nz-list-item-action>
             </ul>
-            <p style="max-width: 300px">{{ option.value.option_description }}</p>
+            <p class="option-description">{{ option.value.option_description }}</p>
           </li>
         }
       </ul>
       @if (options.invalid) {
-        <span style="color: red">Please record at least {{ getMinOptions() }} more options!</span>
+        <span class="error-text">Please record at least {{ getMinOptions() }} more options!</span>
       }
     </nz-form-control>
   </nz-form-item>
@@ -60,7 +60,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="setDefaultValue">Set default value?</label>
@@ -85,7 +85,7 @@
     }
   </div>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">Is Required?</label>

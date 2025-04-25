@@ -39,6 +39,8 @@ nz-sider {
   display: inline-block;
   vertical-align: top;
   position: static;
+  width: 100%;
+  margin-bottom: 50px;
 }
 
 // @todo We alternately use pixels and rem for defining margins and padding. We should stick with one. For margins/paddings/font-sizes rem would be better.
@@ -59,7 +61,7 @@ nz-sider {
 }
 
 .element-box {
-  color: rgba(0, 0, 0, 0.87);
+  color: @secondary-text;
   padding-bottom: 2rem;
   display: flex;
   flex-direction: row;
@@ -84,12 +86,54 @@ nz-sider {
   .transition-move;
 }
 
-/*.element-box:last-child {*/
-/*  border: none;*/
-/*  padding: 0;*/
-/*}*/
-
 .element-list.cdk-drop-list-dragging .element-box:not(.cdk-drag-placeholder) {
   padding: 0;
   .transition-move;
+}
+
+.sider-sticky {
+  height: fit-content;
+  position: sticky;
+  top: 64px;
+  padding-top: 20px;
+}
+
+.section-card {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  padding: 0;
+  width: 900px;
+}
+
+.section-title {
+  border-bottom: 1px solid @border-gray;
+  padding-bottom: 20px;
+}
+
+.section-id {
+  color: @accent-danger;
+}
+
+.section-buttons {
+  border-bottom: 1px solid @border-gray;
+  padding-bottom: 12px;
+}
+
+.button-spacing {
+  margin-left: 10px;
+}
+
+.input-holder {
+  margin: 5px;
+  padding: 0;
+}
+
+.standalone-input-holder {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  padding: 0;
+  width: 900px;
+  border: 1px solid @border-gray;
 }

@@ -8,7 +8,7 @@
           nzType="question-circle"
           nz-tooltip
           nzTooltipTitle="{{ 'form.FORM_TITLE_TOOLTIP' | translate }}"
-          style="margin-left: 5px"
+          class="icon-margin-small"
         ></i>
       </nz-form-label>
       <nz-form-control nz-col nzSpan="24">
@@ -35,7 +35,7 @@
           nzType="question-circle"
           nz-tooltip
           nzTooltipTitle="{{ 'form.FORM_DESCRIPTION_TOOLTIP' | translate }}"
-          style="margin-left: 5px"
+          class="icon-margin-small"
         ></i>
       </nz-form-label>
       <textarea
@@ -46,7 +46,7 @@
         formControlName="description"
         (change)="updateForm()"
       ></textarea>
-      
+
       <hr class="formelement" />
 
       <ng-container>
@@ -60,7 +60,7 @@
               nzType="question-circle"
               nz-tooltip
               nzTooltipTitle="{{ 'form.SWITCH_TOOLTIP' | translate }}"
-              style="margin-left: 10px"
+              class="icon-margin-medium"
             ></i>
           </nz-form-label>
         </nz-form-item>
@@ -75,7 +75,7 @@
             nzType="question-circle"
             nz-tooltip
             nzTooltipTitle="{{ 'form.DEADLINE_TOOLTIP' | translate }}"
-            style="margin-left: 5px"
+            class="icon-margin-small"
           ></i>
         </nz-form-label>
         @if (form.get('hasdeadline')?.value) {
@@ -88,7 +88,7 @@
         <nz-form-label [nzNoColon]="true"
         >{{ 'general.TIME_LIMIT' | translate }}
           <i
-            style="margin-left: 5px"
+            class="icon-margin-small"
             nz-icon
             nzType="question-circle"
             nz-tooltip
