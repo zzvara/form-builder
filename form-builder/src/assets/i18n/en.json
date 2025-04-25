@@ -51,6 +51,7 @@
     "TIME_PICKER": "TIME PICKER",
     "TOOLTIP_TEXT": "Tooltip text",
     "WEEK_NUMBERS?": "Show week numbers?",
+    "INLINE_EDIT": "Inline edit",
     "checkbox_group": {
       "CHECKED?": "Checked?",
       "DISABLED?": "Disabled?",

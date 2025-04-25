@@ -92,10 +92,9 @@
     </nz-form-item>
     @if (getControlValue('showTime')) {
       <div>
-        <span>"{{ 'components.date_picker.PLACEHOLDER_TIME_FORMAT' | translate }}":</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="timeFormatErrors">
-            <input nz-input placeholder="{{ 'components.date_picker.PLACEHOLDER_TIME_FORMAT' | translate }}" formControlName="timeFormat" />
+            <input nz-input formControlName="timeFormat" />
           </nz-form-control>
           <ng-template #timeFormatErrors let-control>
             @if (hasErrors(control, 'required')) {
