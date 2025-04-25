@@ -1,4 +1,5 @@
 @import '../../../breakpoints.less';
+@import '../../../common.less';
 
 @padding-small: 0 0.5rem;
 @gap-small: 1rem;
@@ -132,7 +133,7 @@ nz-content {
     gap: 0.5rem;
 
     > div {
-      width: 100%;
+      width: @width-full;
       justify-content: flex-start;
       margin: 0.2rem 0;
     }
@@ -146,7 +147,7 @@ nz-content {
       align-items: flex-start;
       text-align: left;
       margin-bottom: 0.5rem;
-      max-width: 100%;
+      max-width: @max-width-full;
 
       > h3 {
         font-size: 0.85rem;

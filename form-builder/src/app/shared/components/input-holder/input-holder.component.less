@@ -1,28 +1,29 @@
 @import '../../../../colors.less';
+@import '../../../../common.less';
 
 .valid-style {
-  width: 100%;
+  width: @width-full;
 }
 
 .invalid-style {
-  width: 100%;
+  width: @width-full;
   border: solid 1px @accent-danger;
 }
 
 .card-container {
-  height: 100%;
+  height: @height-full;
 }
 
 .form-container {
-  width: 100%;
+  width: @width-full;
 }
 
 .form-item {
-  margin-bottom: 10px;
+  margin-bottom: @spacing10;
 }
 
 .form-item-border {
-  border-bottom: 1px solid @border-gray;
+  border-bottom: @border-default;
 }
 
 .pre-wrap {
@@ -35,9 +36,9 @@
 
 .error-icon {
   color: @accent-danger;
-  margin-left: 20px;
+  margin-left: @spacing20;
 }
 
 .button-spacing {
-  margin-left: 10px;
+  margin-left: @spacing10;
 }

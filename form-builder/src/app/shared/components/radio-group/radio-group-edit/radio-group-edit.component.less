@@ -1,7 +1,8 @@
 @import '../../../../../colors.less';
+@import '../../../../../common.less';
 
 .list-header {
-  border-bottom: 1px solid @border-gray;
+  border-bottom: @border-default;
   padding-bottom: 12px;
 }
 
@@ -14,10 +15,10 @@
 }
 
 .section-container {
-  border: 1px solid @border-gray;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 10px;
+  border: @border-default;
+  padding-left: @spacing10;
+  padding-right: @spacing10;
+  margin-bottom: @spacing10;
 
   &:last-child {
     margin-bottom: 0;

@@ -1,3 +1,4 @@
+@import '../../../../common.less';
 @import '../../../../colors.less';
 
 nz-layout {
@@ -9,8 +10,8 @@ nz-layout {
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 100%;
-  padding: 10px;
+  width: @width-full;
+  padding: @spacing10;
   background: @background-white;
   border-top: 1px solid @border-gray;
 }
@@ -28,9 +29,9 @@ nz-layout {
 }
 
 .redo-undo-container {
-  margin-right: 20px;
+  margin-right: @spacing20;
 }
 
 .inline-edit-container {
-  margin-right: 20px;
+  margin-right: @spacing20;
 }

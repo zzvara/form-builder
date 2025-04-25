@@ -1,21 +1,22 @@
 @import '../../../../breakpoints.less';
 @import '../../../../colors.less';
+@import '../../../../common.less';
 
 nz-layout {
   background-color: @transparent;
   display: flex;
-  width: 100%;
-  padding: 0 30px;
+  width: @width-full;
+  padding: 0  @spacing30;;
 }
 
 .formelement {
-  margin-bottom: 30px;
-  width: 100%;
+  margin-bottom: @spacing30;
+  width: @width-full;
 }
 
 #switch {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: @spacing10;
+  margin-right: @spacing10;
 }
 
 #title,
@@ -24,12 +25,12 @@ nz-layout {
   border-radius: 10px;
   border-width: 2px;
   margin-top: -5px;
-  width: 100%;
+  width: @width-full;
   box-sizing: border-box;
 }
 
 #title {
-  margin-bottom: 10px;
+  margin-bottom: @spacing10;
 }
 
 .description-label,
@@ -46,7 +47,7 @@ nz-layout {
 }
 
 .error-message {
-  margin-top: 5px;
+  margin-top: @spacing5;
   color: @accent-danger;
   font-size: 12px;
   font-weight: bold;
@@ -59,14 +60,14 @@ nz-layout {
 .same_line {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: @spacing10;
   flex-wrap: wrap;
 }
 
 .created_modifaction {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: @spacing10;
   flex-direction: row;
 }
 
@@ -75,7 +76,7 @@ nz-layout {
   white-space: pre-wrap;
   word-break: break-word;
   font-family: monospace;
-  padding: 10px;
+  padding: @spacing10;
   background-color: @background-light;
   border: 1px solid @border-light;
   border-radius: 5px;
@@ -88,40 +89,40 @@ nz-layout {
 }
 
 #footerdiv {
-  margin-top: 30px; // <-- Gombcsoport felső távolság, opcionális
+  margin-top: @spacing30; // <-- Gombcsoport felső távolság, opcionális
 }
 
 @media (max-width: @breakpoint-lg) {
   .formelement {
-    margin-bottom: 20px;
+    margin-bottom: @spacing20;
   }
 
   #title,
   #description {
     font-size: 18px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: @spacing10;
     padding: 8px;
-    width: 100%;
+    width: @width-full;
   }
 
   .same_line {
     flex-direction: column;
-    gap: 10px;
+    gap: @spacing10;
     padding: 0;
   }
 
   .saveBtn {
     float: none;
     text-align: center;
-    width: 100%;
-    margin-top: 10px;
+    width: @width-full;
+    margin-top: @spacing10;
   }
 
   .created_modifaction {
-    width: 100%;
+    width: @width-full;
     flex-direction: column;
-    gap: 5px;
+    gap: @spacing5;
   }
 
   nz-layout {
@@ -131,44 +132,44 @@ nz-layout {
 
 @media (max-width: @breakpoint-md) {
   .formelement {
-    margin-bottom: 15px;
+    margin-bottom: @spacing15;
   }
 
   #title,
   #description {
     font-size: 14px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: @spacing10;
     padding: 8px;
-    width: 100%;
+    width: @width-full;
   }
 
   .same_line {
     flex-direction: column;
-    gap: 10px;
+    gap: @spacing10;
     padding: 0;
   }
 
   .button-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: @spacing10;
     align-items: stretch;
   }
 
   .saveBtn {
     order: 3;
-    width: 100%;
+    width: @width-full;
   }
 
   .created_modifaction {
-    width: 100%;
+    width: @width-full;
     flex-direction: column;
-    gap: 5px;
+    gap: @spacing5;
   }
 
   nz-layout {
-    padding: 0 15px;
+    padding: 0 @spacing15;
   }
 }
 
@@ -177,11 +178,11 @@ nz-layout {
   #description {
     font-size: 12px;
     padding: 6px;
-    margin-bottom: 10px;
+    margin-bottom: @spacing10;
   }
 
   .formelement {
-    margin-bottom: 10px;
+    margin-bottom: @spacing10;
   }
 
   .same_line {
@@ -190,15 +191,15 @@ nz-layout {
   }
 
   .saveBtn {
-    width: 100%;
+    width: @width-full;
     text-align: center;
   }
 
   .created_modifaction {
-    width: 100%;
+    width: @width-full;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: @spacing10;
   }
 
   .input-error {

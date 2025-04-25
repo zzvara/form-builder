@@ -1,4 +1,5 @@
 @import '../../../../colors.less';
+@import '../../../../common.less';
 
 section {
   overflow-y: scroll;
@@ -22,15 +23,15 @@ section {
 
 :host ::ng-deep {
   .ant-card {
-    width: 100%;
-    border: 1px solid @border-gray;
-    margin-bottom: 20px;
+    width: @width-full;
+    border: @border-default;
+    margin-bottom: @spacing20;
   }
 
   .element-list {
     margin: auto;
     padding: 0;
     width: 900px;
-    border: 1px solid @border-gray;
+    border: @border-default;
   }
 }

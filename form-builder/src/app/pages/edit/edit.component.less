@@ -1,4 +1,5 @@
 @import '../../../../src/colors.less';
+@import '../../../common.less';
 
 .transition-move {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -12,7 +13,7 @@
 nz-content {
   background: @background-light;
   padding: 2rem;
-  height: 100%;
+  height: @height-full;
 }
 
 nz-sider {
@@ -20,7 +21,7 @@ nz-sider {
 }
 
 .sider-menu {
-  height: 100%;
+  height: @height-full;
   border-right: 0;
 }
 
@@ -35,11 +36,11 @@ nz-sider {
 }
 
 .form-container {
-  max-width: 100%;
+  max-width: @max-width-full;
   display: inline-block;
   vertical-align: top;
   position: static;
-  width: 100%;
+  width: @width-full;
   margin-bottom: 50px;
 }
 
@@ -53,7 +54,7 @@ nz-sider {
 }
 
 .element-list {
-  border: solid 1px @border-light;
+  border: @border-default;
   background: @background-white;
   border-radius: 4px;
   overflow: hidden;
@@ -95,20 +96,20 @@ nz-sider {
   height: fit-content;
   position: sticky;
   top: 64px;
-  padding-top: 20px;
+  padding-top: @spacing20;
 }
 
 .section-card {
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 10px;
+  margin-bottom: @spacing10;
   padding: 0;
   width: 900px;
 }
 
 .section-title {
-  border-bottom: 1px solid @border-gray;
-  padding-bottom: 20px;
+  border-bottom: @border-default;
+  padding-bottom: @spacing20;
 }
 
 .section-id {
@@ -116,12 +117,12 @@ nz-sider {
 }
 
 .section-buttons {
-  border-bottom: 1px solid @border-gray;
+  border-bottom: @border-default;
   padding-bottom: 12px;
 }
 
 .button-spacing {
-  margin-left: 10px;
+  margin-left: @spacing10;
 }
 
 .input-holder {
@@ -132,8 +133,8 @@ nz-sider {
 .standalone-input-holder {
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 10px;
+  margin-bottom: @spacing10;
   padding: 0;
   width: 900px;
-  border: 1px solid @border-gray;
+  border: @border-default;
 }
