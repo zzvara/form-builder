@@ -122,10 +122,38 @@ nz-sider {
     border: 1px solid @border-light;
     border-radius: 5px;
     cursor: move;
+    position: relative;
 
     &.section-item {
       flex-direction: column;
       align-items: stretch;
+    }
+
+    .hover-icon {
+      display: none;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: @accent-info;
+      transition: all 0.3s;
+
+      &:hover {
+        color: @accent-info;
+      }
+    }
+
+    &:hover {
+      .hover-icon {
+        display: block;
+      }
+    }
+
+    &.cdk-drag-preview {
+      .hover-icon {
+        display: none !important;
+      }
     }
   }
 }

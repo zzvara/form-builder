@@ -90,6 +90,7 @@
             <app-input-holder
               class="element-box"
               cdkDrag
+              id="{{ edit.id }}"
               [cdkDragData]="edit"
               style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; border: 1px solid lightgray"
               [formInput]="edit.data"
@@ -118,6 +119,9 @@
                     <div class="section-header">
                         <span nz-icon nzType="layout" nzTheme="outline"></span>
                         <span class="component-title">SECTION</span>
+                        <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
+                            <span nz-icon nzType="aim" nzTheme="outline"></span>
+                        </span>
                     </div>
                 </div>
             } @else if (instanceOfFormInputData(edit.data)) {
@@ -126,6 +130,9 @@
                      [cdkDragData]="edit">
                     <span nz-icon nzType="form" nzTheme="outline"></span>
                     <span class="component-title">{{ edit.data.title }}</span>
+                    <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
+                        <span nz-icon nzType="aim" nzTheme="outline"></span>
+                    </span>
                 </div>
             }
         }
