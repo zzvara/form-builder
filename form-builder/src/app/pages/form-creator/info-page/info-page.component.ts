@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Project, ProjectType } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -44,7 +44,7 @@ export class InfoPageComponent implements OnInit {
     haslimit: new FormControl(false),
     limit: new FormControl(0),
   });
-  params: any = {};
+  params: Params = {};
 
   constructor(
     private readonly modal: NzModalService,

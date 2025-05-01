@@ -33,7 +33,8 @@ export class EditComponent implements OnInit, OnChanges {
   @Input() projectId?: string;
   @Input() versionNum?: number;
 
-  @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;
+  @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent<string>>;
+
 
   sideBarData: SidebarData[] = getSideBarData(this);
 
@@ -212,7 +213,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList): {[p: string]: any} {
+  getSectionInputStyle(sect: SectionList): {[p: string]: string} {
     let width: number;
     if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;

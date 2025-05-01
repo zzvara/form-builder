@@ -16,13 +16,14 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
 
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
-  protected readonly formData: FormGroup = this.formBuilder.group<{ [key in InputDataKeys<D>]?: FormControl<any> }>(
-    {},
+  protected readonly formData: FormGroup = this.formBuilder.group(
+    {}, 
     {
       updateOn: this.formUpdateOn,
       validators: this.formValidators,
     }
   );
+
 
   protected initialValues!: D;
 
@@ -193,7 +194,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   }
   connectAnyValidations(controls: ControlConnection) {
     this.executeBasedOnChanges(controls, (connData) => {
-      const control = this.getControl<any>(connData.name);
+      const control = this.getControl(connData.name);
       control?.markAsDirty();
       if (connData.recursiveCall) {
         if (connData.alreadyCalled) {

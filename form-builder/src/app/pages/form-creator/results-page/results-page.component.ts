@@ -5,6 +5,8 @@ import { ProjectService } from '@services/project.service';
 import { ColumnItem } from '@pages/dashboard/dashboard.model';
 import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import { InputData } from '@app/shared/interfaces/input-data';
 
 @Component({
   selector: 'app-results-page',
@@ -21,7 +23,7 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
   latestVersionNum?: number;
-  sectionInputs: any[] = [];
+  sectionInputs:  FormInputData[] = [];
 
   constructor(
     private readonly projectService: ProjectService<Project>,

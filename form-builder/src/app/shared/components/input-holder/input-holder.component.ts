@@ -16,7 +16,7 @@ import { InputData } from '@interfaces/input-data';
   styleUrls: ['./input-holder.component.less'],
   standalone: false,
 })
-export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>
+export class InputHolderComponent<T, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>
   implements OnInit, AfterViewInit
 {
   private readonly destroyRef = inject(DestroyRef);
@@ -73,7 +73,8 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
   }
 
   resetComponent() {
-    const defaultData: FormInputData<D, T> | undefined = getInputGroups().find((group) => group.type === this.formInput.type);
+    const defaultData = getInputGroups().find((group) => group.type === this.formInput.type) as FormInputData<D, T> | undefined;
+    ;
     if (defaultData) {
       Object.keys(this.inputData)
         .filter((key) => key !== 'id' && key !== 'sectionId')

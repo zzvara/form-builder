@@ -16,12 +16,12 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
 
   constructor() {}
 
-  openModal(modalData: ModalData<D, E>): Observable<boolean | undefined> {
+  openModal(modalData:  ModalData<D, E, T>): Observable<boolean | undefined> {
     return this.openModalAndGet<boolean>(modalData);
   }
 
   openModalAndGet<RetType>(
-    modalData: ModalData<D, E>,
+    modalData:  ModalData<D, E, T>,
     dataGetter: ((instance: E) => RetType) | null = null
   ): Observable<RetType | undefined> {
     // Get the translated button labels

@@ -8,6 +8,12 @@ export interface SectionList {
   sectionInputs: FormInputData[];
 }
 
-export function instanceOfSectionList(object: any): object is SectionList {
-  return object && 'sectionId' in object && 'layout' in object && 'sectionInputs' in object;
+export function instanceOfSectionList(object: object | null): object is SectionList {
+  return (
+    typeof object === 'object' &&
+    object !== null &&
+    'sectionId' in object &&
+    'layout' in object &&
+    'sectionInputs' in object
+  );
 }

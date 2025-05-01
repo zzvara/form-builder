@@ -23,6 +23,7 @@ import { TimePickerComponentData } from '@components/time-picker/interfaces/time
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
 import { EditComponent } from '@pages/edit/edit.component';
 import { FormInputData } from '@interfaces/form-input-data';
+import { InputData } from '@app/shared/interfaces/input-data';
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
@@ -120,7 +121,7 @@ const checkboxGroupInputOptions: CheckboxGroupData = {
 };
 
 //Used for resetting inputs
-export function getInputGroups(): FormInputData<any>[] {
+export function getInputGroups(): FormInputData<InputData>[] {
   return [
     {
       title: 'TEXT FIELD',
