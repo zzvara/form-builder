@@ -153,6 +153,7 @@ export class ProjectService<T extends Project> {
       const projectVersion: ProjectVersion<T> = {
         versionNum: versionNum,
         project: previousVersion,
+        created: new Date().toISOString(),
       };
 
       projectHistory.push(projectVersion);

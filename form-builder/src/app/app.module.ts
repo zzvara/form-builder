@@ -14,8 +14,11 @@ import { EditModule } from '@pages/edit/edit.module';
 import { FormCreatorModule } from '@pages/form-creator/form-creator.module';
 import { SharedModule } from '@shared/shared.module';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,6 +44,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     EditModule,
     SharedModule,
     FormCreatorModule,
+    NzToolTipModule,
+    NzIconModule,
+    NzPopoverModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

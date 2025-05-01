@@ -35,9 +35,16 @@
             nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
             style="margin-right: 8px"
           >
-            @for (version of projectHistory; track $index) {
-              <nz-option [nzValue]="version.versionNum" [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"></nz-option>
-            }
+            <ng-container *ngFor="let version of projectHistory; track by trackVersion">
+              <nz-option 
+                [nzValue]="version.versionNum" 
+                [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum">
+                
+                <span>{{ 'project.VERSION' | translate }} {{ version.versionNum }}</span>
+                <i nz-icon nzType="info-circle" nz-tooltip="Tooltip" style="margin-left: 5px"></i>
+                
+              </nz-option>
+            </ng-container>
           </nz-select>
         </div>
 

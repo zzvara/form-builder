@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCreatorComponent } from '@pages/form-creator/form-creator.component';
 import { InfoPageComponent } from '@pages/form-creator/info-page/info-page.component';
@@ -43,6 +44,7 @@ import { SharedModule } from '@shared/shared.module';
     NzButtonModule,
     NzSelectModule,
     NzToolTipModule,
+    NzIconModule,
     SharedModule,
     TranslatePipe,
   ],
