@@ -4,6 +4,12 @@ import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
 import { InlineEdit } from '@interfaces/inline-edit';
 
+
+interface DiffItem {
+  key: string;
+  before: string;
+  after: string;
+}
 @Component({
   selector: 'app-components-page',
   templateUrl: './components-page.component.html',
@@ -24,44 +30,68 @@ export class ComponentsPageComponent implements OnInit {
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
-  tooltipMap: Record<number, string> = {};
 
-  ngOnInit(): void {
-    if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
-      this.currentVersionNum = this.projectHistory.length > 0
-        ? this.projectHistory[this.projectHistory.length - 1].versionNum
-        : 1;
+  /**
+   * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
+   * Otherwise, it defaults the current version number to 1.
+   * @returns {void}
+   */
+ ngOnInit(): void {
+  if (this.projectId !== undefined) {
+    // Betöltés
+    this.projectHistory = this.projectService.getProjectHistory(this.projectId);
 
-        this.tooltipMap = this.projectHistory.reduce((map, version) => {
-          const created = version.created ? new Date(version.created).toLocaleString() : 'N/A';
-          map[version.versionNum] = `Created: ${created}`;
-          return map;
-        }, {} as Record<number, string>);
-        
+    // Debug: nézzük meg, mit kaptunk vissza
+    console.log('projectHistory:', this.projectHistory);
 
-      this.versionChange.emit(this.currentVersionNum);
-    }
+    // Ezután állítjuk be a currentVersionNum-ot
+    this.currentVersionNum = this.projectHistory.length > 0
+      ? this.projectHistory[this.projectHistory.length - 1].versionNum
+      : 1;
+    this.versionChange.emit(this.currentVersionNum);
   }
+}
 
+  /**
+   * Saves the current form state by calling saveForm on the editComponent.
+   * Then, it increments the page number and emits an event to notify parent components of the page change.
+   */
   nextPage() {
     this.editComponent.saveForm();
     this.page! += 1;
     this.onsetPage(this.page!);
   }
 
+  /**
+   * Emits an event to set the current page in the parent component.
+   * @param {number} page - The new page number to navigate to.
+   * @returns {void}
+   */
   onsetPage(page: number): void {
     this.setPage.emit(page);
   }
 
+  /**
+   * Checks if there is a previous version of the project available.
+   * @returns {boolean} True if the current version number is greater than 1, indicating that previous versions exist.
+   */
   hasPreviousVersion(): boolean {
     return this.currentVersionNum !== undefined && this.currentVersionNum > 1;
   }
 
+  /**
+   * Checks if there is a next version of the project available.
+   * @returns {boolean} True if the current version number is not the latest, indicating that a next version exists.
+   */
   hasNextVersion(): boolean {
     return this.currentVersionNum !== undefined && this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1);
   }
 
+  /**
+   * Navigates to a different version of the project based on the given offset.
+   * @param {number} offset - The number to add to the current version number to navigate to the new version.
+   * @returns {void}
+   */
   navigateVersion(offset: number): void {
     if (this.currentVersionNum !== undefined) {
       const newVersionNum = this.currentVersionNum + offset;
@@ -69,6 +99,11 @@ export class ComponentsPageComponent implements OnInit {
     }
   }
 
+  /**
+   * Reverts the project to a specified version.
+   * @param versionNum - The version number to revert the project to.
+   * @returns {void}
+   */
   revertToVersion(versionNum: number): void {
     if (this.projectId !== undefined) {
       const version = this.projectService.revertToVersion(this.projectId, versionNum);
@@ -81,9 +116,33 @@ export class ComponentsPageComponent implements OnInit {
       }
     }
   }
-  trackVersion(index: number, version: ProjectVersion<Project>): number {
-    return version.versionNum;  
+  trackByVersion(index: number, version: ProjectVersion<Project>): number {
+    return version.versionNum; // Track by the version number
+  }  
+
+  selectVersion(versionNum: number) {
+    this.revertToVersion(versionNum);
   }
+
+  getDiffItems(version: ProjectVersion<Project>): DiffItem[] {
+    const prev = this.projectHistory.find(
+      v => v.versionNum === version.versionNum - 1
+    );
+    if (!prev) return [];
+
+    const curr = version.project;
+    const old = prev.project;
+    const keys = Object.keys(curr) as Array<keyof Project>;
+
+    return keys
+      .filter(key => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))
+      .map(key => ({
+        key: key,
+        before: JSON.stringify(old[key]),
+        after: JSON.stringify(curr[key])
+      }));
+  }
+  
 
   onSectionInputsChange(undoRedoEvent: 'UNDO' | 'REDO'): void {
     this.editComponent.undoRedo(undoRedoEvent);

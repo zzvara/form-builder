@@ -8,7 +8,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';  
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,6 +22,8 @@ import { ComponentsPageComponent } from '@pages/form-creator/components-page/com
 import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
 import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
+import { NzPopoverModule }     from 'ng-zorro-antd/popover';
+
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -44,6 +46,7 @@ import { SharedModule } from '@shared/shared.module';
     NzButtonModule,
     NzSelectModule,
     NzToolTipModule,
+    NzPopoverModule,
     NzIconModule,
     SharedModule,
     TranslatePipe,
