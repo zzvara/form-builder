@@ -92,7 +92,7 @@
     </nz-form-item>
     @if (getControlValue('showTime')) {
       <div>
-        <span>Time format:</span>
+        <span>{{'components.time_picker.TIME_FORMAT' | translate}}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="timeFormatErrors">
             <input nz-input placeholder="{{ 'components.date_picker.PLACEHOLDER_TIME_FORMAT' | translate }}" formControlName="timeFormat" />
