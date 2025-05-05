@@ -1,5 +1,5 @@
 @import '../../../../colors.less';
-
+@import '../../../../common.less';
 :host {
   display: block;
   overflow-x: hidden;
@@ -19,8 +19,8 @@
 
 p {
   font-size: 0.75rem;
-  padding: 0;
-  margin: 0;
+  padding: @spacing0;
+  margin: @spacing0;
 }
 
 nz-card {
@@ -60,7 +60,7 @@ nz-card {
 
 .card-footer {
   p {
-    margin: 0;
+    margin: @spacing0;
     text-align: left;
   }
 }

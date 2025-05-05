@@ -6,17 +6,17 @@ nz-layout {
   background-color: @transparent;
   display: flex;
   flex-direction: column;
-  padding: 0 @spacing30;
+  padding: 0 @spacing32;
 }
 
 .formelement {
-  margin-bottom: @spacing30;
+  margin-bottom: @spacing32;
   width: @width-full;
 }
 
 #switch {
-  margin-left: @spacing10;
-  margin-right: @spacing10;
+  margin-left: @spacing12;
+  margin-right: @spacing12;
 }
 
 #title,
@@ -30,7 +30,7 @@ nz-layout {
 }
 
 #title {
-  margin-bottom: @spacing10;
+  margin-bottom: @spacing12;
 }
 
 .description-label,
@@ -60,7 +60,7 @@ nz-layout {
 .same_line {
   display: flex;
   align-items: center;
-  gap: @spacing10;
+  gap: @spacing12;
   flex-wrap: wrap;
 }
 
@@ -69,12 +69,12 @@ nz-layout {
 }
 
 .icon-margin-medium {
-  margin-left: @spacing10;
+  margin-left: @spacing12;
 }
 
 @media (max-width: @breakpoint-lg) {
   nz-layout {
-    padding: 0 @spacing20;
+    padding: @spacing0 @spacing20;
   }
 
   .formelement {
@@ -88,13 +88,13 @@ nz-layout {
 
   .saveBtn {
     float: none;
-    margin-top: @spacing10;
+    margin-top: @spacing12;
   }
 }
 
 @media (max-width: @breakpoint-md) {
   nz-layout {
-    padding: 0 @spacing15;
+    padding: @spacing0 @spacing16;
   }
 
   #title,
@@ -102,7 +102,7 @@ nz-layout {
     font-size: 16px;
   }
   .formelement {
-    margin-bottom: @spacing15;
+    margin-bottom: @spacing16;
   }
 
   .same_line {
@@ -113,13 +113,13 @@ nz-layout {
   .saveBtn {
     float: none;
     width: @width-full;
-    margin-top: @spacing15;
+    margin-top: @spacing16;
   }
 }
 
 @media (max-width: @breakpoint-xs) {
   nz-layout {
-    padding: 0 @spacing10;
+    padding: @spacing0 @spacing12;
   }
 
   #title,
@@ -128,7 +128,7 @@ nz-layout {
   }
 
   .formelement {
-    margin-bottom: @spacing10;
+    margin-bottom: @spacing12;
   }
 
   .saveBtn {
