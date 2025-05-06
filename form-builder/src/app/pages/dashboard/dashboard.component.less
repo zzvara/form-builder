@@ -2,16 +2,21 @@
 
 @padding-small: 0 0.5rem;
 @gap-small: 1rem;
+@navbar-height: 4rem;
+@gap-test-questionnaire: 32pt;
+@gap-test-item: 8pt;
+@gap-list-view-questionnaire: 64pt;
 
 nz-content {
   padding: @padding-small;
   box-sizing: border-box;
   text-align: left;
   overflow-x: auto;
+  padding-top: @navbar-height;
 }
 
 .toolbar {
-  margin: 5rem 0;
+  margin: 2rem 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -34,22 +39,22 @@ nz-content {
 
 .view {
   display: grid;
-  gap: 2rem;
+  gap: @gap-test-item;
 
   > div {
     display: flex;
     align-items: center;
     text-decoration: underline;
-    margin-bottom: 0.5rem;
+    margin-bottom: @gap-test-item;
     justify-content: flex-start;
     flex-wrap: wrap;
 
     &:last-of-type {
-      margin-top: 2rem;
+      margin-top: @gap-test-questionnaire;
     }
 
     > h3 {
-      margin: 0 1rem 0 0;
+      margin: 0 0.5rem 0 0;
       text-align: left;
     }
   }
@@ -94,6 +99,7 @@ nz-content {
     flex-direction: column;
     align-items: stretch;
     gap: 0.8rem;
+    margin: 1rem 0;
 
     > div {
       justify-content: center;
@@ -102,7 +108,7 @@ nz-content {
 
   .view {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
 
     > div {
       flex-direction: column;
@@ -126,6 +132,7 @@ nz-content {
     flex-direction: column;
     align-items: stretch;
     gap: 0.5rem;
+    margin: 0.5rem 0;
 
     > div {
       width: 100%;
