@@ -7,13 +7,13 @@
       id="footerdiv"
     >
       <div nz-col nzSpan="22"></div>
-      <div nz-row nzJustify="start" nzAlign="middle" style="width: 100%">
+      <div nz-row nzJustify="start" nzAlign="middle" class="full-width">
         <button
           nz-button
           nzType="primary"
           type="submit"
           (click)="nextPage()"
-          class="button-margin"
+          class="button-margin next-button"
           [disabled]="isNextButtonDisabled"
           nz-tooltip="{{ 'components.NEXT_TOOLTIP' | translate }}"
         >
