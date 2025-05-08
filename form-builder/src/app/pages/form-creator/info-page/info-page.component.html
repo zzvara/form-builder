@@ -46,25 +46,30 @@
         formControlName="description"
         (change)="updateForm()"
       ></textarea>
-      
+
       <hr class="formelement" />
 
       <ng-container>
         <nz-form-item class="same_line">
-          <nz-form-label [nzNoColon]="true">{{ 'form.QUESTIONNAIRE' | translate }}</nz-form-label>
-          <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
-          <nz-form-label [nzNoColon]="true"
-            >{{ 'form.TEST' | translate }}
+          <nz-form-label [nzNoColon]="true">{{'form.VERSION' | translate}}</nz-form-label>
+          <nz-switch
+            formControlName="type"
+            id="switch"
+            (change)="updateForm()"
+            [nzCheckedChildren]="'form.TEST' | translate"
+            [nzUnCheckedChildren]="'form.QUESTIONNAIRE' | translate">
+          </nz-switch>
+          <nz-form-label [nzNoColon]="true">
             <i
               nz-icon
               nzType="question-circle"
               nz-tooltip
-              nzTooltipTitle="{{ 'form.SWITCH_TOOLTIP' | translate }}"
-              style="margin-left: 10px"
+              [nzTooltipTitle]="'form.SWITCH_TOOLTIP' | translate"
             ></i>
           </nz-form-label>
         </nz-form-item>
       </ng-container>
+
 
       <nz-form-item class="same_line">
         <label nz-checkbox formControlName="hasdeadline"></label>

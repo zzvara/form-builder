@@ -169,7 +169,8 @@
     "SWITCH_TOOLTIP": "Toggle between Test and Questionnaire",
     "TEST": "Test version",
     "TIME_LIMIT_TOOLTIP": "Set a time limit for completing the form.",
-    "TITLE_REQUIRED": "Title is required"
+    "TITLE_REQUIRED": "Title is required",
+    "VERSION": "Version:"
   },
   "general": {
     "CANCEL": "Cancel",
