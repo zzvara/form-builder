@@ -18,18 +18,7 @@ export class InfoPageComponent implements OnInit {
   @Output() projectId = new EventEmitter<string>();
   @Output() formData = new EventEmitter<string>();
 
-  project = {
-    id: '',
-    title: '',
-    description: '',
-    type: ProjectType.QUESTIONNAIRE,
-    time_checkbox: false,
-    deadline_checkbox: false,
-    time_limit: 0,
-    deadline: '',
-    created: new Date().toISOString().split('T')[0],
-    modified: new Date().toISOString().split('T')[0],
-  };
+  project: Project;
 
   formExists = false;
   formId = '';
@@ -50,12 +39,10 @@ export class InfoPageComponent implements OnInit {
     private readonly modal: NzModalService,
     private readonly route: ActivatedRoute,
     private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService
-  ) {}
-
-  /*ngOnChanges(changes: SimpleChanges): void {
-
-  }*/
+    private readonly jsonService: JsonService,
+  ) {
+    this.project = this.projectService.createDefaultProject();
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -63,7 +50,7 @@ export class InfoPageComponent implements OnInit {
       if (params['id']) {
         this.formExists = true;
         this.formId = params['id'];
-        this.project = this.projectService.searchData(this.formId)?.[0] || null;
+        this.project = this.projectService.searchData(this.formId)?.[0] || this.projectService.createDefaultProject();
         if (this.project) {
           this.initializeForm();
         }
@@ -80,7 +67,7 @@ export class InfoPageComponent implements OnInit {
 
     this.jsonService.getJsonData().subscribe((data) => {
       if (data) {
-        this.project = { ...this.project, ...data.project };
+        this.project = this.projectService.createFromData(data.project);
         this.initializeForm();
       }
     });

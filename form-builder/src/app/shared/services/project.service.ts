@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
+import { Project, ProjectType, ProjectVersion } from '@interfaces/project';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -178,5 +178,25 @@ export class ProjectService<T extends Project> {
    */
   searchData(id: string): T[] {
     return this.items.filter((item) => item.id === id);
+  }
+
+  createDefaultProject(): Project {
+    const today = new Date().toISOString().split('T')[0];
+    return {
+      id: '',
+      title: '',
+      description: '',
+      type: ProjectType.QUESTIONNAIRE,
+      time_checkbox: false,
+      deadline_checkbox: false,
+      time_limit: 0,
+      deadline: '',
+      created: today,
+      modified: today,
+    };
+  }
+
+  createFromData(data: Partial<Project>): Project {
+    return { ...this.createDefaultProject(), ...data };
   }
 }
