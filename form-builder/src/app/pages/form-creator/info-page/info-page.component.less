@@ -6,12 +6,16 @@ nz-layout {
   background-color: @transparent;
   display: flex;
   flex-direction: column;
-  padding: 0 @spacing32;
+  padding: @spacing0 @spacing32;
 }
 
 .formelement {
-  margin-bottom: @spacing32;
   width: @width-full;
+}
+
+hr {
+  margin-top: @spacing0;
+  margin-bottom: @spacing8;
 }
 
 #switch {
@@ -29,10 +33,6 @@ nz-layout {
   box-sizing: border-box;
 }
 
-#title {
-  margin-bottom: @spacing12;
-}
-
 .description-label,
 .title-label {
   font-weight: bold;
@@ -47,7 +47,6 @@ nz-layout {
 }
 
 .error-message {
-  margin-top: 5px;
   color: @accent-danger;
   font-size: 12px;
   font-weight: bold;
@@ -60,8 +59,11 @@ nz-layout {
 .same_line {
   display: flex;
   align-items: center;
-  gap: @spacing12;
   flex-wrap: wrap;
+}
+
+.mb-8 {
+  margin-bottom: @spacing8;
 }
 
 .icon-margin-small {
