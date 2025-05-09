@@ -23,6 +23,7 @@ import { TimePickerComponentData } from '@components/time-picker/interfaces/time
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
 import { EditComponent } from '@pages/edit/edit.component';
 import { FormInputData } from '@interfaces/form-input-data';
+import {TranslateService} from "@ngx-translate/core";
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
@@ -120,73 +121,73 @@ const checkboxGroupInputOptions: CheckboxGroupData = {
 };
 
 //Used for resetting inputs
-export function getInputGroups(): FormInputData<any>[] {
+export function getInputGroups(translate: TranslateService): FormInputData<any>[] {
   return [
     {
-      title: 'TEXT FIELD',
+      title: translate.instant('components.TEXT_FIELD'),
       questionPlaceholder: 'Text Field question...',
       descriptionPlaceholder: 'Question description...',
       type: 'InputComponent',
       data: textInputOptions,
     },
     {
-      title: 'NUMBER FIELD',
+      title: translate.instant('components.NUMBER_FIELD'),
       questionPlaceholder: 'Number Field question...',
       descriptionPlaceholder: 'Question description...',
       type: 'NumberInputComponent',
       data: numberInputOptions,
     },
     {
-      title: 'DATE PICKER',
+      title: translate.instant('components.DATE_PICKER'),
       questionPlaceholder: 'Date Picker question...',
       descriptionPlaceholder: 'Question description...',
       type: 'DatePickerComponent',
       data: dateInputOptions,
     },
     {
-      title: 'RANGE PICKER',
+      title: translate.instant('components.RANGE_PICKER'),
       questionPlaceholder: 'Range Picker question...',
       descriptionPlaceholder: 'Question description...',
       type: 'RangePickerComponent',
       data: rangeInputOptions,
     },
     {
-      title: 'TIME PICKER',
+      title: translate.instant('components.TIME_PICKER'),
       questionPlaceholder: 'Time Picker question...',
       descriptionPlaceholder: 'Question description...',
       type: 'TimePickerComponent',
       data: timeInputOptions,
     },
     {
-      title: 'TEXT AREA',
+      title: translate.instant('components.TEXT_AREA'),
       questionPlaceholder: 'Textarea question...',
       descriptionPlaceholder: 'Question description...',
       type: 'TextareaComponent',
       data: textAreaInputOptions,
     },
     {
-      title: 'PICTURE INPUT',
+      title: translate.instant('components.PICTURE_INPUT'),
       questionPlaceholder: 'Picture Input question...',
       descriptionPlaceholder: 'Question description...',
       type: 'PictureInputComponent',
       data: pictureInputOptions,
     },
     {
-      title: 'COMBOBOX',
+      title: translate.instant('components.COMBOBOX'),
       questionPlaceholder: 'ComboBox question...',
       descriptionPlaceholder: 'Question description...',
       type: 'SelectComponent',
       data: selectInputOptions,
     },
     {
-      title: 'RADIO GROUP',
+      title: translate.instant('components.RADIO_GROUP'),
       questionPlaceholder: 'Radio group question...',
       descriptionPlaceholder: 'Question description...',
       type: 'RadioGroupComponent',
       data: radioGroupInputOptions,
     },
     {
-      title: 'CHECKBOX GROUP',
+      title: translate.instant('components.CHECKBOX_GROUP'),
       questionPlaceholder: 'Checkbox group question...',
       descriptionPlaceholder: 'Question description...',
       type: 'CheckboxGroupComponent',
@@ -195,22 +196,24 @@ export function getInputGroups(): FormInputData<any>[] {
   ];
 }
 
+
+
 // The data shown in the edit sidebar
-export function getSideBarData(component: EditComponent): SidebarData[] {
+export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {
   return [
     {
-      groupName: 'Basic inputs',
+      groupName: translate.instant('components.BASIC_INPUTS'),
       active: true,
       dropListConnectedTo: () => component.getSectionIds().concat(['sectionDropList']),
-      groupContents: getInputGroups(),
+      groupContents: getInputGroups(translate),
     },
     {
-      groupName: 'Sections',
+      groupName: translate.instant('components.SECTIONS'),
       active: true,
       dropListConnectedTo: () => 'sectionDropList',
       groupContents: [
         {
-          title: 'SECTION',
+          title: translate.instant('components.SECTION'),
           type: 'SectionComponent',
           data: null,
         },

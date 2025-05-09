@@ -14,7 +14,7 @@ export class CheckboxGroupComponent extends AbstractInput<CheckboxOptions[], Che
     // @todo modalTitle should be translated
     this.modalService
       .openModal({
-        modalTitle: 'Edit Radio Group Settings',
+        modalTitle: this.translate.instant('components.checkbox_group.MODAL_CHECKBOX_GROUP_TITLE'),
         modalContent: CheckboxGroupEditComponent,
         modalData: this.data,
       })

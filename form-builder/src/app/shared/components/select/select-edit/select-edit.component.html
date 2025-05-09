@@ -53,7 +53,7 @@
   <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="Question" formControlName="questionValue" />
+Add  <input nz-input placeholder="Question" formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -79,7 +79,7 @@
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="setDefaultValue">Set default value?</label>
+        <label nz-checkbox formControlName="setDefaultValue">{{ 'components.SET_DEFAULT_VALUE?' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
