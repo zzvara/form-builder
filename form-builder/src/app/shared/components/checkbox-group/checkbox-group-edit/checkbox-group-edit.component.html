@@ -60,17 +60,18 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{'general.DESCRIPTION' | translate}}:</span>
+  <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize placeholder="{{'general.DESCRIPTION' | translate}}" formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
+  <nz-divider></nz-divider>
   <div class="required-section">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">{{'components.IS_REQUIRED' | translate}}</label>
+        <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
