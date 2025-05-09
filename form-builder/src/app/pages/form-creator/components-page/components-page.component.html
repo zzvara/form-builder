@@ -33,61 +33,32 @@
           [(ngModel)]="currentVersionNum"
           nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
           [nzDropdownRender]="versionMenu"
-          style="width:200px; margin-right:8px;"
-        >
+          style="width: 200px; margin-right: 8px;">
         </nz-select>
+
         <ng-template #versionMenu>
           <ul nz-menu>
             <li
               nz-menu-item
               *ngFor="let version of projectHistory; trackBy: trackByVersion"
-              (click)="revertToVersion(version.versionNum)"
-            >
-              <!-- Verziószám -->
-              <span>{{ 'project.VERSION' | translate }} {{ version.versionNum }}</span>
-        
-              <!-- Created-date popover (string-title) -->
+              (click)="revertToVersion(version.versionNum)">
+              <span>
+                {{ 'project.VERSION' | translate }} {{ version.versionNum }}
+              </span>
               <span
-                nz-popover
-                nzPopoverTrigger="hover"
+                nz-popover nzPopoverTrigger="hover"
                 [nzPopoverTitle]="'Created: ' + (version.created | date:'short')"
-                class="version-icon-wrapper"
-              >
-                <i nz-icon nzType="info-circle" class="version-info-icon"></i>
+                class="version-icon-wrapper">
+                <i nz-icon nzType="info-circle"></i>
               </span>
-        
-              <!-- Inline <ng-template> a diff-táblához -->
-              <ng-template #diffTpl>
-                <table class="diff-table">
-                  <thead>
-                    <tr>
-                      <th>Field</th>
-                      <th>Before</th>
-                      <th>After</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let d of getDiffItems(version)">
-                      <td>{{ d.key }}</td>
-                      <td><code>{{ d.before }}</code></td>
-                      <td><code>{{ d.after }}</code></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </ng-template>
-        
-              <!-- Diff popover -->
-              <span
-                nz-popover
-                nzPopoverTrigger="hover"
-                nzPopoverPlacement="right"
-                [nzPopoverTitle]="'Changes since v' + (version.versionNum - 1)"
-                [nzPopoverContent]="diffTpl"
-                class="version-icon-wrapper"
-                style="margin-left:8px;"
-              >
-                <i nz-icon nzType="diff" class="version-diff-icon"></i>
-              </span>
+
+
+              <button nz-button nzType="text"
+                (click)="openDiffModal(version)">
+                <i nz-icon nzType="diff"></i>
+              </button>
+
+              
             </li>
           </ul>
         </ng-template>

@@ -3,6 +3,8 @@ import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
 import { InlineEdit } from '@interfaces/inline-edit';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ChangeSummaryComponent } from './change-summary/change-summary.component';
 
 
 interface DiffItem {
@@ -17,6 +19,7 @@ interface DiffItem {
   standalone: false,
 })
 export class ComponentsPageComponent implements OnInit {
+  private readonly modal = inject(NzModalService);
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
 
   @ViewChild(EditComponent) editComponent!: EditComponent;
@@ -141,6 +144,21 @@ export class ComponentsPageComponent implements OnInit {
         before: JSON.stringify(old[key]),
         after: JSON.stringify(curr[key])
       }));
+  }
+  public getChangeItemsForVersion(version: ProjectVersion<Project>):
+    Array<{ key: string; before: any; after: any }> {
+    return this.getDiffItems(version)
+      .map(d => ({ key: d.key, before: d.before, after: d.after }));
+  }
+  openDiffModal(version: ProjectVersion<Project>): void {
+    this.modal.create({
+      nzTitle: `Changes since v${version.versionNum - 1}`,
+      nzContent: ChangeSummaryComponent,
+      nzData: { items: this.getChangeItemsForVersion(version) }, 
+      nzWidth: '60vw',
+      nzCentered: true,
+      nzFooter: null
+    });
   }
   
 

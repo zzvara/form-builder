@@ -19,14 +19,16 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FormCreatorComponent } from '@pages/form-creator/form-creator.component';
 import { InfoPageComponent } from '@pages/form-creator/info-page/info-page.component';
 import { ComponentsPageComponent } from '@pages/form-creator/components-page/components-page.component';
+import { ChangeSummaryComponent } from './components-page/change-summary/change-summary.component';
 import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
 import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
 import { NzPopoverModule }     from 'ng-zorro-antd/popover';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
-  declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
+  declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent,  ResultsPageComponent],
   imports: [
     NzFormModule,
     NzInputModule,
@@ -48,8 +50,11 @@ import { NzPopoverModule }     from 'ng-zorro-antd/popover';
     NzToolTipModule,
     NzPopoverModule,
     NzIconModule,
+    CommonModule,            
+    NzIconModule,
     SharedModule,
     TranslatePipe,
+    ChangeSummaryComponent
   ],
   providers: [],
   exports: [],

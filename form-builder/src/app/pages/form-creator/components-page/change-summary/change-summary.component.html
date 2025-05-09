@@ -1,0 +1,19 @@
+
+<ul class="change-summary">
+  <li *ngFor="let d of diffItems" (click)="d.open = !d.open">
+    <i nz-icon nzType="diff"></i>
+    <span class="field-name">{{ d.key }}</span>
+  </li>
+</ul>
+
+<div class="diff-details" *ngFor="let d of diffItems">
+  <div *ngIf="d.open" class="diff-block">
+    <pre>
+      <span *ngFor="let p of d.parts"
+            [class.added]="p.added"
+            [class.removed]="p.removed">
+        {{ p.value }}
+      </span>
+    </pre>
+  </div>
+</div>

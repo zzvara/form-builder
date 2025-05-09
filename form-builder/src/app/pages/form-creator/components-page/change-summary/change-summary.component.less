@@ -1,0 +1,43 @@
+
+.change-summary {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.change-summary li {
+  cursor: pointer;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.change-summary li:hover {
+  background-color: #f5f5f5;
+}
+.field-name {
+  margin-left: 4px;
+  font-weight: 500;
+}
+.diff-details {
+  margin-top: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.diff-block {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+}
+.added {
+  background-color: #f6ffed;
+}
+.removed {
+  background-color: #fff1f0;
+}
