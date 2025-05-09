@@ -1,21 +1,26 @@
 @import '../../../../breakpoints.less';
 @import '../../../../colors.less';
+@import '../../../../common.less';
 
 nz-layout {
   background-color: @transparent;
   display: flex;
   flex-direction: column;
-  padding: 0 30px;
+  padding: @spacing0 @spacing32;
 }
 
 .formelement {
-  margin-bottom: 30px;
-  width: 100%;
+  width: @width-full;
+}
+
+hr {
+  margin-top: @spacing0;
+  margin-bottom: @spacing8;
 }
 
 #switch {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: @spacing12;
+  margin-right: @spacing12;
 }
 
 #title,
@@ -24,12 +29,8 @@ nz-layout {
   border-radius: 10px;
   border-width: 2px;
   margin-top: -5px;
-  width: 100%;
+  width: @width-full;
   box-sizing: border-box;
-}
-
-#title {
-  margin-bottom: 10px;
 }
 
 .description-label,
@@ -46,30 +47,40 @@ nz-layout {
 }
 
 .error-message {
-  margin-top: 5px;
   color: @accent-danger;
   font-size: 12px;
   font-weight: bold;
 }
 
 .input-error {
-  border: 1px solid @accent-danger;
+  border: @border-default;
 }
 
 .same_line {
   display: flex;
   align-items: center;
-  gap: 10px;
   flex-wrap: wrap;
 }
 
-@media (max-width: @breakpoint-tablet) {
+.mb-8 {
+  margin-bottom: @spacing8;
+}
+
+.icon-margin-small {
+  margin-left: 5px;
+}
+
+.icon-margin-medium {
+  margin-left: @spacing12;
+}
+
+@media (max-width: @breakpoint-lg) {
   nz-layout {
-    padding: 0 20px;
+    padding: @spacing0 @spacing20;
   }
 
   .formelement {
-    margin-bottom: 20px;
+    margin-bottom: @spacing20;
   }
 
   #title,
@@ -79,13 +90,13 @@ nz-layout {
 
   .saveBtn {
     float: none;
-    margin-top: 10px;
+    margin-top: @spacing12;
   }
 }
 
-@media (max-width: @breakpoint-mobile) {
+@media (max-width: @breakpoint-md) {
   nz-layout {
-    padding: 0 15px;
+    padding: @spacing0 @spacing16;
   }
 
   #title,
@@ -93,7 +104,7 @@ nz-layout {
     font-size: 16px;
   }
   .formelement {
-    margin-bottom: 15px;
+    margin-bottom: @spacing16;
   }
 
   .same_line {
@@ -103,14 +114,14 @@ nz-layout {
 
   .saveBtn {
     float: none;
-    width: 100%;
-    margin-top: 15px;
+    width: @width-full;
+    margin-top: @spacing16;
   }
 }
 
-@media (max-width: @breakpoint-small) {
+@media (max-width: @breakpoint-xs) {
   nz-layout {
-    padding: 0 10px;
+    padding: @spacing0 @spacing12;
   }
 
   #title,
@@ -119,11 +130,11 @@ nz-layout {
   }
 
   .formelement {
-    margin-bottom: 10px;
+    margin-bottom: @spacing12;
   }
 
   .saveBtn {
-    width: 100%;
+    width: @width-full;
     font-size: 14px;
   }
 }

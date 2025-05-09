@@ -1,10 +1,44 @@
 @import '../../../../colors.less';
+@import '../../../../common.less';
 
 .valid-style {
-  width: 100%;
+  width: @width-full;
 }
 
 .invalid-style {
-  width: 100%;
+  width: @width-full;
   border: solid 1px @accent-danger;
+}
+
+.card-container {
+  height: @height-full;
+}
+
+.form-container {
+  width: @width-full;
+}
+
+.form-item {
+  margin-bottom: @spacing12;
+}
+
+.form-item-border {
+  border-bottom: @border-default;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
+}
+
+.id-text {
+  color: @accent-danger;
+}
+
+.error-icon {
+  color: @accent-danger;
+  margin-left: @spacing12;
+}
+
+.button-spacing {
+  margin-left: @spacing12;
 }

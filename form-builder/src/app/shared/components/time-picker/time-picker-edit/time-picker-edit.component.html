@@ -30,7 +30,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="setDefaultValue">{{ 'components.SET_DEFAULT_VALUE?' | translate }}</label>
@@ -53,7 +53,7 @@
               [nzSecondStep]="getControlValue('secondStep')"
               nzPlaceHolder="{{ 'components.SELECT_DATE' | translate }}"
               formControlName="defaultValue"
-              style="width: 100%"
+              class="time-picker"
             ></nz-time-picker>
           </nz-form-control>
           <ng-template #defaultValueErrorTemplate let-control> helpers </ng-template>
@@ -88,7 +88,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <div class="section-container">
     <span>{{ 'components.time_picker.SET_HOUR_STEP' | translate }}</span>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="hourStepNumberErrors">
@@ -133,7 +133,7 @@
     </nz-form-item>
   </div>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
@@ -181,7 +181,7 @@
               [nzSecondStep]="getControlValue('secondStep')"
               nzPlaceHolder="{{ 'components.time_picker.SELECT_MIN_TIME' | translate }}"
               formControlName="minTimeValue"
-              style="width: 100%"
+              class="time-picker"
             ></nz-time-picker>
           </nz-form-control>
           <ng-template #minTimeErrorMessageTemplate let-control>
@@ -242,7 +242,7 @@
     }
   </div>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTooltip">{{ 'components.INPUT_TOOLTIP' | translate }}</label>

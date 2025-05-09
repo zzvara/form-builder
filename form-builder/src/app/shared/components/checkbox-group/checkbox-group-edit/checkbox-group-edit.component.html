@@ -5,26 +5,26 @@
         <thead>
           <tr>
             <th>Description</th>
-            <th style="text-align: center">Disabled?</th>
-            <th style="text-align: center">Checked?</th>
-            <th style="text-align: center">Remove</th>
+            <th class="table-header-center">Disabled?</th>
+            <th class="table-header-center">Checked?</th>
+            <th class="table-header-center">Remove</th>
           </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
           @for (option of options.controls; track option.value.value; let i = $index) {
             <tr [formGroupName]="i" cdkDrag [cdkDragData]="option">
               <td>
-                <p style="max-width: 300px">{{ option.value.label }}</p>
+                <p class="option-label">{{ option.value.label }}</p>
               </td>
-              <td style="text-align: center"><label nz-checkbox formControlName="disabled"></label></td>
-              <td style="text-align: center"><label nz-checkbox formControlName="checked"></label></td>
-              <td style="text-align: center"><button nz-button nzType="link" nzDanger (click)="removeOption(i)">Remove</button></td>
+              <td class="table-header-center"><label nz-checkbox formControlName="disabled"></label></td>
+              <td class="table-header-center"><label nz-checkbox formControlName="checked"></label></td>
+              <td class="table-header-center"><button nz-button nzType="link" nzDanger (click)="removeOption(i)">Remove</button></td>
             </tr>
           }
         </tbody>
       </nz-table>
       @if (options.invalid) {
-        <span style="color: red">Please record at least {{ getMinOptions() }} more options!</span>
+        <span class="error-text">Please record at least {{ getMinOptions() }} more options!</span>
       }
     </nz-form-control>
   </nz-form-item>
@@ -67,7 +67,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <div class="required-section">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">Is Required?</label>

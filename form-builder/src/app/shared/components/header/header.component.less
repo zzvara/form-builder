@@ -1,10 +1,11 @@
 @import '../../../../colors.less';
+@import '../../../../common.less';
 
 nz-header {
   background-color: @gray-dark;
   padding: 0 5rem;
   position: fixed;
-  width: 100%;
+  width: @width-full;
   z-index: 100;
 }
 
@@ -36,35 +37,6 @@ nz-header {
   color: @white-text;
 }
 
-.setting {
-  background-color: @gray-dark;
-  color: black;
-}
-
-.language {
-  background-color: @background-white;
-}
-
-.language-switcher {
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0px;
-
-  span {
-    padding: 0px 0px;
-    transition: 0.3s;
-
-    &:hover {
-      color: #007bff;
-    }
-  }
-
-  .separator {
-    padding: 0 0px;
-    font-weight: normal;
-    color: #666;
-  }
+.hidden-input {
+  display: none;
 }

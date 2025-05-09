@@ -8,13 +8,15 @@
           nzType="question-circle"
           nz-tooltip
           nzTooltipTitle="{{ 'form.FORM_TITLE_TOOLTIP' | translate }}"
-          style="margin-left: 5px"
+          class="icon-margin-small"
         ></i>
       </nz-form-label>
       <nz-form-control nz-col nzSpan="24">
+        <div class="mb-8">
         <input
           nz-input
           type="text"
+          class="formelement"
           id="title"
           formControlName="title"
           (change)="updateForm()"
@@ -26,6 +28,7 @@
             <span class="error-message">{{ 'form.TITLE_REQUIRED' | translate }}</span>
           </div>
         }
+        </div>
       </nz-form-control>
 
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
@@ -35,22 +38,22 @@
           nzType="question-circle"
           nz-tooltip
           nzTooltipTitle="{{ 'form.FORM_DESCRIPTION_TOOLTIP' | translate }}"
-          style="margin-left: 5px"
+          class="icon-margin-small"
         ></i>
       </nz-form-label>
       <textarea
         nz-input
         [nzAutosize]="{ minRows: 4, maxRows: 6 }"
-        class="formelement"
+        class="formelement mb-8"
         id="description"
         formControlName="description"
         (change)="updateForm()"
       ></textarea>
-      
-      <hr class="formelement" />
+
+      <hr/>
 
       <ng-container>
-        <nz-form-item class="same_line">
+        <nz-form-item class="same_line mb-8">
           <nz-form-label [nzNoColon]="true">{{ 'form.QUESTIONNAIRE' | translate }}</nz-form-label>
           <nz-switch formControlName="type" id="switch" (change)="updateForm()"></nz-switch>
           <nz-form-label [nzNoColon]="true"
@@ -60,13 +63,13 @@
               nzType="question-circle"
               nz-tooltip
               nzTooltipTitle="{{ 'form.SWITCH_TOOLTIP' | translate }}"
-              style="margin-left: 10px"
+              class="icon-margin-medium"
             ></i>
           </nz-form-label>
         </nz-form-item>
       </ng-container>
 
-      <nz-form-item class="same_line">
+      <nz-form-item class="same_line mb-8">
         <label nz-checkbox formControlName="hasdeadline"></label>
         <nz-form-label [nzNoColon]="true"
           >{{ 'general.DEADLINE' | translate }}
@@ -75,7 +78,7 @@
             nzType="question-circle"
             nz-tooltip
             nzTooltipTitle="{{ 'form.DEADLINE_TOOLTIP' | translate }}"
-            style="margin-left: 5px"
+            class="icon-margin-small"
           ></i>
         </nz-form-label>
         @if (form.get('hasdeadline')?.value) {
@@ -83,12 +86,12 @@
         }
       </nz-form-item>
 
-      <nz-form-item class="same_line">
+      <nz-form-item class="same_line mb-8">
         <label nz-checkbox formControlName="haslimit"></label>
         <nz-form-label [nzNoColon]="true"
         >{{ 'general.TIME_LIMIT' | translate }}
           <i
-            style="margin-left: 5px"
+            class="icon-margin-small"
             nz-icon
             nzType="question-circle"
             nz-tooltip
@@ -103,11 +106,11 @@
       @if (formExists) {
         <ng-container>
           <div>
-            <div>
+            <div class="mb-8">
               <nz-form-label>{{ 'general.CREATED' | translate }}</nz-form-label>
               <nz-form-label [nzNoColon]="true">{{ project.created }}</nz-form-label>
             </div>
-            <div>
+            <div class="mb-8">
               <nz-form-label>{{ 'form.LAST_MODIFIED' | translate }}</nz-form-label>
               <nz-form-label [nzNoColon]="true">{{ project.modified }}</nz-form-label>
             </div>
@@ -115,7 +118,7 @@
         </ng-container>
       }
 
-      <div class="saveBtn">
+      <div class="saveBtn mb-8">
         <button id="btn" nz-button nzType="primary" type="submit">{{ 'general.NEXT' | translate }}</button>
       </div>
     </form>

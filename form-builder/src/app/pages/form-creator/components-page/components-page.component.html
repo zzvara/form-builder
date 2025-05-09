@@ -2,20 +2,18 @@
   <div>
     <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
 
-    <!-- @todo Styling generalization needed in this file as well. -->
     <div
       nz-row
       id="footerdiv"
-      style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; background: white; border-top: 1px solid lightgray"
     >
       <div nz-col nzSpan="22"></div>
-      <div nz-row nzJustify="start" nzAlign="middle" style="width: 100%">
+      <div nz-row nzJustify="start" nzAlign="middle" class="full-width">
         <button
           nz-button
           nzType="primary"
           type="submit"
           (click)="nextPage()"
-          style="margin-left: 8px"
+          class="button-margin next-button"
           [disabled]="isNextButtonDisabled"
           nz-tooltip="{{ 'components.NEXT_TOOLTIP' | translate }}"
         >
@@ -23,7 +21,7 @@
         </button>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" class="version-button">
             {{ 'components.NEXT_VERSION' | translate }}
           </button>
         </div>
@@ -33,7 +31,7 @@
             [(ngModel)]="currentVersionNum"
             (ngModelChange)="revertToVersion($event)"
             nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
-            style="margin-right: 8px"
+            class="version-select"
           >
             @for (version of projectHistory; track $index) {
               <nz-option [nzValue]="version.versionNum" [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"></nz-option>
@@ -42,16 +40,16 @@
         </div>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" class="version-button">
             {{ 'components.PREVIOUS_VERSION' | translate }}
           </button>
         </div>
 
-        <div style="margin-right: 20px">
+        <div class="redo-undo-container">
           <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
         </div>
 
-        <div style="margin-right: 20px">
+        <div class="inline-edit-container">
           <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
         </div>
       </div>
