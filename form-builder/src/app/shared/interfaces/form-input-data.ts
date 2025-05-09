@@ -1,7 +1,7 @@
 import { translateComponentType } from '@pages/edit/config/edit-data-config';
 import { InputData } from '@interfaces/input-data';
 
-export interface FormInputData<D extends InputData<T> = InputData, T = string | number | boolean | null> {
+export interface FormInputData<D extends InputData<T> = InputData, T = any> {
   title: string;
   questionPlaceholder?: string;
   descriptionPlaceholder?: string;
@@ -9,13 +9,6 @@ export interface FormInputData<D extends InputData<T> = InputData, T = string | 
   data: D | null;
 }
 
-export function instanceOfFormInputData<
-  D extends InputData<T>,
-  T = string | number | boolean | null 
->(object: object | null): object is FormInputData<D, T> {
-  return object != null &&
-    'title' in object &&
-    'type' in object &&
-    'data' in object;
+export function instanceOfFormInputData(object: any): object is FormInputData {
+  return object && 'title' in object && 'type' in object && 'data' in object;
 }
-

@@ -18,7 +18,7 @@ export class PictureInputComponent extends AbstractInput<string | null, PictureI
 
   override onChange(info: NzUploadChangeParam): void {
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
+      console.log(info.file, info.fileList); 
     }
     if (info.file.status === 'done') {
       console.log(`${info.file.name} file uploaded successfully`);
@@ -28,11 +28,14 @@ export class PictureInputComponent extends AbstractInput<string | null, PictureI
   }
 
   uploadToLocalStorage = (file: NzUploadFile): Observable<string> => {
+    const blob = file.originFileObj as Blob;
     const reader = new FileReader();
     reader.onload = () => {
-      localStorage.setItem(file.name, reader.result as string);
+      if (typeof reader.result === 'string') {
+        localStorage.setItem(file.name, reader.result);
+      }
     };
-    reader.readAsDataURL(file as any);
+    reader.readAsDataURL(blob);
     return of('');
   };
 

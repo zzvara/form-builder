@@ -140,10 +140,9 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
     this.options.markAsTouched();
   }
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
+    const error = this.getError(this.options, 'minLengthError') as { min: number; current: number };
     return error.min - error.current;
   }
-
   drop(event: CdkDragDrop<AbstractControl[]>) {
     moveItemInArray(this.options.controls, event.previousIndex, event.currentIndex);
   }

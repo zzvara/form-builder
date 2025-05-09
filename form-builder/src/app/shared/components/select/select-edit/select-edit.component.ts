@@ -121,7 +121,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   }
 
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
+    const error = this.getError(this.options, 'minLengthError') as { min: number; current: number };
     return error.min - error.current;
   }
 

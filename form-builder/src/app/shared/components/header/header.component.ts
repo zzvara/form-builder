@@ -68,11 +68,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.headerService.triggerUndo();
   }
 
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.uploadJson(file);
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) {
+      return;
     }
+    const file = input.files[0];
+    this.uploadJson(file);
   }
 
   uploadJson(file: File): void {
