@@ -1,4 +1,9 @@
 {
+"title": {
+    "dashboard": "Dashboard",
+    "newform" : "New Form",
+    "editform": "Edit Form"
+  },
   "components": {
     "BASIC_INPUTS": "Basic inputs",
     "CANNOT_BE_EMPTY": "Cannot be empty!",
@@ -184,7 +189,8 @@
     "SWITCH_TOOLTIP": "Off state is Questionaire - On state is Test",
     "TEST": "Test",
     "TIME_LIMIT_TOOLTIP": "Determines how much time a user has to complete the form once it has been started.",
-    "TITLE_REQUIRED": "Title is required"
+    "TITLE_REQUIRED": "Title is required",
+    "OPTIONAL": "(optional)"
   },
   "general": {
     "CANCEL": "Cancel",

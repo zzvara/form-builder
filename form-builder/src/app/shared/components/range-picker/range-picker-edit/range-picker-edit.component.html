@@ -1,5 +1,5 @@
 <form id="datePickerEditFormID" nz-form [formGroup]="formData">
-  <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
+  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input placeholder="{{ 'components.QUESTION' | translate }}" formControlName="questionValue" />

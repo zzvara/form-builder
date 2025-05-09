@@ -9,7 +9,7 @@
   }"
 >
   <form #inputHolderForm="ngForm" nz-form class="form-container">
-    <span>Question:</span>
+    <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
     <nz-form-item [ngClass]="{'form-item': true, 'form-item-border': !inlineEdit.enabled}">
       <nz-form-control nzErrorTip="Input question is mandatory!">
         <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
