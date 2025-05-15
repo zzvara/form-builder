@@ -21,6 +21,7 @@ import { ComponentsPageComponent } from '@pages/form-creator/components-page/com
 import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
 import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
+import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -45,6 +46,7 @@ import { SharedModule } from '@shared/shared.module';
     NzToolTipModule,
     SharedModule,
     TranslatePipe,
+    NzDescriptionsModule
   ],
   providers: [],
   exports: [],
