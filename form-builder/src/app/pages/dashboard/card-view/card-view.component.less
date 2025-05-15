@@ -1,5 +1,7 @@
 @import '../../../../colors.less';
 @import '../../../../common.less';
+@import '../../../../typography.less';
+
 :host {
   display: block;
   overflow-x: hidden;
@@ -18,7 +20,7 @@
 }
 
 p {
-  font-size: 0.75rem;
+  font-size: @font-size-tiny; // maybe its too small, it was 0.75rem
   padding: @spacing0;
   margin: @spacing0;
 }
@@ -28,7 +30,7 @@ nz-card {
 
   span {
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: @font-size-lead;
     margin-top: 0.5rem;
   }
 
@@ -39,7 +41,7 @@ nz-card {
 
 .create-card {
   cursor: pointer;
-  font-size: 4rem;
+  font-size: 64px; //it was 64
   color: @gray;
   display: flex;
   justify-content: center;
