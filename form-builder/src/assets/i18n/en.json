@@ -1,15 +1,10 @@
 {
-"title": {
-    "dashboard": "Dashboard",
-    "newform" : "New Form",
-    "editform": "Edit Form"
-  },
   "components": {
     "BASIC_INPUTS": "Basic inputs",
     "CANNOT_BE_EMPTY": "Cannot be empty!",
     "CANNOT_BE_LOWER_THAN": "Cannot be lower than",
     "CHARACTER_COUNTER": "Character counter",
-    "CHECKBOX GROUP": "CHECKBOX GROUP",
+    "CHECKBOX_GROUP": "CHECKBOX GROUP",
     "COMBOBOX": "COMBOBOX",
     "COMPONENT_DESCRIPTION": "Description",
     "COMPONENT_QUESTION": "Question",
@@ -40,7 +35,7 @@
     "PLACEHOLDER_TIME_FORMAT": "Time format",
     "PREVIOUS_VERSION": "Previous Version",
     "PROVIDE_TOOLTIP": "Must provide a tooltip message!",
-    "RADIO GROUP": "RADIO GROUP",
+    "RADIO_GROUP": "RADIO GROUP",
     "RANGE_PICKER": "RANGE PICKER",
     "SECTION": "SECTION",
     "SECTIONS": "Sections",
@@ -189,8 +184,7 @@
     "SWITCH_TOOLTIP": "Off state is Questionaire - On state is Test",
     "TEST": "Test",
     "TIME_LIMIT_TOOLTIP": "Determines how much time a user has to complete the form once it has been started.",
-    "TITLE_REQUIRED": "Title is required",
-    "OPTIONAL": "(optional)"
+    "TITLE_REQUIRED": "Title is required"
   },
   "general": {
     "CANCEL": "Cancel",
