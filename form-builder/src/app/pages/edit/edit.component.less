@@ -138,3 +138,78 @@ nz-sider {
   width: 900px;
   border: @border-default;
 }
+
+.right-sider {
+  background: @background-white;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 112px);  // 64px header + 48px footer
+  border: solid 1px @border-light;
+
+  h3 {
+    padding: 10px;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .components-list {
+    height: calc(100% - 48px);
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .component-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background: @background-light;
+    border: 1px solid @border-light;
+    border-radius: 5px;
+    cursor: move;
+    position: relative;
+
+    &.section-item {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hover-icon {
+      display: none;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: @accent-info;
+      transition: all 0.3s;
+
+      &:hover {
+        color: @accent-info;
+      }
+    }
+
+    &:hover {
+      .hover-icon {
+        display: block;
+      }
+    }
+
+    &.cdk-drag-preview {
+      .hover-icon {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.component-item.cdk-drag-preview {
+  background: @background-light !important;
+  border: 1px solid @border-light;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  .box-shadow;
+}
