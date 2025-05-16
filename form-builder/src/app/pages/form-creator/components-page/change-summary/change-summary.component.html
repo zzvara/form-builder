@@ -1,19 +1,36 @@
+<div class="cs-body">
+  <ng-container *ngFor="let d of diffItems">
+    <!-- Section header -->
+    <h3 class="cs-section-title">{{ d.key }}</h3>
 
-<ul class="change-summary">
-  <li *ngFor="let d of diffItems" (click)="d.open = !d.open">
-    <i nz-icon nzType="diff"></i>
-    <span class="field-name">{{ d.key }}</span>
-  </li>
-</ul>
+    <div class="cs-details">
+      <!-- Added Inputs: always shown -->
+      <div class="cs-subsection">
+        <h4>Added Inputs</h4>
+        <ul>
+          <li *ngFor="let i of d.addedItems">
+            <span class="cs-custom-icon">{{ getIconType(i.data.type) }}</span>
+            {{ i.data.title }}
+          </li>
+          <li *ngIf="!d.addedItems?.length" class="cs-none">
+            — none —
+          </li>
+        </ul>
+      </div>
 
-<div class="diff-details" *ngFor="let d of diffItems">
-  <div *ngIf="d.open" class="diff-block">
-    <pre>
-      <span *ngFor="let p of d.parts"
-            [class.added]="p.added"
-            [class.removed]="p.removed">
-        {{ p.value }}
-      </span>
-    </pre>
-  </div>
+      <!-- Removed Inputs: also always shown -->
+      <div class="cs-subsection">
+        <h4>Removed Inputs</h4>
+        <ul>
+          <li *ngFor="let i of d.removedItems">
+            <span class="cs-custom-icon">{{ getIconType(i.data.type) }}</span>
+            {{ i.data.title }}
+          </li>
+          <li *ngIf="!d.removedItems?.length" class="cs-none">
+            — none —
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
 </div>

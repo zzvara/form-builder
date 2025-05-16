@@ -24,6 +24,8 @@ import { ResultsPageComponent } from '@pages/form-creator/results-page/results-p
 import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
 import { NzPopoverModule }     from 'ng-zorro-antd/popover';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzMenuModule }     from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
 
 
@@ -52,6 +54,8 @@ import { CommonModule } from '@angular/common';
     NzIconModule,
     CommonModule,            
     NzIconModule,
+    NzDropDownModule,
+    NzMenuModule,
     SharedModule,
     TranslatePipe,
     ChangeSummaryComponent

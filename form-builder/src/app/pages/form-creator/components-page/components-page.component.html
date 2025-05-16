@@ -1,13 +1,18 @@
 <nz-layout>
   <div>
-    <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"></app-edit>
+    <app-edit
+      [inlineEdit]="inlineEdit"
+      [projectId]="projectId"
+      [versionNum]="currentVersionNum">
+    </app-edit>
 
     <div
       nz-row
       id="footerdiv"
+      style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; background: white; border-top: 1px solid lightgray"
     >
       <div nz-col nzSpan="22"></div>
-      <div nz-row nzJustify="start" nzAlign="middle" class="full-width">
+      <div nz-row nzJustify="start" nzAlign="middle" style="width: 100%">
         <button
           nz-button
           nzType="primary"
@@ -21,38 +26,74 @@
         </button>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" class="version-button">
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
             {{ 'components.NEXT_VERSION' | translate }}
           </button>
         </div>
 
-        <div>
-          <nz-select
-            [(ngModel)]="currentVersionNum"
-            (ngModelChange)="revertToVersion($event)"
-            nzPlaceHolder="{{ 'components.SELECT_VERSION' | translate }}"
-            style="margin-right: 8px"
+        <!-- Dropdown verzióválasztó -->
+        <div style="margin-left: 8px;">
+          <button
+            nz-button
+            nz-dropdown
+            nzTrigger="click" 
+            [nzDropdownMenu]="versionMenu"
+            style="width: 200px;"
           >
-            @for (version of projectHistory; track $index) {
-              <nz-option [nzValue]="version.versionNum" [nzLabel]="('project.VERSION' | translate) + ' ' + version.versionNum"></nz-option>
-            }
-          </nz-select>
+            {{ currentVersionNum
+              ? ('project.VERSION' | translate) + ' ' + currentVersionNum
+              : ('components.SELECT_VERSION' | translate) }}
+            <i nz-icon nzType="down"></i>
+          </button>
+          <nz-dropdown-menu #versionMenu="nzDropdownMenu">
+            <ul nz-menu>
+              <li
+                nz-menu-item
+                *ngFor="let version of projectHistory; trackBy: trackByVersion"
+                (click)="revertToVersion(version.versionNum)"
+              >
+                <span>
+                  {{ 'project.VERSION' | translate }} {{ version.versionNum }}
+                </span>
+                <span
+                  nz-popover
+                  nzPopoverTrigger="hover"
+                  nz-tooltip="{{'Created: ' | translate}} {{ (version.created | date:'short')}}"
+                  class="version-icon-wrapper"
+                >
+                  <i nz-icon nzType="calendar"></i>
+                </span>
+                
+                <button
+                  *ngIf="version.versionNum > 1"
+                  nz-button
+                  nzType="text"
+                  (click)="openDiffModal(version)"
+                  nz-tooltip="{{ 'Changes made since version' | translate }} {{ version.versionNum - 1 }}"
+                  class="version-icon-wrapper"
+                  style="margin-left: 8px;"
+                >
+                  <i nz-icon nzType="diff"></i>
+                </button>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
         </div>
 
         <div>
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" class="version-button">
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
             {{ 'components.PREVIOUS_VERSION' | translate }}
           </button>
         </div>
 
-        <div class="redo-undo-container">
+        <div style="margin-right: 20px">
           <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
         </div>
 
-        <div class="inline-edit-container">
-          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">{{'components.INLINE_EDIT' | translate}}</label>
+        <div style="margin-right: 20px">
+          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
         </div>
-      </div>
-    </div>
+      </div> <!-- vége nz-row -->
+    </div>   <!-- vége footerdiv -->
   </div>
 </nz-layout>

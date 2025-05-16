@@ -41,13 +41,10 @@ export class ComponentsPageComponent implements OnInit {
    */
  ngOnInit(): void {
   if (this.projectId !== undefined) {
-    // Betöltés
     this.projectHistory = this.projectService.getProjectHistory(this.projectId);
 
-    // Debug: nézzük meg, mit kaptunk vissza
     console.log('projectHistory:', this.projectHistory);
 
-    // Ezután állítjuk be a currentVersionNum-ot
     this.currentVersionNum = this.projectHistory.length > 0
       ? this.projectHistory[this.projectHistory.length - 1].versionNum
       : 1;
@@ -151,15 +148,20 @@ export class ComponentsPageComponent implements OnInit {
       .map(d => ({ key: d.key, before: d.before, after: d.after }));
   }
   openDiffModal(version: ProjectVersion<Project>): void {
-    this.modal.create({
-      nzTitle: `Changes since v${version.versionNum - 1}`,
-      nzContent: ChangeSummaryComponent,
-      nzData: { items: this.getChangeItemsForVersion(version) }, 
-      nzWidth: '60vw',
-      nzCentered: true,
-      nzFooter: null
-    });
-  }
+  const prev = version.versionNum - 1;
+  const title = prev > 0
+    ? `Changes since version ${prev}`
+    : `Changes`;    
+
+  this.modal.create({
+    nzTitle: title,
+    nzContent: ChangeSummaryComponent,
+    nzData: { items: this.getChangeItemsForVersion(version) },
+    nzWidth: '60vw',
+    nzCentered: true,
+    nzFooter: null
+  });
+}
   
 
   onSectionInputsChange(undoRedoEvent: 'UNDO' | 'REDO'): void {
