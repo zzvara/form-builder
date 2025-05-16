@@ -5,7 +5,7 @@ import { ProjectService } from '@services/project.service';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
-
+import { TranslateService } from '@ngx-translate/core';
 
 interface DiffItem {
   key: string;
@@ -20,6 +20,7 @@ interface DiffItem {
 })
 export class ComponentsPageComponent implements OnInit {
   private readonly modal = inject(NzModalService);
+  private readonly translate = inject(TranslateService);
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
 
   @ViewChild(EditComponent) editComponent!: EditComponent;
@@ -29,7 +30,7 @@ export class ComponentsPageComponent implements OnInit {
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();
 
-  inlineEdit: InlineEdit = { enabled: false };
+  inlineEdit: InlineEdit = { enabled: true };
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
@@ -42,8 +43,6 @@ export class ComponentsPageComponent implements OnInit {
  ngOnInit(): void {
   if (this.projectId !== undefined) {
     this.projectHistory = this.projectService.getProjectHistory(this.projectId);
-
-    console.log('projectHistory:', this.projectHistory);
 
     this.currentVersionNum = this.projectHistory.length > 0
       ? this.projectHistory[this.projectHistory.length - 1].versionNum
@@ -150,8 +149,8 @@ export class ComponentsPageComponent implements OnInit {
   openDiffModal(version: ProjectVersion<Project>): void {
   const prev = version.versionNum - 1;
   const title = prev > 0
-    ? `Changes since version ${prev}`
-    : `Changes`;    
+      ? this.translate.instant('components.change_summary.CHANGES_SINCE', {version: prev })
+      : this.translate.instant('components.change_summary.CHANGES_SINCE', { version: version.versionNum });
 
   this.modal.create({
     nzTitle: title,

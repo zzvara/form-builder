@@ -31,6 +31,8 @@
     "MODE": "Mode",
     "NEXT_TOOLTIP": "Please put the components in the edit section before proceeding.",
     "NEXT_VERSION": "Next Version",
+    "CREATED": "Created:",
+    "CHANGES_SINCE": "Changes made since version",
     "NUMBER_FIELD": "NUMBER FIELD",
     "PICTURE_INPUT": "PICTURE INPUT",
     "PLACEHOLDER": "Placeholder",
@@ -61,6 +63,12 @@
       "CHECKED?": "Checked?",
       "DISABLED?": "Disabled?",
       "MODAL_CHECKBOX_GROUP_TITLE": "Edit Checkbox Group Settings"
+    },
+    "change_summary":{
+      "CHANGES_SINCE": "Changes made since version {{version}}",
+      "ADDED_INPUTS": "Added Inputs",
+      "REMOVED_INPUTS": "Removed Inputs",
+      "NONE": "— none —"
     },
     "combobox": {
       "ADD_OPTION": "Add Option",
@@ -164,7 +172,7 @@
       "TIME_FORMAT": "Time format"
     }
   },
-  "dashboard": {
+  "dasxboard": {
     "ACTION": "Action",
     "CARD_VIEW": "Card View",
     "CARD_VIEW_TOOLTIP": "Switch to card view",

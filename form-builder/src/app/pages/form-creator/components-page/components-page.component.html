@@ -31,14 +31,14 @@
           </button>
         </div>
 
-        <!-- Dropdown verzióválasztó -->
+        <!-- Dropdown -->
         <div style="margin-left: 8px;">
           <button
             nz-button
             nz-dropdown
             nzTrigger="click" 
             [nzDropdownMenu]="versionMenu"
-            style="width: 200px;"
+            style="width: 120px;"
           >
             {{ currentVersionNum
               ? ('project.VERSION' | translate) + ' ' + currentVersionNum
@@ -58,7 +58,7 @@
                 <span
                   nz-popover
                   nzPopoverTrigger="hover"
-                  nz-tooltip="{{'Created: ' | translate}} {{ (version.created | date:'short')}}"
+                  nz-tooltip="{{'components.CREATED' | translate}} {{ (version.created | date:'short')}}"
                   class="version-icon-wrapper"
                 >
                   <i nz-icon nzType="calendar"></i>
@@ -69,7 +69,7 @@
                   nz-button
                   nzType="text"
                   (click)="openDiffModal(version)"
-                  nz-tooltip="{{ 'Changes made since version' | translate }} {{ version.versionNum - 1 }}"
+                  nz-tooltip="{{ 'components.CHANGES_SINCE' | translate }} {{ version.versionNum - 1 }}"
                   class="version-icon-wrapper"
                   style="margin-left: 8px;"
                 >
@@ -93,7 +93,7 @@
         <div style="margin-right: 20px">
           <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
         </div>
-      </div> <!-- vége nz-row -->
-    </div>   <!-- vége footerdiv -->
+      </div> 
+    </div>  
   </div>
 </nz-layout>

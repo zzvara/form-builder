@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Input, SimpleChanges, inject } from '@ang
 import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface RawItem {
   id: string;
@@ -22,7 +23,7 @@ interface DiffItem {
 @Component({
   selector: 'app-change-summary',
   standalone: true,
-  imports: [CommonModule, NzIconModule],
+  imports: [CommonModule, NzIconModule,  TranslatePipe],
   templateUrl: './change-summary.component.html',
   styleUrls: ['./change-summary.component.less']
 })

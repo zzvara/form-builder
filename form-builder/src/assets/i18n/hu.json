@@ -26,6 +26,8 @@
     "MODE": "Mód",
     "NEXT_TOOLTIP": "Kérjük, helyezze el a komponenseket a szerkesztési szakaszba a folytatás előtt.",
     "NEXT_VERSION": "Következő verzió",
+    "CREATED": "Létrehozva:",
+    "CHANGES_SINCE": "Változások verzió óta",
     "NUMBER_FIELD": "SZÁMMEZŐ",
     "PICTURE_INPUT": "KÉPBEMENET",
     "PLACEHOLDER": "Helyőrző",
@@ -56,6 +58,12 @@
       "CHECKED?": "Ellenőrizve?",
       "DISABLED?": "Letiltva?",
       "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése"
+    },
+     "change_summary":{
+        "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
+        "ADDED_INPUTS": "Hozzáadott mezők",
+        "REMOVED_INPUTS": "Eltávolított mezők",
+        "NONE": "— nincs —"
     },
     "combobox": {
       "ADD_OPTION": "Lehetőség hozzáadása",
