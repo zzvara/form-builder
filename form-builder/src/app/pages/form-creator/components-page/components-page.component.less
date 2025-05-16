@@ -1,3 +1,4 @@
+@import '../../../../common.less';
 @import '../../../../colors.less';
 
 nz-layout {
@@ -5,7 +6,39 @@ nz-layout {
 }
 
 #footerdiv {
-  margin-top: 1rem;
+  margin-top: @spacing12;
+  position: fixed;
+  bottom: @spacing0;
+  right: @spacing0;
+  width: @width-full;
+  padding: @spacing12;
+  background: @background-white;
+  border-top: @border-default;
+}
+
+.button-margin {
+  margin-left:  @spacing8;
+  margin-right: @spacing8;
+}
+
+.version-button {
+  margin-right: @spacing8;
+}
+
+.version-select {
+  margin-right: @spacing8;
+}
+
+.redo-undo-container {
+  margin-right: @spacing8;
+}
+
+.inline-edit-container {
+  margin-right: @spacing20;
+}
+
+.full-width {
+  width: @width-full;
 }
 
 .diff-table {

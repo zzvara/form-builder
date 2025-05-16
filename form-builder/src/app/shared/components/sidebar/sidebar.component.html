@@ -22,7 +22,7 @@
           [cdkDropListSortingDisabled]="true"
         >
           @for (item of group.groupContents; track item.type) {
-            <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true" style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px">
+            <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
               <span
                 ><b>{{ item.title }}</b></span
               >
@@ -34,7 +34,6 @@
                       nzTitle="Section: section | Layout: vertical"
                       [nzBodyStyle]="{ padding: '10px' }"
                       class="element-list p-3"
-                      style="margin: auto; padding: 0; width: 900px; border: 1px solid lightgray"
                     ></nz-card>
                   }
                   @default {

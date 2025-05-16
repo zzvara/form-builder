@@ -1,10 +1,11 @@
 @import '../../../../src/colors.less';
+@import '../../../common.less';
+@import '../../../../src/shadows.less';
 
 .transition-move {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-// @todo Similarly to achieve a uniform design, we should generalize what we can. We might use completely different box shadows in different parts of the projects, since everything is component-specific.
 .box-shadow {
   box-shadow: @box-shadow;
 }
@@ -12,7 +13,7 @@
 nz-content {
   background: @background-light;
   padding: 2rem;
-  height: 100%;
+  height: @height-full;
 }
 
 nz-sider {
@@ -20,7 +21,7 @@ nz-sider {
 }
 
 .sider-menu {
-  height: 100%;
+  height: @height-full;
   border-right: 0;
 }
 
@@ -35,10 +36,12 @@ nz-sider {
 }
 
 .form-container {
-  max-width: 100%;
+  max-width: @max-width-full;
   display: inline-block;
   vertical-align: top;
   position: static;
+  width: @width-full;
+  margin-bottom: 50px;
 }
 
 // @todo We alternately use pixels and rem for defining margins and padding. We should stick with one. For margins/paddings/font-sizes rem would be better.
@@ -51,7 +54,7 @@ nz-sider {
 }
 
 .element-list {
-  border: solid 1px @border-light;
+  border: @border-default;
   background: @background-white;
   border-radius: 4px;
   overflow: hidden;
@@ -59,7 +62,7 @@ nz-sider {
 }
 
 .element-box {
-  color: rgba(0, 0, 0, 0.87);
+  color: @secondary-text;
   padding-bottom: 2rem;
   display: flex;
   flex-direction: row;
@@ -84,12 +87,54 @@ nz-sider {
   .transition-move;
 }
 
-/*.element-box:last-child {*/
-/*  border: none;*/
-/*  padding: 0;*/
-/*}*/
-
 .element-list.cdk-drop-list-dragging .element-box:not(.cdk-drag-placeholder) {
-  padding: 0;
+  padding: @spacing0;
   .transition-move;
+}
+
+.sider-sticky {
+  height: fit-content;
+  position: sticky;
+  top: 64px;
+  padding-top: @spacing20;
+}
+
+.section-card {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: @spacing12;
+  padding: @spacing0;
+  width: 900px;
+}
+
+.section-title {
+  border-bottom: @border-default;
+  padding-bottom: @spacing20;
+}
+
+.section-id {
+  color: @accent-danger;
+}
+
+.section-buttons {
+  border-bottom: @border-default;
+  padding-bottom: 12px;
+}
+
+.button-spacing {
+  margin-left: @spacing12;
+}
+
+.input-holder {
+  margin: @spacing8;
+  padding: @spacing0;
+}
+
+.standalone-input-holder {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: @spacing12;
+  padding: @spacing0;
+  width: 900px;
+  border: @border-default;
 }

@@ -1,5 +1,5 @@
 <form id="datePickerEditFormID" nz-form [formGroup]="formData">
-  <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
+  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input placeholder="{{ 'components.QUESTION' | translate }}" formControlName="questionValue" />
@@ -30,7 +30,8 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="setDefaultValue">{{ 'components.SET_DEFAULT_VALUE?' | translate }}</label>
@@ -51,7 +52,7 @@
               [nzShowTime]="getTimeOptions"
               [nzShowWeekNumber]="getControlValue('showWeekNumber')"
               [nzShowToday]="true"
-              style="width: 100%"
+              class="full-width"
             ></nz-date-picker>
           </nz-form-control>
           <ng-template #defaultValueErrorTemplate let-control>
@@ -64,6 +65,7 @@
     }
   </div>
 
+  <nz-divider></nz-divider>
   <span>{{ 'components.DATE_PICKER_MODE' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
@@ -87,7 +89,8 @@
     </ng-template>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTime" [nzDisabled]="getControlValue('mode') !== 'date'">
@@ -97,7 +100,7 @@
     </nz-form-item>
     @if (getControlValue('showTime')) {
       <div>
-        <span>{{ 'components.date_picker.TIME_FORMAT' | translate }}:</span>
+        <span>{{ 'components.time_picker.TIME_FORMAT' | translate }}:</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="timeFormatErrors">
             <input nz-input placeholder="{{ 'components.PLACEHOLDER_TIME_FORMAT' | translate }}" formControlName="timeFormat" />
@@ -112,6 +115,7 @@
     }
   </div>
 
+  <nz-divider></nz-divider>
   <span>{{ 'components.date_picker.WEEK_NUMBERS' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
@@ -126,7 +130,8 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
@@ -168,7 +173,7 @@
               [nzShowTime]="getTimeOptions"
               [nzShowWeekNumber]="getControlValue('showWeekNumber')"
               [nzShowToday]="true"
-              style="width: 100%"
+              class="full-width"
             ></nz-date-picker>
           </nz-form-control>
           <ng-template #minDateErrorMessageTemplate let-control>
@@ -203,7 +208,7 @@
               [nzShowTime]="getTimeOptions"
               [nzShowWeekNumber]="getControlValue('showWeekNumber')"
               [nzShowToday]="true"
-              style="width: 100%"
+              class="full-width"
             ></nz-date-picker>
           </nz-form-control>
           <ng-template #maxDateErrorMessageTemplate let-control>
@@ -219,7 +224,7 @@
     }
   </div>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTooltip">{{ 'components.INPUT_TOOLTIP' | translate }}</label>

@@ -1,7 +1,7 @@
 <form id="selectEditFormID" nz-form [formGroup]="formData">
   <nz-form-item>
     <ng-template #listHeader>
-      <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">{{ 'components.combobox.CHOICES_VALUES' | translate }}</div>
+      <div class="list-header">{{ 'components.combobox.CHOICES_VALUES' | translate }}</div>
     </ng-template>
     <nz-form-control formArrayName="selectOptions">
       <ul nz-list cdkDropList (cdkDropListDropped)="drop($event)" nzBordered [nzHeader]="listHeader">
@@ -14,12 +14,12 @@
                 </button>
               </nz-list-item-action>
             </ul>
-            <p style="max-width: 300px">{{ option.value }}</p>
+            <p class="option-description">{{ option.value }}</p>
           </li>
         }
       </ul>
       @if (options.invalid) {
-        <span style="color: red">{{ 'components.combobox.RECORD_MORE_OPTION' | translate }} {{ getMinOptions() }}</span>
+        <span class="error-text">{{ 'components.combobox.RECORD_MORE_OPTION' | translate }} {{ getMinOptions() }}</span>
       }
     </nz-form-control>
   </nz-form-item>
@@ -53,7 +53,7 @@
   <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="Question" formControlName="questionValue" />
+Add  <input nz-input placeholder="Question" formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -76,10 +76,11 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="setDefaultValue">Set default value?</label>
+        <label nz-checkbox formControlName="setDefaultValue">{{ 'components.SET_DEFAULT_VALUE?' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
@@ -106,6 +107,7 @@
     }
   </div>
 
+  <nz-divider></nz-divider>
   <span>{{ 'components.combobox.IS_MULTIPLE_CHOICE' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
@@ -113,7 +115,8 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px; margin-bottom: 10px">
+  <nz-divider></nz-divider>
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
@@ -134,7 +137,7 @@
     }
   </div>
 
-  <div style="border: 1px solid lightgray; padding-left: 10px; padding-right: 10px">
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTooltip">{{ 'components.INPUT_TOOLTIP' | translate }}</label>

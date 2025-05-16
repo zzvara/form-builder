@@ -1,13 +1,10 @@
 {
-  "title": {
-    "dashboard": "Kezdőlap",
-    "newform" : "Új űrlap",
-    "editform": "Űrlap szerkesztése"
-  },
   "components": {
+    "BASIC_INPUTS": "Alap bemenetek",
     "CANNOT_BE_EMPTY": "Nem lehet üres!",
     "CANNOT_BE_LOWER_THAN": "Nem lehet alacsonyabb, mint",
     "CHARACTER_COUNTER": "Karakter számláló",
+    "CHECKBOX_GROUP": "JELÖLŐNÉGYZET CSOPORT",
     "COMBOBOX": "KOMBINÁLT LISTA",
     "COMPONENT_DESCRIPTION": "Leírás",
     "COMPONENT_QUESTION": "Kérdés",
@@ -38,8 +35,10 @@
     "PLACEHOLDER_TIME_FORMAT": "Időformátum",
     "PREVIOUS_VERSION": "Előző verzió",
     "PROVIDE_TOOLTIP": "Meg kell adni egy súgó üzenetet!",
+    "RADIO_GROUP": "RÁDIÓCSOPORT",
     "RANGE_PICKER": "TARTOMÁNYVÁLASZTÓ",
     "SECTION": "SZEKCIÓ",
+    "SECTIONS": "Szekciók",
     "SELECT_DATE": "Dátum kiválasztása",
     "SELECT_VERSION": "Verzió kiválasztása",
     "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",
@@ -52,6 +51,12 @@
     "TIME_PICKER": "IDŐVÁLASZTÓ",
     "TOOLTIP_TEXT": "Súgó szöveg",
     "WEEK_NUMBERS?": "Hetek száma?",
+    "INLINE_EDIT": "Beágyazott szerkesztés",
+    "checkbox_group": {
+      "CHECKED?": "Ellenőrizve?",
+      "DISABLED?": "Letiltva?",
+      "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése"
+    },
     "combobox": {
       "ADD_OPTION": "Lehetőség hozzáadása",
       "CHOICES_VALUES": "Lehetőségek/Értékek",
@@ -94,7 +99,7 @@
       "RESET": "Visszaállítás"
     },
     "number_field": {
-      "FORMAT_INPUT": "Bemenet formázása?",
+      "FORMAT_INPUT": "Bemenet formázása",
       "FORMAT_PATTERN": "Formátum minta - ezekhez használható a bemeneti szám:",
       "LARGER_THAN_SET_STEP_NUMBER": "Nem lehet nagyobb, mint (maximális szám) - (minimális szám)!",
       "MAX_NUMBER": "Maximális szám:",
@@ -113,6 +118,13 @@
     "picture_input": {
       "CLICK_TO_UPLOAD": "Kattintson a feltöltéshez",
       "MODEL_TITLE_PICTURE_INPUT": "Képbemeneti komponens beállításainak szerkesztése"
+    },
+    "radio_group": {
+      "CHOICES_OR_VALUES": "Lehetőségek és értékek",
+      "MODAL_RADIO_GROUP_TITLE": "Rádiócsoport beállításainak szerkesztése",
+      "OPTION_ALREADY": "Az opció már a listában van",
+      "OPTION_ATLEAST": "Kérjük, legalább ennyi lehetőséget rögzítsen",
+      "SHOW_AS_BUTTON": "Mutasd gombként?"
     },
     "range_picker": {
       "MODEL_TITLE_RANGE_PICKER": "Tartományválasztó komponens beállításainak szerkesztése",
@@ -172,7 +184,8 @@
     "SWITCH_TOOLTIP": "Kikapcsolva kérdőív - Bekapcsolva teszt",
     "TEST": "Teszt",
     "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.",
-    "TITLE_REQUIRED": "A cím kötelező"
+    "TITLE_REQUIRED": "A cím kötelező",
+    "OPTIONAL": "(nem kötelező)"
   },
   "general": {
     "CANCEL": "Mégse",
@@ -206,8 +219,8 @@
   },
   "steps": {
     "ANSWER": "Válasz",
-    "RESULTS" : "Eredmény",
     "COMPONENTS": "Komponensek",
-    "FORM_INFO": "Űrlap információ"
+    "FORM_INFO": "Űrlap információ",
+    "RESULT": "Eredmény"
   }
 }
