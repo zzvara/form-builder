@@ -52,6 +52,11 @@
     "TOOLTIP_TEXT": "Súgó szöveg",
     "WEEK_NUMBERS?": "Hetek száma?",
     "INLINE_EDIT": "Beágyazott szerkesztés",
+    "QUESTION_DESCRIPTION": "Kérdés leírása",
+    "INPUT_PREVIEW": "Bevitel előnézete",
+    "INPUT_QUESTION_MANDATORY": "A beviteli kérdés kitöltése kötelező!",
+    "REQUIRED_MESSAGE":"Mező nem lehet üres!",
+    "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {*} karakter!",
     "checkbox_group": {
       "CHECKED?": "Ellenőrizve?",
       "DISABLED?": "Letiltva?",
