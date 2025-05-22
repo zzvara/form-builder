@@ -89,7 +89,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('minLength')) {
-      <span>{{ 'components.text_area.MIN_LENGTH_NUMBER' | translate }}</span>
+    <nz-form-label nzRequired><span>{{ 'components.text_area.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minLengthNumberErrorMessageTemplate">
           <nz-input-number
@@ -130,7 +130,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('maxLength')) {
-      <span>{{ 'components.MAX_LENGTH_NUMBER' | translate }}</span>
+    <nz-form-label nzRequired><span>{{ 'components.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="maxLengthNumberErrorMessageTemplate">
           <nz-input-number
@@ -167,7 +167,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
-      <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span>
+    <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
           <input nz-input formControlName="tooltipText" placeholder="{{ 'components.TOOLTIP_TEXT' | translate }}" />

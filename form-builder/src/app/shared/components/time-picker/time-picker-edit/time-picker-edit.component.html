@@ -170,7 +170,7 @@
     </nz-form-item>
     @if (getControlValue('minTime')) {
       <div>
-        <span>{{ 'components.time_picker.MIN_TIME' | translate }}</span>
+        <nz-form-label nzRequired><span>{{ 'components.time_picker.MIN_TIME' | translate }}</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minTimeErrorMessageTemplate">
             <nz-time-picker
@@ -211,7 +211,7 @@
     </nz-form-item>
     @if (getControlValue('maxTime')) {
       <div>
-        <span>{{ 'components.time_picker.MAX_TIME' | translate }}:</span>
+        <nz-form-label nzRequired><span>{{ 'components.time_picker.MAX_TIME' | translate }}:</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
             <nz-time-picker
@@ -255,7 +255,7 @@
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <div>
-        <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span>
+        <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
             <input nz-input formControlName="tooltipText" placeholder="{{ 'components.TOOLTIP_TEXT' | translate }}" />
