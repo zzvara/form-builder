@@ -125,70 +125,70 @@ const checkboxGroupInputOptions = (translateService: TranslateService): Checkbox
 export function getInputGroups(translate: TranslateService): FormInputData<any>[] {
   return [
     {
-      title: translate.instant('components.TEXT_FIELD'),
+      title: 'components.TEXT_FIELD',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'InputComponent',
       data: textInputOptions(translate),
     },
     {
-      title: translate.instant('components.NUMBER_FIELD'),
+      title: 'components.NUMBER_FIELD',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'NumberInputComponent',
       data: numberInputOptions(translate),
     },
     {
-      title: translate.instant('components.DATE_PICKER'),
+      title: 'components.DATE_PICKER',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'DatePickerComponent',
       data: dateInputOptions(translate),
     },
     {
-      title: translate.instant('components.RANGE_PICKER'),
+      title: 'components.RANGE_PICKER',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'RangePickerComponent',
       data: rangeInputOptions(translate),
     },
     {
-      title: translate.instant('components.TIME_PICKER'),
+      title: 'components.TIME_PICKER',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TimePickerComponent',
       data: timeInputOptions(translate),
     },
     {
-      title: translate.instant('components.TEXT_AREA'),
+      title: 'components.TEXT_AREA',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TextareaComponent',
       data: textAreaInputOptions(translate),
     },
     {
-      title: translate.instant('components.PICTURE_INPUT'),
+      title: 'components.PICTURE_INPUT',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'PictureInputComponent',
       data: pictureInputOptions,
     },
     {
-      title: translate.instant('components.COMBOBOX'),
+      title:'components.COMBOBOX',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'SelectComponent',
       data: selectInputOptions(translate),
     },
     {
-      title: translate.instant('components.RADIO_GROUP'),
+      title: 'components.RADIO_GROUP',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'RadioGroupComponent',
       data: radioGroupInputOptions(translate),
     },
     {
-      title: translate.instant('components.CHECKBOX_GROUP'),
+      title: 'components.CHECKBOX_GROUP',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'CheckboxGroupComponent',
@@ -203,18 +203,18 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
 export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {
   return [
     {
-      groupName: translate.instant('components.BASIC_INPUTS'),
+      groupName: 'components.BASIC_INPUTS',
       active: true,
       dropListConnectedTo: () => component.getSectionIds().concat(['sectionDropList']),
       groupContents: getInputGroups(translate),
     },
     {
-      groupName: translate.instant('components.SECTIONS'),
+      groupName: 'components.SECTIONS',
       active: true,
       dropListConnectedTo: () => 'sectionDropList',
       groupContents: [
         {
-          title: translate.instant('components.SECTION'),
+          title: 'components.SECTION',
           type: 'SectionComponent',
           data: null,
         },

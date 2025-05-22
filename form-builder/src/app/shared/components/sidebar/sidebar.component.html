@@ -14,7 +14,7 @@
     <nz-collapse [nzBordered]="false">
       @for (group of filteredData; track group.groupName) {
         <nz-collapse-panel
-          [nzHeader]="group.groupName"
+          [nzHeader]="group.groupName | translate"
           [nzActive]="group.active"
           cdkDropList
           [cdkDropListData]="group.groupContents"
@@ -24,7 +24,7 @@
           @for (item of group.groupContents; track item.type) {
             <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
               <span
-                ><b>{{ item.title }}</b></span
+                ><b>{{ item.title | translate }}</b></span
               >
 
               <ng-container *cdkDragPlaceholder>
