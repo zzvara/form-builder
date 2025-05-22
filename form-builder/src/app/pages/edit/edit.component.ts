@@ -267,4 +267,14 @@ export class EditComponent implements OnInit, OnChanges {
     console.log('Input component changed/edited (SAVE STATE)!', event.id);
     this.undoRedoService.saveState(this.editList);
   }
+
+  scrollToElement(elementId: string): void {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  }
 }

@@ -1,5 +1,6 @@
 @import '../../../breakpoints.less';
 @import '../../../common.less';
+@import '../../../typography.less';
 
 @padding-small: 0 0.5rem;
 @gap-small: 1rem;
@@ -121,7 +122,7 @@ nz-content {
     }
 
     > h3 {
-      font-size: 1rem;
+      font-size: @font-size-body;  // it was 1rem
       margin-bottom: 0.3rem;
     }
   }
@@ -157,7 +158,7 @@ nz-content {
       max-width: @max-width-full;
 
       > h3 {
-        font-size: 0.85rem;
+        font-size: @font-size-small; // it was 0.85rem
         margin-bottom: 0.2rem;
       }
     }
