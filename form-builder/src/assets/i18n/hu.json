@@ -168,7 +168,7 @@
     "QUESTIONNAIRE": "Kérdőív változat",
     "SWITCH_TOOLTIP": "Kikapcsolva kérdőív - Bekapcsolva teszt",
     "TEST": "Teszt változat",
-    "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.",
+    "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.(óra:perc)",
     "TITLE_REQUIRED": "A cím kötelező",
     "VERSION": "Változat:"
   },
