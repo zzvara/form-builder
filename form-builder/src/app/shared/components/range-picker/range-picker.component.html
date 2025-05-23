@@ -18,7 +18,7 @@
       [(ngModel)]="data.defaultValue"
       (ngModelChange)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
-      style="width: 50%"
+      class="range-picker"
     >
     </nz-range-picker>
     <ng-container *ngTemplateOutlet="suffixTemplate" />
@@ -31,12 +31,12 @@
 </ng-template>
 <ng-template #prefixTemplate>
   @if (data.showTooltip) {
-    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>
+    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" class="icon-margin"></span>
   }
 </ng-template>
 <ng-template #suffixTemplate>
   @if (data.inlineMode) {
-    <div style="margin-top: 10px">
+    <div class="selected-range">
       Selected range: ({{ data.defaultValue?.[0] | date: getFullFormat }}) - ({{ data.defaultValue?.[1] | date: getFullFormat }})
     </div>
   }

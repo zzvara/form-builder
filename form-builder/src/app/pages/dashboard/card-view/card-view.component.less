@@ -1,4 +1,6 @@
 @import '../../../../colors.less';
+@import '../../../../common.less';
+@import '../../../../typography.less';
 
 :host {
   display: block;
@@ -18,22 +20,22 @@
 }
 
 p {
-  font-size: 0.75rem;
-  padding: 0;
-  margin: 0;
+  font-size: @font-size-small;
+  padding: @spacing0;
+  margin: @spacing0;
 }
 
 nz-card {
-  min-height: 12rem;
+  min-height: 192px;  //It was 12rem
 
   span {
     cursor: pointer;
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
+    font-size: @font-size-lead;
+    margin-top: @spacing8;
   }
 
   :last-child {
-    margin-left: 0.5rem;
+    margin-left: @spacing8;
   }
 }
 
@@ -58,7 +60,7 @@ nz-card {
 }
 
 .description {
-  min-height: 3rem;
+  min-height: 48px;
 }
 
 .card-footer {
@@ -76,7 +78,7 @@ nz-card {
 }
 
 .card-header {
-  min-height: 0rem;
+  min-height: 0px;
 }
 
 .card-footer {

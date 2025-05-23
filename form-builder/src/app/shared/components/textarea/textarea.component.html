@@ -22,12 +22,12 @@
   }
 </ng-template>
 <ng-template #footerTemplate>
-  <div style="display: flex; justify-content: space-between">
+  <div class="footer-container">
     @if (data.showTooltip) {
-      <div nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-top: auto; margin-bottom: auto"></div>
+      <div nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" class="tooltip-icon"></div>
     }
     @if (data.maxLength && data.showCharacterCounter) {
-      <div style="margin-top: auto; margin-bottom: auto">{{ inputComponent.value.length }}/{{ data.maxLengthNumber }}</div>
+      <div class="character-counter">{{ inputComponent.value.length }}/{{ data.maxLengthNumber }}</div>
     }
   </div>
 </ng-template>
