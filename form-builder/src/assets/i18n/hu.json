@@ -28,7 +28,7 @@
     "NEXT_TOOLTIP": "Kérjük, helyezze el a komponenseket a szerkesztési szakaszba a folytatás előtt.",
     "NEXT_VERSION": "Következő verzió",
     "CREATED": "Létrehozva:",
-    "CHANGES_SINCE": "Változások verzió óta",
+    "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
     "NUMBER_FIELD": "SZÁMMEZŐ",
     "PICTURE_INPUT": "KÉPBEMENET",
     "PLACEHOLDER": "Helyőrző",

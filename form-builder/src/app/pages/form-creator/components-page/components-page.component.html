@@ -61,7 +61,7 @@
                   nz-tooltip="{{'components.CREATED' | translate}} {{ (version.created | date:'short')}}"
                   class="version-icon-wrapper"
                 >
-                  <i nz-icon nzType="calendar"></i>
+                  <i nz-icon nzType="field-time"></i>
                 </span>
                 
                 <button
@@ -69,7 +69,7 @@
                   nz-button
                   nzType="text"
                   (click)="openDiffModal(version)"
-                  nz-tooltip="{{ 'components.CHANGES_SINCE' | translate }} {{ version.versionNum - 1 }}"
+                  [nz-tooltip]="'components.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
                   class="version-icon-wrapper"
                   style="margin-left: 8px;"
                 >
