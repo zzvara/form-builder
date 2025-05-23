@@ -1,6 +1,7 @@
 @import '../../../../breakpoints.less';
 @import '../../../../colors.less';
 @import '../../../../common.less';
+@import '../../../../typography.less';
 
 nz-layout {
   background-color: @transparent;
@@ -21,7 +22,7 @@ nz-layout {
 
 #title,
 #description {
-  font-size: 20px;
+  font-size: @font-size-lead;
   border-radius: 10px;
   border-width: 2px;
   margin-top: -5px;
@@ -49,7 +50,7 @@ nz-layout {
 .error-message {
   margin-top: @spacing4;
   color: @accent-danger;
-  font-size: 12px;
+  font-size: @font-size-tiny;
   font-weight: bold;
 }
 
@@ -78,13 +79,13 @@ nz-layout {
   font-family: monospace;
   padding: @spacing12;
   background-color: @background-light;
-  border: 1px solid @border-light;
+  border: @border-default;
   border-radius: 5px;
 }
 
 .button-group {
   display: flex;
-  gap: 16px; // <-- Gombok közötti távolság nagyobb lett
+  gap: @spacing16; // <-- Gombok közötti távolság nagyobb lett
   align-items: center;
 }
 
@@ -99,7 +100,7 @@ nz-layout {
 
   #title,
   #description {
-    font-size: 18px;
+    font-size: @font-size-lead;
     border-radius: 8px;
     margin-bottom: @spacing12;
     padding: @spacing8;
@@ -137,7 +138,7 @@ nz-layout {
 
   #title,
   #description {
-    font-size: 14px;
+    font-size: @font-size-small;
     border-radius: 8px;
     margin-bottom: @spacing12;
     padding: @spacing8;
@@ -176,7 +177,7 @@ nz-layout {
 @media (max-width: @breakpoint-xs) {
   #title,
   #description {
-    font-size: 12px;
+    font-size: @font-size-tiny;
     padding: @spacing8;
     margin-bottom: @spacing12;
   }
@@ -203,6 +204,6 @@ nz-layout {
   }
 
   .input-error {
-    font-size: @spacing12;
+    font-size: @font-size-tiny;
   }
 }
