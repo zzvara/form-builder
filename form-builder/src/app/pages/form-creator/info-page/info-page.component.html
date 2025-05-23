@@ -2,7 +2,7 @@
   <div>
     <form nz-form class="form-margin-top" (ngSubmit)="submitForm()" [formGroup]="form">
       <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>
-        <h2>{{ 'form.FORM_TITLE' | translate }}</h2>
+        <h4>{{ 'form.FORM_TITLE' | translate }}</h4>
         <i
           nz-icon
           nzType="question-circle"
@@ -32,7 +32,7 @@
       </nz-form-control>
 
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
-        <h2> {{ 'form.FORM_DESCRIPTION' | translate }} {{ 'form.OPTIONAL' | translate }}</h2>
+        <span> {{ 'form.FORM_DESCRIPTION' | translate }} {{ 'form.OPTIONAL' | translate }}</span>
         <i
           nz-icon
           nzType="question-circle"
