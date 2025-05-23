@@ -1,5 +1,5 @@
 <nz-layout>
-  <nz-sider nzWidth="300px" nzTheme="light" style="height: fit-content; position: sticky; top: 64px; padding-top: 20px">
+  <nz-sider nzWidth="300px" nzTheme="light" class="sider-sticky">
     <app-sidebar [sidebarData]="sideBarData" />
   </nz-sider>
   <nz-layout class="inner-layout">
@@ -28,20 +28,17 @@
               [cdkDropListData]="edit.data.sectionInputs"
               [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
               (cdkDropListDropped)="dropIntoSection($event)"
-              class="element-list p-3"
-              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px"
+              class="element-list p-3 section-card"
               [nzBodyStyle]="getSectionStyle(edit.data)"
             >
               <ng-template #sectionTitle>
-                <!-- @todo Colors should only come from a common variable set for the change to easily modify them if needed and to achieve a uniform design. -->
-                <div style="border-bottom: 1px solid lightgray; padding-bottom: 20px">
+                <div class="section-title">
                   Section
-                  <!-- @todo Same. I won't mark all the relevant places, please check them all. -->
-                  <span style="color: red"> [ID: {{ edit.data.sectionId }} | Layout: {{ edit.data.layout }}]</span>
+                  <span class="section-id"> [ID: {{ edit.data.sectionId }} | Layout: {{ edit.data.layout }}]</span>
                 </div>
               </ng-template>
               <ng-template #sectionButtons>
-                <div style="border-bottom: 1px solid lightgray; padding-bottom: 12px">
+                <div class="section-buttons">
                   <span>Reorder enabled: </span>
                   <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
                   <button
@@ -49,7 +46,7 @@
                     nzType="default"
                     nzShape="circle"
                     (click)="sectionLayoutChange(edit.data)"
-                    style="margin-left: 10px">
+                    class="button-spacing">
                     <span nz-icon nzType="redo" nzTheme="outline"></span>
                   </button>
                   <!-- @todo The templates are filled with different margins. These must be uniform as well, maybe we should prefer classes, such as m-l-10? -->
@@ -64,7 +61,7 @@
                     nzType="default"
                     nzDanger
                     nzShape="circle"
-                    style="margin-left: 10px"
+                    class="button-spacing"
                   >
                     <span nz-icon nzType="delete" nzTheme="outline"></span>
                   </button>
@@ -73,10 +70,9 @@
 
               @for (item of edit.data.sectionInputs; track item) {
                 <app-input-holder
-                  class="element-box"
+                  class="element-box input-holder"
                   cdkDrag
                   [cdkDragData]="item"
-                  style="margin: 5px; padding: 0"
                   [ngStyle]="getSectionInputStyle(edit.data)"
                   [formInput]="item"
                   [inlineEdit]="inlineEdit"
@@ -88,10 +84,11 @@
           } @else if (instanceOfFormInputData(edit.data)) {
             <!-- @todo Again, a large built-in width and lots of margins, the code should be reviewed for similar cases. -->
             <app-input-holder
-              class="element-box"
+              class="element-box standalone-input-holder"
               cdkDrag
+              id="{{ edit.id }}"
               [cdkDragData]="edit"
-              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; width: 900px; border: 1px solid lightgray"
+              style="margin-left: auto; margin-right: auto; margin-bottom: 10px; padding: 0; border: 1px solid lightgray"
               [formInput]="edit.data"
               [inlineEdit]="inlineEdit"
               (removeComponentEvent)="removeEditComponent(edit)"
@@ -102,4 +99,39 @@
       </div>
     </nz-content>
   </nz-layout>
+  <nz-sider nzWidth="300px" nzTheme="light" class="right-sider">
+    <h3>{{ 'components.USED_COMPONENTS' | translate }}</h3>
+    <div class="components-list"
+         id="structureList"
+         cdkDropList
+         [cdkDropListConnectedTo]=[]
+         (cdkDropListDropped)="dropIntoEdit($event)"
+         [cdkDropListData]="editList">
+        @for (edit of editList; track edit) {
+            @if (instanceOfSectionList(edit.data)) {
+                <div class="component-item section-item"
+                     cdkDrag
+                     [cdkDragData]="edit">
+                    <div class="section-header">
+                        <span nz-icon nzType="layout" nzTheme="outline"></span>
+                        <span class="component-title">SECTION</span>
+                        <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
+                            <span nz-icon nzType="aim" nzTheme="outline"></span>
+                        </span>
+                    </div>
+                </div>
+            } @else if (instanceOfFormInputData(edit.data)) {
+                <div class="component-item"
+                     cdkDrag
+                     [cdkDragData]="edit">
+                    <span nz-icon nzType="form" nzTheme="outline"></span>
+                    <span class="component-title">{{ edit.data.title }}</span>
+                    <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
+                        <span nz-icon nzType="aim" nzTheme="outline"></span>
+                    </span>
+                </div>
+            }
+        }
+    </div>
+  </nz-sider>
 </nz-layout>

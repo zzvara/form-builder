@@ -14,7 +14,7 @@
       (blur)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
       [nzStep]="data.stepNumber"
-      style="min-width: 50%"
+      class="number-input"
     />
   </nz-form-control>
 </nz-form-item>
@@ -25,6 +25,6 @@
 </ng-template>
 <ng-template #prefixTemplate>
   @if (data.showTooltip) {
-    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" style="margin-right: 10px"></span>
+    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" class="icon-margin"></span>
   }
 </ng-template>

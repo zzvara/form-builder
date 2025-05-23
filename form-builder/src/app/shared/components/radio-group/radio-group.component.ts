@@ -14,7 +14,7 @@ export class RadioGroupComponent extends AbstractInput<number, RadioGroupData, R
     // @todo Missing translation
     this.modalService
       .openModal({
-        modalTitle: 'Edit Radio Group Settings',
+        modalTitle: this.translate.instant('components.radio_group.MODAL_RADIO_GROUP_TITLE'),
         modalContent: RadioGroupEditComponent,
         modalData: this.data,
       })

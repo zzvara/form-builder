@@ -5,7 +5,6 @@
         <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
         <span>{{ 'dashboard.LIST_VIEW' | translate }}</span>
         <i
-          style="margin-left: 5px"
           nz-icon
           nzType="question-circle"
           nz-tooltip
@@ -17,7 +16,6 @@
         <span nz-icon nzType="appstore" nzTheme="outline"></span>
         <span>{{ 'dashboard.CARD_VIEW' | translate }}</span>
         <i
-          style="margin-left: 5px"
           nz-icon
           nzType="question-circle"
           nz-tooltip
@@ -32,7 +30,7 @@
       <div>
         <h3>{{ 'dashboard.QUESTIONNAIRES' | translate }}</h3>
         <button (click)="createProject(projectTypes.QUESTIONNAIRE)" nz-button>
-          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW' | translate }}
+          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW_QUESTIONNAIRE' | translate }}
         </button>
       </div>
 
@@ -46,7 +44,7 @@
       <div>
         <h3>{{ 'dashboard.TESTS' | translate }}</h3>
         <button (click)="createProject(projectTypes.TEST)" nz-button>
-          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW' | translate }}
+          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW_TEST' | translate }}
         </button>
       </div>
 

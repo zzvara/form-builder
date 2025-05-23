@@ -23,6 +23,7 @@ import { TimePickerComponentData } from '@components/time-picker/interfaces/time
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
 import { EditComponent } from '@pages/edit/edit.component';
 import { FormInputData } from '@interfaces/form-input-data';
+import {TranslateService} from "@ngx-translate/core";
 
 // Default values of the dragged components
 const textInputOptions: InputComponentData = {
@@ -120,7 +121,7 @@ const checkboxGroupInputOptions: CheckboxGroupData = {
 };
 
 //Used for resetting inputs
-export function getInputGroups(): FormInputData<any>[] {
+export function getInputGroups(translate: TranslateService): FormInputData<any>[] {
   return [
     {
       title: 'TEXT FIELD',
@@ -175,22 +176,24 @@ export function getInputGroups(): FormInputData<any>[] {
   ];
 }
 
+
+
 // The data shown in the edit sidebar
-export function getSideBarData(component: EditComponent): SidebarData[] {
+export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {
   return [
     {
-      groupName: 'Basic inputs',
+      groupName: translate.instant('components.BASIC_INPUTS'),
       active: true,
       dropListConnectedTo: () => component.getSectionIds().concat(['sectionDropList']),
-      groupContents: getInputGroups(),
+      groupContents: getInputGroups(translate),
     },
     {
-      groupName: 'Sections',
+      groupName: translate.instant('components.SECTIONS'),
       active: true,
       dropListConnectedTo: () => 'sectionDropList',
       groupContents: [
         {
-          title: 'SECTION',
+          title: translate.instant('components.SECTION'),
           type: 'SectionComponent',
           data: null,
         },
