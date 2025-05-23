@@ -20,28 +20,28 @@
 }
 
 p {
-  font-size: @font-size-tiny; // maybe its too small, it was 0.75rem
+  font-size: @font-size-small;
   padding: @spacing0;
   margin: @spacing0;
 }
 
 nz-card {
-  min-height: 12rem;
+  min-height: 192px;  //It was 12rem
 
   span {
     cursor: pointer;
     font-size: @font-size-lead;
-    margin-top: 0.5rem;
+    margin-top: @spacing8;
   }
 
   :last-child {
-    margin-left: 0.5rem;
+    margin-left: @spacing8;
   }
 }
 
 .create-card {
   cursor: pointer;
-  font-size: 64px; //it was 64
+  font-size: 64px;
   color: @gray;
   display: flex;
   justify-content: center;
@@ -57,7 +57,7 @@ nz-card {
 }
 
 .description {
-  min-height: 3rem;
+  min-height: 48px;
 }
 
 .card-footer {
@@ -68,14 +68,14 @@ nz-card {
 }
 
 .project-card {
-  min-height: 14rem;
+  min-height: 224px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .card-header {
-  min-height: 0rem;
+  min-height: 0px;
 }
 
 .card-footer {
