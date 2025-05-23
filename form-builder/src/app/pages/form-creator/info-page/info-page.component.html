@@ -32,7 +32,8 @@
       </nz-form-control>
 
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
-        <span> {{ 'form.FORM_DESCRIPTION' | translate }} {{ 'form.OPTIONAL' | translate }}</span>
+        <span> {{ 'form.FORM_DESCRIPTION' | translate }}</span>&nbsp;
+        <span style="color: gray"> {{ 'form.OPTIONAL' | translate }} </span>
         <i
           nz-icon
           nzType="question-circle"
