@@ -10,7 +10,6 @@
       [nzFormatter]="inputFormatter"
       [nzParser]="inputParser"
       [disabled]="!inlineEdit.enabled"
-      [nzPlaceHolder]="data.placeholderValue ?? ''"
       [(ngModel)]="data.defaultValue"
       (blur)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
