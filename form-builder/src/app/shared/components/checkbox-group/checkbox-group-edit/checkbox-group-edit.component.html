@@ -5,9 +5,9 @@
         <thead>
           <tr>
             <th>{{'general.DESCRIPTION' | translate}}</th>
-            <th style="text-align: center">{{'components.checkbox_group.DISABLED?' | translate}}</th>
-            <th style="text-align: center">{{'components.checkbox_group.CHECKED?' | translate}}</th>
-            <th style="text-align: center">{{'components.combobox.COMBOBOX_REMOVE' | translate}}</th>
+            <th class="table-center">{{'components.checkbox_group.DISABLED?' | translate}}</th>
+            <th class="table-center">{{'components.checkbox_group.CHECKED?' | translate}}</th>
+            <th class="table-center">{{'components.combobox.COMBOBOX_REMOVE' | translate}}</th>
           </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
@@ -16,15 +16,15 @@
               <td>
                 <p class="option-label">{{ option.value.label }}</p>
               </td>
-              <td style="text-align: center"><label nz-checkbox formControlName="disabled"></label></td>
-              <td style="text-align: center"><label nz-checkbox formControlName="checked"></label></td>
-              <td style="text-align: center"><button nz-button nzType="link" nzDanger (click)="removeOption(i)">{{'components.combobox.COMBOBOX_REMOVE' | translate}}</button></td>
+              <td class="table-center"><label nz-checkbox formControlName="disabled"></label></td>
+              <td class="table-center"><label nz-checkbox formControlName="checked"></label></td>
+              <td class="table-center"><button nz-button nzType="link" nzDanger (click)="removeOption(i)">{{'components.combobox.COMBOBOX_REMOVE' | translate}}</button></td>
             </tr>
           }
         </tbody>
       </nz-table>
       @if (options.invalid) {
-        <span style="color: red">{{'components.radio_group.OPTION_ATLEAST' | translate}}: {{ getMinOptions() }}</span>
+        <span class="error-text">{{'components.radio_group.OPTION_ATLEAST' | translate}}: {{ getMinOptions() }}</span>
       }
     </nz-form-control>
   </nz-form-item>

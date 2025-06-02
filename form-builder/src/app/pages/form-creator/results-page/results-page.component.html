@@ -65,7 +65,7 @@
             </nz-descriptions-item>
 
             <nz-descriptions-item nzTitle="{{ 'project.SECTION_INPUTS_STATISTICS' | translate }}">
-              <ul style="margin: 0; padding-left: 20px;">
+              <ul class="statistics-list">
                 <li *ngFor="let stat of sectionInputStats | keyvalue">
                   {{ stat.key }}: {{ stat.value }}
                 </li>
