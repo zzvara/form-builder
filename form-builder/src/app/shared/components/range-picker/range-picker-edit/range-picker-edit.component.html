@@ -39,7 +39,7 @@
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
       <div>
-        <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span>
+        <nz-form-label [nzRequired]="getControlValue('required')"><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <nz-date-picker
