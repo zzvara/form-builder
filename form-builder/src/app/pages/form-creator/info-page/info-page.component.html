@@ -55,21 +55,20 @@
 
       <ng-container>
         <nz-form-item class="same_line mb-8">
-          <nz-form-label [nzNoColon]="true">{{ 'form.VERSION' | translate }}</nz-form-label>
+          <nz-form-label [nzNoColon]="true">{{'form.VERSION' | translate}}</nz-form-label>
           <nz-switch
             formControlName="type"
             id="switch"
-            (change)="updateForm()">
+            (change)="updateForm()"
             [nzCheckedChildren]="'form.TEST' | translate"
             [nzUnCheckedChildren]="'form.QUESTIONNAIRE' | translate">
           </nz-switch>
-          <nz-form-label [nzNoColon]="true"
-            >{{ 'form.TEST' | translate }}
+          <nz-form-label [nzNoColon]="true">
             <i
               nz-icon
               nzType="question-circle"
               nz-tooltip
-              nzTooltipTitle="{{ 'form.SWITCH_TOOLTIP' | translate }}"
+              [nzTooltipTitle]="'form.SWITCH_TOOLTIP' | translate"
               class="icon-margin-medium"
             ></i>
           </nz-form-label>
