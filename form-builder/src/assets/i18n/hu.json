@@ -196,6 +196,8 @@
     "DESCRIPTION": "Leírás",
     "DOWNLOAD_CONFIRMATION": "Biztosan letölti a projektet?",
     "FORM_BUILDER": "Űrlapkészítő",
+    "ENGLISH" : "Angol",
+    "HUNGARY" : "Magyar",
     "MODIFIED": "Módosítva",
     "NEXT": "Következő",
     "OK": "Igen",
