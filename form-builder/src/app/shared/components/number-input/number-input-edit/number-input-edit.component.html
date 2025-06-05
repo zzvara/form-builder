@@ -108,7 +108,7 @@
     </nz-form-item>
     @if (getControlValue('min')) {
       <div>
-        <span>{{ 'components.number_field.MIN_NUMBER' | translate }}</span>
+        <nz-form-label nzRequired><span>{{ 'components.number_field.MIN_NUMBER' | translate }}</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minNumberErrorMessageTemplate">
             <nz-input-number formControlName="minNumber" [nzMax]="maxNumOrInf" [nzStep]="1"></nz-input-number>
@@ -132,7 +132,7 @@
     </nz-form-item>
     @if (getControlValue('max')) {
       <div>
-        <span>{{ 'components.number_field.MAX_NUMBER' | translate }}</span>
+        <nz-form-label nzRequired><span>{{ 'components.number_field.MAX_NUMBER' | translate }}</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxNumberErrorMessageTemplate">
             <nz-input-number formControlName="maxNumber" [nzMin]="minNumOrNegInf" [nzStep]="1"></nz-input-number>
@@ -159,7 +159,7 @@
     </nz-form-item>
     @if (getControlValue('format')) {
       <div>
-        <span>{{ 'components.number_field.FORMAT_INPUT' | translate }}</span>
+        <nz-form-label nzRequired> <span>{{ 'components.number_field.FORMAT_INPUT' | translate }}</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="formatterErrorMessageTemplate">
             <input
@@ -189,7 +189,7 @@
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <div>
-        <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span>
+        <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
             <input nz-input formControlName="tooltipText" placeholder="{{ 'components.TOOLTIP_TEXT' | translate }}" />

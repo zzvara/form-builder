@@ -3,62 +3,75 @@
     <nz-tabset>
       <nz-tab nzTitle="{{ 'project.PROJECT_INFORMATION' | translate }}">
         @if (project) {
-          <div class="project-container">
-            <p>
-              <strong>{{ 'general.TITLE' | translate }}:</strong> {{ project.title }}
-            </p>
-            <p>
-              <strong>{{ 'general.DESCRIPTION' | translate }}:</strong> {{ project.description }}
-            </p>
-            <p>
-              <strong>{{ 'project.TYPE' | translate }}:</strong> {{ project.type }}
-            </p>
-            @if (project.time_checkbox) {
-              <p>
-                <strong>{{ 'project.TIME_CHECKBOX' | translate }}:</strong> {{ project.time_checkbox }}
-              </p>
-            }
-            @if (project.deadline_checkbox) {
-              <p>
-                <strong>{{ 'project.DEADLINE_CHECKBOX' | translate }}:</strong> {{ project.deadline_checkbox }}
-              </p>
-            }
-            @if (project.time_limit) {
-              <p>
-                <strong>{{ 'general.TIME_LIMIT' | translate }}:</strong> {{ project.time_limit }}
-              </p>
-            }
-            @if (project.deadline) {
-              <p>
-                <strong>{{ 'general.DEADLINE' | translate }}:</strong> {{ project.deadline }}
-              </p>
-            }
-            <p>
-              <strong>{{ 'general.CREATED' | translate }}:</strong> {{ project.created }}
-            </p>
-            <p>
-              <strong>{{ 'general.MODIFIED' | translate }}:</strong> {{ project.modified }}
-            </p>
-          </div>
+          <nz-descriptions
+            nzBordered
+            [nzColumn]="1"
+            *ngIf="project"
+          >
+            <nz-descriptions-item nzTitle="{{ 'general.TITLE' | translate }}">
+              {{ project.title }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'general.DESCRIPTION' | translate }}">
+              {{ project.description }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'project.TYPE' | translate }}">
+              {{ project.type }}
+            </nz-descriptions-item>
+            <nz-descriptions-item
+              *ngIf="project.time_checkbox"
+              nzTitle="{{ 'project.TIME_CHECKBOX' | translate }}"
+            >
+              {{ project.time_checkbox }}
+            </nz-descriptions-item>
+            <nz-descriptions-item
+              *ngIf="project.deadline_checkbox"
+              nzTitle="{{ 'project.DEADLINE_CHECKBOX' | translate }}"
+            >
+              {{ project.deadline_checkbox }}
+            </nz-descriptions-item>
+            <nz-descriptions-item
+              *ngIf="project.time_limit"
+              nzTitle="{{ 'general.TIME_LIMIT' | translate }}"
+            >
+              {{ project.time_limit | date: 'HH:mm:ss' }}
+            </nz-descriptions-item>
+            <nz-descriptions-item
+              *ngIf="project.deadline"
+              nzTitle="{{ 'general.DEADLINE' | translate }}"
+            >
+              {{ project.deadline | date: 'yyyy-MM-dd' }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'general.CREATED' | translate }}">
+              {{ project.created }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'general.MODIFIED' | translate }}">
+              {{ project.modified }}
+            </nz-descriptions-item>
+          </nz-descriptions>
         }
       </nz-tab>
       <nz-tab nzTitle="{{ 'project.SECTION_INPUTS' | translate }}">
         @if (project?.editList?.length) {
-          <div class="section-container">
-            <div class="statistics">
-              <h3>{{ 'project.SECTION_INPUTS_STATISTICS' | translate }}</h3>
-              @if (latestVersionNum) {
-                <p>
-                  <strong>{{ 'project.VERSION' | translate }}:</strong> {{ latestVersionNum }}
-                </p>
-              }
-              <ul>
-                @for (stat of sectionInputStats | keyvalue; track stat.key) {
-                  <li>{{ stat.key }}: {{ stat.value }}</li>
-                }
+          <nz-descriptions
+            nzBordered
+            [nzColumn]="1"
+            *ngIf="sectionInputStats"
+          >
+            <nz-descriptions-item
+              *ngIf="latestVersionNum"
+              nzTitle="{{ 'project.VERSION' | translate }}"
+            >
+              {{ latestVersionNum }}
+            </nz-descriptions-item>
+
+            <nz-descriptions-item nzTitle="{{ 'project.SECTION_INPUTS_STATISTICS' | translate }}">
+              <ul style="margin: 0; padding-left: 20px;">
+                <li *ngFor="let stat of sectionInputStats | keyvalue">
+                  {{ stat.key }}: {{ stat.value }}
+                </li>
               </ul>
-            </div>
-          </div>
+            </nz-descriptions-item>
+          </nz-descriptions>
         }
       </nz-tab>
       <nz-tab nzTitle="{{ 'project.PROJECT_JSON' | translate }}" class="json">

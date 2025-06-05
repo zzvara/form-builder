@@ -2,30 +2,27 @@
 @import '../../../common.less';
 @import '../../../typography.less';
 
-@padding-small: 0 0.5rem;
-@gap-small: 1rem;
-@navbar-height: 4rem;
-@gap-test-questionnaire: 32pt;
-@gap-test-item: 8pt;
-@gap-list-view-questionnaire: 64pt;
+@gap-test-questionnaire: 32px;
+@gap-test-item: 8px;
+@gap-list-view-questionnaire: 64px;
 
 nz-content {
-  padding: @padding-small;
+  padding: @spacing0 @spacing8;
   box-sizing: border-box;
   text-align: left;
   overflow-x: auto;
-  padding-top: @navbar-height;
+  padding-top: 64px;
 }
 
 .toolbar {
-  margin: 2rem 0;
+  margin: @spacing32 @spacing0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: @gap-small;
+  gap: @spacing16;
 
   > :first-child {
-    margin-right: 1rem;
+    margin-right: @spacing16;
   }
 
   > div {
@@ -34,12 +31,12 @@ nz-content {
     align-items: center;
 
     > :first-child {
-      margin-right: 0.3rem;
+      margin-right: @spacing4;
     }
   }
 
   i[nz-icon] {
-    margin-left: 5px;
+    margin-left: @spacing4;
   }
 }
 
@@ -60,7 +57,7 @@ nz-content {
     }
 
     > h3 {
-      margin: 0 0.5rem 0 0;
+      margin: @spacing0 @spacing8 @spacing0 @spacing0;
       text-align: left;
     }
   }
@@ -68,17 +65,17 @@ nz-content {
 
 @media (max-width: @breakpoint-lg) {
   nz-content {
-    padding: @padding-small;
+    padding: @spacing0 @spacing8;
   }
 
   .toolbar {
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: @gap-small;
+    gap: @spacing16;
   }
 
   .view {
-    gap: 1.5rem;
+    gap: @spacing24;
 
     > div {
       flex-direction: row;
@@ -86,26 +83,26 @@ nz-content {
     }
 
     &:last-of-type {
-      margin-top: 1.5rem;
+      margin-top: @spacing24;
     }
 
     > h3 {
-      margin: 0 0.5rem 0 0;
+      margin: @spacing0 @spacing8 @spacing0 @spacing0;
     }
   }
 }
 
 @media (max-width: @breakpoint-md) {
   nz-content {
-    padding: @padding-small;
+    padding: @spacing0 @spacing8;
     overflow-x: auto;
   }
 
   .toolbar {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.8rem;
-    margin: 1rem 0;
+    gap: @spacing12;
+    margin: @spacing16 @spacing0;
 
     > div {
       justify-content: center;
@@ -114,7 +111,7 @@ nz-content {
 
   .view {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: @spacing16;
 
     > div {
       flex-direction: column;
@@ -122,49 +119,49 @@ nz-content {
     }
 
     > h3 {
-      font-size: @font-size-body;  // it was 1rem
-      margin-bottom: 0.3rem;
+      font-size: @font-size-body;
+      margin-bottom: @spacing4;
     }
   }
 }
 
 @media (max-width: @breakpoint-xs) {
   nz-content {
-    padding: 0 0.2rem;
+    padding: @spacing0 @spacing4;
     overflow-x: auto;
   }
 
   .toolbar {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.5rem;
-    margin: 0.5rem 0;
+    gap: @spacing8;
+    margin: @spacing8 @spacing0;
 
     > div {
       width: @width-full;
       justify-content: flex-start;
-      margin: 0.2rem 0;
+      margin: @spacing4 @spacing0;
     }
   }
 
   .view {
-    gap: 1rem;
+    gap: @spacing16;
 
     > div {
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      margin-bottom: 0.5rem;
+      margin-bottom: @spacing8;
       max-width: @max-width-full;
 
       > h3 {
         font-size: @font-size-small; // it was 0.85rem
-        margin-bottom: 0.2rem;
+        margin-bottom: @spacing4;
       }
     }
   }
 
   .toolbar > div > :first-child {
-    margin-right: 0.2rem;
+    margin-right: @spacing4;
   }
 }

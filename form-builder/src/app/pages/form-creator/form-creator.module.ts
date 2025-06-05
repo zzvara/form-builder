@@ -23,6 +23,7 @@ import { ChangeSummaryComponent } from './components-page/change-summary/change-
 import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
 import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
+import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
 import { NzPopoverModule }     from 'ng-zorro-antd/popover';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule }     from 'ng-zorro-antd/menu';
@@ -58,6 +59,7 @@ import { CommonModule } from '@angular/common';
     NzMenuModule,
     SharedModule,
     TranslatePipe,
+    NzDescriptionsModule,
     ChangeSummaryComponent
   ],
   providers: [],
