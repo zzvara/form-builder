@@ -69,14 +69,30 @@ hr {
 
 .icon-margin-small {
   margin-left: @spacing4;
+  display: flex;
+  align-items: center;
 }
 
 .icon-margin-medium {
   margin-left: @spacing12;
+  display: flex;
+  align-items: center;
 }
 
 .form-margin-top {
   margin-top: @spacing8;
+}
+
+nz-form-label {
+  div,
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  h4 {
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: @breakpoint-lg) {
