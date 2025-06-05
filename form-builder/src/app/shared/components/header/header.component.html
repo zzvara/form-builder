@@ -32,8 +32,12 @@
       </div>
       <nz-dropdown-menu #languageMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item (click)="setLanguage('en')" [class.selected]="currentLanguage === 'en'">{{ 'general.ENGLISH' | translate }}</li>
-          <li nz-menu-item (click)="setLanguage('hu')" [class.selected]="currentLanguage === 'hu'">{{ 'general.HUNGARY' | translate }}</li>
+          <li nz-menu-item (click)="setLanguage('en')" [class.selected]="currentLanguage === 'en'">
+            <span class="fi fi-gb"></span> {{ 'general.ENGLISH' | translate }}
+          </li>
+          <li nz-menu-item (click)="setLanguage('hu')" [class.selected]="currentLanguage === 'hu'">
+            <span class="fi fi-hu"></span> {{ 'general.HUNGARY' | translate }}
+          </li>
         </ul>
       </nz-dropdown-menu>
     </div>
