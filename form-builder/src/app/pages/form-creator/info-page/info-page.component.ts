@@ -80,6 +80,7 @@ export class InfoPageComponent implements OnInit {
     this.formData.emit(this.project.type);
 
     this.jsonService.getJsonData().subscribe((data) => {
+      // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
       if (data) {
         this.project = { ...this.project, ...data.project };
         this.initializeForm();
