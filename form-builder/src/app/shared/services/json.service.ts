@@ -21,7 +21,7 @@ export class JsonService {
    * @returns {boolean} - True if project is valid, false otherwise.
    */
   private validateProject(project: Project): boolean {
-    return project && project.id !== undefined;
+    return Boolean(project && project.id !== undefined && project.id !== null);
   }
 
   /**
@@ -121,8 +121,8 @@ export class JsonService {
 
           const json = JSON.parse(target.result) as ProjectData;
 
-          if (!this.validateProject(json.project)) {
-            throw new Error('Invalid project data');
+          if (!json.project) {
+            throw new Error('Invalid project data: No project found');
           }
 
           // Clear the ID to ensure a new one is generated when the project is saved
