@@ -29,6 +29,7 @@ hr {
   font-size: @font-size-lead;
   border-radius: 10px;
   border-width: 2px;
+  border-color: @border-dark;
   margin-top: -5px;
   width: @width-full;
   box-sizing: border-box;
@@ -73,10 +74,14 @@ hr {
 
 .icon-margin-small {
   margin-left: @spacing4;
+  display: flex;
+  align-items: center;
 }
 
 .icon-margin-medium {
   margin-left: @spacing12;
+  display: flex;
+  align-items: center;
 }
 
 .form-margin-top {
@@ -85,6 +90,18 @@ hr {
 
 .optional-text {
   color: @gray;
+}
+
+nz-form-label {
+  div,
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  h4 {
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: @breakpoint-lg) {
@@ -116,6 +133,7 @@ hr {
   #description {
     font-size: @font-size-body;
   }
+
   .formelement {
     margin-bottom: @spacing16;
   }

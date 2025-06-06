@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Project, ProjectType } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -49,6 +49,7 @@ export class InfoPageComponent implements OnInit {
   constructor(
     private readonly modal: NzModalService,
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly projectService: ProjectService<Project>,
     private readonly jsonService: JsonService
   ) {}
@@ -119,6 +120,8 @@ export class InfoPageComponent implements OnInit {
     } else {
       this.projectId.emit(this.project.id);
     }
+
+    this.jsonService.clearJsonData();
   }
 
   submitForm() {
@@ -128,12 +131,27 @@ export class InfoPageComponent implements OnInit {
       console.log('Form is invalid, validation failed');
       return;
     }
+
     this.updateForm();
+
+    let projectId: string;
+
     if (this.formExists && this.formId !== '') {
       this.projectService.update(this.formId, this.project);
+      projectId = this.formId;
     } else {
       this.projectService.add(this.project);
+      projectId = this.project.id;
     }
+
+    // Update the URL with &id=projectId
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { id: projectId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+
     this.page! += 1;
     this.onsetPage(this.page!);
     this.saveFailed = false;

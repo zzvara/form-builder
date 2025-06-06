@@ -45,13 +45,22 @@ export class EditComponent implements OnInit, OnChanges {
 
   getSectionIds: () => string[] = () =>
     this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
-  getAllFormInputs: () => FormInputData[] = () =>
-    this.editList.flatMap((edit) => {
+  getAllFormInputs: () => FormInputData[] = () => {
+    // If editList is empty but there's JSON data with editList, use that instead
+    if (this.editList.length === 0 && this.projectId) {
+      const project = this.projectService.searchData(this.projectId)[0];
+      if (project?.editList && project.editList.length > 0) {
+        this.editList = cloneDeep(project.editList);
+      }
+    }
+
+    return this.editList.flatMap((edit) => {
       if (instanceOfSectionList(edit.data)) {
         return edit.data.sectionInputs;
       }
       return edit.data;
     });
+  };
 
   sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
     item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
@@ -88,7 +97,7 @@ export class EditComponent implements OnInit, OnChanges {
    * If a project and its form inputs are found, it updates the formInputs array with the project's form inputs.
    * @returns {void}
    */
-  private loadProject(): void {
+  private loadProject(): void {    
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       if (project?.editList) {

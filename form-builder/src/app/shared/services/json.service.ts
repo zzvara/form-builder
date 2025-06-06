@@ -125,6 +125,13 @@ export class JsonService {
             throw new Error('Invalid project data');
           }
 
+          // Clear the ID to ensure a new one is generated when the project is saved
+          json.project.id = '';
+
+          // Update modification date
+          // json.project.created = new Date().toISOString().split('T')[0];
+          json.project.modified = new Date().toISOString().split('T')[0];
+
           observer.next(json);
           observer.complete();
         } catch (e) {

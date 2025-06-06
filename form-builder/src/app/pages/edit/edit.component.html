@@ -38,7 +38,7 @@
               </ng-template>
               <ng-template #sectionButtons>
                 <div class="section-buttons">
-                  <span>Reorder enabled: </span>
+                  <span>{{'components.REORDER' | translate}}: </span>
                   <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
                   <button
                     nz-button
@@ -123,7 +123,7 @@
                      cdkDrag
                      [cdkDragData]="edit">
                     <span nz-icon nzType="form" nzTheme="outline"></span>
-                    <span class="component-title">{{ edit.data.title }}</span>
+                    <span class="component-title">{{ edit.data.title | translate }}</span>
                     <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
                         <span nz-icon nzType="aim" nzTheme="outline"></span>
                     </span>
