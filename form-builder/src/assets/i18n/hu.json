@@ -30,13 +30,13 @@
     "MODE": "Működési mód",
     "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
     "NEXT_VERSION": "Következő verzió",
-    "NUMBER_FIELD": "Számmező",
-    "PICTURE_INPUT": "Képfeltöltés",
-    "PLACEHOLDER": "Helykitöltő szöveg",
-    "PLACEHOLDER_DESCRIPTION": "A mező leírása",
-    "PLACEHOLDER_ERROR_REQUIRED": "Ez a mező nem hagyható üresen.",
-    "PLACEHOLDER_QUESTION": "Tedd fel a kérdést",
-    "PLACEHOLDER_TIME_FORMAT": "Pl.: ÓÓ:PP",
+    "NUMBER_FIELD": "SZÁMMEZŐ",
+    "PICTURE_INPUT": "KÉPBEMENET",
+    "PLACEHOLDER": "Helyőrző",
+    "PLACEHOLDER_DESCRIPTION": "Leírás",
+    "PLACEHOLDER_ERROR_REQUIRED": "Kötelező hibaüzenet",
+    "PLACEHOLDER_QUESTION": "Kérdés",
+    "PLACEHOLDER_TIME_FORMAT": "Időformátum",
     "PREVIOUS_VERSION": "Előző verzió",
     "PROVIDE_TOOLTIP": "Kérlek, adj meg egy súgószöveget!",
     "QUESTION_DESCRIPTION": "Kérdés leírása",
@@ -63,6 +63,12 @@
       "CHECKED?": "Ellenőrizve?",
       "DISABLED?": "Letiltva?",
       "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése"
+    },
+     "change_summary":{
+        "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
+        "ADDED_INPUTS": "Hozzáadott mezők",
+        "REMOVED_INPUTS": "Eltávolított mezők",
+        "NONE": "— nincs —"
     },
     "combobox": {
       "ADD_OPTION": "Új lehetőség hozzáadása",
