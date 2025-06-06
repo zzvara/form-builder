@@ -51,10 +51,22 @@ export class ProjectService<T extends Project> {
    */
   add(data: T): void {
     data.id = this.generateNextId();
+    const now = new Date().toISOString();
+    data.created  = now.split('T')[0];
+    data.modified = now.split('T')[0];
+
     this.items.push(data);
     this.itemsSubject.next([...this.items]);
     localStorage.setItem(this.storageKey, JSON.stringify(this.items));
-  }
+
+    const projectHistoryKey = `${this.storageKey}-history-${data.id}`;
+    const initialVersion: ProjectVersion<T> = {
+      versionNum: 1,
+      project: { ...data },
+      created: now
+    };
+    localStorage.setItem(projectHistoryKey, JSON.stringify([initialVersion]));
+}
 
   /**
    * Removes a project by its ID from the list and updates local storage.
@@ -83,9 +95,26 @@ export class ProjectService<T extends Project> {
    * @returns {ProjectVersion<T>[]} An array of project versions, which are of generic type T.
    */
   getProjectHistory(projectId: string): ProjectVersion<T>[] {
-    const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
-    return JSON.parse(localStorage.getItem(projectHistoryKey) ?? '[]');
+    const key = `${this.storageKey}-history-${projectId}`;
+    let history = JSON.parse(localStorage.getItem(key) ?? '[]') as ProjectVersion<T>[];
+  
+    // ha még nincs bejegyzés, generálunk egyet
+    if (history.length === 0) {
+      const proj = this.items.find(i => i.id === projectId);
+      if (proj) {
+        const now = proj.created ? new Date(proj.created).toISOString() : new Date().toISOString();
+        history = [{
+          versionNum: 1,
+          project: { ...proj },
+          created: now
+        }];
+        localStorage.setItem(key, JSON.stringify(history));
+      }
+    }
+  
+    return history;
   }
+  
 
   /**
    * Retrieves a specific version of a project by its ID and version number.
@@ -153,6 +182,7 @@ export class ProjectService<T extends Project> {
       const projectVersion: ProjectVersion<T> = {
         versionNum: versionNum,
         project: previousVersion,
+        created: new Date().toISOString(),
       };
 
       projectHistory.push(projectVersion);

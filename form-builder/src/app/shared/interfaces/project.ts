@@ -22,4 +22,5 @@ export interface Project {
 export interface ProjectVersion<T extends Project> {
   versionNum: number;
   project: T;
+  created: string;
 }
