@@ -1,7 +1,7 @@
 <section>
   <div class="sticky-header">
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="input search text" [(ngModel)]="searchTerm" (ngModelChange)="filterItems()" />
+      <input type="text" nz-input placeholder="{{'form.SEARCH' | translate}}" [(ngModel)]="searchTerm" (ngModelChange)="filterItems()" />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
