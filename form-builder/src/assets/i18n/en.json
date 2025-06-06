@@ -42,6 +42,7 @@
         "QUESTION_DESCRIPTION": "Question description",
         "RADIO_GROUP": "Radio group",
         "RANGE_PICKER": "Range Picker",
+        "REORDER": "Reorder enabled",
         "REQUIRED_MESSAGE": "Field cannot be empty!",
         "SECTION": "Section",
         "SECTIONS": "Sections",
