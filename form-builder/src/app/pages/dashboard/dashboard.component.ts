@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly questionnaireService: ProjectService<Questionnaire>,
+    private readonly questionnaireService: ProjectService<Questionnaire>
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit {
     if (savedView) {
       this.isListView = savedView === 'list';
     }
-
   }
 
   createProject(type: ProjectType): void {

@@ -1,8 +1,10 @@
 <form id="textareaEditFormID" nz-form [formGroup]="formData">
-  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
+  <nz-form-label nzRequired
+    ><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+  >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input  formControlName="questionValue" />
+      <input nz-input formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -14,11 +16,7 @@
   <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
-      <textarea
-        nz-input
-        nzAutosize
-        formControlName="descriptionValue"
-      ></textarea>
+      <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
@@ -38,7 +36,9 @@
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
       <div>
-        <nz-form-label [nzRequired]="getControlValue('required')"><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label>
+        <nz-form-label [nzRequired]="getControlValue('required')"
+          ><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <textarea
@@ -78,7 +78,7 @@
         <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-            <input nz-input formControlName="requiredMessage"/>
+            <input nz-input formControlName="requiredMessage" />
           </nz-form-control>
           <ng-template #requiredErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
@@ -96,7 +96,9 @@
     </nz-form-item>
     @if (getControlValue('minLength')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.text_area.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.text_area.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minLengthNumberErrorMessageTemplate">
             <nz-input-number
@@ -139,7 +141,9 @@
     </nz-form-item>
     @if (getControlValue('maxLength')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxLengthNumberErrorMessageTemplate">
             <nz-input-number
@@ -179,7 +183,9 @@
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
             <input nz-input formControlName="tooltipText" />

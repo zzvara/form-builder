@@ -23,14 +23,14 @@ interface DiffItem {
 @Component({
   selector: 'app-change-summary',
   standalone: true,
-  imports: [CommonModule, NzIconModule,  TranslatePipe],
+  imports: [CommonModule, NzIconModule, TranslatePipe],
   templateUrl: './change-summary.component.html',
-  styleUrls: ['./change-summary.component.less']
+  styleUrls: ['./change-summary.component.less'],
 })
 export class ChangeSummaryComponent implements OnInit, OnChanges {
   @Input() items: ChangeInput[] = [];
   private modalData = inject(NZ_MODAL_DATA, { optional: true }) as { items: ChangeInput[] } | null;
-  private modalRef  = inject(NzModalRef);
+  private modalRef = inject(NzModalRef);
 
   diffItems: DiffItem[] = [];
 
@@ -48,7 +48,7 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
     }
   }
 
-  /** 
+  /**
    * Safely parse a JSON string into an array of RawItem.
    * If the input is not a string or is invalid JSON, return an empty array.
    */
@@ -68,32 +68,36 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
    */
   private buildDiffs(rawItems: ChangeInput[]): void {
     if (!rawItems || rawItems.length === 0) {
-      this.diffItems = [{
-        key: 'editList',
-        open: true,
-        addedItems: [],
-        removedItems: []
-      }];
+      this.diffItems = [
+        {
+          key: 'editList',
+          open: true,
+          addedItems: [],
+          removedItems: [],
+        },
+      ];
       return;
     }
 
-    this.diffItems = rawItems.map(item => {
-      const beforeArr  = this.safeParseArray(item.before);
-      const afterArr   = this.safeParseArray(item.after);
-      const added      = afterArr.filter(a => !beforeArr.some(b => b.id === a.id));
-      const removed    = beforeArr.filter(b => !afterArr.some(a => a.id === b.id));
+    this.diffItems = rawItems.map((item) => {
+      const beforeArr = this.safeParseArray(item.before);
+      const afterArr = this.safeParseArray(item.after);
+      const added = afterArr.filter((a) => !beforeArr.some((b) => b.id === a.id));
+      const removed = beforeArr.filter((b) => !afterArr.some((a) => a.id === b.id));
       return { key: item.key, open: false, addedItems: added, removedItems: removed };
     });
 
-    const hasChanges = this.diffItems.some(d => d.addedItems.length > 0 || d.removedItems.length > 0);
+    const hasChanges = this.diffItems.some((d) => d.addedItems.length > 0 || d.removedItems.length > 0);
     if (!hasChanges) {
       // No real changes: show a placeholder section instead of leaving it blank
-      this.diffItems = [{
-        key: 'editList',
-        open: true,
-        addedItems: [],
-        removedItems: []
-      }];
+      this.diffItems = [
+        {
+          key: 'editList',
+          open: true,
+          addedItems: [],
+          removedItems: [],
+        },
+      ];
     }
   }
 
@@ -105,9 +109,9 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
     this.modalRef?.close();
   }
 
-    getIconType(type: string): string {
+  getIconType(type: string): string {
     if (type.toLowerCase().includes('number')) return '#';
-    if (type.toLowerCase().includes('text'))   return 'T';
+    if (type.toLowerCase().includes('text')) return 'T';
     return '?';
   }
 }

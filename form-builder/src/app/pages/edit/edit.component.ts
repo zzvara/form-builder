@@ -13,9 +13,9 @@ import { instanceOfSectionList, SectionList } from '@pages/edit/interfaces/secti
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
-import { NgStyleInterface } from "ng-zorro-antd/core/types";
+import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { v4 as uuidv4 } from 'uuid';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit',
@@ -38,7 +38,6 @@ export class EditComponent implements OnInit, OnChanges {
   @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;
 
   sideBarData = getSideBarData(this, this.translate);
-
 
   editList: EditList[] = [];
 
@@ -96,7 +95,7 @@ export class EditComponent implements OnInit, OnChanges {
    * If a project and its form inputs are found, it updates the formInputs array with the project's form inputs.
    * @returns {void}
    */
-  private loadProject(): void {    
+  private loadProject(): void {
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       if (project?.editList) {
@@ -151,12 +150,12 @@ export class EditComponent implements OnInit, OnChanges {
         // Create a deep copy of the dropped item with updated ID
         const newItemId = uuidv4();
         const newItem: FormInputData = cloneDeep(droppedInput);
-        
+
         // Initialize data if it's null
         if (!newItem.data) {
           newItem.data = {};
         }
-        
+
         newItem.data.id = newItemId;
         newItem.data.sectionId = event.container.id;
         const newInputEdit: EditList = {
@@ -166,12 +165,11 @@ export class EditComponent implements OnInit, OnChanges {
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
     } else if (instanceOfFormInputData(event.item.data)) {
-      
       // Initialize data if it's null
       if (!event.item.data.data) {
         event.item.data.data = {};
       }
-      
+
       event.item.data.data.sectionId = event.container.id;
       const transferredInput: EditList = {
         id: event.item.data.data.id!,
@@ -237,12 +235,12 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList): {[p: string]: any} {
+  getSectionInputStyle(sect: SectionList): { [p: string]: any } {
     let width: number;
     if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
     } else {
-      width = (100 / sect.sectionInputs.length) - 1;
+      width = 100 / sect.sectionInputs.length - 1;
     }
     return {
       width: width.toString() + '%',
@@ -252,14 +250,14 @@ export class EditComponent implements OnInit, OnChanges {
   getSectionStyle(sect: SectionList): NgStyleInterface {
     if (sect.layout === LayoutEnum.HORIZONTAL) {
       return {
-        "display": "flex",
-        "padding": "15px",
-        "padding-bottom": "24px"
-      }
+        display: 'flex',
+        padding: '15px',
+        'padding-bottom': '24px',
+      };
     }
     return {
-      "padding": "15px",
-      "padding-bottom": "24px"
+      padding: '15px',
+      'padding-bottom': '24px',
     };
   }
 
@@ -294,7 +292,7 @@ export class EditComponent implements OnInit, OnChanges {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'center'
+        block: 'center',
       });
     }
   }

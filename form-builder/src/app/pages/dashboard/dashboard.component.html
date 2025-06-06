@@ -4,23 +4,13 @@
       <div (click)="toggleView()">
         <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
         <span>{{ 'dashboard.LIST_VIEW' | translate }}</span>
-        <i
-          nz-icon
-          nzType="question-circle"
-          nz-tooltip
-          nzTooltipTitle="{{ 'dashboard.LIST_VIEW_TOOLTIP' | translate }}"
-        ></i>
+        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'dashboard.LIST_VIEW_TOOLTIP' | translate }}"></i>
       </div>
     } @else {
       <div (click)="toggleView()">
         <span nz-icon nzType="appstore" nzTheme="outline"></span>
         <span>{{ 'dashboard.CARD_VIEW' | translate }}</span>
-        <i
-          nz-icon
-          nzType="question-circle"
-          nz-tooltip
-          nzTooltipTitle="{{ 'dashboard.CARD_VIEW_TOOLTIP' | translate }}"
-        ></i>
+        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'dashboard.CARD_VIEW_TOOLTIP' | translate }}"></i>
       </div>
     }
   </div>

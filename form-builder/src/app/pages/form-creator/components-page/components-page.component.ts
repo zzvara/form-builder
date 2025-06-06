@@ -40,23 +40,20 @@ export class ComponentsPageComponent implements OnInit {
    * Otherwise, it defaults the current version number to 1.
    * @returns {void}
    */
- ngOnInit(): void {
-  if (this.projectId !== undefined) {
-    this.projectHistory = this.projectService.getProjectHistory(this.projectId);
+  ngOnInit(): void {
+    if (this.projectId !== undefined) {
+      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
 
-    this.currentVersionNum = this.projectHistory.length > 0
-      ? this.projectHistory[this.projectHistory.length - 1].versionNum
-      : 1;
-    this.versionChange.emit(this.currentVersionNum);
+      this.currentVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : 1;
+      this.versionChange.emit(this.currentVersionNum);
+    }
   }
-}
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
   }
-
 
   /**
    * Saves the current form state by calling saveForm on the editComponent.
@@ -124,16 +121,14 @@ export class ComponentsPageComponent implements OnInit {
   }
   trackByVersion(index: number, version: ProjectVersion<Project>): number {
     return version.versionNum; // Track by the version number
-  }  
+  }
 
   selectVersion(versionNum: number) {
     this.revertToVersion(versionNum);
   }
 
   getDiffItems(version: ProjectVersion<Project>): DiffItem[] {
-    const prev = this.projectHistory.find(
-      v => v.versionNum === version.versionNum - 1
-    );
+    const prev = this.projectHistory.find((v) => v.versionNum === version.versionNum - 1);
     if (!prev) return [];
 
     const curr = version.project;
@@ -141,34 +136,32 @@ export class ComponentsPageComponent implements OnInit {
     const keys = Object.keys(curr) as Array<keyof Project>;
 
     return keys
-      .filter(key => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))
-      .map(key => ({
+      .filter((key) => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))
+      .map((key) => ({
         key: key,
         before: JSON.stringify(old[key]),
-        after: JSON.stringify(curr[key])
+        after: JSON.stringify(curr[key]),
       }));
   }
-  public getChangeItemsForVersion(version: ProjectVersion<Project>):
-    Array<{ key: string; before: any; after: any }> {
-    return this.getDiffItems(version)
-      .map(d => ({ key: d.key, before: d.before, after: d.after }));
+  public getChangeItemsForVersion(version: ProjectVersion<Project>): Array<{ key: string; before: any; after: any }> {
+    return this.getDiffItems(version).map((d) => ({ key: d.key, before: d.before, after: d.after }));
   }
   openDiffModal(version: ProjectVersion<Project>): void {
-  const prev = version.versionNum - 1;
-  const title = prev > 0
-      ? this.translate.instant('components.change_summary.CHANGES_SINCE', {version: prev })
-      : this.translate.instant('components.change_summary.CHANGES_SINCE', { version: version.versionNum });
+    const prev = version.versionNum - 1;
+    const title =
+      prev > 0
+        ? this.translate.instant('components.change_summary.CHANGES_SINCE', { version: prev })
+        : this.translate.instant('components.change_summary.CHANGES_SINCE', { version: version.versionNum });
 
-  this.modal.create({
-    nzTitle: title,
-    nzContent: ChangeSummaryComponent,
-    nzData: { items: this.getChangeItemsForVersion(version) },
-    nzWidth: '60vw',
-    nzCentered: true,
-    nzFooter: null
-  });
-}
-  
+    this.modal.create({
+      nzTitle: title,
+      nzContent: ChangeSummaryComponent,
+      nzData: { items: this.getChangeItemsForVersion(version) },
+      nzWidth: '60vw',
+      nzCentered: true,
+      nzFooter: null,
+    });
+  }
 
   onSectionInputsChange(undoRedoEvent: 'UNDO' | 'REDO'): void {
     this.editComponent.undoRedo(undoRedoEvent);

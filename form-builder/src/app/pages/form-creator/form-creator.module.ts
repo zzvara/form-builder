@@ -8,7 +8,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';  
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,15 +23,14 @@ import { ChangeSummaryComponent } from './components-page/change-summary/change-
 import { ResultsPageComponent } from '@pages/form-creator/results-page/results-page.component';
 import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
-import {NzDescriptionsModule} from "ng-zorro-antd/descriptions";
-import { NzPopoverModule }     from 'ng-zorro-antd/popover';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzMenuModule }     from 'ng-zorro-antd/menu';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
 
-
 @NgModule({
-  declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent,  ResultsPageComponent],
+  declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
   imports: [
     NzFormModule,
     NzInputModule,
@@ -53,14 +52,14 @@ import { CommonModule } from '@angular/common';
     NzToolTipModule,
     NzPopoverModule,
     NzIconModule,
-    CommonModule,            
+    CommonModule,
     NzIconModule,
     NzDropDownModule,
     NzMenuModule,
     SharedModule,
     TranslatePipe,
     NzDescriptionsModule,
-    ChangeSummaryComponent
+    ChangeSummaryComponent,
   ],
   providers: [],
   exports: [],

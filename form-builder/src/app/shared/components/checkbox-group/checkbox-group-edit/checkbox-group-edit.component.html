@@ -4,10 +4,10 @@
       <nz-table #smallTable nzBordered nzSize="small" [nzData]="options.controls">
         <thead>
           <tr>
-            <th>{{'general.DESCRIPTION' | translate}}</th>
-            <th class="table-center">{{'components.checkbox_group.DISABLED?' | translate}}</th>
-            <th class="table-center">{{'components.checkbox_group.CHECKED?' | translate}}</th>
-            <th class="table-center">{{'components.combobox.COMBOBOX_REMOVE' | translate}}</th>
+            <th>{{ 'general.DESCRIPTION' | translate }}</th>
+            <th class="table-center">{{ 'components.checkbox_group.DISABLED?' | translate }}</th>
+            <th class="table-center">{{ 'components.checkbox_group.CHECKED?' | translate }}</th>
+            <th class="table-center">{{ 'components.combobox.COMBOBOX_REMOVE' | translate }}</th>
           </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
@@ -18,13 +18,17 @@
               </td>
               <td class="table-center"><label nz-checkbox formControlName="disabled"></label></td>
               <td class="table-center"><label nz-checkbox formControlName="checked"></label></td>
-              <td class="table-center"><button nz-button nzType="link" nzDanger (click)="removeOption(i)">{{'components.combobox.COMBOBOX_REMOVE' | translate}}</button></td>
+              <td class="table-center">
+                <button nz-button nzType="link" nzDanger (click)="removeOption(i)">
+                  {{ 'components.combobox.COMBOBOX_REMOVE' | translate }}
+                </button>
+              </td>
             </tr>
           }
         </tbody>
       </nz-table>
       @if (options.invalid) {
-        <span class="error-text">{{'components.radio_group.OPTION_ATLEAST' | translate}}: {{ getMinOptions() }}</span>
+        <span class="error-text">{{ 'components.radio_group.OPTION_ATLEAST' | translate }}: {{ getMinOptions() }}</span>
       }
     </nz-form-control>
   </nz-form-item>
@@ -32,23 +36,27 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="newOptionErrors">
       <nz-input-group nzSearch [nzAddOnAfter]="addOptionButton">
-        <input type="text" nz-input  [appMutateText]="trimString" [formControl]="newOption" />
+        <input type="text" nz-input [appMutateText]="trimString" [formControl]="newOption" />
       </nz-input-group>
       <ng-template #addOptionButton>
-        <button nz-button nzType="primary" [disabled]="newOption.invalid" (click)="addOption()">{{'components.combobox.ADD_OPTION' | translate}}</button>
+        <button nz-button nzType="primary" [disabled]="newOption.invalid" (click)="addOption()">
+          {{ 'components.combobox.ADD_OPTION' | translate }}
+        </button>
       </ng-template>
       <ng-template #newOptionErrors let-control>
         @if (hasErrors(control, 'required', 'fieldIsEmpty')) {
           <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
         }
         @if (hasErrors(control, 'listContainsItem')) {
-          <div>{{'components.radio_group.OPTION_ALREADY' | translate}}:: {{ control.errors['listContainsItem'] }}</div>
+          <div>{{ 'components.radio_group.OPTION_ALREADY' | translate }}:: {{ control.errors['listContainsItem'] }}</div>
         }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
+  <nz-form-label nzRequired
+    ><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+  >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -75,7 +83,9 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
-    <nz-form-label [nzRequired]="getControlValue('required')"><span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span></nz-form-label>
+      <nz-form-label [nzRequired]="getControlValue('required')"
+        ><span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span></nz-form-label
+      >
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
           <input nz-input formControlName="requiredMessage" />

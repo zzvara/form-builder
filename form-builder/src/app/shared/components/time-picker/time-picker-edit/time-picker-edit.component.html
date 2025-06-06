@@ -1,8 +1,10 @@
 <form id="datePickerEditFormID" nz-form [formGroup]="formData">
-  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
+  <nz-form-label nzRequired
+    ><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+  >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input  formControlName="questionValue" />
+      <input nz-input formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -14,11 +16,7 @@
   <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
-      <textarea
-        nz-input
-        nzAutosize
-        formControlName="descriptionValue"
-      ></textarea>
+      <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
@@ -38,7 +36,9 @@
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
       <div>
-        <nz-form-label [nzRequired]="getControlValue('required')"><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label>
+        <nz-form-label [nzRequired]="getControlValue('required')"
+          ><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <nz-time-picker
@@ -147,10 +147,7 @@
         <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-            <input
-              nz-input
-              formControlName="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}"
-            />
+            <input nz-input formControlName="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}" />
           </nz-form-control>
           <ng-template #requiredErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
@@ -168,7 +165,9 @@
     </nz-form-item>
     @if (getControlValue('minTime')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.time_picker.MIN_TIME' | translate }}</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.time_picker.MIN_TIME' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minTimeErrorMessageTemplate">
             <nz-time-picker
@@ -209,7 +208,9 @@
     </nz-form-item>
     @if (getControlValue('maxTime')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.time_picker.MAX_TIME' | translate }}:</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.time_picker.MAX_TIME' | translate }}:</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
             <nz-time-picker
@@ -253,7 +254,9 @@
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
             <input nz-input formControlName="tooltipText" />

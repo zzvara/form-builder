@@ -11,33 +11,31 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.dashboard'
+    title: 'title.dashboard',
   },
   {
     path: 'new',
     component: FormCreatorComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.newform'
+    title: 'title.newform',
   },
   {
     path: 'edit',
     component: FormCreatorComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.editform'
+    title: 'title.editform',
   },
   {
     path: '**',
     component: DashboardComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.dashboard'
+    title: 'title.dashboard',
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [
-    { provide: TitleStrategy, useClass: TranslatedTitleStrategy}
-    ]
+  providers: [{ provide: TitleStrategy, useClass: TranslatedTitleStrategy }],
 })
 export class AppRoutingModule {}

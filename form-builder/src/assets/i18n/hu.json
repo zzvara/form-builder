@@ -64,11 +64,11 @@
       "DISABLED?": "Letiltva?",
       "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése"
     },
-     "change_summary":{
-        "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
-        "ADDED_INPUTS": "Hozzáadott mezők",
-        "REMOVED_INPUTS": "Eltávolított mezők",
-        "NONE": "— nincs —"
+    "change_summary": {
+      "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
+      "ADDED_INPUTS": "Hozzáadott mezők",
+      "REMOVED_INPUTS": "Eltávolított mezők",
+      "NONE": "— nincs —"
     },
     "combobox": {
       "ADD_OPTION": "Új lehetőség hozzáadása",
@@ -212,8 +212,8 @@
     "DESCRIPTION": "Leírás",
     "DOWNLOAD_CONFIRMATION": "Biztosan letölti a projektet?",
     "FORM_BUILDER": "Űrlapkészítő",
-    "ENGLISH" : "Angol",
-    "HUNGARY" : "Magyar",
+    "ENGLISH": "Angol",
+    "HUNGARY": "Magyar",
     "MODIFIED": "Módosítva",
     "NEXT": "Következő",
     "OK": "Igen",

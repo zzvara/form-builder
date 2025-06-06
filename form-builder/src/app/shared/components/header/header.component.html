@@ -14,7 +14,10 @@
         <span
           [ngClass]="activeOptions.includes(options.SIDEBAR) ? 'is-active' : ''"
           (click)="changeMenuItemState(options.SIDEBAR)"
-          nz-icon nzType="menu" nzTheme="outline">
+          nz-icon
+          nzType="menu"
+          nzTheme="outline"
+        >
         </span>
       }
       @if (headerOptions.includes(options.UPLOAD_JSON)) {

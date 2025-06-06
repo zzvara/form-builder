@@ -9,7 +9,9 @@
           <li nz-list-item cdkDrag [cdkDragData]="option">
             <ul nz-list-item-actions>
               <nz-list-item-action>
-                <button nz-button nzType="link" nzDanger (click)="removeOption(i)">{{'components.combobox.COMBOBOX_REMOVE' | translate}}</button>
+                <button nz-button nzType="link" nzDanger (click)="removeOption(i)">
+                  {{ 'components.combobox.COMBOBOX_REMOVE' | translate }}
+                </button>
               </nz-list-item-action>
             </ul>
             <p class="option-description">{{ option.value.option_description }}</p>
@@ -17,7 +19,7 @@
         }
       </ul>
       @if (options.invalid) {
-        <span class="error-text">{{'components.radio_group.OPTION_ATLEAST' | translate}}: {{ getMinOptions() }}</span>
+        <span class="error-text">{{ 'components.radio_group.OPTION_ATLEAST' | translate }}: {{ getMinOptions() }}</span>
       }
     </nz-form-control>
   </nz-form-item>
@@ -25,26 +27,28 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="newOptionErrors">
       <nz-input-group nzSearch [nzAddOnAfter]="addOptionButton">
-        <input type="text" nz-input  [appMutateText]="trimString" [formControl]="newOption" />
+        <input type="text" nz-input [appMutateText]="trimString" [formControl]="newOption" />
       </nz-input-group>
       <ng-template #addOptionButton>
-        <button nz-button nzType="primary" [disabled]="newOption.invalid" (click)="addOption()">{{'components.combobox.ADD_OPTION' | translate}}</button>
+        <button nz-button nzType="primary" [disabled]="newOption.invalid" (click)="addOption()">
+          {{ 'components.combobox.ADD_OPTION' | translate }}
+        </button>
       </ng-template>
       <ng-template #newOptionErrors let-control>
         @if (hasErrors(control, 'required', 'fieldIsEmpty')) {
           <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
         }
         @if (hasErrors(control, 'listContainsItem')) {
-          <div>{{'components.radio_group.OPTION_ALREADY' | translate}}: {{ control.errors['listContainsItem'] }}!</div>
+          <div>{{ 'components.radio_group.OPTION_ALREADY' | translate }}: {{ control.errors['listContainsItem'] }}!</div>
         }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{'components.COMPONENT_QUESTION' |translate }}:</span>
+  <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input  formControlName="questionValue" />
+      <input nz-input formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -53,7 +57,7 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{'general.DESCRIPTION' | translate}}:</span>
+  <span>{{ 'general.DESCRIPTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
@@ -67,10 +71,12 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
-    <nz-form-label [nzRequired]="getControlValue('required')"><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label>
+      <nz-form-label [nzRequired]="getControlValue('required')"
+        ><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
+      >
       <nz-form-item>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-          <nz-select formControlName="defaultValue"   nzAllowClear>
+          <nz-select formControlName="defaultValue" nzAllowClear>
             @for (option of optionObjects; track option.option_id) {
               <nz-option [nzLabel]="option.option_description" [nzValue]="option.option_id"></nz-option>
             }
@@ -88,7 +94,7 @@
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">{{'components.IS_REQUIRED' | translate}}</label>
+        <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
@@ -108,7 +114,7 @@
 
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="isButton">{{'components.radio_group.SHOW_AS_BUTTON' | translate}}</label>
+      <label nz-checkbox formControlName="isButton">{{ 'components.radio_group.SHOW_AS_BUTTON' | translate }}</label>
     </nz-form-control>
   </nz-form-item>
 </form>

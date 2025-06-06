@@ -23,7 +23,7 @@ import { TimePickerComponentData } from '@components/time-picker/interfaces/time
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
 import { EditComponent } from '@pages/edit/edit.component';
 import { FormInputData } from '@interfaces/form-input-data';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 
 // Default values of the dragged components
 const textInputOptions = (translateService: TranslateService): InputComponentData => ({
@@ -174,7 +174,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       data: pictureInputOptions,
     },
     {
-      title:'components.COMBOBOX',
+      title: 'components.COMBOBOX',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'SelectComponent',
@@ -196,8 +196,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
     },
   ];
 }
-
-
 
 // The data shown in the edit sidebar
 export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {

@@ -5,12 +5,14 @@
   [ngClass]="{
     'valid-style': inputHolderForm.valid,
     'invalid-style': inputHolderForm.invalid,
-    'card-container': true
+    'card-container': true,
   }"
 >
   <form #inputHolderForm="ngForm" nz-form class="form-container">
-    <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
-    <nz-form-item [ngClass]="{'form-item': true, 'form-item-border': !inlineEdit.enabled}">
+    <nz-form-label nzRequired
+      ><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+    >
+    <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit.enabled }">
       <nz-form-control nzErrorTip="">
         <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
         <input
@@ -28,7 +30,7 @@
         />
       </nz-form-control>
     </nz-form-item>
-    <span>{{'components.QUESTION_DESCRIPTION' | translate}}:</span>
+    <span>{{ 'components.QUESTION_DESCRIPTION' | translate }}:</span>
     <nz-form-item class="form-item">
       <nz-form-control>
         <span class="pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
@@ -51,7 +53,7 @@
   <span class="id-text">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
 </nz-card>
 <ng-template #titleTemplate>
-  <span>{{ formInput.title | translate}}</span>
+  <span>{{ formInput.title | translate }}</span>
   @if (inputHolderForm.invalid) {
     <span
       nz-tooltip

@@ -6,28 +6,28 @@
     <div class="cs-details">
       <!-- Added Inputs: always shown -->
       <div class="cs-subsection">
-       <h4>{{ 'components.change_summary.ADDED_INPUTS' | translate }}</h4>
+        <h4>{{ 'components.change_summary.ADDED_INPUTS' | translate }}</h4>
         <ul>
           <li *ngFor="let i of d.addedItems">
             <span class="cs-custom-icon">{{ getIconType(i.data.type) }}</span>
             {{ i.data.title }}
           </li>
           <li *ngIf="!d.addedItems?.length" class="cs-none">
-              {{ 'components.change_summary.NONE' | translate }}
+            {{ 'components.change_summary.NONE' | translate }}
           </li>
         </ul>
       </div>
 
       <!-- Removed Inputs: also always shown -->
       <div class="cs-subsection">
-       <h4>{{ 'components.change_summary.REMOVED_INPUTS' | translate }}</h4>
+        <h4>{{ 'components.change_summary.REMOVED_INPUTS' | translate }}</h4>
         <ul>
           <li *ngFor="let i of d.removedItems">
             <span class="cs-custom-icon">{{ getIconType(i.data.type) }}</span>
             {{ i.data.title }}
           </li>
           <li *ngIf="!d.removedItems?.length" class="cs-none">
-             {{ 'components.change_summary.NONE' | translate }}
+            {{ 'components.change_summary.NONE' | translate }}
           </li>
         </ul>
       </div>

@@ -1,6 +1,6 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SectionComponent } from '@app/shared/components/section/section.component';
 import { SharedModule } from '@app/shared/shared.module';
@@ -13,7 +13,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzSwitchModule } from "ng-zorro-antd/switch";
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @NgModule({
   declarations: [EditComponent],
@@ -30,7 +30,7 @@ import { NzSwitchModule } from "ng-zorro-antd/switch";
     NzPopconfirmModule,
     TranslatePipe,
     NzSwitchModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [SectionComponent],
   exports: [NzIconModule, EditComponent],

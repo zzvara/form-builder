@@ -1,7 +1,7 @@
 <section>
   <div class="sticky-header">
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="{{'form.SEARCH' | translate}}" [(ngModel)]="searchTerm" (ngModelChange)="filterItems()" />
+      <input type="text" nz-input placeholder="{{ 'form.SEARCH' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="filterItems()" />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
@@ -30,10 +30,7 @@
               <ng-container *cdkDragPlaceholder>
                 @switch (item.type) {
                   @case ('SectionComponent') {
-                    <nz-card
-                      nzTitle="Section: section | Layout: vertical"
-                      class="element-list p-3"
-                    ></nz-card>
+                    <nz-card nzTitle="Section: section | Layout: vertical" class="element-list p-3"></nz-card>
                   }
                   @default {
                     <app-input-holder [formInput]="item" />

@@ -1,6 +1,7 @@
 <form id="inputEditFormID" nz-form [formGroup]="formData">
   <nz-form-label nzRequired>
-  <span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
+    <span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+  >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -34,7 +35,9 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
-    <nz-form-label [nzRequired]="getControlValue('required')"><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label>
+      <nz-form-label [nzRequired]="getControlValue('required')"
+        ><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
+      >
       <nz-form-item>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
           <nz-input-group [nzSuffix]="suffixTemplateCounter">
@@ -88,7 +91,9 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('minLength')) {
-    <nz-form-label nzRequired><span>{{ 'components.text_area.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label>
+      <nz-form-label nzRequired
+        ><span>{{ 'components.text_area.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label
+      >
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minLengthNumberErrorMessageTemplate">
           <nz-input-number
@@ -129,7 +134,9 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('maxLength')) {
-    <nz-form-label nzRequired><span>{{ 'components.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label>
+      <nz-form-label nzRequired
+        ><span>{{ 'components.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label
+      >
       <nz-form-item>
         <nz-form-control [nzErrorTip]="maxLengthNumberErrorMessageTemplate">
           <nz-input-number
@@ -166,7 +173,9 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
-    <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
+      <nz-form-label nzRequired
+        ><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label
+      >
       <nz-form-item>
         <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
           <input nz-input formControlName="tooltipText" />

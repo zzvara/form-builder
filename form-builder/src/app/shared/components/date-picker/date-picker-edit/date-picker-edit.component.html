@@ -1,5 +1,7 @@
 <form id="datePickerEditFormID" nz-form [formGroup]="formData">
-  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
+  <nz-form-label nzRequired
+    ><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+  >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -34,7 +36,9 @@
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
       <div>
-        <nz-form-label [nzRequired]="getControlValue('required')"> <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label>
+        <nz-form-label [nzRequired]="getControlValue('required')">
+          <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <nz-date-picker
@@ -95,7 +99,7 @@
     </nz-form-item>
     @if (getControlValue('showTime')) {
       <div>
-        <span>{{'components.time_picker.TIME_FORMAT' | translate}}</span>
+        <span>{{ 'components.time_picker.TIME_FORMAT' | translate }}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="timeFormatErrors">
             <input nz-input formControlName="timeFormat" />
@@ -155,7 +159,9 @@
     </nz-form-item>
     @if (getControlValue('minDate')) {
       <div>
-        <nz-form-label nzRequired> <span>{{ 'components.date_picker.MIN_DATE' | translate }}</span></nz-form-label>
+        <nz-form-label nzRequired>
+          <span>{{ 'components.date_picker.MIN_DATE' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minDateErrorMessageTemplate">
             <nz-date-picker
@@ -190,7 +196,9 @@
     </nz-form-item>
     @if (getControlValue('maxDate')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.date_picker.MAX_DATE' | translate }}</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.date_picker.MAX_DATE' | translate }}</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
             <nz-date-picker
@@ -227,7 +235,9 @@
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <div>
-        <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
+        <nz-form-label nzRequired
+          ><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label
+        >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
             <input nz-input formControlName="tooltipText" />
