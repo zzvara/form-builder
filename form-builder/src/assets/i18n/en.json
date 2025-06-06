@@ -217,6 +217,8 @@
       "DESCRIPTION": "Description",
       "DOWNLOAD_CONFIRMATION": "Download this project?",
       "FORM_BUILDER": "Form Builder",
+      "ENGLISH" : "English",
+      "HUNGARY" : "Hungarian",
       "MODIFIED": "Last Modified",
       "NEXT": "Next",
       "OK": "OK",
