@@ -1,4 +1,5 @@
 @import '../../../../colors.less';
+@import '../../../../common.less';
 
 section {
   overflow-y: scroll;
@@ -18,4 +19,19 @@ section {
 
 .clear-icon:hover {
   color: @accent-danger;
+}
+
+:host ::ng-deep {
+  .ant-card {
+    width: @width-full;
+    border: @border-default;
+    margin-bottom: @spacing20;
+  }
+
+  .element-list {
+    margin: auto;
+    width: 900px;
+    border: @border-default;
+    padding: @spacing8;
+  }
 }

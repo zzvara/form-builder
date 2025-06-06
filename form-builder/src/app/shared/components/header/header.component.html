@@ -19,7 +19,7 @@
       }
       @if (headerOptions.includes(options.UPLOAD_JSON)) {
         <span>
-          <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
+          <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden-input" />
           <span (click)="fileInput.click()" nz-icon nzType="upload" nzTheme="outline"></span>
         </span>
       }

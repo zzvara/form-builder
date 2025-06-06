@@ -1,5 +1,6 @@
 @import '../../../breakpoints.less';
 @import '../../../colors.less';
+@import '../../../common.less';
 
 nz-layout {
   margin-top: 100px;
@@ -12,20 +13,18 @@ nz-steps {
 
 .form-container {
   background-color: @background-white;
-  width: 100%;
+  width: @width-full;
   height: auto;
   margin: auto;
-  padding-left: 40px;
-  padding-right: 40px;
 }
 
-@media (max-width: @breakpoint-tablet) {
+@media (max-width: @breakpoint-lg) {
   nz-layout {
     margin-top: 150px;
   }
   .form-container {
     width: 90%;
-    padding: 30px;
+    padding: @spacing32;
   }
 
   nz-steps {
@@ -33,30 +32,35 @@ nz-steps {
   }
 }
 
-@media (max-width: @breakpoint-mobile) {
+@media (max-width: @breakpoint-md) {
   nz-layout {
     margin-top: 120px;
   }
   .form-container {
     width: 95%;
-    padding: 20px;
+    padding: @spacing20;
   }
 
   nz-steps {
-    width: 100%;
+    width: @width-full;
   }
 }
 
-@media (max-width: @breakpoint-small) {
+@media (max-width: @breakpoint-xs) {
   nz-layout {
     margin-top: 80px;
   }
   .form-container {
-    width: 100%;
-    padding: 15px;
+    width: @width-full;
+    padding: @spacing16;
   }
 
   nz-steps {
-    width: 100%; /* Teljes szélesség */
+    width: @width-full;
   }
+}
+
+.form-page-container {
+  padding-left: @spacing32;
+  padding-right: @spacing32;
 }

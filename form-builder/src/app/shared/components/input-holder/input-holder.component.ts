@@ -9,6 +9,7 @@ import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-input-holder',
@@ -20,6 +21,7 @@ export class InputHolderComponent<T, D extends InputData<T> = InputData, E exten
   implements OnInit, AfterViewInit
 {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly translate: TranslateService = inject(TranslateService);
 
   @Input() formInput!: FormInputData<D, T>;
   get inputData(): D {
@@ -73,8 +75,7 @@ export class InputHolderComponent<T, D extends InputData<T> = InputData, E exten
   }
 
   resetComponent() {
-    const defaultData = getInputGroups().find((group) => group.type === this.formInput.type) as FormInputData<D, T> | undefined;
-    ;
+    const defaultData: FormInputData<D, T> | undefined = getInputGroups(this.translate).find((group) => group.type === this.formInput.type);
     if (defaultData) {
       Object.keys(this.inputData)
         .filter((key) => key !== 'id' && key !== 'sectionId')

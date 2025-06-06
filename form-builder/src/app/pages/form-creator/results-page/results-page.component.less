@@ -1,35 +1,37 @@
 @import '../../../../breakpoints.less';
 @import '../../../../colors.less';
+@import '../../../../common.less';
+@import '../../../../typography.less';
 
 nz-layout {
   background-color: @transparent;
   display: flex;
-  width: 100%;
-  padding: 0 30px;
+  width: @width-full;
+  padding: @spacing0 @spacing32;
 }
 
 .formelement {
-  margin-bottom: 30px;
-  width: 100%;
+  margin-bottom: @spacing32;
+  width: @width-full;
 }
 
 #switch {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: @spacing12;
+  margin-right: @spacing12;
 }
 
 #title,
 #description {
-  font-size: 20px;
+  font-size: @font-size-lead;
   border-radius: 10px;
   border-width: 2px;
   margin-top: -5px;
-  width: 100%;
+  width: @width-full;
   box-sizing: border-box;
 }
 
 #title {
-  margin-bottom: 10px;
+  margin-bottom: @spacing12;
 }
 
 .description-label,
@@ -46,9 +48,9 @@ nz-layout {
 }
 
 .error-message {
-  margin-top: 5px;
+  margin-top: @spacing4;
   color: @accent-danger;
-  font-size: 12px;
+  font-size: @font-size-tiny;
   font-weight: bold;
 }
 
@@ -59,14 +61,14 @@ nz-layout {
 .same_line {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: @spacing12;
   flex-wrap: wrap;
 }
 
 .created_modifaction {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: @spacing8;
   flex-direction: row;
 }
 
@@ -75,133 +77,138 @@ nz-layout {
   white-space: pre-wrap;
   word-break: break-word;
   font-family: monospace;
-  padding: 10px;
+  padding: @spacing12;
   background-color: @background-light;
-  border: 1px solid @border-light;
+  border: @border-default;
   border-radius: 5px;
 }
 
 .button-group {
   display: flex;
-  gap: 16px; // <-- Gombok közötti távolság nagyobb lett
+  gap: @spacing16; // <-- Gombok közötti távolság nagyobb lett
   align-items: center;
 }
 
 #footerdiv {
-  margin-top: 30px; // <-- Gombcsoport felső távolság, opcionális
+  margin-top: @spacing32; // <-- Gombcsoport felső távolság, opcionális
 }
 
-@media (max-width: @breakpoint-tablet) {
+.statistics-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+@media (max-width: @breakpoint-lg) {
   .formelement {
-    margin-bottom: 20px;
+    margin-bottom: @spacing20;
   }
 
   #title,
   #description {
-    font-size: 18px;
+    font-size: @font-size-lead;
     border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 100%;
+    margin-bottom: @spacing12;
+    padding: @spacing8;
+    width: @width-full;
   }
 
   .same_line {
     flex-direction: column;
-    gap: 10px;
-    padding: 0;
+    gap: @spacing12;
+    padding: @spacing0;
   }
 
   .saveBtn {
     float: none;
     text-align: center;
-    width: 100%;
-    margin-top: 10px;
+    width: @width-full;
+    margin-top: @spacing12;
   }
 
   .created_modifaction {
-    width: 100%;
+    width: @width-full;
     flex-direction: column;
-    gap: 5px;
+    gap: @spacing8;
   }
 
   nz-layout {
-    padding: 0 20px;
+    padding: @spacing0 @spacing20;
   }
 }
 
-@media (max-width: @breakpoint-mobile) {
+@media (max-width: @breakpoint-md) {
   .formelement {
-    margin-bottom: 15px;
+    margin-bottom: @spacing16;
   }
 
   #title,
   #description {
-    font-size: 14px;
+    font-size: @font-size-small;
     border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 100%;
+    margin-bottom: @spacing12;
+    padding: @spacing8;
+    width: @width-full;
   }
 
   .same_line {
     flex-direction: column;
-    gap: 10px;
-    padding: 0;
+    gap: @spacing12;
+    padding: @spacing0;
   }
 
   .button-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: @spacing12;
     align-items: stretch;
   }
 
   .saveBtn {
     order: 3;
-    width: 100%;
+    width: @width-full;
   }
 
   .created_modifaction {
-    width: 100%;
+    width: @width-full;
     flex-direction: column;
-    gap: 5px;
+    gap: @spacing8;
   }
 
   nz-layout {
-    padding: 0 15px;
+    padding: @spacing0 @spacing16;
   }
 }
 
-@media (max-width: @breakpoint-small) {
+@media (max-width: @breakpoint-xs) {
   #title,
   #description {
-    font-size: 12px;
-    padding: 6px;
-    margin-bottom: 10px;
+    font-size: @font-size-tiny;
+    padding: @spacing8;
+    margin-bottom: @spacing12;
   }
 
   .formelement {
-    margin-bottom: 10px;
+    margin-bottom: @spacing12;
   }
 
   .same_line {
     flex-direction: column;
-    gap: 5px;
+    gap: @spacing8;
   }
 
   .saveBtn {
-    width: 100%;
+    width: @width-full;
     text-align: center;
   }
 
   .created_modifaction {
-    width: 100%;
+    width: @width-full;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: @spacing12;
   }
 
   .input-error {
-    font-size: 10px;
+    font-size: @font-size-tiny;
   }
 }

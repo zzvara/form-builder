@@ -14,7 +14,7 @@
     <nz-collapse [nzBordered]="false">
       @for (group of filteredData; track group.groupName) {
         <nz-collapse-panel
-          [nzHeader]="group.groupName"
+          [nzHeader]="group.groupName | translate"
           [nzActive]="group.active"
           cdkDropList
           [cdkDropListData]="group.groupContents"
@@ -22,9 +22,9 @@
           [cdkDropListSortingDisabled]="true"
         >
           @for (item of group.groupContents; track item.type) {
-            <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true" style="width: 100%; border: 1px solid lightgray; margin-bottom: 20px">
+            <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
               <span
-                ><b>{{ item.title }}</b></span
+                ><b>{{ item.title | translate }}</b></span
               >
 
               <ng-container *cdkDragPlaceholder>
@@ -32,9 +32,7 @@
                   @case ('SectionComponent') {
                     <nz-card
                       nzTitle="Section: section | Layout: vertical"
-                      [nzBodyStyle]="{ padding: '10px' }"
                       class="element-list p-3"
-                      style="margin: auto; padding: 0; width: 900px; border: 1px solid lightgray"
                     ></nz-card>
                   }
                   @default {

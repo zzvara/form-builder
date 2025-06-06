@@ -15,6 +15,7 @@ import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
 import { NgStyleInterface } from "ng-zorro-antd/core/types";
 import { v4 as uuidv4 } from 'uuid';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-edit',
@@ -25,6 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class EditComponent implements OnInit, OnChanges {
   private readonly projectService: ProjectService<Project> = inject(ProjectService);
   private readonly undoRedoService: UndoRedoService<EditList[]> = inject(UndoRedoService);
+  private readonly translate: TranslateService = inject(TranslateService);
 
   protected readonly instanceOfSectionList = instanceOfSectionList;
   protected readonly instanceOfFormInputData = instanceOfFormInputData;
@@ -36,7 +38,8 @@ export class EditComponent implements OnInit, OnChanges {
   @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent<string>>;
 
 
-  sideBarData: SidebarData[] = getSideBarData(this);
+  sideBarData = getSideBarData(this, this.translate);
+
 
   editList: EditList[] = [];
 
@@ -58,6 +61,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.sideBarData = getSideBarData(this, this.translate);
     this.loadProject();
     this.initializeUndoRedo();
     console.log({ formInputs: this.getAllFormInputs() });
@@ -263,5 +267,15 @@ export class EditComponent implements OnInit, OnChanges {
   onValueChanged<D extends InputData<T>, T>(event: D): void {
     console.log('Input component changed/edited (SAVE STATE)!', event.id);
     this.undoRedoService.saveState(this.editList);
+  }
+
+  scrollToElement(elementId: string): void {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
   }
 }
