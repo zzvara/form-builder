@@ -58,10 +58,10 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
   }
 
   ngAfterViewInit() {
-    this.questionInput.control.markAsTouched();
+    this.questionInput?.control?.markAsTouched();
     if (this.inputOutlet) {
       setTimeout(() => {
-        if (this.embeddedComponent) {
+        if (this.embeddedComponent && this.embeddedComponent.edited) {
           this.embeddedComponent.edited.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: D) => {
             this.changedEvent.emit(data);
           });

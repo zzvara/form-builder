@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 
 @Component({
@@ -8,6 +8,9 @@ import { FormComponentMarker } from '@interfaces/form-component-marker';
   standalone: false,
 })
 export class SectionComponent implements FormComponentMarker {
+  @Input() data: any;
+  @Input() inlineEdit: any;
+
   // Egyelőre ennek a komponensnek nincs semmi értelme, mivel az edit.component saját maga generálja le és tárolja a section-ök adatait
   // @todo In that case can we destroy it?
   // Correction: Not entirely unused it. It is indeed utilized as a 'type' in edit-data-config.ts and in the Sidebar as a draggable component. However that's it.

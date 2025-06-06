@@ -151,8 +151,14 @@ export class EditComponent implements OnInit, OnChanges {
         // Create a deep copy of the dropped item with updated ID
         const newItemId = uuidv4();
         const newItem: FormInputData = cloneDeep(droppedInput);
-        newItem.data!.id = newItemId;
-        newItem.data!.sectionId = event.container.id;
+        
+        // Initialize data if it's null
+        if (!newItem.data) {
+          newItem.data = {};
+        }
+        
+        newItem.data.id = newItemId;
+        newItem.data.sectionId = event.container.id;
         const newInputEdit: EditList = {
           id: newItemId,
           data: newItem,
@@ -160,9 +166,15 @@ export class EditComponent implements OnInit, OnChanges {
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
     } else if (instanceOfFormInputData(event.item.data)) {
-      event.item.data.data!.sectionId = event.container.id;
+      
+      // Initialize data if it's null
+      if (!event.item.data.data) {
+        event.item.data.data = {};
+      }
+      
+      event.item.data.data.sectionId = event.container.id;
       const transferredInput: EditList = {
-        id: event.item.data.data!.id!,
+        id: event.item.data.data.id!,
         data: event.item.data,
       };
       event.container.data.splice(event.currentIndex, 0, transferredInput);
