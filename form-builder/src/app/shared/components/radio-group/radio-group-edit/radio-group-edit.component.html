@@ -25,7 +25,7 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="newOptionErrors">
       <nz-input-group nzSearch [nzAddOnAfter]="addOptionButton">
-        <input type="text" nz-input placeholder="{{'components.combobox.NEW_OPTION' | translate}}" [appMutateText]="trimString" [formControl]="newOption" />
+        <input type="text" nz-input  [appMutateText]="trimString" [formControl]="newOption" />
       </nz-input-group>
       <ng-template #addOptionButton>
         <button nz-button nzType="primary" [disabled]="newOption.invalid" (click)="addOption()">{{'components.combobox.ADD_OPTION' | translate}}</button>
@@ -41,14 +41,14 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
+  <span>{{'components.COMPONENT_QUESTION' |translate }}:</span>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="Question" formControlName="questionValue" />
+      <input nz-input  formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
-        <div>{{'components.COMPONENT_QUESTION' |translate }}:</div>
+        <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
       }
     </ng-template>
   </nz-form-item>
@@ -56,11 +56,10 @@
   <span>{{'general.DESCRIPTION' | translate}}:</span>
   <nz-form-item>
     <nz-form-control>
-      <textarea nz-input nzAutosize placeholder="{{'general.DESCRIPTION' | translate}}:" formControlName="descriptionValue"></textarea>
+      <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -71,7 +70,7 @@
       <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-          <nz-select formControlName="defaultValue" [nzPlaceHolder]="'components.combobox.SELECT_DEFAULT_VALUE' | translate"  nzAllowClear>
+          <nz-select formControlName="defaultValue"   nzAllowClear>
             @for (option of optionObjects; track option.option_id) {
               <nz-option [nzLabel]="option.option_description" [nzValue]="option.option_id"></nz-option>
             }
@@ -86,7 +85,6 @@
     }
   </div>
 
-  <nz-divider></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -97,7 +95,7 @@
       <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-          <input nz-input formControlName="requiredMessage" placeholder="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}" />
+          <input nz-input formControlName="requiredMessage" />
         </nz-form-control>
         <ng-template #requiredErrorMessageTemplate let-control>
           @if (hasErrors(control, 'required')) {
@@ -108,7 +106,6 @@
     }
   </div>
 
-  <nz-divider></nz-divider>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="isButton">{{'components.radio_group.SHOW_AS_BUTTON' | translate}}</label>

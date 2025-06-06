@@ -26,27 +26,27 @@ import { FormInputData } from '@interfaces/form-input-data';
 import {TranslateService} from "@ngx-translate/core";
 
 // Default values of the dragged components
-const textInputOptions: InputComponentData = {
+const textInputOptions = (translateService: TranslateService): InputComponentData => ({
   required: false,
-  requiredMessage: 'Field cannot be empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   minLength: false,
-  minLengthMessage: 'Field value cannot be shorter than: {*} characters!',
+  minLengthMessage: translateService.instant('components.MIN_LENGTH_MESSAGE'),
   maxLength: false,
   showTooltip: false,
   showCharacterCounter: false,
-};
-const numberInputOptions: NumberInputComponentData = {
+});
+const numberInputOptions = (translateService: TranslateService): NumberInputComponentData => ({
   required: false,
-  requiredMessage: 'Field cannot be empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   showTooltip: false,
   max: false,
   min: false,
   stepNumber: 1,
   format: false,
-};
-const dateInputOptions: DatePickerComponentData = {
+});
+const dateInputOptions = (translateService: TranslateService): DatePickerComponentData => ({
   required: false,
-  requiredMessage: 'Field cannot be empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
@@ -56,10 +56,10 @@ const dateInputOptions: DatePickerComponentData = {
   mode: 'date',
   showTime: false,
   showWeekNumber: false,
-};
-const rangeInputOptions: RangePickerComponentData = {
+});
+const rangeInputOptions = (translateService: TranslateService): RangePickerComponentData => ({
   required: false,
-  requiredMessage: 'Field cannot be empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
@@ -69,10 +69,10 @@ const rangeInputOptions: RangePickerComponentData = {
   mode: 'date',
   showTime: false,
   showWeekNumber: false,
-};
-const timeInputOptions: TimePickerComponentData = {
+});
+const timeInputOptions = (translateService: TranslateService): TimePickerComponentData => ({
   required: false,
-  requiredMessage: 'Field cannot be empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   showTooltip: false,
   maxTime: false,
   minTime: false,
@@ -82,116 +82,117 @@ const timeInputOptions: TimePickerComponentData = {
   hourStep: 1,
   minuteStep: 1,
   secondStep: 1,
-};
-const textAreaInputOptions: TextareaComponentData = {
+});
+const textAreaInputOptions = (translateService: TranslateService): TextareaComponentData => ({
   required: false,
-  requiredMessage: 'Field cannot be empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   minLength: false,
-  minLengthMessage: 'Field value cannot be shorter than: {*} characters!',
+  minLengthMessage: translateService.instant('components.MIN_LENGTH_MESSAGE'),
   maxLength: false,
   showTooltip: false,
   showCharacterCounter: false,
-};
+});
 const pictureInputOptions: PictureInputComponentData = {};
-const selectInputOptions: SelectComponentData = {
+
+const selectInputOptions = (translateService: TranslateService): SelectComponentData => ({
   selectOptions: ['Option 1', 'Option 2'],
   required: false,
-  requiredMessage: 'Field cannot be empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   showTooltip: false,
   isMultipleChoice: false,
-};
-const radioGroupInputOptions: RadioGroupData = {
+});
+const radioGroupInputOptions = (translateService: TranslateService): RadioGroupData => ({
   required: false,
-  requiredMessage: 'Do not leave empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   isButton: false,
   options: [
     { option_id: 1, option_description: 'Option 1' },
     { option_id: 2, option_description: 'Option 2' },
     { option_id: 3, option_description: 'Option 3' },
   ],
-};
-const checkboxGroupInputOptions: CheckboxGroupData = {
+});
+const checkboxGroupInputOptions = (translateService: TranslateService): CheckboxGroupData => ({
   required: false,
-  requiredMessage: 'Do not leave empty!',
+  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
   defaultValue: [
     { label: 'Option 1', value: 1 },
     { label: 'Option 2', value: 2 },
     { label: 'Option 3', value: 3 },
   ],
-};
+});
 
 //Used for resetting inputs
 export function getInputGroups(translate: TranslateService): FormInputData<any>[] {
   return [
     {
-      title: translate.instant('components.TEXT_FIELD'),
-      questionPlaceholder: 'Text Field question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.TEXT_FIELD',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'InputComponent',
-      data: textInputOptions,
+      data: textInputOptions(translate),
     },
     {
-      title: translate.instant('components.NUMBER_FIELD'),
-      questionPlaceholder: 'Number Field question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.NUMBER_FIELD',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'NumberInputComponent',
-      data: numberInputOptions,
+      data: numberInputOptions(translate),
     },
     {
-      title: translate.instant('components.DATE_PICKER'),
-      questionPlaceholder: 'Date Picker question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.DATE_PICKER',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'DatePickerComponent',
-      data: dateInputOptions,
+      data: dateInputOptions(translate),
     },
     {
-      title: translate.instant('components.RANGE_PICKER'),
-      questionPlaceholder: 'Range Picker question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.RANGE_PICKER',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'RangePickerComponent',
-      data: rangeInputOptions,
+      data: rangeInputOptions(translate),
     },
     {
-      title: translate.instant('components.TIME_PICKER'),
-      questionPlaceholder: 'Time Picker question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.TIME_PICKER',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'TimePickerComponent',
-      data: timeInputOptions,
+      data: timeInputOptions(translate),
     },
     {
-      title: translate.instant('components.TEXT_AREA'),
-      questionPlaceholder: 'Textarea question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.TEXT_AREA',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'TextareaComponent',
-      data: textAreaInputOptions,
+      data: textAreaInputOptions(translate),
     },
     {
-      title: translate.instant('components.PICTURE_INPUT'),
-      questionPlaceholder: 'Picture Input question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.PICTURE_INPUT',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'PictureInputComponent',
       data: pictureInputOptions,
     },
     {
-      title: translate.instant('components.COMBOBOX'),
-      questionPlaceholder: 'ComboBox question...',
-      descriptionPlaceholder: 'Question description...',
+      title:'components.COMBOBOX',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'SelectComponent',
-      data: selectInputOptions,
+      data: selectInputOptions(translate),
     },
     {
-      title: translate.instant('components.RADIO_GROUP'),
-      questionPlaceholder: 'Radio group question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.RADIO_GROUP',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'RadioGroupComponent',
-      data: radioGroupInputOptions,
+      data: radioGroupInputOptions(translate),
     },
     {
-      title: translate.instant('components.CHECKBOX_GROUP'),
-      questionPlaceholder: 'Checkbox group question...',
-      descriptionPlaceholder: 'Question description...',
+      title: 'components.CHECKBOX_GROUP',
+      questionPlaceholder: '',
+      descriptionPlaceholder: '',
       type: 'CheckboxGroupComponent',
-      data: checkboxGroupInputOptions,
+      data: checkboxGroupInputOptions(translate),
     },
   ];
 }
@@ -202,18 +203,18 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
 export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {
   return [
     {
-      groupName: translate.instant('components.BASIC_INPUTS'),
+      groupName: 'components.BASIC_INPUTS',
       active: true,
       dropListConnectedTo: () => component.getSectionIds().concat(['sectionDropList']),
       groupContents: getInputGroups(translate),
     },
     {
-      groupName: translate.instant('components.SECTIONS'),
+      groupName: 'components.SECTIONS',
       active: true,
       dropListConnectedTo: () => 'sectionDropList',
       groupContents: [
         {
-          title: translate.instant('components.SECTION'),
+          title: 'components.SECTION',
           type: 'SectionComponent',
           data: null,
         },

@@ -32,7 +32,7 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="newOptionErrors">
       <nz-input-group nzSearch [nzAddOnAfter]="addOptionButton">
-        <input type="text" nz-input placeholder="{{'components.combobox.NEW_OPTION' | translate}}" [appMutateText]="trimString" [formControl]="newOption" />
+        <input type="text" nz-input  [appMutateText]="trimString" [formControl]="newOption" />
       </nz-input-group>
       <ng-template #addOptionButton>
         <button nz-button nzType="primary" [disabled]="newOption.invalid" (click)="addOption()">{{'components.combobox.ADD_OPTION' | translate}}</button>
@@ -51,7 +51,7 @@
   <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="{{'components.PLACEHOLDER_QUESTION' |translate }}" formControlName="questionValue" />
+      <input nz-input formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -63,7 +63,7 @@
   <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
-      <textarea nz-input nzAutosize placeholder="{{'general.DESCRIPTION' | translate}}" formControlName="descriptionValue"></textarea>
+      <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
@@ -78,7 +78,7 @@
       <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-          <input nz-input formControlName="requiredMessage" placeholder="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}" />
+          <input nz-input formControlName="requiredMessage" />
         </nz-form-control>
         <ng-template #requiredErrorMessageTemplate let-control>
           @if (hasErrors(control, 'required')) {

@@ -37,7 +37,7 @@ export class EditComponent implements OnInit, OnChanges {
 
   @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;
 
-  sideBarData: SidebarData[] = getSideBarData(this, this.translate);
+  sideBarData = getSideBarData(this, this.translate);
 
 
   editList: EditList[] = [];

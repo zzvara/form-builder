@@ -2,7 +2,7 @@
   <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
-      <input nz-input placeholder="{{ 'components.PLACEHOLDER_QUESTION' | translate }}" formControlName="questionValue" />
+      <input nz-input formControlName="questionValue" />
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
@@ -17,7 +17,6 @@
       <textarea
         nz-input
         nzAutosize
-        placeholder="{{ 'components.PLACEHOLDER_DESCRIPTION' | translate }}"
         formControlName="descriptionValue"
       ></textarea>
     </nz-form-control>
@@ -26,7 +25,7 @@
   <span>{{ 'components.SET_PLACEHOLDER_VALUE' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
-      <input nz-input placeholder="{{ 'components.PLACEHOLDER' | translate }}" formControlName="placeholderValue" />
+      <input nz-input formControlName="placeholderValue" />
     </nz-form-control>
   </nz-form-item>
 
@@ -62,7 +61,6 @@
               [nzMax]="maxNumOrInf"
               [nzFormatter]="inputFormatter"
               [nzParser]="inputParser"
-              nzPlaceHolder="{{ 'components.DEFAULT_VALUE' | translate }}"
               formControlName="defaultValue"
               [nzStep]="getControlValue('stepNumber')"
               class="full-width"
@@ -90,7 +88,7 @@
         <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-            <input nz-input formControlName="requiredMessage" placeholder="{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}" />
+            <input nz-input formControlName="requiredMessage" />
           </nz-form-control>
           <ng-template #requiredErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
@@ -165,7 +163,6 @@
             <input
               nz-input
               formControlName="formatter"
-              placeholder="{{ 'components.number_field.PLACEHOLDER_INPUT_NUMBER_FORMATTER' | translate }}"
             />
           </nz-form-control>
           <ng-template #formatterErrorMessageTemplate let-control>
@@ -192,7 +189,7 @@
         <nz-form-label nzRequired><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
-            <input nz-input formControlName="tooltipText" placeholder="{{ 'components.TOOLTIP_TEXT' | translate }}" />
+            <input nz-input formControlName="tooltipText"/>
           </nz-form-control>
           <ng-template #tooltipTextErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {

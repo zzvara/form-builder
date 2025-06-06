@@ -58,6 +58,11 @@
     "TOOLTIP_TEXT": "Tooltip Text",
     "WEEK_NUMBERS?": "Show week numbers?",
     "INLINE_EDIT": "Inline edit",
+    "QUESTION_DESCRIPTION": "Question description",
+    "INPUT_PREVIEW": "Input preview",
+    "INPUT_QUESTION_MANDATORY": "Input question is mandatory!",
+    "REQUIRED_MESSAGE":"Field cannot be empty!",
+    "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {*} characters!",
     "checkbox_group": {
       "CHECKED?": "Checked?",
       "DISABLED?": "Disabled?",
