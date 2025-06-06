@@ -49,7 +49,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span>
+  <nz-form-label nzRequired><span>{{ 'components.COMPONENT_QUESTION' | translate }}:</span></nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -82,7 +82,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
-      <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span>
+    <nz-form-label [nzRequired]="getControlValue('required')"> <span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span> </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
           <nz-select
@@ -139,7 +139,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
-      <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span>
+    <nz-form-label nzRequired> <span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
           <input nz-input formControlName="tooltipText"/>
