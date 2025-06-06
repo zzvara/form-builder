@@ -12,11 +12,16 @@ import { Observable, of } from 'rxjs';
   standalone: false,
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
-  onFileChange(event: any): void {
-    this.data.file = event.target.files[0];
+   onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) {
+      return;
+    }
+    const file = input.files[0];
+    this.data.file = file;
   }
 
-  override onChange(info: NzUploadChangeParam): void {
+  onUploadChange(info: NzUploadChangeParam): void {
     if (info.file.status !== 'uploading') {
       console.log(info.file, info.fileList); 
     }

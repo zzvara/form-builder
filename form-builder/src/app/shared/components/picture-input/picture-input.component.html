@@ -2,7 +2,7 @@
   [nzDisabled]="!inlineEdit.enabled"
   [nzAction]="uploadToLocalStorage"
   [nzHeaders]="{ authorization: 'authorization-text' }"
-  (nzChange)="onChange($event)"
+  (nzChange)="onUploadChange($event)"
 >
   <button nz-button>
     <span nz-icon nzType="upload"></span>

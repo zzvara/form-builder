@@ -229,7 +229,7 @@ export class CustomValidators {
 
   static executeValidationsConditionally(validationConditions: { condition: () => boolean; validation: ValidatorFn }[]) {
     return (control: AbstractControl) => {
-      const errors: { [key: string]: any } = {};
+      const errors: { [key: string]: string } = {};
       validationConditions.forEach((vc) => {
         if (vc.condition()) {
           const error = vc.validation(control);
