@@ -30,8 +30,6 @@
     "MODE": "Működési mód",
     "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
     "NEXT_VERSION": "Következő verzió",
-    "CREATED": "Létrehozva:",
-    "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
     "NUMBER_FIELD": "SZÁMMEZŐ",
     "PICTURE_INPUT": "KÉPBEMENET",
     "PLACEHOLDER": "Helyőrző",

@@ -36,7 +36,7 @@
             <button
               nz-button
               nz-dropdown
-              nzTrigger="click" 
+              nzTrigger="click"
               [nzDropdownMenu]="versionMenu"
               [nzOverlayStyle]="{ 'max-height': '250px', 'overflow-y': 'auto' }"
               style="width: 120px;"
@@ -59,18 +59,18 @@
                   <span
                     nz-popover
                     nzPopoverTrigger="hover"
-                    nz-tooltip="{{'components.CREATED' | translate}} {{ (version.created | date:'short')}}"
+                    nz-tooltip="{{'general.CREATED' | translate}}: {{ (version.created | date:'short')}}"
                     class="version-icon-wrapper"
                   >
                     <i nz-icon nzType="field-time"></i>
                   </span>
-                  
+
                   <button
                     *ngIf="version.versionNum > 1"
                     nz-button
                     nzType="text"
                     (click)="openDiffModal(version)"
-                    [nz-tooltip]="'components.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
+                    [nz-tooltip]="'components.change_summary.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
                     class="version-icon-wrapper"
                     style="margin-left: 8px;"
                   >
@@ -94,7 +94,7 @@
           <div style="margin-right: 20px">
             <label nz-checkbox [(ngModel)]="inlineEdit.enabled">Inline edit</label>
           </div>
-        </div> 
-      </div>  
+        </div>
+      </div>
     </div>
   </nz-layout>

@@ -69,7 +69,7 @@
         "DISABLED?": "Disabled?",
         "MODAL_CHECKBOX_GROUP_TITLE": "Edit Checkbox Group Settings"
     },
-    "change_summary":{
+    "change_summary": {
       "CHANGES_SINCE": "Changes made since version {{version}}",
       "ADDED_INPUTS": "Added Inputs",
       "REMOVED_INPUTS": "Removed Inputs",
