@@ -6,13 +6,13 @@ Open-source yet another form-builder based on Angular and [NG-Zorro](https://ng.
 
 ## Role assignments
 
-| Role | Members                                                                                  |
-|-|------------------------------------------------------------------------------------------|
-| Stakeholder | Barnabás Balázs, Zoltán Zvara                                                            |
-| Shepherd | Juhász László                                                                            |
-| Taskmaster | Hoffner Marcell                                                                          |
-| UI/UX master | Lázár Máté                                                                               |
-| Engineer | Barta Kristóf, Hoffner Marcell, Juhász László, Kovács Tamás, Lázár Máté, Nagy Dóra Ágnes |
+| Role | Members                                                    |
+|-|------------------------------------------------------------|
+| Stakeholder | Barnabás Balázs, Zoltán Zvara                              |
+| Shepherd | Oravecz József                                             |
+| Taskmaster | Lázár Máté                                                 |
+| UI/UX master | Horváth Janka                                              |
+| Engineer | Bederna Kristóf, Horváth Janka, Lázár Máté, Oravecz József |
 
 
 ## Role definitions
