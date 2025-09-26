@@ -43,7 +43,6 @@ export class UndoRedoService<T> {
       this.undoStack.push(this.cloneState(state));
       this.redoStack = [];
       this.hasInitialStateSaved = true;
-      console.log('SAVE STATES:', this.undoStack);
     }
   }
 
@@ -54,7 +53,6 @@ export class UndoRedoService<T> {
    */
   undo(): T | null {
     if (this.canUndo()) {
-      console.log('UNDO happened!');
       // Current state is at the top of the undoStack (CLONE STATE IMPORTANT!)
       this.redoStack.push(this.cloneState(this.undoStack.pop()!));
       // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
@@ -69,7 +67,6 @@ export class UndoRedoService<T> {
    */
   redo(): T | null {
     if (this.canRedo()) {
-      console.log('REDO happened!');
       // Current state is at the top of the redoStack (CLONE STATE IMPORTANT!)
       this.undoStack.push(this.cloneState(this.redoStack.pop()!));
       // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)

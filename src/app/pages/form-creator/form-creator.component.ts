@@ -28,8 +28,6 @@ export class FormCreatorComponent {
   handleFormData(data: ProjectType) {
     this.projectType = data;
     this.cdr.detectChanges();
-
-    console.log('Project type:', this.projectType);
   }
 
   setPage(p: number) {

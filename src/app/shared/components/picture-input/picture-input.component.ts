@@ -18,12 +18,12 @@ export class PictureInputComponent extends AbstractInput<string | null, PictureI
 
   override onChange(info: NzUploadChangeParam): void {
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
+      console.warn(info.file, info.fileList);
     }
     if (info.file.status === 'done') {
-      console.log(`${info.file.name} file uploaded successfully`);
+      console.info(`${info.file.name} file uploaded successfully`);
     } else if (info.file.status === 'error') {
-      console.log(`${info.file.name} file upload failed.`);
+      console.error(`${info.file.name} file upload failed.`);
     }
   }
 

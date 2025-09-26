@@ -98,8 +98,6 @@ export class InfoPageComponent implements OnInit {
       haslimit: this.project.time_checkbox || false,
       limit: this.project.time_limit || 0,
     });
-
-    console.log('Form initialized:', this.form.value);
   }
 
   updateForm() {
@@ -126,10 +124,8 @@ export class InfoPageComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('Form validity:', this.form.valid);
     if (this.form.invalid) {
       this.saveFailed = true;
-      console.log('Form is invalid, validation failed');
       return;
     }
 

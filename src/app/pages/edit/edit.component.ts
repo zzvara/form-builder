@@ -102,7 +102,6 @@ export class EditComponent implements OnInit, OnChanges {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       if (project?.editList) {
         this.editList = cloneDeep(project.editList);
-        console.log('Project loaded (SAVE STATE)!');
         this.undoRedoService.saveState(this.editList);
       }
     }
@@ -115,7 +114,6 @@ export class EditComponent implements OnInit, OnChanges {
   private initializeUndoRedo(): void {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
       this.undoRedoService.clearHistory();
-      console.log('Undo-redo initialized (SAVE STATE)!');
       this.undoRedoService.saveState(this.editList);
     }
   }
@@ -129,7 +127,6 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   dropIntoEdit(event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>): void {
-    console.log({ sectionInputs: this.getAllFormInputs() });
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
@@ -180,14 +177,10 @@ export class EditComponent implements OnInit, OnChanges {
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
-    console.log('Input components modified (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
-
-    console.log({ sectionInputs: this.getAllFormInputs() });
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
-    console.log({ sectionInputs: this.getAllFormInputs() });
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
@@ -208,10 +201,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
-    console.log('Input components modified (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
-
-    console.log({ sectionInputs: this.getAllFormInputs() });
   }
 
   getEditDropListConnectedTo(): string[] {
@@ -227,13 +217,11 @@ export class EditComponent implements OnInit, OnChanges {
 
   removeEditComponent(edit: EditList): void {
     this.editList = this.editList.filter((e) => e.id !== edit.id);
-    console.log('Edit component removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
-    console.log('Input component in section removed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
@@ -269,7 +257,6 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       sect.layout = LayoutEnum.VERTICAL;
     }
-    console.log('Section layout changed (SAVE STATE)!');
     this.undoRedoService.saveState(this.editList);
   }
 
@@ -285,7 +272,6 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   onValueChanged<D extends InputData<T>, T>(event: D): void {
-    console.log('Input component changed/edited (SAVE STATE)!', event.id);
     this.undoRedoService.saveState(this.editList);
   }
 

@@ -63,8 +63,6 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
         });
       }
     });
-
-    console.log(this.sectionInputs);
   }
 
   nextPage() {
