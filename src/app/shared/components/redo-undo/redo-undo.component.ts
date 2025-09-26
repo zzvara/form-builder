@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { SectionList } from '@pages/edit/interfaces/section-list';
 import { UndoRedoService } from '@services/undo-redo.service';
 
@@ -19,13 +20,13 @@ export class RedoUndoComponent {
     return this.undoRedoService.canRedo();
   }
 
-  @Output() sectionInputsChange = new EventEmitter<'UNDO' | 'REDO'>();
+  @Output() sectionInputsChange = new EventEmitter<UndoRedoEnum>();
 
   undoBtn(): void {
-    this.sectionInputsChange.emit('UNDO');
+    this.sectionInputsChange.emit(UndoRedoEnum.UNDO);
   }
 
   redoBtn(): void {
-    this.sectionInputsChange.emit('REDO');
+    this.sectionInputsChange.emit(UndoRedoEnum.REDO);
   }
 }

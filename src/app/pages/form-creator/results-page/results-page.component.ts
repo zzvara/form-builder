@@ -5,6 +5,7 @@ import { ProjectService } from '@services/project.service';
 import { ColumnItem } from '@pages/dashboard/dashboard.model';
 import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import { DateFormat } from '@app/shared/constants/date-format.constant';
 
 @Component({
   selector: 'app-results-page',
@@ -37,6 +38,8 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
       sortDirections: ['ascend', 'descend', null],
     },
   ];
+
+  DateFormat = DateFormat;
 
   constructor(
     private readonly projectService: ProjectService<Project>,

@@ -2,7 +2,7 @@
   <nz-steps id="progressbar" nzType="navigation" [nzCurrent]="page">
     <nz-step [nzTitle]="'STEPS.FORM_INFO' | translate" (click)="toInfoPage()"></nz-step>
     <nz-step [nzTitle]="'STEPS.COMPONENTS' | translate" (click)="toCompPage()"></nz-step>
-    <nz-step [nzTitle]="(projectType === 'test' ? 'STEPS.ANSWER' : 'STEPS.RESULTS') | translate" (click)="toAnswPage()"></nz-step>
+    <nz-step [nzTitle]="'STEPS.' + (projectType === ProjectType.TEST ? 'ANSWER' : 'RESULTS') | translate" (click)="toAnswPage()"></nz-step>
   </nz-steps>
   <div class="form-container">
     @switch (page) {

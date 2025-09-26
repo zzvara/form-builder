@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { ProjectType } from '@app/shared/interfaces/project';
 
 @Component({
   selector: 'app-form-creator',
@@ -9,7 +10,9 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 export class FormCreatorComponent {
   projectId: string;
   currentVersionNum?: number;
-  projectType: string = '';
+  projectType: ProjectType = ProjectType.TEST;
+
+  ProjectType = ProjectType;
 
   constructor(private readonly cdr: ChangeDetectorRef) {
     this.projectId = '';
@@ -23,7 +26,7 @@ export class FormCreatorComponent {
     this.currentVersionNum = versionNum;
   }
 
-  handleFormData(data: string) {
+  handleFormData(data: ProjectType) {
     this.projectType = data;
     this.cdr.detectChanges();
 

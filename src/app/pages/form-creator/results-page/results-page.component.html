@@ -20,10 +20,10 @@
               {{ project.deadline_checkbox }}
             </nz-descriptions-item>
             <nz-descriptions-item *ngIf="project.time_limit" [nzTitle]="'GENERAL.TIME_LIMIT' | translate">
-              {{ project.time_limit | date: 'HH:mm:ss' }}
+              {{ project.time_limit | date: DateFormat.TIME }}
             </nz-descriptions-item>
             <nz-descriptions-item *ngIf="project.deadline" [nzTitle]="'GENERAL.DEADLINE' | translate">
-              {{ project.deadline | date: 'yyyy-MM-dd' }}
+              {{ project.deadline | date: DateFormat.DATE }}
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'GENERAL.CREATED' | translate">
               {{ project.created }}

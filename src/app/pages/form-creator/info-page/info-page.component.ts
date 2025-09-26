@@ -16,7 +16,7 @@ export class InfoPageComponent implements OnInit {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() projectId = new EventEmitter<string>();
-  @Output() formData = new EventEmitter<string>();
+  @Output() formData = new EventEmitter<ProjectType>();
 
   project = {
     id: '',
@@ -70,7 +70,7 @@ export class InfoPageComponent implements OnInit {
         }
       }
       if (params['type']) {
-        this.project.type = params['type'] === 'TEST' ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.project.type = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
         this.form.patchValue({
           type: this.project.type === ProjectType.TEST,
         });

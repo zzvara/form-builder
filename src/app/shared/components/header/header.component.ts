@@ -6,7 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '@services/header/header.service';
 import { JsonService } from '@services/json.service';
 import { Subscription } from 'rxjs';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { RoutePath } from '@app/shared/models/route-path.model';
+import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 
 @Component({
   selector: 'app-header',
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.currentLanguage = localStorage.getItem('language') || 'en';
+    this.currentLanguage = localStorage.getItem(LocalStorageKey.LANGUAGE) || 'en';
     this.translate.use(this.currentLanguage);
     this.jsonService.clearJsonData();
     this.optionsSub = this.headerService
@@ -42,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateToHome(): void {
-    this.router.navigate(['dashboard']);
+    this.router.navigate([RoutePath.DASHBOARD]);
   }
 
   changeMenuItemState(toChange: MenuOption) {
@@ -78,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   uploadJson(file: File): void {
     this.jsonService.uploadJson(file).subscribe((data) => {
       this.jsonService.setJsonData(data);
-      this.router.navigate(['new'], {
+      this.router.navigate([RoutePath.NEW], {
         queryParams: { type: data.type },
         state: { projectData: data },
       });
@@ -94,6 +95,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   setLanguage(lang: string): void {
     this.currentLanguage = lang;
     this.translate.use(lang);
-    localStorage.setItem('language', lang);
+    localStorage.setItem(LocalStorageKey.LANGUAGE, lang);
   }
 }

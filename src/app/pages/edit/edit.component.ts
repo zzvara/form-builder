@@ -15,6 +15,7 @@ import { cloneDeep } from 'lodash-es';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslateService } from '@ngx-translate/core';
+import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 
 @Component({
   selector: 'app-edit',
@@ -119,8 +120,8 @@ export class EditComponent implements OnInit, OnChanges {
     }
   }
 
-  undoRedo(undoRedoEvent: 'UNDO' | 'REDO'): void {
-    if (undoRedoEvent === 'UNDO') {
+  undoRedo(undoRedoEvent: UndoRedoEnum): void {
+    if (undoRedoEvent === UndoRedoEnum.UNDO) {
       this.editList = this.undoRedoService.undo() ?? [];
     } else {
       this.editList = this.undoRedoService.redo() ?? [];

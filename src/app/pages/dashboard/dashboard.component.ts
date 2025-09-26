@@ -4,6 +4,9 @@ import { Observable, of } from 'rxjs';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from '@services/project.service';
+import { ViewType } from '@app/shared/interfaces/view-type.enum';
+import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
+import { RoutePath } from '@app/shared/models/route-path.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,17 +26,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.projects$ = this.questionnaireService.list();
-    const savedView = localStorage.getItem('viewPreference');
+    const savedView = localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE);
     if (savedView) {
-      this.isListView = savedView === 'list';
+      this.isListView = savedView === ViewType.LIST;
     }
   }
 
   createProject(type: ProjectType): void {
     if (type === ProjectType.TEST) {
-      this.router.navigate(['new'], { queryParams: { type: 'TEST' } });
+      this.router.navigate([RoutePath.NEW], { queryParams: { type: ProjectType.TEST } });
     } else {
-      this.router.navigate(['new'], { queryParams: { type: 'QUESTIONNAIRE' } });
+      this.router.navigate([RoutePath.NEW], { queryParams: { type: ProjectType.QUESTIONNAIRE } });
     }
   }
 
@@ -42,11 +45,11 @@ export class DashboardComponent implements OnInit {
   }
 
   editProject(id: string) {
-    this.router.navigate(['edit'], { queryParams: { id } });
+    this.router.navigate([RoutePath.EDIT], { queryParams: { id } });
   }
 
   toggleView(): void {
     this.isListView = !this.isListView;
-    localStorage.setItem('viewPreference', this.isListView ? 'list' : 'card');
+    localStorage.setItem(LocalStorageKey.VIEW_PREFERENCE, this.isListView ? ViewType.LIST : ViewType.CARD);
   }
 }

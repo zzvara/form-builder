@@ -6,6 +6,8 @@ import { InlineEdit } from '@interfaces/inline-edit';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
 import { TranslateService } from '@ngx-translate/core';
+import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
+import { DateFormat } from '@app/shared/constants/date-format.constant';
 
 interface DiffItem {
   key: string;
@@ -30,6 +32,8 @@ export class ComponentsPageComponent implements OnInit {
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
+
+  DateFormat = DateFormat;
 
   constructor(
     private modal: NzModalService,
@@ -164,7 +168,7 @@ export class ComponentsPageComponent implements OnInit {
     });
   }
 
-  onSectionInputsChange(undoRedoEvent: 'UNDO' | 'REDO'): void {
+  onSectionInputsChange(undoRedoEvent: UndoRedoEnum): void {
     this.editComponent.undoRedo(undoRedoEvent);
   }
 
