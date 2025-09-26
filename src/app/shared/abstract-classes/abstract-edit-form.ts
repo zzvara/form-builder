@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, inject, OnInit } from '@angular/core';
+import { DestroyRef, Directive, Inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ControlConnection, ControlConnectionData, DataSetterType } from '@interfaces/control-connection';
@@ -9,11 +9,6 @@ import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 
 @Directive()
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
-  protected readonly destroyRef = inject(DestroyRef);
-  protected readonly formBuilder = inject(FormBuilder);
-  protected readonly translate: TranslateService = inject(TranslateService);
-  private readonly nzModalData: D = inject(NZ_MODAL_DATA);
-
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
   protected readonly formData: FormGroup = this.formBuilder.group<{ [key in InputDataKeys<D>]?: FormControl<any> }>(
@@ -25,6 +20,13 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   );
 
   protected initialValues!: D;
+
+  constructor(
+    @Inject(NZ_MODAL_DATA) private nzModalData: D,
+    protected destroyRef: DestroyRef,
+    protected formBuilder: FormBuilder,
+    protected translate: TranslateService
+  ) {}
 
   ngOnInit() {
     this.initialValues = this.nzModalData;

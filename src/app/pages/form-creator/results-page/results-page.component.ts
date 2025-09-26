@@ -23,12 +23,6 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   latestVersionNum?: number;
   sectionInputs: any[] = [];
 
-  constructor(
-    private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService,
-    private readonly statisticsService: StatisticsService
-  ) {}
-
   columnsConfig: ColumnItem[] = [
     {
       title: 'Question',
@@ -43,6 +37,12 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
       sortDirections: ['ascend', 'descend', null],
     },
   ];
+
+  constructor(
+    private readonly projectService: ProjectService<Project>,
+    private readonly jsonService: JsonService,
+    private readonly statisticsService: StatisticsService
+  ) {}
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {

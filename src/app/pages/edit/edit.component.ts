@@ -1,7 +1,6 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, inject, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
-import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 import { FormInputData, instanceOfFormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
@@ -24,10 +23,6 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
 })
 export class EditComponent implements OnInit, OnChanges {
-  private readonly projectService: ProjectService<Project> = inject(ProjectService);
-  private readonly undoRedoService: UndoRedoService<EditList[]> = inject(UndoRedoService);
-  private readonly translate: TranslateService = inject(TranslateService);
-
   protected readonly instanceOfSectionList = instanceOfSectionList;
   protected readonly instanceOfFormInputData = instanceOfFormInputData;
 
@@ -40,6 +35,12 @@ export class EditComponent implements OnInit, OnChanges {
   sideBarData = getSideBarData(this, this.translate);
 
   editList: EditList[] = [];
+
+  constructor(
+    private projectService: ProjectService<Project>,
+    private undoRedoService: UndoRedoService<EditList[]>,
+    private translate: TranslateService
+  ) {}
 
   getSectionIds: () => string[] = () =>
     this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);

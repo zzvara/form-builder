@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ProjectType } from '@interfaces/project';
@@ -12,8 +12,6 @@ import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface
   standalone: false,
 })
 export class ListViewComponent implements OnInit {
-  private readonly translate: TranslateService = inject(TranslateService);
-
   @Input() projects: Observable<Questionnaire[]> = of([]);
   @Input() type?: ProjectType;
 
@@ -22,6 +20,8 @@ export class ListViewComponent implements OnInit {
 
   projectList: Questionnaire[] = [];
   columnsConfig: ColumnItem[] = [];
+
+  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.projects.subscribe((projects) => {

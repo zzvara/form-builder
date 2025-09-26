@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-creator',
@@ -8,16 +7,13 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class FormCreatorComponent {
-  constructor(
-    private readonly router: Router,
-    private readonly cdr: ChangeDetectorRef
-  ) {
-    this.projectId = '';
-  }
-
   projectId: string;
   currentVersionNum?: number;
   projectType: string = '';
+
+  constructor(private readonly cdr: ChangeDetectorRef) {
+    this.projectId = '';
+  }
 
   setProjectId(id: string) {
     this.projectId = id;

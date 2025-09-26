@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
@@ -19,10 +19,6 @@ interface DiffItem {
   standalone: false,
 })
 export class ComponentsPageComponent implements OnInit {
-  private readonly modal = inject(NzModalService);
-  private readonly translate = inject(TranslateService);
-  private readonly projectService: ProjectService<Project> = inject(ProjectService);
-
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: string | undefined;
@@ -34,6 +30,13 @@ export class ComponentsPageComponent implements OnInit {
 
   projectHistory: ProjectVersion<Project>[] = [];
   currentVersionNum?: number;
+
+  constructor(
+    private modal: NzModalService,
+    private translate: TranslateService,
+    private projectService: ProjectService<Project>,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -48,8 +51,6 @@ export class ComponentsPageComponent implements OnInit {
       this.versionChange.emit(this.currentVersionNum);
     }
   }
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.cdr.detectChanges();

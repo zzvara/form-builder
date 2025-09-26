@@ -1,4 +1,4 @@
-import { Directive, HostListener, inject, Input } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
@@ -6,11 +6,9 @@ import { NgControl } from '@angular/forms';
   standalone: false,
 })
 export class MutateTextDirective {
-  private readonly control: NgControl = inject(NgControl);
-
   @Input() appMutateText: (value: string) => string = (value) => value;
 
-  constructor() {}
+  constructor(private control: NgControl) {}
 
   @HostListener('blur', ['$event'])
   onBlur(): void {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { SectionList } from '@pages/edit/interfaces/section-list';
 import { UndoRedoService } from '@services/undo-redo.service';
 
@@ -9,7 +9,7 @@ import { UndoRedoService } from '@services/undo-redo.service';
   standalone: false,
 })
 export class RedoUndoComponent {
-  private readonly undoRedoService: UndoRedoService<SectionList[]> = inject(UndoRedoService);
+  constructor(private undoRedoService: UndoRedoService<SectionList[]>) {}
 
   get canUndo(): boolean {
     return this.undoRedoService.canUndo();

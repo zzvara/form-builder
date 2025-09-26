@@ -1,7 +1,7 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { NgComponentOutlet } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, EventEmitter, Input, OnInit, Output, Type, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgForm, NgModel } from '@angular/forms';
 import { getInputGroups, translateComponentType } from '@pages/edit/config/edit-data-config';
@@ -20,9 +20,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>
   implements OnInit, AfterViewInit
 {
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly translate: TranslateService = inject(TranslateService);
-
   @Input() formInput!: FormInputData<D, T>;
   get inputData(): D {
     return this.formInput.data!;
@@ -41,6 +38,11 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
     data: D;
     inlineEdit: InlineEdit;
   };
+
+  constructor(
+    private destroyRef: DestroyRef,
+    private translate: TranslateService
+  ) {}
 
   get componentType(): Type<FormComponentMarker> {
     return translateComponentType[this.formInput.type];

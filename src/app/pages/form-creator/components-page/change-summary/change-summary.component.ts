@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, SimpleChanges, inject } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, SimpleChanges, Optional, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
@@ -29,10 +29,15 @@ interface DiffItem {
 })
 export class ChangeSummaryComponent implements OnInit, OnChanges {
   @Input() items: ChangeInput[] = [];
-  private modalData = inject(NZ_MODAL_DATA, { optional: true }) as { items: ChangeInput[] } | null;
-  private modalRef = inject(NzModalRef);
 
   diffItems: DiffItem[] = [];
+
+  constructor(
+    @Optional()
+    @Inject(NZ_MODAL_DATA)
+    private modalData: { items: ChangeInput[] } | null,
+    private modalRef: NzModalRef
+  ) {}
 
   ngOnInit(): void {
     // If opened as a modal, build diffs from the injected data
