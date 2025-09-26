@@ -10,6 +10,8 @@ import { UndoRedoService } from '@services/undo-redo.service';
   standalone: false,
 })
 export class RedoUndoComponent {
+  @Output() sectionInputsChange = new EventEmitter<UndoRedoEnum>();
+
   constructor(private undoRedoService: UndoRedoService<SectionList[]>) {}
 
   get canUndo(): boolean {
@@ -19,8 +21,6 @@ export class RedoUndoComponent {
   get canRedo(): boolean {
     return this.undoRedoService.canRedo();
   }
-
-  @Output() sectionInputsChange = new EventEmitter<UndoRedoEnum>();
 
   undoBtn(): void {
     this.sectionInputsChange.emit(UndoRedoEnum.UNDO);

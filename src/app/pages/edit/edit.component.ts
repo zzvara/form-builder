@@ -43,8 +43,19 @@ export class EditComponent implements OnInit, OnChanges {
     private translate: TranslateService
   ) {}
 
+  ngOnInit() {
+    this.sideBarData = getSideBarData(this, this.translate);
+    this.loadProject();
+    this.initializeUndoRedo();
+  }
+
+  ngOnChanges() {
+    this.loadProject();
+  }
+
   getSectionIds: () => string[] = () =>
     this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
+
   getAllFormInputs: () => FormInputData[] = () => {
     // If editList is empty but there's JSON data with editList, use that instead
     if (this.editList.length === 0 && this.projectId) {
@@ -64,17 +75,6 @@ export class EditComponent implements OnInit, OnChanges {
 
   sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
     item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
-
-  ngOnChanges() {
-    this.loadProject();
-  }
-
-  ngOnInit() {
-    this.sideBarData = getSideBarData(this, this.translate);
-    this.loadProject();
-    this.initializeUndoRedo();
-    console.log({ formInputs: this.getAllFormInputs() });
-  }
 
   /**
    * Saves the current state of the form inputs to the project.
