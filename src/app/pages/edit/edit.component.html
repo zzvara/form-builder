@@ -17,7 +17,7 @@
           @if (instanceOfSectionList(edit.data)) {
             <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
             <nz-card
-              id="{{ edit.data.sectionId }}"
+              [id]="edit.data.sectionId"
               [nzTitle]="sectionTitle"
               [nzExtra]="sectionButtons"
               cdkDrag
@@ -38,7 +38,7 @@
               </ng-template>
               <ng-template #sectionButtons>
                 <div class="section-buttons">
-                  <span>{{ 'components.REORDER' | translate }}: </span>
+                  <span>{{ 'COMPONENTS.REORDER' | translate }}: </span>
                   <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
                   <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)" class="button-spacing">
                     <span nz-icon nzType="redo" nzTheme="outline"></span>
@@ -46,9 +46,9 @@
                   <!-- @todo The templates are filled with different margins. These must be uniform as well, maybe we should prefer classes, such as m-l-10? -->
                   <button
                     nz-popconfirm
-                    nzPopconfirmTitle="{{ 'components.input_holder.POP_REMOVE' | translate }}"
-                    [nzCancelText]="'general.CANCEL' | translate"
-                    [nzOkText]="'general.OK' | translate"
+                    [nzPopconfirmTitle]="'COMPONENTS.INPUT_HOLDER.POP_REMOVE' | translate"
+                    [nzCancelText]="'GENERAL.CANCEL' | translate"
+                    [nzOkText]="'GENERAL.OK' | translate"
                     (nzOnConfirm)="removeEditComponent(edit)"
                     nzPopconfirmPlacement="top"
                     nz-button
@@ -80,7 +80,7 @@
             <app-input-holder
               class="element-box standalone-input-holder"
               cdkDrag
-              id="{{ edit.id }}"
+              [id]="edit.id"
               [cdkDragData]="edit"
               [formInput]="edit.data"
               [inlineEdit]="inlineEdit"
@@ -93,7 +93,7 @@
     </nz-content>
   </nz-layout>
   <nz-sider nzWidth="300px" nzTheme="light" class="right-sider">
-    <h3>{{ 'components.USED_COMPONENTS' | translate }}</h3>
+    <h3>{{ 'COMPONENTS.USED_COMPONENTS' | translate }}</h3>
     <div
       class="components-list"
       id="structureList"

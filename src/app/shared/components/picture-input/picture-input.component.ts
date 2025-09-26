@@ -39,7 +39,7 @@ export class PictureInputComponent extends AbstractInput<string | null, PictureI
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.picture_input.MODEL_TITLE_PICTURE_INPUT'), // Use the translated title here
+        modalTitle: this.translate.instant('COMPONENTS.PICTURE_INPUT.MODEL_TITLE_PICTURE_INPUT'), // Use the translated title here
         modalContent: PictureInputEditComponent,
         modalData: this.data,
       })

@@ -1,6 +1,6 @@
 <form id="textareaEditFormID" nz-form [formGroup]="formData">
   <nz-form-label nzRequired
-    ><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+    ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
   >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
@@ -8,19 +8,19 @@
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
-        <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
+        <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
       }
     </ng-template>
   </nz-form-item>
 
-  <span>{{ 'components.COMPONENT_DESCRIPTION' | translate }}:</span>
+  <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}:</span>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'components.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
   <nz-form-item>
     <nz-form-control>
       <input nz-input formControlName="placeholderValue" />
@@ -31,13 +31,13 @@
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="setDefaultValue">{{ 'components.SET_DEFAULT_VALUE?' | translate }}</label>
+        <label nz-checkbox formControlName="setDefaultValue">{{ 'COMPONENTS.SET_DEFAULT_VALUE?' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
       <div>
         <nz-form-label [nzRequired]="getControlValue('required')"
-          ><span>{{ 'components.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
+          ><span>{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
         >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
@@ -70,19 +70,19 @@
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">{{ 'components.IS_REQUIRED' | translate }}</label>
+        <label nz-checkbox formControlName="required">{{ 'COMPONENTS.IS_REQUIRED' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
       <div>
-        <span>{{ 'components.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
             <input nz-input formControlName="requiredMessage" />
           </nz-form-control>
           <ng-template #requiredErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
-              <div>{{ 'components.IS_FIELD_REQUIRED' | translate }}</div>
+              <div>{{ 'COMPONENTS.IS_FIELD_REQUIRED' | translate }}</div>
             }
           </ng-template>
         </nz-form-item>
@@ -91,13 +91,13 @@
 
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="minLength">{{ 'components.text_area.MIN_LENGTH_REQUIRED?' | translate }}</label>
+        <label nz-checkbox formControlName="minLength">{{ 'COMPONENTS.TEXT_AREA.MIN_LENGTH_REQUIRED?' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('minLength')) {
       <div>
         <nz-form-label nzRequired
-          ><span>{{ 'components.text_area.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label
+          ><span>{{ 'COMPONENTS.TEXT_AREA.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label
         >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minLengthNumberErrorMessageTemplate">
@@ -110,24 +110,24 @@
           </nz-form-control>
           <ng-template #minLengthNumberErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
-              <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
+              <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
             }
             @if (hasErrors(control, 'minError')) {
-              <div>{{ 'components.CANNOT_BE_LOWER_THAN' | translate }} {{ control.errors['minError'] }}!</div>
+              <div>{{ 'COMPONENTS.CANNOT_BE_LOWER_THAN' | translate }} {{ control.errors['minError'] }}!</div>
             }
             @if (hasErrors(control, 'minMaxError')) {
-              <div>{{ 'components.MIN_VALUE_LIMIT' | translate }} ({{ control.errors['minMaxError'] }})!</div>
+              <div>{{ 'COMPONENTS.MIN_VALUE_LIMIT' | translate }} ({{ control.errors['minMaxError'] }})!</div>
             }
           </ng-template>
         </nz-form-item>
-        <span>{{ 'components.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}&#123;*&#125;</span>
+        <span>{{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}&#123;*&#125;</span>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minLengthMessageErrorMessageTemplate">
             <input nz-input formControlName="minLengthMessage" />
           </nz-form-control>
           <ng-template #minLengthMessageErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
-              <div>{{ 'components.MIN_LENGTH_ERROR_MESSAGE_REQUIRED' | translate }}</div>
+              <div>{{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_REQUIRED' | translate }}</div>
             }
           </ng-template>
         </nz-form-item>
@@ -136,13 +136,13 @@
 
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="maxLength">{{ 'components.MAX_LENGTH_REQUIRED?' | translate }}</label>
+        <label nz-checkbox formControlName="maxLength">{{ 'COMPONENTS.MAX_LENGTH_REQUIRED?' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('maxLength')) {
       <div>
         <nz-form-label nzRequired
-          ><span>{{ 'components.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label
+          ><span>{{ 'COMPONENTS.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label
         >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxLengthNumberErrorMessageTemplate">
@@ -154,20 +154,20 @@
           </nz-form-control>
           <ng-template #maxLengthNumberErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
-              <div>{{ 'components.CANNOT_BE_EMPTY' | translate }}</div>
+              <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
             }
             @if (hasErrors(control, 'minError')) {
-              <div>{{ 'components.CANNOT_BE_LOWER_THAN' | translate }}{{ control.errors['minError'] }}!</div>
+              <div>{{ 'COMPONENTS.CANNOT_BE_LOWER_THAN' | translate }}{{ control.errors['minError'] }}!</div>
             }
             @if (hasErrors(control, 'maxMinError')) {
-              <div>{{ 'components.MIN_VALUE_LIMIT' | translate }}({{ control.errors['maxMinError'] }})!</div>
+              <div>{{ 'COMPONENTS.MIN_VALUE_LIMIT' | translate }}({{ control.errors['maxMinError'] }})!</div>
             }
           </ng-template>
         </nz-form-item>
-        <span>{{ 'components.CHARACTER_COUNTER' | translate }}</span>
+        <span>{{ 'COMPONENTS.CHARACTER_COUNTER' | translate }}</span>
         <nz-form-item>
           <nz-form-control>
-            <label nz-checkbox formControlName="showCharacterCounter">{{ 'components.SHOW_CHARACTER_COUNTER' | translate }}</label>
+            <label nz-checkbox formControlName="showCharacterCounter">{{ 'COMPONENTS.SHOW_CHARACTER_COUNTER' | translate }}</label>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -178,13 +178,13 @@
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="showTooltip">{{ 'components.INPUT_TOOLTIP' | translate }}</label>
+        <label nz-checkbox formControlName="showTooltip">{{ 'COMPONENTS.INPUT_TOOLTIP' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <div>
         <nz-form-label nzRequired
-          ><span>{{ 'components.TOOLTIP_TEXT' | translate }}:</span></nz-form-label
+          ><span>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}:</span></nz-form-label
         >
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
@@ -192,7 +192,7 @@
           </nz-form-control>
           <ng-template #tooltipTextErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
-              <div>{{ 'components.PROVIDE_TOOLTIP' | translate }}</div>
+              <div>{{ 'COMPONENTS.PROVIDE_TOOLTIP' | translate }}</div>
             }
           </ng-template>
         </nz-form-item>

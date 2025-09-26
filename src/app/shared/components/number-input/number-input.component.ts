@@ -13,7 +13,7 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.number_input.MODEL_TITLE_NUMBER_INPUT'),
+        modalTitle: this.translate.instant('COMPONENTS.NUMBER_INPUT.MODEL_TITLE_NUMBER_INPUT'),
         modalContent: NumberInputEditComponent,
         modalData: this.data,
       })

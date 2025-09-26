@@ -10,7 +10,7 @@
 >
   <form #inputHolderForm="ngForm" nz-form class="form-container">
     <nz-form-label nzRequired
-      ><span>{{ 'components.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+      ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
     >
     <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit.enabled }">
       <nz-form-control nzErrorTip="">
@@ -30,7 +30,7 @@
         />
       </nz-form-control>
     </nz-form-item>
-    <span>{{ 'components.QUESTION_DESCRIPTION' | translate }}:</span>
+    <span>{{ 'COMPONENTS.QUESTION_DESCRIPTION' | translate }}:</span>
     <nz-form-item class="form-item">
       <nz-form-control>
         <span class="pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
@@ -47,7 +47,7 @@
         ></textarea>
       </nz-form-control>
     </nz-form-item>
-    <div>{{ 'components.INPUT_PREVIEW' | translate }}:</div>
+    <div>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}:</div>
     <ng-container *ngComponentOutlet="componentType; inputs: componentInputs" />
   </form>
   <span class="id-text">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
@@ -57,7 +57,7 @@
   @if (inputHolderForm.invalid) {
     <span
       nz-tooltip
-      nzTooltipTitle="{{ 'components.input_holder.INVALID_INPUT' | translate }}"
+      [nzTooltipTitle]="'COMPONENTS.INPUT_HOLDER.INVALID_INPUT' | translate"
       nzTooltipColor="red"
       nz-icon
       nzType="exclamation-circle"
@@ -72,9 +72,9 @@
   </button>
   <button
     nz-popconfirm
-    nzPopconfirmTitle="{{ 'components.input_holder.POP_RESET' | translate }}"
-    [nzCancelText]="'general.CANCEL' | translate"
-    [nzOkText]="'general.OK' | translate"
+    [nzPopconfirmTitle]="'COMPONENTS.INPUT_HOLDER.POP_RESET' | translate"
+    [nzCancelText]="'GENERAL.CANCEL' | translate"
+    [nzOkText]="'GENERAL.OK' | translate"
     (nzOnConfirm)="resetComponent()"
     nzPopconfirmPlacement="top"
     nz-button
@@ -82,13 +82,13 @@
     nzShape="round"
     class="button-spacing"
   >
-    <span>{{ 'components.input_holder.RESET' | translate }}</span>
+    <span>{{ 'COMPONENTS.INPUT_HOLDER.RESET' | translate }}</span>
   </button>
   <button
     nz-popconfirm
-    nzPopconfirmTitle="{{ 'components.input_holder.POP_REMOVE' | translate }}"
-    [nzCancelText]="'general.CANCEL' | translate"
-    [nzOkText]="'general.OK' | translate"
+    [nzPopconfirmTitle]="'COMPONENTS.INPUT_HOLDER.POP_REMOVE' | translate"
+    [nzCancelText]="'GENERAL.CANCEL' | translate"
+    [nzOkText]="'GENERAL.OK' | translate"
     (nzOnConfirm)="removeComponent()"
     nzPopconfirmPlacement="top"
     nz-button

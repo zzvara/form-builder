@@ -13,7 +13,7 @@ export class RangePickerComponent extends AbstractDatePickerComponent<Date[], Ra
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.range_picker.MODEL_TITLE_RANGE_PICKER'),
+        modalTitle: this.translate.instant('COMPONENTS.RANGE_PICKER.MODEL_TITLE_RANGE_PICKER'),
         modalContent: RangePickerEditComponent,
         modalData: this.data,
       })

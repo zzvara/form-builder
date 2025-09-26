@@ -13,7 +13,7 @@ export class SelectComponent extends AbstractFieldLikeInputs<string | string[], 
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.combobox.MODEL_TITLE_SELECT'),
+        modalTitle: this.translate.instant('COMPONENTS.COMBOBOX.MODEL_TITLE_SELECT'),
         modalContent: SelectEditComponent,
         modalData: this.data,
       })

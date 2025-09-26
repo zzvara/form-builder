@@ -1,76 +1,21 @@
 {
-  "components": {
+  "COMPONENTS": {
     "BASIC_INPUTS": "Alap bemenetek",
     "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
     "CANNOT_BE_LOWER_THAN": "Az érték nem lehet kisebb, mint",
+    "CHANGE_SUMMARY": {
+      "ADDED_INPUTS": "Hozzáadott mezők",
+      "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
+      "NONE": "— nincs —",
+      "REMOVED_INPUTS": "Eltávolított mezők"
+    },
     "CHARACTER_COUNTER": "Karakterszámláló",
-    "CHECKBOX_GROUP": "Jelölőnégyzet-csoport",
-    "COMBOBOX": "Legördülő lista",
-    "COMPONENT_DESCRIPTION": "Komponens leírása",
-    "COMPONENT_QUESTION": "Írd be a kérdést",
-    "DATE_FORMAT": "Dátum formátuma",
-    "DATE_FORMAT_PLACEHOLDER": "Pl.: ÉÉÉÉ-HH-NN",
-    "DATE_PICKER": "Dátumválasztó",
-    "DATE_PICKER_MODE": "Dátumválasztó módja",
-    "DEFAULT_VALUE": "Alapértelmezett érték",
-    "INLINE_COMPONENT?": "Megjelenjen beágyazottan?",
-    "INLINE_EDIT": "Beágyazott szerkesztés",
-    "INPUT_PREVIEW": "Bevitel előnézete",
-    "INPUT_QUESTION_MANDATORY": "A beviteli kérdés kitöltése kötelező!",
-    "INPUT_TOOLTIP": "Mutassuk a súgót?",
-    "IS_FIELD_REQUIRED": "Ha kötelező, az üzenet nem maradhat üresen.",
-    "IS_REQUIRED": "Kötelező kitölteni?",
-    "MAX_LENGTH_NUMBER": "Maximális karakterek száma:",
-    "MAX_LENGTH_REQUIRED?": "Kötelező megadni a maximális hosszúságot?",
-    "MIN_LENGTH_ERROR_MESSAGE": "Hibaüzenet, ha túl rövid a szöveg",
-    "MIN_LENGTH_ERROR_MESSAGE_HELP": "Ezt az üzenetet látja a felhasználó, ha a megadott szöveg túl rövid:",
-    "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Kötelező hibaüzenet, ha minimum hossz meg van adva!",
-    "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {*} karakter!",
-    "MIN_VALUE_LIMIT": "Nem lehet nagyobb, mint a maximális érték",
-    "MODE": "Működési mód",
-    "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
-    "NEXT_VERSION": "Következő verzió",
-    "NUMBER_FIELD": "SZÁMMEZŐ",
-    "PICTURE_INPUT": "KÉPBEMENET",
-    "PLACEHOLDER": "Helyőrző",
-    "PLACEHOLDER_DESCRIPTION": "Leírás",
-    "PLACEHOLDER_ERROR_REQUIRED": "Kötelező hibaüzenet",
-    "PLACEHOLDER_QUESTION": "Kérdés",
-    "PLACEHOLDER_TIME_FORMAT": "Időformátum",
-    "PREVIOUS_VERSION": "Előző verzió",
-    "PROVIDE_TOOLTIP": "Kérlek, adj meg egy súgószöveget!",
-    "QUESTION_DESCRIPTION": "Kérdés leírása",
-    "RADIO_GROUP": "Egyszeri kiválasztó csoport",
-    "RANGE_PICKER": "Tartományválasztó",
-    "REORDER": "Átrendezés engedélyezve",
-    "REQUIRED_MESSAGE": "Mező nem lehet üres!",
-    "SECTION": "Szekció",
-    "SECTIONS": "Szekciók",
-    "SELECT_DATE": "Válassz dátumot",
-    "SELECT_VERSION": "Válaszd ki a verziót",
-    "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",
-    "SET_DEFAULT_VALUE?": "Legyen alapértelmezett érték?",
-    "SET_PLACEHOLDER_VALUE": "Helykitöltő érték beállítása",
-    "SHOW_CHARACTER_COUNTER": "Mutassuk a karakterszámlálót?",
-    "SHOW_TIME?": "Mutassuk az időt is?",
-    "TEXT_AREA": "Szövegmező (többsoros)",
-    "TEXT_FIELD": "Egysoros szövegmező",
-    "TIME_PICKER": "Időválasztó",
-    "TOOLTIP_TEXT": "Súgószöveg",
-    "USED_COMPONENTS": "Használt komponensek",
-    "WEEK_NUMBERS?": "Mutassuk a hét számát?",
-    "checkbox_group": {
+    "CHECKBOX_GROUP": {
       "CHECKED?": "Ellenőrizve?",
       "DISABLED?": "Letiltva?",
       "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése"
     },
-    "change_summary": {
-      "CHANGES_SINCE": "Változások a {{version}}. verzió óta",
-      "ADDED_INPUTS": "Hozzáadott mezők",
-      "REMOVED_INPUTS": "Eltávolított mezők",
-      "NONE": "— nincs —"
-    },
-    "combobox": {
+    "COMBOBOX": {
       "ADD_OPTION": "Új lehetőség hozzáadása",
       "CHOICES_VALUES": "Lehetőségek és értékek",
       "COMBOBOX_REMOVE": "Lehetőség eltávolítása",
@@ -82,7 +27,11 @@
       "RECORD_MORE_OPTION": "Adj meg még legalább ennyi lehetőséget: ",
       "SELECT_DEFAULT_VALUE": "Válaszd ki az alapértelmezett értéket"
     },
-    "date_picker": {
+    "COMPONENT_DESCRIPTION": "Komponens leírása",
+    "COMPONENT_QUESTION": "Írd be a kérdést",
+    "DATE_FORMAT": "Dátum formátuma",
+    "DATE_FORMAT_PLACEHOLDER": "Pl.: ÉÉÉÉ-HH-NN",
+    "DATE_PICKER": {
       "DECADE": "Évtized",
       "FULL_DATE": "Teljes dátum",
       "INLINE_COMPONENT": "Beágyazott megjelenítés",
@@ -101,17 +50,36 @@
       "WEEK_NUMBERS?": "Mutassuk a hét számát?",
       "YEAR": "Év"
     },
-    "input": {
+    "DATE_PICKER_MODE": "Dátumválasztó módja",
+    "DEFAULT_VALUE": "Alapértelmezett érték",
+    "INLINE_COMPONENT?": "Megjelenjen beágyazottan?",
+    "INLINE_EDIT": "Beágyazott szerkesztés",
+    "INPUT": {
       "MODEL_TITLE_TEXT_INPUT": "Szövegmező beállításai"
     },
-    "input_holder": {
+    "INPUT_HOLDER": {
       "INLINE_EDIT": "Beágyazott szerkesztés",
       "INVALID_INPUT": "Érvénytelen adat",
       "POP_REMOVE": "Biztosan törölni szeretnéd ezt a komponenst?",
       "POP_RESET": "Biztosan visszaállítod az eredeti állapotot?",
       "RESET": "Visszaállítás"
     },
-    "number_field": {
+    "INPUT_PREVIEW": "Bevitel előnézete",
+    "INPUT_QUESTION_MANDATORY": "A beviteli kérdés kitöltése kötelező!",
+    "INPUT_TOOLTIP": "Mutassuk a súgót?",
+    "IS_FIELD_REQUIRED": "Ha kötelező, az üzenet nem maradhat üresen.",
+    "IS_REQUIRED": "Kötelező kitölteni?",
+    "MAX_LENGTH_NUMBER": "Maximális karakterek száma:",
+    "MAX_LENGTH_REQUIRED?": "Kötelező megadni a maximális hosszúságot?",
+    "MIN_LENGTH_ERROR_MESSAGE": "Hibaüzenet, ha túl rövid a szöveg",
+    "MIN_LENGTH_ERROR_MESSAGE_HELP": "Ezt az üzenetet látja a felhasználó, ha a megadott szöveg túl rövid:",
+    "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Kötelező hibaüzenet, ha minimum hossz meg van adva!",
+    "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {*} karakter!",
+    "MIN_VALUE_LIMIT": "Nem lehet nagyobb, mint a maximális érték",
+    "MODE": "Működési mód",
+    "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
+    "NEXT_VERSION": "Következő verzió",
+    "NUMBER_FIELD": {
       "FORMAT_INPUT": "Formázzuk a számot?",
       "FORMAT_PATTERN": "Formátum minta – így jelenik meg a szám:",
       "LARGER_THAN_SET_STEP_NUMBER": "Nem lehet nagyobb, mint (max. szám – min. szám)!",
@@ -125,25 +93,44 @@
       "PLACEHOLDER_INPUT_NUMBER_FORMATTER": "Szám formázása",
       "SET_STEP_NUMBER": "Lépésköz beállítása"
     },
-    "number_input": {
+    "NUMBER_INPUT": {
       "MODEL_TITLE_NUMBER_INPUT": "Számmező beállításai"
     },
-    "picture_input": {
+    "PICTURE_INPUT": {
       "CLICK_TO_UPLOAD": "Kattints ide a képfeltöltéshez",
       "MODEL_TITLE_PICTURE_INPUT": "Képfeltöltő beállításai"
     },
-    "radio_group": {
+    "PLACEHOLDER": "Helyőrző",
+    "PLACEHOLDER_DESCRIPTION": "Leírás",
+    "PLACEHOLDER_ERROR_REQUIRED": "Kötelező hibaüzenet",
+    "PLACEHOLDER_QUESTION": "Kérdés",
+    "PLACEHOLDER_TIME_FORMAT": "Időformátum",
+    "PREVIOUS_VERSION": "Előző verzió",
+    "PROVIDE_TOOLTIP": "Kérlek, adj meg egy súgószöveget!",
+    "QUESTION_DESCRIPTION": "Kérdés leírása",
+    "RADIO_GROUP": {
       "CHOICES_OR_VALUES": "Lehetőségek és értékek",
       "MODAL_RADIO_GROUP_TITLE": "Rádiócsoport beállításainak szerkesztése",
       "OPTION_ALREADY": "Az opció már a listában van",
       "OPTION_ATLEAST": "Kérjük, legalább ennyi lehetőséget rögzítsen",
       "SHOW_AS_BUTTON": "Mutasd gombként?"
     },
-    "range_picker": {
+    "RANGE_PICKER": {
       "MODEL_TITLE_RANGE_PICKER": "Tartományválasztó beállításai",
       "SET_PLACEHOLDER_VALUE_RANGE": "Helykitöltő érték megadása (használj '|' jelet elválasztásra)"
     },
-    "text_area": {
+    "REORDER": "Átrendezés engedélyezve",
+    "REQUIRED_MESSAGE": "Mező nem lehet üres!",
+    "SECTION": "Szekció",
+    "SECTIONS": "Szekciók",
+    "SELECT_DATE": "Válassz dátumot",
+    "SELECT_VERSION": "Válaszd ki a verziót",
+    "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",
+    "SET_DEFAULT_VALUE?": "Legyen alapértelmezett érték?",
+    "SET_PLACEHOLDER_VALUE": "Helykitöltő érték beállítása",
+    "SHOW_CHARACTER_COUNTER": "Mutassuk a karakterszámlálót?",
+    "SHOW_TIME?": "Mutassuk az időt is?",
+    "TEXT_AREA": {
       "MAX_LENGTH_NUMBER": "Maximális hossz:",
       "MAX_LENGTH_REQUIRED?": "Kötelező megadni a maximális hosszúságot?",
       "MAX_VALUE_LIMIT": "Nem lehet kisebb a minimális értéknél",
@@ -151,7 +138,8 @@
       "MIN_LENGTH_REQUIRED?": "Kötelező megadni a minimális hosszúságot?",
       "MODEL_TITLE_TEXTAREA": "Szövegmező (többsoros) beállításai"
     },
-    "time_picker": {
+    "TEXT_FIELD": "Egysoros szövegmező",
+    "TIME_PICKER": {
       "12_HOUR_FORMAT": "12 órás formátum",
       "12_HOUR_FORMAT?": "12 órás formátum legyen?",
       "HIDE_DISABLED_OPTIONS": "Rejtsük el a nem elérhető opciókat?",
@@ -170,9 +158,12 @@
       "SET_MINUTE_STEP": "Perclépés beállítása",
       "SET_SECOND_STEP": "Másodperclépés beállítása",
       "TIME_FORMAT": "Időformátum"
-    }
+    },
+    "TOOLTIP_TEXT": "Súgószöveg",
+    "USED_COMPONENTS": "Használt komponensek",
+    "WEEK_NUMBERS?": "Mutassuk a hét számát?"
   },
-  "dashboard": {
+  "DASHBOARD": {
     "ACTION": "Művelet",
     "CARD_VIEW": "Kártyás elrendezés",
     "CARD_VIEW_TOOLTIP": "Váltás kártya nézetre",
@@ -186,7 +177,7 @@
     "TESTS": "Teszt",
     "UPLOAD_JSON": "JSON feltöltése"
   },
-  "form": {
+  "FORM": {
     "DEADLINE_TOOLTIP": "Ez határozza meg, hogy meddig nyújtható be az űrlap. Ez egy fix dátum és idő, amely után az űrlap már nem érhető el vagy nyújtható be.",
     "FORM_DESCRIPTION": "Leírás",
     "FORM_DESCRIPTION_TOOLTIP": "Adja meg a leírást",
@@ -204,15 +195,15 @@
     "TITLE_REQUIRED": "A cím kötelező",
     "VERSION": "Változat:"
   },
-  "general": {
+  "GENERAL": {
     "CANCEL": "Mégse",
     "CREATED": "Létrehozva",
     "DEADLINE": "Beadási határidő",
     "DELETE_CONFIRMATION": "Biztosan törli ezt a projektet?",
     "DESCRIPTION": "Leírás",
     "DOWNLOAD_CONFIRMATION": "Biztosan letölti a projektet?",
-    "FORM_BUILDER": "Űrlapkészítő",
     "ENGLISH": "Angol",
+    "FORM_BUILDER": "Űrlapkészítő",
     "HUNGARY": "Magyar",
     "MODIFIED": "Módosítva",
     "NEXT": "Következő",
@@ -222,7 +213,7 @@
     "TIME_LIMIT": "Időkorlát az űrlap kitöltéséhez",
     "TITLE": "Cím"
   },
-  "project": {
+  "PROJECT": {
     "DEADLINE_CHECKBOX": "Határidő jelölőnégyzet",
     "DOWNLOAD_PROJECT": "Projekt letöltése",
     "DOWNLOAD_PROJECT_WITH_HISTORY": "Projekt letöltése előzménnyel",
@@ -236,15 +227,15 @@
     "TYPE": "Típus",
     "VERSION": "Verzió"
   },
-  "steps": {
+  "STEPS": {
     "ANSWER": "Válasz",
     "COMPONENTS": "Komponensek",
     "FORM_INFO": "Űrlap információ",
     "RESULTS": "Eredmény"
   },
-  "title": {
-    "dashboard": "Kezdőlap",
-    "editform": "Űrlap szerkesztése",
-    "newform": "Új űrlap"
+  "TITLE": {
+    "DASHBOARD": "Kezdőlap",
+    "EDIT_FORM": "Űrlap szerkesztése",
+    "NEW_FORM": "Új űrlap"
   }
 }

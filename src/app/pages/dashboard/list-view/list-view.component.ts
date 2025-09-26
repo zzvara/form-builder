@@ -35,25 +35,25 @@ export class ListViewComponent implements OnInit {
   setColumnsConfig(): void {
     this.columnsConfig = [
       {
-        title: this.translate.instant('general.TITLE'),
+        title: this.translate.instant('GENERAL.TITLE'),
         sortOrder: null,
         sortFn: (a: Questionnaire, b: Questionnaire) => a.title.localeCompare(b.title),
         sortDirections: ['ascend', 'descend', null],
       },
       {
-        title: this.translate.instant('general.DESCRIPTION'),
+        title: this.translate.instant('GENERAL.DESCRIPTION'),
         sortOrder: null,
         sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
         sortDirections: ['ascend', 'descend', null],
       },
       {
-        title: this.translate.instant('general.CREATED'),
+        title: this.translate.instant('GENERAL.CREATED'),
         sortOrder: 'descend',
         sortFn: (a: Questionnaire, b: Questionnaire) => a.created.localeCompare(b.created),
         sortDirections: ['ascend', 'descend', null],
       },
       {
-        title: this.translate.instant('general.MODIFIED'),
+        title: this.translate.instant('GENERAL.MODIFIED'),
         sortOrder: null,
         sortFn: (a: Questionnaire, b: Questionnaire) => a.modified.localeCompare(b.modified),
         sortDirections: ['ascend', 'descend', null],

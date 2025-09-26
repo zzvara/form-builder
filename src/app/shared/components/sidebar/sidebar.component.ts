@@ -9,7 +9,7 @@ import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
   standalone: false,
 })
 export class SidebarComponent implements OnInit {
-  @Input() sidebarData!: SidebarData[];
+  @Input() sidebarData: SidebarData[] = [];
 
   searchTerm: string = '';
   filteredData: SidebarData[] = [];

@@ -3,14 +3,14 @@
     @if (!isListView) {
       <div (click)="toggleView()">
         <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
-        <span>{{ 'dashboard.LIST_VIEW' | translate }}</span>
-        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'dashboard.LIST_VIEW_TOOLTIP' | translate }}"></i>
+        <span>{{ 'DASHBOARD.LIST_VIEW' | translate }}</span>
+        <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'DASHBOARD.LIST_VIEW_TOOLTIP' | translate"></i>
       </div>
     } @else {
       <div (click)="toggleView()">
         <span nz-icon nzType="appstore" nzTheme="outline"></span>
-        <span>{{ 'dashboard.CARD_VIEW' | translate }}</span>
-        <i nz-icon nzType="question-circle" nz-tooltip nzTooltipTitle="{{ 'dashboard.CARD_VIEW_TOOLTIP' | translate }}"></i>
+        <span>{{ 'DASHBOARD.CARD_VIEW' | translate }}</span>
+        <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'DASHBOARD.CARD_VIEW_TOOLTIP' | translate"></i>
       </div>
     }
   </div>
@@ -18,9 +18,9 @@
   @if (isListView) {
     <div class="view">
       <div>
-        <h3>{{ 'dashboard.QUESTIONNAIRES' | translate }}</h3>
+        <h3>{{ 'DASHBOARD.QUESTIONNAIRES' | translate }}</h3>
         <button (click)="createProject(projectTypes.QUESTIONNAIRE)" nz-button>
-          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW_QUESTIONNAIRE' | translate }}
+          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'DASHBOARD.NEW_QUESTIONNAIRE' | translate }}
         </button>
       </div>
 
@@ -32,9 +32,9 @@
       ></app-list-view>
 
       <div>
-        <h3>{{ 'dashboard.TESTS' | translate }}</h3>
+        <h3>{{ 'DASHBOARD.TESTS' | translate }}</h3>
         <button (click)="createProject(projectTypes.TEST)" nz-button>
-          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'dashboard.NEW_TEST' | translate }}
+          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'DASHBOARD.NEW_TEST' | translate }}
         </button>
       </div>
 
@@ -48,7 +48,7 @@
   } @else {
     <div class="view">
       <div>
-        <h3>{{ 'dashboard.QUESTIONNAIRES' | translate }}</h3>
+        <h3>{{ 'DASHBOARD.QUESTIONNAIRES' | translate }}</h3>
       </div>
 
       <app-card-view
@@ -60,7 +60,7 @@
       ></app-card-view>
 
       <div>
-        <h3>{{ 'dashboard.TESTS' | translate }}</h3>
+        <h3>{{ 'DASHBOARD.TESTS' | translate }}</h3>
       </div>
 
       <app-card-view

@@ -13,7 +13,7 @@ export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaC
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.text_area.MODEL_TITLE_TEXTAREA'),
+        modalTitle: this.translate.instant('COMPONENTS.TEXT_AREA.MODEL_TITLE_TEXTAREA'),
         modalContent: TextareaEditComponent,
         modalData: this.data,
       })

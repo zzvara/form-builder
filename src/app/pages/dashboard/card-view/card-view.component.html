@@ -6,8 +6,8 @@
           <nz-card-meta [nzTitle]="project.title" [nzDescription]="project.description"></nz-card-meta>
         </div>
         <div class="card-footer">
-          <p>{{ 'general.CREATED' | translate }}: {{ project.created }}</p>
-          <p>{{ 'general.MODIFIED' | translate }}: {{ project.modified }}</p>
+          <p>{{ 'GENERAL.CREATED' | translate }}: {{ project.created }}</p>
+          <p>{{ 'GENERAL.MODIFIED' | translate }}: {{ project.modified }}</p>
         </div>
         <ng-template #actionEdit>
           <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
@@ -15,7 +15,7 @@
         <ng-template #actionDelete>
           <span
             nz-popconfirm
-            [nzPopconfirmTitle]="'general.DELETE_CONFIRMATION' | translate"
+            [nzPopconfirmTitle]="'GENERAL.DELETE_CONFIRMATION' | translate"
             (nzOnConfirm)="onDeleteProject(project.id)"
             nz-icon
             nzType="delete"

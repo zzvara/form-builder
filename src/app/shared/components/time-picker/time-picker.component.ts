@@ -14,7 +14,7 @@ export class TimePickerComponent extends AbstractFieldLikeInputs<Date, TimePicke
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.time_picker.MODEL_TITLE_TIME_PICKER'),
+        modalTitle: this.translate.instant('COMPONENTS.TIME_PICKER.MODEL_TITLE_TIME_PICKER'),
         modalContent: TimePickerEditComponent,
         modalData: this.data,
       })

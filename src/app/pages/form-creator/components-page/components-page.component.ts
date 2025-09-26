@@ -150,8 +150,8 @@ export class ComponentsPageComponent implements OnInit {
     const prev = version.versionNum - 1;
     const title =
       prev > 0
-        ? this.translate.instant('components.change_summary.CHANGES_SINCE', { version: prev })
-        : this.translate.instant('components.change_summary.CHANGES_SINCE', { version: version.versionNum });
+        ? this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', { version: prev })
+        : this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', { version: version.versionNum });
 
     this.modal.create({
       nzTitle: title,

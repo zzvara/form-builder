@@ -16,14 +16,15 @@
           (click)="nextPage()"
           class="button-margin next-button"
           [disabled]="isNextButtonDisabled"
-          nz-tooltip="{{ 'components.NEXT_TOOLTIP' | translate }}"
+          nz-tooltip
+          [nzTooltipTitle]="'COMPONENTS.NEXT_TOOLTIP' | translate"
         >
-          {{ 'general.NEXT' | translate }}
+          {{ 'GENERAL.NEXT' | translate }}
         </button>
 
         <div>
           <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
-            {{ 'components.NEXT_VERSION' | translate }}
+            {{ 'COMPONENTS.NEXT_VERSION' | translate }}
           </button>
         </div>
 
@@ -37,7 +38,7 @@
             [nzOverlayStyle]="{ 'max-height': '250px', 'overflow-y': 'auto' }"
             style="width: 120px"
           >
-            {{ currentVersionNum ? ('project.VERSION' | translate) + ' ' + currentVersionNum : ('components.SELECT_VERSION' | translate) }}
+            {{ currentVersionNum ? ('PROJECT.VERSION' | translate) + ' ' + currentVersionNum : ('COMPONENTS.SELECT_VERSION' | translate) }}
             <i nz-icon nzType="down"></i>
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
@@ -47,11 +48,12 @@
                 *ngFor="let version of projectHistory; trackBy: trackByVersion"
                 (click)="revertToVersion(version.versionNum)"
               >
-                <span> {{ 'project.VERSION' | translate }} {{ version.versionNum }} </span>
+                <span> {{ 'PROJECT.VERSION' | translate }} {{ version.versionNum }} </span>
+                <!-- @Todo: tooltip translate -->
                 <span
                   nz-popover
                   nzPopoverTrigger="hover"
-                  nz-tooltip="{{ 'general.CREATED' | translate }}: {{ version.created | date: 'short' }}"
+                  nz-tooltip="{{ 'GENERAL.CREATED' | translate }}: {{ version.created | date: 'short' }}"
                   class="version-icon-wrapper"
                 >
                   <i nz-icon nzType="field-time"></i>
@@ -62,7 +64,7 @@
                   nz-button
                   nzType="text"
                   (click)="openDiffModal(version)"
-                  [nz-tooltip]="'components.change_summary.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
+                  [nz-tooltip]="'COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
                   class="version-icon-wrapper"
                   style="margin-left: 8px"
                 >
@@ -75,7 +77,7 @@
 
         <div>
           <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
-            {{ 'components.PREVIOUS_VERSION' | translate }}
+            {{ 'COMPONENTS.PREVIOUS_VERSION' | translate }}
           </button>
         </div>
 

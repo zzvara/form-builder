@@ -28,16 +28,16 @@ import { TranslateService } from '@ngx-translate/core';
 // Default values of the dragged components
 const textInputOptions = (translateService: TranslateService): InputComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   minLength: false,
-  minLengthMessage: translateService.instant('components.MIN_LENGTH_MESSAGE'),
+  minLengthMessage: translateService.instant('COMPONENTS.MIN_LENGTH_MESSAGE'),
   maxLength: false,
   showTooltip: false,
   showCharacterCounter: false,
 });
 const numberInputOptions = (translateService: TranslateService): NumberInputComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   showTooltip: false,
   max: false,
   min: false,
@@ -46,7 +46,7 @@ const numberInputOptions = (translateService: TranslateService): NumberInputComp
 });
 const dateInputOptions = (translateService: TranslateService): DatePickerComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
@@ -59,7 +59,7 @@ const dateInputOptions = (translateService: TranslateService): DatePickerCompone
 });
 const rangeInputOptions = (translateService: TranslateService): RangePickerComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
@@ -72,7 +72,7 @@ const rangeInputOptions = (translateService: TranslateService): RangePickerCompo
 });
 const timeInputOptions = (translateService: TranslateService): TimePickerComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   showTooltip: false,
   maxTime: false,
   minTime: false,
@@ -85,9 +85,9 @@ const timeInputOptions = (translateService: TranslateService): TimePickerCompone
 });
 const textAreaInputOptions = (translateService: TranslateService): TextareaComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   minLength: false,
-  minLengthMessage: translateService.instant('components.MIN_LENGTH_MESSAGE'),
+  minLengthMessage: translateService.instant('COMPONENTS.MIN_LENGTH_MESSAGE'),
   maxLength: false,
   showTooltip: false,
   showCharacterCounter: false,
@@ -97,13 +97,13 @@ const pictureInputOptions: PictureInputComponentData = {};
 const selectInputOptions = (translateService: TranslateService): SelectComponentData => ({
   selectOptions: ['Option 1', 'Option 2'],
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   showTooltip: false,
   isMultipleChoice: false,
 });
 const radioGroupInputOptions = (translateService: TranslateService): RadioGroupData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   isButton: false,
   options: [
     { option_id: 1, option_description: 'Option 1' },
@@ -113,7 +113,7 @@ const radioGroupInputOptions = (translateService: TranslateService): RadioGroupD
 });
 const checkboxGroupInputOptions = (translateService: TranslateService): CheckboxGroupData => ({
   required: false,
-  requiredMessage: translateService.instant('components.REQUIRED_MESSAGE'),
+  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   defaultValue: [
     { label: 'Option 1', value: 1 },
     { label: 'Option 2', value: 2 },
@@ -125,70 +125,70 @@ const checkboxGroupInputOptions = (translateService: TranslateService): Checkbox
 export function getInputGroups(translate: TranslateService): FormInputData<any>[] {
   return [
     {
-      title: 'components.TEXT_FIELD',
+      title: 'COMPONENTS.TEXT_FIELD',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'InputComponent',
       data: textInputOptions(translate),
     },
     {
-      title: 'components.NUMBER_FIELD',
+      title: 'COMPONENTS.NUMBER_FIELD',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'NumberInputComponent',
       data: numberInputOptions(translate),
     },
     {
-      title: 'components.DATE_PICKER',
+      title: 'COMPONENTS.DATE_PICKER',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'DatePickerComponent',
       data: dateInputOptions(translate),
     },
     {
-      title: 'components.RANGE_PICKER',
+      title: 'COMPONENTS.RANGE_PICKER',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'RangePickerComponent',
       data: rangeInputOptions(translate),
     },
     {
-      title: 'components.TIME_PICKER',
+      title: 'COMPONENTS.TIME_PICKER',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TimePickerComponent',
       data: timeInputOptions(translate),
     },
     {
-      title: 'components.TEXT_AREA',
+      title: 'COMPONENTS.TEXT_AREA',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TextareaComponent',
       data: textAreaInputOptions(translate),
     },
     {
-      title: 'components.PICTURE_INPUT',
+      title: 'COMPONENTS.PICTURE_INPUT',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'PictureInputComponent',
       data: pictureInputOptions,
     },
     {
-      title: 'components.COMBOBOX',
+      title: 'COMPONENTS.COMBOBOX',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'SelectComponent',
       data: selectInputOptions(translate),
     },
     {
-      title: 'components.RADIO_GROUP',
+      title: 'COMPONENTS.RADIO_GROUP',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'RadioGroupComponent',
       data: radioGroupInputOptions(translate),
     },
     {
-      title: 'components.CHECKBOX_GROUP',
+      title: 'COMPONENTS.CHECKBOX_GROUP',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'CheckboxGroupComponent',
@@ -201,18 +201,18 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
 export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {
   return [
     {
-      groupName: 'components.BASIC_INPUTS',
+      groupName: 'COMPONENTS.BASIC_INPUTS',
       active: true,
       dropListConnectedTo: () => component.getSectionIds().concat(['sectionDropList']),
       groupContents: getInputGroups(translate),
     },
     {
-      groupName: 'components.SECTIONS',
+      groupName: 'COMPONENTS.SECTIONS',
       active: true,
       dropListConnectedTo: () => 'sectionDropList',
       groupContents: [
         {
-          title: 'components.SECTION',
+          title: 'COMPONENTS.SECTION',
           type: 'SectionComponent',
           data: null,
         },

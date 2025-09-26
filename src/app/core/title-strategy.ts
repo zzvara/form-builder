@@ -16,7 +16,7 @@ export class TranslatedTitleStrategy extends TitleStrategy {
     const titleKey = this.buildTitle(routerState);
     if (titleKey) {
       this.translate.get(titleKey).subscribe((translatedTitle) => {
-        this.title.setTitle(`${translatedTitle}`);
+        this.title.setTitle(translatedTitle);
       });
     }
   }

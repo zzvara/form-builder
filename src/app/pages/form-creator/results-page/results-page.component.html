@@ -1,47 +1,47 @@
 <nz-layout>
   <div>
     <nz-tabset>
-      <nz-tab nzTitle="{{ 'project.PROJECT_INFORMATION' | translate }}">
+      <nz-tab [nzTitle]="'PROJECT.PROJECT_INFORMATION' | translate">
         @if (project) {
           <nz-descriptions nzBordered [nzColumn]="1" *ngIf="project">
-            <nz-descriptions-item nzTitle="{{ 'general.TITLE' | translate }}">
+            <nz-descriptions-item [nzTitle]="'GENERAL.TITLE' | translate">
               {{ project.title }}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="{{ 'general.DESCRIPTION' | translate }}">
+            <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
               {{ project.description }}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="{{ 'project.TYPE' | translate }}">
+            <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
               {{ project.type }}
             </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.time_checkbox" nzTitle="{{ 'project.TIME_CHECKBOX' | translate }}">
+            <nz-descriptions-item *ngIf="project.time_checkbox" [nzTitle]="'PROJECT.TIME_CHECKBOX' | translate">
               {{ project.time_checkbox }}
             </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.deadline_checkbox" nzTitle="{{ 'project.DEADLINE_CHECKBOX' | translate }}">
+            <nz-descriptions-item *ngIf="project.deadline_checkbox" [nzTitle]="'PROJECT.DEADLINE_CHECKBOX' | translate">
               {{ project.deadline_checkbox }}
             </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.time_limit" nzTitle="{{ 'general.TIME_LIMIT' | translate }}">
+            <nz-descriptions-item *ngIf="project.time_limit" [nzTitle]="'GENERAL.TIME_LIMIT' | translate">
               {{ project.time_limit | date: 'HH:mm:ss' }}
             </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.deadline" nzTitle="{{ 'general.DEADLINE' | translate }}">
+            <nz-descriptions-item *ngIf="project.deadline" [nzTitle]="'GENERAL.DEADLINE' | translate">
               {{ project.deadline | date: 'yyyy-MM-dd' }}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="{{ 'general.CREATED' | translate }}">
+            <nz-descriptions-item [nzTitle]="'GENERAL.CREATED' | translate">
               {{ project.created }}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="{{ 'general.MODIFIED' | translate }}">
+            <nz-descriptions-item [nzTitle]="'GENERAL.MODIFIED' | translate">
               {{ project.modified }}
             </nz-descriptions-item>
           </nz-descriptions>
         }
       </nz-tab>
-      <nz-tab nzTitle="{{ 'project.SECTION_INPUTS' | translate }}">
+      <nz-tab [nzTitle]="'PROJECT.SECTION_INPUTS' | translate">
         @if (project?.editList?.length) {
           <nz-descriptions nzBordered [nzColumn]="1" *ngIf="sectionInputStats">
-            <nz-descriptions-item *ngIf="latestVersionNum" nzTitle="{{ 'project.VERSION' | translate }}">
+            <nz-descriptions-item *ngIf="latestVersionNum" [nzTitle]="'PROJECT.VERSION' | translate">
               {{ latestVersionNum }}
             </nz-descriptions-item>
 
-            <nz-descriptions-item nzTitle="{{ 'project.SECTION_INPUTS_STATISTICS' | translate }}">
+            <nz-descriptions-item [nzTitle]="'PROJECT.SECTION_INPUTS_STATISTICS' | translate">
               <ul class="statistics-list">
                 <li *ngFor="let stat of sectionInputStats | keyvalue">{{ stat.key }}: {{ stat.value }}</li>
               </ul>
@@ -49,14 +49,14 @@
           </nz-descriptions>
         }
       </nz-tab>
-      <nz-tab nzTitle="{{ 'project.PROJECT_JSON' | translate }}" class="json">
+      <nz-tab [nzTitle]="'PROJECT.PROJECT_JSON' | translate" class="json">
         <div class="json-container">
           @if (project) {
             <pre>{{ project | json }}</pre>
           }
         </div>
       </nz-tab>
-      <nz-tab nzTitle="{{ 'project.PROJECT_HISTORY_JSON' | translate }}" class="json">
+      <nz-tab [nzTitle]="'PROJECT.PROJECT_HISTORY_JSON' | translate" class="json">
         <div class="json-container">
           @if (project) {
             <pre>{{ projectHistory | json }}</pre>
@@ -67,33 +67,33 @@
     <div nz-row nzJustify="start" nzAlign="bottom" id="footerdiv">
       <div class="button-group">
         <button nz-button nzType="primary" type="submit" (click)="nextPage()">
-          {{ 'project.SAVE' | translate }}
+          {{ 'PROJECT.SAVE' | translate }}
         </button>
         <button
           nz-popconfirm
-          nzPopconfirmTitle="{{ 'general.DOWNLOAD_CONFIRMATION' | translate }}"
-          [nzCancelText]="'general.CANCEL' | translate"
-          [nzOkText]="'general.OK' | translate"
+          [nzPopconfirmTitle]="'GENERAL.DOWNLOAD_CONFIRMATION' | translate"
+          [nzCancelText]="'GENERAL.CANCEL' | translate"
+          [nzOkText]="'GENERAL.OK' | translate"
           (nzOnConfirm)="saveProjectToJson()"
           nzPopconfirmPlacement="top"
           nz-button
           nzType="default"
           type="button"
         >
-          {{ 'project.DOWNLOAD_PROJECT' | translate }}
+          {{ 'PROJECT.DOWNLOAD_PROJECT' | translate }}
         </button>
         <button
           nz-popconfirm
-          nzPopconfirmTitle="{{ 'general.DOWNLOAD_CONFIRMATION' | translate }}"
-          [nzCancelText]="'general.CANCEL' | translate"
-          [nzOkText]="'general.OK' | translate"
+          [nzPopconfirmTitle]="'GENERAL.DOWNLOAD_CONFIRMATION' | translate"
+          [nzCancelText]="'GENERAL.CANCEL' | translate"
+          [nzOkText]="'GENERAL.OK' | translate"
           (nzOnConfirm)="saveProjectWithHistoryToJson()"
           nzPopconfirmPlacement="top"
           nz-button
           nzType="default"
           type="button"
         >
-          {{ 'project.DOWNLOAD_PROJECT_WITH_HISTORY' | translate }}
+          {{ 'PROJECT.DOWNLOAD_PROJECT_WITH_HISTORY' | translate }}
         </button>
       </div>
     </div>

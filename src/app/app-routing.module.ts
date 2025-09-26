@@ -11,25 +11,25 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.dashboard',
+    title: 'TITLE.DASHBOARD',
   },
   {
     path: 'new',
     component: FormCreatorComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.newform',
+    title: 'TITLE.NEW_FORM',
   },
   {
     path: 'edit',
     component: FormCreatorComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.editform',
+    title: 'TITLE.EDIT_FORM',
   },
   {
     path: '**',
     component: DashboardComponent,
     resolve: { menuOptions: headerResolver },
-    title: 'title.dashboard',
+    title: 'TITLE.DASHBOARD',
   },
 ];
 

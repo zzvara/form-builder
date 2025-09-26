@@ -26,11 +26,11 @@ export class DatePickerEditComponent<
   D extends DatePickerComponentData<T> = DatePickerComponentData<T>,
 > extends AbstractFieldLikeEditForm<T, D> {
   datePickerModes: { mode: NzDateMode; label: string }[] = [
-    { mode: 'decade', label: this.translate.instant('components.date_picker.DECADE') },
-    { mode: 'year', label: this.translate.instant('components.date_picker.YEAR') },
-    { mode: 'month', label: this.translate.instant('components.date_picker.MONTH') },
-    { mode: 'week', label: this.translate.instant('components.date_picker.WEEK') },
-    { mode: 'date', label: this.translate.instant('components.date_picker.FULL_DATE') },
+    { mode: 'decade', label: this.translate.instant('COMPONENTS.DATE_PICKER.DECADE') },
+    { mode: 'year', label: this.translate.instant('COMPONENTS.DATE_PICKER.YEAR') },
+    { mode: 'month', label: this.translate.instant('COMPONENTS.DATE_PICKER.MONTH') },
+    { mode: 'week', label: this.translate.instant('COMPONENTS.DATE_PICKER.WEEK') },
+    { mode: 'date', label: this.translate.instant('COMPONENTS.DATE_PICKER.FULL_DATE') },
   ];
 
   override ngOnInit(): void {

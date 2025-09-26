@@ -13,7 +13,7 @@ export class DatePickerComponent extends AbstractDatePickerComponent<Date, DateP
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.date_picker.MODEL_TITLE_DATE_PICKER'),
+        modalTitle: this.translate.instant('COMPONENTS.DATE_PICKER.MODEL_TITLE_DATE_PICKER'),
         modalContent: DatePickerEditComponent,
         modalData: this.data,
       })

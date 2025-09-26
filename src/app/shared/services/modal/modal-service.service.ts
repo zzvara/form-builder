@@ -25,9 +25,9 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
     dataGetter: ((instance: E) => RetType) | null = null
   ): Observable<RetType | undefined> {
     // Get the translated button labels
-    const closeLabel = this.translate.instant('general.CANCEL');
-    const resetLabel = this.translate.instant('general.RESET');
-    const saveLabel = this.translate.instant('general.SAVE');
+    const closeLabel = this.translate.instant('GENERAL.CANCEL');
+    const resetLabel = this.translate.instant('GENERAL.RESET');
+    const saveLabel = this.translate.instant('GENERAL.SAVE');
 
     const modal = this.modal.create<E, D>({
       nzTitle: modalData.modalTitle,

@@ -14,7 +14,7 @@ export class InputComponent extends AbstractFieldLikeInputs<string, InputCompone
   override edit(): void {
     this.modalService
       .openModal({
-        modalTitle: this.translate.instant('components.input.MODEL_TITLE_TEXT_INPUT'),
+        modalTitle: this.translate.instant('COMPONENTS.INPUT.MODEL_TITLE_TEXT_INPUT'),
         modalContent: InputEditComponent,
         modalData: this.data,
       })
