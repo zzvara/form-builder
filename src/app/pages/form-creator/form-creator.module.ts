@@ -28,6 +28,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
+import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -60,6 +61,7 @@ import { CommonModule } from '@angular/common';
     TranslatePipe,
     NzDescriptionsModule,
     ChangeSummaryComponent,
+    IconTypePipe,
   ],
   providers: [],
   exports: [],

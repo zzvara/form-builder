@@ -14,7 +14,7 @@
         [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
       >
         @for (edit of editList; track edit) {
-          @if (instanceOfSectionList(edit.data)) {
+          @if (edit.data | instanceOfSectionList) {
             <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
             <nz-card
               [id]="edit.data.sectionId"
@@ -78,7 +78,7 @@
                 />
               }
             </nz-card>
-          } @else if (instanceOfFormInputData(edit.data)) {
+          } @else if (edit.data | instanceOfFormInputData) {
             <!-- @todo Again, a large built-in width and lots of margins, the code should be reviewed for similar cases. -->
             <app-input-holder
               class="element-box standalone-input-holder"
@@ -106,7 +106,7 @@
       [cdkDropListData]="editList"
     >
       @for (edit of editList; track edit) {
-        @if (instanceOfSectionList(edit.data)) {
+        @if (edit.data | instanceOfSectionList) {
           <div class="component-item section-item" cdkDrag [cdkDragData]="edit">
             <div class="section-header">
               <span nz-icon nzType="layout" nzTheme="outline"></span>
@@ -116,7 +116,7 @@
               </span>
             </div>
           </div>
-        } @else if (instanceOfFormInputData(edit.data)) {
+        } @else if (edit.data | instanceOfFormInputData) {
           <div class="component-item" cdkDrag [cdkDragData]="edit">
             <span nz-icon nzType="form" nzTheme="outline"></span>
             <span class="component-title">{{ edit.data.title | translate }}</span>

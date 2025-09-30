@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
 
 interface RawItem {
   id: string;
@@ -23,7 +24,7 @@ interface DiffItem {
 @Component({
   selector: 'app-change-summary',
   standalone: true,
-  imports: [CommonModule, NzIconModule, TranslatePipe],
+  imports: [CommonModule, NzIconModule, TranslatePipe, IconTypePipe],
   templateUrl: './change-summary.component.html',
   styleUrls: ['./change-summary.component.less'],
 })
@@ -112,11 +113,5 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
 
   close(): void {
     this.modalRef?.close();
-  }
-
-  getIconType(type: string): string {
-    if (type.toLowerCase().includes('number')) return '#';
-    if (type.toLowerCase().includes('text')) return 'T';
-    return '?';
   }
 }

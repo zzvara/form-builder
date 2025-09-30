@@ -8,7 +8,7 @@ import { Project } from '@interfaces/project';
 import { getSideBarData } from '@pages/edit/config/edit-data-config';
 import { EditList } from '@pages/edit/interfaces/edit-list';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
-import { instanceOfSectionList, SectionList } from '@pages/edit/interfaces/section-list';
+import { SectionList } from '@pages/edit/interfaces/section-list';
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
@@ -16,6 +16,7 @@ import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
+import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 
 @Component({
   selector: 'app-edit',
@@ -24,9 +25,6 @@ import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
   standalone: false,
 })
 export class EditComponent implements OnInit, OnChanges {
-  protected readonly instanceOfSectionList = instanceOfSectionList;
-  protected readonly instanceOfFormInputData = instanceOfFormInputData;
-
   @Input() inlineEdit!: InlineEdit;
   @Input() projectId?: string;
   @Input() versionNum?: number;
@@ -40,7 +38,8 @@ export class EditComponent implements OnInit, OnChanges {
   constructor(
     private projectService: ProjectService<Project>,
     private undoRedoService: UndoRedoService<EditList[]>,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private instanceOfSectionListPipe: InstanceOfSectionListPipe
   ) {}
 
   ngOnInit() {
@@ -54,7 +53,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionIds: () => string[] = () =>
-    this.editList.filter((edit) => instanceOfSectionList(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
+    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
 
   getAllFormInputs: () => FormInputData[] = () => {
     // If editList is empty but there's JSON data with editList, use that instead
@@ -66,7 +65,7 @@ export class EditComponent implements OnInit, OnChanges {
     }
 
     return this.editList.flatMap((edit) => {
-      if (instanceOfSectionList(edit.data)) {
+      if (this.instanceOfSectionListPipe.transform(edit.data)) {
         return edit.data.sectionInputs;
       }
       return edit.data;
@@ -227,7 +226,7 @@ export class EditComponent implements OnInit, OnChanges {
 
   getSectionInputStyle(sect: SectionList): { [p: string]: any } {
     let width: number;
-    if (sect.sectionInputs.some((edit) => instanceOfSectionList(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
+    if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
     } else {
       width = 100 / sect.sectionInputs.length - 1;

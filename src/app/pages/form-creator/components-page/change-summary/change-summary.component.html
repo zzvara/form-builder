@@ -9,7 +9,7 @@
         <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.ADDED_INPUTS' | translate }}</h4>
         <ul>
           <li *ngFor="let i of d.addedItems">
-            <span class="cs-custom-icon">{{ getIconType(i.data.type) }}</span>
+            <span class="cs-custom-icon">{{ i.data.type | iconType }}</span>
             {{ i.data.title }}
           </li>
           <li *ngIf="!d.addedItems?.length" class="cs-none">
@@ -23,7 +23,7 @@
         <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.REMOVED_INPUTS' | translate }}</h4>
         <ul>
           <li *ngFor="let i of d.removedItems">
-            <span class="cs-custom-icon">{{ getIconType(i.data.type) }}</span>
+            <span class="cs-custom-icon">{{ i.data.type | iconType }}</span>
             {{ i.data.title }}
           </li>
           <li *ngIf="!d.removedItems?.length" class="cs-none">

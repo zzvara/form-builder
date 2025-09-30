@@ -7,7 +7,3 @@ export interface SectionList {
   reorderEnabled: boolean;
   sectionInputs: FormInputData[];
 }
-
-export function instanceOfSectionList(object: any): object is SectionList {
-  return object && 'sectionId' in object && 'layout' in object && 'sectionInputs' in object;
-}

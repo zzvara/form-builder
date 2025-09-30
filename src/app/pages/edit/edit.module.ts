@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SectionComponent } from '@app/shared/components/section/section.component';
+import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
+import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { SharedModule } from '@app/shared/shared.module';
 import { TranslatePipe } from '@ngx-translate/core';
 import { EditComponent } from '@pages/edit/edit.component';
@@ -31,6 +33,8 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     TranslatePipe,
     NzSwitchModule,
     FormsModule,
+    InstanceOfSectionListPipe,
+    InstanceOfFormInputDataPipe,
   ],
   providers: [SectionComponent],
   exports: [NzIconModule, EditComponent],
