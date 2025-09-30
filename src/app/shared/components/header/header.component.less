@@ -13,23 +13,29 @@ nz-header {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  position: relative;
 
+  > div {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+
+    > span {
+      cursor: pointer;
+    }
+
+    &:not(:last-child) {
+      margin-right: @spacing16;
+    }
+  }
   > h1 {
     color: @white-text;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-  }
-
-  > div {
+    white-space: nowrap;
     font-size: @font-size-title;
-
-    > span {
-      cursor: pointer;
-    }
-  }
-
-  > div :not(:last-child) {
     margin-right: @spacing16;
   }
 }
@@ -40,4 +46,38 @@ nz-header {
 
 .hidden-input {
   display: none;
+}
+
+@media (max-width: 992px) {
+  nz-header {
+    padding: @spacing0 40px;
+  }
+
+  .header {
+    > h1 {
+      font-size: 20px;
+    }
+    > div {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  nz-header {
+    padding: @spacing0 20px;
+  }
+
+  .header {
+    justify-content: space-between;
+    > h1 {
+      font-size: 16px;
+    }
+    > div {
+      font-size: 16px;
+      > span {
+        margin: 0 4px;
+      }
+    }
+  }
 }
