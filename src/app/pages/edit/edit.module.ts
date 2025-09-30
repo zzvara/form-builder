@@ -36,7 +36,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     InstanceOfSectionListPipe,
     InstanceOfFormInputDataPipe,
   ],
-  providers: [SectionComponent],
+  providers: [SectionComponent, InstanceOfSectionListPipe, InstanceOfFormInputDataPipe],
   exports: [NzIconModule, EditComponent],
 })
 export class EditModule {}

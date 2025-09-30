@@ -10,7 +10,7 @@
         <ul>
           @for (item of diffItem.addedItems; track $index) {
             <li>
-              <span class="cs-custom-icon">{{ item.data.type | iconType }}</span>
+              <nz-icon class="cs-custom-icon" [nzType]="item.data.type | iconType" nzTheme="outline" />
               {{ item.data.title }}
             </li>
           }
@@ -26,7 +26,7 @@
         <ul>
           @for (item of diffItem.removedItems; track $index) {
             <li>
-              <span class="cs-custom-icon">{{ item.data.type | iconType }}</span>
+              <nz-icon class="cs-custom-icon" [nzType]="item.data.type | iconType" nzTheme="outline" />
               {{ item.data.title }}
             </li>
           }

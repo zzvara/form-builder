@@ -63,7 +63,7 @@ import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
     ChangeSummaryComponent,
     IconTypePipe,
   ],
-  providers: [],
+  providers: [IconTypePipe],
   exports: [],
 })
 export class FormCreatorModule {}
