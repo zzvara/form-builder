@@ -28,7 +28,18 @@
               [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
               (cdkDropListDropped)="dropIntoSection($event)"
               class="element-list p-3 section-card"
-              [nzBodyStyle]="getSectionStyle(edit.data)"
+              [nzBodyStyle]="
+                edit.data.layout === LayoutEnum.HORIZONTAL
+                  ? {
+                      display: 'flex',
+                      padding: '15px',
+                      'padding-bottom': '24px',
+                    }
+                  : {
+                      padding: '15px',
+                      'padding-bottom': '24px',
+                    }
+              "
             >
               <ng-template #sectionTitle>
                 <div class="section-title">

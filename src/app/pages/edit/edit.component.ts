@@ -12,7 +12,6 @@ import { SectionList } from '@pages/edit/interfaces/section-list';
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
-import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
@@ -34,6 +33,8 @@ export class EditComponent implements OnInit, OnChanges {
   sideBarData = getSideBarData(this, this.translate);
 
   editList: EditList[] = [];
+
+  LayoutEnum = LayoutEnum;
 
   constructor(
     private projectService: ProjectService<Project>,
@@ -233,20 +234,6 @@ export class EditComponent implements OnInit, OnChanges {
     }
     return {
       width: width.toString() + '%',
-    };
-  }
-
-  getSectionStyle(sect: SectionList): NgStyleInterface {
-    if (sect.layout === LayoutEnum.HORIZONTAL) {
-      return {
-        display: 'flex',
-        padding: '15px',
-        'padding-bottom': '24px',
-      };
-    }
-    return {
-      padding: '15px',
-      'padding-bottom': '24px',
     };
   }
 
