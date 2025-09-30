@@ -21,9 +21,9 @@
             formControlName="title"
             (change)="updateForm()"
             required
-            [ngClass]="{ 'input-error': form.get('title')?.invalid && (form.get('title')?.touched || saveFailed) }"
+            [ngClass]="{ 'input-error': form.controls['title'].invalid && (form.controls['title'].touched || saveFailed) }"
           />
-          @if (form.get('title')?.invalid && (form.get('title')?.touched || saveFailed)) {
+          @if (form.controls['title'].invalid && (form.controls['title'].touched || saveFailed)) {
             <div>
               <span class="error-message">{{ 'FORM.TITLE_REQUIRED' | translate }}</span>
             </div>
@@ -89,7 +89,7 @@
             class="icon-margin-small"
           ></i>
         </nz-form-label>
-        @if (form.get('hasdeadline')?.value) {
+        @if (form.controls['hasdeadline'].value) {
           <nz-date-picker id="deadline" formControlName="deadline" (change)="updateForm()"></nz-date-picker>
         }
       </nz-form-item>
@@ -106,8 +106,8 @@
             [nzTooltipTitle]="'FORM.TIME_LIMIT_TOOLTIP' | translate"
           ></i>
         </nz-form-label>
-        @if (form.get('haslimit')?.value) {
-          <nz-time-picker [nzFormat]="'HH:mm'" formControlName="limit" (change)="updateForm()"></nz-time-picker>
+        @if (form.controls['haslimit'].value) {
+          <nz-time-picker [nzFormat]="DateFormat.HOUR_MINUTE" formControlName="limit" (change)="updateForm()"></nz-time-picker>
         }
       </nz-form-item>
 

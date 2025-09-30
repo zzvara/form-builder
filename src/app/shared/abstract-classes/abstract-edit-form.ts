@@ -122,14 +122,14 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return this.getControlValue(control as string);
   }
   getControlValue<VType>(control: string): VType {
-    return this.formData?.get(control)?.getRawValue();
+    return this.formData.controls[control].getRawValue();
   }
 
   getStrictControl<VType>(control: InputDataKeys<D>): AbstractControl<VType> | null {
     return this.getControl(control as string);
   }
   getControl<VType>(control: string): AbstractControl<VType> | null {
-    return this.formData?.get(control);
+    return this.formData.controls[control];
   }
 
   //---------FORM STATE---------------------------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return errors.reduce((acc, curr) => acc || control.hasError(curr), false);
   }
   hasErrorsName(controlName: string, ...errors: string[]): boolean {
-    const control = this.formData.get(controlName);
+    const control = this.formData.controls[controlName];
     if (control) {
       return errors.reduce((acc, curr) => acc || control.hasError(curr), false);
     }
@@ -165,7 +165,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return control.errors?.[errorName];
   }
   getErrorName<ErrType>(controlName: string, errorName: string): ErrType | null {
-    const control = this.formData.get(controlName);
+    const control = this.formData.controls[controlName];
     if (control) {
       return control.errors?.[errorName];
     }

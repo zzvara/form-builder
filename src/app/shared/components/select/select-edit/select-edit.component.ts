@@ -17,7 +17,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   newOption!: FormControl<string | null>;
 
   get options(): FormArray {
-    return this.formData.get('selectOptions') as FormArray;
+    return this.formData.controls['selectOptions'] as FormArray;
   }
 
   get optionsValues(): string[] {
@@ -35,7 +35,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   }
 
   get isMultipleChoice(): boolean {
-    return this.formData.get('isMultipleChoice')?.getRawValue();
+    return this.formData.controls['isMultipleChoice'].getRawValue();
   }
 
   override ngOnInit(): void {
@@ -93,11 +93,11 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   //----------------------------------------------------------------------------------------------------------------------
 
   getDefaultValues(): string | string[] {
-    return this.formData.get('defaultValue')?.getRawValue();
+    return this.formData.controls['defaultValue'].getRawValue();
   }
 
   setDefaultValue(values: string | string[]): void {
-    this.formData.get('defaultValue')?.setValue(values);
+    this.formData.controls['defaultValue'].setValue(values);
   }
 
   // Add a new option

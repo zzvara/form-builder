@@ -24,7 +24,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
   }
 
   get options(): FormArray {
-    return this.formData.get('options') as FormArray;
+    return this.formData.controls['options'] as FormArray;
   }
   get optionObjects(): typeof this.initialValues.options {
     if (this.formData) {

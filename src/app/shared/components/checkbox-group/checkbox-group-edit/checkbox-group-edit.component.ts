@@ -23,7 +23,7 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
   }
 
   get options(): FormArray {
-    return this.formData.get('defaultValue') as FormArray;
+    return this.formData.controls['defaultValue'] as FormArray;
   }
 
   get optionIds(): number[] {
