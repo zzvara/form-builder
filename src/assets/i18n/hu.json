@@ -13,7 +13,8 @@
     "CHECKBOX_GROUP": {
       "CHECKED?": "Ellenőrizve?",
       "DISABLED?": "Letiltva?",
-      "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése"
+      "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése",
+      "TITLE": "Jelölőnégyzet-csoport"
     },
     "COMBOBOX": {
       "ADD_OPTION": "Új lehetőség hozzáadása",
@@ -25,7 +26,8 @@
       "NEW_OPTION": "Új opció",
       "OPTION_ALREADY": "Ez a lehetőség már szerepel a listában:",
       "RECORD_MORE_OPTION": "Adj meg még legalább ennyi lehetőséget: ",
-      "SELECT_DEFAULT_VALUE": "Válaszd ki az alapértelmezett értéket"
+      "SELECT_DEFAULT_VALUE": "Válaszd ki az alapértelmezett értéket",
+      "TITLE": "Legördülő lista"
     },
     "COMPONENT_DESCRIPTION": "Komponens leírása",
     "COMPONENT_QUESTION": "Írd be a kérdést",
@@ -45,6 +47,7 @@
       "MONTH": "Hónap",
       "SELECT_MAX_DATE": "Válaszd ki a maximális dátumot",
       "SELECT_MIN_DATE": "Válaszd ki a minimális dátumot",
+      "TITLE": "Dátumválasztó",
       "WEEK": "Hét",
       "WEEK_NUMBERS": "Hetek számozása",
       "WEEK_NUMBERS?": "Mutassuk a hét számát?",
@@ -91,7 +94,8 @@
       "MIN_NUMBER_REQUIRED": "Szükséges minimális érték?",
       "MUST_CONTAIN": "Tartalmaznia kell ezt a szimbólumot:",
       "PLACEHOLDER_INPUT_NUMBER_FORMATTER": "Szám formázása",
-      "SET_STEP_NUMBER": "Lépésköz beállítása"
+      "SET_STEP_NUMBER": "Lépésköz beállítása",
+      "TITLE": "Számmező"
     },
     "NUMBER_INPUT": {
       "MODEL_TITLE_NUMBER_INPUT": "Számmező beállításai"
@@ -99,7 +103,8 @@
     "OPTION": "Opció {{number}}",
     "PICTURE_INPUT": {
       "CLICK_TO_UPLOAD": "Kattints ide a képfeltöltéshez",
-      "MODEL_TITLE_PICTURE_INPUT": "Képfeltöltő beállításai"
+      "MODEL_TITLE_PICTURE_INPUT": "Képfeltöltő beállításai",
+      "TITLE": "Kép bemenet"
     },
     "PLACEHOLDER": "Helyőrző",
     "PLACEHOLDER_DESCRIPTION": "Leírás",
@@ -114,11 +119,13 @@
       "MODAL_RADIO_GROUP_TITLE": "Rádiócsoport beállításainak szerkesztése",
       "OPTION_ALREADY": "Az opció már a listában van",
       "OPTION_ATLEAST": "Kérjük, legalább ennyi lehetőséget rögzítsen",
-      "SHOW_AS_BUTTON": "Mutasd gombként?"
+      "SHOW_AS_BUTTON": "Mutasd gombként?",
+      "TITLE": "Egyszeri kiválasztó csoport"
     },
     "RANGE_PICKER": {
       "MODEL_TITLE_RANGE_PICKER": "Tartományválasztó beállításai",
-      "SET_PLACEHOLDER_VALUE_RANGE": "Helykitöltő érték megadása (használj '|' jelet elválasztásra)"
+      "SET_PLACEHOLDER_VALUE_RANGE": "Helykitöltő érték megadása (használj '|' jelet elválasztásra)",
+      "TITLE": "Tartományválasztó"
     },
     "REORDER": "Átrendezés engedélyezve",
     "REQUIRED_MESSAGE": "Mező nem lehet üres!",
@@ -139,9 +146,12 @@
       "MAX_VALUE_LIMIT": "Nem lehet kisebb a minimális értéknél",
       "MIN_LENGTH_NUMBER": "Minimális hossz:",
       "MIN_LENGTH_REQUIRED?": "Kötelező megadni a minimális hosszúságot?",
-      "MODEL_TITLE_TEXTAREA": "Szövegmező (többsoros) beállításai"
+      "MODEL_TITLE_TEXTAREA": "Szövegmező (többsoros) beállításai",
+      "TITLE": "Szövegmező (többsoros)"
     },
-    "TEXT_FIELD": "Egysoros szövegmező",
+    "TEXT_FIELD": {
+      "TITLE": "Egysoros szövegmező"
+    },
     "TIME_PICKER": {
       "12_HOUR_FORMAT": "12 órás formátum",
       "12_HOUR_FORMAT?": "12 órás formátum legyen?",
@@ -160,7 +170,8 @@
       "SET_HOUR_STEP": "Óralépés beállítása",
       "SET_MINUTE_STEP": "Perclépés beállítása",
       "SET_SECOND_STEP": "Másodperclépés beállítása",
-      "TIME_FORMAT": "Időformátum"
+      "TIME_FORMAT": "Időformátum",
+      "TITLE": "Időválasztó"
     },
     "TOOLTIP_TEXT": "Súgószöveg",
     "USED_COMPONENTS": "Használt komponensek",

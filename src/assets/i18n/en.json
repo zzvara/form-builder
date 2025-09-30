@@ -13,7 +13,8 @@
     "CHECKBOX_GROUP": {
       "CHECKED?": "Checked?",
       "DISABLED?": "Disabled?",
-      "MODAL_CHECKBOX_GROUP_TITLE": "Edit Checkbox Group Settings"
+      "MODAL_CHECKBOX_GROUP_TITLE": "Edit Checkbox Group Settings",
+      "TITLE": "Checkbox group"
     },
     "COMBOBOX": {
       "ADD_OPTION": "Add new option",
@@ -25,7 +26,8 @@
       "NEW_OPTION": "New option",
       "OPTION_ALREADY": "This option already exists in the list:",
       "RECORD_MORE_OPTION": "Please provide at least this many more options:",
-      "SELECT_DEFAULT_VALUE": "Select default value"
+      "SELECT_DEFAULT_VALUE": "Select default value",
+      "TITLE": "Dropdown List"
     },
     "COMPONENT_DESCRIPTION": "Component Description",
     "COMPONENT_QUESTION": "Enter the question",
@@ -45,6 +47,7 @@
       "MONTH": "Month",
       "SELECT_MAX_DATE": "Select maximum date",
       "SELECT_MIN_DATE": "Select minimum date",
+      "TITLE": "Date Picker",
       "WEEK": "Week",
       "WEEK_NUMBERS": "Week numbers",
       "WEEK_NUMBERS?": "Show week numbers?",
@@ -91,7 +94,8 @@
       "MIN_NUMBER_REQUIRED": "Is minimum value required?",
       "MUST_CONTAIN": "Must contain this symbol:",
       "PLACEHOLDER_INPUT_NUMBER_FORMATTER": "Format number",
-      "SET_STEP_NUMBER": "Set step value"
+      "SET_STEP_NUMBER": "Set step value",
+      "TITLE": "Number Field"
     },
     "NUMBER_INPUT": {
       "MODEL_TITLE_NUMBER_INPUT": "Number field settings"
@@ -99,7 +103,8 @@
     "OPTION": "Option {{number}}",
     "PICTURE_INPUT": {
       "CLICK_TO_UPLOAD": "Click here to upload an image",
-      "MODEL_TITLE_PICTURE_INPUT": "Image upload settings"
+      "MODEL_TITLE_PICTURE_INPUT": "Image upload settings",
+      "TITLE": "Image Upload"
     },
     "PLACEHOLDER": "Placeholder Text",
     "PLACEHOLDER_DESCRIPTION": "Field description",
@@ -114,11 +119,13 @@
       "MODAL_RADIO_GROUP_TITLE": "Edit Radio Group Settings",
       "OPTION_ALREADY": "Option already in the list",
       "OPTION_ATLEAST": "Please record at least this amount of option",
-      "SHOW_AS_BUTTON": "Show as button?"
+      "SHOW_AS_BUTTON": "Show as button?",
+      "TITLE": "Radio group"
     },
     "RANGE_PICKER": {
       "MODEL_TITLE_RANGE_PICKER": "Range picker settings",
-      "SET_PLACEHOLDER_VALUE_RANGE": "Set placeholder value (use '|' to separate)"
+      "SET_PLACEHOLDER_VALUE_RANGE": "Set placeholder value (use '|' to separate)",
+      "TITLE": "Range Picker"
     },
     "REORDER": "Reorder enabled",
     "REQUIRED_MESSAGE": "Field cannot be empty!",
@@ -139,9 +146,12 @@
       "MAX_VALUE_LIMIT": "Cannot be smaller than minimum value",
       "MIN_LENGTH_NUMBER": "Minimum length:",
       "MIN_LENGTH_REQUIRED?": "Is setting a minimum length required?",
-      "MODEL_TITLE_TEXTAREA": "Text area settings"
+      "MODEL_TITLE_TEXTAREA": "Text area settings",
+      "TITLE": "Text Area (multi-line)"
     },
-    "TEXT_FIELD": "Single-line Text Field",
+    "TEXT_FIELD": {
+      "TITLE": "Single-line Text Field"
+    },
     "TIME_PICKER": {
       "12_HOUR_FORMAT": "12-hour format",
       "12_HOUR_FORMAT?": "Use 12-hour format?",
@@ -160,7 +170,8 @@
       "SET_HOUR_STEP": "Set hour step",
       "SET_MINUTE_STEP": "Set minute step",
       "SET_SECOND_STEP": "Set second step",
-      "TIME_FORMAT": "Time format"
+      "TIME_FORMAT": "Time format",
+      "TITLE": "Time Picker"
     },
     "TOOLTIP_TEXT": "Tooltip Text",
     "USED_COMPONENTS": "Used Components",
