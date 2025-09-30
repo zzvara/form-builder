@@ -1,7 +1,7 @@
 <form id="selectEditFormID" nz-form [formGroup]="formData">
   <nz-form-item>
     <ng-template #listHeader>
-      <div class="list-header">Choices/Values</div>
+      <div class="list-header">{{ 'COMPONENTS.RADIO_GROUP.CHOICES_OR_VALUES' | translate }}</div>
     </ng-template>
     <nz-form-control formArrayName="options">
       <ul nz-list cdkDropList (cdkDropListDropped)="drop($event)" nzBordered [nzHeader]="listHeader">

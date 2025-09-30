@@ -96,6 +96,7 @@
     "NUMBER_INPUT": {
       "MODEL_TITLE_NUMBER_INPUT": "Number field settings"
     },
+    "OPTION": "Option {{number}}",
     "PICTURE_INPUT": {
       "CLICK_TO_UPLOAD": "Click here to upload an image",
       "MODEL_TITLE_PICTURE_INPUT": "Image upload settings"
@@ -123,6 +124,8 @@
     "REQUIRED_MESSAGE": "Field cannot be empty!",
     "SECTION": "Section",
     "SECTIONS": "Sections",
+    "SECTION_ID": "Section ID",
+    "SELECTED_RAGE": "Selected rage",
     "SELECT_DATE": "Select a date",
     "SELECT_VERSION": "Select the version",
     "SET_DEFAULT_VALUE": "Set default value",
@@ -177,6 +180,14 @@
     "TESTS": "Tests",
     "UPLOAD_JSON": "Upload JSON"
   },
+  "EDIT": {
+    "LAYOUT": "Layout",
+    "LAYOUT_TYPE": {
+      "HORIZONTAL": "Horizontal",
+      "VERTICAL": "Vertical"
+    },
+    "SECTION": "Section"
+  },
   "FORM": {
     "DEADLINE_TOOLTIP": "Set the submission deadline. After this, the form is closed.",
     "FORM_DESCRIPTION": "Description",
@@ -213,6 +224,10 @@
     "TIME_LIMIT": "Time limit for filling out the form",
     "TITLE": "Title"
   },
+  "LANGUAGE": {
+    "EN": "English",
+    "HU": "Hungarian"
+  },
   "PROJECT": {
     "DEADLINE_CHECKBOX": "Enable Deadline",
     "DOWNLOAD_PROJECT": "Download Project",
@@ -226,6 +241,10 @@
     "TIME_CHECKBOX": "Enable Time Limit",
     "TYPE": "Type",
     "VERSION": "Version"
+  },
+  "RESULTS": {
+    "DESCRIPTION": "Description",
+    "QUESTION": "Question"
   },
   "STEPS": {
     "ANSWER": "Answer",

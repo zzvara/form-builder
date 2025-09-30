@@ -6,6 +6,7 @@ import { ColumnItem } from '@pages/dashboard/dashboard.model';
 import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-results-page',
@@ -22,17 +23,17 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
   latestVersionNum?: number;
-  sectionInputs: any[] = [];
+  sectionInputs: any[] = []; // @Todo: change any
 
   columnsConfig: ColumnItem[] = [
     {
-      title: 'Question',
+      title: this.translate.instant('RESULTS.QUESTION'),
       sortOrder: null,
       sortFn: (a: Questionnaire, b: Questionnaire) => a.title.localeCompare(b.title),
       sortDirections: ['ascend', 'descend', null],
     },
     {
-      title: 'Description',
+      title: this.translate.instant('RESULTS.DESCRIPTION'),
       sortOrder: null,
       sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
       sortDirections: ['ascend', 'descend', null],
@@ -44,7 +45,8 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly projectService: ProjectService<Project>,
     private readonly jsonService: JsonService,
-    private readonly statisticsService: StatisticsService
+    private readonly statisticsService: StatisticsService,
+    private readonly translate: TranslateService
   ) {}
 
   ngOnInit(): void {

@@ -50,7 +50,7 @@
     <div>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}:</div>
     <ng-container *ngComponentOutlet="componentType; inputs: componentInputs" />
   </form>
-  <span class="id-text">[ID: {{ inputData.id }} | section ID: {{ inputData.sectionId }}]</span>
+  <span class="id-text">[ID: {{ inputData.id }} | {{ 'COMPONENTS.SECTION_ID' | translate }}: {{ inputData.sectionId }}]</span>
 </nz-card>
 <ng-template #titleTemplate>
   <span>{{ formInput.title | translate }}</span>

@@ -36,6 +36,6 @@
 </ng-template>
 <ng-template #suffixTemplate>
   @if (data.inlineMode) {
-    <div class="selected-date">Selected date: {{ data.defaultValue | date: getFullFormat }}</div>
+    <div class="selected-date">{{ 'COMPONENTS.SELECTED_RAGE' | translate }}: {{ data.defaultValue | date: getFullFormat }}</div>
   }
 </ng-template>

@@ -32,8 +32,11 @@
             >
               <ng-template #sectionTitle>
                 <div class="section-title">
-                  Section
-                  <span class="section-id"> [ID: {{ edit.data.sectionId }} | Layout: {{ edit.data.layout }}]</span>
+                  {{ 'EDIT.SECTION' | translate }}
+                  <span class="section-id"
+                    >[ID: {{ edit.data.sectionId }} | {{ 'EDIT.LAYOUT' | translate }}:
+                    {{ 'EDIT.LAYOUT_TYPE.' + (edit.data.layout | uppercase) | translate }}]</span
+                  >
                 </div>
               </ng-template>
               <ng-template #sectionButtons>
@@ -107,7 +110,7 @@
           <div class="component-item section-item" cdkDrag [cdkDragData]="edit">
             <div class="section-header">
               <span nz-icon nzType="layout" nzTheme="outline"></span>
-              <span class="component-title">SECTION</span>
+              <span class="component-title">{{ 'EDIT.SECTION' | translate | uppercase }}</span>
               <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
                 <span nz-icon nzType="aim" nzTheme="outline"></span>
               </span>

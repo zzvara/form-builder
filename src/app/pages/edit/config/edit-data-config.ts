@@ -95,7 +95,7 @@ const textAreaInputOptions = (translateService: TranslateService): TextareaCompo
 const pictureInputOptions: PictureInputComponentData = {};
 
 const selectInputOptions = (translateService: TranslateService): SelectComponentData => ({
-  selectOptions: ['Option 1', 'Option 2'],
+  selectOptions: Array.from({ length: 2 }).map((_, index: number) => translateService.instant('COMPONENTS.OPTION', { number: index + 1 })),
   required: false,
   requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   showTooltip: false,
@@ -105,20 +105,18 @@ const radioGroupInputOptions = (translateService: TranslateService): RadioGroupD
   required: false,
   requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
   isButton: false,
-  options: [
-    { option_id: 1, option_description: 'Option 1' },
-    { option_id: 2, option_description: 'Option 2' },
-    { option_id: 3, option_description: 'Option 3' },
-  ],
+  options: Array.from({ length: 3 }).map((_, index: number) => ({
+    option_description: translateService.instant('COMPONENTS.OPTION', { number: index + 1 }),
+    option_id: index + 1,
+  })),
 });
 const checkboxGroupInputOptions = (translateService: TranslateService): CheckboxGroupData => ({
   required: false,
   requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
-  defaultValue: [
-    { label: 'Option 1', value: 1 },
-    { label: 'Option 2', value: 2 },
-    { label: 'Option 3', value: 3 },
-  ],
+  defaultValue: Array.from({ length: 3 }).map((_, index: number) => ({
+    label: translateService.instant('COMPONENTS.OPTION', { number: index + 1 }),
+    value: index + 1,
+  })),
 });
 
 //Used for resetting inputs

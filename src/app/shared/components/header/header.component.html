@@ -30,7 +30,7 @@
     <div>
       <div>
         <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="languageMenu" nz-dropdown>
-          {{ currentLanguage === 'en' ? 'English' : 'Magyar' }}
+          {{ 'LANGUAGE.' + (currentLanguage | uppercase) | translate }}
         </button>
       </div>
       <nz-dropdown-menu #languageMenu="nzDropdownMenu">

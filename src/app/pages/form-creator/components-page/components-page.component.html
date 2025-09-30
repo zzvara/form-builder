@@ -49,11 +49,11 @@
                 (click)="revertToVersion(version.versionNum)"
               >
                 <span> {{ 'PROJECT.VERSION' | translate }} {{ version.versionNum }} </span>
-                <!-- @Todo: tooltip translate -->
                 <span
                   nz-popover
                   nzPopoverTrigger="hover"
-                  nz-tooltip="{{ 'GENERAL.CREATED' | translate }}: {{ version.created | date: DateFormat.SHORT }}"
+                  nz-tooltip
+                  [nzTooltipTitle]="('GENERAL.CREATED' | translate) + ': ' + (version.created | date: DateFormat.SHORT)"
                   class="version-icon-wrapper"
                 >
                   <i nz-icon nzType="field-time"></i>

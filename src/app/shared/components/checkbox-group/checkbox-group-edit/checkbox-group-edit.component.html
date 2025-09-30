@@ -48,7 +48,7 @@
           <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
         }
         @if (hasErrors(control, 'listContainsItem')) {
-          <div>{{ 'COMPONENTS.RADIO_GROUP.OPTION_ALREADY' | translate }}:: {{ control.errors['listContainsItem'] }}</div>
+          <div>{{ 'COMPONENTS.RADIO_GROUP.OPTION_ALREADY' | translate }}: {{ control.errors['listContainsItem'] }}</div>
         }
       </ng-template>
     </nz-form-control>

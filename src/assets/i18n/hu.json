@@ -96,6 +96,7 @@
     "NUMBER_INPUT": {
       "MODEL_TITLE_NUMBER_INPUT": "Számmező beállításai"
     },
+    "OPTION": "Opció {{number}}",
     "PICTURE_INPUT": {
       "CLICK_TO_UPLOAD": "Kattints ide a képfeltöltéshez",
       "MODEL_TITLE_PICTURE_INPUT": "Képfeltöltő beállításai"
@@ -123,6 +124,8 @@
     "REQUIRED_MESSAGE": "Mező nem lehet üres!",
     "SECTION": "Szekció",
     "SECTIONS": "Szekciók",
+    "SECTION_ID": "Szekció ID",
+    "SELECTED_RAGE": "Kiválasztott intervallum",
     "SELECT_DATE": "Válassz dátumot",
     "SELECT_VERSION": "Válaszd ki a verziót",
     "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",
@@ -177,6 +180,14 @@
     "TESTS": "Teszt",
     "UPLOAD_JSON": "JSON feltöltése"
   },
+  "EDIT": {
+    "LAYOUT": "Elrendezés",
+    "LAYOUT_TYPE": {
+      "HORIZONTAL": "Vízszintes",
+      "VERTICAL": "Függőleges"
+    },
+    "SECTION": "Szakasz"
+  },
   "FORM": {
     "DEADLINE_TOOLTIP": "Ez határozza meg, hogy meddig nyújtható be az űrlap. Ez egy fix dátum és idő, amely után az űrlap már nem érhető el vagy nyújtható be.",
     "FORM_DESCRIPTION": "Leírás",
@@ -213,6 +224,10 @@
     "TIME_LIMIT": "Időkorlát az űrlap kitöltéséhez",
     "TITLE": "Cím"
   },
+  "LANGUAGE": {
+    "EN": "Angol",
+    "HU": "Magyar"
+  },
   "PROJECT": {
     "DEADLINE_CHECKBOX": "Határidő jelölőnégyzet",
     "DOWNLOAD_PROJECT": "Projekt letöltése",
@@ -226,6 +241,10 @@
     "TIME_CHECKBOX": "Idő jelölőnégyzet",
     "TYPE": "Típus",
     "VERSION": "Verzió"
+  },
+  "RESULTS": {
+    "DESCRIPTION": "Leírás",
+    "QUESTION": "Kérdés"
   },
   "STEPS": {
     "ANSWER": "Válasz",
