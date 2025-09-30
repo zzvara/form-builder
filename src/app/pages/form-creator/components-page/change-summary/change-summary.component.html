@@ -1,18 +1,20 @@
 <div class="cs-body">
-  <ng-container *ngFor="let d of diffItems">
+  @for (diffItem of diffItems; track $index) {
     <!-- Section header -->
-    <h3 class="cs-section-title">{{ d.key }}</h3>
+    <h3 class="cs-section-title">{{ diffItem.key }}</h3>
 
     <div class="cs-details">
       <!-- Added Inputs: always shown -->
       <div class="cs-subsection">
         <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.ADDED_INPUTS' | translate }}</h4>
         <ul>
-          <li *ngFor="let i of d.addedItems">
-            <span class="cs-custom-icon">{{ i.data.type | iconType }}</span>
-            {{ i.data.title }}
-          </li>
-          <li *ngIf="!d.addedItems?.length" class="cs-none">
+          @for (item of diffItem.addedItems; track $index) {
+            <li>
+              <span class="cs-custom-icon">{{ item.data.type | iconType }}</span>
+              {{ item.data.title }}
+            </li>
+          }
+          <li *ngIf="!diffItem.addedItems?.length" class="cs-none">
             {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
           </li>
         </ul>
@@ -22,15 +24,17 @@
       <div class="cs-subsection">
         <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.REMOVED_INPUTS' | translate }}</h4>
         <ul>
-          <li *ngFor="let i of d.removedItems">
-            <span class="cs-custom-icon">{{ i.data.type | iconType }}</span>
-            {{ i.data.title }}
-          </li>
-          <li *ngIf="!d.removedItems?.length" class="cs-none">
+          @for (item of diffItem.removedItems; track $index) {
+            <li>
+              <span class="cs-custom-icon">{{ item.data.type | iconType }}</span>
+              {{ item.data.title }}
+            </li>
+          }
+          <li *ngIf="!diffItem.removedItems?.length" class="cs-none">
             {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
           </li>
         </ul>
       </div>
     </div>
-  </ng-container>
+  }
 </div>

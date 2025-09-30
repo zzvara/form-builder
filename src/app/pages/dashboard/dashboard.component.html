@@ -1,75 +1,55 @@
 <nz-content>
   <div class="toolbar">
-    @if (!isListView) {
-      <div (click)="toggleView()">
-        <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
-        <span>{{ 'DASHBOARD.LIST_VIEW' | translate }}</span>
-        <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'DASHBOARD.LIST_VIEW_TOOLTIP' | translate"></i>
-      </div>
-    } @else {
-      <div (click)="toggleView()">
-        <span nz-icon nzType="appstore" nzTheme="outline"></span>
-        <span>{{ 'DASHBOARD.CARD_VIEW' | translate }}</span>
-        <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'DASHBOARD.CARD_VIEW_TOOLTIP' | translate"></i>
-      </div>
-    }
+    <div (click)="toggleView()">
+      <span nz-icon nzTheme="outline" [nzType]="isListView ? 'appstore' : 'unordered-list'"></span>
+      <span>{{ 'DASHBOARD.' + (isListView ? 'CARD_VIEW' : 'LIST_VIEW') | translate }}</span>
+      <i
+        nz-icon
+        nzType="question-circle"
+        nz-tooltip
+        [nzTooltipTitle]="'DASHBOARD.' + (isListView ? 'CARD_VIEW_TOOLTIP' : 'LIST_VIEW_TOOLTIP') | translate"
+      ></i>
+    </div>
   </div>
 
-  @if (isListView) {
-    <div class="view">
-      <div>
-        <h3>{{ 'DASHBOARD.QUESTIONNAIRES' | translate }}</h3>
+  <div class="view">
+    <div>
+      <h3>{{ 'DASHBOARD.QUESTIONNAIRES' | translate }}</h3>
+
+      @if (isListView) {
         <button (click)="createProject(projectTypes.QUESTIONNAIRE)" nz-button>
           <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'DASHBOARD.NEW_QUESTIONNAIRE' | translate }}
         </button>
-      </div>
+      }
+    </div>
 
-      <app-list-view
-        (deleteProject)="deleteProject($event)"
-        (editProject)="editProject($event)"
-        [projects]="projects$"
-        [type]="projectTypes.QUESTIONNAIRE"
-      ></app-list-view>
+    <ng-container [ngTemplateOutlet]="viewTemp" [ngTemplateOutletContext]="{ type: projectTypes.QUESTIONNAIRE }"></ng-container>
 
-      <div>
-        <h3>{{ 'DASHBOARD.TESTS' | translate }}</h3>
+    <div>
+      <h3>{{ 'DASHBOARD.TESTS' | translate }}</h3>
+
+      @if (isListView) {
         <button (click)="createProject(projectTypes.TEST)" nz-button>
           <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'DASHBOARD.NEW_TEST' | translate }}
         </button>
-      </div>
-
-      <app-list-view
-        (deleteProject)="deleteProject($event)"
-        (editProject)="editProject($event)"
-        [projects]="projects$"
-        [type]="projectTypes.TEST"
-      ></app-list-view>
+      }
     </div>
-  } @else {
-    <div class="view">
-      <div>
-        <h3>{{ 'DASHBOARD.QUESTIONNAIRES' | translate }}</h3>
-      </div>
 
+    <ng-container [ngTemplateOutlet]="viewTemp" [ngTemplateOutletContext]="{ type: projectTypes.TEST }"></ng-container>
+  </div>
+
+  <ng-template #viewTemp let-type="type">
+    @if (isListView) {
+      <app-list-view [type]="type" [projects]="projects$" (editProject)="editProject($event)" (deleteProject)="deleteProject($event)">
+      </app-list-view>
+    } @else {
       <app-card-view
+        [type]="type"
         [projects]="projects$"
-        [type]="projectTypes.QUESTIONNAIRE"
         (createProject)="createProject($event)"
-        (deleteProject)="deleteProject($event)"
         (editProject)="editProject($event)"
-      ></app-card-view>
-
-      <div>
-        <h3>{{ 'DASHBOARD.TESTS' | translate }}</h3>
-      </div>
-
-      <app-card-view
-        [projects]="projects$"
-        [type]="projectTypes.TEST"
-        (createProject)="createProject($event)"
         (deleteProject)="deleteProject($event)"
-        (editProject)="editProject($event)"
       ></app-card-view>
-    </div>
-  }
+    }
+  </ng-template>
 </nz-content>
