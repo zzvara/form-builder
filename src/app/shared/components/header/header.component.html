@@ -35,10 +35,10 @@
       </div>
       <nz-dropdown-menu #languageMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item (click)="setLanguage('en')" [class.selected]="currentLanguage === 'en'">
+          <li nz-menu-item (click)="setLanguage(LanguageEnum.EN)" [class.selected]="currentLanguage === LanguageEnum.EN">
             <span class="fi fi-gb"></span> {{ 'GENERAL.ENGLISH' | translate }}
           </li>
-          <li nz-menu-item (click)="setLanguage('hu')" [class.selected]="currentLanguage === 'hu'">
+          <li nz-menu-item (click)="setLanguage(LanguageEnum.HU)" [class.selected]="currentLanguage === LanguageEnum.HU">
             <span class="fi fi-hu"></span> {{ 'GENERAL.HUNGARY' | translate }}
           </li>
         </ul>

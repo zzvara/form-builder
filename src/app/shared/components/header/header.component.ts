@@ -8,6 +8,7 @@ import { JsonService } from '@services/json.service';
 import { Subscription } from 'rxjs';
 import { RoutePath } from '@app/shared/models/route-path.model';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
+import { LanguageEnum } from '@app/shared/interfaces/language.enum';
 
 @Component({
   selector: 'app-header',
@@ -20,9 +21,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   activeOptions: MenuOption[] = [];
   contextActions: ContextAction[] = [];
   options = MenuOption;
-  currentLanguage: string = 'en';
+  currentLanguage: LanguageEnum = LanguageEnum.EN;
   private optionsSub?: Subscription;
   private actionsSub?: Subscription;
+
+  LanguageEnum = LanguageEnum;
 
   constructor(
     private readonly router: Router,
@@ -32,7 +35,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.currentLanguage = localStorage.getItem(LocalStorageKey.LANGUAGE) || 'en';
+    this.currentLanguage =
+      localStorage.getItem(LocalStorageKey.LANGUAGE) && localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
+        ? LanguageEnum.HU
+        : LanguageEnum.EN;
     this.translate.use(this.currentLanguage);
     this.jsonService.clearJsonData();
     this.optionsSub = this.headerService
@@ -92,7 +98,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.jsonService.destroy();
   }
 
-  setLanguage(lang: string): void {
+  setLanguage(lang: LanguageEnum): void {
     this.currentLanguage = lang;
     this.translate.use(lang);
     localStorage.setItem(LocalStorageKey.LANGUAGE, lang);

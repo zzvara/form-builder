@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { Project, ProjectType } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -45,6 +46,8 @@ export class InfoPageComponent implements OnInit {
     limit: new FormControl(0),
   });
   params: any = {};
+
+  DateFormat = DateFormat;
 
   constructor(
     private readonly modal: NzModalService,
