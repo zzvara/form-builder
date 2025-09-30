@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ProjectType } from '@interfaces/project';
-import { ColumnItem } from '@pages/dashboard/dashboard.model';
+import { ColumnItem } from '@app/shared/interfaces/column-item.model';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 
 @Component({

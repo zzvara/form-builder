@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
-import { ColumnItem } from '@pages/dashboard/dashboard.model';
+import { ColumnItem } from '@app/shared/interfaces/column-item.model';
 import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
