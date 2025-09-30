@@ -45,21 +45,16 @@ export class InfoPageComponent implements OnInit {
     haslimit: new FormControl(false),
     limit: new FormControl(0),
   });
-  params: any = {};
+  params: any = {}; // @Todo: change any
 
   DateFormat = DateFormat;
 
   constructor(
-    private readonly modal: NzModalService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly projectService: ProjectService<Project>,
     private readonly jsonService: JsonService
   ) {}
-
-  /*ngOnChanges(changes: SimpleChanges): void {
-
-  }*/
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
