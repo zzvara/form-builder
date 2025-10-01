@@ -14,10 +14,10 @@
               {{ project.type }}
             </nz-descriptions-item>
             <nz-descriptions-item *ngIf="project.time_checkbox" [nzTitle]="'PROJECT.TIME_CHECKBOX' | translate">
-              {{ project.time_checkbox }}
+              {{ 'RESULTS.BOOLEAN.' + (project.time_checkbox ? 'TRUE' : 'FALSE') | translate }}
             </nz-descriptions-item>
             <nz-descriptions-item *ngIf="project.deadline_checkbox" [nzTitle]="'PROJECT.DEADLINE_CHECKBOX' | translate">
-              {{ project.deadline_checkbox }}
+              {{ 'RESULTS.BOOLEAN.' + (project.deadline_checkbox ? 'TRUE' : 'FALSE') | translate }}
             </nz-descriptions-item>
             <nz-descriptions-item *ngIf="project.time_limit" [nzTitle]="'GENERAL.TIME_LIMIT' | translate">
               {{ project.time_limit | date: DateFormat.TIME }}

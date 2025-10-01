@@ -254,6 +254,10 @@
     "VERSION": "Verzió"
   },
   "RESULTS": {
+    "BOOLEAN": {
+      "FALSE": "Nem",
+      "TRUE": "Igen"
+    },
     "DESCRIPTION": "Leírás",
     "QUESTION": "Kérdés"
   },

@@ -254,6 +254,10 @@
     "VERSION": "Version"
   },
   "RESULTS": {
+    "BOOLEAN": {
+      "FALSE": "False",
+      "TRUE": "True"
+    },
     "DESCRIPTION": "Description",
     "QUESTION": "Question"
   },
