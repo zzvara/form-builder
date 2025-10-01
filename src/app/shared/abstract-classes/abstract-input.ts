@@ -36,7 +36,7 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
     this.edited.emit(modifiedData);
   }
 
-  onChange($event: any) {
+  onChange($event: Event) {
     if (this.previousValue !== this.data.defaultValue) {
       this.onEdit(this.data);
       this.previousValue = this.data.defaultValue;

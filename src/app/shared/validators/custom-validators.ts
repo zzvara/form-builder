@@ -2,6 +2,19 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { compareTimeFull, defaultDateComparers } from '@helpers/date-helper';
 import { NzDateMode } from 'ng-zorro-antd/date-picker';
 
+type CustomValidationErrors =
+  | { fieldIsEmpty: true }
+  | { listContainsItem: string }
+  | { minlength: number }
+  | { maxlength: number }
+  | { required: true }
+  | { minError: true }
+  | { minMaxError: number | Date }
+  | { maxError: true }
+  | { maxMinError: number | Date }
+  | { containsError: string };
+
+
 export class CustomValidators {
   static validateStringNotEmpty(control: AbstractControl) {
     const value = control.value as string;
@@ -227,23 +240,21 @@ export class CustomValidators {
     };
   }
 
-  static executeValidationsConditionally(validationConditions: { condition: () => boolean; validation: ValidatorFn }[]) {
+  static executeValidationsConditionally(
+    validationConditions: { condition: () => boolean; validation: ValidatorFn }[]
+  ): ValidatorFn {
     return (control: AbstractControl) => {
-      const errors: { [key: string]: any } = {};
+      const errors: Partial<CustomValidationErrors> = {};
       validationConditions.forEach((vc) => {
         if (vc.condition()) {
           const error = vc.validation(control);
           if (error) {
-            Object.keys(error).forEach((key) => {
-              errors[key] = error[key];
-            });
+            Object.assign(errors, error as CustomValidationErrors);
           }
         }
       });
-      if (Object.keys(errors).length > 0) {
-        return errors;
-      }
-      return null;
+      return Object.keys(errors).length ? (errors as CustomValidationErrors) : null;
     };
   }
+
 }
