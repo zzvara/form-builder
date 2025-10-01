@@ -26,10 +26,10 @@
               {{ project.deadline | date: DateFormat.DATE }}
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'GENERAL.CREATED' | translate">
-              {{ project.created }}
+              {{ project.created | date: DateFormat.DATE }}
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'GENERAL.MODIFIED' | translate">
-              {{ project.modified }}
+              {{ project.modified | date: DateFormat.DATE }}
             </nz-descriptions-item>
           </nz-descriptions>
         }
