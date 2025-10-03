@@ -122,14 +122,14 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return this.getControlValue(control as string);
   }
   getControlValue<VType>(control: string): VType {
-    return this.formData.controls[control].getRawValue();
+    return this.formData?.get(control)?.getRawValue();
   }
 
   getStrictControl<VType>(control: InputDataKeys<D>): AbstractControl<VType> | null {
     return this.getControl(control as string);
   }
   getControl<VType>(control: string): AbstractControl<VType> | null {
-    return this.formData.controls[control];
+    return this.formData?.get(control);
   }
 
   //---------FORM STATE---------------------------------------------------------------------------------------------------
