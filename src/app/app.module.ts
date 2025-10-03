@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { HttpBackend, HttpClientModule } from '@angular/common/http';
+import { HttpBackend, HttpClient, provideHttpClient } from '@angular/common/http';
 import en from '@angular/common/locales/en';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,7 +43,6 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     DashboardModule,
     EditModule,
     SharedModule,
@@ -63,6 +62,7 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
+    provideHttpClient(),
   ],
 })
 export class AppModule {}
