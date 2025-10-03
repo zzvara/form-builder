@@ -1,0 +1,75 @@
+{
+    "FORM": {
+    "DEADLINE_TOOLTIP": "Set the submission deadline. After this, the form is closed.",
+    "FORM_DESCRIPTION": "Description",
+    "FORM_DESCRIPTION_TOOLTIP": "Enter a brief description",
+    "FORM_TITLE": "Title",
+    "FORM_TITLE_TOOLTIP": "Enter form title",
+    "LAST_MODIFIED": "Last Updated",
+    "OPTIONAL": "(optional)",
+    "PLACEHOLDER_DESCRIPTION": "We value your feedback. Your responses are confidential.",
+    "PLACEHOLDER_TITLE": "Feedback Form",
+    "QUESTIONNAIRE": "Questionnaire version",
+    "SEARCH": "Search",
+    "SWITCH_TOOLTIP": "Toggle between Test and Questionnaire",
+    "TEST": "Test version",
+    "TIME_LIMIT_TOOLTIP": "Set a time limit (hour:minutes) for completing the form.",
+    "TITLE_REQUIRED": "Title is required",
+    "VERSION": "Version:"
+  },
+  "GENERAL": {
+    "CANCEL": "Cancel",
+    "CREATED": "Created",
+    "DEADLINE": "Submission deadline",
+    "DELETE_CONFIRMATION": "Delete this project?",
+    "DESCRIPTION": "Description",
+    "DOWNLOAD_CONFIRMATION": "Download this project?",
+    "ENGLISH": "English",
+    "FORM_BUILDER": "Form Builder",
+    "HUNGARY": "Hungarian",
+    "MODIFIED": "Last Modified",
+    "NEXT": "Next",
+    "OK": "OK",
+    "RESET": "Reset",
+    "SAVE": "Save",
+    "TIME_LIMIT": "Time limit for filling out the form",
+    "TITLE": "Title"
+  },
+  "LANGUAGE": {
+    "EN": "English",
+    "HU": "Hungarian"
+  },
+  "PROJECT": {
+    "DEADLINE_CHECKBOX": "Enable Deadline",
+    "DOWNLOAD_PROJECT": "Download Project",
+    "DOWNLOAD_PROJECT_WITH_HISTORY": "Download with History",
+    "PROJECT_HISTORY_JSON": "Project History",
+    "PROJECT_INFORMATION": "Project Info",
+    "PROJECT_JSON": "Project JSON",
+    "SAVE": "Save Project",
+    "SECTION_INPUTS": "Inputs by Section",
+    "SECTION_INPUTS_STATISTICS": "Input Statistics",
+    "TIME_CHECKBOX": "Enable Time Limit",
+    "TYPE": "Type",
+    "VERSION": "Version"
+  },
+  "RESULTS": {
+    "BOOLEAN": {
+      "FALSE": "False",
+      "TRUE": "True"
+    },
+    "DESCRIPTION": "Description",
+    "QUESTION": "Question"
+  },
+  "STEPS": {
+    "ANSWER": "Answer",
+    "COMPONENTS": "Components",
+    "FORM_INFO": "Form Info",
+    "RESULTS": "Results"
+  },
+  "TITLE": {
+    "DASHBOARD": "Dashboard",
+    "EDIT_FORM": "Edit Form",
+    "NEW_FORM": "New Form"
+  }
+}

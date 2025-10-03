@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpBackend, HttpClientModule } from '@angular/common/http';
 import en from '@angular/common/locales/en';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { AppstoreOutline, HomeOutline, PlusOutline, SettingOutline } from '@ant-design/icons-angular/icons';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { DashboardModule } from '@pages/dashboard/dashboard.module';
 import { EditModule } from '@pages/edit/edit.module';
 import { FormCreatorModule } from '@pages/form-creator/form-creator.module';
@@ -27,8 +27,11 @@ const icons: IconDefinition[] = [HomeOutline, SettingOutline, AppstoreOutline, P
 
 registerLocaleData(en);
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
+export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
+  return new MultiTranslateHttpLoader(handler, [
+    { prefix: './assets/i18n/', suffix: '/general.json' },
+    { prefix: './assets/i18n/', suffix: '/test.json' },
+  ]);
 }
 
 @NgModule({
@@ -40,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     DashboardModule,
     EditModule,
     SharedModule,
@@ -51,11 +55,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
+        deps: [HttpBackend],
       },
     }),
     NzCheckboxModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, provideHttpClient(withInterceptorsFromDi()), { provide: NZ_ICONS, useValue: icons }],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: NZ_ICONS, useValue: icons },
+  ],
 })
 export class AppModule {}
