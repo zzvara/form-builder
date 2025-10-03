@@ -6,8 +6,8 @@
           <nz-card-meta [nzTitle]="project.title" [nzDescription]="project.description"></nz-card-meta>
         </div>
         <div class="card-footer">
-          <p>{{ 'GENERAL.CREATED' | translate }}: {{ project.created }}</p>
-          <p>{{ 'GENERAL.MODIFIED' | translate }}: {{ project.modified }}</p>
+          <p>{{ 'GENERAL.CREATED' | translate }}: {{ project.created | date: DateFormat.DATE }}</p>
+          <p>{{ 'GENERAL.MODIFIED' | translate }}: {{ project.modified | date: DateFormat.DATE }}</p>
         </div>
         <ng-template #actionEdit>
           <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>

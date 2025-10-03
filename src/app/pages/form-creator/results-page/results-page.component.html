@@ -11,7 +11,7 @@
               {{ project.description }}
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
-              {{ project.type }}
+              {{ 'FORM.' + (project.type | uppercase) | translate }}
             </nz-descriptions-item>
             <nz-descriptions-item *ngIf="project.time_checkbox" [nzTitle]="'PROJECT.TIME_CHECKBOX' | translate">
               {{ 'RESULTS.BOOLEAN.' + (project.time_checkbox ? 'TRUE' : 'FALSE') | translate }}
