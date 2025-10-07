@@ -1,3 +1,4 @@
+<nz-form-item>
 <nz-radio-group [(ngModel)]="data.defaultValue" [disabled]="!inlineEdit.enabled">
   @if (data.isButton) {
     @for (item of data.options; track item) {
@@ -9,3 +10,4 @@
     }
   }
 </nz-radio-group>
+</nz-form-item>
