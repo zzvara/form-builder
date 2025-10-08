@@ -29,7 +29,6 @@ registerLocaleData(en);
 
 export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
   return new MultiTranslateHttpLoader(handler, [
-    { prefix: './assets/i18n/', suffix: '/general.json' },
     { prefix: './assets/i18n/', suffix: '/dashboard.json' },
     { prefix: './assets/i18n/', suffix: '/form-creator.json' },
     { prefix: './assets/i18n/', suffix: '/edit.json' },
