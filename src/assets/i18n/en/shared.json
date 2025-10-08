@@ -1,0 +1,23 @@
+{
+"STEPS": {
+    "COMPONENTS": "Components",
+    "FORM_INFO": "Form Info",
+    "RESULTS": "Results"
+  },
+  "GENERAL":
+  {
+    "NEXT": "Next",
+    "CANCEL": "Cancel",
+    "OK": "OK",
+    "DELETE_CONFIRMATION": "Delete this project?"
+  },
+  "PROJECT": {
+    "VERSION": "Version"
+  },
+  "FORM": {
+    "FORM_TITLE": "Title",
+    "FORM_DESCRIPTION": "Description",
+    "CREATED": "Created",
+    "LAST_MODIFIED": "Last modified"
+  }
+}

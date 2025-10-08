@@ -1,0 +1,22 @@
+{
+  "DASHBOARD": {
+    "CARD_VIEW": "Card View",
+    "QUESTIONNAIRES": "Questionnaires",
+    "NEW_QUESTIONNAIRE": "New Questionnaire",
+    "TESTS": "Tests",
+    "NEW_TEST": "New Test",
+    "ACTION": "Actions",
+    "CARD_VIEW_TOOLTIP": "Switch to Card Layout"
+  },
+  "LANGUAGE": {
+    "EN": "English",
+    "HU": "Hungarian"
+  },
+  "GENERAL": {
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "CREATED": "Created",
+    "MODIFIED": "Last modified",
+    "FORM_BUILDER": "Form Builder"
+  }
+}
