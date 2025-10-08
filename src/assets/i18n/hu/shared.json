@@ -1,3 +1,23 @@
 {
-
+"STEPS": {
+    "COMPONENTS": "Komponensek",
+    "FORM_INFO": "Űrlap információ",
+    "RESULTS": "Eredmény"
+  },
+  "GENERAL":
+  {
+    "NEXT": "Következő",
+    "CANCEL": "Mégse",
+    "OK": "Igen",
+    "DELETE_CONFIRMATION": "Biztosan törli ezt a projektet?"
+  },
+  "PROJECT": {
+    "VERSION": "Verzió"
+  },
+  "FORM": {
+    "FORM_TITLE": "Űrlap címe",
+    "FORM_DESCRIPTION": "Leírás",
+    "CREATED": "Létrehozva",
+    "LAST_MODIFIED": "Utoljára módosítva"
+  }
 }

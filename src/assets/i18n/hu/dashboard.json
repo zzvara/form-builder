@@ -1,3 +1,22 @@
 {
-
+  "DASHBOARD": {
+    "CARD_VIEW": "Kártyás elrendezés",
+    "QUESTIONNAIRES": "Kérdőívek",
+    "NEW_QUESTIONNAIRE": "Új kérdőív létrehozása",
+    "TESTS": "Teszt",
+    "NEW_TEST": "Új teszt létrehozása",
+    "ACTION": "Művelet",
+    "CARD_VIEW_TOOLTIP": "Váltás kártya nézetre"
+  },
+  "LANGUAGE": {
+    "EN": "Angol",
+    "HU": "Magyar"
+  },
+  "GENERAL": {
+    "TITLE": "Cím",
+    "DESCRIPTION": "Leírás",
+    "CREATED": "Létrehozva",
+    "MODIFIED": "Módosítva",
+    "FORM_BUILDER": "Űrlapkészítő"
+  }
 }
