@@ -1,20 +1,11 @@
 <nz-form-item>
-<nz-checkbox-group
-  class="checkbox-group"
-  [(ngModel)]="data.defaultValue"
-  [disabled]="!inlineEdit.enabled"
-><nz-checkbox-group
-        class="checkbox-group"
-      >
-        @for (option of data.defaultValue; track option.value) {
-          <label nz-checkbox
-                 [nzValue]="option.value"
-                 [nzDisabled]="option.disabled"
-                 [ngModel]="option.checked"
-          >
-            {{ option.label }}
-          </label>
-        }
-      </nz-checkbox-group>
-</nz-checkbox-group>
+  <nz-checkbox-group class="checkbox-group" [(ngModel)]="data.defaultValue" [disabled]="!inlineEdit.enabled">
+    <nz-checkbox-group class="checkbox-group">
+      @for (option of data.defaultValue; track option.value) {
+        <label nz-checkbox [nzValue]="option.value" [nzDisabled]="option.disabled" [ngModel]="option.checked">
+          {{ option.label }}
+        </label>
+      }
+    </nz-checkbox-group>
+  </nz-checkbox-group>
 </nz-form-item>

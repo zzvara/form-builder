@@ -11,7 +11,7 @@ export class MutateTextDirective {
   constructor(private control: NgControl) {}
 
   @HostListener('change', ['$event'])
-  onBlur(): void {
+  onChange(): void {
     this.control.control?.setValue(this.appMutateText(this.control.value));
   }
 }
