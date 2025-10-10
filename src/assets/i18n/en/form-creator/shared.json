@@ -2,7 +2,8 @@
   "STEPS": {
     "COMPONENTS": "Components",
     "FORM_INFO": "Form Info",
-    "RESULTS": "Results"
+    "RESULTS": "Results",
+    "ANSWER": "Answers"
   },
   "GENERAL": {
     "TIME_LIMIT": "Time Limit",

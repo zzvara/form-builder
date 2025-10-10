@@ -2,6 +2,8 @@
   "DASHBOARD": {
     "CARD_VIEW": "Card View",
     "CARD_VIEW_TOOLTIP": "Switch to Card Layout",
+    "LIST_VIEW": "List View",
+    "LIST_VIEW_TOOLTIP": "Switch to List View",
     "QUESTIONNAIRES": "Questionnaires",
     "NEW_QUESTIONNAIRE": "New Questionnaire",
     "TESTS": "Tests",

@@ -150,10 +150,10 @@
             <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
           }
           @if (hasErrors(control, 'minError')) {
-            <div>{{ 'COMPONENTS.TEXT_AREA.CANNOT_BE_LOWER_THAN' | translate }} {{ control.errors['minError'] }}!</div>
+            <div>{{ 'COMPONENTS.CANNOT_BE_LOWER_THAN' | translate }} {{ control.errors['minError'] }}!</div>
           }
           @if (hasErrors(control, 'maxMinError')) {
-            <div>{{ 'COMPONENTS.TEXT_AREA.MIN_VALUE_LIMIT' | translate }} ({{ control.errors['maxMinError'] }})!</div>
+            <div>{{ 'COMPONENTS.MIN_VALUE_LIMIT' | translate }} ({{ control.errors['maxMinError'] }})!</div>
           }
         </ng-template>
       </nz-form-item>

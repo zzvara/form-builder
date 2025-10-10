@@ -2,7 +2,8 @@
   "STEPS": {
     "COMPONENTS": "Komponensek",
     "FORM_INFO": "Űrlap információ",
-    "RESULTS": "Eredmény"
+    "RESULTS": "Eredmény",
+    "ANSWER": "Válaszok"
   },
   "GENERAL": {
     "TIME_LIMIT": "Időkorlát az űrlap kitöltéséhez",

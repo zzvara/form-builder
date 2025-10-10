@@ -2,6 +2,8 @@
   "DASHBOARD": {
     "CARD_VIEW": "Kártyás elrendezés",
     "CARD_VIEW_TOOLTIP": "Váltás kártya nézetre",
+    "LIST_VIEW": "Lista nézet",
+    "LIST_VIEW_TOOLTIP": "Váltás lista nézetre",
     "QUESTIONNAIRES": "Kérdőívek",
     "NEW_QUESTIONNAIRE": "Új kérdőív létrehozása",
     "TESTS": "Teszt",
