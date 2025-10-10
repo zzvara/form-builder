@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly headerService: HeaderService,
     private readonly jsonService: JsonService,
     private readonly translate: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentLanguage =
@@ -75,12 +75,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.headerService.triggerUndo();
   }
 
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const file = input.files[0];
       this.uploadJson(file);
     }
   }
+
 
   uploadJson(file: File): void {
     this.jsonService.uploadJson(file).subscribe((data) => {
