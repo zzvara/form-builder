@@ -1,0 +1,13 @@
+{
+    "FORM": {
+        "FORM_TITLE_TOOLTIP": "Enter form title",
+        "TITLE_REQUIRED": "Title is required",
+        "FORM_DESCRIPTION_TOOLTIP": "Enter a brief description",
+        "OPTIONAL": "(optional)",
+        "QUESTIONNAIRE": "Questionnaire version",
+        "TEST": "Test version",
+        "SWITCH_TOOLTIP": "Toggle between Test and Questionnaire",
+        "DEADLINE_TOOLTIP": "Set a deadline (date and time) for completing the form.",
+        "TIME_LIMIT_TOOLTIP": "Set a time limit (hour:minutes) for completing the form."
+    }
+}

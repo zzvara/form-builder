@@ -29,11 +29,13 @@ registerLocaleData(en);
 
 export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
   return new MultiTranslateHttpLoader(handler, [
-    { prefix: './assets/i18n/', suffix: '/dashboard.json' },
-    { prefix: './assets/i18n/', suffix: '/form-creator.json' },
-    { prefix: './assets/i18n/', suffix: '/edit.json' },
-    { prefix: './assets/i18n/', suffix: '/shared.json' },
     { prefix: './assets/i18n/', suffix: '/header.json' },
+    { prefix: './assets/i18n/', suffix: '/dashboard.json' },
+    { prefix: './assets/i18n/', suffix: '/form-creator/info.json' },
+    { prefix: './assets/i18n/', suffix: '/form-creator/components.json' },
+    { prefix: './assets/i18n/', suffix: '/form-creator/results.json' },
+    { prefix: './assets/i18n/', suffix: '/form-creator/shared.json' },
+    { prefix: './assets/i18n/', suffix: '/shared.json' },
   ]);
 }
 

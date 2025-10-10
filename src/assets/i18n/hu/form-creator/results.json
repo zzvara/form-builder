@@ -1,0 +1,22 @@
+{
+    "PROJECT": {
+        "DEADLINE_CHECKBOX": "Határidő jelölőnégyzet",
+        "DOWNLOAD_PROJECT": "Projekt letöltése",
+        "DOWNLOAD_PROJECT_WITH_HISTORY": "Projekt letöltése előzménnyel",
+        "PROJECT_HISTORY_JSON": "Projekt előzménye JSON",
+        "PROJECT_INFORMATION": "Projektinformáció",
+        "PROJECT_JSON": "Projekt JSON",
+        "SAVE": "Mentés",
+        "SECTION_INPUTS": "Szakasz bevitelek",
+        "SECTION_INPUTS_STATISTICS": "Szakaszbevitel statisztikák",
+        "TIME_CHECKBOX": "Idő jelölőnégyzet",
+        "TYPE": "Típus"
+    },
+    "RESULTS": {
+        "BOOLEAN": {
+            "FALSE": "Hamis",
+            "TRUE": "Igaz"
+        }
+    },
+    "DOWNLOAD_CONFIRMATION": "Biztosan letölti a projektet?"
+}

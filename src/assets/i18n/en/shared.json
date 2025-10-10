@@ -1,9 +1,4 @@
 {
-  "STEPS": {
-    "COMPONENTS": "Components",
-    "FORM_INFO": "Form Info",
-    "RESULTS": "Results"
-  },
   "GENERAL": {
     "NEXT": "Next",
     "CANCEL": "Cancel",
@@ -13,7 +8,6 @@
     "CREATED": "Created",
     "MODIFIED": "Last modified"
   },
-  "VERSION": "Version",
   "TITLE": {
     "DASHBOARD": "Dashboard",
     "EDIT_FORM": "Edit Form",

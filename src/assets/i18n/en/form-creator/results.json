@@ -1,0 +1,22 @@
+{
+    "PROJECT": {
+        "DEADLINE_CHECKBOX": "Enable Deadline",
+        "DOWNLOAD_PROJECT": "Download Project",
+        "DOWNLOAD_PROJECT_WITH_HISTORY": "Download with History",
+        "PROJECT_HISTORY_JSON": "Project History",
+        "PROJECT_INFORMATION": "Project Info",
+        "PROJECT_JSON": "Project JSON",
+        "SAVE": "Save Project",
+        "SECTION_INPUTS": "Inputs by Section",
+        "SECTION_INPUTS_STATISTICS": "Input Statistics",
+        "TIME_CHECKBOX": "Enable Time Limit",
+        "TYPE": "Type"
+    },
+    "RESULTS": {
+        "BOOLEAN": {
+            "FALSE": "False",
+            "TRUE": "True"
+        }
+    },
+    "DOWNLOAD_CONFIRMATION": "Download this project?"
+}

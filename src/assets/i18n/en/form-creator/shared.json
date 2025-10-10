@@ -1,0 +1,12 @@
+{
+  "STEPS": {
+    "COMPONENTS": "Components",
+    "FORM_INFO": "Form Info",
+    "RESULTS": "Results"
+  },
+  "GENERAL": {
+    "TIME_LIMIT": "Time Limit",
+    "DEADLINE": "Deadline"
+  },
+  "VERSION": "Version"
+}
