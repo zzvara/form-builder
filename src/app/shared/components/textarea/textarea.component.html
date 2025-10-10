@@ -9,7 +9,7 @@
       [disabled]="!inlineEdit.enabled"
       [placeholder]="data.placeholderValue ?? ''"
       [(ngModel)]="data.defaultValue"
-      (blur)="onChange($event)"
+      (change)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
       nzAutosize
     ></textarea>

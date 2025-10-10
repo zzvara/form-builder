@@ -25,7 +25,7 @@
           [placeholder]="formInput.questionPlaceholder"
           (mousedown)="$event.stopPropagation()"
           [(ngModel)]="inputData.questionValue"
-          [ngModelOptions]="{ updateOn: 'blur' }"
+          [ngModelOptions]="{ updateOn: 'change' }"
           (ngModelChange)="change()"
         />
       </nz-form-control>
@@ -42,7 +42,7 @@
           (mousedown)="$event.stopPropagation()"
           [placeholder]="formInput.descriptionPlaceholder"
           [(ngModel)]="inputData.descriptionValue"
-          [ngModelOptions]="{ updateOn: 'blur' }"
+          [ngModelOptions]="{ updateOn: 'change' }"
           (ngModelChange)="change()"
         ></textarea>
       </nz-form-control>
