@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ProjectType } from '@interfaces/project';
 import { ColumnItem } from '@app/shared/interfaces/column-item.model';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import { DateFormat } from '@app/shared/constants/date-format.constant';
 
 @Component({
   selector: 'app-list-view',
@@ -20,6 +21,8 @@ export class ListViewComponent implements OnInit {
 
   projectList: Questionnaire[] = [];
   columnsConfig: ColumnItem[] = [];
+
+  DateFormat = DateFormat;
 
   constructor(private translate: TranslateService) {}
 

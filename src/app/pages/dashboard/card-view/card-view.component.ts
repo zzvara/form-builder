@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { ProjectType } from '@interfaces/project';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { Observable, of } from 'rxjs';
@@ -19,6 +20,8 @@ export class CardViewComponent implements OnInit {
   @Output() editProject = new EventEmitter<string>();
 
   projectList: Questionnaire[] = [];
+
+  DateFormat = DateFormat;
 
   ngOnInit(): void {
     this.projects.subscribe((projects) => (this.projectList = projects.filter((project) => project.type === this.type)));

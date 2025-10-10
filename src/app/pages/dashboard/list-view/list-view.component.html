@@ -14,8 +14,8 @@
       <tr>
         <td>{{ data.title }}</td>
         <td>{{ data.description }}</td>
-        <td>{{ data.created }}</td>
-        <td>{{ data.modified }}</td>
+        <td>{{ data.created | date: DateFormat.DATE }}</td>
+        <td>{{ data.modified | date: DateFormat.DATE }}</td>
         <td>
           <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
           <span
