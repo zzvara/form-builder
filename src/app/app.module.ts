@@ -33,6 +33,7 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
     { prefix: './assets/i18n/', suffix: '/form-creator.json' },
     { prefix: './assets/i18n/', suffix: '/edit.json' },
     { prefix: './assets/i18n/', suffix: '/shared.json' },
+    { prefix: './assets/i18n/', suffix: '/header.json' },
   ]);
 }
 

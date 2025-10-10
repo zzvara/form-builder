@@ -1,23 +1,22 @@
 {
-"STEPS": {
+  "STEPS": {
     "COMPONENTS": "Components",
     "FORM_INFO": "Form Info",
     "RESULTS": "Results"
   },
-  "GENERAL":
-  {
+  "GENERAL": {
     "NEXT": "Next",
     "CANCEL": "Cancel",
     "OK": "OK",
-    "DELETE_CONFIRMATION": "Delete this project?"
-  },
-  "PROJECT": {
-    "VERSION": "Version"
-  },
-  "FORM": {
-    "FORM_TITLE": "Title",
-    "FORM_DESCRIPTION": "Description",
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
     "CREATED": "Created",
-    "LAST_MODIFIED": "Last modified"
+    "MODIFIED": "Last modified"
+  },
+  "VERSION": "Version",
+  "TITLE": {
+    "DASHBOARD": "Dashboard",
+    "EDIT_FORM": "Edit Form",
+    "NEW_FORM": "New Form"
   }
 }

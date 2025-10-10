@@ -38,7 +38,7 @@
             [nzOverlayStyle]="{ 'max-height': '250px', 'overflow-y': 'auto' }"
             style="width: 120px"
           >
-            {{ currentVersionNum ? ('PROJECT.VERSION' | translate) + ' ' + currentVersionNum : ('COMPONENTS.SELECT_VERSION' | translate) }}
+            {{ currentVersionNum ? ('VERSION' | translate) + ' ' + currentVersionNum : ('COMPONENTS.SELECT_VERSION' | translate) }}
             <i nz-icon nzType="down"></i>
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
@@ -48,7 +48,7 @@
                 *ngFor="let version of projectHistory; trackBy: trackByVersion"
                 (click)="revertToVersion(version.versionNum)"
               >
-                <span> {{ 'PROJECT.VERSION' | translate }} {{ version.versionNum }} </span>
+                <span> {{ 'VERSION' | translate }} {{ version.versionNum }} </span>
                 <span
                   nz-popover
                   nzPopoverTrigger="hover"

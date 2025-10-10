@@ -1,23 +1,22 @@
 {
-"STEPS": {
+  "STEPS": {
     "COMPONENTS": "Komponensek",
     "FORM_INFO": "Űrlap információ",
     "RESULTS": "Eredmény"
   },
-  "GENERAL":
-  {
+  "GENERAL": {
     "NEXT": "Következő",
     "CANCEL": "Mégse",
     "OK": "Igen",
-    "DELETE_CONFIRMATION": "Biztosan törli ezt a projektet?"
-  },
-  "PROJECT": {
-    "VERSION": "Verzió"
-  },
-  "FORM": {
-    "FORM_TITLE": "Űrlap címe",
-    "FORM_DESCRIPTION": "Leírás",
+    "TITLE": "Cím",
+    "DESCRIPTION": "Leírás",
     "CREATED": "Létrehozva",
-    "LAST_MODIFIED": "Utoljára módosítva"
+    "MODIFIED": "Módosítva"
+  },
+  "VERSION": "Verzió",
+  "TITLE": {
+    "DASHBOARD": "Kezdőlap",
+    "EDIT_FORM": "Űrlap szerkesztése",
+    "NEW_FORM": "Új űrlap"
   }
 }

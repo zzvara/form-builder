@@ -1,5 +1,5 @@
 {
-    "FORM": {
+  "FORM": {
     "DEADLINE_TOOLTIP": "Ez határozza meg, hogy meddig nyújtható be az űrlap. Ez egy fix dátum és idő, amely után az űrlap már nem érhető el vagy nyújtható be.",
     "FORM_DESCRIPTION": "Leírás",
     "FORM_DESCRIPTION_TOOLTIP": "Adja meg a leírást",

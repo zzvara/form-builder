@@ -1,20 +1,20 @@
 {
   "FORM": {
-  "DEADLINE_TOOLTIP": "Ez határozza meg, hogy meddig nyújtható be az űrlap. Ez egy fix dátum és idő, amely után az űrlap már nem érhető el vagy nyújtható be.",
-  "FORM_DESCRIPTION_TOOLTIP": "Adja meg a leírást",
-  "FORM_TITLE_TOOLTIP": "Adja meg az űrlap címét",
-  "OPTIONAL": "(nem kötelező)",
-  "QUESTIONNAIRE": "Kérdőív változat",
-  "SEARCH": "Keresés",
-  "SWITCH_TOOLTIP": "Kikapcsolva kérdőív - Bekapcsolva teszt",
-  "TEST": "Teszt változat",
-  "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.(óra:perc)",
-  "TITLE_REQUIRED": "A cím kötelező",
-  "VERSION": "Változat:"
-},
-
-
- "COMPONENTS": {
+    "DEADLINE": "Beadási határidő",
+    "TIME_LIMIT": "Időkorlát az űrlap kitöltéséhez",
+    "DEADLINE_TOOLTIP": "Ez határozza meg, hogy meddig nyújtható be az űrlap. Ez egy fix dátum és idő, amely után az űrlap már nem érhető el vagy nyújtható be.",
+    "FORM_DESCRIPTION_TOOLTIP": "Adja meg a leírást",
+    "FORM_TITLE_TOOLTIP": "Adja meg az űrlap címét",
+    "OPTIONAL": "(nem kötelező)",
+    "QUESTIONNAIRE": "Kérdőív változat",
+    "SEARCH": "Keresés",
+    "SWITCH_TOOLTIP": "Kikapcsolva kérdőív - Bekapcsolva teszt",
+    "TEST": "Teszt változat",
+    "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.(óra:perc)",
+    "TITLE_REQUIRED": "A cím kötelező",
+    "VERSION": "Változat:"
+  },
+  "COMPONENTS": {
     "BASIC_INPUTS": "Alap bemenetek",
     "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
     "CANNOT_BE_LOWER_THAN": "Az érték nem lehet kisebb, mint",
@@ -192,21 +192,19 @@
     "USED_COMPONENTS": "Használt komponensek",
     "WEEK_NUMBERS?": "Mutassuk a hét számát?"
   },
-
-
   "PROJECT": {
-  "DEADLINE_CHECKBOX": "Határidő jelölőnégyzet",
-  "DOWNLOAD_PROJECT": "Projekt letöltése",
-  "DOWNLOAD_PROJECT_WITH_HISTORY": "Projekt letöltése előzménnyel",
-  "PROJECT_HISTORY_JSON": "Projekt előzménye JSON",
-  "PROJECT_INFORMATION": "Projektinformáció",
-  "PROJECT_JSON": "Projekt JSON",
-  "SAVE": "Mentés",
-  "SECTION_INPUTS": "Szakasz bevitelek",
-  "SECTION_INPUTS_STATISTICS": "Szakaszbevitel statisztikák",
-  "TIME_CHECKBOX": "Idő jelölőnégyzet",
-  "TYPE": "Típus"
-},
+    "DEADLINE_CHECKBOX": "Határidő jelölőnégyzet",
+    "DOWNLOAD_PROJECT": "Projekt letöltése",
+    "DOWNLOAD_PROJECT_WITH_HISTORY": "Projekt letöltése előzménnyel",
+    "PROJECT_HISTORY_JSON": "Projekt előzménye JSON",
+    "PROJECT_INFORMATION": "Projektinformáció",
+    "PROJECT_JSON": "Projekt JSON",
+    "SAVE": "Mentés",
+    "SECTION_INPUTS": "Szakasz bevitelek",
+    "SECTION_INPUTS_STATISTICS": "Szakaszbevitel statisztikák",
+    "TIME_CHECKBOX": "Idő jelölőnégyzet",
+    "TYPE": "Típus"
+  },
   "RESULTS": {
     "BOOLEAN": {
       "FALSE": "Hamis",

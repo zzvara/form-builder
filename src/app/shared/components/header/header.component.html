@@ -30,20 +30,20 @@
     <div>
       <div>
         <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="languageMenu" nz-dropdown>
-          {{ 'LANGUAGE.' + (currentLanguage | uppercase) | translate }}
+          {{ 'HEADER.LANGUAGE.' + (currentLanguage | uppercase) | translate }}
         </button>
       </div>
       <nz-dropdown-menu #languageMenu="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="setLanguage(LanguageEnum.EN)" [class.selected]="currentLanguage === LanguageEnum.EN">
-            <span class="fi fi-gb"></span> {{ 'LANGUAGE.EN' | translate }}
+            <span class="fi fi-gb"></span> {{ 'HEADER.LANGUAGE.EN' | translate }}
           </li>
           <li nz-menu-item (click)="setLanguage(LanguageEnum.HU)" [class.selected]="currentLanguage === LanguageEnum.HU">
-            <span class="fi fi-hu"></span> {{ 'LANGUAGE.HU' | translate }}
+            <span class="fi fi-hu"></span> {{ 'HEADER.LANGUAGE.HU' | translate }}
           </li>
         </ul>
       </nz-dropdown-menu>
     </div>
-    <h1>{{ 'GENERAL.FORM_BUILDER' | translate }}</h1>
+    <h1>{{ 'HEADER.FORM_BUILDER' | translate }}</h1>
   </div>
 </nz-header>

@@ -37,7 +37,7 @@
       <nz-tab [nzTitle]="'PROJECT.SECTION_INPUTS' | translate">
         @if (project?.editList?.length) {
           <nz-descriptions nzBordered [nzColumn]="1" *ngIf="sectionInputStats">
-            <nz-descriptions-item *ngIf="latestVersionNum" [nzTitle]="'PROJECT.VERSION' | translate">
+            <nz-descriptions-item *ngIf="latestVersionNum" [nzTitle]="'VERSION' | translate">
               {{ latestVersionNum }}
             </nz-descriptions-item>
 

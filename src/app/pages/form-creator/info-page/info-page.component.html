@@ -2,7 +2,7 @@
   <div>
     <form nz-form class="form-margin-top" (ngSubmit)="submitForm()" [formGroup]="form">
       <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>
-        <h4>{{ 'FORM.FORM_TITLE' | translate }}</h4>
+        <h4>{{ 'GENERAL.TITLE' | translate }}</h4>
         <i
           nz-icon
           nzType="question-circle"
@@ -32,7 +32,7 @@
       </nz-form-control>
 
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
-        <span> {{ 'FORM.FORM_DESCRIPTION' | translate }}</span
+        <span> {{ 'GENERAL.DESCRIPTION' | translate }}</span
         >&nbsp;
         <span class="optional-text"> {{ 'FORM.OPTIONAL' | translate }} </span>
         <i
@@ -119,7 +119,7 @@
               <nz-form-label [nzNoColon]="true">{{ project.created | date: DateFormat.DATE }}</nz-form-label>
             </div>
             <div class="mb-8">
-              <nz-form-label>{{ 'FORM.LAST_MODIFIED' | translate }}</nz-form-label>
+              <nz-form-label>{{ 'GENERAL.MODIFIED' | translate }}</nz-form-label>
               <nz-form-label [nzNoColon]="true">{{ project.modified | date: DateFormat.DATE }}</nz-form-label>
             </div>
           </div>
