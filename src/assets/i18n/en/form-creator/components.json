@@ -1,5 +1,7 @@
 {
     "SEARCH": "Search components",
+    "RESET": "Reset component",
+    "SAVE": "Save",
     "COMPONENTS": {
         "BASIC_INPUTS": "Basic inputs",
         "CANNOT_BE_EMPTY": "This field cannot be empty.",

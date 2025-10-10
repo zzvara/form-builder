@@ -1,6 +1,8 @@
 {
     
     "SEARCH": "Keresés",
+    "RESET": "Komponens visszaállítása",
+    "SAVE": "Mentés",
     "COMPONENTS": {
         "BASIC_INPUTS": "Alap bemenetek",
         "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
