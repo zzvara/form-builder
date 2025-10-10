@@ -4,7 +4,7 @@
 
 nz-header {
   background-color: @gray-dark;
-  padding: @spacing0 80px;
+  padding: @spacing0 clamp(16px, 5vw, 80px);
   position: fixed;
   width: @width-full;
   z-index: 100;
@@ -19,10 +19,11 @@ nz-header {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    font-size: clamp(24px, 5vw, 32px);
   }
 
   > div {
-    font-size: @font-size-title;
+    font-size: clamp(18px, 2.5vw, 26px);
 
     > span {
       cursor: pointer;
@@ -30,7 +31,7 @@ nz-header {
   }
 
   > div :not(:last-child) {
-    margin-right: @spacing16;
+    margin-right: clamp(8px, 2vw, 16px);
   }
 }
 
