@@ -13,14 +13,18 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}:</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <input nz-input formControlName="placeholderValue" />

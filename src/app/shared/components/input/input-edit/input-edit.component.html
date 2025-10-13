@@ -13,14 +13,18 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}:</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <input nz-input formControlName="placeholderValue" />
@@ -72,7 +76,9 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
-      <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+      <nz-form-label [nzRequired]="getControlValue('required')">
+        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+      </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
           <input nz-input formControlName="requiredMessage" />
@@ -115,7 +121,9 @@
           }
         </ng-template>
       </nz-form-item>
-      <span>{{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}&#123;*&#125;</span>
+      <nz-form-label nzRequired>
+        <span>{{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}&#123;*&#125;</span>
+      </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minLengthMessageErrorMessageTemplate">
           <input nz-input formControlName="minLengthMessage" />

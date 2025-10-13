@@ -44,9 +44,9 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-label nzRequired
-    ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}:</span></nz-form-label
-  >
+  <nz-form-label nzRequired>
+    <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -58,14 +58,18 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}:</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <input nz-input formControlName="placeholderValue" />
@@ -99,7 +103,9 @@
     }
   </div>
 
-  <span>{{ 'COMPONENTS.COMBOBOX.IS_MULTIPLE_CHOICE' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.COMBOBOX.IS_MULTIPLE_CHOICE' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="isMultipleChoice">{{ 'COMPONENTS.COMBOBOX.MULTIPLE' | translate }}</label>
@@ -113,7 +119,9 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
-      <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+      <nz-form-label [nzRequired]="getControlValue('required')">
+        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+      </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
           <input nz-input formControlName="requiredMessage" />

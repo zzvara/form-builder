@@ -13,14 +13,18 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}:</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <input nz-input formControlName="placeholderValue" />
@@ -63,7 +67,9 @@
   </div>
 
   <nz-divider></nz-divider>
-  <span>{{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}:</span>
+  <nz-form-label nzRequired>
+    <span>{{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="timeFormatErrors">
       <input nz-input formControlName="timeFormat" />
@@ -75,14 +81,18 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.TIME_PICKER.12_HOUR_FORMAT' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.TIME_PICKER.12_HOUR_FORMAT' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="use12Hours">{{ 'COMPONENTS.TIME_PICKER.12_HOUR_FORMAT?' | translate }}</label>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.TIME_PICKER.HIDE_DISABLED_OPTIONS' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.TIME_PICKER.HIDE_DISABLED_OPTIONS' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="hideDisabledOptions">{{ 'COMPONENTS.TIME_PICKER.HIDE_DISABLED_OPTIONS' | translate }}</label>
@@ -91,7 +101,9 @@
 
   <nz-divider></nz-divider>
   <div class="section-container">
-    <span>{{ 'COMPONENTS.TIME_PICKER.SET_HOUR_STEP' | translate }}</span>
+    <nz-form-label nzRequired>
+      <span>{{ 'COMPONENTS.TIME_PICKER.SET_HOUR_STEP' | translate }}</span>
+    </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="hourStepNumberErrors">
         <nz-input-number formControlName="hourStep" [nzMin]="1" [nzMax]="24" [nzStep]="1"></nz-input-number>
@@ -105,7 +117,10 @@
         }
       </ng-template>
     </nz-form-item>
-    <span>{{ 'COMPONENTS.TIME_PICKER.SET_MINUTE_STEP' | translate }}</span>
+
+    <nz-form-label nzRequired>
+      <span>{{ 'COMPONENTS.TIME_PICKER.SET_MINUTE_STEP' | translate }}</span>
+    </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="minuteStepNumberErrors">
         <nz-input-number formControlName="minuteStep" [nzMin]="1" [nzMax]="60" [nzStep]="1"></nz-input-number>
@@ -119,7 +134,10 @@
         }
       </ng-template>
     </nz-form-item>
-    <span>{{ 'COMPONENTS.TIME_PICKER.SET_SECOND_STEP' | translate }}</span>
+
+    <nz-form-label nzRequired>
+      <span>{{ 'COMPONENTS.TIME_PICKER.SET_SECOND_STEP' | translate }}</span>
+    </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="secondStepNumberErrors">
         <nz-input-number formControlName="secondStep" [nzMin]="1" [nzMax]="60" [nzStep]="1"></nz-input-number>
@@ -144,7 +162,9 @@
     </nz-form-item>
     @if (getControlValue('required')) {
       <div>
-        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        <nz-form-label [nzRequired]="getControlValue('required')">
+          <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
             <!-- @Todo: FormControlName translate ? -->
@@ -209,9 +229,9 @@
     </nz-form-item>
     @if (getControlValue('maxTime')) {
       <div>
-        <nz-form-label nzRequired
-          ><span>{{ 'COMPONENTS.TIME_PICKER.MAX_TIME' | translate }}:</span></nz-form-label
-        >
+        <nz-form-label nzRequired>
+          <span>{{ 'COMPONENTS.TIME_PICKER.MAX_TIME' | translate }}</span>
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
             <nz-time-picker

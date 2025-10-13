@@ -13,14 +13,18 @@
     </ng-template>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}:</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.RANGE_PICKER.SET_PLACEHOLDER_VALUE_RANGE' | translate }}</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.RANGE_PICKER.SET_PLACEHOLDER_VALUE_RANGE' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <input nz-input formControlName="placeholderValue" />
@@ -65,7 +69,9 @@
   </div>
 
   <nz-divider></nz-divider>
-  <span>{{ 'COMPONENTS.DATE_PICKER_MODE' | translate }}:</span>
+  <nz-form-label nzRequired>
+    <span>{{ 'COMPONENTS.DATE_PICKER_MODE' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <nz-select formControlName="mode" [nzPlaceHolder]="'COMPONENTS.MODE' | translate">
@@ -76,7 +82,9 @@
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.DATE_FORMAT' | translate }}:</span>
+  <nz-form-label nzRequired>
+    <span>{{ 'COMPONENTS.DATE_FORMAT' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="dateFormatErrors">
       <input nz-input formControlName="dateFormat" />
@@ -99,7 +107,9 @@
     </nz-form-item>
     @if (getControlValue('showTime')) {
       <div>
-        <span>{{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}:</span>
+        <nz-form-label>
+          <span>{{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}</span>
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="timeFormatErrors">
             <input nz-input formControlName="timeFormat" />
@@ -115,14 +125,19 @@
   </div>
 
   <nz-divider></nz-divider>
-  <span>{{ 'COMPONENTS.DATE_PICKER.WEEK_NUMBERS' | translate }}:</span>
+
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.DATE_PICKER.WEEK_NUMBERS' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="showWeekNumber">{{ 'COMPONENTS.WEEK_NUMBERS?' | translate }}</label>
     </nz-form-control>
   </nz-form-item>
 
-  <span>{{ 'COMPONENTS.DATE_PICKER.INLINE_COMPONENT' | translate }}:</span>
+  <nz-form-label>
+    <span>{{ 'COMPONENTS.DATE_PICKER.INLINE_COMPONENT' | translate }}</span>
+  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="inlineMode">{{ 'COMPONENTS.INLINE_COMPONENT?' | translate }}</label>
@@ -138,7 +153,9 @@
     </nz-form-item>
     @if (getControlValue('required')) {
       <div>
-        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        <nz-form-label [nzRequired]="getControlValue('required')">
+          <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
             <input nz-input formControlName="requiredMessage" [placeholder]="'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate" />

@@ -30,7 +30,10 @@
         />
       </nz-form-control>
     </nz-form-item>
-    <span>{{ 'COMPONENTS.QUESTION_DESCRIPTION' | translate }}:</span>
+
+    <nz-form-label>
+      <span>{{ 'COMPONENTS.QUESTION_DESCRIPTION' | translate }}</span>
+    </nz-form-label>
     <nz-form-item class="form-item">
       <nz-form-control>
         <span class="pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
@@ -47,6 +50,7 @@
         ></textarea>
       </nz-form-control>
     </nz-form-item>
+
     <div>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}:</div>
     <ng-container *ngComponentOutlet="componentType; inputs: componentInputs" />
   </form>
