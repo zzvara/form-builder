@@ -1,6 +1,6 @@
 <form id="datePickerEditFormID" nz-form [formGroup]="formData">
   <nz-form-label nzRequired
-    ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+    >{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label
   >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
@@ -14,7 +14,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+    {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -23,7 +23,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+    {{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -41,8 +41,8 @@
     @if (getControlValue('setDefaultValue')) {
       <div>
         <nz-form-label [nzRequired]="getControlValue('required')"
-          ><span>{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
-        >
+          >{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <nz-time-picker
@@ -68,7 +68,7 @@
 
   <nz-divider></nz-divider>
   <nz-form-label nzRequired>
-    <span>{{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}</span>
+    {{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="timeFormatErrors">
@@ -82,7 +82,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.TIME_PICKER.12_HOUR_FORMAT' | translate }}</span>
+    {{ 'COMPONENTS.TIME_PICKER.12_HOUR_FORMAT' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -91,7 +91,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.TIME_PICKER.HIDE_DISABLED_OPTIONS' | translate }}</span>
+    {{ 'COMPONENTS.TIME_PICKER.HIDE_DISABLED_OPTIONS' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -102,7 +102,7 @@
   <nz-divider></nz-divider>
   <div class="section-container">
     <nz-form-label nzRequired>
-      <span>{{ 'COMPONENTS.TIME_PICKER.SET_HOUR_STEP' | translate }}</span>
+      {{ 'COMPONENTS.TIME_PICKER.SET_HOUR_STEP' | translate }}
     </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="hourStepNumberErrors">
@@ -119,7 +119,7 @@
     </nz-form-item>
 
     <nz-form-label nzRequired>
-      <span>{{ 'COMPONENTS.TIME_PICKER.SET_MINUTE_STEP' | translate }}</span>
+      {{ 'COMPONENTS.TIME_PICKER.SET_MINUTE_STEP' | translate }}
     </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="minuteStepNumberErrors">
@@ -136,7 +136,7 @@
     </nz-form-item>
 
     <nz-form-label nzRequired>
-      <span>{{ 'COMPONENTS.TIME_PICKER.SET_SECOND_STEP' | translate }}</span>
+      {{ 'COMPONENTS.TIME_PICKER.SET_SECOND_STEP' | translate }}
     </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="secondStepNumberErrors">
@@ -163,7 +163,7 @@
     @if (getControlValue('required')) {
       <div>
         <nz-form-label [nzRequired]="getControlValue('required')">
-          <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+          {{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}
         </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
@@ -230,7 +230,7 @@
     @if (getControlValue('maxTime')) {
       <div>
         <nz-form-label nzRequired>
-          <span>{{ 'COMPONENTS.TIME_PICKER.MAX_TIME' | translate }}</span>
+          {{ 'COMPONENTS.TIME_PICKER.MAX_TIME' | translate }}
         </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
@@ -276,8 +276,8 @@
     @if (getControlValue('showTooltip')) {
       <div>
         <nz-form-label nzRequired
-          ><span>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</span></nz-form-label
-        >
+          >{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
             <input nz-input formControlName="tooltipText" />

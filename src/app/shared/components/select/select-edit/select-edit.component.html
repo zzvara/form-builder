@@ -45,7 +45,7 @@
   </nz-form-item>
 
   <nz-form-label nzRequired>
-    <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
+    {{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
@@ -59,7 +59,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+    {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -68,7 +68,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+    {{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -84,7 +84,7 @@
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
       <nz-form-label [nzRequired]="getControlValue('required')">
-        <span>{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}</span>
+        {{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}
       </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
@@ -104,7 +104,7 @@
   </div>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.COMBOBOX.IS_MULTIPLE_CHOICE' | translate }}</span>
+    {{ 'COMPONENTS.COMBOBOX.IS_MULTIPLE_CHOICE' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -120,7 +120,7 @@
     </nz-form-item>
     @if (getControlValue('required')) {
       <nz-form-label [nzRequired]="getControlValue('required')">
-        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        {{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}
       </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
@@ -143,7 +143,7 @@
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <nz-form-label nzRequired>
-        <span>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</span></nz-form-label
+        {{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</nz-form-label
       >
       <nz-form-item>
         <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
