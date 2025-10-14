@@ -15,19 +15,17 @@
     <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit.enabled }">
       <nz-form-control nzErrorTip="">
         <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
-        <input
-          #questionInput="ngModel"
+        <textarea
           [hidden]="!inlineEdit.enabled"
           nz-input
-          nzSize="small"
+          nzAutosize
           name="inputQuestion"
           required
           [placeholder]="formInput.questionPlaceholder"
-          (mousedown)="$event.stopPropagation()"
           [(ngModel)]="inputData.questionValue"
           [ngModelOptions]="{ updateOn: 'change' }"
-          (ngModelChange)="change()"
-        />
+          (ngModelChange)="change()">
+        </textarea>
       </nz-form-control>
     </nz-form-item>
 
