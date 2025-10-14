@@ -29,7 +29,7 @@
         </div>
 
         <!-- Dropdown -->
-        <div style="margin-left: 8px">
+        <div style="margin-left: 8px" class="version-button">
           <button
             nz-button
             nz-dropdown
@@ -75,13 +75,13 @@
           </nz-dropdown-menu>
         </div>
 
-        <div>
+        <div class="prev-version">
           <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
             {{ 'COMPONENTS.PREVIOUS_VERSION' | translate }}
           </button>
         </div>
 
-        <div style="margin-right: 20px">
+        <div class="redo-undo-container">
           <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
         </div>
 
