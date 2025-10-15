@@ -4,6 +4,8 @@
         "LANGUAGE": {
             "EN": "English",
             "HU": "Hungarian"
-        }
+        },
+        "IMPORT": "Import questionnaire in JSON format",
+        "HOME": "Back to main page"
     }
 }

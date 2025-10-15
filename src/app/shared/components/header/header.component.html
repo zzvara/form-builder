@@ -2,7 +2,7 @@
   <div class="header">
     <div>
       @if (headerOptions.includes(options.HOME)) {
-        <span (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline"></span>
+        <span (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline" title="{{ 'HEADER.HOME' | translate }}"></span>
       }
       @if (headerOptions.includes(options.UNDO)) {
         <span (click)="handleUndo()" nz-icon nzType="rollback" nzTheme="outline"></span>
@@ -23,7 +23,12 @@
       @if (headerOptions.includes(options.UPLOAD_JSON)) {
         <span>
           <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden-input" />
-          <span (click)="fileInput.click()" nz-icon nzType="upload" nzTheme="outline"></span>
+          <span (click)="fileInput.click()"
+                nz-icon
+                nzType="upload"
+                nzTheme="outline"
+                title="{{ 'HEADER.IMPORT' | translate }}">
+          </span>
         </span>
       }
     </div>
