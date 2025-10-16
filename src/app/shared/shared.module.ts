@@ -56,6 +56,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { QuillEditorComponent } from "ngx-quill";
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -125,7 +126,8 @@ const COMPONENTS = [
     NzDropdownMenuComponent,
     NzMenuModule,
     NzDropDownModule,
-  ],
+    QuillEditorComponent
+],
   providers: [],
   exports: [...COMPONENTS],
 })

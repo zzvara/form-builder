@@ -64,7 +64,9 @@
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
-      <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
+      <quill-editor
+        formControlName="descriptionValue"
+        [style]="{ height: '150px' }"/>
     </nz-form-control>
   </nz-form-item>
 

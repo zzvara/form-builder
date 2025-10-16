@@ -29,6 +29,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
 import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
+import { QuillEditorComponent } from "ngx-quill";
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -62,7 +63,8 @@ import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
     NzDescriptionsModule,
     ChangeSummaryComponent,
     IconTypePipe,
-  ],
+    QuillEditorComponent
+],
   providers: [IconTypePipe],
   exports: [],
 })
