@@ -3,39 +3,46 @@
 @import '../../../../common.less';
 @import '../../../../typography.less';
 
+body, nz-layout {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 nz-layout {
   background-color: @transparent;
   display: flex;
-  width: @width-full;
-  padding: @spacing0 @spacing32;
+  width: 100%;
+  max-width: 100%;
+  padding: clamp(@spacing8, 2vw, @spacing24) clamp(@spacing12, 4vw, @spacing24);
 }
 
 .formelement {
-  margin-bottom: @spacing32;
-  width: @width-full;
+  margin-bottom: clamp(@spacing12, 2vw, @spacing24);
+  width: 100%;
+  max-width: 100%;
 }
 
 #switch {
-  margin-left: @spacing12;
-  margin-right: @spacing12;
+  margin-left: clamp(@spacing8, 1vw, @spacing12);
+  margin-right: clamp(@spacing8, 1vw, @spacing12);
 }
 
 #title,
 #description {
-  font-size: @font-size-lead;
+  font-size: clamp(@font-size-tiny, 2vw, @font-size-lead);
   border-radius: 10px;
   border-width: 2px;
   margin-top: -5px;
-  width: @width-full;
+  margin-bottom: clamp(@spacing8, 1vw, @spacing12);
+  padding: clamp(@spacing4, 1vw, @spacing8);
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
-#title {
-  margin-bottom: @spacing12;
-}
-
-.description-label,
-.title-label {
+.title-label,
+.description-label {
   font-weight: bold;
 }
 
@@ -45,31 +52,38 @@ nz-layout {
 
 .saveBtn {
   float: left;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  margin-top: clamp(@spacing8, 1vw, @spacing12);
 }
 
 .error-message {
-  margin-top: @spacing4;
+  margin-top: clamp(@spacing2, 0.5vw, @spacing4);
   color: @accent-danger;
-  font-size: @font-size-tiny;
+  font-size: clamp(@font-size-tiny, 1vw, @font-size-small);
   font-weight: bold;
 }
 
 .input-error {
   border: 1px solid @accent-danger;
+  font-size: clamp(@font-size-tiny, 1vw, @font-size-small);
 }
 
 .same_line {
   display: flex;
   align-items: center;
-  gap: @spacing12;
+  gap: clamp(@spacing8, 1vw, @spacing12);
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .created_modifaction {
   display: flex;
   align-items: center;
-  gap: @spacing8;
+  gap: clamp(@spacing4, 1vw, @spacing8);
   flex-direction: row;
+  width: 100%;
 }
 
 .json-container {
@@ -77,139 +91,26 @@ nz-layout {
   white-space: pre-wrap;
   word-break: break-word;
   font-family: monospace;
-  padding: @spacing12;
+  padding: clamp(@spacing8, 1vw, @spacing12);
   background-color: @background-light;
   border: @border-default;
   border-radius: 5px;
+  max-width: 100%;
 }
 
 .button-group {
   display: flex;
-  gap: @spacing16; // <-- Gombok közötti távolság nagyobb lett
+  flex-wrap: wrap;
+  gap: clamp(@spacing12, 2vw, @spacing16);
   align-items: center;
 }
 
 #footerdiv {
-  margin-top: @spacing12; // <-- Gombcsoport felső távolság, opcionális
-  margin-bottom: @spacing12;
+  margin-top: clamp(@spacing8, 1vw, @spacing12);
+  margin-bottom: clamp(@spacing8, 1vw, @spacing12);
 }
 
 .statistics-list {
   margin: 0;
   padding-left: 20px;
-}
-
-@media (max-width: @breakpoint-lg) {
-  .formelement {
-    margin-bottom: @spacing20;
-  }
-
-  #title,
-  #description {
-    font-size: @font-size-lead;
-    border-radius: 8px;
-    margin-bottom: @spacing12;
-    padding: @spacing8;
-    width: @width-full;
-  }
-
-  .same_line {
-    flex-direction: column;
-    gap: @spacing12;
-    padding: @spacing0;
-  }
-
-  .saveBtn {
-    float: none;
-    text-align: center;
-    width: @width-full;
-    margin-top: @spacing12;
-  }
-
-  .created_modifaction {
-    width: @width-full;
-    flex-direction: column;
-    gap: @spacing8;
-  }
-}
-
-@media (max-width: @breakpoint-md) {
-  .formelement {
-    margin-bottom: @spacing16;
-  }
-
-  #title,
-  #description {
-    font-size: @font-size-small;
-    border-radius: 8px;
-    margin-bottom: @spacing12;
-    padding: @spacing8;
-    width: @width-full;
-  }
-
-  .same_line {
-    flex-direction: column;
-    gap: @spacing12;
-    padding: @spacing0;
-  }
-
-  .button-group {
-    display: flex;
-    flex-direction: column;
-    gap: @spacing12;
-    align-items: stretch;
-  }
-
-  .saveBtn {
-    order: 3;
-    width: @width-full;
-  }
-
-  .created_modifaction {
-    width: @width-full;
-    flex-direction: column;
-    gap: @spacing8;
-  }
-
-  nz-layout {
-    padding: @spacing0 @spacing20;
-  }
-}
-
-@media (max-width: @breakpoint-xs) {
-  #title,
-  #description {
-    font-size: @font-size-tiny;
-    padding: @spacing8;
-    margin-bottom: @spacing12;
-  }
-
-  .formelement {
-    margin-bottom: @spacing12;
-  }
-
-  .same_line {
-    flex-direction: column;
-    gap: @spacing8;
-  }
-
-  .saveBtn {
-    width: @width-full;
-    text-align: center;
-  }
-
-  .created_modifaction {
-    width: @width-full;
-    display: flex;
-    flex-direction: column;
-    gap: @spacing12;
-  }
-
-  .input-error {
-    font-size: @font-size-tiny;
-  }
-
-  nz-layout {
-    padding: @spacing0 @spacing16;
-  }
 }
