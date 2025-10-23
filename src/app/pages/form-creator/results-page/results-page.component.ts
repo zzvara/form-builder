@@ -7,6 +7,7 @@ import { StatisticsService } from '@pages/form-creator/results-page/services/sta
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-results-page',
@@ -46,7 +47,8 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
     private readonly projectService: ProjectService<Project>,
     private readonly jsonService: JsonService,
     private readonly statisticsService: StatisticsService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +72,8 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   nextPage() {
     this.page! += 1;
     this.onsetPage(this.page!);
+
+    this.router.navigate(['/']);
   }
 
   onsetPage(page: number): void {
