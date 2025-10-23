@@ -69,8 +69,9 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
       modules: {
         toolbar: [
           ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          ['link', 'image'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          [{script: 'sub'}, {script: 'super'}],
+          ['link', 'image', 'code-block'],
           ['clean'],
         ],
       },
