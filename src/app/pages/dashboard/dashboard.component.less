@@ -2,36 +2,36 @@
 @import '../../../common.less';
 @import '../../../typography.less';
 
-@gap-questionnaire: clamp(24px, 4vw, 32px);
-@gap-item: clamp(4px, 1vw, 8px);
-@gap-list-questionnaire: clamp(48px, 6vw, 64px);
+@gap-questionnaire: clamp(@spacing24, 4vw, @spacing32);
+@gap-item: clamp(@spacing4, 1vw, @spacing8);
+@gap-list-questionnaire: clamp(@spacing48, 6vw, 64px);
 
 nz-content {
-  padding: clamp(8px, 2vw, 16px) clamp(8px, 5vw, 32px);
-  padding-top: clamp(48px, 5vw, 64px);
+  padding: clamp(@spacing8, 2vw, @spacing16) clamp(@spacing8, 5vw, @spacing32);
+  padding-top: clamp(@spacing48, 5vw, 64px);
   box-sizing: border-box;
   text-align: left;
   overflow-x: auto;
 }
 
 .toolbar {
-  margin: clamp(24px, 4vw, 32px) 0;
+  margin: clamp(@spacing24, 4vw, @spacing32) 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: clamp(8px, 2vw, 16px);
+  gap: clamp(@spacing8, 2vw, @spacing16);
 
-  > :first-child { margin-right: clamp(8px, 2vw, 16px); }
+  > :first-child { margin-right: clamp(@spacing8, 2vw, @spacing16); }
 
   > div {
     display: flex;
     align-items: center;
     cursor: pointer;
 
-    > :first-child { margin-right: clamp(2px, 1vw, 4px); }
+    > :first-child { margin-right: clamp(@spacing2, 1vw, @spacing4); }
   }
 
-  i[nz-icon] { margin-left: clamp(2px, 1vw, 4px); }
+  i[nz-icon] { margin-left: clamp(@spacing2, 1vw, @spacing4); }
 }
 
 .view {
@@ -48,8 +48,8 @@ nz-content {
     &:last-of-type { margin-top: @gap-questionnaire; }
 
     > h3 {
-      margin: 0 clamp(4px, 1vw, 8px) 0 0;
-      font-size: clamp(16px, 2vw, 20px);
+      margin: 0 clamp(@spacing4, 1vw, @spacing8) 0 0;
+      font-size: clamp(@font-size-h2-sm, 2vw, @font-size-h2-md);
       text-align: left;
     }
   }
@@ -57,14 +57,14 @@ nz-content {
 
 button[nz-button],
 .toolbar > div > span[nz-icon] {
-  font-size: clamp(14px, 2vw, 18px);
+  font-size: clamp(@font-size-body-sm, 2vw, @font-size-body-lg);
   line-height: 1.4;
-  padding: clamp(6px, 1.5vw, 12px) clamp(12px, 2.5vw, 20px);
+  padding: clamp(@spacing6, 1.5vw, @spacing12) clamp(@spacing12, 2.5vw, @spacing20);
   height: clamp(36px, 6vw, 48px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(4px, 1vw, 8px);
+  gap: clamp(@spacing4, 1vw, @spacing8);
 
   > nz-icon { font-size: clamp(16px, 2vw, 20px); }
 }
