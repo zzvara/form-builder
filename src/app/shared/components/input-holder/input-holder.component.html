@@ -15,7 +15,7 @@
     <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit.enabled }">
       <nz-form-control nzErrorTip="">
         <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
-        <textarea
+        <input
           [hidden]="!inlineEdit.enabled"
           nz-input
           nzAutosize
@@ -25,7 +25,6 @@
           [(ngModel)]="inputData.questionValue"
           [ngModelOptions]="{ updateOn: 'change' }"
           (ngModelChange)="change()">
-        </textarea>
       </nz-form-control>
     </nz-form-item>
 
@@ -48,9 +47,19 @@
         ></textarea>
       </nz-form-control>
     </nz-form-item>
-
-    <div>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}:</div>
-    <ng-container *ngComponentOutlet="componentType; inputs: componentInputs" />
+    <nz-form-label>
+      <span>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}</span>
+    </nz-form-label>
+    <nz-form-item class="form-item form-item-border">
+      <nz-form-control>
+        <div
+          class="input-preview-container"
+          (mousedown)="$event.stopPropagation()"
+        >
+          <ng-container *ngComponentOutlet="componentType; inputs: componentInputs"></ng-container>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
   </form>
   <span class="id-text">[ID: {{ inputData.id }} | {{ 'COMPONENTS.SECTION_ID' | translate }}: {{ inputData.sectionId }}]</span>
 </nz-card>
