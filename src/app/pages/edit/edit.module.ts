@@ -16,6 +16,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import {ComponentIconsPipe} from "@pages/edit/config/used-component-icons";
 
 @NgModule({
   declarations: [EditComponent],
@@ -35,6 +36,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     FormsModule,
     InstanceOfSectionListPipe,
     InstanceOfFormInputDataPipe,
+    ComponentIconsPipe
   ],
   providers: [SectionComponent, InstanceOfSectionListPipe, InstanceOfFormInputDataPipe],
   exports: [NzIconModule, EditComponent],
