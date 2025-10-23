@@ -36,21 +36,6 @@ export class EditComponent implements OnInit, OnChanges {
 
   LayoutEnum = LayoutEnum;
 
-  iconMap: Record<string, string> = {
-    InputComponent: 'font-size',
-    NumberInputComponent: 'field-number',
-    DatePickerComponent: 'calendar',
-    RangePickerComponent: 'column-width',
-    TimePickerComponent: 'clock-circle',
-    TextareaComponent: 'file-text',
-    PictureInputComponent: 'picture',
-    SelectComponent: 'down',
-    RadioGroupComponent: 'profile',
-    CheckboxGroupComponent: 'check-square',
-    SectionComponent: 'layout',
-  };
-
-
   constructor(
     private projectService: ProjectService<Project>,
     private undoRedoService: UndoRedoService<EditList[]>,
@@ -284,8 +269,5 @@ export class EditComponent implements OnInit, OnChanges {
         block: 'center',
       });
     }
-  }
-  getIcon(type: string): string {
-    return this.iconMap[type] || 'question-circle';
   }
 }
