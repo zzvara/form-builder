@@ -43,7 +43,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-
+  <nz-divider></nz-divider>
   <nz-form-label nzRequired>
     {{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}
   </nz-form-label>
@@ -75,7 +75,7 @@
       <input nz-input formControlName="placeholderValue" />
     </nz-form-control>
   </nz-form-item>
-
+<nz-divider></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -103,9 +103,6 @@
     }
   </div>
 
-  <nz-form-label>
-    {{ 'COMPONENTS.COMBOBOX.IS_MULTIPLE_CHOICE' | translate }}
-  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="isMultipleChoice">{{ 'COMPONENTS.COMBOBOX.MULTIPLE' | translate }}</label>

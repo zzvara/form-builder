@@ -1,5 +1,4 @@
 {
-    
     "SEARCH": "Keresés",
     "RESET": "Komponens visszaállítása",
     "SAVE": "Mentés",
@@ -73,9 +72,9 @@
         },
         "INPUT_PREVIEW": "Bevitel előnézete",
         "INPUT_QUESTION_MANDATORY": "A beviteli kérdés kitöltése kötelező!",
-        "INPUT_TOOLTIP": "Mutassuk a súgót?",
+        "INPUT_TOOLTIP": "Sugó mutatása",
         "IS_FIELD_REQUIRED": "Ha kötelező, az üzenet nem maradhat üresen.",
-        "IS_REQUIRED": "Kötelező kitölteni?",
+        "IS_REQUIRED": "Kötelező",
         "MAX_LENGTH_NUMBER": "Maximális karakterek száma",
         "MAX_LENGTH_REQUIRED?": "Kötelező megadni a maximális hosszúságot?",
         "MIN_LENGTH_ERROR_MESSAGE": "Hibaüzenet, ha túl rövid a szöveg",
@@ -141,16 +140,16 @@
         "SELECT_DATE": "Válassz dátumot",
         "SELECT_VERSION": "Válaszd ki a verziót",
         "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",
-        "SET_DEFAULT_VALUE?": "Legyen alapértelmezett érték?",
+        "SET_DEFAULT_VALUE?": "Alapértelmezett érték",
         "SET_PLACEHOLDER_VALUE": "Helykitöltő érték beállítása",
         "SHOW_CHARACTER_COUNTER": "Mutassuk a karakterszámlálót?",
         "SHOW_TIME?": "Mutassuk az időt is?",
         "TEXT_AREA": {
             "MAX_LENGTH_NUMBER": "Maximális hossz",
-            "MAX_LENGTH_REQUIRED?": "Kötelező megadni a maximális hosszúságot?",
+            "MAX_LENGTH_REQUIRED?": "Maximális hosszúság megadása",
             "MAX_VALUE_LIMIT": "Nem lehet kisebb a minimális értéknél",
             "MIN_LENGTH_NUMBER": "Minimális hossz",
-            "MIN_LENGTH_REQUIRED?": "Kötelező megadni a minimális hosszúságot?",
+            "MIN_LENGTH_REQUIRED?": "Minimális hosszúság megadása",
             "MODEL_TITLE_TEXTAREA": "Szövegmező (többsoros) beállításai",
             "TITLE": "Szövegmező (többsoros)"
         },
