@@ -1,4 +1,5 @@
 <form id="textareaEditFormID" nz-form [formGroup]="formData">
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_GENERAL' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-label nzRequired
     >{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}ű
   </nz-form-label>
@@ -21,7 +22,7 @@
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
-
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_PLACEHOLDER' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-label>
    {{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}
   </nz-form-label>
@@ -70,7 +71,7 @@
     }
   </div>
 
-  <nz-divider></nz-divider>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -183,7 +184,7 @@
     }
   </div>
 
-  <nz-divider></nz-divider>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_TOOLTIP' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>

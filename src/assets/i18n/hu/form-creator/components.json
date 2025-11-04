@@ -1,7 +1,4 @@
 {
-    "SEARCH": "Keresés",
-    "RESET": "Komponens visszaállítása",
-    "SAVE": "Mentés",
     "COMPONENTS": {
         "BASIC_INPUTS": "Alap bemenetek",
         "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
@@ -58,6 +55,19 @@
         },
         "DATE_PICKER_MODE": "Dátumválasztó módja",
         "DEFAULT_VALUE": "Alapértelmezett érték",
+        "DIVIDER_DEFAULT": "Alapértelmezett érték beállításai",
+        "DIVIDER_DISPLAY": "Megjelenítési beállítások",
+        "DIVIDER_DISPLAY_MODE": "Megjelenítési mód beállításai",
+        "DIVIDER_DROPDOWN": "Dropdown List Settings",
+        "DIVIDER_FORMAT": "Dátumformátum és mód",
+        "DIVIDER_FORMATTING": "Formázási beállítások",
+        "DIVIDER_GENERAL": "Általános információk",
+        "DIVIDER_PLACEHOLDER": "Helykitöltő és alapértelmezett értékek",
+        "DIVIDER_SELECTION": "Választási beállítások",
+        "DIVIDER_STEP_SETTINGS": "Lépésköz beállításai",
+        "DIVIDER_TIME_SETTINGS": "Időformátum beállításai",
+        "DIVIDER_TOOLTIP": "Tooltip beállításai",
+        "DIVIDER_VALIDATION": "Érvényesítési szabályok",
         "INLINE_COMPONENT?": "Megjelenjen beágyazottan?",
         "INLINE_EDIT": "Beágyazott szerkesztés",
         "INPUT": {
@@ -180,5 +190,8 @@
         "TOOLTIP_TEXT": "Súgószöveg",
         "USED_COMPONENTS": "Használt komponensek",
         "WEEK_NUMBERS?": "Mutassuk a hét számát?"
-    }
+    },
+    "RESET": "Komponens visszaállítása",
+    "SAVE": "Mentés",
+    "SEARCH": "Keresés"
 }

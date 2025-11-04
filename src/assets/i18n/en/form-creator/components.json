@@ -1,7 +1,4 @@
 {
-    "SEARCH": "Search components",
-    "RESET": "Reset component",
-    "SAVE": "Save",
     "COMPONENTS": {
         "BASIC_INPUTS": "Basic inputs",
         "CANNOT_BE_EMPTY": "This field cannot be empty.",
@@ -58,6 +55,19 @@
         },
         "DATE_PICKER_MODE": "Date Picker Mode",
         "DEFAULT_VALUE": "Default Value",
+        "DIVIDER_DEFAULT": "Default Value Settings",
+        "DIVIDER_DISPLAY": "Display Options",
+        "DIVIDER_DISPLAY_MODE": "Display Mode Settings",
+        "DIVIDER_DROPDOWN": "Dropdown List Settings",
+        "DIVIDER_FORMAT": "Date Format & Mode",
+        "DIVIDER_FORMATTING": "Formatting Options",
+        "DIVIDER_GENERAL": "General Information",
+        "DIVIDER_PLACEHOLDER": "Placeholder & Default Settings",
+        "DIVIDER_SELECTION": "Selection Settings",
+        "DIVIDER_STEP_SETTINGS": "Step Settings",
+        "DIVIDER_TIME_SETTINGS": "Time Settings",
+        "DIVIDER_TOOLTIP": "Tooltip Settings",
+        "DIVIDER_VALIDATION": "Validation Rules",
         "INLINE_COMPONENT?": "Display inline?",
         "INLINE_EDIT": "Inline edit",
         "INPUT": {
@@ -180,5 +190,8 @@
         "TOOLTIP_TEXT": "Tooltip Text",
         "USED_COMPONENTS": "Used Components",
         "WEEK_NUMBERS?": "Show week numbers?"
-    }
+    },
+    "RESET": "Reset component",
+    "SAVE": "Save",
+    "SEARCH": "Search components"
 }
