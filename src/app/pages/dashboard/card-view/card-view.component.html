@@ -3,8 +3,14 @@
     <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
       <nz-card [nzActions]="[actionEdit, actionDelete]" class="project-card">
         <div class="description">
-          <nz-card-meta [nzTitle]="project.title" [nzDescription]="project.description"></nz-card-meta>
-        </div>
+  <nz-card-meta
+    [nzTitle]="project.title"
+    [nzDescription]="null"
+  ></nz-card-meta>
+
+  <div [innerHTML]="project.description | safeHtml"></div>
+</div>
+
         <div class="card-footer">
           <p>{{ 'GENERAL.CREATED' | translate }}: {{ project.created | date: DateFormat.DATE }}</p>
           <p>{{ 'GENERAL.MODIFIED' | translate }}: {{ project.modified | date: DateFormat.DATE }}</p>

@@ -13,6 +13,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { CardViewComponent } from '@pages/dashboard/card-view/card-view.component';
 import { ListViewComponent } from '@pages/dashboard/list-view/list-view.component';
+import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
+
 
 @NgModule({
   declarations: [DashboardComponent, CardViewComponent, ListViewComponent],
@@ -27,6 +29,7 @@ import { ListViewComponent } from '@pages/dashboard/list-view/list-view.componen
     NzToolTipModule,
     NzPopconfirmModule,
     TranslatePipe,
+    SafeHtmlPipe,
   ],
   providers: [NzModalService],
   exports: [NzLayoutModule],
