@@ -118,22 +118,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     const existingLink = document.getElementById('theme-link') as HTMLLinkElement | null;
 
-    // remove the old theme link if any
     if (existingLink) {
       existingLink.parentNode?.removeChild(existingLink);
     }
 
     if (theme === 'dark') {
-      // dynamically load dark theme css
       const link = document.createElement('link');
       link.id = 'theme-link';
       link.rel = 'stylesheet';
-      link.href = 'dark.css'; // output file name from angular.json
+      link.href = 'dark.css';
       document.head.appendChild(link);
     } else {
       // back to light: ensure only default (light) styles are active
       // no extra CSS to add because light.css is already injected
     }
   }
-
 }
