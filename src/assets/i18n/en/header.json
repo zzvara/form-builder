@@ -6,6 +6,11 @@
             "HU": "Hungarian"
         },
         "IMPORT": "Import questionnaire in JSON format",
-        "HOME": "Back to main page"
+        "HOME": "Back to main page",
+        "THEME": {
+            "TITLE": "Theme: ",
+            "LIGHT": "Light",
+            "DARK": "Dark"
+        }
     }
 }

@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { RoutePath } from '@app/shared/models/route-path.model';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -27,11 +28,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   LanguageEnum = LanguageEnum;
 
+  currentTheme: string = 'light';
+
   constructor(
     private readonly router: Router,
     private readonly headerService: HeaderService,
     private readonly jsonService: JsonService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
 
     this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
+    this.currentTheme = (localStorage.getItem(LocalStorageKey.THEME) as 'light' | 'dark') || 'light';
   }
 
   navigateToHome(): void {
@@ -102,5 +107,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentLanguage = lang;
     this.translate.use(lang);
     localStorage.setItem(LocalStorageKey.LANGUAGE, lang);
+  }
+
+  setTheme(theme: 'light' | 'dark'): void {
+    localStorage.setItem(LocalStorageKey.THEME, theme);
+    this.currentTheme = theme;
   }
 }

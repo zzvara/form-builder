@@ -6,6 +6,11 @@
             "HU": "Magyar"
         },
         "IMPORT": "Űrlap importálása JSON formátumban",
-        "HOME": "Vissza a főoldalra"
+        "HOME": "Vissza a főoldalra",
+        "THEME": {
+            "TITLE": "Téma: ",
+            "LIGHT": "Világos",
+            "DARK": "Sötét"
+        }
     }
 }
