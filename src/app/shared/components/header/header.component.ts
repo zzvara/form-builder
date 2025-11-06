@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly jsonService: JsonService,
     private readonly translate: TranslateService,
     private readonly cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentLanguage =
@@ -51,6 +51,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
     this.currentTheme = (localStorage.getItem(LocalStorageKey.THEME) as 'light' | 'dark') || 'light';
+    if (this.currentTheme === 'dark') {
+      this.setTheme('dark');
+    }
   }
 
   navigateToHome(): void {
@@ -112,5 +115,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
   setTheme(theme: 'light' | 'dark'): void {
     localStorage.setItem(LocalStorageKey.THEME, theme);
     this.currentTheme = theme;
+
+    const existingLink = document.getElementById('theme-link') as HTMLLinkElement | null;
+
+    // remove the old theme link if any
+    if (existingLink) {
+      existingLink.parentNode?.removeChild(existingLink);
+    }
+
+    if (theme === 'dark') {
+      // dynamically load dark theme css
+      const link = document.createElement('link');
+      link.id = 'theme-link';
+      link.rel = 'stylesheet';
+      link.href = 'dark.css'; // output file name from angular.json
+      document.head.appendChild(link);
+    } else {
+      // back to light: ensure only default (light) styles are active
+      // no extra CSS to add because light.css is already injected
+    }
   }
+
 }
