@@ -225,6 +225,35 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
+  duplicateEditComponent(newComponent: FormInputData<any>): void {
+    const cloned = cloneDeep(newComponent);
+    cloned.data.id = uuidv4();
+    const newEdit: EditList = {
+      id: cloned.data.id,
+      data: cloned,
+    };
+    this.editList.push(newEdit);
+    this.undoRedoService.saveState(this.editList);
+  }
+
+  duplicateSectionComponent(sectionData: any, newComponent: FormInputData<any>): void {
+    if (!this.instanceOfSectionListPipe.transform(sectionData)) {
+      return;
+    }
+    const section = this.editList.find(
+      (item) => this.instanceOfSectionListPipe.transform(item.data) && (item.data as SectionList).sectionId === sectionData.sectionId
+    );
+
+    if (section && this.instanceOfSectionListPipe.transform(section.data)) {
+      const sect = section.data as SectionList;
+      const cloned = cloneDeep(newComponent);
+      cloned.data.id = uuidv4();
+      cloned.data.sectionId = sect.sectionId;
+      sect.sectionInputs.push(cloned);
+      this.undoRedoService.saveState(this.editList);
+    }
+  }
+
   getSectionInputStyle(sect: SectionList): { [p: string]: any } {
     let width: number;
     if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {

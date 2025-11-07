@@ -89,6 +89,15 @@
     <span>{{ 'COMPONENTS.INPUT_HOLDER.RESET' | translate }}</span>
   </button>
   <button
+    nz-button
+    nzType="default"
+    nzShape="circle"
+    (click)="duplicateComponent()"
+    class="button-spacing"
+  >
+    <span nz-icon nzType="copy" nzTheme="outline"></span>
+  </button>
+  <button
     nz-popconfirm
     [nzPopconfirmTitle]="'COMPONENTS.INPUT_HOLDER.POP_REMOVE' | translate"
     [nzCancelText]="'GENERAL.CANCEL' | translate"

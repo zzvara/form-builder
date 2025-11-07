@@ -86,6 +86,7 @@
                   [inlineEdit]="inlineEdit"
                   (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
                   (changedEvent)="onValueChanged($event)"
+                  (duplicateComponentEvent)="duplicateSectionComponent(edit.data, $event)"
                 />
               }
             </nz-card>
@@ -100,7 +101,8 @@
               [inlineEdit]="inlineEdit"
               (removeComponentEvent)="removeEditComponent(edit)"
               (changedEvent)="onValueChanged($event)"
-            />
+              (duplicateComponentEvent)="duplicateEditComponent($event)"
+          />
           }
         }
       </div>

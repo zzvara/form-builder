@@ -198,6 +198,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
 // The data shown in the edit sidebar
 export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {
   return [
+
     {
       groupName: 'COMPONENTS.BASIC_INPUTS',
       active: true,
@@ -206,6 +207,18 @@ export function getSideBarData(component: EditComponent, translate: TranslateSer
     },
     {
       groupName: 'COMPONENTS.SECTIONS',
+      active: true,
+      dropListConnectedTo: () => 'sectionDropList',
+      groupContents: [
+        {
+          title: 'COMPONENTS.SECTION',
+          type: 'SectionComponent',
+          data: null,
+        },
+      ],
+    },
+    {
+      groupName: 'Template',
       active: true,
       dropListConnectedTo: () => 'sectionDropList',
       groupContents: [

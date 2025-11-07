@@ -28,6 +28,7 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
     const closeLabel = this.translate.instant('GENERAL.CANCEL');
     const resetLabel = this.translate.instant('RESET');
     const saveLabel = this.translate.instant('SAVE');
+    const templateLabel = this.translate.instant('Save as Template');
 
     const modal = this.modal.create<E, D>({
       nzTitle: modalData.modalTitle,
@@ -51,12 +52,21 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
           },
         },
         {
+          label: templateLabel,
+          shape: 'round',
+          type: 'dashed',
+          onClick: (editComponentInstance?: E) => {
+            editComponentInstance?.onReset();
+          },
+        },
+        {
           label: saveLabel,
           type: 'primary',
           disabled: (editComponentInstance?: E) => {
             //TODO: this gets called dozens of times with each change in the embedded component (could cause performance issues)
             return editComponentInstance?.isInvalid ?? true;
           },
+
           onClick: (editComponentInstance?: E): NzSafeAny | Promise<NzSafeAny> => {
             const saveSuccess = editComponentInstance?.onSave();
             if (editComponentInstance && dataGetter) {

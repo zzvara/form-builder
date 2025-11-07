@@ -27,6 +27,7 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
 
   @Output() changedEvent = new EventEmitter<D>();
   @Output() removeComponentEvent = new EventEmitter<string>();
+  @Output() duplicateComponentEvent = new EventEmitter<FormInputData<any>>();
 
   @ViewChild('inputHolderForm') form!: NgForm;
   @ViewChild('questionInput') questionInput!: NgModel;
@@ -104,5 +105,14 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
 
   isPristine() {
     return this.form?.pristine ?? true;
+  }
+  duplicateComponent() {
+    const clonedInput: FormInputData<any> = JSON.parse(JSON.stringify(this.formInput));
+    const baseId = this.formInput.data?.id || 'input';
+    clonedInput.data.id = `${baseId}_${Date.now()}`;
+    if (clonedInput.data.sectionId) {
+      clonedInput.data.sectionId = `${clonedInput.data.sectionId}_copy_${Date.now()}`;
+    }
+    this.duplicateComponentEvent.emit(clonedInput);
   }
 }
