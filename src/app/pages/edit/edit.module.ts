@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SectionComponent } from '@app/shared/components/section/section.component';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
+import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
 import { SharedModule } from '@app/shared/shared.module';
 import { TranslatePipe } from '@ngx-translate/core';
 import { EditComponent } from '@pages/edit/edit.component';
@@ -16,7 +17,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import {ComponentIconsPipe} from "@pages/edit/config/used-component-icons";
 
 @NgModule({
   declarations: [EditComponent],
@@ -36,7 +36,7 @@ import {ComponentIconsPipe} from "@pages/edit/config/used-component-icons";
     FormsModule,
     InstanceOfSectionListPipe,
     InstanceOfFormInputDataPipe,
-    ComponentIconsPipe
+    ComponentIconsPipe,
   ],
   providers: [SectionComponent, InstanceOfSectionListPipe, InstanceOfFormInputDataPipe],
   exports: [NzIconModule, EditComponent],
