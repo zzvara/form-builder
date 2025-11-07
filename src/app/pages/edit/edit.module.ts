@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SectionComponent } from '@app/shared/components/section/section.component';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
+import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
 import { SharedModule } from '@app/shared/shared.module';
 import { TranslatePipe } from '@ngx-translate/core';
 import { EditComponent } from '@pages/edit/edit.component';
@@ -35,6 +36,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     FormsModule,
     InstanceOfSectionListPipe,
     InstanceOfFormInputDataPipe,
+    ComponentIconsPipe,
   ],
   providers: [SectionComponent, InstanceOfSectionListPipe, InstanceOfFormInputDataPipe],
   exports: [NzIconModule, EditComponent],
