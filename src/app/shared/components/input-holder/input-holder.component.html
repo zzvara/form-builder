@@ -24,7 +24,9 @@
           [placeholder]="formInput.questionPlaceholder"
           [(ngModel)]="inputData.questionValue"
           [ngModelOptions]="{ updateOn: 'change' }"
-          (ngModelChange)="change()">
+          (ngModelChange)="change()"
+          (mousedown)="$event.stopPropagation()"
+        />
       </nz-form-control>
     </nz-form-item>
 
@@ -52,10 +54,7 @@
     </nz-form-label>
     <nz-form-item class="form-item form-item-border">
       <nz-form-control>
-        <div
-          class="input-preview-container"
-          (mousedown)="$event.stopPropagation()"
-        >
+        <div class="input-preview-container" (mousedown)="$event.stopPropagation()">
           <ng-container *ngComponentOutlet="componentType; inputs: componentInputs"></ng-container>
         </div>
       </nz-form-control>
