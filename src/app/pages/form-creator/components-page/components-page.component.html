@@ -1,14 +1,7 @@
 <nz-layout>
   <div>
-    <app-edit
-      [inlineEdit]="inlineEdit"
-      [projectId]="projectId"
-      [versionNum]="currentVersionNum">
-    </app-edit>
-    <div
-      nz-row
-      id="footerdiv"
-    >
+    <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"> </app-edit>
+    <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
       <div nz-row nzJustify="start" nzAlign="middle" class="footer-inner-row">
         <button
@@ -24,12 +17,7 @@
           {{ 'GENERAL.NEXT' | translate }}
         </button>
         <div class="version-controls">
-          <button
-            nz-button
-            nzType="default"
-            (click)="navigateVersion(-1)"
-            [disabled]="!hasPreviousVersion()"
-          >
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()">
             {{ 'COMPONENTS.PREVIOUS_VERSION' | translate }}
           </button>
           <button
@@ -43,12 +31,7 @@
             {{ currentVersionNum ? ('PROJECT.VERSION' | translate) + ' ' + currentVersionNum : ('COMPONENTS.SELECT_VERSION' | translate) }}
             <i nz-icon nzType="down"></i>
           </button>
-          <button
-            nz-button
-            nzType="default"
-            (click)="navigateVersion(1)"
-            [disabled]="!hasNextVersion()"
-          >
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()">
             {{ 'COMPONENTS.NEXT_VERSION' | translate }}
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
@@ -58,9 +41,7 @@
                 *ngFor="let version of projectHistory; trackBy: trackByVersion"
                 (click)="revertToVersion(version.versionNum)"
               >
-                <span>
-                  {{ 'PROJECT.VERSION' | translate }} {{ version.versionNum }}
-                </span>
+                <span> {{ 'PROJECT.VERSION' | translate }} {{ version.versionNum }} </span>
                 <span
                   nz-popover
                   nzPopoverTrigger="hover"
