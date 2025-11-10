@@ -12,8 +12,14 @@ nz-steps {
 }
 
 .form-container {
-  background-color: @background-white;
   width: @width-full;
   height: auto;
   margin: auto;
+}
+
+.form-page-container {
+  background-color: @background-white;
+  height: auto;
+  margin: 0 clamp(@spacing16, 5vw, @spacing32);
+  margin-bottom: clamp(@spacing16, 5vw, @spacing24);
 }
