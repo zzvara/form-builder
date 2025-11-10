@@ -1,4 +1,4 @@
-<form id="datePickerEditFormID" nz-form [formGroup]="formData">
+<form id="datePickerEditFormID" nz-form [formGroup]="formData" xmlns="http://www.w3.org/1999/html">
   <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_GENERAL' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-label nzRequired
     >{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label
@@ -122,21 +122,19 @@
   </div>
 
   <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_DISPLAY' | translate }}" nzOrientation="left"></nz-divider>
-  <nz-form-label>
-   {{ 'COMPONENTS.DATE_PICKER.WEEK_NUMBERS' | translate }}
-  </nz-form-label>
   <nz-form-item>
-    <nz-form-control>
-      <label nz-checkbox formControlName="showWeekNumber"></label>
-    </nz-form-control>
+  <nz-form-control >
+    <label nz-checkbox formControlName="showWeekNumber" >
+      {{ 'COMPONENTS.DATE_PICKER.WEEK_NUMBERS' | translate }}
+    </label>
+  </nz-form-control>
   </nz-form-item>
 
-  <nz-form-label>
-   {{ 'COMPONENTS.DATE_PICKER.INLINE_COMPONENT' | translate }}
-  </nz-form-label>
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="inlineMode"></label>
+  <label nz-checkbox formControlName="inlineMode">
+   {{ 'COMPONENTS.DATE_PICKER.INLINE_COMPONENT' | translate }}
+  </label>
     </nz-form-control>
   </nz-form-item>
 
