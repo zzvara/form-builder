@@ -100,9 +100,13 @@ nz-layout {
 
 .button-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: clamp(@spacing12, 2vw, @spacing16);
+  gap: @spacing8; // <-- Gombok közötti távolság nagyobb lett
   align-items: center;
+}
+
+.button-group .saveBtn {
+  margin-right: @spacing8;
+  margin-top: 0;
 }
 
 #footerdiv {

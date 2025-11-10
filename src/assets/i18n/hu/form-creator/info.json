@@ -4,9 +4,9 @@
         "FORM_DESCRIPTION_TOOLTIP": "Adja meg a leírást",
         "FORM_TITLE_TOOLTIP": "Adja meg az űrlap címét",
         "OPTIONAL": "(nem kötelező)",
-        "QUESTIONNAIRE": "Kérdőív változat",
-        "SWITCH_TOOLTIP": "Kikapcsolva kérdőív - Bekapcsolva teszt",
-        "TEST": "Teszt változat",
+        "QUESTIONNAIRE": "Kérdőív",
+        "SWITCH_TOOLTIP": "Teszt verzióban megjelölhetők helyes válaszok az egyes kérdésekhez",
+        "TEST": "Teszt",
         "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.(óra:perc)",
         "TITLE_REQUIRED": "A cím kötelező",
         "VERSION": "Változat:"

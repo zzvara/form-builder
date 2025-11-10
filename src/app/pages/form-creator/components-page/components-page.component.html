@@ -1,45 +1,38 @@
 <nz-layout>
   <div>
     <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"> </app-edit>
-
-    <div
-      nz-row
-      id="footerdiv"
-      style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 16px; background: white; border-top: 1px solid lightgray"
-    >
+    <div nz-row id="footerdiv">
       <div nz-col nzSpan="22"></div>
-      <div nz-row nzJustify="start" nzAlign="middle" style="width: 100%">
+      <div nz-row nzJustify="start" nzAlign="middle" class="footer-inner-row">
         <button
           nz-button
           nzType="primary"
           type="submit"
           (click)="nextPage()"
-          class="button-margin next-button"
+          class="next-button"
           [disabled]="isNextButtonDisabled"
           nz-tooltip
           [nzTooltipTitle]="'COMPONENTS.NEXT_TOOLTIP' | translate"
         >
           {{ 'GENERAL.NEXT' | translate }}
         </button>
-
-        <div>
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()" style="margin-right: 8px">
-            {{ 'COMPONENTS.NEXT_VERSION' | translate }}
+        <div class="version-controls">
+          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()">
+            {{ 'COMPONENTS.PREVIOUS_VERSION' | translate }}
           </button>
-        </div>
-
-        <!-- Dropdown -->
-        <div style="margin-left: 8px">
           <button
             nz-button
             nz-dropdown
             nzTrigger="click"
             [nzDropdownMenu]="versionMenu"
             [nzOverlayStyle]="{ 'max-height': '250px', 'overflow-y': 'auto' }"
-            style="width: 120px"
+            class="version-selector"
           >
             {{ currentVersionNum ? ('VERSION' | translate) + ' ' + currentVersionNum : ('COMPONENTS.SELECT_VERSION' | translate) }}
             <i nz-icon nzType="down"></i>
+          </button>
+          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()">
+            {{ 'COMPONENTS.NEXT_VERSION' | translate }}
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
             <ul nz-menu>
@@ -66,7 +59,6 @@
                   (click)="openDiffModal(version)"
                   [nz-tooltip]="'COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
                   class="version-icon-wrapper"
-                  style="margin-left: 8px"
                 >
                   <i nz-icon nzType="diff"></i>
                 </button>
@@ -74,19 +66,13 @@
             </ul>
           </nz-dropdown-menu>
         </div>
-
-        <div>
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()" style="margin-right: 8px">
-            {{ 'COMPONENTS.PREVIOUS_VERSION' | translate }}
-          </button>
-        </div>
-
-        <div style="margin-right: 20px">
+        <div class="redo-undo-container">
           <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
         </div>
-
-        <div style="margin-right: 20px">
-          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">{{ 'COMPONENTS.INLINE_EDIT' | translate }}</label>
+        <div class="inline-edit-container">
+          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">
+            {{ 'COMPONENTS.INLINE_EDIT' | translate }}
+          </label>
         </div>
       </div>
     </div>

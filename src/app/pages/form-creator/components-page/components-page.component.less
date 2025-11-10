@@ -6,7 +6,6 @@ nz-layout {
 }
 
 #footerdiv {
-  margin-top: @spacing12;
   position: fixed;
   bottom: @spacing0;
   right: @spacing0;
@@ -14,30 +13,36 @@ nz-layout {
   padding: @spacing12;
   background: @background-white;
   border-top: @border-default;
+  z-index: 100;
 }
 
-.button-margin {
+.footer-inner-row {
+  width: 100%;
+  align-items: center;
+}
+
+.next-button {
+  margin-left: @spacing8;
   margin-right: @spacing8;
 }
 
-.version-button {
-  margin-right: @spacing8;
+.version-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: @spacing8;
 }
 
-.version-select {
-  margin-right: @spacing8;
+.version-selector {
+  width: 120px;
 }
 
 .redo-undo-container {
-  margin-right: @spacing8;
+  margin-left: @spacing8;
+  margin-right: @spacing20;
 }
 
 .inline-edit-container {
   margin-right: @spacing20;
-}
-
-.full-width {
-  width: @width-full;
 }
 
 .version-icon-wrapper {
