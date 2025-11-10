@@ -102,6 +102,11 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
     return this.form?.valid ?? false;
   }
 
+  isInvalid(): 'error' | 'success' | '' {
+    return !this.inputData.questionValue ? 'error' : 'success';
+  }
+
+
   isPristine() {
     return this.form?.pristine ?? true;
   }
