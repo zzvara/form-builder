@@ -27,7 +27,7 @@
     <div class="header-right">
       <div>
         <div>
-          <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="languageMenu" nz-dropdown>
+          <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="languageMenu" nz-dropdown class="language-selector-button">
             {{ 'HEADER.LANGUAGE.' + (currentLanguage | uppercase) | translate }}
           </button>
         </div>
@@ -46,7 +46,7 @@
       </div>
       <div>
         <div>
-          <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="themeMenu" nz-dropdown>
+          <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="themeMenu" nz-dropdown class="theme-selector-button">
             {{ 'HEADER.THEME.TITLE' | translate }} {{ 'HEADER.THEME.'+currentTheme | uppercase | translate }}
           </button>
         </div>
