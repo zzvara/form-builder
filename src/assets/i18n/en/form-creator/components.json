@@ -14,8 +14,8 @@
         },
         "CHARACTER_COUNTER": "Character Counter",
         "CHECKBOX_GROUP": {
-            "CHECKED?": "Checked?",
-            "DISABLED?": "Disabled?",
+            "CHECKED?": "Checked",
+            "DISABLED?": "Disabled",
             "MODAL_CHECKBOX_GROUP_TITLE": "Edit Checkbox Group Settings",
             "TITLE": "Checkbox group"
         },

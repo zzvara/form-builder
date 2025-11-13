@@ -1,5 +1,4 @@
 {
-    
     "SEARCH": "Keresés",
     "RESET": "Komponens visszaállítása",
     "SAVE": "Mentés",
@@ -15,8 +14,8 @@
         },
         "CHARACTER_COUNTER": "Karakterszámláló",
         "CHECKBOX_GROUP": {
-            "CHECKED?": "Ellenőrizve?",
-            "DISABLED?": "Letiltva?",
+            "CHECKED?": "Alapértelmezetten bejelölve",
+            "DISABLED?": "Letiltva",
             "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése",
             "TITLE": "Jelölőnégyzet-csoport"
         },

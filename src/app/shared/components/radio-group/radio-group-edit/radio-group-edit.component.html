@@ -1,25 +1,50 @@
 <form id="selectEditFormID" nz-form [formGroup]="formData">
   <nz-form-item>
-    <ng-template #listHeader>
-      <div class="list-header">{{ 'COMPONENTS.RADIO_GROUP.CHOICES_OR_VALUES' | translate }}</div>
+    <ng-template #tableHeader>
+      <div class="list-header">
+        {{ 'COMPONENTS.RADIO_GROUP.CHOICES_OR_VALUES' | translate }}
+      </div>
     </ng-template>
+
     <nz-form-control formArrayName="options">
-      <ul nz-list cdkDropList (cdkDropListDropped)="drop($event)" nzBordered [nzHeader]="listHeader">
-        @for (option of options.controls; track option.value.option_id; let i = $index) {
-          <li nz-list-item cdkDrag [cdkDragData]="option">
-            <ul nz-list-item-actions>
-              <nz-list-item-action>
-                <button nz-button nzType="link" nzDanger (click)="removeOption(i)">
-                  {{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}
+      <nz-table
+        #optionTable
+        nzBordered
+        [nzData]="options.controls"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+        [nzTitle]="tableHeader"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+      >
+        <tbody>
+          @for (option of options.controls; track option.value.option_id; let i = $index) {
+            <tr cdkDrag [cdkDragData]="option">
+              <td>
+                <p>
+                  {{ option.value.option_description }}
+                </p>
+              </td>
+              <td class="table-center">
+                <button
+                  nz-button
+                  nzType="link"
+                  nzDanger
+                  (click)="removeOption(i)"
+                >
+                  <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
                 </button>
-              </nz-list-item-action>
-            </ul>
-            <p class="option-description">{{ option.value.option_description }}</p>
-          </li>
-        }
-      </ul>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+
       @if (options.invalid) {
-        <span class="error-text">{{ 'COMPONENTS.RADIO_GROUP.OPTION_ATLEAST' | translate }}: {{ getMinOptions() }}</span>
+        <span class="error-text">
+        {{ 'COMPONENTS.RADIO_GROUP.OPTION_ATLEAST' | translate }}:
+          {{ getMinOptions() }}
+      </span>
       }
     </nz-form-control>
   </nz-form-item>
