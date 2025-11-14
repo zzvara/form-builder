@@ -4,6 +4,8 @@
         "LANGUAGE": {
             "EN": "Angol",
             "HU": "Magyar"
-        }
+        },
+        "IMPORT": "Űrlap importálása JSON formátumban",
+        "HOME": "Vissza a főoldalra"
     }
 }

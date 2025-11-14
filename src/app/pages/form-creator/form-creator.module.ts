@@ -1,3 +1,7 @@
+/*
+ * <<licensetext>>
+ */
+
 import { NgModule } from '@angular/core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -29,7 +33,8 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
 import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
-import { QuillEditorComponent } from "ngx-quill";
+import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -63,8 +68,9 @@ import { QuillEditorComponent } from "ngx-quill";
     NzDescriptionsModule,
     ChangeSummaryComponent,
     IconTypePipe,
-    QuillEditorComponent
-],
+    QuillEditorComponent,
+    SafeHtmlPipe,
+  ],
   providers: [IconTypePipe],
   exports: [],
 })

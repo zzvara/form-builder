@@ -8,7 +8,7 @@
               {{ project.title }}
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
-              {{ project.description }}
+              <div [innerHTML]="project.description | safeHtml"></div>
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
               {{ 'FORM.' + (project.type | uppercase) | translate }}
