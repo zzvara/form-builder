@@ -8,7 +8,7 @@
 @medium: #545454;
 @light: #a6a6a6;
 @lightest: #cccccc;
-@error-color: #ff0e0e;
+@error-color: #ff4d4f;
 @primary: #1890FF;
 
 // optional overrides
@@ -28,8 +28,25 @@
   background: @dark;
 }
 
+.ant-card-bordered {
+  border-color: @medium;
+}
+
+.ant-card-bordered .ant-card-head {
+  border-bottom-color: @medium;
+}
+
+.standalone-input-holder[_ngcontent-ng-c317939174] {
+  border: none !important;
+}
+
 .ant-card-actions {
   background: @dark;
+  border-top-color: @medium;
+}
+
+.ant-card-actions > li:not(:last-child) {
+  border-right-color: @medium;
 }
 
 .delete-icon {
@@ -45,8 +62,8 @@
 }
 
 .theme-selector-button:hover {
-  border-color: @lightest !important; 
-  color: @lightest !important;
+  border-color: @primary !important;
+  color: @primary !important;
 }
 
 .theme-selector-button {
@@ -54,16 +71,20 @@
 }
 
 .language-selector-button:hover {
-  border-color: @lightest !important;
-  color: @lightest !important; 
+  border-color: @primary !important;
+  color: @primary !important;
 }
 
 .language-selector-button {
-  border-color: @primary;
+  border-color: @light;
 }
 
 .nz-steps {
   background: @darkest;
+}
+
+.form-page-container {
+  background: @dark;
 }
 
 .form-container {
@@ -103,7 +124,12 @@
 }
 
 .ant-modal-body .ant-input {
-  border-color: @white;
+  border-color: @light;
+}
+
+.ant-input-affix-wrapper {
+  border-color: @light;
+  background-color: @dark;
 }
 
 .ant-modal-body .ant-input-affix-wrapper-status-success {
@@ -128,4 +154,30 @@
 
 .ant-tabs-nav-list {
   border-bottom: 1px solid @medium;
+}
+
+.ant-checkbox-inner {
+  border-color: @light;
+}
+
+.ant-radio-inner {
+  border-color: @light;
+}
+
+.ant-input {
+  border-color: @light;
+}
+
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  color: @error-color;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: @light;
+}
+
+// Scrollbar
+
+:root {
+  scrollbar-color: @medium @dark;
 }
