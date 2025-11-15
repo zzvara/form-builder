@@ -33,6 +33,7 @@ export class EditComponent implements OnInit, OnChanges {
   sideBarData = getSideBarData(this, this.translate);
 
   editList: EditList[] = [];
+  names: string[] = [];
 
   LayoutEnum = LayoutEnum;
 
@@ -62,6 +63,7 @@ export class EditComponent implements OnInit, OnChanges {
       const project = this.projectService.searchData(this.projectId)[0];
       if (project?.editList && project.editList.length > 0) {
         this.editList = cloneDeep(project.editList);
+        this.names = this.getCustomTitles();
       }
     }
 
@@ -88,6 +90,7 @@ export class EditComponent implements OnInit, OnChanges {
       for (const edit of this.editList) {
         project.editList.push(cloneDeep(edit));
       }
+      this.names = this.getCustomTitles();
       this.projectService.update(this.projectId!, project);
     }
   }
@@ -102,6 +105,7 @@ export class EditComponent implements OnInit, OnChanges {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       if (project?.editList) {
         this.editList = cloneDeep(project.editList);
+        this.names = this.getCustomTitles();
         this.undoRedoService.saveState(this.editList);
       }
     }
@@ -121,8 +125,10 @@ export class EditComponent implements OnInit, OnChanges {
   undoRedo(undoRedoEvent: UndoRedoEnum): void {
     if (undoRedoEvent === UndoRedoEnum.UNDO) {
       this.editList = this.undoRedoService.undo() ?? [];
+      this.names = this.getCustomTitles();
     } else {
       this.editList = this.undoRedoService.redo() ?? [];
+      this.names = this.getCustomTitles();
     }
   }
 
@@ -144,6 +150,7 @@ export class EditComponent implements OnInit, OnChanges {
             sectionInputs: [],
           },
         };
+        this.names = this.getCustomTitles();
         event.container.data.splice(event.currentIndex, 0, newSectionEdit);
       } else {
         // Create a deep copy of the dropped item with updated ID
@@ -161,6 +168,7 @@ export class EditComponent implements OnInit, OnChanges {
           id: newItemId,
           data: newItem,
         };
+        this.names = this.getCustomTitles();
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
     } else if (instanceOfFormInputData(event.item.data)) {
@@ -174,6 +182,7 @@ export class EditComponent implements OnInit, OnChanges {
         id: event.item.data.data.id!,
         data: event.item.data,
       };
+      this.names = this.getCustomTitles();
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
@@ -217,6 +226,7 @@ export class EditComponent implements OnInit, OnChanges {
 
   removeEditComponent(edit: EditList): void {
     this.editList = this.editList.filter((e) => e.id !== edit.id);
+    this.names = this.getCustomTitles();
     this.undoRedoService.saveState(this.editList);
   }
 
@@ -269,5 +279,13 @@ export class EditComponent implements OnInit, OnChanges {
         block: 'center',
       });
     }
+  }
+
+  updateName(): void {
+    this.names = this.getCustomTitles();
+  }
+
+  private getCustomTitles(): string[] {
+    return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
   }
 }

@@ -49,6 +49,7 @@
         ></textarea>
       </nz-form-control>
     </nz-form-item>
+
     <nz-form-label>
       <span>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}</span>
     </nz-form-label>
@@ -62,20 +63,24 @@
   </form>
   <span class="id-text">[ID: {{ inputData.id }} | {{ 'COMPONENTS.SECTION_ID' | translate }}: {{ inputData.sectionId }}]</span>
 </nz-card>
+
 <ng-template #titleTemplate>
-  <span>{{ formInput.title | translate }}</span>
-  @if (inputHolderForm.invalid) {
-    <span
-      nz-tooltip
-      [nzTooltipTitle]="'COMPONENTS.INPUT_HOLDER.INVALID_INPUT' | translate"
-      nzTooltipColor="red"
-      nz-icon
-      nzType="exclamation-circle"
-      nzTheme="outline"
-      class="error-icon"
-    ></span>
-  }
+  <div style="display: flex; flex-direction: row; align-items: center">
+    @if (inputHolderForm.invalid) {
+      <nz-icon
+        class="mr-12 error-icon"
+        nzType="exclamation-circle"
+        nzTheme="fill"
+        nz-tooltip
+        [nzTooltipTitle]="'COMPONENTS.INPUT_HOLDER.INVALID_INPUT' | translate"
+        nzTooltipColor="red"
+      />
+    }
+
+    <ng-container [ngTemplateOutlet]="customTitle"></ng-container>
+  </div>
 </ng-template>
+
 <ng-template #headerButtons>
   <button nz-button nzType="primary" nzShape="circle" (click)="editComponent()" class="button-spacing">
     <span nz-icon nzType="edit" nzTheme="outline"></span>

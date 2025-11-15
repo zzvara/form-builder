@@ -36,7 +36,6 @@
 
 .error-icon {
   color: @accent-danger;
-  margin-left: @spacing12;
 }
 
 .button-spacing {
@@ -46,4 +45,8 @@
 .input-holder-padding {
   padding-right: @spacing24;
   padding-left: @spacing24;
+}
+
+:host ::ng-deep .custom-header .ant-card-head-title {
+  text-overflow: unset;
 }

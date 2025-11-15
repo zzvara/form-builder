@@ -3,6 +3,22 @@
   "RESET": "Komponens visszaállítása",
   "SAVE": "Mentés",
   "COMPONENTS": {
+    "NAME_EDIT": {
+      "PLACEHOLDER": "Egyedi név",
+      "ERRORS": {
+        "REQUIRED": "Az egyedi név megadása kötelező!",
+        "INVALID_JS_VARIABLE_NAME": "A megadott név nem érvényes JavaScript változónév!",
+        "NOT_UNIQUE": "Ez a név már foglalt! Kérlek válassz másikat."
+      },
+      "TOOLTIP": {
+        "DEFAULT": "A névnek érvényes JavaScript változónévnek kell lennie:",
+        "LINE_1": "Nem kezdődhet számmal",
+        "LINE_2": "Betűvel, _ vagy $ jellel kell kezdődnie",
+        "LINE_3": "Tartalmazhat betűket, számokat, _, $ karaktert",
+        "LINE_4": "Nem lehet JavaScript kulcsszó (pl. class, return)",
+        "LINE_5": "Nem tartalmazhat szóközt vagy speciális jeleket"
+      }
+    },
     "BASIC_INPUTS": "Alap bemenetek",
     "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
     "CANNOT_BE_LOWER_THAN": "Az érték nem lehet kisebb, mint",

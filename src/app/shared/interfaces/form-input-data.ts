@@ -7,6 +7,8 @@ export interface FormInputData<D extends InputData<T> = InputData, T = any> {
   descriptionPlaceholder?: string;
   type: keyof typeof translateComponentType;
   data: D | null;
+
+  customTitle?: string;
 }
 
 export function instanceOfFormInputData(object: any): object is FormInputData {

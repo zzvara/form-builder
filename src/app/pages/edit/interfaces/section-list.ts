@@ -6,4 +6,6 @@ export interface SectionList {
   layout: LayoutEnum;
   reorderEnabled: boolean;
   sectionInputs: FormInputData[];
+
+  customTitle?: string;
 }

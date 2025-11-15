@@ -42,14 +42,9 @@
               "
             >
               <ng-template #sectionTitle>
-                <div class="section-title">
-                  {{ 'EDIT.SECTION' | translate }}
-                  <span class="section-id"
-                    >[ID: {{ edit.data.sectionId }} | {{ 'EDIT.LAYOUT' | translate }}:
-                    {{ 'EDIT.LAYOUT_TYPE.' + (edit.data.layout | uppercase) | translate }}]</span
-                  >
-                </div>
+                <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
               </ng-template>
+
               <ng-template #sectionButtons>
                 <div class="section-buttons">
                   <span>{{ 'COMPONENTS.REORDER' | translate }}: </span>
@@ -77,9 +72,14 @@
               </ng-template>
 
               @for (item of edit.data.sectionInputs; track item) {
+                <ng-template #inputTitleTemp>
+                  <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
+                </ng-template>
+
                 <app-input-holder
                   class="element-box input-holder"
                   cdkDrag
+                  [customTitle]="inputTitleTemp"
                   [cdkDragData]="item"
                   [ngStyle]="getSectionInputStyle(edit.data)"
                   [formInput]="item"
@@ -90,11 +90,16 @@
               }
             </nz-card>
           } @else if (edit.data | instanceOfFormInputData) {
+            <ng-template #inputTitleTemp>
+              <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
+            </ng-template>
+
             <!-- @todo Again, a large built-in width and lots of margins, the code should be reviewed for similar cases. -->
             <app-input-holder
               class="element-box standalone-input-holder"
               cdkDrag
               [id]="edit.id"
+              [customTitle]="inputTitleTemp"
               [cdkDragData]="edit"
               [formInput]="edit.data"
               [inlineEdit]="inlineEdit"
@@ -106,6 +111,7 @@
       </div>
     </nz-content>
   </nz-layout>
+
   <nz-sider nzWidth="300px" nzTheme="light" class="right-sider">
     <h3>{{ 'COMPONENTS.USED_COMPONENTS' | translate }}</h3>
     <div
@@ -123,21 +129,20 @@
               <span nz-icon nzType="layout" nzTheme="outline"></span>
               <span class="component-title">{{ 'EDIT.SECTION' | translate | uppercase }}</span>
               <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
-              <span nz-icon nzType="aim" nzTheme="outline"></span>
-            </span>
+                <span nz-icon nzType="aim" nzTheme="outline"></span>
+              </span>
             </div>
           </div>
         } @else if (edit.data | instanceOfFormInputData) {
           <div class="component-item" cdkDrag [cdkDragData]="edit">
-            <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe " nzTheme="outline"></span>
+            <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
             <span class="component-title">{{ edit.data.title | translate }}</span>
             <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
-            <span nz-icon nzType="aim" nzTheme="outline"></span>
-          </span>
+              <span nz-icon nzType="aim" nzTheme="outline"></span>
+            </span>
           </div>
         }
       }
     </div>
   </nz-sider>
-
 </nz-layout>

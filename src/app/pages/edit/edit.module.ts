@@ -1,7 +1,9 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { EditNameComponent } from '@app/shared/components/edit-name/edit-name.component';
 import { SectionComponent } from '@app/shared/components/section/section.component';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
@@ -14,29 +16,40 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzWaveModule } from 'ng-zorro-antd/core/wave';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
+const ngZorro = [
+  NzLayoutModule,
+  NzIconModule,
+  NzFormModule,
+  NzCardModule,
+  NzButtonModule,
+  NzWaveModule,
+  NzPopconfirmModule,
+  NzSwitchModule,
+  NzInputModule,
+  NzToolTipModule,
+];
 
 @NgModule({
-  declarations: [EditComponent],
+  declarations: [EditComponent, EditNameComponent],
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
-    NzLayoutModule,
-    NzIconModule,
-    NzFormModule,
     DragDropModule,
     SharedModule,
-    NzCardModule,
-    NzButtonModule,
-    NzWaveModule,
-    NzPopconfirmModule,
     TranslatePipe,
-    NzSwitchModule,
     FormsModule,
     InstanceOfSectionListPipe,
     InstanceOfFormInputDataPipe,
     ComponentIconsPipe,
+    ...ngZorro,
   ],
   providers: [SectionComponent, InstanceOfSectionListPipe, InstanceOfFormInputDataPipe],
   exports: [NzIconModule, EditComponent],

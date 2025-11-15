@@ -1,0 +1,23 @@
+@import '../../../../colors.less';
+@import '../../../../common.less';
+@import '../../../../shadows.less';
+@import '../../../../typography.less';
+
+.custom-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: @spacing8;
+}
+
+.action-icon {
+  cursor: pointer;
+  &:hover {
+    color: @primary-color;
+  }
+}
+
+.error-icon {
+  color: @accent-danger;
+  margin-left: @spacing12;
+}

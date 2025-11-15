@@ -1,0 +1,65 @@
+<div class="custom-title">
+  <nz-icon
+    class="mr-4"
+    [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"
+    nz-tooltip
+    [nzTooltipTitle]="((edit.data | instanceOfFormInputData) ? edit.data.title : 'EDIT.SECTION') | translate"
+  ></nz-icon>
+
+  @if (isEditName) {
+    <form nz-form [formGroup]="form">
+      <nz-form-control [nzValidateStatus]="form.controls['name']">
+        <ng-template #suffixTemplate>
+          @if (form.controls['name'].invalid) {
+            <ng-template #errorTooltipTemplate>
+              @if (form.controls['name'].hasError('required')) {
+                {{ 'COMPONENTS.NAME_EDIT.ERRORS.REQUIRED' | translate }}
+              } @else if (form.controls['name'].hasError('invalidJsVariableName')) {
+                {{ 'COMPONENTS.NAME_EDIT.ERRORS.INVALID_JS_VARIABLE_NAME' | translate }}
+              } @else if (form.controls['name'].hasError('notUnique')) {
+                {{ 'COMPONENTS.NAME_EDIT.ERRORS.NOT_UNIQUE' | translate }}
+              }
+            </ng-template>
+            <nz-icon nzType="exclamation-circle" nzTheme="outline" class="error-icon" nz-tooltip [nzTooltipTitle]="errorTooltipTemplate" />
+          }
+        </ng-template>
+
+        <ng-template #inputTooltipTemplate>
+          <div>
+            {{ 'COMPONENTS.NAME_EDIT.TOOLTIP.DEFAULT' | translate }}
+            <ul class="m-0 pl-20">
+              @for (i of [1, 2, 3, 4, 5]; track $index) {
+                <li>
+                  {{ 'COMPONENTS.NAME_EDIT.TOOLTIP.LINE_' + i | translate }}
+                </li>
+              }
+            </ul>
+          </div>
+        </ng-template>
+
+        <nz-input-group style="width: 250px" [nzSuffix]="suffixTemplate">
+          <input
+            nz-input
+            formControlName="name"
+            type="text"
+            [placeholder]="'COMPONENTS.NAME_EDIT.PLACEHOLDER' | translate"
+            [class.ant-input-status-error]="form.controls['name'].invalid"
+            nz-tooltip
+            [nzTooltipTitle]="inputTooltipTemplate"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </form>
+
+    <nz-icon class="ml-4 action-icon" nzType="save" (click)="saveName()" (mousedown)="$event.stopPropagation()"></nz-icon>
+    <nz-icon class="ml-4 action-icon" nzType="close" (click)="setEditMode(false)" (mousedown)="$event.stopPropagation()"></nz-icon>
+  } @else {
+    {{
+      edit.data.customTitle
+        ? edit.data.customTitle
+        : (((edit.data | instanceOfFormInputData) ? edit.data.title : 'EDIT.SECTION') | translate)
+    }}
+
+    <nz-icon class="ml-4 action-icon" nzType="edit" (click)="setEditMode(true)" (mousedown)="$event.stopPropagation()"></nz-icon>
+  }
+</div>

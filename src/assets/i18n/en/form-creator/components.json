@@ -3,6 +3,22 @@
   "RESET": "Reset component",
   "SAVE": "Save",
   "COMPONENTS": {
+    "NAME_EDIT": {
+      "PLACEHOLDER": "Unique name",
+      "ERRORS": {
+        "REQUIRED": "Providing a unique name is required!",
+        "INVALID_JS_VARIABLE_NAME": "The provided name is not a valid JavaScript variable name!",
+        "NOT_UNIQUE": "This name is already taken! Please choose another."
+      },
+      "TOOLTIP": {
+        "DEFAULT": "The name must be a valid JavaScript variable identifier:",
+        "LINE_1": "It cannot start with a number",
+        "LINE_2": "It must start with a letter, _ or $",
+        "LINE_3": "It may contain letters, digits, _, or $",
+        "LINE_4": "It cannot be a JavaScript reserved keyword (e.g., class, return)",
+        "LINE_5": "It cannot contain spaces or special characters"
+      }
+    },
     "BASIC_INPUTS": "Basic inputs",
     "CANNOT_BE_EMPTY": "This field cannot be empty.",
     "CANNOT_BE_LOWER_THAN": "The value cannot be lower than",
