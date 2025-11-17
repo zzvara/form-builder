@@ -1,3 +1,7 @@
+/*
+ * <<licensetext>>
+ */
+
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { NgComponentOutlet } from '@angular/common';
@@ -101,11 +105,6 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
   isValid() {
     return this.form?.valid ?? false;
   }
-
-  isInvalid(): 'error' | 'success' | '' {
-    return !this.inputData.questionValue ? 'error' : 'success';
-  }
-
 
   isPristine() {
     return this.form?.pristine ?? true;

@@ -1,3 +1,7 @@
+<!--
+  ~ <<licensetext>>
+  -->
+
 <nz-card
   [nzTitle]="titleTemplate"
   [nzExtra]="headerButtons"
@@ -9,34 +13,34 @@
   }"
 >
   <form #inputHolderForm="ngForm" nz-form class="form-container">
-    <nz-form-label nzRequired
-      ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
-    >
+    <nz-form-label nzRequired>
+      <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
+    </nz-form-label>
     <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit.enabled }">
-      <nz-form-control [nzValidateStatus]="isInvalid()" nzErrorTip="">
-        <span *ngIf="!inlineEdit.enabled">{{ inputData.questionValue }}</span>
-        <nz-input-group *ngIf="inlineEdit.enabled" [nzSuffix]="suffixTemplate">
-          <input
-            nz-input
-            nzSize="small"
-            name="inputQuestion"
-            required
-            [placeholder]="formInput.questionPlaceholder"
-            (mousedown)="$event.stopPropagation()"
-            [(ngModel)]="inputData.questionValue"
-            [ngModelOptions]="{ updateOn: 'change' }"
-            (ngModelChange)="change()"
-          />
-        </nz-input-group>
-        <ng-template #suffixTemplate>
-          <i
-            nz-icon
-            nzType="warning"
-            *ngIf="!inputData.questionValue"
-            (click)="inputData.questionValue=''; change()"
-            class="error-icon"
-          ></i>
-        </ng-template>
+      <nz-form-control [nzValidateStatus]="!this.inputData.questionValue ? 'error' : 'success'" nzErrorTip="">
+        @if (!inlineEdit.enabled) {
+          <span>{{ inputData.questionValue }}</span>
+        } @else {
+          <nz-input-group [nzSuffix]="suffixTemplate">
+            <input
+              nz-input
+              nzSize="small"
+              name="inputQuestion"
+              required
+              [placeholder]="formInput.questionPlaceholder"
+              (mousedown)="$event.stopPropagation()"
+              [(ngModel)]="inputData.questionValue"
+              [ngModelOptions]="{ updateOn: 'change' }"
+              (ngModelChange)="change()"
+            />
+          </nz-input-group>
+
+          <ng-template #suffixTemplate>
+            @if (!inputData.questionValue) {
+              <i nz-icon nzType="warning" (click)="inputData.questionValue = ''; change()" class="error-icon"></i>
+            }
+          </ng-template>
+        }
       </nz-form-control>
     </nz-form-item>
 
