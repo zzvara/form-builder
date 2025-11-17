@@ -42,7 +42,6 @@
         <nz-form-label [nzRequired]="getControlValue('required')"
           ><span>{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
         >
-        <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_FORMAT' | translate }}" nzOrientation="left"></nz-divider>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <nz-date-picker
@@ -67,6 +66,7 @@
       </div>
     }
   </div>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_FORMAT' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-label nzRequired>
     {{ 'COMPONENTS.DATE_PICKER_MODE' | translate }}
   </nz-form-label>
