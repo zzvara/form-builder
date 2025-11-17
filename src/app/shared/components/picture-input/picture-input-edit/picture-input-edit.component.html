@@ -1,6 +1,7 @@
 <form id="pictureInputEditFormID" nz-form [formGroup]="formData">
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_GENERAL' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-label nzRequired
-    ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
+    >{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label
   >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
@@ -14,7 +15,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+    {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -23,7 +24,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+    {{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
