@@ -12,6 +12,7 @@
             "NONE": "— none —",
             "REMOVED_INPUTS": "Removed Inputs"
         },
+        "ERROR_DUPLICATE_OPTION": "Already used",
         "CHARACTER_COUNTER": "Character Counter",
         "CHECKBOX_GROUP": {
             "CHECKED?": "Checked",
@@ -23,6 +24,7 @@
             "ADD_OPTION": "Add new option",
             "CHOICES_VALUES": "Choices and values",
             "COMBOBOX_REMOVE": "Remove option",
+            "COMBOBOX_EDIT": "Edit option",
             "IS_MULTIPLE_CHOICE": "Allow multiple selections?",
             "MODEL_TITLE_SELECT": "Dropdown list settings",
             "MULTIPLE": "Multiple answers allowed",

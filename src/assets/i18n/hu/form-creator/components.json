@@ -12,6 +12,7 @@
             "NONE": "— nincs —",
             "REMOVED_INPUTS": "Eltávolított mezők"
         },
+        "ERROR_DUPLICATE_OPTION": "Foglalt",
         "CHARACTER_COUNTER": "Karakterszámláló",
         "CHECKBOX_GROUP": {
             "CHECKED?": "Alapértelmezetten bejelölve",
@@ -22,7 +23,8 @@
         "COMBOBOX": {
             "ADD_OPTION": "Új lehetőség hozzáadása",
             "CHOICES_VALUES": "Lehetőségek és értékek",
-            "COMBOBOX_REMOVE": "Lehetőség eltávolítása",
+            "COMBOBOX_REMOVE": "Opciók eltávolítása",
+            "COMBOBOX_EDIT": "Opciók szerkesztése",
             "IS_MULTIPLE_CHOICE": "Engedélyezett több választás?",
             "MODEL_TITLE_SELECT": "Legördülő lista beállításai",
             "MULTIPLE": "Több válasz lehetséges",
