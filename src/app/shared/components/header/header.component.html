@@ -54,11 +54,11 @@
 
         <nz-dropdown-menu #themeMenu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item (click)="setTheme('dark')">
+            <li nz-menu-item (click)="setTheme(ThemeEnum.DARK)">
               <span nz-icon nzType="moon" nzTheme="outline"></span>
               {{ 'HEADER.THEME.DARK' | translate }}
             </li>
-            <li nz-menu-item (click)="setTheme('light')">
+            <li nz-menu-item (click)="setTheme(ThemeEnum.LIGHT)">
               <span nz-icon nzType="sun" nzTheme="outline"></span>
               {{ 'HEADER.THEME.LIGHT' | translate }}
             </li>

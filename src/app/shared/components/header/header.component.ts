@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { RoutePath } from '@app/shared/models/route-path.model';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
+import { ThemeEnum } from '@app/shared/enums/theme.enum';
 
 @Component({
   selector: 'app-header',
@@ -22,12 +23,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   contextActions: ContextAction[] = [];
   options = MenuOption;
   currentLanguage: LanguageEnum = LanguageEnum.EN;
+  currentTheme: ThemeEnum = ThemeEnum.LIGHT;
+
   private optionsSub?: Subscription;
   private actionsSub?: Subscription;
 
   LanguageEnum = LanguageEnum;
-
-  currentTheme: string = 'light';
+  ThemeEnum = ThemeEnum;
 
   constructor(
     private readonly router: Router,
@@ -48,9 +50,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
 
     this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
-    this.currentTheme = (localStorage.getItem(LocalStorageKey.THEME) as 'light' | 'dark') || 'light';
-    if (this.currentTheme === 'dark') {
-      this.setTheme('dark');
+    this.currentTheme =
+      localStorage.getItem(LocalStorageKey.THEME) && localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
+        ? ThemeEnum.LIGHT
+        : ThemeEnum.DARK;
+
+    if (this.currentTheme === ThemeEnum.DARK) {
+      this.setTheme(ThemeEnum.DARK);
     }
   }
 
@@ -111,7 +117,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.setItem(LocalStorageKey.LANGUAGE, lang);
   }
 
-  setTheme(theme: 'light' | 'dark'): void {
+  setTheme(theme: ThemeEnum): void {
     localStorage.setItem(LocalStorageKey.THEME, theme);
     this.currentTheme = theme;
 
@@ -121,7 +127,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       existingLink.parentNode?.removeChild(existingLink);
     }
 
-    if (theme === 'dark') {
+    if (theme === ThemeEnum.DARK) {
       const link = document.createElement('link');
       link.id = 'theme-link';
       link.rel = 'stylesheet';
