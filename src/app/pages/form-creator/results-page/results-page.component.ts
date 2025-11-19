@@ -8,6 +8,7 @@ import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { FormInputData } from '@app/shared/interfaces/form-input-data';
 
 @Component({
   selector: 'app-results-page',
@@ -24,7 +25,7 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
   latestVersionNum?: number;
-  sectionInputs: any[] = []; // @Todo: change any
+  sectionInputs: FormInputData[] = [];
 
   columnsConfig: ColumnItem[] = [
     {

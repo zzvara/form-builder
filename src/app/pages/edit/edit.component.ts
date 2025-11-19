@@ -16,6 +16,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
+import { NgStyle } from '@angular/common';
+
 
 @Component({
   selector: 'app-edit',
@@ -225,7 +227,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList): { [p: string]: any } {
+  getSectionInputStyle(sect: SectionList): NgStyle["ngStyle"] {
     let width: number;
     if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
