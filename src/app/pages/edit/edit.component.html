@@ -17,14 +17,14 @@
           @if (edit.data | instanceOfSectionList) {
             <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
             <nz-card
-              [id]="edit.data.sectionId"
+              [id]="edit.id"
               [nzTitle]="sectionTitle"
               [nzExtra]="sectionButtons"
               cdkDrag
               cdkDropList
               [cdkDropListOrientation]="edit.data.layout"
               [cdkDropListConnectedTo]="getSectionDropListConnectedTo(edit.data)"
-              [cdkDropListData]="edit.data.sectionInputs"
+              [cdkDropListData]="edit.data.sectionInputs || []"
               [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
               (cdkDropListDropped)="dropIntoSection($event)"
               class="element-list p-3 section-card"
@@ -45,7 +45,7 @@
                 <div class="section-title">
                   {{ 'EDIT.SECTION' | translate }}
                   <span class="section-id"
-                    >[ID: {{ edit.data.sectionId }} | {{ 'EDIT.LAYOUT' | translate }}:
+                    >[ID: {{ edit.id }} | {{ 'EDIT.LAYOUT' | translate }}:
                     {{ 'EDIT.LAYOUT_TYPE.' + (edit.data.layout | uppercase) | translate }}]</span
                   >
                 </div>

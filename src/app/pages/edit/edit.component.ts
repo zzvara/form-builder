@@ -11,7 +11,7 @@ import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
 import { SectionList } from '@pages/edit/interfaces/section-list';
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, drop } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
@@ -54,7 +54,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionIds: () => string[] = () =>
-    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
+    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
     // If editList is empty but there's JSON data with editList, use that instead
@@ -181,24 +181,31 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
+    let object: any = event.item.data;
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
-      const droppedInput: FormInputData = event.item.data;
-      // Create a deep copy of the dropped item with updated ID
+    } else if (this.getSectionIds().includes(event.container.id) && this.getSectionIds().includes(event.previousContainer.id)) {
+      // Move items between sections
+      object.data.sectionId = event.container.id;
+      event.container.data.splice(event.currentIndex, 0, object);
+      event.previousContainer.data.splice(event.previousIndex, 1);
+    } else if (!object.data?.data?.id) {
+      // Add a completely new item to any drop list
+      const droppedInput: FormInputData = object;
       const newItemId = uuidv4();
       const newItem: FormInputData = cloneDeep(droppedInput);
       newItem.data!.id = newItemId;
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
-    } else if (instanceOfFormInputData(event.item.data)) {
-      transferArrayItem(event.previousContainer.data as FormInputData[], event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      const transferredInput = event.item.data.data as FormInputData;
-      transferredInput.data!.sectionId = event.container.id;
-      event.container.data.splice(event.currentIndex, 0, transferredInput);
+      // Move existing item from edit area to section or from section to edit area
+      const droppedInput: FormInputData = object;
+      const movedItemId = object.data?.data?.id;
+      const movedItem: FormInputData = cloneDeep(droppedInput);
+      let toMove: any = movedItem.data;
+      event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
     this.undoRedoService.saveState(this.editList);
@@ -208,7 +215,7 @@ export class EditComponent implements OnInit, OnChanges {
     return this.getSectionIds();
   }
 
-  getSectionDropListConnectedTo(sect: SectionList): string[] {
+  getSectionDropListConnectedTo(sect: any): string[] {
     if (sect.reorderEnabled) {
       return [];
     }

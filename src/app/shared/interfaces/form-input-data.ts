@@ -10,5 +10,5 @@ export interface FormInputData<D extends InputData<T> = InputData, T = any> {
 }
 
 export function instanceOfFormInputData(object: any): object is FormInputData {
-  return object && 'title' in object && 'type' in object && 'data' in object;
+  return object && (object.data && (('title' in object.data && 'type' in object.data && 'data' in object.data)) || ('title' in object && 'type' in object && 'data' in object));
 }
