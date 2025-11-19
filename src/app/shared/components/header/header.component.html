@@ -27,22 +27,44 @@
         </span>
       }
     </div>
-    <div>
+    <div class="header-right">
       <div>
-        <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="languageMenu" nz-dropdown>
-          {{ 'HEADER.LANGUAGE.' + (currentLanguage | uppercase) | translate }}
-        </button>
+        <div>
+          <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="languageMenu" nz-dropdown>
+            {{ 'HEADER.LANGUAGE.' + (currentLanguage | uppercase) | translate }}
+          </button>
+        </div>
+        <nz-dropdown-menu #languageMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="setLanguage(LanguageEnum.EN)" [class.selected]="currentLanguage === LanguageEnum.EN">
+              <span class="fi fi-gb"></span> {{ 'HEADER.LANGUAGE.EN' | translate }}
+            </li>
+            <li nz-menu-item (click)="setLanguage(LanguageEnum.HU)" [class.selected]="currentLanguage === LanguageEnum.HU">
+              <span class="fi fi-hu"></span> {{ 'HEADER.LANGUAGE.HU' | translate }}
+            </li>
+          </ul>
+        </nz-dropdown-menu>
       </div>
-      <nz-dropdown-menu #languageMenu="nzDropdownMenu">
-        <ul nz-menu>
-          <li nz-menu-item (click)="setLanguage(LanguageEnum.EN)" [class.selected]="currentLanguage === LanguageEnum.EN">
-            <span class="fi fi-gb"></span> {{ 'HEADER.LANGUAGE.EN' | translate }}
-          </li>
-          <li nz-menu-item (click)="setLanguage(LanguageEnum.HU)" [class.selected]="currentLanguage === LanguageEnum.HU">
-            <span class="fi fi-hu"></span> {{ 'HEADER.LANGUAGE.HU' | translate }}
-          </li>
-        </ul>
-      </nz-dropdown-menu>
+      <div>
+        <div>
+          <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="themeMenu" nz-dropdown>
+            {{ 'HEADER.THEME.TITLE' | translate }} {{ 'HEADER.THEME.' + currentTheme | uppercase | translate }}
+          </button>
+        </div>
+
+        <nz-dropdown-menu #themeMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="setTheme('dark')">
+              <span nz-icon nzType="moon" nzTheme="outline"></span>
+              {{ 'HEADER.THEME.DARK' | translate }}
+            </li>
+            <li nz-menu-item (click)="setTheme('light')">
+              <span nz-icon nzType="sun" nzTheme="outline"></span>
+              {{ 'HEADER.THEME.LIGHT' | translate }}
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
     </div>
     <h1>{{ 'HEADER.FORM_BUILDER' | translate }}</h1>
   </div>

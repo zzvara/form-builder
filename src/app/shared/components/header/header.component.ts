@@ -27,12 +27,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   LanguageEnum = LanguageEnum;
 
+  currentTheme: string = 'light';
+
   constructor(
     private readonly router: Router,
     private readonly headerService: HeaderService,
     private readonly jsonService: JsonService,
     private readonly translate: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentLanguage =
@@ -46,6 +48,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
 
     this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
+    this.currentTheme = (localStorage.getItem(LocalStorageKey.THEME) as 'light' | 'dark') || 'light';
+    if (this.currentTheme === 'dark') {
+      this.setTheme('dark');
+    }
   }
 
   navigateToHome(): void {
@@ -83,7 +89,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-
   uploadJson(file: File): void {
     this.jsonService.uploadJson(file).subscribe((data) => {
       this.jsonService.setJsonData(data);
@@ -104,5 +109,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentLanguage = lang;
     this.translate.use(lang);
     localStorage.setItem(LocalStorageKey.LANGUAGE, lang);
+  }
+
+  setTheme(theme: 'light' | 'dark'): void {
+    localStorage.setItem(LocalStorageKey.THEME, theme);
+    this.currentTheme = theme;
+
+    const existingLink = document.getElementById('theme-link') as HTMLLinkElement | null;
+
+    if (existingLink) {
+      existingLink.parentNode?.removeChild(existingLink);
+    }
+
+    if (theme === 'dark') {
+      const link = document.createElement('link');
+      link.id = 'theme-link';
+      link.rel = 'stylesheet';
+      link.href = 'dark.css';
+      document.head.appendChild(link);
+    } else {
+      // back to light: ensure only default (light) styles are active
+      // no extra CSS to add because light.css is already injected
+    }
   }
 }

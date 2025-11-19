@@ -17,7 +17,9 @@
               "base": "dist/form-builder"
             },
             "index": "src/index.html",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -28,7 +30,19 @@
                 "output": "/assets/"
               }
             ],
-            "styles": ["src/theme.less", "src/styles.less"],
+            "styles": [
+              "src/styles.less",
+              {
+                "input": "src/themes/light.less",
+                "bundleName": "light",
+                "inject": true
+              },
+              {
+                "input": "src/themes/dark.less",
+                "bundleName": "dark",
+                "inject": false
+              }
+            ],
             "scripts": [],
             "browser": "src/main.ts"
           },
@@ -78,10 +92,18 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.less"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.less"
+            ],
             "scripts": []
           }
         }
