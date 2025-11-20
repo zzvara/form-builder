@@ -1,13 +1,11 @@
 {
     "FORM": {
         "DEADLINE_TOOLTIP": "Ez határozza meg, hogy meddig nyújtható be az űrlap. Ez egy fix dátum és idő, amely után az űrlap már nem érhető el vagy nyújtható be.",
-        "FORM_DESCRIPTION_TOOLTIP": "Adja meg a leírást",
-        "FORM_TITLE_TOOLTIP": "Adja meg az űrlap címét",
         "OPTIONAL": "(nem kötelező)",
         "QUESTIONNAIRE": "Kérdőív",
         "SWITCH_TOOLTIP": "Teszt verzióban megjelölhetők helyes válaszok az egyes kérdésekhez",
         "TEST": "Teszt",
-        "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.(óra:perc)",
+        "TIME_LIMIT_TOOLTIP": "Meghatározza, hogy mennyi ideje van a felhasználónak az űrlap kitöltésére, miután elkezdte.\u00a0(óra:perc)",
         "TITLE_REQUIRED": "A cím kötelező",
         "VERSION": "Változat:"
     }
