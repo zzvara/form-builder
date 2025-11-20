@@ -1,8 +1,6 @@
 {
     "FORM": {
-        "FORM_TITLE_TOOLTIP": "Enter form title",
         "TITLE_REQUIRED": "Title is required",
-        "FORM_DESCRIPTION_TOOLTIP": "Enter a brief description",
         "OPTIONAL": "(optional)",
         "QUESTIONNAIRE": "Questionnaire",
         "TEST": "Test",
