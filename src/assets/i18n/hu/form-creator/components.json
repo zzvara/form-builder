@@ -1,5 +1,5 @@
 {
-    
+
     "SEARCH": "Keresés",
     "RESET": "Komponens visszaállítása",
     "SAVE": "Mentés",
@@ -133,7 +133,7 @@
             "TITLE": "Tartományválasztó"
         },
         "REORDER": "Átrendezés engedélyezve",
-        "REQUIRED_MESSAGE": "Mező nem lehet üres!",
+        "REQUIRED_MESSAGE": "A mező nem lehet üres!",
         "SECTION": "Szekció",
         "SECTIONS": "Szekciók",
         "SECTION_ID": "Szekció ID",
