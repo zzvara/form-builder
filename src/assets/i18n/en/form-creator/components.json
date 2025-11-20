@@ -112,7 +112,7 @@
         },
         "PLACEHOLDER": "Placeholder Text",
         "PLACEHOLDER_DESCRIPTION": "Field description",
-        "PLACEHOLDER_ERROR_REQUIRED": "This field cannot be left empty.",
+        "PLACEHOLDER_ERROR_REQUIRED": "Message shown if field is left empty",
         "PLACEHOLDER_QUESTION": "Ask the question",
         "PLACEHOLDER_TIME_FORMAT": "E.g.: HH:MM",
         "PREVIOUS_VERSION": "Previous Version",

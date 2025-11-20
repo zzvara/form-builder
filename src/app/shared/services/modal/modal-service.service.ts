@@ -37,15 +37,13 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
       nzFooter: [
         {
           label: closeLabel,
-          shape: 'round',
           onClick: () => {
             modal.close();
           },
         },
         {
           label: resetLabel,
-          shape: 'round',
-          type: 'dashed',
+          type: 'default',
           onClick: (editComponentInstance?: E) => {
             editComponentInstance?.onReset();
           },
