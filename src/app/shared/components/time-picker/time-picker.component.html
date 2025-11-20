@@ -1,4 +1,8 @@
 <nz-form-item>
+  @if (label) {
+    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+  }
+
   <nz-form-control [nzErrorTip]="errorTemplate">
     <ng-container *ngTemplateOutlet="prefixTemplate" />
     <!-- @todo width: 50%, responsiveness, etc. -->

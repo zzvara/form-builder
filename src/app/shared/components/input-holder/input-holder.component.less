@@ -16,9 +16,21 @@
 
 .form-container {
   width: @width-full;
+
+  nz-form-control {
+    flex: unset !important;
+    width: 100%;
+  }
+
+  nz-form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
 }
 
-.form-item {
+.form-item:not(:last-child) {
   margin-bottom: @spacing12;
 }
 
@@ -42,11 +54,28 @@
   margin-left: @spacing12;
 }
 
-.input-holder-padding {
-  padding-right: @spacing24;
-  padding-left: @spacing24;
-}
+:host ::ng-deep {
+  .custom-header .ant-card-head-title {
+    text-overflow: unset;
+  }
 
-:host ::ng-deep .custom-header .ant-card-head-title {
-  text-overflow: unset;
+  .input-preview-container nz-form-item {
+    margin-bottom: 0;
+  }
+
+  .form-container {
+    width: @width-full;
+
+    nz-form-control {
+      flex: unset !important;
+      width: 100%;
+    }
+
+    nz-form-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+  }
 }

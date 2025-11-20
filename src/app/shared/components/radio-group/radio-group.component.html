@@ -1,4 +1,8 @@
 <nz-form-item>
+  @if (label) {
+    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+  }
+
   <nz-radio-group [(ngModel)]="data.defaultValue" [disabled]="!inlineEdit.enabled">
     @if (data.isButton) {
       @for (item of data.options; track item) {

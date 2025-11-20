@@ -1,7 +1,6 @@
 <nz-card
   [nzTitle]="titleTemplate"
   [nzExtra]="headerButtons"
-  class="input-holder-padding"
   [ngClass]="{
     'valid-style': inputHolderForm.valid,
     'invalid-style': inputHolderForm.invalid,
@@ -9,10 +8,11 @@
   }"
 >
   <form #inputHolderForm="ngForm" nz-form class="form-container">
-    <nz-form-label nzRequired
-      ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
-    >
     <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit.enabled }">
+      <nz-form-label nzRequired>
+        <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
+      </nz-form-label>
+
       <nz-form-control nzErrorTip="">
         <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
         <input
@@ -30,10 +30,11 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-label>
-      <span>{{ 'COMPONENTS.QUESTION_DESCRIPTION' | translate }}</span>
-    </nz-form-label>
     <nz-form-item class="form-item">
+      <nz-form-label>
+        <span>{{ 'COMPONENTS.QUESTION_DESCRIPTION' | translate }}</span>
+      </nz-form-label>
+
       <nz-form-control>
         <span class="pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
         <textarea
@@ -50,18 +51,21 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-label>
-      <span>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}</span>
-    </nz-form-label>
-    <nz-form-item class="form-item form-item-border">
-      <nz-form-control>
-        <div class="input-preview-container" (mousedown)="$event.stopPropagation()">
-          <ng-container *ngComponentOutlet="componentType; inputs: componentInputs"></ng-container>
-        </div>
-      </nz-form-control>
-    </nz-form-item>
+    <ng-template #inputPreviewTemp>
+      <nz-form-label>
+        <span>{{ 'COMPONENTS.INPUT_PREVIEW' | translate }}</span>
+      </nz-form-label>
+    </ng-template>
+
+    <div class="input-preview-container" (mousedown)="$event.stopPropagation()">
+      <ng-container
+        *ngComponentOutlet="
+          componentType;
+          inputs: { data: componentInputs.data, inlineEdit: componentInputs.inlineEdit, label: inputPreviewTemp }
+        "
+      ></ng-container>
+    </div>
   </form>
-  <span class="id-text">[ID: {{ inputData.id }} | {{ 'COMPONENTS.SECTION_ID' | translate }}: {{ inputData.sectionId }}]</span>
 </nz-card>
 
 <ng-template #titleTemplate>

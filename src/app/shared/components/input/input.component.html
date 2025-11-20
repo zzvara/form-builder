@@ -1,4 +1,8 @@
 <nz-form-item>
+  @if (label) {
+    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+  }
+
   <nz-form-control [nzErrorTip]="errorTemplate">
     <nz-input-group [nzPrefix]="prefixTemplate" [nzSuffix]="suffixTemplateCounter">
       <input

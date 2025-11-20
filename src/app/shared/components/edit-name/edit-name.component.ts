@@ -42,6 +42,10 @@ export class EditNameComponent implements OnInit, OnChanges {
       this.updateName.emit();
     } else {
       this.form.markAllAsTouched();
+      Object.values(this.form.controls).forEach((control) => {
+        control.markAsDirty();
+        control.updateValueAndValidity();
+      });
     }
   }
 

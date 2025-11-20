@@ -1,4 +1,8 @@
 <nz-form-item>
+  @if (label) {
+    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+  }
+
   <nz-checkbox-group class="checkbox-group" [(ngModel)]="data.defaultValue" [disabled]="!inlineEdit.enabled">
     <nz-checkbox-group class="checkbox-group">
       @for (option of data.defaultValue; track option.value) {

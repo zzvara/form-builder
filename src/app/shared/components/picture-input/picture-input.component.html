@@ -1,13 +1,17 @@
-<nz-upload
-  [nzDisabled]="!inlineEdit.enabled"
-  [nzAction]="uploadToLocalStorage"
-  [nzHeaders]="{ authorization: 'authorization-text' }"
-  (nzChange)="onChange($event)"
->
-  <nz-form-item>
+<nz-form-item>
+  @if (label) {
+    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+  }
+
+  <nz-upload
+    [nzDisabled]="!inlineEdit.enabled"
+    [nzAction]="uploadToLocalStorage"
+    [nzHeaders]="{ authorization: 'authorization-text' }"
+    (nzChange)="onChange($event)"
+  >
     <button nz-button>
       <span nz-icon nzType="upload"></span>
       {{ 'COMPONENTS.PICTURE_INPUT.CLICK_TO_UPLOAD' | translate }}
     </button>
-  </nz-form-item>
-</nz-upload>
+  </nz-upload>
+</nz-form-item>
