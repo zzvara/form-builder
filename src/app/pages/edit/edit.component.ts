@@ -1,7 +1,7 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
-import { FormInputData, instanceOfFormInputData } from '@interfaces/form-input-data';
+import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
 import { Project } from '@interfaces/project';
@@ -11,11 +11,12 @@ import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
 import { SectionList } from '@pages/edit/interfaces/section-list';
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
-import { cloneDeep, drop } from 'lodash-es';
+import { cloneDeep } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
+import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 
 @Component({
   selector: 'app-edit',
@@ -40,7 +41,8 @@ export class EditComponent implements OnInit, OnChanges {
     private projectService: ProjectService<Project>,
     private undoRedoService: UndoRedoService<EditList[]>,
     private translate: TranslateService,
-    private instanceOfSectionListPipe: InstanceOfSectionListPipe
+    private instanceOfSectionListPipe: InstanceOfSectionListPipe,
+    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
   ) {}
 
   ngOnInit() {
@@ -74,7 +76,7 @@ export class EditComponent implements OnInit, OnChanges {
   };
 
   sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
-    item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
+    item.data && (this.instanceOfFormInputDataPipe.transform(item.data) || this.instanceOfFormInputDataPipe.transform(item.data.data));
 
   /**
    * Saves the current state of the form inputs to the project.
@@ -131,7 +133,7 @@ export class EditComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
+    } else if (this.instanceOfFormInputDataPipe.transform(event.item.data) && !event.item.data.data?.id) {
       const droppedInput: FormInputData = event.item.data;
       if (droppedInput.title === 'SECTION') {
         const newSectionId = uuidv4();
@@ -163,7 +165,7 @@ export class EditComponent implements OnInit, OnChanges {
         };
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
-    } else if (instanceOfFormInputData(event.item.data)) {
+    } else if (this.instanceOfFormInputDataPipe.transform(event.item.data)) {
       // Initialize data if it's null
       if (!event.item.data.data) {
         event.item.data.data = {};
@@ -215,7 +217,7 @@ export class EditComponent implements OnInit, OnChanges {
     return this.getSectionIds();
   }
 
-  getSectionDropListConnectedTo(sect: any): string[] {
+  getSectionDropListConnectedTo(sect: SectionList): string[] {
     if (sect.reorderEnabled) {
       return [];
     }
@@ -232,7 +234,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList): { [p: string]: any } {
+  getSectionInputStyle(sect: SectionList): { [p: string]: string } {
     let width: number;
     if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
@@ -240,7 +242,7 @@ export class EditComponent implements OnInit, OnChanges {
       width = 100 / sect.sectionInputs.length - 1;
     }
     return {
-      width: width.toString() + '%',
+      width: `${width.toString()}%`,
     };
   }
 

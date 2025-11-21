@@ -205,12 +205,12 @@ export function getSideBarData(component: EditComponent, translate: TranslateSer
       groupContents: getInputGroups(translate),
     },
     {
-      groupName: 'COMPONENTS.SECTIONS',
+      groupName: 'COMPONENTS.SECTION.TITLE.PLURAL',
       active: true,
       dropListConnectedTo: () => 'sectionDropList',
       groupContents: [
         {
-          title: 'COMPONENTS.SECTION',
+          title: 'COMPONENTS.SECTION.TITLE.SINGULAR',
           type: 'SectionComponent',
           data: null,
         },
