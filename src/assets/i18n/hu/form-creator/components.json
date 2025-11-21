@@ -1,9 +1,10 @@
 {
-    
     "SEARCH": "Keresés",
     "RESET": "Komponens visszaállítása",
     "SAVE": "Mentés",
     "COMPONENTS": {
+        "UNDO_TOOLTIP": "Utolsó művelet visszavonása",
+        "REDO_TOOLTIP": "Utolsó művelet visszaállítása",
         "BASIC_INPUTS": "Alap bemenetek",
         "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
         "CANNOT_BE_LOWER_THAN": "Az érték nem lehet kisebb, mint",
@@ -84,7 +85,7 @@
         "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {*} karakter!",
         "MIN_VALUE_LIMIT": "Nem lehet nagyobb, mint a maximális érték",
         "MODE": "Működési mód",
-        "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
+        "NEXT_TOOLTIP": "Töltsd ki a kötlező mezőket, majd nyomd meg a Kövekező gombot",
         "NEXT_VERSION": "Következő verzió",
         "NUMBER_FIELD": {
             "FORMAT_INPUT": "Formázzuk a számot?",

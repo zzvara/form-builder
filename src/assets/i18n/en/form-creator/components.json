@@ -3,6 +3,8 @@
     "RESET": "Reset component",
     "SAVE": "Save",
     "COMPONENTS": {
+        "UNDO_TOOLTIP": "Undo last action",
+        "REDO_TOOLTIP": "Redo last action",
         "BASIC_INPUTS": "Basic inputs",
         "CANNOT_BE_EMPTY": "This field cannot be empty.",
         "CANNOT_BE_LOWER_THAN": "The value cannot be lower than",
@@ -83,7 +85,7 @@
         "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {*} characters!",
         "MIN_VALUE_LIMIT": "Cannot be greater than the maximum value",
         "MODE": "Mode",
-        "NEXT_TOOLTIP": "Drag components into the editor to continue.",
+        "NEXT_TOOLTIP": "Fill the required fields, then click the button",
         "NEXT_VERSION": "Next Version",
         "NUMBER_FIELD": {
             "FORMAT_INPUT": "Format number?",

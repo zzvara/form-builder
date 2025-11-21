@@ -249,6 +249,20 @@ export class EditComponent implements OnInit, OnChanges {
   isFormInvalid(): boolean {
     return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
   }
+  isComponentInvalid(edit: EditList): boolean {
+
+    if (this.instanceOfSectionListPipe.transform(edit.data)) {
+      return edit.data.sectionInputs.some(inp => this.isInputInvalid(inp));
+    }
+
+    return this.isInputInvalid(edit.data as FormInputData);
+  }
+
+  isInputInvalid(input: FormInputData): boolean {
+    if (!input?.data) return true;
+    const val = input.data.questionValue;
+    return !val || val.trim().length === 0;
+  }
 
   /**
    * Handles the event when the value of a form input changes.

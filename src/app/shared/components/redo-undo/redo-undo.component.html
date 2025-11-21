@@ -1,8 +1,8 @@
 <div style="display: flex; gap: 8px;">
-  <button nz-button [disabled]="!canUndo" (click)="undoBtn()">
+  <button nz-button [disabled]="!canUndo" (click)="undoBtn()" [nz-tooltip]="'COMPONENTS.UNDO_TOOLTIP' | translate">
     <span nz-icon nzType="undo" nzTheme="outline"></span>
   </button>
-  <button nz-button [disabled]="!canRedo" (click)="redoBtn()">
+  <button nz-button [disabled]="!canRedo" (click)="redoBtn()"  [nz-tooltip]="'COMPONENTS.REDO_TOOLTIP' | translate">
     <span nz-icon nzType="redo" nzTheme="outline"></span>
   </button>
 </div>

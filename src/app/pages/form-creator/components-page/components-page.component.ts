@@ -65,9 +65,36 @@ export class ComponentsPageComponent implements OnInit {
    * Then, it increments the page number and emits an event to notify parent components of the page change.
    */
   nextPage() {
+    if (!this.editComponent) return;
+
+    if (this.editComponent.isFormInvalid()) {
+      this.jumpToFirstError();
+      return;
+    }
     this.editComponent.saveForm();
     this.page! += 1;
     this.onsetPage(this.page!);
+  }
+  jumpToFirstError() {
+    if (!this.editComponent) return;
+
+    const invalidInput = this.editComponent
+      .getAllFormInputs()
+      .find(inp => this.editComponent.isInputInvalid(inp));
+
+    if (invalidInput?.data?.id) {
+      this.editComponent.scrollToElement(invalidInput.data.id);
+      return;
+    }
+
+    const invalidSection = this.editComponent.editList.find(item =>
+      this.editComponent.isComponentInvalid(item)
+    );
+
+    if (invalidSection?.id) {
+      this.editComponent.scrollToElement(invalidSection.id);
+      return;
+    }
   }
 
   /**
