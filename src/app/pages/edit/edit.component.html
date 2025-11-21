@@ -17,14 +17,14 @@
           @if (edit.data | instanceOfSectionList) {
             <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
             <nz-card
-              [id]="edit.data.sectionId"
+              [id]="edit.id"
               [nzTitle]="sectionTitle"
               [nzExtra]="sectionButtons"
               cdkDrag
               cdkDropList
               [cdkDropListOrientation]="edit.data.layout"
               [cdkDropListConnectedTo]="getSectionDropListConnectedTo(edit.data)"
-              [cdkDropListData]="edit.data.sectionInputs"
+              [cdkDropListData]="edit.data.sectionInputs || []"
               [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
               (cdkDropListDropped)="dropIntoSection($event)"
               class="element-list p-3 section-card"
@@ -43,13 +43,14 @@
             >
               <ng-template #sectionTitle>
                 <div class="section-title">
-                  {{ 'EDIT.SECTION' | translate }}
-                  <span class="section-id"
-                    >[ID: {{ edit.data.sectionId }} | {{ 'EDIT.LAYOUT' | translate }}:
-                    {{ 'EDIT.LAYOUT_TYPE.' + (edit.data.layout | uppercase) | translate }}]</span
-                  >
+                  {{ 'COMPONENTS.SECTION.TITLE.SINGULAR' | translate }}
+                  <span class="section-id">
+                    [ID: {{ edit.id }} | {{ 'COMPONENTS.SECTION.LAYOUT.TITLE' | translate }}:
+                    {{ 'COMPONENTS.SECTION.LAYOUT.TYPES.' + (edit.data.layout | uppercase) | translate }}]
+                  </span>
                 </div>
               </ng-template>
+
               <ng-template #sectionButtons>
                 <div class="section-buttons">
                   <span>{{ 'COMPONENTS.REORDER' | translate }}: </span>
@@ -121,23 +122,22 @@
           <div class="component-item section-item" cdkDrag [cdkDragData]="edit">
             <div class="section-header">
               <span nz-icon nzType="layout" nzTheme="outline"></span>
-              <span class="component-title">{{ 'EDIT.SECTION' | translate | uppercase }}</span>
+              <span class="component-title">{{ 'COMPONENTS.SECTION.TITLE.SINGULAR' | translate }}</span>
               <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
-              <span nz-icon nzType="aim" nzTheme="outline"></span>
-            </span>
+                <span nz-icon nzType="aim" nzTheme="outline"></span>
+              </span>
             </div>
           </div>
         } @else if (edit.data | instanceOfFormInputData) {
           <div class="component-item" cdkDrag [cdkDragData]="edit">
-            <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe " nzTheme="outline"></span>
+            <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
             <span class="component-title">{{ edit.data.title | translate }}</span>
             <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
-            <span nz-icon nzType="aim" nzTheme="outline"></span>
-          </span>
+              <span nz-icon nzType="aim" nzTheme="outline"></span>
+            </span>
           </div>
         }
       }
     </div>
   </nz-sider>
-
 </nz-layout>

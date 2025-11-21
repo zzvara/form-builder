@@ -133,9 +133,20 @@
         },
         "REORDER": "Reorder enabled",
         "REQUIRED_MESSAGE": "Field cannot be empty!",
-        "SECTION": "Section",
-        "SECTIONS": "Sections",
-        "SECTION_ID": "Section ID",
+        "SECTION": {
+            "ID": "Section ID",
+            "LAYOUT": {
+                "TITLE": "Layout",
+                "TYPES": {
+                    "HORIZONTAL": "Horizontal",
+                    "VERTICAL": "Vertical"
+                }
+            },
+            "TITLE": {
+                "PLURAL": "Sections",
+                "SINGULAR": "Section"
+            }
+        },
         "SELECTED_RAGE": "Selected rage",
         "SELECT_DATE": "Select a date",
         "SELECT_VERSION": "Select the version",

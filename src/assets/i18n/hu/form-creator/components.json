@@ -134,9 +134,20 @@
         },
         "REORDER": "Átrendezés engedélyezve",
         "REQUIRED_MESSAGE": "Mező nem lehet üres!",
-        "SECTION": "Szekció",
-        "SECTIONS": "Szekciók",
-        "SECTION_ID": "Szekció ID",
+        "SECTION": {
+			"ID": "Szekció ID",
+			"LAYOUT": {
+				"TITLE": "Elrendezés",
+				"TYPES": {
+					"HORIZONTAL": "Vízszintes",
+					"VERTICAL": "Függőleges"
+				}
+			},
+			"TITLE": {
+				"PLURAL": "Szekciók",
+				"SINGULAR": "Szekció"
+			}
+		},
         "SELECTED_RAGE": "Kiválasztott intervallum",
         "SELECT_DATE": "Válassz dátumot",
         "SELECT_VERSION": "Válaszd ki a verziót",

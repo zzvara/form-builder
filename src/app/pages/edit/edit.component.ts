@@ -1,7 +1,7 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
-import { FormInputData, instanceOfFormInputData } from '@interfaces/form-input-data';
+import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
 import { Project } from '@interfaces/project';
@@ -16,8 +16,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
+import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 import { NgStyle } from '@angular/common';
-
 
 @Component({
   selector: 'app-edit',
@@ -42,7 +42,8 @@ export class EditComponent implements OnInit, OnChanges {
     private projectService: ProjectService<Project>,
     private undoRedoService: UndoRedoService<EditList[]>,
     private translate: TranslateService,
-    private instanceOfSectionListPipe: InstanceOfSectionListPipe
+    private instanceOfSectionListPipe: InstanceOfSectionListPipe,
+    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
   ) {}
 
   ngOnInit() {
@@ -56,7 +57,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionIds: () => string[] = () =>
-    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => (sect.data as SectionList).sectionId);
+    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
     // If editList is empty but there's JSON data with editList, use that instead
@@ -76,7 +77,7 @@ export class EditComponent implements OnInit, OnChanges {
   };
 
   sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
-    item.data && (instanceOfFormInputData(item.data) || instanceOfFormInputData(item.data.data));
+    item.data && (this.instanceOfFormInputDataPipe.transform(item.data) || this.instanceOfFormInputDataPipe.transform(item.data.data));
 
   /**
    * Saves the current state of the form inputs to the project.
@@ -133,7 +134,7 @@ export class EditComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
+    } else if (this.instanceOfFormInputDataPipe.transform(event.item.data) && !event.item.data.data?.id) {
       const droppedInput: FormInputData = event.item.data;
       if (droppedInput.title === 'SECTION') {
         const newSectionId = uuidv4();
@@ -165,7 +166,7 @@ export class EditComponent implements OnInit, OnChanges {
         };
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
-    } else if (instanceOfFormInputData(event.item.data)) {
+    } else if (this.instanceOfFormInputDataPipe.transform(event.item.data)) {
       // Initialize data if it's null
       if (!event.item.data.data) {
         event.item.data.data = {};
@@ -183,24 +184,31 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
+    let object: any = event.item.data;
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (instanceOfFormInputData(event.item.data) && !event.item.data.data?.id) {
-      const droppedInput: FormInputData = event.item.data;
-      // Create a deep copy of the dropped item with updated ID
+    } else if (this.getSectionIds().includes(event.container.id) && this.getSectionIds().includes(event.previousContainer.id)) {
+      // Move items between sections
+      object.data.sectionId = event.container.id;
+      event.container.data.splice(event.currentIndex, 0, object);
+      event.previousContainer.data.splice(event.previousIndex, 1);
+    } else if (!object.data?.data?.id) {
+      // Add a completely new item to any drop list
+      const droppedInput: FormInputData = object;
       const newItemId = uuidv4();
       const newItem: FormInputData = cloneDeep(droppedInput);
       newItem.data!.id = newItemId;
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
-    } else if (instanceOfFormInputData(event.item.data)) {
-      transferArrayItem(event.previousContainer.data as FormInputData[], event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      const transferredInput = event.item.data.data as FormInputData;
-      transferredInput.data!.sectionId = event.container.id;
-      event.container.data.splice(event.currentIndex, 0, transferredInput);
+      // Move existing item from edit area to section or from section to edit area
+      const droppedInput: FormInputData = object;
+      const movedItemId = object.data?.data?.id;
+      const movedItem: FormInputData = cloneDeep(droppedInput);
+      let toMove: any = movedItem.data;
+      event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
     this.undoRedoService.saveState(this.editList);
@@ -227,7 +235,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList): NgStyle["ngStyle"] {
+  getSectionInputStyle(sect: SectionList): { [p: string]: string } {
     let width: number;
     if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
@@ -235,7 +243,7 @@ export class EditComponent implements OnInit, OnChanges {
       width = 100 / sect.sectionInputs.length - 1;
     }
     return {
-      width: width.toString() + '%',
+      width: `${width.toString()}%`,
     };
   }
 

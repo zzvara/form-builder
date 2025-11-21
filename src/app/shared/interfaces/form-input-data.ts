@@ -8,7 +8,3 @@ export interface FormInputData<D extends InputData<T> = InputData, T = any> {
   type: keyof typeof translateComponentType;
   data: D | null;
 }
-
-export function instanceOfFormInputData(object: any): object is FormInputData {
-  return object && 'title' in object && 'type' in object && 'data' in object;
-}
