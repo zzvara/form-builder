@@ -1,24 +1,5 @@
 {
-  "SEARCH": "Keresés",
-  "RESET": "Komponens visszaállítása",
-  "SAVE": "Mentés",
   "COMPONENTS": {
-    "NAME_EDIT": {
-      "PLACEHOLDER": "Egyedi név",
-      "ERRORS": {
-        "REQUIRED": "Az egyedi név megadása kötelező!",
-        "INVALID_JS_VARIABLE_NAME": "A megadott név nem érvényes JavaScript változónév!",
-        "NOT_UNIQUE": "Ez a név már foglalt! Kérlek válassz másikat."
-      },
-      "TOOLTIP": {
-        "DEFAULT": "A névnek érvényes JavaScript változónévnek kell lennie:",
-        "LINE_1": "Nem kezdődhet számmal",
-        "LINE_2": "Betűvel, _ vagy $ jellel kell kezdődnie",
-        "LINE_3": "Tartalmazhat betűket, számokat, _, $ karaktert",
-        "LINE_4": "Nem lehet JavaScript kulcsszó (pl. class, return)",
-        "LINE_5": "Nem tartalmazhat szóközt vagy speciális jeleket"
-      }
-    },
     "BASIC_INPUTS": "Alap bemenetek",
     "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
     "CANNOT_BE_LOWER_THAN": "Az érték nem lehet kisebb, mint",
@@ -99,6 +80,22 @@
     "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {*} karakter!",
     "MIN_VALUE_LIMIT": "Nem lehet nagyobb, mint a maximális érték",
     "MODE": "Működési mód",
+    "NAME_EDIT": {
+      "ERRORS": {
+        "INVALID_JS_VARIABLE_NAME": "A megadott név nem érvényes JavaScript változónév!",
+        "NOT_UNIQUE": "Ez a név már foglalt! Kérlek válassz másikat.",
+        "REQUIRED": "Az egyedi név megadása kötelező!"
+      },
+      "PLACEHOLDER": "Egyedi név",
+      "TOOLTIP": {
+        "DEFAULT": "A névnek érvényes JavaScript változónévnek kell lennie:",
+        "LINE_1": "Nem kezdődhet számmal",
+        "LINE_2": "Betűvel, _ vagy $ jellel kell kezdődnie",
+        "LINE_3": "Tartalmazhat betűket, számokat, _, $ karaktert",
+        "LINE_4": "Nem lehet JavaScript kulcsszó (pl. class, return)",
+        "LINE_5": "Nem tartalmazhat szóközt vagy speciális jeleket"
+      }
+    },
     "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
     "NEXT_VERSION": "Következő verzió",
     "NUMBER_FIELD": {
@@ -149,9 +146,20 @@
     },
     "REORDER": "Átrendezés engedélyezve",
     "REQUIRED_MESSAGE": "Mező nem lehet üres!",
-    "SECTION": "Szekció",
-    "SECTIONS": "Szekciók",
-    "SECTION_ID": "Szekció ID",
+    "SECTION": {
+      "ID": "Szekció ID",
+      "LAYOUT": {
+        "TITLE": "Elrendezés",
+        "TYPES": {
+          "HORIZONTAL": "Vízszintes",
+          "VERTICAL": "Függőleges"
+        }
+      },
+      "TITLE": {
+        "PLURAL": "Szekciók",
+        "SINGULAR": "Szekció"
+      }
+    },
     "SELECTED_RAGE": "Kiválasztott intervallum",
     "SELECT_DATE": "Válassz dátumot",
     "SELECT_VERSION": "Válaszd ki a verziót",
@@ -196,5 +204,8 @@
     "TOOLTIP_TEXT": "Súgószöveg",
     "USED_COMPONENTS": "Használt komponensek",
     "WEEK_NUMBERS?": "Mutassuk a hét számát?"
-  }
+  },
+  "RESET": "Komponens visszaállítása",
+  "SAVE": "Mentés",
+  "SEARCH": "Keresés"
 }

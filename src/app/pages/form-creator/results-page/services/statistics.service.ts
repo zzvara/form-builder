@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Project } from '@interfaces/project';
-import { instanceOfFormInputData } from '@interfaces/form-input-data';
+import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatisticsService {
+  constructor(private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe) {}
+
   calculateSectionInputStats(project: Project): { [key: string]: number } {
     if (!project?.editList) {
       return {};
@@ -13,7 +15,7 @@ export class StatisticsService {
 
     return project.editList.reduce(
       (stats, edit) => {
-        if (instanceOfFormInputData(edit.data)) {
+        if (this.instanceOfFormInputDataPipe.transform(edit.data)) {
           const inputType = edit.data.title;
           if (!stats[inputType]) {
             stats[inputType] = 0;

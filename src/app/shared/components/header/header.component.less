@@ -4,7 +4,7 @@
 
 nz-header {
   background-color: @gray-dark;
-  padding: @spacing0 80px;
+  padding: @spacing0 clamp(@spacing16, 5vw, 80px);
   position: fixed;
   width: @width-full;
   z-index: 100;
@@ -14,18 +14,19 @@ nz-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: @height-full;
 
   > h1 {
     color: @white-text;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin: 0;
+    font-size: clamp(24px, 5vw, 32px);
+    margin-bottom: 0;
   }
 
   > div {
-    font-size: @font-size-title;
+    font-size: clamp(18px, 2.5vw, 26px);
 
     > span {
       cursor: pointer;
@@ -34,7 +35,7 @@ nz-header {
   }
 
   > div :not(:last-child) {
-    margin-right: @spacing16;
+    margin-right: clamp(@spacing8, 2vw, @spacing16);
   }
 
   div {
@@ -48,4 +49,9 @@ nz-header {
 
 .hidden-input {
   display: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
 }

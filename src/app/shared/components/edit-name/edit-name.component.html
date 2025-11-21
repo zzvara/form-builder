@@ -3,7 +3,7 @@
     class="mr-4"
     [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"
     nz-tooltip
-    [nzTooltipTitle]="((edit.data | instanceOfFormInputData) ? edit.data.title : 'EDIT.SECTION') | translate"
+    [nzTooltipTitle]="((edit.data | instanceOfFormInputData) ? edit.data.title : 'COMPONENTS.SECTION.TITLE.SINGULAR') | translate"
   ></nz-icon>
 
   @if (isEditName) {
@@ -54,11 +54,19 @@
     <nz-icon class="ml-4 action-icon" nzType="save" (click)="saveName()" (mousedown)="$event.stopPropagation()"></nz-icon>
     <nz-icon class="ml-4 action-icon" nzType="close" (click)="setEditMode(false)" (mousedown)="$event.stopPropagation()"></nz-icon>
   } @else {
-    {{
-      edit.data.customTitle
-        ? edit.data.customTitle
-        : (((edit.data | instanceOfFormInputData) ? edit.data.title : 'EDIT.SECTION') | translate)
-    }}
+    <ng-template #nameTemplate let-data="data">
+      {{
+        data.customTitle
+          ? data.customTitle
+          : (((data | instanceOfFormInputData) ? data.title : 'COMPONENTS.SECTION.TITLE.SINGULAR') | translate)
+      }}
+    </ng-template>
+
+    @if (editList) {
+      <ng-container [ngTemplateOutlet]="nameTemplate" [ngTemplateOutletContext]="{ data: editList.data }"></ng-container>
+    } @else if (editFormInput) {
+      <ng-container [ngTemplateOutlet]="nameTemplate" [ngTemplateOutletContext]="{ data: editFormInput }"></ng-container>
+    }
 
     <nz-icon class="ml-4 action-icon" nzType="edit" (click)="setEditMode(true)" (mousedown)="$event.stopPropagation()"></nz-icon>
   }

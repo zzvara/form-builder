@@ -13,20 +13,30 @@
         <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
       </nz-form-label>
 
-      <nz-form-control nzErrorTip="">
-        <span [hidden]="inlineEdit.enabled">{{ inputData.questionValue }}</span>
-        <input
-          [hidden]="!inlineEdit.enabled"
-          nz-input
-          nzAutosize
-          name="inputQuestion"
-          required
-          [placeholder]="formInput.questionPlaceholder"
-          [(ngModel)]="inputData.questionValue"
-          [ngModelOptions]="{ updateOn: 'change' }"
-          (ngModelChange)="change()"
-          (mousedown)="$event.stopPropagation()"
-        />
+      <nz-form-control [nzValidateStatus]="!this.inputData.questionValue ? 'error' : 'success'" nzErrorTip="">
+        @if (!inlineEdit.enabled) {
+          <span>{{ inputData.questionValue }}</span>
+        } @else {
+          <nz-input-group [nzSuffix]="suffixTemplate">
+            <input
+              nz-input
+              nzSize="small"
+              name="inputQuestion"
+              required
+              [placeholder]="formInput.questionPlaceholder"
+              (mousedown)="$event.stopPropagation()"
+              [(ngModel)]="inputData.questionValue"
+              [ngModelOptions]="{ updateOn: 'change' }"
+              (ngModelChange)="change()"
+            />
+          </nz-input-group>
+
+          <ng-template #suffixTemplate>
+            @if (!inputData.questionValue) {
+              <i nz-icon nzType="warning" (click)="inputData.questionValue = ''; change()" class="error-icon"></i>
+            }
+          </ng-template>
+        }
       </nz-form-control>
     </nz-form-item>
 

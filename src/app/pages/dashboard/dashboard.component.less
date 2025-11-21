@@ -2,165 +2,69 @@
 @import '../../../common.less';
 @import '../../../typography.less';
 
-@gap-test-questionnaire: 32px;
-@gap-test-item: 8px;
-@gap-list-view-questionnaire: 64px;
+@gap-questionnaire: clamp(@spacing24, 4vw, @spacing32);
+@gap-item: clamp(@spacing4, 1vw, @spacing8);
+@gap-list-questionnaire: clamp(@spacing48, 6vw, 64px);
 
 nz-content {
-  padding: @spacing0 @spacing8;
+  padding: clamp(@spacing8, 2vw, @spacing16) clamp(@spacing8, 5vw, @spacing32);
+  padding-top: clamp(@spacing48, 5vw, 64px);
   box-sizing: border-box;
   text-align: left;
   overflow-x: auto;
-  padding-top: 64px;
 }
 
 .toolbar {
-  margin: @spacing32 @spacing0;
+  margin: clamp(@spacing24, 4vw, @spacing32) 0;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: @spacing16;
+  justify-content: space-between;
+  gap: clamp(@spacing8, 2vw, @spacing16);
 
-  > :first-child {
-    margin-right: @spacing16;
-  }
+  > :first-child { margin-right: clamp(@spacing8, 2vw, @spacing16); }
 
   > div {
-    cursor: pointer;
     display: flex;
     align-items: center;
+    cursor: pointer;
 
-    > :first-child {
-      margin-right: @spacing4;
-    }
+    > :first-child { margin-right: clamp(@spacing2, 1vw, @spacing4); }
   }
 
-  i[nz-icon] {
-    margin-left: @spacing4;
-  }
+  i[nz-icon] { margin-left: clamp(@spacing2, 1vw, @spacing4); }
 }
 
 .view {
   display: grid;
-  gap: @gap-test-item;
+  gap: @gap-item;
 
   > div {
     display: flex;
     align-items: center;
-    margin-bottom: @gap-test-item;
     justify-content: flex-start;
     flex-wrap: wrap;
+    margin-bottom: @gap-item;
 
-    &:last-of-type {
-      margin-top: @gap-test-questionnaire;
-    }
+    &:last-of-type { margin-top: @gap-questionnaire; }
 
     > h3 {
-      margin: @spacing0 @spacing8 @spacing0 @spacing0;
+      margin: 0 clamp(@spacing4, 1vw, @spacing8) 0 0;
+      font-size: clamp(@font-size-h2-sm, 2vw, @font-size-h2-md);
       text-align: left;
     }
   }
 }
 
-@media (max-width: @breakpoint-lg) {
-  nz-content {
-    padding: @spacing0 @spacing8;
-  }
+button[nz-button],
+.toolbar > div > span[nz-icon] {
+  font-size: clamp(@font-size-body-sm, 2vw, @font-size-body-lg);
+  line-height: 1.4;
+  padding: clamp(@spacing6, 1.5vw, @spacing12) clamp(@spacing12, 2.5vw, @spacing20);
+  height: clamp(36px, 6vw, 48px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(@spacing4, 1vw, @spacing8);
 
-  .toolbar {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: @spacing16;
-  }
-
-  .view {
-    gap: @spacing24;
-
-    > div {
-      flex-direction: row;
-      align-items: center;
-    }
-
-    &:last-of-type {
-      margin-top: @spacing24;
-    }
-
-    > h3 {
-      margin: @spacing0 @spacing8 @spacing0 @spacing0;
-    }
-  }
-}
-
-@media (max-width: @breakpoint-md) {
-  nz-content {
-    padding: @spacing0 @spacing8;
-    overflow-x: auto;
-  }
-
-  .toolbar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: @spacing12;
-    margin: @spacing16 @spacing0;
-
-    > div {
-      justify-content: center;
-    }
-  }
-
-  .view {
-    grid-template-columns: 1fr;
-    gap: @spacing16;
-
-    > div {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    > h3 {
-      font-size: @font-size-body;
-      margin-bottom: @spacing4;
-    }
-  }
-}
-
-@media (max-width: @breakpoint-xs) {
-  nz-content {
-    padding: @spacing0 @spacing4;
-    overflow-x: auto;
-  }
-
-  .toolbar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: @spacing8;
-    margin: @spacing8 @spacing0;
-
-    > div {
-      width: @width-full;
-      justify-content: flex-start;
-      margin: @spacing4 @spacing0;
-    }
-  }
-
-  .view {
-    gap: @spacing16;
-
-    > div {
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-      margin-bottom: @spacing8;
-      max-width: @max-width-full;
-
-      > h3 {
-        font-size: @font-size-small; // it was 0.85rem
-        margin-bottom: @spacing4;
-      }
-    }
-  }
-
-  .toolbar > div > :first-child {
-    margin-right: @spacing4;
-  }
+  > nz-icon { font-size: clamp(16px, 2vw, 20px); }
 }

@@ -10,7 +10,3 @@ export interface FormInputData<D extends InputData<T> = InputData, T = any> {
 
   customTitle?: string;
 }
-
-export function instanceOfFormInputData(object: any): object is FormInputData {
-  return object && 'title' in object && 'type' in object && 'data' in object;
-}

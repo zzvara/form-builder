@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { RoutePath } from '@app/shared/models/route-path.model';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
+import { ThemeEnum } from '@app/shared/enums/theme.enum';
 
 @Component({
   selector: 'app-header',
@@ -22,10 +23,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   contextActions: ContextAction[] = [];
   options = MenuOption;
   currentLanguage: LanguageEnum = LanguageEnum.EN;
+  currentTheme: ThemeEnum = ThemeEnum.LIGHT;
+
   private optionsSub?: Subscription;
   private actionsSub?: Subscription;
 
   LanguageEnum = LanguageEnum;
+  ThemeEnum = ThemeEnum;
 
   constructor(
     private readonly router: Router,
@@ -46,6 +50,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
 
     this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
+    this.currentTheme =
+      localStorage.getItem(LocalStorageKey.THEME) && localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
+        ? ThemeEnum.LIGHT
+        : ThemeEnum.DARK;
+
+    if (this.currentTheme === ThemeEnum.DARK) {
+      this.setTheme(ThemeEnum.DARK);
+    }
   }
 
   navigateToHome(): void {
@@ -75,9 +87,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.headerService.triggerUndo();
   }
 
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const file = input.files[0];
       this.uploadJson(file);
     }
   }
@@ -102,5 +115,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentLanguage = lang;
     this.translate.use(lang);
     localStorage.setItem(LocalStorageKey.LANGUAGE, lang);
+  }
+
+  setTheme(theme: ThemeEnum): void {
+    localStorage.setItem(LocalStorageKey.THEME, theme);
+    this.currentTheme = theme;
+
+    const existingLink = document.getElementById('theme-link') as HTMLLinkElement | null;
+
+    if (existingLink) {
+      existingLink.parentNode?.removeChild(existingLink);
+    }
+
+    if (theme === ThemeEnum.DARK) {
+      const link = document.createElement('link');
+      link.id = 'theme-link';
+      link.rel = 'stylesheet';
+      link.href = 'dark.css';
+      document.head.appendChild(link);
+    } else {
+      // back to light: ensure only default (light) styles are active
+      // no extra CSS to add because light.css is already injected
+    }
   }
 }

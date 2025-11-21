@@ -1,3 +1,7 @@
+/*
+ * <<licensetext>>
+ */
+
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { NgComponentOutlet } from '@angular/common';

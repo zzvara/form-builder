@@ -1,24 +1,5 @@
 {
-  "SEARCH": "Search components",
-  "RESET": "Reset component",
-  "SAVE": "Save",
   "COMPONENTS": {
-    "NAME_EDIT": {
-      "PLACEHOLDER": "Unique name",
-      "ERRORS": {
-        "REQUIRED": "Providing a unique name is required!",
-        "INVALID_JS_VARIABLE_NAME": "The provided name is not a valid JavaScript variable name!",
-        "NOT_UNIQUE": "This name is already taken! Please choose another."
-      },
-      "TOOLTIP": {
-        "DEFAULT": "The name must be a valid JavaScript variable identifier:",
-        "LINE_1": "It cannot start with a number",
-        "LINE_2": "It must start with a letter, _ or $",
-        "LINE_3": "It may contain letters, digits, _, or $",
-        "LINE_4": "It cannot be a JavaScript reserved keyword (e.g., class, return)",
-        "LINE_5": "It cannot contain spaces or special characters"
-      }
-    },
     "BASIC_INPUTS": "Basic inputs",
     "CANNOT_BE_EMPTY": "This field cannot be empty.",
     "CANNOT_BE_LOWER_THAN": "The value cannot be lower than",
@@ -99,6 +80,22 @@
     "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {*} characters!",
     "MIN_VALUE_LIMIT": "Cannot be greater than the maximum value",
     "MODE": "Mode",
+    "NAME_EDIT": {
+      "ERRORS": {
+        "INVALID_JS_VARIABLE_NAME": "The provided name is not a valid JavaScript variable name!",
+        "NOT_UNIQUE": "This name is already taken! Please choose another.",
+        "REQUIRED": "Providing a unique name is required!"
+      },
+      "PLACEHOLDER": "Unique name",
+      "TOOLTIP": {
+        "DEFAULT": "The name must be a valid JavaScript variable identifier:",
+        "LINE_1": "It cannot start with a number",
+        "LINE_2": "It must start with a letter, _ or $",
+        "LINE_3": "It may contain letters, digits, _, or $",
+        "LINE_4": "It cannot be a JavaScript reserved keyword (e.g., class, return)",
+        "LINE_5": "It cannot contain spaces or special characters"
+      }
+    },
     "NEXT_TOOLTIP": "Drag components into the editor to continue.",
     "NEXT_VERSION": "Next Version",
     "NUMBER_FIELD": {
@@ -149,9 +146,20 @@
     },
     "REORDER": "Reorder enabled",
     "REQUIRED_MESSAGE": "Field cannot be empty!",
-    "SECTION": "Section",
-    "SECTIONS": "Sections",
-    "SECTION_ID": "Section ID",
+    "SECTION": {
+      "ID": "Section ID",
+      "LAYOUT": {
+        "TITLE": "Layout",
+        "TYPES": {
+          "HORIZONTAL": "Horizontal",
+          "VERTICAL": "Vertical"
+        }
+      },
+      "TITLE": {
+        "PLURAL": "Sections",
+        "SINGULAR": "Section"
+      }
+    },
     "SELECTED_RAGE": "Selected rage",
     "SELECT_DATE": "Select a date",
     "SELECT_VERSION": "Select the version",
@@ -196,5 +204,8 @@
     "TOOLTIP_TEXT": "Tooltip Text",
     "USED_COMPONENTS": "Used Components",
     "WEEK_NUMBERS?": "Show week numbers?"
-  }
+  },
+  "RESET": "Reset component",
+  "SAVE": "Save",
+  "SEARCH": "Search components"
 }
