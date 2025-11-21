@@ -15,6 +15,10 @@ import { ListValidators } from '@validators/list-validators';
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
   newOption!: FormControl<string | null>;
+  editingIndex: number | null = null;
+  editValue: string = '';
+  editError: string | null = null;
+  editControl: FormControl = new FormControl('');
 
   get options(): FormArray {
     return this.formData.controls['selectOptions'] as FormArray;
@@ -118,6 +122,43 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     }
     this.options.markAsDirty();
     this.options.markAsTouched();
+  }
+
+  startEdit(index: number, value: string) {
+    this.editingIndex = index;
+    this.editValue = value;
+    this.editControl.setValue(value);
+    this.editError = null;
+  }
+  saveEdit(index: number) {
+    const newValue = this.editControl.value?.trim();
+
+    if (!newValue) {
+      this.editingIndex = null;
+      return;
+    }
+    const values = this.optionsValues.filter((_, i) => i !== index);
+    if (values.includes(newValue)) {
+      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      return;
+    }
+    this.editError = null;
+    const control = this.options.at(index) as FormControl;
+    control.setValue(newValue);
+    control.markAsDirty();
+    control.markAsTouched();
+    const defaults = this.getDefaultValues();
+    if (Array.isArray(defaults)) {
+      const updated = defaults.map(v => (v === this.optionsValues[index] ? newValue : v));
+      this.setDefaultValue(updated);
+    } else if (defaults === this.optionsValues[index]) {
+      this.setDefaultValue(newValue);
+    }
+    this.editingIndex = null;
+  }
+  cancelEdit() {
+    this.editingIndex = null;
+    this.editError = null;
   }
 
   getMinOptions(): number {
