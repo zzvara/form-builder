@@ -8,59 +8,39 @@
 
     <nz-form-control formArrayName="options">
       <nz-table
-        #optionTable
-        nzBordered
+        #basicTables
         [nzData]="options.controls"
         [nzFrontPagination]="false"
         [nzShowPagination]="false"
         cdkDropList
         (cdkDropListDropped)="drop($event)"
       >
-        <thead>
-        <tr>
-          <th nzAlign="center">{{ 'GENERAL.DESCRIPTION' | translate }}</th>
-          <th nzAlign="center">{{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}</th>
-          <th nzAlign="center">{{ 'COMPONENTS.COMBOBOX.COMBOBOX_EDIT' | translate }}</th>
-        </tr>
-        </thead>
         <tbody>
           @for (option of options.controls; track option.value.option_id; let i = $index) {
             <tr cdkDrag [cdkDragData]="option">
-              <td nzAlign="center">
-                @if (editingIndex !== i) {
-                  <p>{{ option.value.option_description }}</p>
-                } @else {
-                  <div nz-typography nzType="danger">
-                    <input
-                      nz-input
-                      [formControl]="editControl"
-                    />
-                    @if (editError) {
-                      <div>
-                        {{ editError }}
-                      </div>
+              <td nzAlign="left">
+                <div class="flex items-center justify-center gap-2">
+                  @if (editingIndex !== i) {
+                    <span>{{ option.value.option_description }}</span>
+                    <button nz-button nzType="link" (click)="startEdit(i, option.value.option_description)">
+                      <nz-icon nzType="edit" nzTheme="outline"></nz-icon>
+                    </button>
+                    <button nz-button nzType="link" nzDanger (click)="removeOption(i)">
+                      <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
+                    </button>
+                  } @else {
+                    <input nz-input [formControl]="editControl" style="width:150px;" />
+                    <button nz-button nzType="link" (click)="saveEdit(i)">
+                      <nz-icon nzType="check" nzTheme="outline"></nz-icon>
+                    </button>
+                    <button nz-button nzType="link" (click)="cancelEdit()">
+                      <nz-icon nzType="close" nzTheme="outline"></nz-icon>
+                    </button>
+                    @if (editError){
+                      <div style="color:red; text-align:center;">{{ editError }}</div>
                     }
-                  </div>
-                }
-              </td>
-              <td nzAlign="center">
-                @if (editingIndex !== i) {
-                  <button nz-button nzType="link" (click)="startEdit(i, option.value.option_description)">
-                    <nz-icon nzType="edit" nzTheme="outline"></nz-icon>
-                  </button>
-                } @else {
-                  <button nz-button nzType="link" (click)="saveEdit(i)">
-                    <nz-icon nzType="check" nzTheme="outline"></nz-icon>
-                  </button>
-                  <button nz-button nzType="link" (click)="cancelEdit()">
-                    <nz-icon nzType="close" nzTheme="outline"></nz-icon>
-                  </button>
-                }
-              </td>
-              <td nzAlign="center">
-                <button nz-button nzType="link" nzDanger (click)="removeOption(i)">
-                  <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
-                </button>
+                  }
+                </div>
               </td>
             </tr>
           }
