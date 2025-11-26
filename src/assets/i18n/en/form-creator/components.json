@@ -180,5 +180,6 @@
         "TOOLTIP_TEXT": "Tooltip Text",
         "USED_COMPONENTS": "Used Components",
         "WEEK_NUMBERS?": "Show week numbers?"
-    }
+    },
+    "DESCRIPTION_PLACEHOLDER": "Enter a description for the input..."
 }

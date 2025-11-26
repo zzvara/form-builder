@@ -8,7 +8,7 @@
               {{ project.title }}
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
-              <div [innerHTML]="project.description | safeHtml"></div>
+              <div class="ql-editor" [innerHTML]="project.description | safeHtml"></div>
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
               {{ 'FORM.' + (project.type | uppercase) | translate }}

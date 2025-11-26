@@ -48,7 +48,7 @@
       </nz-form-label>
 
       <nz-form-control nz-col nzSpan="24">
-        <quill-editor formControlName="description" (onContentChanged)="updateForm()" [style]="{ height: '150px' }"> </quill-editor>
+        <quill-editor formControlName="description" (onContentChanged)="updateForm()" [style]="{ height: '150px', width:'100%' }" [placeholder]="''"> </quill-editor>
 
         <div *ngIf="form.controls['description'].invalid && (form.controls['description'].touched || saveFailed)">
           <span class="error-message">{{ 'FORM.DESCRIPTION_REQUIRED' | translate }}</span>

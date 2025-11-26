@@ -13,7 +13,7 @@
     @for (data of table.data; track $index) {
       <tr>
         <td>{{ data.title }}</td>
-        <td><div [innerHTML]="data.description | safeHtml"></div></td>
+        <td><div class="ql-editor" [innerHTML]="data.description | safeHtml"></div></td>
         <td>{{ data.created | date: DateFormat.DATE }}</td>
         <td>{{ data.modified | date: DateFormat.DATE }}</td>
         <td>

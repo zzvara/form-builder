@@ -8,7 +8,7 @@
     [nzDescription]="null"
   ></nz-card-meta>
 
-  <div [innerHTML]="project.description | safeHtml"></div>
+  <div class="ql-editor" [innerHTML]="project.description | safeHtml" style="width: 100%; max-height: 150px;"></div>
 </div>
 
         <div class="card-footer">
