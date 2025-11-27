@@ -4,10 +4,10 @@
       <nz-table #basicTable  nzShowPagination="false" nzSize="small" [nzData]="options.controls" class="compact-table">
         <thead>
         <tr>
-          <th nzAlign="center">{{ 'GENERAL.DESCRIPTION' | translate }}</th>
-          <th nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.DISABLED?' | translate }}</th>
-          <th nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.CHECKED?' | translate }}</th>
-          <th nzAlign="center">{{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}</th>
+          <th nzWidth="50%" nzAlign="center">{{ 'GENERAL.DESCRIPTION' | translate }}</th>
+          <th nzWidth="10%" nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.DISABLED?' | translate }}</th>
+          <th nzWidth="10%" nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.CHECKED?' | translate }}</th>
+          <th nzWidth="20%" nzAlign="center">{{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}</th>
         </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
@@ -16,14 +16,14 @@
               <td nzAlign="center">
                 @if (editingIndex !== i) {
                   <div>
-                    <label>{{ option.value.label }}</label>
+                    <span>{{ option.value.label }}</span>
                     <button nz-button nzType="link" (click)="startEdit(i, option.value.label)">
                       <nz-icon nzType="edit" nzTheme="outline"></nz-icon>
                     </button>
                   </div>
                 } @else {
                   <div nz-typography nzType="danger">
-                    <input nz-input [formControl]="editControl"/>
+                    <input nz-input [formControl]="editControl" style="width:190px;"/>
                     @if (editError) {
                       <div>{{ editError }}</div>
                     }
