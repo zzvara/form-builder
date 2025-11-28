@@ -78,6 +78,7 @@
     "MIN_LENGTH_ERROR_MESSAGE_HELP": "This message is shown if the entered text is too short",
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Error message required if minimum length is set!",
     "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {{..}} characters!",
+    "MIN_LENGTH_TOOLTIP": "{{..}} will be replaced with the minimum length number set above.",
     "MIN_VALUE_LIMIT": "Cannot be greater than the maximum value",
     "MODE": "Mode",
     "NAME_EDIT": {
@@ -101,6 +102,7 @@
     "NUMBER_FIELD": {
       "FORMAT_INPUT": "Format number?",
       "FORMAT_LABEL": "Format number",
+      "FORMAT_TOOLTIP": "The {{..}} string will become the number in the pattern.",
       "FORMAT_PATTERN": "Format pattern – how the number will be displayed",
       "LARGER_THAN_SET_STEP_NUMBER": "Cannot be larger than (max – min)!",
       "MAX_NUMBER": "Maximum value",

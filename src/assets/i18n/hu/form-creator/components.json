@@ -78,6 +78,7 @@
     "MIN_LENGTH_ERROR_MESSAGE_HELP": "Ezt az üzenetet látja a felhasználó, ha a megadott szöveg túl rövid",
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Kötelező hibaüzenet, ha minimum hossz meg van adva!",
     "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {{..}} karakter!",
+    "MIN_LENGTH_TOOLTIP": "{{..}} fel lesz cserélve a fenti minimális hossz számra.",
     "MIN_VALUE_LIMIT": "Nem lehet nagyobb, mint a maximális érték",
     "MODE": "Működési mód",
     "NAME_EDIT": {
@@ -102,6 +103,7 @@
       "FORMAT_INPUT": "Formázzuk a számot?",
       "FORMAT_LABEL": "Szám formázása",
       "FORMAT_PATTERN": "Formátum minta – így jelenik meg a szám",
+      "FORMAT_TOOLTIP": "A {{..}} karakterlánc a mintában a számot fogja jelölni.",
       "LARGER_THAN_SET_STEP_NUMBER": "Nem lehet nagyobb, mint (max. szám – min. szám)!",
       "MAX_NUMBER": "Maximális érték",
       "MAX_NUMBER_LIMIT": "Nem lehet kisebb a minimális értéknél",
