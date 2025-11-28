@@ -24,6 +24,7 @@ import { RangePickerEditComponent } from '@components/range-picker/range-picker-
 import { RangePickerComponent } from '@components/range-picker/range-picker.component';
 import { RedoUndoComponent } from '@components/redo-undo/redo-undo.component';
 import { SectionComponent } from '@components/section/section.component';
+import { RepeatedSectionComponent } from './components/repeated-section/repeated-section.component';
 import { SelectEditComponent } from '@components/select/select-edit/select-edit.component';
 import { SelectComponent } from '@components/select/select.component';
 import { SidebarComponent } from '@components/sidebar/sidebar.component';
@@ -65,6 +66,7 @@ const COMPONENTS = [
   HeaderComponent,
   SidebarComponent,
   SectionComponent,
+  RepeatedSectionComponent,
   RedoUndoComponent,
   PictureInputComponent,
   NumberInputComponent,

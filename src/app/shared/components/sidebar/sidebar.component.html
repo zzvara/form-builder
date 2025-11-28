@@ -32,6 +32,9 @@
                   @case ('SectionComponent') {
                     <nz-card nzTitle="Section: section | Layout: vertical" class="element-list p-3"></nz-card>
                   }
+                  @case ('RepeatedSectionComponent') {
+                    <nz-card nzTitle="Section: section | Layout: vertical" class="element-list p-3"></nz-card>
+                  }
                   @default {
                     <app-input-holder [formInput]="item" />
                   }

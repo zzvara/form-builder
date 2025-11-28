@@ -158,6 +158,13 @@
       "TITLE": {
         "PLURAL": "Szekciók",
         "SINGULAR": "Szekció"
+      },
+      "REPEATED": {
+        "TITLE": "Ismételt szekció",
+        "REPEAT_LABEL": "Ismétlés eszerint",
+        "GIVEN": "Megadott szám",
+        "INPUT": "Másik input",
+        "PLACEHOLDER": "Válassz egy elnevezett mezőt"
       }
     },
     "SELECTED_RAGE": "Kiválasztott intervallum",

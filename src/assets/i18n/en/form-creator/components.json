@@ -158,6 +158,13 @@
       "TITLE": {
         "PLURAL": "Sections",
         "SINGULAR": "Section"
+      },
+      "REPEATED": {
+        "TITLE": "Repeated Section",
+        "REPEAT_LABEL": "Repeat based on",
+        "GIVEN": "Given number",
+        "INPUT": "Another input",
+        "PLACEHOLDER": "Select a named input"
       }
     },
     "SELECTED_RAGE": "Selected rage",

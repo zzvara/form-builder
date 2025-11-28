@@ -17,7 +17,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
-import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-edit',
@@ -151,6 +150,7 @@ export class EditComponent implements OnInit, OnChanges {
             layout: LayoutEnum.VERTICAL,
             reorderEnabled: false,
             sectionInputs: [],
+            type: droppedInput.type
           },
         };
         this.names = this.getCustomTitles();
@@ -159,7 +159,7 @@ export class EditComponent implements OnInit, OnChanges {
         // Create a deep copy of the dropped item with updated ID
         const newItemId = uuidv4();
         const newItem: FormInputData = cloneDeep(droppedInput);
-
+        
         // Initialize data if it's null
         if (!newItem.data) {
           newItem.data = {};
@@ -171,6 +171,7 @@ export class EditComponent implements OnInit, OnChanges {
           id: newItemId,
           data: newItem,
         };
+
         this.names = this.getCustomTitles();
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
