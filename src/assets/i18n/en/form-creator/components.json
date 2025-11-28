@@ -77,7 +77,7 @@
     "MIN_LENGTH_ERROR_MESSAGE": "Error message if the text is too short",
     "MIN_LENGTH_ERROR_MESSAGE_HELP": "This message is shown if the entered text is too short",
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Error message required if minimum length is set!",
-    "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {*} characters!",
+    "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {{..}} characters!",
     "MIN_VALUE_LIMIT": "Cannot be greater than the maximum value",
     "MODE": "Mode",
     "NAME_EDIT": {
@@ -161,7 +161,7 @@
       }
     },
     "SELECTED_RAGE": "Selected rage",
-    "SELECT_DATE": "Select a date",
+    "SELECT_DATE": "Select time",
     "SELECT_VERSION": "Select the version",
     "SET_DEFAULT_VALUE": "Set default value",
     "SET_DEFAULT_VALUE?": "Should it have a default value?",

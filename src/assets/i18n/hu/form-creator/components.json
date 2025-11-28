@@ -77,7 +77,7 @@
     "MIN_LENGTH_ERROR_MESSAGE": "Hibaüzenet, ha túl rövid a szöveg",
     "MIN_LENGTH_ERROR_MESSAGE_HELP": "Ezt az üzenetet látja a felhasználó, ha a megadott szöveg túl rövid",
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Kötelező hibaüzenet, ha minimum hossz meg van adva!",
-    "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {*} karakter!",
+    "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {{..}} karakter!",
     "MIN_VALUE_LIMIT": "Nem lehet nagyobb, mint a maximális érték",
     "MODE": "Működési mód",
     "NAME_EDIT": {
@@ -161,7 +161,7 @@
       }
     },
     "SELECTED_RAGE": "Kiválasztott intervallum",
-    "SELECT_DATE": "Válassz dátumot",
+    "SELECT_DATE": "Válassz időpontot",
     "SELECT_VERSION": "Válaszd ki a verziót",
     "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",
     "SET_DEFAULT_VALUE?": "Legyen alapértelmezett érték?",

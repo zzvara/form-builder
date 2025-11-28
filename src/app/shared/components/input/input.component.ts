@@ -25,7 +25,7 @@ export class InputComponent extends AbstractFieldLikeInputs<string, InputCompone
     return super.errorList().concat([
       {
         errorName: 'minlength',
-        errorMessage: this.data.minLengthMessage!.replace('{*}', String(this.data.minLengthNumber!)),
+        errorMessage: this.data.minLengthMessage!.replace('{{..}}', String(this.data.minLengthNumber!)),
       },
     ]);
   }
