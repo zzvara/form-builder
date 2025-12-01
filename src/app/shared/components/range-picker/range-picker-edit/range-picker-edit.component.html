@@ -1,8 +1,6 @@
 <form id="datePickerEditFormID" nz-form [formGroup]="formData">
   <nz-divider nzText="{{ 'COMPONENTS.DIVIDER_GENERAL' | translate }}" nzOrientation="left"></nz-divider>
-  <nz-form-label nzRequired
-    >{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label
-  >
+  <nz-form-label nzRequired>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -164,9 +162,7 @@
     </nz-form-item>
     @if (getControlValue('minDate')) {
       <div>
-        <nz-form-label nzRequired
-          >{{ 'COMPONENTS.DATE_PICKER.MIN_DATE' | translate }}
-        </nz-form-label>
+        <nz-form-label nzRequired>{{ 'COMPONENTS.DATE_PICKER.MIN_DATE' | translate }} </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minDateErrorMessageTemplate">
             <nz-date-picker
@@ -201,9 +197,7 @@
     </nz-form-item>
     @if (getControlValue('maxDate')) {
       <div>
-        <nz-form-label nzRequired
-          >{{ 'COMPONENTS.DATE_PICKER.MAX_DATE' | translate }}
-        </nz-form-label>
+        <nz-form-label nzRequired>{{ 'COMPONENTS.DATE_PICKER.MAX_DATE' | translate }} </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
             <nz-date-picker
