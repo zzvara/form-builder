@@ -1,7 +1,4 @@
 {
-    "SEARCH": "Keresés",
-    "RESET": "Komponens visszaállítása",
-    "SAVE": "Mentés",
     "COMPONENTS": {
         "BASIC_INPUTS": "Alap bemenetek",
         "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
@@ -12,10 +9,9 @@
             "NONE": "— nincs —",
             "REMOVED_INPUTS": "Eltávolított mezők"
         },
-        "ERROR_DUPLICATE_OPTION": "Foglalt",
         "CHARACTER_COUNTER": "Karakterszámláló",
         "CHECKBOX_GROUP": {
-            "CHECKED?": "Alapértelmezetten bejelölve",
+            "CHECKED?": "Bejelölve",
             "DISABLED?": "Letiltva",
             "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése",
             "TITLE": "Jelölőnégyzet-csoport"
@@ -23,8 +19,8 @@
         "COMBOBOX": {
             "ADD_OPTION": "Új lehetőség hozzáadása",
             "CHOICES_VALUES": "Lehetőségek és értékek",
-            "COMBOBOX_REMOVE": "Opciók eltávolítása",
             "COMBOBOX_EDIT": "Opciók szerkesztése",
+            "COMBOBOX_REMOVE": "Opciók eltávolítása",
             "IS_MULTIPLE_CHOICE": "Engedélyezett több választás?",
             "MODEL_TITLE_SELECT": "Legördülő lista beállításai",
             "MULTIPLE": "Több válasz lehetséges",
@@ -60,6 +56,7 @@
         },
         "DATE_PICKER_MODE": "Dátumválasztó módja",
         "DEFAULT_VALUE": "Alapértelmezett érték",
+        "ERROR_DUPLICATE_OPTION": "Foglalt",
         "INLINE_COMPONENT?": "Megjelenjen beágyazottan?",
         "INLINE_EDIT": "Beágyazott szerkesztés",
         "INPUT": {
@@ -182,5 +179,8 @@
         "TOOLTIP_TEXT": "Súgószöveg",
         "USED_COMPONENTS": "Használt komponensek",
         "WEEK_NUMBERS?": "Mutassuk a hét számát?"
-    }
+    },
+    "RESET": "Komponens visszaállítása",
+    "SAVE": "Mentés",
+    "SEARCH": "Keresés"
 }
