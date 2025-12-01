@@ -1,7 +1,6 @@
 <form id="inputEditFormID" nz-form [formGroup]="formData">
-  <nz-form-label nzRequired>
-    <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
-  >
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }} " nzOrientation="left"></nz-divider>
+  <nz-form-label nzRequired> {{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -14,16 +13,16 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+    {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
-
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.PLACEHOLDER' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-label>
-    <span>{{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}</span>
+    {{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -31,7 +30,6 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -39,9 +37,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
-      <nz-form-label [nzRequired]="getControlValue('required')"
-        ><span>{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}</span></nz-form-label
-      >
+      <nz-form-label [nzRequired]="getControlValue('required')">{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}</nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
           <nz-input-group [nzSuffix]="suffixTemplateCounter">
@@ -68,7 +64,7 @@
     }
   </div>
 
-  <nz-divider></nz-divider>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -77,7 +73,7 @@
     </nz-form-item>
     @if (getControlValue('required')) {
       <nz-form-label [nzRequired]="getControlValue('required')">
-        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        {{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}
       </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
@@ -97,9 +93,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('minLength')) {
-      <nz-form-label nzRequired
-        ><span>{{ 'COMPONENTS.TEXT_AREA.MIN_LENGTH_NUMBER' | translate }}</span></nz-form-label
-      >
+      <nz-form-label nzRequired>{{ 'COMPONENTS.TEXT_AREA.MIN_LENGTH_NUMBER' | translate }}</nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minLengthNumberErrorMessageTemplate">
           <nz-input-number
@@ -121,9 +115,7 @@
           }
         </ng-template>
       </nz-form-item>
-      <nz-form-label nzRequired>
-        <span>{{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}&#123;*&#125;</span>
-      </nz-form-label>
+      <nz-form-label nzRequired> {{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}&#123;*&#125; </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minLengthMessageErrorMessageTemplate">
           <input nz-input formControlName="minLengthMessage" />
@@ -142,9 +134,7 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('maxLength')) {
-      <nz-form-label nzRequired
-        ><span>{{ 'COMPONENTS.MAX_LENGTH_NUMBER' | translate }}</span></nz-form-label
-      >
+      <nz-form-label nzRequired>{{ 'COMPONENTS.MAX_LENGTH_NUMBER' | translate }}</nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="maxLengthNumberErrorMessageTemplate">
           <nz-input-number
@@ -165,7 +155,9 @@
           }
         </ng-template>
       </nz-form-item>
-      <span>{{ 'COMPONENTS.CHARACTER_COUNTER' | translate }}</span>
+      <nz-form-label>
+        {{ 'COMPONENTS.CHARACTER_COUNTER' | translate }}
+      </nz-form-label>
       <nz-form-item>
         <nz-form-control>
           <label nz-checkbox formControlName="showCharacterCounter">{{ 'COMPONENTS.SHOW_CHARACTER_COUNTER' | translate }}</label>
@@ -173,7 +165,7 @@
       </nz-form-item>
     }
   </div>
-
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.TOOLTIP' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>

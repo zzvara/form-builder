@@ -1,4 +1,5 @@
 <form id="numberInputEditFormID" nz-form [formGroup]="formData">
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }} " nzOrientation="left"></nz-divider>
   <nz-form-label nzRequired
     ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
   >
@@ -14,7 +15,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+    {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -48,7 +49,7 @@
     </ng-template>
   </nz-form-item>
 
-  <nz-divider></nz-divider>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.DEFAULT' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -82,7 +83,7 @@
     }
   </div>
 
-  <nz-divider></nz-divider>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -160,7 +161,7 @@
     }
   </div>
 
-  <nz-divider></nz-divider>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.FORMATTING' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -188,7 +189,7 @@
       </div>
     }
   </div>
-
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.TOOLTIP' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>

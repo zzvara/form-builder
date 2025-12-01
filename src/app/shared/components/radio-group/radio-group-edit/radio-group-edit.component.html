@@ -1,4 +1,5 @@
 <form id="selectEditFormID" nz-form [formGroup]="formData">
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.SELECTION' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-item>
     <ng-template #listHeader>
       <div class="list-header">{{ 'COMPONENTS.RADIO_GROUP.CHOICES_OR_VALUES' | translate }}</div>
@@ -44,9 +45,9 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-
-  <nz-form-label>
-    <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-form-label nzRequired>
+    {{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
@@ -60,14 +61,14 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'GENERAL.DESCRIPTION' | translate }}</span>
+    {{ 'GENERAL.DESCRIPTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
       <textarea nz-input nzAutosize formControlName="descriptionValue"></textarea>
     </nz-form-control>
   </nz-form-item>
-
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.DEFAULT' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -94,7 +95,7 @@
       </nz-form-item>
     }
   </div>
-
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
@@ -103,7 +104,7 @@
     </nz-form-item>
     @if (getControlValue('required')) {
       <nz-form-label [nzRequired]="getControlValue('required')">
-        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        {{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}
       </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
@@ -117,7 +118,7 @@
       </nz-form-item>
     }
   </div>
-
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.DISPLAY_MODE' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="isButton">{{ 'COMPONENTS.RADIO_GROUP.SHOW_AS_BUTTON' | translate }}</label>

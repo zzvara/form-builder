@@ -1,4 +1,5 @@
 <form id="selectEditFormID" nz-form [formGroup]="formData">
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.SELECTION' | translate }}" nzOrientation="left"></nz-divider>
   <nz-form-item>
     <nz-form-control formArrayName="defaultValue">
       <nz-table #smallTable nzBordered nzSize="small" [nzData]="options.controls">
@@ -53,10 +54,11 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-form-label nzRequired>
+    {{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}
+  </nz-form-label>
 
-  <nz-form-label nzRequired
-    ><span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span></nz-form-label
-  >
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
       <input nz-input formControlName="questionValue" />
@@ -69,7 +71,7 @@
   </nz-form-item>
 
   <nz-form-label>
-    <span>{{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}</span>
+    {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
@@ -77,7 +79,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider></nz-divider>
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
   <div class="required-section">
     <nz-form-item>
       <nz-form-control>
@@ -86,7 +88,7 @@
     </nz-form-item>
     @if (getControlValue('required')) {
       <nz-form-label [nzRequired]="getControlValue('required')">
-        <span>{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}</span>
+        {{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}
       </nz-form-label>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
