@@ -47,7 +47,7 @@
 
               <ng-template #sectionButtons>
                 <div class="section-buttons">
-                  @if(edit.data | instanceOfRepeatedSection : editList) {
+                  @if(edit.data | instanceOfRepeatedSection) {
                     <div class="repeated-settings">
                       <div class="repeated-switch">
                         <span>{{'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate}}:</span>

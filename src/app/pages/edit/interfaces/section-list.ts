@@ -15,6 +15,6 @@ export interface SectionList {
 export interface RepeatedSectionList extends SectionList {
   repeatByOther: boolean,
   repeatTimes: number | undefined,
-  referencableInputs: [string],
+  referencableInputs: string[],
   referencedInput: SectionList["customTitle"]
 }
