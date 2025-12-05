@@ -1,8 +1,7 @@
 @import '../../../../common.less';
 
 section {
-  overflow-y: scroll;
-  height: 75vh; // @todo Is this responsive enough for mobile resolution as well?
+  height: 100%;
 }
 
 .sticky-header {
@@ -14,6 +13,8 @@ section {
 
 .body {
   position: static;
+  height: calc(100vh - 54px - 64px - 64px);
+  overflow-y: auto;
 }
 
 .clear-icon:hover {
@@ -25,6 +26,10 @@ section {
     width: @width-full;
     border: @border-default;
     margin-bottom: @spacing20;
+  }
+
+  .ant-card:last-child {
+    margin-bottom: 0;
   }
 
   .element-list {
