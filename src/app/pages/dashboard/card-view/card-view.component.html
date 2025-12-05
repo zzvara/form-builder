@@ -3,13 +3,19 @@
     <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
       <nz-card [nzActions]="[actionEdit, actionDelete]" class="project-card">
         <div class="description">
-  <nz-card-meta
-    [nzTitle]="project.title"
-    [nzDescription]="null"
-  ></nz-card-meta>
+          <nz-card-meta [nzTitle]="project.title" [nzDescription]="null"></nz-card-meta>
+          <ng-template #descriptionTooltipTemp>
+            <span class="ql-editor custom-tooltip" [innerHTML]="project.description | safeHtml"></span>
+          </ng-template>
 
-  <div class="ql-editor" [innerHTML]="project.description | safeHtml" style="width: 100%; max-height: 150px;"></div>
-</div>
+          <div
+            class="ql-editor view-mode"
+            [innerHTML]="project.description | safeHtml"
+            style="width: 100%; max-height: 150px"
+            nz-tooltip
+            [nzTooltipTitle]="descriptionTooltipTemp"
+          ></div>
+        </div>
 
         <div class="card-footer">
           <p>{{ 'GENERAL.CREATED' | translate }}: {{ project.created | date: DateFormat.DATE }}</p>
