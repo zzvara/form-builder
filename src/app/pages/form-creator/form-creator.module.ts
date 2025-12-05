@@ -35,6 +35,7 @@ import { CommonModule } from '@angular/common';
 import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { QuillEditorComponent } from 'ngx-quill';
+import { CodeEditorModule } from '@app/shared/components/code-editor/code-editor.module';
 
 @NgModule({
   declarations: [FormCreatorComponent, InfoPageComponent, ComponentsPageComponent, ResultsPageComponent],
@@ -70,6 +71,7 @@ import { QuillEditorComponent } from 'ngx-quill';
     IconTypePipe,
     QuillEditorComponent,
     SafeHtmlPipe,
+    CodeEditorModule,
   ],
   providers: [IconTypePipe],
   exports: [],

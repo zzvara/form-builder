@@ -17,6 +17,7 @@ import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
 import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { EventService } from '@app/shared/services/event.service';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
+import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
 
 @Component({
   selector: 'app-results-page',
@@ -30,27 +31,6 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   @Input() versionNum?: number;
 
   @Output() setPage = new EventEmitter<number>();
-
-  @ViewChild('editorProject', { static: true }) editorProjectElement!: ElementRef;
-  @ViewChild('editorProjectHistory', { static: true }) editorProjectHistoryElement!: ElementRef;
-
-  editorProjectView!: EditorView;
-
-  editorTheme = new Compartment();
-  editorExtensionList = [
-    EditorView.lineWrapping,
-    json(),
-    basicSetup,
-
-    // Theme
-    this.editorTheme.of(this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark),
-
-    // Linter
-    lintGutter(),
-    linter(jsonParseLinter()),
-    //
-    EditorState.readOnly.of(true),
-  ];
 
   project?: Project;
   projectHistory: ProjectVersion<Project>[] = [];
@@ -74,14 +54,15 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   ];
 
   DateFormat = DateFormat;
+  CodeEditorMode = CodeEditorMode;
+  CodeEditorType = CodeEditorType;
 
   constructor(
     private readonly projectService: ProjectService<Project>,
     private readonly jsonService: JsonService,
     private readonly statisticsService: StatisticsService,
     private readonly translate: TranslateService,
-    private readonly router: Router,
-    private readonly eventService: EventService
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -100,43 +81,6 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
         });
       }
     });
-
-    this.updateCodeMirrorTheme();
-    this.eventService.themeChange.subscribe((value) => {
-      this.updateCodeMirrorTheme();
-    });
-  }
-
-  selectedIndexChange(event: number): void {
-    if (this.editorProjectView) {
-      this.editorProjectView.destroy();
-    }
-
-    if (event === 2) {
-      this.editorProjectView = new EditorView({
-        state: EditorState.create({
-          doc: `${JSON.stringify(this.project, null, 2)}`,
-          extensions: this.editorExtensionList,
-        }),
-        parent: this.editorProjectElement.nativeElement,
-      });
-    } else if (event === 3) {
-      this.editorProjectView = new EditorView({
-        state: EditorState.create({
-          doc: `${JSON.stringify(this.projectHistory, null, 2)}`,
-          extensions: this.editorExtensionList,
-        }),
-        parent: this.editorProjectHistoryElement.nativeElement,
-      });
-    }
-  }
-
-  updateCodeMirrorTheme() {
-    if (this.editorProjectView) {
-      this.editorProjectView.dispatch({
-        effects: this.editorTheme.reconfigure(this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark),
-      });
-    }
   }
 
   nextPage() {
