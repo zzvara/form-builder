@@ -193,17 +193,17 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
-    let eventData: CdkDragDrop<FormInputData[]> = event as CdkDragDrop<FormInputData[]>;
-    let draggable: CdkDrag = eventData.item;
-    let data: EditList = draggable.data;
-    let innerData: FormInputData = data.data as FormInputData;
+    const eventData: CdkDragDrop<FormInputData[]> = event as CdkDragDrop<FormInputData[]>;
+    const draggable: CdkDrag = eventData.item;
+    const data: EditList = draggable.data;
+    const innerData: FormInputData = data.data as FormInputData;
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else if (this.getSectionIds().includes(event.container.id) && this.getSectionIds().includes(event.previousContainer.id)) {
       // Move items between sections
-      let sectionList = data.data as SectionList;
+      const sectionList = data.data as SectionList;
       sectionList.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, draggable.data);
       event.previousContainer.data.splice(event.previousIndex, 1);
@@ -219,7 +219,7 @@ export class EditComponent implements OnInit, OnChanges {
       // Move existing item from edit area to section or from section to edit area
       const droppedInput: FormInputData = draggable.data;
       const movedItem: FormInputData = cloneDeep(droppedInput);
-      let toMove: any = movedItem.data;
+      const toMove: any = movedItem.data;
       event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
