@@ -193,19 +193,23 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
-    let object: any = event.item.data;
+    let eventData: CdkDragDrop<FormInputData[]> = event as CdkDragDrop<FormInputData[]>;
+    let draggable: CdkDrag = eventData.item;
+    let data: EditList = draggable.data;
+    let innerData: FormInputData = data.data as FormInputData;
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else if (this.getSectionIds().includes(event.container.id) && this.getSectionIds().includes(event.previousContainer.id)) {
       // Move items between sections
-      object.data.sectionId = event.container.id;
-      event.container.data.splice(event.currentIndex, 0, object);
+      let sectionList = data.data as SectionList;
+      sectionList.sectionId = event.container.id;
+      event.container.data.splice(event.currentIndex, 0, draggable.data);
       event.previousContainer.data.splice(event.previousIndex, 1);
-    } else if (!object.data?.data?.id) {
+    } else if (!innerData.data?.id) {
       // Add a completely new item to any drop list
-      const droppedInput: FormInputData = object;
+      const droppedInput: FormInputData = draggable.data;
       const newItemId = uuidv4();
       const newItem: FormInputData = cloneDeep(droppedInput);
       newItem.data!.id = newItemId;
@@ -213,8 +217,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else {
       // Move existing item from edit area to section or from section to edit area
-      const droppedInput: FormInputData = object;
-      const movedItemId = object.data?.data?.id;
+      const droppedInput: FormInputData = draggable.data;
       const movedItem: FormInputData = cloneDeep(droppedInput);
       let toMove: any = movedItem.data;
       event.container.data.splice(event.currentIndex, 0, toMove);
