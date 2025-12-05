@@ -8,7 +8,16 @@
               {{ project.title }}
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
-              {{ project.description }}
+              <ng-template #descriptionTooltipTemp>
+                <span class="ql-editor custom-tooltip" [innerHTML]="project.description | safeHtml"></span>
+              </ng-template>
+              <div
+                class="ql-editor view-mode"
+                style="max-width: 100%"
+                [innerHTML]="project.description | safeHtml"
+                nz-tooltip
+                [nzTooltipTitle]="descriptionTooltipTemp"
+              ></div>
             </nz-descriptions-item>
             <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
               {{ 'FORM.' + (project.type | uppercase) | translate }}

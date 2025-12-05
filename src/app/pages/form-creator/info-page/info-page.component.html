@@ -1,3 +1,7 @@
+<!--
+  ~ <<licensetext>>
+  -->
+
 <nz-layout>
   <div>
     <form nz-form class="form-margin-top" (ngSubmit)="submitForm()" [formGroup]="form">
@@ -32,8 +36,7 @@
       </nz-form-control>
 
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
-        <span> {{ 'GENERAL.DESCRIPTION' | translate }}</span
-        >&nbsp;
+        <span> {{ 'GENERAL.DESCRIPTION' | translate }}</span>
         <span class="optional-text"> {{ 'FORM.OPTIONAL' | translate }} </span>
         <i
           nz-icon
@@ -43,14 +46,14 @@
           class="icon-margin-small"
         ></i>
       </nz-form-label>
-      <textarea
-        nz-input
-        [nzAutosize]="{ minRows: 4, maxRows: 6 }"
-        class="formelement mb-8"
-        id="description"
-        formControlName="description"
-        (change)="updateForm()"
-      ></textarea>
+
+      <nz-form-control nz-col nzSpan="24">
+        <quill-editor formControlName="description" (onContentChanged)="updateForm()" [style]="{ height: '150px', width:'100%' }" [placeholder]="''"> </quill-editor>
+
+        <div *ngIf="form.controls['description'].invalid && (form.controls['description'].touched || saveFailed)">
+          <span class="error-message">{{ 'FORM.DESCRIPTION_REQUIRED' | translate }}</span>
+        </div>
+      </nz-form-control>
 
       <hr />
 
@@ -66,13 +69,7 @@
           >
           </nz-switch>
           <nz-form-label [nzNoColon]="true">
-            <i
-              nz-icon
-              nzType="question-circle"
-              nz-tooltip
-              [nzTooltipTitle]="'FORM.SWITCH_TOOLTIP' | translate"
-              class="icon-flex"
-            ></i>
+            <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'FORM.SWITCH_TOOLTIP' | translate" class="icon-flex"></i>
           </nz-form-label>
         </nz-form-item>
       </ng-container>

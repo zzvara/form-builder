@@ -47,17 +47,15 @@
 
       <nz-form-control>
         <span class="pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
-        <textarea
+        <quill-editor
           [hidden]="!inlineEdit.enabled"
-          nz-input
-          nzAutosize
-          name="inputDescription"
+          [style]="{ height: '150px', width:'100%' }"
           (mousedown)="$event.stopPropagation()"
-          [placeholder]="formInput.descriptionPlaceholder"
+          [placeholder]="''"
           [(ngModel)]="inputData.descriptionValue"
+          name="inputDescription"
           [ngModelOptions]="{ updateOn: 'change' }"
-          (ngModelChange)="change()"
-        ></textarea>
+          (ngModelChange)="change()"/>
       </nz-form-control>
     </nz-form-item>
 

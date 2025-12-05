@@ -219,6 +219,7 @@
     "USED_COMPONENTS": "Used Components",
     "WEEK_NUMBERS?": "Show week numbers?"
   },
+  "DESCRIPTION_PLACEHOLDER": "Enter a description for the input...",
   "RESET": "Reset component",
   "SAVE": "Save",
   "SEARCH": "Search components"

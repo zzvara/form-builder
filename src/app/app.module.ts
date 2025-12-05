@@ -19,6 +19,7 @@ import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { QuillModule } from 'ngx-quill';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -63,6 +64,18 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
       },
     }),
     NzCheckboxModule,
+    QuillModule.forRoot({
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          [{script: 'sub'}, {script: 'super'}],
+          ['link', 'image', 'code-block'],
+          ['clean'],
+        ],
+      },
+    }),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
@@ -70,4 +83,4 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
     provideHttpClient(),
   ],
 })
-export class AppModule {}
+export class AppModule { }

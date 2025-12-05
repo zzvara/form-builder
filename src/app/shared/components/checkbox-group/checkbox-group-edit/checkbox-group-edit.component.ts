@@ -6,6 +6,7 @@ import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/i
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-checkbox-group-edit',
@@ -13,6 +14,7 @@ import { ListValidators } from '@validators/list-validators';
   styleUrls: [],
   standalone: false,
 })
+
 export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions[], CheckboxGroupData> {
   newOption!: FormControl<string | null>;
   get newOptionValue(): string | null {

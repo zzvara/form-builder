@@ -1,6 +1,7 @@
 @import 'theme.less';
 @import 'breakpoints.less';
 @import 'colors.less';
+@import '../node_modules/quill/dist/quill.snow.css';
 @import 'common.less';
 
 /* You can add global styles to this file, and also import other style files */
@@ -61,3 +62,28 @@ h4 {
   margin-bottom: @spacing8;
 }
 
+.ql-snow .ql-tooltip {
+  z-index: 99999;
+}
+
+.ql-editor {
+  &.view-mode {
+    padding: 0 !important;
+
+    max-width: 1145px;
+
+    display: -webkit-box;
+    overflow-y: hidden;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
+
+  &.custom-tooltip {
+    padding: 0 !important;
+
+    p {
+      margin: 0 !important;
+    }
+  }
+}

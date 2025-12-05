@@ -42,24 +42,35 @@ export class ListViewComponent implements OnInit {
         sortOrder: null,
         sortFn: (a: Questionnaire, b: Questionnaire) => a.title.localeCompare(b.title),
         sortDirections: ['ascend', 'descend', null],
+        width: '300px',
       },
       {
         title: this.translate.instant('GENERAL.DESCRIPTION'),
         sortOrder: null,
         sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
         sortDirections: ['ascend', 'descend', null],
+        width: '1145px',
       },
       {
         title: this.translate.instant('GENERAL.CREATED'),
         sortOrder: 'descend',
         sortFn: (a: Questionnaire, b: Questionnaire) => a.created.localeCompare(b.created),
         sortDirections: ['ascend', 'descend', null],
+        width: '140px',
       },
       {
         title: this.translate.instant('GENERAL.MODIFIED'),
         sortOrder: null,
         sortFn: (a: Questionnaire, b: Questionnaire) => a.modified.localeCompare(b.modified),
         sortDirections: ['ascend', 'descend', null],
+        width: '140px',
+      },
+      {
+        title: this.translate.instant('DASHBOARD.ACTION'),
+        sortDirections: [],
+        sortFn: null,
+        sortOrder: null,
+        width: '100px',
       },
     ];
   }
