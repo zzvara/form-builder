@@ -28,16 +28,16 @@ import { TranslateService } from '@ngx-translate/core';
 // Default values of the dragged components
 const textInputOptions = (translateService: TranslateService): InputComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   minLength: false,
-  minLengthMessage: translateService.instant('COMPONENTS.MIN_LENGTH_MESSAGE'),
+  minLengthMessage: '',
   maxLength: false,
   showTooltip: false,
   showCharacterCounter: false,
 });
 const numberInputOptions = (translateService: TranslateService): NumberInputComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   showTooltip: false,
   max: false,
   min: false,
@@ -46,7 +46,7 @@ const numberInputOptions = (translateService: TranslateService): NumberInputComp
 });
 const dateInputOptions = (translateService: TranslateService): DatePickerComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
@@ -59,7 +59,7 @@ const dateInputOptions = (translateService: TranslateService): DatePickerCompone
 });
 const rangeInputOptions = (translateService: TranslateService): RangePickerComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
@@ -72,7 +72,7 @@ const rangeInputOptions = (translateService: TranslateService): RangePickerCompo
 });
 const timeInputOptions = (translateService: TranslateService): TimePickerComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   showTooltip: false,
   maxTime: false,
   minTime: false,
@@ -85,9 +85,9 @@ const timeInputOptions = (translateService: TranslateService): TimePickerCompone
 });
 const textAreaInputOptions = (translateService: TranslateService): TextareaComponentData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   minLength: false,
-  minLengthMessage: translateService.instant('COMPONENTS.MIN_LENGTH_MESSAGE'),
+  minLengthMessage: '',
   maxLength: false,
   showTooltip: false,
   showCharacterCounter: false,
@@ -97,13 +97,13 @@ const pictureInputOptions: PictureInputComponentData = {};
 const selectInputOptions = (translateService: TranslateService): SelectComponentData => ({
   selectOptions: Array.from({ length: 2 }).map((_, index: number) => translateService.instant('COMPONENTS.OPTION', { number: index + 1 })),
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   showTooltip: false,
   isMultipleChoice: false,
 });
 const radioGroupInputOptions = (translateService: TranslateService): RadioGroupData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   isButton: false,
   options: Array.from({ length: 3 }).map((_, index: number) => ({
     option_description: translateService.instant('COMPONENTS.OPTION', { number: index + 1 }),
@@ -112,7 +112,7 @@ const radioGroupInputOptions = (translateService: TranslateService): RadioGroupD
 });
 const checkboxGroupInputOptions = (translateService: TranslateService): CheckboxGroupData => ({
   required: false,
-  requiredMessage: translateService.instant('COMPONENTS.REQUIRED_MESSAGE'),
+  requiredMessage: '',
   defaultValue: Array.from({ length: 3 }).map((_, index: number) => ({
     label: translateService.instant('COMPONENTS.OPTION', { number: index + 1 }),
     value: index + 1,
