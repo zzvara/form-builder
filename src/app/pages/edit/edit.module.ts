@@ -21,6 +21,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 const ngZorro = [
   NzLayoutModule,
@@ -49,6 +50,7 @@ const ngZorro = [
     InstanceOfSectionListPipe,
     InstanceOfFormInputDataPipe,
     ComponentIconsPipe,
+    NzCollapseModule,
     ...ngZorro,
   ],
   providers: [SectionComponent, InstanceOfSectionListPipe, InstanceOfFormInputDataPipe],
