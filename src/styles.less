@@ -60,3 +60,26 @@ h4 {
 .ql-snow .ql-tooltip {
   z-index: 99999;
 }
+
+.ql-editor {
+  &.view-mode {
+    padding: 0 !important;
+
+    max-width: 1145px;
+    max-height: 60px;
+
+    display: -webkit-box;
+    overflow-y: hidden;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  &.custom-tooltip {
+    padding: 0 !important;
+
+    p {
+      margin: 0 !important;
+    }
+  }
+}
