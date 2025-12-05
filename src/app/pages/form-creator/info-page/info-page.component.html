@@ -7,13 +7,6 @@
     <form nz-form class="form-margin-top" (ngSubmit)="submitForm()" [formGroup]="form">
       <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>
         <h4>{{ 'GENERAL.TITLE' | translate }}</h4>
-        <i
-          nz-icon
-          nzType="question-circle"
-          nz-tooltip
-          [nzTooltipTitle]="'FORM.FORM_TITLE_TOOLTIP' | translate"
-          class="icon-margin-small"
-        ></i>
       </nz-form-label>
       <nz-form-control nz-col nzSpan="24">
         <div class="mb-8">
@@ -38,13 +31,6 @@
       <nz-form-label [nzFor]="'description'" nz-col nzSpan="24" class="description-label">
         <span> {{ 'GENERAL.DESCRIPTION' | translate }}</span>
         <span class="optional-text"> {{ 'FORM.OPTIONAL' | translate }} </span>
-        <i
-          nz-icon
-          nzType="question-circle"
-          nz-tooltip
-          [nzTooltipTitle]="'FORM.FORM_DESCRIPTION_TOOLTIP' | translate"
-          class="icon-margin-small"
-        ></i>
       </nz-form-label>
 
       <nz-form-control nz-col nzSpan="24">
@@ -74,7 +60,7 @@
         </nz-form-item>
       </ng-container>
 
-      <nz-form-item class="same_line mb-8">
+      <nz-form-item class="same_line item-margin-bottom">
         <label nz-checkbox formControlName="hasdeadline"></label>
         <nz-form-label [nzNoColon]="true"
           >{{ 'GENERAL.DEADLINE' | translate }}
