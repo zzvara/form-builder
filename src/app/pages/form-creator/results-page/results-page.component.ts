@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -9,6 +9,14 @@ import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import { basicSetup, EditorView } from 'codemirror';
+import { Compartment, EditorState } from '@codemirror/state';
+import { json, jsonLanguage, jsonParseLinter } from '@codemirror/lang-json';
+import { linter, lintGutter } from '@codemirror/lint';
+import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
+import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
+import { EventService } from '@app/shared/services/event.service';
+import { ThemeEnum } from '@app/shared/enums/theme.enum';
 
 @Component({
   selector: 'app-results-page',
@@ -18,9 +26,32 @@ import { FormInputData } from '@app/shared/interfaces/form-input-data';
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
   @Input() page?: number;
-  @Output() setPage = new EventEmitter<number>();
   @Input() projectId: string | undefined;
   @Input() versionNum?: number;
+
+  @Output() setPage = new EventEmitter<number>();
+
+  @ViewChild('editorProject', { static: true }) editorProjectElement!: ElementRef;
+  @ViewChild('editorProjectHistory', { static: true }) editorProjectHistoryElement!: ElementRef;
+
+  editorProjectView!: EditorView;
+
+  editorTheme = new Compartment();
+  editorExtensionList = [
+    EditorView.lineWrapping,
+    json(),
+    basicSetup,
+
+    // Theme
+    this.editorTheme.of(this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark),
+
+    // Linter
+    lintGutter(),
+    linter(jsonParseLinter()),
+    //
+    EditorState.readOnly.of(true),
+  ];
+
   project?: Project;
   projectHistory: ProjectVersion<Project>[] = [];
   sectionInputStats: { [key: string]: number | string } = {};
@@ -49,7 +80,8 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
     private readonly jsonService: JsonService,
     private readonly statisticsService: StatisticsService,
     private readonly translate: TranslateService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly eventService: EventService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +100,43 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
         });
       }
     });
+
+    this.updateCodeMirrorTheme();
+    this.eventService.themeChange.subscribe((value) => {
+      this.updateCodeMirrorTheme();
+    });
+  }
+
+  selectedIndexChange(event: number): void {
+    if (this.editorProjectView) {
+      this.editorProjectView.destroy();
+    }
+
+    if (event === 2) {
+      this.editorProjectView = new EditorView({
+        state: EditorState.create({
+          doc: `${JSON.stringify(this.project, null, 2)}`,
+          extensions: this.editorExtensionList,
+        }),
+        parent: this.editorProjectElement.nativeElement,
+      });
+    } else if (event === 3) {
+      this.editorProjectView = new EditorView({
+        state: EditorState.create({
+          doc: `${JSON.stringify(this.projectHistory, null, 2)}`,
+          extensions: this.editorExtensionList,
+        }),
+        parent: this.editorProjectHistoryElement.nativeElement,
+      });
+    }
+  }
+
+  updateCodeMirrorTheme() {
+    if (this.editorProjectView) {
+      this.editorProjectView.dispatch({
+        effects: this.editorTheme.reconfigure(this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark),
+      });
+    }
   }
 
   nextPage() {

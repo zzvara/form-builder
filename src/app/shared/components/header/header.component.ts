@@ -11,6 +11,7 @@ import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
 import { ChangeDetectorRef } from '@angular/core';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
+import { EventService } from '@app/shared/services/event.service';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly headerService: HeaderService,
     private readonly jsonService: JsonService,
     private readonly translate: TranslateService,
+    private readonly eventService: EventService,
     private readonly cdr: ChangeDetectorRef
   ) {}
 
@@ -64,6 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.currentTheme === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }
+    this.eventService.themeChange.next(this.currentTheme);
   }
 
   navigateToHome(): void {
@@ -132,6 +135,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (existingLink) {
       existingLink.parentNode?.removeChild(existingLink);
     }
+
+    this.eventService.themeChange.next(theme);
 
     if (theme === ThemeEnum.DARK) {
       const link = document.createElement('link');

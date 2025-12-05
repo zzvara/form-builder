@@ -1,6 +1,6 @@
 <nz-layout>
   <div>
-    <nz-tabset>
+    <nz-tabset (nzSelectedIndexChange)="selectedIndexChange($event)">
       <nz-tab [nzTitle]="'PROJECT.PROJECT_INFORMATION' | translate">
         @if (project) {
           <nz-descriptions nzBordered [nzColumn]="1" *ngIf="project">
@@ -59,18 +59,10 @@
         }
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_JSON' | translate" class="json">
-        <div class="json-container">
-          @if (project) {
-            <pre>{{ project | json }}</pre>
-          }
-        </div>
+        <div #editorProject id="editorProject" class="code-editor"></div>
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_HISTORY_JSON' | translate" class="json">
-        <div class="json-container">
-          @if (project) {
-            <pre>{{ projectHistory | json }}</pre>
-          }
-        </div>
+        <div #editorProjectHistory id="editorProjectHistory" class="code-editor"></div>
       </nz-tab>
     </nz-tabset>
     <div nz-row nzJustify="start" nzAlign="bottom" id="footerdiv">
