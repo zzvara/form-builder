@@ -1,10 +1,8 @@
 @import '../../../../breakpoints.less';
-@import '../../../../colors.less';
 @import '../../../../common.less';
 @import '../../../../typography.less';
 
 nz-layout {
-  background-color: @transparent;
   display: flex;
   flex-direction: column;
   padding: clamp(@spacing16, 2vw, @spacing24) clamp(@spacing4, 5vw, @spacing24);
@@ -100,7 +98,6 @@ nz-form-label {
     margin-bottom: 0;
   }
 }
-
 
 @media (max-width: @breakpoint-md) {
   .same_line {

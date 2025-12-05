@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { RoutePath } from '@app/shared/models/route-path.model';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
+import { ChangeDetectorRef } from '@angular/core';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 
 @Component({
@@ -35,7 +36,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly headerService: HeaderService,
     private readonly jsonService: JsonService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +57,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         ? ThemeEnum.LIGHT
         : ThemeEnum.DARK;
 
+    if (this.currentTheme === ThemeEnum.DARK) {
+      this.setTheme(ThemeEnum.DARK);
+    }
+    this.currentTheme = localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.DARK ? ThemeEnum.DARK : ThemeEnum.LIGHT;
     if (this.currentTheme === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }

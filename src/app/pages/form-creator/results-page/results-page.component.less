@@ -1,16 +1,15 @@
 @import '../../../../breakpoints.less';
-@import '../../../../colors.less';
 @import '../../../../common.less';
 @import '../../../../typography.less';
 
-body, nz-layout {
+body,
+nz-layout {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
 
 nz-layout {
-  background-color: @transparent;
   display: flex;
   width: 100%;
   max-width: 100%;
@@ -92,7 +91,6 @@ nz-layout {
   word-break: break-word;
   font-family: monospace;
   padding: clamp(@spacing8, 1vw, @spacing12);
-  background-color: @background-light;
   border: @border-default;
   border-radius: 5px;
   max-width: 100%;

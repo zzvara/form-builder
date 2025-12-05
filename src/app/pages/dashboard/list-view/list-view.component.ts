@@ -49,7 +49,7 @@ export class ListViewComponent implements OnInit {
         sortOrder: null,
         sortFn: (a: Questionnaire, b: Questionnaire) => a.description.localeCompare(b.description),
         sortDirections: ['ascend', 'descend', null],
-        width: '1145px',
+        width: '1080px',
       },
       {
         title: this.translate.instant('GENERAL.CREATED'),
