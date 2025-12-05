@@ -216,10 +216,10 @@ export class EditComponent implements OnInit, OnChanges {
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else {
-      // Move existing item from edit area to section or from section to edit area
+      // Move existing item from edit area to section
       const droppedInput: FormInputData = draggable.data;
       const movedItem: FormInputData = cloneDeep(droppedInput);
-      let toMove: any = movedItem.data;
+      let toMove: FormInputData<InputData<any>, any> = movedItem.data as FormInputData<InputData<any>, any>;
       event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
