@@ -45,7 +45,7 @@ export class EditComponent implements OnInit, OnChanges {
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.sideBarData = getSideBarData(this, this.translate);
@@ -216,7 +216,7 @@ export class EditComponent implements OnInit, OnChanges {
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else {
-      // Move existing item from edit area to section or from section to edit area
+      // Move existing item from edit area to section
       const droppedInput: FormInputData = draggable.data;
       const movedItem: FormInputData = cloneDeep(droppedInput);
       let toMove: any = movedItem.data;
@@ -300,5 +300,18 @@ export class EditComponent implements OnInit, OnChanges {
 
   private getCustomTitles(): string[] {
     return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
+  }
+
+  returnChildren(sect: SectionList): { title: string; id: string }[] {
+    const returnVal: { title: string; id: string }[] = [];
+    for (const input of sect.sectionInputs) {
+      let id: string = input.data?.id || "";
+      returnVal.push({
+        title: input.title,
+        id: id,
+      });
+    }
+
+    return returnVal;
   }
 }

@@ -75,6 +75,7 @@
                 </ng-template>
 
                 <app-input-holder
+                  [id]="item.data?.id"
                   class="element-box input-holder"
                   cdkDrag
                   [customTitle]="inputTitleTemp"
@@ -135,10 +136,20 @@
               <span class="component-title">{{
                 edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
               }}</span>
-              <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
+              <span class="hover-icon" (click)="scrollToElement(edit.id)">
                 <span nz-icon nzType="aim" nzTheme="outline"></span>
               </span>
             </div>
+          </div>
+          <div>
+            @for (child of returnChildren(edit.data); track child.id) {
+              <div class="component-item section-item">
+                {{child.title | translate}}
+                <span class="hover-icon" (click)="scrollToElement(child.id)">
+                <span nz-icon nzType="aim" nzTheme="outline"></span>
+                </span>
+              </div>
+            }
           </div>
         } @else if (edit.data | instanceOfFormInputData) {
           <div class="component-item" cdkDrag [cdkDragData]="edit">
