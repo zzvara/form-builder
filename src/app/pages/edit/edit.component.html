@@ -80,45 +80,40 @@
       @if (edit.data | instanceOfSectionList) {
       <div class="section-item" cdkDrag [cdkDragData]="edit">
         <div class="section-children">
-         <nz-collapse [nzBordered]="false">
-  <nz-collapse-panel nzActive [nzShowArrow]="false" [nzHeader]="nzHeader" style="padding: 0;">
+          <nz-collapse [nzBordered]="false">
+            <nz-collapse-panel nzActive [nzShowArrow]="false" [nzHeader]="nzHeader" style="padding: 0;">
 
-    <ng-template #nzHeader>
-      <div
-        class="component-item section-header"
-      >
-        <nz-icon
-          class="mr-4"
-          [nzType]="((edit.data | instanceOfFormInputData)
+              <ng-template #nzHeader>
+                <div class="component-item section-header">
+                  <nz-icon class="mr-4" [nzType]="((edit.data | instanceOfFormInputData)
             ? edit.data.type
-            : 'layout') | ComponentIconsPipe"
-        ></nz-icon>
+            : 'layout') | ComponentIconsPipe"></nz-icon>
 
-        <span class="component-title">
-          {{
-            edit.data.customTitle
-              ? edit.data.customTitle
-              : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
-          }}
-        </span>
+                  <span class="component-title">
+                    {{
+                    edit.data.customTitle
+                    ? edit.data.customTitle
+                    : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
+                    }}
+                  </span>
 
-        <span
-          class="hover-icon"
-          (click)="scrollToElement(edit.id); $event.stopPropagation()"
-        >
-          <span nz-icon nzType="aim"></span>
-        </span>
-      </div>
-    </ng-template>
+                  <span class="hover-icon" (click)="scrollToElement(edit.id); $event.stopPropagation()">
+                    <span nz-icon nzType="aim"></span>
+                  </span>
+                </div>
+              </ng-template>
 
-    @for (child of returnChildren(edit.data); track child.id) {
-      <div class="component-item section-item">
-        {{ child.title | translate }}
-      </div>
-    }
+              @for (child of returnChildren(edit.data); track child.id) {
+              <div class="component-item section-item">
+                {{child.title | translate}}
+                <span class="hover-icon" (click)="scrollToElement(child.id)">
+                  <span nz-icon nzType="aim" nzTheme="outline"></span>
+                </span>
+              </div>
+              }
 
-  </nz-collapse-panel>
-</nz-collapse>
+            </nz-collapse-panel>
+          </nz-collapse>
 
         </div>
       </div>
