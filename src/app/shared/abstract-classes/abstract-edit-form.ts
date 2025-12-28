@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, Inject, OnInit } from '@angular/core';
+import { DestroyRef, Directive, Inject, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ControlConnection, ControlConnectionData, DataSetterType } from '@interfaces/control-connection';
@@ -6,9 +6,12 @@ import { InputData, InputDataKeys } from '@interfaces/input-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslateService } from '@ngx-translate/core';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
+import { CodeEditorModalComponent } from '../components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Directive()
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
+  @ViewChild(CodeEditorModalComponent) codeEditorModalElement?: CodeEditorModalComponent;
+
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
   protected readonly formData: FormGroup = this.formBuilder.group<{ [key in InputDataKeys<D>]?: FormControl<any> }>(
@@ -22,7 +25,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   protected initialValues!: D;
 
   constructor(
-    @Inject(NZ_MODAL_DATA) private nzModalData: D,
+    @Inject(NZ_MODAL_DATA) public nzModalData: D,
     protected destroyRef: DestroyRef,
     protected formBuilder: FormBuilder,
     protected translate: TranslateService
@@ -60,6 +63,15 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     this.initialValues.questionValue = this.rawFormData.questionValue;
     this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
     this.initialValues.defaultValue = this.rawFormData.defaultValue;
+
+    if (
+      this.codeEditorModalElement &&
+      this.codeEditorModalElement.selectedElement &&
+      this.codeEditorModalElement.selectedElementCodeMirror &&
+      this.codeEditorModalElement.selectedElement.codeEditor
+    ) {
+      this.codeEditorModalElement.selectedElement.codeEditor = this.codeEditorModalElement.selectedElementCodeMirror;
+    }
   }
 
   get rawFormData(): D {
@@ -83,7 +95,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return null;
   }
   protected get defaultValueUpdateOn(): UpdateOnStrategy {
-    return UpdateOnStrategy.CHANGE
+    return UpdateOnStrategy.CHANGE;
   }
   protected get getDefaultValueValue(): T | null {
     return null;
@@ -138,7 +150,12 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return this.formData.valid;
   }
   get isInvalid(): boolean {
-    return this.formData.invalid;
+    return (
+      this.formData.invalid ||
+      (!!this.codeEditorModalElement &&
+        this.codeEditorModalElement.selectedElementCodeMirror.enabled &&
+        !this.codeEditorModalElement.selectedElementCodeMirror.data?.isValid)
+    );
   }
 
   get isPristine(): boolean {

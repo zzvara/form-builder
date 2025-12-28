@@ -1,5 +1,34 @@
 {
   "COMPONENTS": {
+    "CONDITION_SETTINGS": {
+      "LABELS": {
+        "ENABLE": "Enable",
+        "VARIABLES": "Variables",
+        "CODE": "Code"
+      },
+      "ERRORS": {
+        "RETURN": "The code returns with an incorrect type!",
+        "RUN_CODE": "An error occurred while running the code!",
+        "CODE": "There are {{ count }} errors in the code!"
+      },
+      "WARNINGS": {
+        "CODE": "There are {{ count }} warnings in the code!"
+      },
+      "NEW_VARIABLE": "Adding variables",
+      "VARIABLE_MODAL": {
+        "TITLE": "Selecting variables",
+        "AVAILABLE_VARIABLES": "Available variables",
+        "SELECTED_VARIABLES": "Selected variables",
+        "VARIABLE_TYPES": {
+          "STRING": "String",
+          "NUMBER": "Number",
+          "DATE": "Date",
+          "BOOLEAN": "Boolean",
+          "DATE_ARRAY": "Date array",
+          "STRING_ARRAY": "String array"
+        }
+      }
+    },
     "BASIC_INPUTS": "Basic inputs",
     "CANNOT_BE_EMPTY": "This field cannot be empty.",
     "CANNOT_BE_LOWER_THAN": "The value cannot be lower than",
@@ -68,7 +97,8 @@
       "STEP_SETTINGS": "Step Settings",
       "TIME_SETTINGS": "Time Settings",
       "TOOLTIP": "Tooltip Settings",
-      "VALIDATION": "Validation Rules"
+      "VALIDATION": "Validation Rules",
+      "CODE_EDITOR": "Condition Settings"
     },
     "INLINE_COMPONENT?": "Display inline?",
     "INLINE_EDIT": "Inline edit",
@@ -173,7 +203,8 @@
       "TITLE": {
         "PLURAL": "Sections",
         "SINGULAR": "Section"
-      }
+      },
+      "MODAL_RADIO_GROUP_TITLE": "Section Settings"
     },
     "SELECTED_RAGE": "Selected rage",
     "SELECT_DATE": "Select a date",

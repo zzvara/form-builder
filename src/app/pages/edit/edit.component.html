@@ -48,6 +48,9 @@
               <ng-template #sectionButtons>
                 <span>{{ 'COMPONENTS.REORDER' | translate }}: </span>
                 <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
+                <button nz-button nzType="primary" nzShape="circle" class="ml-12" (click)="sectionEdit(edit.data)">
+                  <nz-icon nzType="edit"></nz-icon>
+                </button>
                 <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)" class="button-spacing">
                   <span nz-icon nzType="redo" nzTheme="outline"></span>
                 </button>
@@ -135,7 +138,7 @@
               <span class="component-title">{{
                 edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
               }}</span>
-              <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
+              <span class="hover-icon" (click)="scrollToElement(edit.data.data.id)">
                 <span nz-icon nzType="aim" nzTheme="outline"></span>
               </span>
             </div>

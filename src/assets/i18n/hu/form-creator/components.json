@@ -1,5 +1,34 @@
 {
   "COMPONENTS": {
+    "CONDITION_SETTINGS": {
+      "LABELS": {
+        "ENABLE": "Engedélyezés",
+        "VARIABLES": "Változók",
+        "CODE": "Kód"
+      },
+      "ERRORS": {
+        "CODE": "{{ count }} hiba van a kódban!",
+        "RETURN": "A kód nem megfelelő típussal tér vissza!",
+        "RUN_CODE": "Hiba történt a kód futtatása közben!"
+      },
+      "WARNINGS": {
+        "CODE": "{{ count }} figyelmeztetés van a kódban!"
+      },
+      "NEW_VARIABLE": "Változók hozzáadása",
+      "VARIABLE_MODAL": {
+        "TITLE": "Változók kiválasztása",
+        "AVAILABLE_VARIABLES": "Elérhető változók",
+        "SELECTED_VARIABLES": "Kiválasztott változók",
+        "VARIABLE_TYPES": {
+          "STRING": "Szöveg",
+          "STRING_ARRAY": "Szöveg tömb",
+          "NUMBER": "Szám",
+          "DATE": "Dátum",
+          "DATE_ARRAY": "Dátum tömb",
+          "BOOLEAN": "Logikai érték"
+        }
+      }
+    },
     "BASIC_INPUTS": "Alap bemenetek",
     "CANNOT_BE_EMPTY": "Ez a mező nem maradhat üresen.",
     "CANNOT_BE_LOWER_THAN": "Az érték nem lehet kisebb, mint",
@@ -68,7 +97,8 @@
       "STEP_SETTINGS": "Lépésköz beállításai",
       "TIME_SETTINGS": "Időformátum beállításai",
       "TOOLTIP": "Tooltip beállításai",
-      "VALIDATION": "Érvényesítési szabályok"
+      "VALIDATION": "Érvényesítési szabályok",
+      "CODE_EDITOR": "Feltétel Beállításai"
     },
     "INLINE_COMPONENT?": "Megjelenjen beágyazottan",
     "INLINE_EDIT": "Beágyazott szerkesztés",
@@ -173,7 +203,8 @@
       "TITLE": {
         "PLURAL": "Szekciók",
         "SINGULAR": "Szekció"
-      }
+      },
+      "MODAL_RADIO_GROUP_TITLE": "Szekció beállításai"
     },
     "SELECTED_RAGE": "Kiválasztott intervallum",
     "SELECT_DATE": "Válassz dátumot",

@@ -33,6 +33,7 @@ import { TimePickerEditComponent } from '@components/time-picker/time-picker-edi
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
 import { MutateTextDirective } from '@directives/mutate-text.directive';
 import { TranslatePipe } from '@ngx-translate/core';
+import { QuillEditorComponent } from 'ngx-quill';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -56,7 +57,14 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { QuillEditorComponent } from "ngx-quill";
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzTransferModule } from 'ng-zorro-antd/transfer';
+import { CodeEditorComponent } from './components/code-editor/code-editor.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { VariableIconPipe } from './pipes/variable-icon.pipe';
+import { CodeEditorModalComponent } from './components/code-editor/code-editor-modal/code-editor-modal.component';
+import { VariableModalComponent } from './components/code-editor/variable-modal/variable-modal.component';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -85,49 +93,62 @@ const COMPONENTS = [
   RadioGroupEditComponent,
   CheckboxGroupComponent,
   CheckboxGroupEditComponent,
+  // Code-Editor
+  CodeEditorComponent,
+  CodeEditorModalComponent,
+  VariableModalComponent,
+];
+
+const ngZorro = [
+  NzInputNumberModule,
+  NzUploadModule,
+  NzCardModule,
+  NzDatePickerModule,
+  NzInputModule,
+  NzDividerModule,
+  NzSelectModule,
+  NzLayoutModule,
+  NzIconModule,
+  NzCollapseModule,
+  NzButtonModule,
+  NzModalModule,
+  NzCheckboxModule,
+  NzListModule,
+  NzFormModule,
+  NzToolTipModule,
+  NzTimePickerModule,
+  NzPopconfirmModule,
+  NzRadioGroupComponent,
+  NzRadioModule,
+  NzTableModule,
+  NzMenuDirective,
+  NzMenuItemComponent,
+  NzSubMenuComponent,
+  NzTypographyComponent,
+  NzDropdownMenuComponent,
+  NzMenuModule,
+  NzDropDownModule,
+  NzSwitchModule,
+  NzTagModule,
+  NzTransferModule,
+  NzAlertModule,
 ];
 
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [
-    NzInputNumberModule,
-    NzUploadModule,
-    NzCardModule,
+    ...ngZorro,
     BrowserModule,
     CommonModule,
-    NzDatePickerModule,
-    NzInputModule,
-    NzDividerModule,
-    NzSelectModule,
     FormsModule,
-    NzLayoutModule,
-    NzIconModule,
-    NzCollapseModule,
     CdkDrag,
     CdkDropList,
     DragDropModule,
-    NzButtonModule,
-    NzModalModule,
-    NzCheckboxModule,
-    NzListModule,
     ReactiveFormsModule,
-    NzFormModule,
-    NzToolTipModule,
-    NzTimePickerModule,
-    NzPopconfirmModule,
-    NzRadioGroupComponent,
-    NzRadioModule,
-    NzTableModule,
-    NzMenuDirective,
-    NzMenuItemComponent,
-    NzSubMenuComponent,
-    NzTypographyComponent,
     TranslatePipe,
-    NzDropdownMenuComponent,
-    NzMenuModule,
-    NzDropDownModule,
-    QuillEditorComponent
-],
+    QuillEditorComponent,
+    VariableIconPipe,
+  ],
   providers: [],
   exports: [...COMPONENTS],
 })

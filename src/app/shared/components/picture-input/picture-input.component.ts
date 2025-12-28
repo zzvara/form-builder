@@ -13,27 +13,25 @@ import { Observable, of } from 'rxjs';
 })
 export class PictureInputComponent extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent> {
   onFileChange(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files?.length) {
-    this.data.file = input.files[0];
-  }
-}
-
-
- override onChange(event: Event | NzUploadChangeParam): void {
-  const info = event as NzUploadChangeParam;
-
-  if (info.file.status !== 'uploading') {
-    console.warn(info.file, info.fileList);
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.data.file = input.files[0];
+    }
   }
 
-  if (info.file.status === 'done') {
-    console.info(`${info.file.name} file uploaded successfully`);
-  } else if (info.file.status === 'error') {
-    console.error(`${info.file.name} file upload failed.`);
-  }
-}
+  override onChange(event: Event | NzUploadChangeParam): void {
+    const info = event as NzUploadChangeParam;
 
+    if (info.file.status !== 'uploading') {
+      console.warn(info.file, info.fileList);
+    }
+
+    if (info.file.status === 'done') {
+      console.info(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      console.error(`${info.file.name} file upload failed.`);
+    }
+  }
 
   uploadToLocalStorage = (file: NzUploadFile): Observable<string> => {
     const reader = new FileReader();

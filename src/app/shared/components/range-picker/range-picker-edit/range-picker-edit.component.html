@@ -17,9 +17,7 @@
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
-      <quill-editor
-        formControlName="descriptionValue"
-        [style]="{ height: '150px', width:'100%' }" [placeholder]="''"/>
+      <quill-editor formControlName="descriptionValue" [style]="{ height: '150px', width: '100%' }" [placeholder]="''" />
     </nz-form-control>
   </nz-form-item>
   <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.PLACEHOLDER' | translate }}" nzOrientation="left"></nz-divider>
@@ -253,3 +251,5 @@
     }
   </div>
 </form>
+
+<app-code-editor-modal [elementId]="nzModalData.id"></app-code-editor-modal>
