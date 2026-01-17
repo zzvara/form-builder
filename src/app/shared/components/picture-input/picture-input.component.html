@@ -5,13 +5,17 @@
 
   <nz-upload
     [nzDisabled]="!inlineEdit.enabled"
-    [nzAction]="uploadToLocalStorage"
+    [nzCustomRequest]="uploadToLocalStorage"
     [nzHeaders]="{ authorization: 'authorization-text' }"
     (nzChange)="onChange($event)"
+    [nzFileList]="fileList"
+    [nzDownload]="onDownload"
+    [nzRemove]="onRemove"
+    nzListType="picture"
   >
-    <button nz-button>
+    <button nz-button type="button">
       <span nz-icon nzType="upload"></span>
-      {{ 'COMPONENTS.PICTURE_INPUT.CLICK_TO_UPLOAD' | translate }}
+      {{ data.placeholderValue || ('COMPONENTS.PICTURE_INPUT.CLICK_TO_UPLOAD' | translate) }}
     </button>
   </nz-upload>
 </nz-form-item>

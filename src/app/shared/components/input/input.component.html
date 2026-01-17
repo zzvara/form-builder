@@ -10,8 +10,8 @@
         nz-input
         type="text"
         [required]="data.required"
-        [minlength]="data.minLengthNumber ?? null"
-        [maxlength]="data.maxLengthNumber ?? null"
+        [minlength]="data.minLength ? (data.minLengthNumber ?? null) : null"
+        [maxlength]="data.maxLength ? (data.maxLengthNumber ?? null) : null"
         [disabled]="!inlineEdit.enabled"
         [placeholder]="data.placeholderValue ?? ''"
         [(ngModel)]="data.defaultValue"
