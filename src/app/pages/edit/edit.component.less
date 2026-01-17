@@ -21,13 +21,21 @@ nz-content {
 }
 
 .inner-layout {
-  padding-left: 0rem;
-
-  > nz-content {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 735px;
 }
+
+.inner-layout>nz-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+
+  display: flex;
+  justify-content: center;
+}
+
 
 .form-container {
   max-width: @max-width-full;
@@ -84,7 +92,8 @@ nz-content {
 }
 
 .sider-sticky {
-  height: fit-content;
+  height: 735px;
+  display: flex;
   position: sticky;
   top: 64px;
 }
@@ -127,9 +136,9 @@ nz-content {
 .right-sider {
   position: sticky;
   top: 64px;
-  height: calc(100vh - 112px);
+  height: 735px;
   border: solid 1px @border-light;
-  margin-top: @spacing20;
+  margin-top: 0px;
 
   h3 {
     padding: @spacing12;
