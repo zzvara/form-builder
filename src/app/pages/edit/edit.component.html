@@ -49,11 +49,14 @@
                 <div class="section-buttons">
                   @if(edit.data | instanceOfRepeatedSection) {
                     <div class="repeated-settings">
-                      <div class="repeated-switch">
+                      <div class="repeated-select">
                         <span>{{'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate}}:</span>
-                        <nz-switch [(ngModel)]="edit.data.repeatByOther" [nzCheckedChildren]="'COMPONENTS.SECTION.REPEATED.INPUT' | translate" [nzUnCheckedChildren]="'COMPONENTS.SECTION.REPEATED.GIVEN' | translate"></nz-switch>
+                        <nz-select class="repeated-width" [(ngModel)]="edit.data.repeatByOther">
+                          <nz-option [nzValue]="true" [nzLabel]="'COMPONENTS.SECTION.REPEATED.INPUT' | translate"></nz-option>
+                          <nz-option [nzValue]="false" [nzLabel]="'COMPONENTS.SECTION.REPEATED.GIVEN' | translate"></nz-option>
+                        </nz-select>
                       </div>
-                      <nz-input-number ngDefaultControl [hidden]="edit.data.repeatByOther" [(ngModel)]="edit.data.repeatTimes" nzMin="1"/>
+                      <nz-input-number class="repeated-width" ngDefaultControl [hidden]="edit.data.repeatByOther" [(ngModel)]="edit.data.repeatTimes" nzMin="1"/>
                       <nz-select ngDefaultControl [hidden]="!edit.data.repeatByOther" nzShowSearch nzAllowClear [nzPlaceHolder]="'COMPONENTS.SECTION.REPEATED.PLACEHOLDER' | translate" [(ngModel)]="edit.data.referencedInput">
                         @for(item of edit.data.referencableInputs; track item) {
                           <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>

@@ -177,9 +177,6 @@ export class EditComponent implements OnInit, OnChanges {
         this.names = this.getCustomTitles();
 
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
-        if(newItem.type === "RepeatedSectionComponent") {
-          this.updateRepeatBasedOn(0, this.editList, [], event.currentIndex);
-        }
       }
     } else if (this.instanceOfFormInputDataPipe.transform(event.item.data)) {
       // Initialize data if it's null
@@ -197,10 +194,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
     
-    if(this.instanceOfFormInputDataPipe.transform(event.item.data)) {
-      this.runUpdateRepeated(event.item.data, Math.min(event.currentIndex, event.previousIndex));
-    }
-
+    this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
   }
 
@@ -232,10 +226,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
-    if(this.instanceOfFormInputDataPipe.transform(object)) {
-      this.runUpdateRepeated(object, Math.min(event.currentIndex, event.previousIndex));
-    }
-
+    this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
   }
 
@@ -255,9 +246,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.editList = this.editList.filter((e) => e.id !== edit.id);
     this.names = this.getCustomTitles();
 
-    if(this.instanceOfFormInputDataPipe.transform(edit.data))
-      this.runUpdateRepeated(edit.data, ind);
-
+    this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
   }
 
@@ -266,9 +255,7 @@ export class EditComponent implements OnInit, OnChanges {
     const component = sect.sectionInputs.find(item => item.data!.id === componentId);
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
     
-    if(this.instanceOfFormInputDataPipe.transform(component))
-      this.runUpdateRepeated(component, ind < 0 ? 0 : ind);
-
+    this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
   }
 
@@ -320,56 +307,45 @@ export class EditComponent implements OnInit, OnChanges {
 
   updateName(): void {
     this.names = this.getCustomTitles();
-    this.updateRepeatBasedOn();
+    this.updateRepeated();
   }
 
   private getCustomTitles(): string[] {
     return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
   }
 
-  private runUpdateRepeated(input: FormInputData, start: number = 0) {
-    if((input.type === "CheckboxGroupComponent" || input.type === "NumberInputComponent") && input.customTitle)
-      this.updateRepeatBasedOn(start);
+  private isReferencable(input : FormInputData) : input is FormInputData & { customTitle: string } {
+    return (input.type === "CheckboxGroupComponent" || input.type === "NumberInputComponent") && !!input.customTitle;
   }
 
-  /**
-   * Updates repeated sections' "Repeat based on another input" options in a recursive way
-   *
-   *   @param ind        - Index of where to start the update.
-   *   @param list       - The list of inputs to iterate.
-   *   @param inputNames - The collected names of referencable inputs.
-   *   @param till       - Index of the form element to stop updating referencable inputs from. (inclusive)
-   *   
-   * @returns {string[]} - The collected names of referencable inputs.
-   */
-  private updateRepeatBasedOn(ind: number = 0, list: EditList[] | FormInputData[] = this.editList, inputNames: string[] = [], till: number = list.length) : string[] {
-    if(ind >= list.length || ind > till)
-      return inputNames;
-    
-    const elem = list[ind];
+  private getReferencables(id : string) : string[] {
 
-    if(this.instanceOfSectionListPipe.transform(elem.data)) {
-      const sectionList = elem.data as SectionList;
+    const ind = this.editList.findIndex(item => item.id === id);
 
-      if(sectionList.type === "RepeatedSectionComponent") {
-        (sectionList as RepeatedSectionList).referencableInputs = JSON.parse(JSON.stringify(inputNames));
+    const list : EditList[] = cloneDeep(this.editList);
+    list.splice(ind);
+
+    return list.flatMap(input => {
+      const isSectionList = this.instanceOfSectionListPipe.transform(input.data);
+
+      if (isSectionList) {
+        return (input.data as SectionList).sectionInputs
+          .filter(item => this.isReferencable(item))
+          .map(item => item.customTitle);
       }
 
-      inputNames = this.updateRepeatBasedOn(0, sectionList.sectionInputs, inputNames);
+      return this.isReferencable(input.data as FormInputData) && input.data.customTitle
+        ? [input.data.customTitle]
+        : [];
+    });
+  }
 
-    } else {
-      let input = elem;
-      if(this.instanceOfFormInputDataPipe.transform(elem.data))
-        input = elem.data as FormInputData;
-      else
-        input = elem as FormInputData;
-
-      if(input.type === "CheckboxGroupComponent" || input.type === "NumberInputComponent") {
-        if(input.customTitle)
-          inputNames.push(input.customTitle);
-      }
-    }
-    
-    return this.updateRepeatBasedOn(ind + 1, list, inputNames);
+  private updateRepeated() {
+    this.editList
+    .filter(item => item.data.type === 'RepeatedSectionComponent')
+    .forEach(item => {
+      const repeatedSection = item.data as RepeatedSectionList;
+      repeatedSection.referencableInputs = this.getReferencables(item.id);
+    });
   }
 }
