@@ -143,6 +143,7 @@ export class ComponentService {
   private getVariableType(itemType: keyof typeof translateComponentType): CodeEditorVariableType | null {
     switch (itemType) {
       case 'CheckboxGroupComponent':
+      case 'SelectComponent':
         return CodeEditorVariableType.STRING_ARRAY;
       case 'DatePickerComponent':
       case 'TimePickerComponent':
@@ -150,7 +151,6 @@ export class ComponentService {
       case 'InputComponent':
       case 'TextareaComponent':
       case 'RadioGroupComponent':
-      case 'SelectComponent':
         return CodeEditorVariableType.STRING;
       case 'NumberInputComponent':
         return CodeEditorVariableType.NUMBER;
