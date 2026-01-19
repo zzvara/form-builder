@@ -32,7 +32,7 @@ import { TextareaComponent } from '@components/textarea/textarea.component';
 import { TimePickerEditComponent } from '@components/time-picker/time-picker-edit/time-picker-edit.component';
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
 import { MutateTextDirective } from '@directives/mutate-text.directive';
-import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';

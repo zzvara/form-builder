@@ -149,7 +149,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     control.markAsTouched();
     const defaults = this.getDefaultValues();
     if (Array.isArray(defaults)) {
-      const updated = defaults.map(v => (v === this.optionsValues[index] ? newValue : v));
+      const updated = defaults.map((v) => (v === this.optionsValues[index] ? newValue : v));
       this.setDefaultValue(updated);
     } else if (defaults === this.optionsValues[index]) {
       this.setDefaultValue(newValue);

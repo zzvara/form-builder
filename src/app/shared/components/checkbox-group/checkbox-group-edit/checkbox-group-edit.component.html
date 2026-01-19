@@ -1,14 +1,14 @@
 <form id="selectEditFormID" nz-form [formGroup]="formData">
   <nz-form-item>
     <nz-form-control formArrayName="defaultValue">
-      <nz-table #basicTable  nzShowPagination="false" nzSize="small" [nzData]="options.controls" class="compact-table">
+      <nz-table #basicTable nzShowPagination="false" nzSize="small" [nzData]="options.controls" class="compact-table">
         <thead>
-        <tr>
-          <th nzWidth="50%" nzAlign="center">{{ 'GENERAL.DESCRIPTION' | translate }}</th>
-          <th nzWidth="10%" nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.DISABLED?' | translate }}</th>
-          <th nzWidth="10%" nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.CHECKED?' | translate }}</th>
-          <th nzWidth="20%" nzAlign="center">{{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}</th>
-        </tr>
+          <tr>
+            <th nzWidth="50%" nzAlign="center">{{ 'GENERAL.DESCRIPTION' | translate }}</th>
+            <th nzWidth="10%" nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.DISABLED?' | translate }}</th>
+            <th nzWidth="10%" nzAlign="center">{{ 'COMPONENTS.CHECKBOX_GROUP.CHECKED?' | translate }}</th>
+            <th nzWidth="20%" nzAlign="center">{{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}</th>
+          </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
           @for (option of options.controls; track option.value.value; let i = $index) {
@@ -23,7 +23,7 @@
                   </div>
                 } @else {
                   <div>
-                    <input nz-input [formControl]="editControl" style="width:190px;vertical-align:center;"/>
+                    <input nz-input [formControl]="editControl" style="width: 190px; vertical-align: center" />
                     <button nz-button nzType="link" (click)="saveEdit(i)">
                       <nz-icon nzType="check" nzTheme="outline"></nz-icon>
                     </button>
