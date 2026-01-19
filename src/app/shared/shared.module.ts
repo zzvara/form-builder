@@ -33,7 +33,7 @@ import { TextareaComponent } from '@components/textarea/textarea.component';
 import { TimePickerEditComponent } from '@components/time-picker/time-picker-edit/time-picker-edit.component';
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
 import { MutateTextDirective } from '@directives/mutate-text.directive';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -57,7 +57,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { QuillEditorComponent } from "ngx-quill";
+import { QuillEditorComponent } from 'ngx-quill';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -128,8 +128,9 @@ const COMPONENTS = [
     NzDropdownMenuComponent,
     NzMenuModule,
     NzDropDownModule,
-    QuillEditorComponent
-],
+    QuillEditorComponent,
+    TranslateModule,
+  ],
   providers: [],
   exports: [...COMPONENTS],
 })

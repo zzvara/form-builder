@@ -11,7 +11,7 @@
     },
     "CHARACTER_COUNTER": "Karakterszámláló",
     "CHECKBOX_GROUP": {
-      "CHECKED?": "Ellenőrizve?",
+      "CHECKED?": "Bejelölve",
       "DISABLED?": "Letiltva?",
       "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése",
       "TITLE": "Jelölőnégyzet-csoport"
@@ -19,7 +19,7 @@
     "COMBOBOX": {
       "ADD_OPTION": "Új lehetőség hozzáadása",
       "CHOICES_VALUES": "Lehetőségek és értékek",
-      "COMBOBOX_REMOVE": "Lehetőség eltávolítása",
+      "COMBOBOX_REMOVE": "Opciók eltávolítása",
       "IS_MULTIPLE_CHOICE": "Engedélyezett több választás",
       "MODEL_TITLE_SELECT": "Legördülő lista beállításai",
       "MULTIPLE": "Több válasz lehetséges",
@@ -70,6 +70,7 @@
       "TOOLTIP": "Tooltip beállításai",
       "VALIDATION": "Érvényesítési szabályok"
     },
+    "ERROR_DUPLICATE_OPTION": "Foglalt",
     "INLINE_COMPONENT?": "Megjelenjen beágyazottan",
     "INLINE_EDIT": "Beágyazott szerkesztés",
     "INPUT": {
@@ -170,16 +171,16 @@
           "VERTICAL": "Függőleges"
         }
       },
+      "REPEATED": {
+        "GIVEN": "Megadott szám",
+        "INPUT": "Másik input",
+        "PLACEHOLDER": "Válassz egy elnevezett mezőt",
+        "REPEAT_LABEL": "Ismétlés eszerint",
+        "TITLE": "Ismételt szekció"
+      },
       "TITLE": {
         "PLURAL": "Szekciók",
         "SINGULAR": "Szekció"
-      },
-      "REPEATED": {
-        "TITLE": "Ismételt szekció",
-        "REPEAT_LABEL": "Ismétlés eszerint",
-        "GIVEN": "Megadott szám",
-        "INPUT": "Másik input",
-        "PLACEHOLDER": "Válassz egy elnevezett mezőt"
       }
     },
     "SELECTED_RAGE": "Kiválasztott intervallum",
