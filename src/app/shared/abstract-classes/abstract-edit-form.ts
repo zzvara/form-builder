@@ -34,6 +34,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
       questionValue: new FormControl(null, Validators.required),
       descriptionValue: new FormControl(),
       defaultValue: this.defaultValueControl,
+      placeholderValue: new FormControl(),
     });
     this.getStrictControl('questionValue')?.markAsTouched();
   }
@@ -60,6 +61,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     this.initialValues.questionValue = this.rawFormData.questionValue;
     this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
     this.initialValues.defaultValue = this.rawFormData.defaultValue;
+    this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
   }
 
   get rawFormData(): D {
@@ -83,7 +85,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return null;
   }
   protected get defaultValueUpdateOn(): UpdateOnStrategy {
-    return UpdateOnStrategy.CHANGE
+    return UpdateOnStrategy.CHANGE;
   }
   protected get getDefaultValueValue(): T | null {
     return null;
