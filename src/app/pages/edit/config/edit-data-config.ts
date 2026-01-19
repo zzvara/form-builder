@@ -219,7 +219,7 @@ export function getSideBarData(component: EditComponent, translate: TranslateSer
           title: 'COMPONENTS.SECTION.REPEATED.TITLE',
           type: 'RepeatedSectionComponent',
           data: null,
-        }
+        },
       ],
     },
   ];

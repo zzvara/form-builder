@@ -38,7 +38,7 @@ const ngZorro = [
   NzToolTipModule,
   NzOptionComponent,
   NzSelectComponent,
-  NzInputNumberComponent
+  NzInputNumberComponent,
 ];
 
 @NgModule({

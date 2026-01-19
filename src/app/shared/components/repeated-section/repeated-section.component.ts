@@ -8,5 +8,4 @@ import { SectionComponent } from '../section/section.component';
   styleUrls: [],
   standalone: false,
 })
-export class RepeatedSectionComponent extends SectionComponent implements FormComponentMarker {
-}
+export class RepeatedSectionComponent extends SectionComponent implements FormComponentMarker {}

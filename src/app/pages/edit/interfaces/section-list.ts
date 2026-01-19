@@ -7,14 +7,14 @@ export interface SectionList {
   layout: LayoutEnum;
   reorderEnabled: boolean;
   sectionInputs: FormInputData[];
-  type: keyof typeof translateComponentType
+  type: keyof typeof translateComponentType;
 
   customTitle?: string;
 }
 
 export interface RepeatedSectionList extends SectionList {
-  repeatByOther: boolean,
-  repeatTimes: number | undefined,
-  referencableInputs: string[],
-  referencedInput: SectionList["customTitle"]
+  repeatByOther: boolean;
+  repeatTimes: number | undefined;
+  referencableInputs: string[];
+  referencedInput: SectionList['customTitle'];
 }

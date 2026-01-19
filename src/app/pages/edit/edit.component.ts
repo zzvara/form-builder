@@ -1,5 +1,5 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, input, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
@@ -17,8 +17,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
-import { TimeHolder } from 'ng-zorro-antd/time-picker/time-holder';
-import { SectionComponent } from '@app/shared/components/section/section.component';
 
 @Component({
   selector: 'app-edit',
@@ -152,7 +150,7 @@ export class EditComponent implements OnInit, OnChanges {
             layout: LayoutEnum.VERTICAL,
             reorderEnabled: false,
             sectionInputs: [],
-            type: droppedInput.type
+            type: droppedInput.type,
           },
         };
         this.names = this.getCustomTitles();
@@ -161,7 +159,7 @@ export class EditComponent implements OnInit, OnChanges {
         // Create a deep copy of the dropped item with updated ID
         const newItemId = uuidv4();
         const newItem: FormInputData = cloneDeep(droppedInput);
-        
+
         // Initialize data if it's null
         if (!newItem.data) {
           newItem.data = {};
@@ -193,7 +191,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
-    
+
     this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
   }
@@ -242,7 +240,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   removeEditComponent(edit: EditList): void {
-    const ind = this.editList.findIndex(item => item.id === edit.id);
+    const ind = this.editList.findIndex((item) => item.id === edit.id);
     this.editList = this.editList.filter((e) => e.id !== edit.id);
     this.names = this.getCustomTitles();
 
@@ -251,10 +249,10 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
-    const ind = this.editList.findIndex(sec => sec.id === sect.sectionId);
-    const component = sect.sectionInputs.find(item => item.data!.id === componentId);
+    const ind = this.editList.findIndex((sec) => sec.id === sect.sectionId);
+    const component = sect.sectionInputs.find((item) => item.data!.id === componentId);
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
-    
+
     this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
   }
@@ -314,38 +312,33 @@ export class EditComponent implements OnInit, OnChanges {
     return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
   }
 
-  private isReferencable(input : FormInputData) : input is FormInputData & { customTitle: string } {
-    return (input.type === "CheckboxGroupComponent" || input.type === "NumberInputComponent") && !!input.customTitle;
+  private isReferencable(input: FormInputData): input is FormInputData & { customTitle: string } {
+    return (input.type === 'CheckboxGroupComponent' || input.type === 'NumberInputComponent') && !!input.customTitle;
   }
 
-  private getReferencables(id : string) : string[] {
+  private getReferencables(id: string): string[] {
+    const ind = this.editList.findIndex((item) => item.id === id);
 
-    const ind = this.editList.findIndex(item => item.id === id);
-
-    const list : EditList[] = cloneDeep(this.editList);
+    const list: EditList[] = cloneDeep(this.editList);
     list.splice(ind);
 
-    return list.flatMap(input => {
+    return list.flatMap((input) => {
       const isSectionList = this.instanceOfSectionListPipe.transform(input.data);
 
       if (isSectionList) {
-        return (input.data as SectionList).sectionInputs
-          .filter(item => this.isReferencable(item))
-          .map(item => item.customTitle);
+        return (input.data as SectionList).sectionInputs.filter((item) => this.isReferencable(item)).map((item) => item.customTitle);
       }
 
-      return this.isReferencable(input.data as FormInputData) && input.data.customTitle
-        ? [input.data.customTitle]
-        : [];
+      return this.isReferencable(input.data as FormInputData) && input.data.customTitle ? [input.data.customTitle] : [];
     });
   }
 
   private updateRepeated() {
     this.editList
-    .filter(item => item.data.type === 'RepeatedSectionComponent')
-    .forEach(item => {
-      const repeatedSection = item.data as RepeatedSectionList;
-      repeatedSection.referencableInputs = this.getReferencables(item.id);
-    });
+      .filter((item) => item.data.type === 'RepeatedSectionComponent')
+      .forEach((item) => {
+        const repeatedSection = item.data as RepeatedSectionList;
+        repeatedSection.referencableInputs = this.getReferencables(item.id);
+      });
   }
 }
