@@ -78,18 +78,14 @@ export class ComponentsPageComponent implements OnInit {
   jumpToFirstError() {
     if (!this.editComponent) return;
 
-    const invalidInput = this.editComponent
-      .getAllFormInputs()
-      .find(inp => this.editComponent.isInputInvalid(inp));
+    const invalidInput = this.editComponent.getAllFormInputs().find((inp) => this.editComponent.isInputInvalid(inp));
 
     if (invalidInput?.data?.id) {
       this.editComponent.scrollToElement(invalidInput.data.id);
       return;
     }
 
-    const invalidSection = this.editComponent.editList.find(item =>
-      this.editComponent.isComponentInvalid(item)
-    );
+    const invalidSection = this.editComponent.editList.find((item) => this.editComponent.isComponentInvalid(item));
 
     if (invalidSection?.id) {
       this.editComponent.scrollToElement(invalidSection.id);

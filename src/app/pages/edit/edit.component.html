@@ -123,22 +123,21 @@
               <span nz-icon nzType="layout" nzTheme="outline"></span>
               <span class="component-title">{{ 'EDIT.SECTION' | translate | uppercase }}</span>
               <span class="hover-icon" (click)="scrollToElement(edit.data.sectionId)">
-              <span nz-icon nzType="aim" nzTheme="outline"></span>
-            </span>
+                <span nz-icon nzType="aim" nzTheme="outline"></span>
+              </span>
             </div>
           </div>
         } @else if (edit.data | instanceOfFormInputData) {
           <div cdkDrag [cdkDragData]="edit" class="component-item" [class.invalid-component]="isComponentInvalid(edit)">
-          <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
+            <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
             <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
             <span class="component-title"> {{ edit.data.title | translate }}</span>
             <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
-            <span nz-icon nzType="aim" nzTheme="outline"></span>
-          </span>
+              <span nz-icon nzType="aim" nzTheme="outline"></span>
+            </span>
           </div>
         }
       }
     </div>
   </nz-sider>
-
 </nz-layout>
