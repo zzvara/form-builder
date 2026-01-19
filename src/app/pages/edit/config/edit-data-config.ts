@@ -14,6 +14,7 @@ import { RadioGroupComponent } from '@components/radio-group/radio-group.compone
 import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
 import { RangePickerComponent } from '@components/range-picker/range-picker.component';
 import { SectionComponent } from '@components/section/section.component';
+import { RepeatedSectionComponent } from '@app/shared/components/repeated-section/repeated-section.component';
 import { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { SelectComponent } from '@components/select/select.component';
 import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
@@ -214,6 +215,11 @@ export function getSideBarData(component: EditComponent, translate: TranslateSer
           type: 'SectionComponent',
           data: null,
         },
+        {
+          title: 'COMPONENTS.SECTION.REPEATED.TITLE',
+          type: 'RepeatedSectionComponent',
+          data: null,
+        },
       ],
     },
   ];
@@ -231,4 +237,5 @@ export const translateComponentType = {
   RadioGroupComponent: RadioGroupComponent,
   CheckboxGroupComponent: CheckboxGroupComponent,
   SectionComponent: SectionComponent,
+  RepeatedSectionComponent: RepeatedSectionComponent,
 };

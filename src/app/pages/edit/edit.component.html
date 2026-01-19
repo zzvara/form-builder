@@ -46,27 +46,61 @@
               </ng-template>
 
               <ng-template #sectionButtons>
-                <span>{{ 'COMPONENTS.REORDER' | translate }}: </span>
-                <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
-                <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)" class="button-spacing">
-                  <span nz-icon nzType="redo" nzTheme="outline"></span>
-                </button>
-                <!-- @todo The templates are filled with different margins. These must be uniform as well, maybe we should prefer classes, such as m-l-10? -->
-                <button
-                  nz-popconfirm
-                  [nzPopconfirmTitle]="'COMPONENTS.INPUT_HOLDER.POP_REMOVE' | translate"
-                  [nzCancelText]="'GENERAL.CANCEL' | translate"
-                  [nzOkText]="'GENERAL.OK' | translate"
-                  (nzOnConfirm)="removeEditComponent(edit)"
-                  nzPopconfirmPlacement="top"
-                  nz-button
-                  nzType="default"
-                  nzDanger
-                  nzShape="circle"
-                  class="button-spacing"
-                >
-                  <span nz-icon nzType="delete" nzTheme="outline"></span>
-                </button>
+                <div class="section-buttons">
+                  @if (edit.data | instanceOfRepeatedSection) {
+                    <div class="repeated-settings">
+                      <div class="repeated-select">
+                        <span>{{ 'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate }}:</span>
+                        <nz-select class="repeated-width" [(ngModel)]="edit.data.repeatByOther">
+                          <nz-option [nzValue]="true" [nzLabel]="'COMPONENTS.SECTION.REPEATED.INPUT' | translate"></nz-option>
+                          <nz-option [nzValue]="false" [nzLabel]="'COMPONENTS.SECTION.REPEATED.GIVEN' | translate"></nz-option>
+                        </nz-select>
+                      </div>
+                      <nz-input-number
+                        class="repeated-width"
+                        ngDefaultControl
+                        [hidden]="edit.data.repeatByOther"
+                        [(ngModel)]="edit.data.repeatTimes"
+                        nzMin="1"
+                      />
+                      <nz-select
+                        ngDefaultControl
+                        [hidden]="!edit.data.repeatByOther"
+                        nzShowSearch
+                        nzAllowClear
+                        [nzPlaceHolder]="'COMPONENTS.SECTION.REPEATED.PLACEHOLDER' | translate"
+                        [(ngModel)]="edit.data.referencedInput"
+                      >
+                        @for (item of edit.data.referencableInputs; track item) {
+                          <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+                        }
+                      </nz-select>
+                    </div>
+                  }
+                  <div>
+                    <span>{{ 'COMPONENTS.REORDER' | translate }}: </span>
+                    <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
+                    <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)" class="button-spacing">
+                      <span nz-icon nzType="redo" nzTheme="outline"></span>
+                    </button>
+                    <!-- @todo The templates are filled with different margins. These must be uniform as well, maybe we should prefer classes, such as m-l-10? -->
+                    <button
+                      nz-popconfirm
+                      [nzPopconfirmTitle]="'COMPONENTS.INPUT_HOLDER.POP_REMOVE' | translate"
+                      [nzCancelText]="'GENERAL.CANCEL' | translate"
+                      [nzOkText]="'GENERAL.OK' | translate"
+                      (nzOnConfirm)="removeEditComponent(edit)"
+                      nzPopconfirmPlacement="top"
+                      nz-button
+                      nzType="default"
+                      nzDanger
+                      nzShape="circle"
+                      class="button-spacing"
+                    >
+                      <span nz-icon nzType="delete" nzTheme="outline"></span>
+                    </button>
+                  </div>
+                </div>
               </ng-template>
 
               @for (item of edit.data.sectionInputs; track item) {

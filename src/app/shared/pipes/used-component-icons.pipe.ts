@@ -17,6 +17,7 @@ export class ComponentIconsPipe implements PipeTransform {
     RadioGroupComponent: 'check-circle',
     CheckboxGroupComponent: 'check-square',
     SectionComponent: 'layout',
+    RepeatedSectionComponent: 'interaction',
   };
 
   transform(type: string): string {
