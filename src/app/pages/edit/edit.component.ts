@@ -1,4 +1,4 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
@@ -17,7 +17,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
-import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-edit',
@@ -45,7 +44,7 @@ export class EditComponent implements OnInit, OnChanges {
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.sideBarData = getSideBarData(this, this.translate);
@@ -305,7 +304,7 @@ export class EditComponent implements OnInit, OnChanges {
   returnChildren(sect: SectionList): { title: string; id: string }[] {
     const returnVal: { title: string; id: string }[] = [];
     for (const input of sect.sectionInputs) {
-      let id: string = input.data?.id || "";
+      let id: string = input.data?.id || '';
       returnVal.push({
         title: input.title,
         id: id,
