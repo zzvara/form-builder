@@ -85,7 +85,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return null;
   }
   protected get defaultValueUpdateOn(): UpdateOnStrategy {
-    return UpdateOnStrategy.CHANGE
+    return UpdateOnStrategy.CHANGE;
   }
   protected get getDefaultValueValue(): T | null {
     return null;
