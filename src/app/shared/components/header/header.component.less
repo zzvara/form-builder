@@ -2,29 +2,37 @@
 @import '../../../../typography.less';
 
 nz-header {
-  padding: @spacing0 clamp(@spacing16, 5vw, 80px);
+  padding: @spacing0 clamp(@spacing8, 5vw, 80px);
   position: fixed;
   width: @width-full;
   z-index: 100;
+  line-height: unset;
+  height: auto;
+  min-height: 64px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: @height-full;
+  height: 100%;
+  padding-top: @spacing8;
+  padding-bottom: @spacing8;
 
   > h1 {
     color: @white-text;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-size: clamp(24px, 5vw, 32px);
+    font-size: clamp(16px, 4vw, 32px);
     margin-bottom: 0;
+    white-space: nowrap;
   }
 
   > div {
     font-size: clamp(18px, 2.5vw, 26px);
+    display: flex;
+    align-items: center;
 
     > span {
       cursor: pointer;
@@ -52,4 +60,15 @@ nz-header {
 .header-right {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 576px) {
+  .header > h1 {
+    display: none;
+
+  }
+  .theme-selector-button, .language-selector-button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
 }

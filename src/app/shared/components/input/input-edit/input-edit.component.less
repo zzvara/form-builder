@@ -2,11 +2,16 @@
 
 .section-container {
   border: @border-default;
-  padding-left: @spacing12;
-  padding-right: @spacing12;
+  padding-left: clamp(@spacing8, 2vw, @spacing12);
+  padding-right: clamp(@spacing8, 2vw, @spacing12);
   margin-bottom: @spacing12;
+  border-radius: 4px;
 
   &:last-child {
     margin-bottom: @spacing0;
   }
+}
+
+::ng-deep .ant-form-item {
+  margin-bottom: clamp(12px, 2vh, 24px);
 }

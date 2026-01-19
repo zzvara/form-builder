@@ -2,14 +2,22 @@
 
 .table-center {
   text-align: center;
+  width: 1%;
+  white-space: nowrap;
+  padding: 8px 4px !important;
 }
 
 .option-label {
-  max-width: 300px;
+  max-width: clamp(120px, 40vw, 300px);
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .error-text {
   color: @accent-danger;
+  display: block;
+  margin-top: 5px;
 }
 
 .required-section {
@@ -17,4 +25,8 @@
   padding-left: @spacing8;
   padding-right: @spacing8;
   margin-bottom: @spacing8;
+}
+
+::ng-deep .ant-table-small > .ant-table-content > .ant-table-body {
+  margin: 0;
 }

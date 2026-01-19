@@ -2,9 +2,10 @@
 
 .section-container {
   border: @border-default;
-  padding-left: @spacing12;
-  padding-right: @spacing12;
+  padding-left: clamp(@spacing8, 2vw, @spacing12);
+  padding-right: clamp(@spacing8, 2vw, @spacing12);
   margin-bottom: @spacing12;
+  border-radius: 4px;
 
   &:last-child {
     margin-bottom: @spacing0;
@@ -13,4 +14,9 @@
 
 .full-width {
   width: @width-full;
+}
+
+nz-input-number {
+  width: 100%;
+  max-width: 100%;
 }

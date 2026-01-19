@@ -3,23 +3,35 @@
 .list-header {
   border-bottom: @border-default;
   padding-bottom: @spacing12;
+  font-size: clamp(14px, 4vw, 16px);
 }
 
 .option-description {
-  max-width: 300px;
+  max-width: clamp(150px, 45vw, 300px);
+  white-space: normal;
+  word-break: break-word;
 }
 
 .error-text {
   color: @accent-danger;
+  display: block;
+  margin-top: 4px;
 }
 
 .section-container {
   border: @border-default;
-  padding-left: @spacing12;
-  padding-right: @spacing12;
+  border: @border-default;
+  padding-left: clamp(@spacing8, 2vw, @spacing12);
+  padding-right: clamp(@spacing8, 2vw, @spacing12);
+
   margin-bottom: @spacing12;
 
   &:last-child {
     margin-bottom: @spacing0;
   }
+}
+
+::ng-deep .ant-list-item {
+  padding: clamp(@spacing8, 2vw, @spacing12);
+  flex-wrap: nowrap;
 }

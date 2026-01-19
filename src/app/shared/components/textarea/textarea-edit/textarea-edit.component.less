@@ -2,9 +2,13 @@
 
 .section-container {
   border: @border-default;
-  padding-left: @spacing12;
-  padding-right: @spacing12;
+
+  // CLAMP: 8px mobilon, 12px desktopon
+  padding-left: clamp(@spacing8, 2vw, @spacing12);
+  padding-right: clamp(@spacing8, 2vw, @spacing12);
+
   margin-bottom: @spacing12;
+  border-radius: 4px;
 }
 
 .section-container:last-child {
@@ -13,4 +17,12 @@
 
 .character-counter {
   text-align: right;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+// Biztosítsuk, hogy a szerkesztőben a textarea kitöltse a helyet
+textarea {
+  width: 100%;
+  min-height: 80px;
 }

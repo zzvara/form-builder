@@ -1,20 +1,26 @@
 @import '../../../../common.less';
 
 section {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 .sticky-header {
+  flex: 0 0 auto;
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: @spacing16;
+  padding: @spacing12;
+  background: #fff;
 }
 
 .body {
-  position: static;
-  height: calc(100vh - 54px - 64px - 64px);
+  position: relative;
+  flex: 1;
   overflow-y: auto;
+  padding-bottom: @spacing24;
 }
 
 .clear-icon:hover {
@@ -25,7 +31,11 @@ section {
   .ant-card {
     width: @width-full;
     border: @border-default;
-    margin-bottom: @spacing20;
+    margin-bottom: @spacing8;
+  }
+
+  .ant-card-body {
+    padding: @spacing10;
   }
 
   .ant-card:last-child {
@@ -34,8 +44,27 @@ section {
 
   .element-list {
     margin: auto;
-    width: 900px;
+    width: 100%;
+    max-width: 900px;
     border: @border-default;
     padding: @spacing8;
+  }
+
+  .ant-collapse-header {
+    padding: @spacing8 !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  section {
+    height: auto;
+    width: 100%;
+  }
+
+  .body {
+    flex: unset;
+    height: calc(100vh - 230px);
+
+    min-height: 200px;
   }
 }
