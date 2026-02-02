@@ -10,13 +10,20 @@
       </nz-form-label>
       <nz-form-control nz-col nzSpan="24">
         <div class="mb-8">
-          <input nz-input type="text" class="formelement" id="title" formControlName="title" (change)="updateForm()"
+          <input
+            nz-input
+            type="text"
+            class="formelement"
+            id="title"
+            formControlName="title"
+            (change)="updateForm()"
             required
-            [ngClass]="{ 'input-error': form.controls['title'].invalid && (form.controls['title'].touched || saveFailed) }" />
+            [ngClass]="{ 'input-error': form.controls['title'].invalid && (form.controls['title'].touched || saveFailed) }"
+          />
           @if (form.controls['title'].invalid && (form.controls['title'].touched || saveFailed)) {
-          <div>
-            <span class="error-message">{{ 'FORM.TITLE_REQUIRED' | translate }}</span>
-          </div>
+            <div>
+              <span class="error-message">{{ 'FORM.TITLE_REQUIRED' | translate }}</span>
+            </div>
           }
         </div>
       </nz-form-control>
@@ -27,8 +34,13 @@
       </nz-form-label>
 
       <nz-form-control nz-col nzSpan="24">
-        <quill-editor formControlName="description" (onContentChanged)="updateForm()"
-          [style]="{ height: '150px', width:'100%' }" [placeholder]="''"> </quill-editor>
+        <quill-editor
+          formControlName="description"
+          (onContentChanged)="updateForm()"
+          [style]="{ height: '150px', width: '100%' }"
+          [placeholder]="''"
+        >
+        </quill-editor>
 
         <div *ngIf="form.controls['description'].invalid && (form.controls['description'].touched || saveFailed)">
           <span class="error-message">{{ 'FORM.DESCRIPTION_REQUIRED' | translate }}</span>
@@ -40,53 +52,67 @@
       <ng-container>
         <nz-form-item class="same_line mb-8">
           <nz-form-label [nzNoColon]="true">{{ 'VERSION' | translate }}</nz-form-label>
-          <nz-switch formControlName="type" id="switch" (change)="updateForm()"
-            [nzCheckedChildren]="'FORM.TEST' | translate" [nzUnCheckedChildren]="'FORM.QUESTIONNAIRE' | translate">
+          <nz-switch
+            formControlName="type"
+            id="switch"
+            (change)="updateForm()"
+            [nzCheckedChildren]="'FORM.TEST' | translate"
+            [nzUnCheckedChildren]="'FORM.QUESTIONNAIRE' | translate"
+          >
           </nz-switch>
           <nz-form-label [nzNoColon]="true">
-            <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'FORM.SWITCH_TOOLTIP' | translate"
-              class="icon-flex"></i>
+            <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'FORM.SWITCH_TOOLTIP' | translate" class="icon-flex"></i>
           </nz-form-label>
         </nz-form-item>
       </ng-container>
 
       <nz-form-item class="same_line item-margin-bottom">
         <label nz-checkbox formControlName="hasdeadline"></label>
-        <nz-form-label [nzNoColon]="true">{{ 'GENERAL.DEADLINE' | translate }}
-          <i nz-icon nzType="question-circle" nz-tooltip [nzTooltipTitle]="'FORM.DEADLINE_TOOLTIP' | translate"
-            class="icon-margin-small"></i>
+        <nz-form-label [nzNoColon]="true"
+          >{{ 'GENERAL.DEADLINE' | translate }}
+          <i
+            nz-icon
+            nzType="question-circle"
+            nz-tooltip
+            [nzTooltipTitle]="'FORM.DEADLINE_TOOLTIP' | translate"
+            class="icon-margin-small"
+          ></i>
         </nz-form-label>
         @if (form.controls['hasdeadline'].value) {
-        <nz-date-picker [nzFormat]="DateFormat.DATE" id="deadline" formControlName="deadline"
-          (change)="updateForm()"></nz-date-picker>
+          <nz-date-picker [nzFormat]="DateFormat.DATE" id="deadline" formControlName="deadline" (change)="updateForm()"></nz-date-picker>
         }
       </nz-form-item>
 
       <nz-form-item class="same_line mb-8">
         <label nz-checkbox formControlName="haslimit"></label>
-        <nz-form-label [nzNoColon]="true">{{ 'GENERAL.TIME_LIMIT' | translate }}
-          <i class="icon-margin-small" nz-icon nzType="question-circle" nz-tooltip
-            [nzTooltipTitle]="'FORM.TIME_LIMIT_TOOLTIP' | translate"></i>
+        <nz-form-label [nzNoColon]="true"
+          >{{ 'GENERAL.TIME_LIMIT' | translate }}
+          <i
+            class="icon-margin-small"
+            nz-icon
+            nzType="question-circle"
+            nz-tooltip
+            [nzTooltipTitle]="'FORM.TIME_LIMIT_TOOLTIP' | translate"
+          ></i>
         </nz-form-label>
         @if (form.controls['haslimit'].value) {
-        <nz-time-picker [nzFormat]="DateFormat.HOUR_MINUTE" formControlName="limit"
-          (change)="updateForm()"></nz-time-picker>
+          <nz-time-picker [nzFormat]="DateFormat.HOUR_MINUTE" formControlName="limit" (change)="updateForm()"></nz-time-picker>
         }
       </nz-form-item>
 
       @if (formExists) {
-      <ng-container>
-        <div>
-          <div class="mb-8">
-            <nz-form-label>{{ 'GENERAL.CREATED' | translate }}</nz-form-label>
-            <nz-form-label [nzNoColon]="true">{{ project.created | date: DateFormat.DATE }}</nz-form-label>
+        <ng-container>
+          <div>
+            <div class="mb-8">
+              <nz-form-label>{{ 'GENERAL.CREATED' | translate }}</nz-form-label>
+              <nz-form-label [nzNoColon]="true">{{ project.created | date: DateFormat.DATE }}</nz-form-label>
+            </div>
+            <div class="mb-8">
+              <nz-form-label>{{ 'GENERAL.MODIFIED' | translate }}</nz-form-label>
+              <nz-form-label [nzNoColon]="true">{{ project.modified | date: DateFormat.DATE }}</nz-form-label>
+            </div>
           </div>
-          <div class="mb-8">
-            <nz-form-label>{{ 'GENERAL.MODIFIED' | translate }}</nz-form-label>
-            <nz-form-label [nzNoColon]="true">{{ project.modified | date: DateFormat.DATE }}</nz-form-label>
-          </div>
-        </div>
-      </ng-container>
+        </ng-container>
       }
 
       <div class="saveBtn mb-8">
