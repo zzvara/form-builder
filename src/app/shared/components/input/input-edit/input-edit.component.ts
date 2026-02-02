@@ -104,7 +104,7 @@ export class InputEditComponent<T extends InputComponentData = InputComponentDat
       {
         errorName: 'minlength',
         errorMessage: this.getStrictControlValue<string>('minLengthMessage').replace(
-          '{*}',
+          '{{..}}',
           String(this.getStrictControlValue<number>('minLengthNumber'))
         ),
       },

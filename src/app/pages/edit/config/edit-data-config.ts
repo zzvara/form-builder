@@ -44,6 +44,7 @@ const numberInputOptions = (translateService: TranslateService): NumberInputComp
   min: false,
   stepNumber: 1,
   format: false,
+  formatter: '{{..}}',
 });
 const dateInputOptions = (translateService: TranslateService): DatePickerComponentData => ({
   required: false,

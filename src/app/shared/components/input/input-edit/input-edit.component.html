@@ -17,9 +17,7 @@
   </nz-form-label>
   <nz-form-item>
     <nz-form-control>
-      <quill-editor
-        formControlName="descriptionValue"
-        [style]="{ height: '150px', width:'100%' }" [placeholder]="''"/>
+      <quill-editor formControlName="descriptionValue" [style]="{ height: '150px', width: '100%' }" [placeholder]="''" />
     </nz-form-control>
   </nz-form-item>
   <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.PLACEHOLDER' | translate }}" nzOrientation="left"></nz-divider>
@@ -117,7 +115,18 @@
           }
         </ng-template>
       </nz-form-item>
-      <nz-form-label nzRequired> {{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}&#123;*&#125; </nz-form-label>
+      <div style="display: flex; justify-content: space-between">
+        <nz-form-label nzRequired>
+          <span>{{ 'COMPONENTS.MIN_LENGTH_ERROR_MESSAGE_HELP' | translate }}</span>
+        </nz-form-label>
+        <i
+          nz-icon
+          style="margin-left: 8px"
+          nzType="question-circle"
+          nz-tooltip
+          [nzTooltipTitle]="'COMPONENTS.MIN_LENGTH_TOOLTIP' | translate"
+        ></i>
+      </div>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="minLengthMessageErrorMessageTemplate">
           <input nz-input formControlName="minLengthMessage" />

@@ -29,7 +29,7 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
 
   get inputFormatter(): (value: number) => string {
     if (this.data.format && this.data.formatter) {
-      return (value) => this.data.formatter!.replace('{*}', String(value));
+      return (value) => this.data.formatter!.replace('{{..}}', String(value));
     }
     return (value) => String(value);
   }
@@ -37,7 +37,7 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<number, Number
   get inputParser(): (value: string) => number {
     if (this.data.format && this.data.formatter) {
       return (value) => {
-        const specIndex = this.data.formatter!.indexOf('{*}');
+        const specIndex = this.data.formatter!.indexOf('{{..}}');
         if (specIndex > -1) {
           const [before, after] = [
             this.data.formatter!.substring(0, specIndex),

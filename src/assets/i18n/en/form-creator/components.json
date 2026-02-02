@@ -93,7 +93,8 @@
     "MIN_LENGTH_ERROR_MESSAGE": "Error message if the text is too short",
     "MIN_LENGTH_ERROR_MESSAGE_HELP": "This message is shown if the entered text is too short",
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Error message required if minimum length is set!",
-    "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {*} characters!",
+    "MIN_LENGTH_MESSAGE": "Field value cannot be shorter than: {{..}} characters!",
+    "MIN_LENGTH_TOOLTIP": "{{..}} will be replaced with the minimum length number set above.",
     "MIN_VALUE_LIMIT": "Cannot be greater than the maximum value",
     "MODE": "Mode",
     "NAME_EDIT": {
@@ -118,6 +119,7 @@
       "FORMAT_INPUT": "Format number?",
       "FORMAT_LABEL": "Format number",
       "FORMAT_PATTERN": "Format pattern – how the number will be displayed",
+      "FORMAT_TOOLTIP": "The {{..}} string will become the number in the pattern.",
       "LARGER_THAN_SET_STEP_NUMBER": "Cannot be larger than (max – min)!",
       "MAX_NUMBER": "Maximum value",
       "MAX_NUMBER_LIMIT": "Cannot be smaller than minimum value",
@@ -177,7 +179,7 @@
       }
     },
     "SELECTED_RAGE": "Selected rage",
-    "SELECT_DATE": "Select a date",
+    "SELECT_DATE": "Select time",
     "SELECT_VERSION": "Select the version",
     "SET_DEFAULT_VALUE": "Set default value",
     "SET_DEFAULT_VALUE?": "Should it have a default value?",
