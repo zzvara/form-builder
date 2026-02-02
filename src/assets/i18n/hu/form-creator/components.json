@@ -112,7 +112,7 @@
         "LINE_5": "Nem tartalmazhat szóközt vagy speciális jeleket"
       }
     },
-    "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
+    "NEXT_TOOLTIP": "Töltsd ki a kötlező mezőket, majd nyomd meg a Kövekező gombot",
     "NEXT_VERSION": "Következő verzió",
     "NUMBER_FIELD": {
       "FORMAT_INPUT": "Formázzuk a számot?",
@@ -160,6 +160,7 @@
       "SET_PLACEHOLDER_VALUE_RANGE": "Helykitöltő érték megadása (használj '|' jelet elválasztásra)",
       "TITLE": "Tartományválasztó"
     },
+    "REDO_TOOLTIP": "Utolsó művelet visszaállítása",
     "REORDER": "Átrendezés engedélyezve",
     "REQUIRED_MESSAGE": "A mező nem lehet üres!",
     "SECTION": {
@@ -224,6 +225,7 @@
       "TITLE": "Időválasztó"
     },
     "TOOLTIP_TEXT": "Súgószöveg",
+    "UNDO_TOOLTIP": "Utolsó művelet visszavonása",
     "USED_COMPONENTS": "Használt komponensek",
     "WEEK_NUMBERS?": "Mutassuk a hét számát?"
   },

@@ -112,7 +112,7 @@
         "LINE_5": "It cannot contain spaces or special characters"
       }
     },
-    "NEXT_TOOLTIP": "Drag components into the editor to continue.",
+    "NEXT_TOOLTIP": "DrFill the required fields, then click the button",
     "NEXT_VERSION": "Next Version",
     "NUMBER_FIELD": {
       "FORMAT_INPUT": "Format number?",
@@ -160,6 +160,7 @@
       "SET_PLACEHOLDER_VALUE_RANGE": "Set placeholder value (use '|' to separate)",
       "TITLE": "Range Picker"
     },
+    "REDO_TOOLTIP": "Redo last action",
     "REORDER": "Reorder enabled",
     "REQUIRED_MESSAGE": "Field cannot be empty!",
     "SECTION": {
@@ -216,6 +217,7 @@
       "TITLE": "Time Picker"
     },
     "TOOLTIP_TEXT": "Tooltip Text",
+    "UNDO_TOOLTIP": "Undo last action",
     "USED_COMPONENTS": "Used Components",
     "WEEK_NUMBERS?": "Show week numbers?"
   },
