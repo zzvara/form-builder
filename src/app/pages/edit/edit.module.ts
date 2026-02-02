@@ -24,6 +24,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 const ngZorro = [
   NzLayoutModule,
@@ -56,6 +57,7 @@ const ngZorro = [
     InstanceOfFormInputDataPipe,
     InstanceOfRepeatedSectionPipe,
     ComponentIconsPipe,
+    NzCollapseModule,
     ...ngZorro,
   ],
   providers: [SectionComponent, InstanceOfSectionListPipe, InstanceOfFormInputDataPipe, InstanceOfRepeatedSectionPipe],
