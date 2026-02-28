@@ -2,13 +2,8 @@
   <div>
     <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"> </app-edit>
 
-    <div
-      nz-row
-      id="footerdiv"
-      class="version-footer"
-      style="position: fixed; bottom: 0; right: 0; width: 100%; padding: 10px; border-top: 1px solid lightgray"
-    >
-      <div nz-col nzSpan="22"></div>
+    <div nz-row id="footerdiv" class="version-footer">
+      <div nz-col nzSpan="22" class="footer-spacer"></div>
       <div nz-row nzJustify="start" nzAlign="middle" class="footer-inner-row">
         <button
           nz-button

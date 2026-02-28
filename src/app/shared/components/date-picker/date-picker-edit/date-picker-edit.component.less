@@ -2,9 +2,15 @@
 
 .section-container {
   border: @border-default;
-  padding-left: @spacing8;
-  padding-right: @spacing8;
+
+  // CLAMP: Mobilon 8px padding, Desktopon 16px (vagy több)
+  padding-left: clamp(@spacing8, 2vw, @spacing16);
+  padding-right: clamp(@spacing8, 2vw, @spacing16);
+
   margin-bottom: @spacing8;
+
+  // Reszponzív keret lekerekítés (opcionális, de szép)
+  border-radius: 4px;
 }
 
 .section-container:last-child {
@@ -12,5 +18,12 @@
 }
 
 .date-picker {
-  width: @width-full;
+  // Itt a szerkesztőben lévő "Default Value" mezőről van szó.
+  // Legyen mindig 100% széles a konténerén belül.
+  width: 100%;
+}
+
+// Ha a date-picker-edit.component.html-ben lévő input mezők túl szorosak lennének:
+nz-form-item {
+  margin-bottom: 12px; // Kicsit szellősebb form items
 }

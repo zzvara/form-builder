@@ -6,7 +6,9 @@
 }
 
 .option-description {
-  max-width: 300px;
+  max-width: clamp(140px, 45vw, 300px);
+  white-space: normal;
+  word-break: break-word;
 }
 
 .error-text {
@@ -14,10 +16,20 @@
 }
 
 .section-container {
-  padding-right: @spacing12;
+  padding-right: clamp(@spacing4, 2vw, @spacing12);
   margin-bottom: @spacing12;
 
   &:last-child {
     margin-bottom: @spacing0;
   }
+}
+
+button {
+  margin-right: @spacing8;
+}
+
+::ng-deep .ant-list-item {
+  padding: clamp(@spacing8, 2vw, @spacing12);
+  display: flex;
+  align-items: center;
 }

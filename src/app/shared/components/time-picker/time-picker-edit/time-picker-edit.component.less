@@ -14,3 +14,18 @@
 .time-picker {
   width: @width-full;
 }
+
+@media (max-width: 576px) {
+  .time-picker {
+    width: 100% !important;
+  }
+
+  :host ::ng-deep nz-input-number {
+    width: 100%;
+  }
+
+  .section-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

@@ -11,6 +11,7 @@
 
 .card-container {
   height: @height-full;
+  max-width: 100%;
 }
 
 .form-container {
@@ -39,6 +40,8 @@
 
 .pre-wrap {
   white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .id-text {
@@ -50,12 +53,21 @@
 }
 
 .button-spacing {
-  margin-left: @spacing12;
+  margin-left: clamp(@spacing4, 2vw, @spacing12);
 }
 
 :host ::ng-deep {
   .custom-header .ant-card-head-title {
     text-overflow: unset;
+    white-space: normal;
+  }
+
+  .ant-card-head {
+    padding: 0 clamp(@spacing8, 2vw, @spacing24);
+  }
+
+  .ant-card-body {
+    padding: clamp(@spacing12, 3vw, @spacing24);
   }
 
   .input-preview-container nz-form-item {
@@ -64,7 +76,6 @@
 
   .form-container {
     width: @width-full;
-
     nz-form-control {
       flex: unset !important;
       width: 100%;

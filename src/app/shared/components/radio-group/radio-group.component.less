@@ -3,4 +3,24 @@
 [nz-radio] {
   display: block;
   line-height: @spacing32;
+  // Hosszú szöveg esetén tördelje a sort, ne lógjon ki
+  white-space: normal;
+  margin-bottom: 4px;
+}
+
+// Ha "Button" módban van (a HTML-ben nz-radio-group van),
+// akkor biztosítani kell a tördelést.
+::ng-deep .ant-radio-group {
+  display: flex;
+  flex-wrap: wrap; // Mobilon engedje új sorba a gombokat
+  gap: 8px;        // Kis térköz a gombok között
+}
+
+// A gombok belsejében lévő szöveg kezelése
+::ng-deep .ant-radio-button-wrapper {
+  height: auto;
+  line-height: 1.5;
+  padding: 4px 15px;
+  white-space: normal; // Engedje a többsoros szöveget a gombban
+  text-align: center;
 }
