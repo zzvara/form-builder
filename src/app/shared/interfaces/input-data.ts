@@ -4,6 +4,7 @@ export interface InputData<T = any> {
   questionValue?: string;
   descriptionValue?: string;
   defaultValue?: T;
+  placeholderValue?: string;
 }
 
 export type InputDataKeys<T extends InputData> = keyof T;
