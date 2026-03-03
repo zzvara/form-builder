@@ -11,7 +11,7 @@ nz-content {
   padding-top: clamp(@spacing48, 5vw, 64px);
   box-sizing: border-box;
   text-align: left;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 .toolbar {
@@ -36,7 +36,9 @@ nz-content {
 
 .view {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: @gap-item;
+  max-width: 100%;
 
   > div {
     display: flex;
