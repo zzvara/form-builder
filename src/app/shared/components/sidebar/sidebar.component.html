@@ -1,48 +1,42 @@
 <section>
   <div class="sticky-header">
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input [placeholder]="'SEARCH' | translate" [(ngModel)]="searchTerm" (ngModelChange)="filterItems()" />
+      <input type="text" nz-input [placeholder]="'SEARCH' | translate" [(ngModel)]="searchTerm"
+        (ngModelChange)="filterItems()" />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
       @if (searchTerm) {
-        <span nz-icon nzType="close" nzTheme="outline" class="clear-icon" (click)="clearSearch()"></span>
+      <span nz-icon nzType="close" nzTheme="outline" class="clear-icon" (click)="clearSearch()"></span>
       }
     </ng-template>
   </div>
   <div class="body">
     <nz-collapse [nzBordered]="false">
       @for (group of filteredData; track group.groupName) {
-        <nz-collapse-panel
-          [nzHeader]="group.groupName | translate"
-          [nzActive]="group.active"
-          cdkDropList
-          [cdkDropListData]="group.groupContents"
-          [cdkDropListConnectedTo]="group.dropListConnectedTo()"
-          [cdkDropListSortingDisabled]="true"
-        >
-          @for (item of group.groupContents; track item.type) {
-            <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
-              <span
-                ><b>{{ item.title | translate }}</b></span
-              >
+      <nz-collapse-panel [nzHeader]="group.groupName | translate" [nzActive]="group.active" cdkDropList
+        [cdkDropListData]="group.groupContents" [cdkDropListConnectedTo]="group.dropListConnectedTo()"
+        [cdkDropListSortingDisabled]="true">
+        @for (item of group.groupContents; track item.type) {
+        <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
+          <span><b>{{ item.title | translate }}</b></span>
 
-              <ng-container *cdkDragPlaceholder>
-                @switch (item.type) {
-                  @case ('SectionComponent') {
-                    <nz-card nzTitle="Section: section | Layout: vertical" class="element-list p-3"></nz-card>
-                  }
-                  @case ('RepeatedSectionComponent') {
-                    <nz-card nzTitle="Section: section | Layout: vertical" class="element-list p-3"></nz-card>
-                  }
-                  @default {
-                    <app-input-holder [formInput]="item" />
-                  }
-                }
-              </ng-container>
-            </nz-card>
-          }
-        </nz-collapse-panel>
+          <ng-container *cdkDragPlaceholder>
+            @switch (item.type) {
+            @case ('SectionComponent') {
+            <nz-card nzTitle="Section: section | Layout: vertical" class="element-list p-3"></nz-card>
+            }
+            @case ('RepeatedSectionComponent') {
+            <nz-card nzTitle="Section: section | Layout: vertical" class="element-list p-3"></nz-card>
+            }
+            @default {
+            <app-input-holder [formInput]="item" />
+            }
+            }
+          </ng-container>
+        </nz-card>
+        }
+      </nz-collapse-panel>
       }
     </nz-collapse>
   </div>
