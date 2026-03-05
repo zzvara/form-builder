@@ -187,6 +187,13 @@
               <div>{{ 'COMPONENTS.NUMBER_FIELD.MUST_CONTAIN' | translate }}'{{ control.errors['containsError'] }}'</div>
             }
           </ng-template>
+          <i
+            nz-icon
+            style="margin-left: 8px"
+            nzType="question-circle"
+            nz-tooltip
+            [nzTooltipTitle]="'COMPONENTS.NUMBER_FIELD.FORMAT_TOOLTIP' | translate"
+          ></i>
         </nz-form-item>
       </div>
     }

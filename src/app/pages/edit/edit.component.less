@@ -46,7 +46,7 @@ nz-content {
 }
 
 .p-3 {
-  padding: @spacing48;
+  padding: clamp(@spacing16, 5vw, @spacing48);
 }
 
 .mt-1 {
@@ -102,7 +102,8 @@ nz-content {
   margin-right: auto;
   margin-bottom: @spacing12;
   padding: @spacing0;
-  width: 900px;
+  width: clamp(300px, 95%, 900px);
+  max-width: 100%;
 }
 
 .section-title {
@@ -128,8 +129,18 @@ nz-content {
   margin-right: auto;
   margin-bottom: @spacing12;
   padding: @spacing0;
-  width: 900px;
+  width: clamp(300px, 95%, 900px);
+  max-width: 100%;
   border: @border-default;
+}
+
+.warning-icon {
+  color: @accent-danger;
+  margin-right: @spacing8;
+}
+
+.invalid-component {
+  border: 3px solid @accent-danger !important;
 }
 
 .right-sider {
@@ -204,7 +215,81 @@ nz-content {
   align-items: center;
   .box-shadow;
 }
-
 .component-title {
   padding-left: @spacing8;
+}
+
+@media (max-width: 1200px) {
+
+  :host ::ng-deep > nz-layout, nz-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  nz-sider, .sider-sticky, .right-sider {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    flex: 0 0 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    left: auto !important;
+    top: auto !important;
+    margin-bottom: @spacing16;
+  }
+
+  .inner-layout {
+    padding: 0 !important;
+    width: 100% !important;
+
+    > nz-content {
+      padding: @spacing12;
+      display: block;
+      width: 100% !important;
+    }
+  }
+
+  .right-sider {
+    height: auto;
+    max-height: 90vh;
+    margin-top: 20px !important;
+    border: none !important;
+    border-top: 1px solid @border-light !important;
+
+    .components-list {
+      height: 80vh;
+    }
+  }
+
+  .form-container {
+    width: 100% !important;
+    margin-bottom: 20px;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .p-3 {
+    padding: @spacing12 !important;
+  }
+
+  nz-content {
+    padding: @spacing8 !important;
+  }
+
+  .inner-layout > nz-content {
+    padding: @spacing4 !important;
+  }
+
+  .section-card,
+  .standalone-input-holder {
+    width: 100% !important;
+  }
+
+  .section-card .ant-card-body {
+    padding: @spacing12 !important;
+  }
 }

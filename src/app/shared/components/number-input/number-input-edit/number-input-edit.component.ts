@@ -56,7 +56,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
       }),
       formatter: new FormControl(null, [
         CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('format')),
-        CustomValidators.validateContainsIf(() => this.getStrictControlValue<boolean>('format'), '{*}'),
+        CustomValidators.validateContainsIf(() => this.getStrictControlValue<boolean>('format'), '{{..}}'),
       ]),
     });
     this.initializeFormValues();
@@ -106,7 +106,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
 
   get inputFormatter(): (value: number) => string {
     if (this.getStrictControlValue('format') && this.getStrictControlValue('formatter')) {
-      return (value) => this.getStrictControlValue<string>('formatter').replace('{*}', String(value));
+      return (value) => this.getStrictControlValue<string>('formatter').replace('{{..}}', String(value));
     }
     return (value) => String(value);
   }
@@ -114,7 +114,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
   get inputParser(): (value: string) => number {
     if (this.getStrictControlValue('format') && this.getStrictControlValue('formatter')) {
       return (value) => {
-        const specIndex = this.getStrictControlValue<string>('formatter').indexOf('{*}');
+        const specIndex = this.getStrictControlValue<string>('formatter').indexOf('{{..}}');
         if (specIndex > -1) {
           const [before, after] = [
             this.getStrictControlValue<string>('formatter').substring(0, specIndex),

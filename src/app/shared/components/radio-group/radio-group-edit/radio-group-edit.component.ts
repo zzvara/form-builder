@@ -16,6 +16,9 @@ import { ListValidators } from '@validators/list-validators';
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {
   newOption!: FormControl<string | null>;
+  editControl: FormControl = new FormControl('');
+  editingIndex: number | null = null;
+  editError: string | null = null;
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
@@ -182,6 +185,27 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     this.getStrictControl('defaultValue')?.setValue(undefined);
     this.options.markAsDirty();
     this.options.markAsTouched();
+  }
+  startEdit(i: number, value: string) {
+    this.editingIndex = i;
+    this.editError = null;
+    this.editControl = new FormControl(value, Validators.required);
+  }
+  saveEdit(i: number) {
+    const newValue = this.editControl.value?.trim();
+    if (!newValue) return;
+    const otherValues = this.optionDescriptions.filter((_, idx) => idx !== i);
+    if (otherValues.includes(newValue)) {
+      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      return;
+    }
+    this.options.at(i).patchValue({ label: newValue });
+    this.editingIndex = null;
+    this.editError = null;
+  }
+  cancelEdit() {
+    this.editingIndex = null;
+    this.editError = null;
   }
 
   getMinOptions(): number {

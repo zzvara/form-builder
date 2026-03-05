@@ -11,7 +11,7 @@
     },
     "CHARACTER_COUNTER": "Karakterszámláló",
     "CHECKBOX_GROUP": {
-      "CHECKED?": "Ellenőrizve?",
+      "CHECKED?": "Bejelölve",
       "DISABLED?": "Letiltva?",
       "MODAL_CHECKBOX_GROUP_TITLE": "A jelölőnégyzet csoportbeállításainak szerkesztése",
       "TITLE": "Jelölőnégyzet-csoport"
@@ -19,7 +19,7 @@
     "COMBOBOX": {
       "ADD_OPTION": "Új lehetőség hozzáadása",
       "CHOICES_VALUES": "Lehetőségek és értékek",
-      "COMBOBOX_REMOVE": "Lehetőség eltávolítása",
+      "COMBOBOX_REMOVE": "Opciók eltávolítása",
       "IS_MULTIPLE_CHOICE": "Engedélyezett több választás",
       "MODEL_TITLE_SELECT": "Legördülő lista beállításai",
       "MULTIPLE": "Több válasz lehetséges",
@@ -70,6 +70,7 @@
       "TOOLTIP": "Tooltip beállításai",
       "VALIDATION": "Érvényesítési szabályok"
     },
+    "ERROR_DUPLICATE_OPTION": "Foglalt",
     "INLINE_COMPONENT?": "Megjelenjen beágyazottan",
     "INLINE_EDIT": "Beágyazott szerkesztés",
     "INPUT": {
@@ -92,7 +93,8 @@
     "MIN_LENGTH_ERROR_MESSAGE": "Hibaüzenet, ha túl rövid a szöveg",
     "MIN_LENGTH_ERROR_MESSAGE_HELP": "Ezt az üzenetet látja a felhasználó, ha a megadott szöveg túl rövid",
     "MIN_LENGTH_ERROR_MESSAGE_REQUIRED": "Kötelező hibaüzenet, ha minimum hossz meg van adva!",
-    "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {*} karakter!",
+    "MIN_LENGTH_MESSAGE": "A mező értéke nem lehet rövidebb, mint: {{..}} karakter!",
+    "MIN_LENGTH_TOOLTIP": "{{..}} fel lesz cserélve a fenti minimális hossz számra.",
     "MIN_VALUE_LIMIT": "Nem lehet nagyobb, mint a maximális érték",
     "MODE": "Működési mód",
     "NAME_EDIT": {
@@ -111,12 +113,13 @@
         "LINE_5": "Nem tartalmazhat szóközt vagy speciális jeleket"
       }
     },
-    "NEXT_TOOLTIP": "Húzd át a komponenseket a szerkesztőbe a folytatáshoz.",
+    "NEXT_TOOLTIP": "Töltsd ki a kötlező mezőket, majd nyomd meg a Kövekező gombot",
     "NEXT_VERSION": "Következő verzió",
     "NUMBER_FIELD": {
       "FORMAT_INPUT": "Formázzuk a számot?",
       "FORMAT_LABEL": "Szám formázása",
       "FORMAT_PATTERN": "Formátum minta – így jelenik meg a szám",
+      "FORMAT_TOOLTIP": "A {{..}} karakterlánc a mintában a számot fogja jelölni.",
       "LARGER_THAN_SET_STEP_NUMBER": "Nem lehet nagyobb, mint (max. szám – min. szám)!",
       "MAX_NUMBER": "Maximális érték",
       "MAX_NUMBER_LIMIT": "Nem lehet kisebb a minimális értéknél",
@@ -159,6 +162,7 @@
       "SET_PLACEHOLDER_VALUE_RANGE": "Helykitöltő érték megadása (használj '|' jelet elválasztásra)",
       "TITLE": "Tartományválasztó"
     },
+    "REDO_TOOLTIP": "Utolsó művelet visszaállítása",
     "REORDER": "Átrendezés engedélyezve",
     "REQUIRED_MESSAGE": "A mező nem lehet üres!",
     "SECTION": {
@@ -170,13 +174,20 @@
           "VERTICAL": "Függőleges"
         }
       },
+      "REPEATED": {
+        "GIVEN": "Megadott szám",
+        "INPUT": "Másik input",
+        "PLACEHOLDER": "Válassz egy elnevezett mezőt",
+        "REPEAT_LABEL": "Ismétlés eszerint",
+        "TITLE": "Ismételt szekció"
+      },
       "TITLE": {
         "PLURAL": "Szekciók",
         "SINGULAR": "Szekció"
       }
     },
     "SELECTED_RAGE": "Kiválasztott intervallum",
-    "SELECT_DATE": "Válassz dátumot",
+    "SELECT_DATE": "Válassz időpontot",
     "SELECT_VERSION": "Válaszd ki a verziót",
     "SET_DEFAULT_VALUE": "Alapértelmezett érték beállítása",
     "SET_DEFAULT_VALUE?": "Alapértelmezett érték",
@@ -216,6 +227,7 @@
       "TITLE": "Időválasztó"
     },
     "TOOLTIP_TEXT": "Súgószöveg",
+    "UNDO_TOOLTIP": "Utolsó művelet visszavonása",
     "USED_COMPONENTS": "Használt komponensek",
     "WEEK_NUMBERS?": "Mutassuk a hét számát?"
   },
