@@ -43,19 +43,19 @@ export class FormCreatorComponent {
   }
 
   toInfoPage() {
-    if (this.page >= 0) {
+    if (this.page >= 0 || this.projectId) {
       this.page = 0;
     }
   }
 
   toCompPage() {
-    if (this.page >= 1) {
+    if (this.page >= 1 || this.projectId) {
       this.page = 1;
     }
   }
 
   toAnswPage() {
-    if (this.page >= 2) {
+    if (this.page >= 2 || this.projectId) {
       this.page = 2;
     }
   }
