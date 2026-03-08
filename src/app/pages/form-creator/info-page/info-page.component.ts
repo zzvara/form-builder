@@ -63,8 +63,6 @@ export class InfoPageComponent implements OnInit {
         this.formExists = true;
         this.formId = params['id'];
 
-        this.projectId.emit(this.formId);
-
         this.project = this.projectService.searchData(this.formId)?.[0] || null;
         if (this.project) {
           this.initializeForm();
@@ -141,8 +139,6 @@ export class InfoPageComponent implements OnInit {
       this.projectService.add(this.project);
       projectId = this.project.id;
     }
-
-    this.projectId.emit(projectId);
 
     // Update the URL with &id=projectId
     this.router.navigate([], {
