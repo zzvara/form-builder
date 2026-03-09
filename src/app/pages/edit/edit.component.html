@@ -137,7 +137,9 @@
       </div>
       } @else if (edit.data | instanceOfFormInputData) {
       <div cdkDrag [cdkDragData]="edit" class="component-item" [class.invalid-component]="isComponentInvalid(edit)">
-        <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
+        @if (isComponentInvalid(edit)) {
+        <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon"></span>
+        }
         <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
         <span class="component-title"> {{ edit.data.title | translate }}</span>
         <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">

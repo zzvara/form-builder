@@ -1,40 +1,44 @@
 <div class="cs-body">
   @for (diffItem of diffItems; track $index) {
-    <!-- Section header -->
-    <h3 class="cs-section-title">{{ diffItem.key }}</h3>
+  <!-- Section header -->
+  <h3 class="cs-section-title">{{ diffItem.key }}</h3>
 
-    <div class="cs-details">
-      <!-- Added Inputs: always shown -->
-      <div class="cs-subsection">
-        <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.ADDED_INPUTS' | translate }}</h4>
-        <ul>
-          @for (item of diffItem.addedItems; track $index) {
-            <li>
-              <nz-icon class="cs-custom-icon" [nzType]="item.data.type | iconType" nzTheme="outline" />
-              {{ item.data.title }}
-            </li>
-          }
-          <li *ngIf="!diffItem.addedItems?.length" class="cs-none">
-            {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- Removed Inputs: also always shown -->
-      <div class="cs-subsection">
-        <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.REMOVED_INPUTS' | translate }}</h4>
-        <ul>
-          @for (item of diffItem.removedItems; track $index) {
-            <li>
-              <nz-icon class="cs-custom-icon" [nzType]="item.data.type | iconType" nzTheme="outline" />
-              {{ item.data.title }}
-            </li>
-          }
-          <li *ngIf="!diffItem.removedItems?.length" class="cs-none">
-            {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
-          </li>
-        </ul>
-      </div>
+  <div class="cs-details">
+    <!-- Added Inputs: always shown -->
+    <div class="cs-subsection">
+      <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.ADDED_INPUTS' | translate }}</h4>
+      <ul>
+        @for (item of diffItem.addedItems; track $index) {
+        <li>
+          <nz-icon class="cs-custom-icon" [nzType]="item.data.type | iconType" nzTheme="outline" />
+          {{ item.data.title }}
+        </li>
+        }
+        @if (!diffItem.addedItems.length) {
+        <li class="cs-none">
+          {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
+        </li>
+        }
+      </ul>
     </div>
+
+    <!-- Removed Inputs: also always shown -->
+    <div class="cs-subsection">
+      <h4>{{ 'COMPONENTS.CHANGE_SUMMARY.REMOVED_INPUTS' | translate }}</h4>
+      <ul>
+        @for (item of diffItem.removedItems; track $index) {
+        <li>
+          <nz-icon class="cs-custom-icon" [nzType]="item.data.type | iconType" nzTheme="outline" />
+          {{ item.data.title }}
+        </li>
+        }
+        @if (!diffItem.removedItems.length) {
+        <li class="cs-none">
+          {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
   }
 </div>
