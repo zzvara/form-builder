@@ -18,12 +18,12 @@ import { NzWaveModule } from 'ng-zorro-antd/core/wave';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 const ngZorro = [
@@ -36,10 +36,10 @@ const ngZorro = [
   NzPopconfirmModule,
   NzSwitchModule,
   NzInputModule,
-  NzToolTipModule,
+  NzTooltipModule,
   NzOptionComponent,
   NzSelectComponent,
-  NzInputNumberComponent,
+  NzInputNumberModule,
 ];
 
 @NgModule({

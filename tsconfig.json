@@ -8,7 +8,6 @@
       "@assets/*": ["assets/*"],
       "@pages/*": ["app/pages/*"],
       "@shared/*": ["app/shared/*"],
-
       "@abstract-classes/*": ["app/shared/abstract-classes/*"],
       "@components/*": ["app/shared/components/*"],
       "@directives/*": ["app/shared/directives/*"],
@@ -30,12 +29,11 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": false,
-    "lib": ["ES2022", "dom"]
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

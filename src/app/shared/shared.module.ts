@@ -39,7 +39,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzDropdownMenuComponent, NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownMenuComponent, NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -53,7 +53,7 @@ import { NzRadioGroupComponent, NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -114,7 +114,7 @@ const COMPONENTS = [
     NzListModule,
     ReactiveFormsModule,
     NzFormModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzTimePickerModule,
     NzPopconfirmModule,
     NzRadioGroupComponent,
@@ -127,7 +127,7 @@ const COMPONENTS = [
     TranslatePipe,
     NzDropdownMenuComponent,
     NzMenuModule,
-    NzDropDownModule,
+    NzDropdownModule,
     QuillEditorComponent,
     TranslateModule,
   ],

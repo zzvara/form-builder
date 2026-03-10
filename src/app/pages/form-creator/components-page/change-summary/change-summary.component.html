@@ -14,9 +14,11 @@
               {{ item.data.title }}
             </li>
           }
-          <li *ngIf="!diffItem.addedItems?.length" class="cs-none">
-            {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
-          </li>
+          @if (!diffItem.addedItems.length) {
+            <li class="cs-none">
+              {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
+            </li>
+          }
         </ul>
       </div>
 
@@ -30,9 +32,11 @@
               {{ item.data.title }}
             </li>
           }
-          <li *ngIf="!diffItem.removedItems?.length" class="cs-none">
-            {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
-          </li>
+          @if (!diffItem.removedItems.length) {
+            <li class="cs-none">
+              {{ 'COMPONENTS.CHANGE_SUMMARY.NONE' | translate }}
+            </li>
+          }
         </ul>
       </div>
     </div>

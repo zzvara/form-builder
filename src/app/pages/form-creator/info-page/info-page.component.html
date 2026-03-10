@@ -1,6 +1,6 @@
 <!--
-  ~ <<licensetext>>
-  -->
+~ <<licensetext>>
+-->
 
 <nz-layout>
   <div>
@@ -42,9 +42,11 @@
         >
         </quill-editor>
 
-        <div *ngIf="form.controls['description'].invalid && (form.controls['description'].touched || saveFailed)">
-          <span class="error-message">{{ 'FORM.DESCRIPTION_REQUIRED' | translate }}</span>
-        </div>
+        @if (form.controls['description'].invalid && (form.controls['description'].touched || saveFailed)) {
+          <div>
+            <span class="error-message">{{ 'FORM.DESCRIPTION_REQUIRED' | translate }}</span>
+          </div>
+        }
       </nz-form-control>
 
       <hr />

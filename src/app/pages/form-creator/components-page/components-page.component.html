@@ -36,33 +36,31 @@
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
             <ul nz-menu>
-              <li
-                nz-menu-item
-                *ngFor="let version of projectHistory; trackBy: trackByVersion"
-                (click)="revertToVersion(version.versionNum)"
-              >
-                <span> {{ 'VERSION' | translate }} {{ version.versionNum }} </span>
-                <span
-                  nz-popover
-                  nzPopoverTrigger="hover"
-                  nz-tooltip
-                  [nzTooltipTitle]="('GENERAL.CREATED' | translate) + ': ' + (version.created | date: DateFormat.SHORT)"
-                  class="version-icon-wrapper"
-                >
-                  <i nz-icon nzType="field-time"></i>
-                </span>
-
-                <button
-                  *ngIf="version.versionNum > 1"
-                  nz-button
-                  nzType="text"
-                  (click)="openDiffModal(version)"
-                  [nz-tooltip]="'COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
-                  class="version-icon-wrapper"
-                >
-                  <i nz-icon nzType="diff"></i>
-                </button>
-              </li>
+              @for (version of projectHistory; track trackByVersion($index, version)) {
+                <li nz-menu-item (click)="revertToVersion(version.versionNum)">
+                  <span> {{ 'VERSION' | translate }} {{ version.versionNum }} </span>
+                  <span
+                    nz-popover
+                    nzPopoverTrigger="hover"
+                    nz-tooltip
+                    [nzTooltipTitle]="('GENERAL.CREATED' | translate) + ': ' + (version.created | date: DateFormat.SHORT)"
+                    class="version-icon-wrapper"
+                  >
+                    <i nz-icon nzType="field-time"></i>
+                  </span>
+                  @if (version.versionNum > 1) {
+                    <button
+                      nz-button
+                      nzType="text"
+                      (click)="openDiffModal(version)"
+                      [nz-tooltip]="'COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
+                      class="version-icon-wrapper"
+                    >
+                      <i nz-icon nzType="diff"></i>
+                    </button>
+                  }
+                </li>
+              }
             </ul>
           </nz-dropdown-menu>
         </div>
