@@ -37,7 +37,7 @@
     "flag-icons": "^7.3.2",
     "lodash-es": "^4.17.21",
     "ng-zorro-antd": "^21.1.1",
-    "ngx-quill": "^27.1.2",
+    "ngx-quill": "^29.2.0",
     "ngx-translate-multi-http-loader": "^20.0.0",
     "quill": "^2.0.3",
     "rxjs": "~7.8.2",
