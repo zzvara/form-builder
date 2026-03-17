@@ -8,10 +8,11 @@ export default defineConfig({
   workers: process.env['CI'] ? 1 : undefined,
   reporter: 'html',
 
-  use: {
-    baseURL: 'http://localhost:4200',
-    trace: 'on-first-retry',
-    video: 'on',
+  webServer: {
+    command: 'npx serve -s dist/form-builder/browser -l 4200',
+    port: 4200,
+    reuseExistingServer: !process.env['CI'],
+    timeout: 120 * 1000,
   },
 
   projects: [
