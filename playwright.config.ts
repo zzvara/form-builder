@@ -11,7 +11,7 @@ export default defineConfig({
   webServer: {
     command: 'npx serve -s dist/form-builder/browser -l 4200',
     port: 4200,
-    reuseExistingServer: !process.env['CI'],
+    reuseExistingServer: true,
     timeout: 120 * 1000,
   },
 
