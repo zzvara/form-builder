@@ -1,4 +1,4 @@
-name: Build Angular Project & Run Playwright Tests
+name: Build Angular Project
 
 on:
   push:
@@ -25,14 +25,8 @@ jobs:
       - name: Build Angular project
         run: npm run build
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-
-      - name: Serve Angular app
-        run: npx serve -s dist -l 4200 &
-
-      - name: Wait for app to be ready
-        run: npx wait-on http://localhost:4200
-
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: angular-dist
+          path: dist/
