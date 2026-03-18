@@ -2,7 +2,7 @@ name: Bump Version
 
 on:
   workflow_run:
-    workflows: ["Build Angular Project & Run Playwright Tests"]
+    workflows: ["Playwright Tests"]
     types:
       - completed
 
