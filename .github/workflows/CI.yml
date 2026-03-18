@@ -56,7 +56,7 @@ jobs:
           name: angular-dist
           path: dist/
 
-      - name: Debug dist structure (optional)
+      - name: Debug dist structure
         run: ls -R dist
 
       - name: Install Playwright Browsers
