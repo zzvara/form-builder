@@ -33,7 +33,7 @@
         <span class="optional-text"> {{ 'FORM.OPTIONAL' | translate }} </span>
       </nz-form-label>
 
-      <nz-form-control nz-col nzSpan="24">
+      <nz-form-control nz-col nzSpan="24" class="quill-desc">
         <quill-editor
           formControlName="description"
           (onContentChanged)="updateForm()"
@@ -47,11 +47,9 @@
         </div>
       </nz-form-control>
 
-      <hr />
-
       <ng-container>
         <nz-form-item class="same_line mb-8">
-          <nz-form-label [nzNoColon]="true">{{ 'VERSION' | translate }}</nz-form-label>
+          <nz-form-label [nzNoColon]="true">{{ 'TYPE' | translate }}</nz-form-label>
           <nz-switch
             formControlName="type"
             id="switch"

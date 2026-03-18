@@ -62,6 +62,7 @@ export class InfoPageComponent implements OnInit {
       if (params['id']) {
         this.formExists = true;
         this.formId = params['id'];
+
         this.project = this.projectService.searchData(this.formId)?.[0] || null;
         if (this.project) {
           this.initializeForm();
