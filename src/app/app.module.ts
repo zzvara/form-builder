@@ -17,7 +17,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { QuillModule } from 'ngx-quill';
 
@@ -53,7 +53,7 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
     EditModule,
     SharedModule,
     FormCreatorModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzIconModule,
     NzPopoverModule,
     TranslateModule.forRoot({
@@ -70,17 +70,13 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
         toolbar: [
           ['bold', 'italic', 'underline', 'strike'],
           [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-          [{script: 'sub'}, {script: 'super'}],
+          [{ script: 'sub' }, { script: 'super' }],
           ['link', 'image', 'code-block'],
           ['clean'],
         ],
       },
     }),
   ],
-  providers: [
-    { provide: NZ_I18N, useValue: en_US },
-    { provide: NZ_ICONS, useValue: icons },
-    provideHttpClient(),
-  ],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }, provideHttpClient()],
 })
-export class AppModule { }
+export class AppModule {}

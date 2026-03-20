@@ -17,7 +17,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCreatorComponent } from '@pages/form-creator/form-creator.component';
@@ -29,7 +29,7 @@ import { EditModule } from '@pages/edit/edit.module';
 import { SharedModule } from '@shared/shared.module';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
 import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
@@ -57,12 +57,12 @@ import { CodeEditorModule } from '@app/shared/components/code-editor/code-editor
     EditModule,
     NzButtonModule,
     NzSelectModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzPopoverModule,
     NzIconModule,
     CommonModule,
     NzIconModule,
-    NzDropDownModule,
+    NzDropdownModule,
     NzMenuModule,
     SharedModule,
     TranslatePipe,
