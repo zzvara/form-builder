@@ -24,10 +24,10 @@ nz-content {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  height: 735px;
+  height: 765px;
 }
 
-.inner-layout > nz-content {
+.inner-layout>nz-content {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -91,8 +91,9 @@ nz-content {
 }
 
 .sider-sticky {
-  height: 735px;
+  height: 775px;
   display: flex;
+  width: 300px;
   position: sticky;
   top: 64px;
 }
@@ -146,7 +147,7 @@ nz-content {
 .right-sider {
   position: sticky;
   top: 64px;
-  height: 735px;
+  height: 775px;
   border: solid 1px @border-light;
   margin-top: 0px;
 
@@ -158,7 +159,7 @@ nz-content {
   }
 
   .components-list {
-    height: calc(100% - @spacing48);
+    height: calc(100% - 56px);
     overflow-y: auto;
     padding: @spacing8;
   }
@@ -215,20 +216,24 @@ nz-content {
   align-items: center;
   .box-shadow;
 }
+
 .component-title {
   padding-left: @spacing8;
 }
 
 @media (max-width: 1200px) {
 
-  :host ::ng-deep > nz-layout, nz-layout {
+  :host ::ng-deep>nz-layout,
+  nz-layout {
     display: flex !important;
     flex-direction: column !important;
     width: 100% !important;
     min-width: 100% !important;
   }
 
-  nz-sider, .sider-sticky, .right-sider {
+  nz-sider,
+  .sider-sticky,
+  .right-sider {
     position: static !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -245,7 +250,7 @@ nz-content {
     padding: 0 !important;
     width: 100% !important;
 
-    > nz-content {
+    >nz-content {
       padding: @spacing12;
       display: block;
       width: 100% !important;
@@ -280,7 +285,7 @@ nz-content {
     padding: @spacing8 !important;
   }
 
-  .inner-layout > nz-content {
+  .inner-layout>nz-content {
     padding: @spacing4 !important;
   }
 

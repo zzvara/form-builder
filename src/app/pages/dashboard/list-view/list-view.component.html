@@ -1,29 +1,36 @@
-<nz-table #table [nzData]="projectList" nzTableLayout="auto" nzPaginationType="small">
+<nz-table
+  #table
+  [nzData]="projectList"
+  nzTableLayout="fixed"
+  [nzScroll]="{ x: '600px' }"
+  nzPaginationType="small"
+>
   <thead>
-    <tr>
-      @for (column of columnsConfig; track $index) {
-        <th
-          [nzSortOrder]="column.sortOrder"
-          [nzSortFn]="column.sortFn"
-          [nzSortDirections]="column.sortDirections"
-          [nzShowSort]="!!column.sortFn"
-          [nzWidth]="column.width ? column.width : 'auto'"
-        >
-          {{ column.title }}
-        </th>
-      }
-    </tr>
+  <tr>
+    @for (column of columnsConfig; track $index) {
+      <th
+        [nzSortOrder]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzSortDirections]="column.sortDirections"
+        [nzShowSort]="!!column.sortFn"
+        [nzWidth]="column.width ? column.width : 'auto'"
+        [style.min-width]="column.minWidth ? column.minWidth : '100px'"
+      >
+        {{ column.title }}
+      </th>
+    }
+  </tr>
   </thead>
   <tbody>
     @for (data of table.data; track $index) {
       <tr>
-        <td>{{ data.title }}</td>
+        <td class="truncate-text" [title]="data.title">{{ data.title }}</td>
         <td>
           <ng-template #descriptionTooltipTemp>
             <span class="ql-editor custom-tooltip" [innerHTML]="data.description | safeHtml"></span>
           </ng-template>
           <div
-            class="ql-editor view-mode"
+            class="ql-editor view-mode truncate-text"
             [innerHTML]="data.description | safeHtml"
             nz-tooltip
             [nzTooltipTitle]="descriptionTooltipTemp"
@@ -32,7 +39,7 @@
         <td>{{ data.created | date: DateFormat.DATE }}</td>
         <td>{{ data.modified | date: DateFormat.DATE }}</td>
         <td>
-          <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon" style="margin-right: 8px"></span>
+          <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
           <span
             nz-popconfirm
             [nzPopconfirmTitle]="'DASHBOARD.DELETE_CONFIRMATION' | translate"
