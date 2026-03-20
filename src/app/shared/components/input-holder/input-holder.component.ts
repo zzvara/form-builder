@@ -19,7 +19,10 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-input-holder',
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    
+  ]
 })
 export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>
   implements OnInit, AfterViewInit

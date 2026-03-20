@@ -1,13 +1,24 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TextareaEditComponent } from '@components/textarea/textarea-edit/textarea-edit.component';
+import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    FormsModule,
+    CommonModule,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    NzToolTipModule
+  ]
 })
 export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaComponentData, TextareaEditComponent> {
   override edit(): void {

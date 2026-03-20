@@ -1,6 +1,7 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
   disabledHours,
@@ -14,13 +15,31 @@ import {
   disabledSeconds,
 } from '@helpers/date-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslateModule } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-time-picker-edit',
   templateUrl: './time-picker-edit.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    NzDividerComponent,
+    NzFormLabelComponent,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    QuillEditorComponent,
+    NzTimePickerComponent,
+    NzInputNumberComponent,
+    TranslateModule,
+    ReactiveFormsModule,
+    DatePipe
+  ]
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, TimePickerComponentData> {
   override ngOnInit(): void {
