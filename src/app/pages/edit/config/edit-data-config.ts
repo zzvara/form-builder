@@ -29,6 +29,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Default values of the dragged components
 const textInputOptions = (translateService: TranslateService): InputComponentData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   minLength: false,
   minLengthMessage: '',
@@ -38,6 +39,7 @@ const textInputOptions = (translateService: TranslateService): InputComponentDat
 });
 const numberInputOptions = (translateService: TranslateService): NumberInputComponentData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   showTooltip: false,
   max: false,
@@ -48,6 +50,7 @@ const numberInputOptions = (translateService: TranslateService): NumberInputComp
 });
 const dateInputOptions = (translateService: TranslateService): DatePickerComponentData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
@@ -61,6 +64,7 @@ const dateInputOptions = (translateService: TranslateService): DatePickerCompone
 });
 const rangeInputOptions = (translateService: TranslateService): RangePickerComponentData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   showTooltip: false,
   dateFormat: defaultDateFormats.date,
@@ -74,6 +78,7 @@ const rangeInputOptions = (translateService: TranslateService): RangePickerCompo
 });
 const timeInputOptions = (translateService: TranslateService): TimePickerComponentData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   showTooltip: false,
   maxTime: false,
@@ -87,6 +92,7 @@ const timeInputOptions = (translateService: TranslateService): TimePickerCompone
 });
 const textAreaInputOptions = (translateService: TranslateService): TextareaComponentData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   minLength: false,
   minLengthMessage: '',
@@ -94,17 +100,21 @@ const textAreaInputOptions = (translateService: TranslateService): TextareaCompo
   showTooltip: false,
   showCharacterCounter: false,
 });
-const pictureInputOptions: PictureInputComponentData = {};
+const pictureInputOptions: PictureInputComponentData = {
+  draft: true,
+};
 
 const selectInputOptions = (translateService: TranslateService): SelectComponentData => ({
   selectOptions: Array.from({ length: 2 }).map((_, index: number) => translateService.instant('COMPONENTS.OPTION', { number: index + 1 })),
   required: false,
+  draft: true,
   requiredMessage: '',
   showTooltip: false,
   isMultipleChoice: false,
 });
 const radioGroupInputOptions = (translateService: TranslateService): RadioGroupData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   isButton: false,
   options: Array.from({ length: 3 }).map((_, index: number) => ({
@@ -114,6 +124,7 @@ const radioGroupInputOptions = (translateService: TranslateService): RadioGroupD
 });
 const checkboxGroupInputOptions = (translateService: TranslateService): CheckboxGroupData => ({
   required: false,
+  draft: true,
   requiredMessage: '',
   defaultValue: Array.from({ length: 3 }).map((_, index: number) => ({
     label: translateService.instant('COMPONENTS.OPTION', { number: index + 1 }),
