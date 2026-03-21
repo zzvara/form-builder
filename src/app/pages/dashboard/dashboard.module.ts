@@ -7,14 +7,13 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { CardViewComponent } from '@pages/dashboard/card-view/card-view.component';
 import { ListViewComponent } from '@pages/dashboard/list-view/list-view.component';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
-
 
 @NgModule({
   declarations: [DashboardComponent, CardViewComponent, ListViewComponent],
@@ -26,7 +25,7 @@ import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
     NzGridModule,
     NzButtonModule,
     NzCardModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzPopconfirmModule,
     TranslatePipe,
     SafeHtmlPipe,

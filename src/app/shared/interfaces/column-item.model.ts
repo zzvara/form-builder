@@ -7,4 +7,5 @@ export interface ColumnItem {
   sortFn: NzTableSortFn<Questionnaire> | null;
   sortDirections: NzTableSortOrder[];
   width?: string;
+  minWidth?: string;
 }

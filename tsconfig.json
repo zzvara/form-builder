@@ -4,45 +4,19 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@app/*": [
-        "app/*"
-      ],
-      "@assets/*": [
-        "assets/*"
-      ],
-      "@pages/*": [
-        "app/pages/*"
-      ],
-      "@shared/*": [
-        "app/shared/*"
-      ],
-      "@abstract-classes/*": [
-        "app/shared/abstract-classes/*"
-      ],
-      "@components/*": [
-        "app/shared/components/*"
-      ],
-      "@directives/*": [
-        "app/shared/directives/*"
-      ],
-      "@helpers/*": [
-        "app/shared/helpers/*"
-      ],
-      "@interfaces/*": [
-        "app/shared/interfaces/*"
-      ],
-      "@models/*": [
-        "app/shared/models/*"
-      ],
-      "@resolvers/*": [
-        "app/shared/resolvers/*"
-      ],
-      "@services/*": [
-        "app/shared/services/*"
-      ],
-      "@validators/*": [
-        "app/shared/validators/*"
-      ]
+      "@app/*": ["app/*"],
+      "@assets/*": ["assets/*"],
+      "@pages/*": ["app/pages/*"],
+      "@shared/*": ["app/shared/*"],
+      "@abstract-classes/*": ["app/shared/abstract-classes/*"],
+      "@components/*": ["app/shared/components/*"],
+      "@directives/*": ["app/shared/directives/*"],
+      "@helpers/*": ["app/shared/helpers/*"],
+      "@interfaces/*": ["app/shared/interfaces/*"],
+      "@models/*": ["app/shared/models/*"],
+      "@resolvers/*": ["app/shared/resolvers/*"],
+      "@services/*": ["app/shared/services/*"],
+      "@validators/*": ["app/shared/validators/*"]
     },
     "outDir": "./dist/out-tsc",
     "esModuleInterop": true,
@@ -55,17 +29,11 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

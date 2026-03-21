@@ -18,7 +18,8 @@
 
       @if (isListView) {
         <button (click)="createProject(projectTypes.QUESTIONNAIRE)" nz-button>
-          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'DASHBOARD.NEW_QUESTIONNAIRE' | translate }}
+          <span nz-icon nzType="plus" nzTheme="outline"></span>
+          <span>{{ 'DASHBOARD.NEW_QUESTIONNAIRE' | translate }}</span>
         </button>
       }
     </div>
@@ -30,7 +31,8 @@
 
       @if (isListView) {
         <button (click)="createProject(projectTypes.TEST)" nz-button>
-          <span nz-icon nzType="plus" nzTheme="outline"></span> {{ 'DASHBOARD.NEW_TEST' | translate }}
+          <span nz-icon nzType="plus" nzTheme="outline"></span>
+          <span>{{ 'DASHBOARD.NEW_TEST' | translate }}</span>
         </button>
       }
     </div>

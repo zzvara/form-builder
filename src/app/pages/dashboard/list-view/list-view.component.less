@@ -1,6 +1,12 @@
 @import '../../../../typography.less';
 @import '../../../../common.less';
 
+:host {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 .hover-color(@color) {
   &:hover {
     color: @color;
@@ -15,10 +21,17 @@
 .delete-icon {
   .hover-color(@accent-danger);
 }
-
+.truncate-text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
 tr {
   td {
-    span {
+    vertical-align: middle;
+    span[nz-icon] {
       cursor: pointer;
       font-size: @font-size-lead;
     }
