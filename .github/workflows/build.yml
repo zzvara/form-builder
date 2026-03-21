@@ -1,9 +1,11 @@
-name: Build Angular Project
+name: Build Angular Project (deprecated)
 
+#on:
+#  push:
+#    branches:
+#      - main
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -24,3 +26,9 @@ jobs:
 
       - name: Build Angular project
         run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: angular-dist
+          path: dist/

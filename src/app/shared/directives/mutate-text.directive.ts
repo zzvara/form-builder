@@ -10,7 +10,7 @@ export class MutateTextDirective {
 
   constructor(private control: NgControl) {}
 
-  @HostListener('change', ['$event'])
+  @HostListener('change')
   onChange(): void {
     this.control.control?.setValue(this.appMutateText(this.control.value));
   }

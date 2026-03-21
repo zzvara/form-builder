@@ -1,8 +1,8 @@
-name: Bump Version
+name: Bump Version (deprecated)
 
 on:
   workflow_run:
-    workflows: ["Build Angular Project"]
+    workflows: ["Playwright Tests"]
     types:
       - completed
 

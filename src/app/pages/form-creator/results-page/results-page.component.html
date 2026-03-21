@@ -1,61 +1,76 @@
 <nz-layout>
   <div>
-    <nz-tabset>
+    <nz-tabs>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_INFORMATION' | translate">
         @if (project) {
-          <nz-descriptions nzBordered [nzColumn]="1" *ngIf="project">
-            <nz-descriptions-item [nzTitle]="'GENERAL.TITLE' | translate">
-              {{ project.title }}
-            </nz-descriptions-item>
-            <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
-              <ng-template #descriptionTooltipTemp>
-                <span class="ql-editor custom-tooltip" [innerHTML]="project.description | safeHtml"></span>
-              </ng-template>
-              <div
-                class="ql-editor view-mode"
-                style="max-width: 100%"
-                [innerHTML]="project.description | safeHtml"
-                nz-tooltip
-                [nzTooltipTitle]="descriptionTooltipTemp"
-              ></div>
-            </nz-descriptions-item>
-            <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
-              {{ 'FORM.' + (project.type | uppercase) | translate }}
-            </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.time_checkbox" [nzTitle]="'PROJECT.TIME_CHECKBOX' | translate">
-              {{ 'RESULTS.BOOLEAN.' + (project.time_checkbox ? 'TRUE' : 'FALSE') | translate }}
-            </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.deadline_checkbox" [nzTitle]="'PROJECT.DEADLINE_CHECKBOX' | translate">
-              {{ 'RESULTS.BOOLEAN.' + (project.deadline_checkbox ? 'TRUE' : 'FALSE') | translate }}
-            </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.time_limit" [nzTitle]="'GENERAL.TIME_LIMIT' | translate">
-              {{ project.time_limit | date: DateFormat.TIME }}
-            </nz-descriptions-item>
-            <nz-descriptions-item *ngIf="project.deadline" [nzTitle]="'GENERAL.DEADLINE' | translate">
-              {{ project.deadline | date: DateFormat.DATE }}
-            </nz-descriptions-item>
-            <nz-descriptions-item [nzTitle]="'GENERAL.CREATED' | translate">
-              {{ project.created | date: DateFormat.DATE }}
-            </nz-descriptions-item>
-            <nz-descriptions-item [nzTitle]="'GENERAL.MODIFIED' | translate">
-              {{ project.modified | date: DateFormat.DATE }}
-            </nz-descriptions-item>
-          </nz-descriptions>
+          @if (project) {
+            <nz-descriptions nzBordered [nzColumn]="1">
+              <nz-descriptions-item [nzTitle]="'GENERAL.TITLE' | translate">
+                {{ project.title }}
+              </nz-descriptions-item>
+              <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
+                <ng-template #descriptionTooltipTemp>
+                  <span class="ql-editor custom-tooltip" [innerHTML]="project.description | safeHtml"></span>
+                </ng-template>
+                <div
+                  class="ql-editor view-mode"
+                  style="max-width: 100%"
+                  [innerHTML]="project.description | safeHtml"
+                  nz-tooltip
+                  [nzTooltipTitle]="descriptionTooltipTemp"
+                ></div>
+              </nz-descriptions-item>
+              <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
+                {{ 'FORM.' + (project.type | uppercase) | translate }}
+              </nz-descriptions-item>
+              @if (project.time_checkbox) {
+                <nz-descriptions-item [nzTitle]="'PROJECT.TIME_CHECKBOX' | translate">
+                  {{ 'RESULTS.BOOLEAN.' + (project.time_checkbox ? 'TRUE' : 'FALSE') | translate }}
+                </nz-descriptions-item>
+              }
+              @if (project.deadline_checkbox) {
+                <nz-descriptions-item [nzTitle]="'PROJECT.DEADLINE_CHECKBOX' | translate">
+                  {{ 'RESULTS.BOOLEAN.' + (project.deadline_checkbox ? 'TRUE' : 'FALSE') | translate }}
+                </nz-descriptions-item>
+              }
+              @if (project.time_limit) {
+                <nz-descriptions-item [nzTitle]="'GENERAL.TIME_LIMIT' | translate">
+                  {{ project.time_limit | date: DateFormat.TIME }}
+                </nz-descriptions-item>
+              }
+              @if (project.deadline) {
+                <nz-descriptions-item [nzTitle]="'GENERAL.DEADLINE' | translate">
+                  {{ project.deadline | date: DateFormat.DATE }}
+                </nz-descriptions-item>
+              }
+              <nz-descriptions-item [nzTitle]="'GENERAL.CREATED' | translate">
+                {{ project.created | date: DateFormat.DATE }}
+              </nz-descriptions-item>
+              <nz-descriptions-item [nzTitle]="'GENERAL.MODIFIED' | translate">
+                {{ project.modified | date: DateFormat.DATE }}
+              </nz-descriptions-item>
+            </nz-descriptions>
+          }
         }
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.SECTION_INPUTS' | translate">
         @if (project?.editList?.length) {
-          <nz-descriptions nzBordered [nzColumn]="1" *ngIf="sectionInputStats">
-            <nz-descriptions-item *ngIf="latestVersionNum" [nzTitle]="'VERSION' | translate">
-              {{ latestVersionNum }}
-            </nz-descriptions-item>
-
-            <nz-descriptions-item [nzTitle]="'PROJECT.SECTION_INPUTS_STATISTICS' | translate">
-              <ul class="statistics-list">
-                <li *ngFor="let stat of sectionInputStats | keyvalue">{{ stat.key | translate }}: {{ stat.value }}</li>
-              </ul>
-            </nz-descriptions-item>
-          </nz-descriptions>
+          @if (sectionInputStats) {
+            <nz-descriptions nzBordered [nzColumn]="1">
+              @if (latestVersionNum) {
+                <nz-descriptions-item [nzTitle]="'VERSION' | translate">
+                  {{ latestVersionNum }}
+                </nz-descriptions-item>
+              }
+              <nz-descriptions-item [nzTitle]="'PROJECT.SECTION_INPUTS_STATISTICS' | translate">
+                <ul class="statistics-list">
+                  @for (stat of sectionInputStats | keyvalue; track stat) {
+                    <li>{{ stat.key | translate }}: {{ stat.value }}</li>
+                  }
+                </ul>
+              </nz-descriptions-item>
+            </nz-descriptions>
+          }
         }
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_JSON' | translate" class="json">
@@ -64,7 +79,7 @@
       <nz-tab [nzTitle]="'PROJECT.PROJECT_HISTORY_JSON' | translate" class="json">
         <app-code-editor [mode]="CodeEditorMode.VIEW" [type]="CodeEditorType.JSON" [code]="this.projectHistory | json"></app-code-editor>
       </nz-tab>
-    </nz-tabset>
+    </nz-tabs>
     <div nz-row nzJustify="start" nzAlign="bottom" id="footerdiv">
       <div class="button-group">
         <button nz-button nzType="primary" type="button" (click)="nextPage()" class="saveBtn">
