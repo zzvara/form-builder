@@ -29,7 +29,6 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
 
   ngOnInit() {
     this.previousValue = this.data.defaultValue;
-    this.data.draft = true;
   }
 
   abstract edit(): void;
