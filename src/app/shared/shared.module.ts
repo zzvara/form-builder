@@ -58,6 +58,7 @@ import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { QuillEditorComponent } from 'ngx-quill';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 const COMPONENTS = [
   DatePickerComponent,
@@ -111,6 +112,7 @@ const COMPONENTS = [
     NzButtonModule,
     NzModalModule,
     NzCheckboxModule,
+    NzSwitchModule,
     NzListModule,
     ReactiveFormsModule,
     NzFormModule,

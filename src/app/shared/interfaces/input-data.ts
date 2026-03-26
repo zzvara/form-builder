@@ -5,6 +5,7 @@ export interface InputData<T = any> {
   descriptionValue?: string;
   defaultValue?: T;
   placeholderValue?: string;
+  draft?: boolean;
 }
 
 export type InputDataKeys<T extends InputData> = keyof T;

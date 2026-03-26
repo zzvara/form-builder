@@ -137,10 +137,10 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   //---------FORM STATE---------------------------------------------------------------------------------------------------
 
   get isValid(): boolean {
-    return this.formData.valid;
+    return this.formData.valid || (this.rawFormData.draft ?? false);
   }
   get isInvalid(): boolean {
-    return this.formData.invalid;
+    return this.formData.invalid && !this.rawFormData.draft;
   }
 
   get isPristine(): boolean {

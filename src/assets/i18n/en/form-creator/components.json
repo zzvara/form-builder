@@ -79,6 +79,8 @@
     "INPUT_HOLDER": {
       "INLINE_EDIT": "Inline editing",
       "INVALID_INPUT": "Invalid input",
+      "DRAFT_INPUT": "Draft",
+      "ACTIVE_INPUT": "Active",
       "POP_REMOVE": "Are you sure you want to delete this component?",
       "POP_RESET": "Are you sure you want to reset to the original state?",
       "RESET": "Reset"

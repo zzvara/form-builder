@@ -104,8 +104,13 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
     this.changedEvent.emit(this.inputData);
   }
 
+  onDraftChange(value: boolean) {
+  this.inputData.draft = value;
+  this.changedEvent.emit(this.inputData);
+}
+
   isValid() {
-    return this.form?.valid ?? false;
+    return (this.form?.valid ?? false) || this.inputData.draft;
   }
 
   isPristine() {

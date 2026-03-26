@@ -79,6 +79,8 @@
     "INPUT_HOLDER": {
       "INLINE_EDIT": "Beágyazott szerkesztés",
       "INVALID_INPUT": "Érvénytelen adat",
+      "DRAFT_INPUT": "Vázlat",
+      "ACTIVE_INPUT": "Éles",
       "POP_REMOVE": "Biztosan törölni szeretnéd ezt a komponenst?",
       "POP_RESET": "Biztosan visszaállítod az eredeti állapotot?",
       "RESET": "Visszaállítás"
