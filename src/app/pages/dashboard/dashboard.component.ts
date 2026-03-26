@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from '@services/project.service';
@@ -13,31 +13,26 @@ import { RoutePath } from '@app/shared/models/route-path.model';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.less'],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
-  projects$: Observable<Questionnaire[]> = of([]);
-  isListView = true;
+  private readonly router = inject(Router);
+  private readonly questionnaireService = inject(ProjectService<Questionnaire>);
+
+  projects = toSignal(this.questionnaireService.list(), { initialValue: [] });
+  isListView = signal(true);
+
   projectTypes = ProjectType;
 
-  constructor(
-    private readonly router: Router,
-    private readonly questionnaireService: ProjectService<Questionnaire>
-  ) {}
-
   ngOnInit(): void {
-    this.projects$ = this.questionnaireService.list();
     const savedView = localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE);
     if (savedView) {
-      this.isListView = savedView === ViewType.LIST;
+      this.isListView.set(savedView === ViewType.LIST);
     }
   }
 
   createProject(type: ProjectType): void {
-    if (type === ProjectType.TEST) {
-      this.router.navigate([RoutePath.NEW], { queryParams: { type: ProjectType.TEST } });
-    } else {
-      this.router.navigate([RoutePath.NEW], { queryParams: { type: ProjectType.QUESTIONNAIRE } });
-    }
+    this.router.navigate([RoutePath.NEW], { queryParams: { type } });
   }
 
   deleteProject(id: string): void {
@@ -49,7 +44,7 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleView(): void {
-    this.isListView = !this.isListView;
-    localStorage.setItem(LocalStorageKey.VIEW_PREFERENCE, this.isListView ? ViewType.LIST : ViewType.CARD);
+    this.isListView.update(v => !v);
+    localStorage.setItem(LocalStorageKey.VIEW_PREFERENCE, this.isListView() ? ViewType.LIST : ViewType.CARD);
   }
 }

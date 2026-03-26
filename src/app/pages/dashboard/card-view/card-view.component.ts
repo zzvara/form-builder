@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output, computed, ViewEncapsulation } from '@angular/core';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { ProjectType } from '@interfaces/project';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-card-view',
@@ -10,22 +9,19 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./card-view.component.less'],
   standalone: false,
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush, // <-- OnPush!
 })
-export class CardViewComponent implements OnInit {
-  @Input() projects: Observable<Questionnaire[]> = of([]);
-  @Input() type?: ProjectType;
+export class CardViewComponent {
 
-  @Output() deleteProject = new EventEmitter<string>();
-  @Output() createProject = new EventEmitter<ProjectType>();
-  @Output() editProject = new EventEmitter<string>();
+  projects = input<Questionnaire[]>([]);
+  type = input<ProjectType>();
 
-  projectList: Questionnaire[] = [];
+  deleteProject = output<string>();
+  createProject = output<ProjectType>();
+  editProject = output<string>();
+  projectList = computed(() => this.projects().filter((project) => project.type === this.type()));
 
   DateFormat = DateFormat;
-
-  ngOnInit(): void {
-    this.projects.subscribe((projects) => (this.projectList = projects.filter((project) => project.type === this.type)));
-  }
 
   onDeleteProject(id: string): void {
     this.deleteProject.emit(id);

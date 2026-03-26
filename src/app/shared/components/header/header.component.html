@@ -1,18 +1,18 @@
 <nz-header>
   <div class="header">
     <div>
-      @if (headerOptions.includes(options.HOME)) {
+      @if (headerOptions().includes(options.HOME)) {
         <span (click)="navigateToHome()" nz-icon nzType="home" nzTheme="outline" [title]="'HEADER.HOME' | translate"></span>
       }
-      @if (headerOptions.includes(options.UNDO)) {
+      @if (headerOptions().includes(options.UNDO)) {
         <span (click)="handleUndo()" nz-icon nzType="rollback" nzTheme="outline"></span>
       }
-      @if (headerOptions.includes(options.SAVE)) {
+      @if (headerOptions().includes(options.SAVE)) {
         <span (click)="handleSave()" nz-icon nzType="save" nzTheme="outline"></span>
       }
-      @if (headerOptions.includes(options.SIDEBAR)) {
+      @if (headerOptions().includes(options.SIDEBAR)) {
         <span
-          [ngClass]="activeOptions.includes(options.SIDEBAR) ? 'is-active' : ''"
+          [ngClass]="activeOptions().includes(options.SIDEBAR) ? 'is-active' : ''"
           (click)="changeMenuItemState(options.SIDEBAR)"
           nz-icon
           nzType="menu"
@@ -20,7 +20,7 @@
         >
         </span>
       }
-      @if (headerOptions.includes(options.UPLOAD_JSON)) {
+      @if (headerOptions().includes(options.UPLOAD_JSON)) {
         <span>
           <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden-input" />
           <span (click)="fileInput.click()" nz-icon nzType="upload" nzTheme="outline" [title]="'HEADER.IMPORT' | translate"> </span>
@@ -32,15 +32,15 @@
         <div>
           <div>
             <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="languageMenu" nz-dropdown class="language-selector-button">
-              {{ 'HEADER.LANGUAGE.' + (currentLanguage | uppercase) | translate }}
+              {{ 'HEADER.LANGUAGE.' + (currentLanguage() | uppercase) | translate }}
             </button>
           </div>
           <nz-dropdown-menu #languageMenu="nzDropdownMenu">
             <ul nz-menu>
-              <li nz-menu-item (click)="setLanguage(LanguageEnum.EN)" [class.selected]="currentLanguage === LanguageEnum.EN">
+              <li nz-menu-item (click)="setLanguage(LanguageEnum.EN)" [class.selected]="currentLanguage() === LanguageEnum.EN">
                 <span class="fi fi-gb"></span> {{ 'HEADER.LANGUAGE.EN' | translate }}
               </li>
-              <li nz-menu-item (click)="setLanguage(LanguageEnum.HU)" [class.selected]="currentLanguage === LanguageEnum.HU">
+              <li nz-menu-item (click)="setLanguage(LanguageEnum.HU)" [class.selected]="currentLanguage() === LanguageEnum.HU">
                 <span class="fi fi-hu"></span> {{ 'HEADER.LANGUAGE.HU' | translate }}
               </li>
             </ul>
@@ -49,7 +49,7 @@
         <div>
           <div>
             <button nz-button nzType="default" nzSize="large" [nzDropdownMenu]="themeMenu" nz-dropdown class="theme-selector-button">
-              {{ 'HEADER.THEME.TITLE' | translate }} {{ 'HEADER.THEME.' + currentTheme | uppercase | translate }}
+              {{ 'HEADER.THEME.TITLE' | translate }} {{ 'HEADER.THEME.' + currentTheme() | uppercase | translate }}
             </button>
           </div>
 

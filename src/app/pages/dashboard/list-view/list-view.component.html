@@ -1,13 +1,13 @@
 <nz-table
   #table
-  [nzData]="projectList"
+  [nzData]="projectList()"
   nzTableLayout="fixed"
   [nzScroll]="{ x: '600px' }"
   nzPaginationType="small"
 >
   <thead>
   <tr>
-    @for (column of columnsConfig; track $index) {
+    @for (column of columnsConfig(); track $index) {
       <th
         [nzSortOrder]="column.sortOrder"
         [nzSortFn]="column.sortFn"

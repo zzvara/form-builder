@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy, input, output, computed, inject, signal, DestroyRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectType } from '@interfaces/project';
 import { ColumnItem } from '@app/shared/interfaces/column-item.model';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
@@ -11,32 +11,32 @@ import { DateFormat } from '@app/shared/constants/date-format.constant';
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.less'],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListViewComponent implements OnInit {
-  @Input() projects: Observable<Questionnaire[]> = of([]);
-  @Input() type?: ProjectType;
+  private readonly translate = inject(TranslateService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  @Output() deleteProject = new EventEmitter<string>();
-  @Output() editProject = new EventEmitter<string>();
+  projects = input<Questionnaire[]>([]);
+  type = input<ProjectType>();
 
-  projectList: Questionnaire[] = [];
-  columnsConfig: ColumnItem[] = [];
+  deleteProject = output<string>();
+  editProject = output<string>();
+
+  projectList = computed(() => this.projects().filter((project) => project.type === this.type()));
+  columnsConfig = signal<ColumnItem[]>([]);
 
   DateFormat = DateFormat;
 
-  constructor(private translate: TranslateService) {}
-
   ngOnInit(): void {
-    this.projects.subscribe((projects) => {
-      this.projectList = projects.filter((project) => project.type === this.type);
-    });
-
     this.setColumnsConfig();
-    this.translate.onLangChange.subscribe(() => this.setColumnsConfig());
+    this.translate.onLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.setColumnsConfig();
+    });
   }
 
   setColumnsConfig(): void {
-    this.columnsConfig = [
+    this.columnsConfig.set([
       {
         title: this.translate.instant('GENERAL.TITLE'),
         sortOrder: null,
@@ -77,7 +77,7 @@ export class ListViewComponent implements OnInit {
         width: '100px',
         minWidth: '100px',
       },
-    ];
+    ]);
   }
 
   onDeleteProject(id: string): void {

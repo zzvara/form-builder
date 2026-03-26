@@ -1,13 +1,13 @@
 <nz-content>
   <div class="toolbar">
     <div (click)="toggleView()">
-      <span nz-icon nzTheme="outline" [nzType]="isListView ? 'appstore' : 'unordered-list'"></span>
-      <span>{{ 'DASHBOARD.' + (isListView ? 'CARD_VIEW' : 'LIST_VIEW') | translate }}</span>
+      <span nz-icon nzTheme="outline" [nzType]="isListView() ? 'appstore' : 'unordered-list'"></span>
+      <span>{{ 'DASHBOARD.' + (isListView() ? 'CARD_VIEW' : 'LIST_VIEW') | translate }}</span>
       <i
         nz-icon
         nzType="question-circle"
         nz-tooltip
-        [nzTooltipTitle]="'DASHBOARD.' + (isListView ? 'CARD_VIEW_TOOLTIP' : 'LIST_VIEW_TOOLTIP') | translate"
+        [nzTooltipTitle]="'DASHBOARD.' + (isListView() ? 'CARD_VIEW_TOOLTIP' : 'LIST_VIEW_TOOLTIP') | translate"
       ></i>
     </div>
   </div>
@@ -16,7 +16,7 @@
     <div>
       <h3>{{ 'DASHBOARD.QUESTIONNAIRES' | translate }}</h3>
 
-      @if (isListView) {
+      @if (isListView()) {
         <button (click)="createProject(projectTypes.QUESTIONNAIRE)" nz-button>
           <span nz-icon nzType="plus" nzTheme="outline"></span>
           <span>{{ 'DASHBOARD.NEW_QUESTIONNAIRE' | translate }}</span>
@@ -29,7 +29,7 @@
     <div>
       <h3>{{ 'DASHBOARD.TESTS' | translate }}</h3>
 
-      @if (isListView) {
+      @if (isListView()) {
         <button (click)="createProject(projectTypes.TEST)" nz-button>
           <span nz-icon nzType="plus" nzTheme="outline"></span>
           <span>{{ 'DASHBOARD.NEW_TEST' | translate }}</span>
@@ -41,13 +41,13 @@
   </div>
 
   <ng-template #viewTemp let-type="type">
-    @if (isListView) {
-      <app-list-view [type]="type" [projects]="projects$" (editProject)="editProject($event)" (deleteProject)="deleteProject($event)">
+    @if (isListView()) {
+      <app-list-view [type]="type" [projects]="projects()" (editProject)="editProject($event)" (deleteProject)="deleteProject($event)">
       </app-list-view>
     } @else {
       <app-card-view
         [type]="type"
-        [projects]="projects$"
+        [projects]="projects()"
         (createProject)="createProject($event)"
         (editProject)="editProject($event)"
         (deleteProject)="deleteProject($event)"

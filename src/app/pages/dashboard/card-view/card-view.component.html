@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="[16, 16]">
-  @for (project of projectList; track $index) {
+  @for (project of projectList(); track $index) {
     <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
       <nz-card [nzActions]="[actionEdit, actionDelete]" class="project-card">
         <div class="description">
@@ -40,7 +40,7 @@
     </div>
   }
   <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6">
-    <nz-card (click)="onCreateProject(type!)" class="create-card project-card" [nzTitle]="">
+    <nz-card (click)="onCreateProject(type()!)" class="create-card project-card" [nzTitle]="">
       <div nz-icon nzType="plus" nzTheme="outline"></div>
     </nz-card>
   </div>
