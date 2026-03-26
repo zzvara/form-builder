@@ -1,5 +1,5 @@
+import { Component, ChangeDetectionStrategy, input, output, computed, ViewEncapsulation } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { ProjectType } from '@interfaces/project';
@@ -11,13 +11,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-card-view',
   templateUrl: './card-view.component.html',
   styleUrls: ['./card-view.component.less'],
-  standalone: true,
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzTableModule,
     NzCardComponent,
@@ -31,25 +31,21 @@ import { Observable, of } from 'rxjs';
     DatePipe,
     NzIconModule,
   ],
-  encapsulation: ViewEncapsulation.Emulated,
 })
-export class CardViewComponent implements OnInit {
-  @Input() projects: Observable<Questionnaire[]> = of([]);
-  @Input() type?: ProjectType;
+export class CardViewComponent {
+  projects = input<Questionnaire[]>([]);
+  type = input<ProjectType>();
 
-  @Output() deleteProject = new EventEmitter<string>();
-  @Output() createProject = new EventEmitter<ProjectType>();
-  @Output() editProject = new EventEmitter<string>();
+  deleteProject = output<string>();
+  createProject = output<ProjectType>();
+  editProject = output<string>();
 
-  projectList: Questionnaire[] = [];
+  projectList = computed(() => {
+    const currentType = this.type();
+    return this.projects().filter((project) => project.type === currentType);
+  });
 
   DateFormat = DateFormat;
-
-  ngOnInit(): void {
-    this.projects.subscribe(
-      (projects) => (this.projectList = projects.filter((project) => project.type === this.type)),
-    );
-  }
 
   onDeleteProject(id: string): void {
     this.deleteProject.emit(id);

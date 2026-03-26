@@ -1,25 +1,25 @@
 <nz-table
   #table
-  [nzData]="projectList"
+  [nzData]="projectList()"
   nzTableLayout="fixed"
   [nzScroll]="{ x: '600px' }"
   nzPaginationType="small"
 >
   <thead>
-    <tr>
-      @for (column of columnsConfig; track $index) {
-        <th
-          [nzSortOrder]="column.sortOrder"
-          [nzSortFn]="column.sortFn"
-          [nzSortDirections]="column.sortDirections"
-          [nzShowSort]="!!column.sortFn"
-          [nzWidth]="column.width ? column.width : 'auto'"
-          [style.min-width]="column.minWidth ? column.minWidth : '100px'"
-        >
-          {{ column.title }}
-        </th>
-      }
-    </tr>
+  <tr>
+    @for (column of columnsConfig(); track $index) {
+      <th
+        [nzSortOrder]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzSortDirections]="column.sortDirections"
+        [nzShowSort]="!!column.sortFn"
+        [nzWidth]="column.width ? column.width : 'auto'"
+        [style.min-width]="column.minWidth ? column.minWidth : '100px'"
+      >
+        {{ column.title }}
+      </th>
+    }
+  </tr>
   </thead>
   <tbody>
     @for (data of table.data; track $index) {
@@ -39,13 +39,7 @@
         <td>{{ data.created | date: DateFormat.DATE }}</td>
         <td>{{ data.modified | date: DateFormat.DATE }}</td>
         <td>
-          <span
-            (click)="onEditProject(data.id)"
-            nz-icon
-            nzType="edit"
-            nzTheme="outline"
-            class="edit-icon"
-          ></span>
+          <span (click)="onEditProject(data.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
           <span
             nz-popconfirm
             [nzPopconfirmTitle]="'DASHBOARD.DELETE_CONFIRMATION' | translate"
@@ -56,7 +50,8 @@
             nzType="delete"
             nzTheme="outline"
             class="delete-icon"
-          ></span>
+          >
+          </span>
         </td>
       </tr>
     }
