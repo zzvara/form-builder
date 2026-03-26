@@ -1,25 +1,25 @@
 <nz-table
   #table
-  [nzData]="projectList"
+  [nzData]="projectList()"
   nzTableLayout="fixed"
   [nzScroll]="{ x: '600px' }"
   nzPaginationType="small"
 >
   <thead>
-    <tr>
-      @for (column of columnsConfig; track $index) {
-        <th
-          [nzSortOrder]="column.sortOrder"
-          [nzSortFn]="column.sortFn"
-          [nzSortDirections]="column.sortDirections"
-          [nzShowSort]="!!column.sortFn"
-          [nzWidth]="column.width ? column.width : 'auto'"
-          [style.min-width]="column.minWidth ? column.minWidth : '100px'"
-        >
-          {{ column.title }}
-        </th>
-      }
-    </tr>
+  <tr>
+    @for (column of columnsConfig(); track $index) {
+      <th
+        [nzSortOrder]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzSortDirections]="column.sortDirections"
+        [nzShowSort]="!!column.sortFn"
+        [nzWidth]="column.width ? column.width : 'auto'"
+        [style.min-width]="column.minWidth ? column.minWidth : '100px'"
+      >
+        {{ column.title }}
+      </th>
+    }
+  </tr>
   </thead>
   <tbody>
     @for (data of table.data; track $index) {
