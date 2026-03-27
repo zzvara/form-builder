@@ -136,7 +136,8 @@
         </div>
       </div>
       } @else if (edit.data | instanceOfFormInputData) {
-      <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)" [class.invalid-component]="isComponentInvalid(edit)">
+      <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)"
+        [class.invalid-component]="isComponentInvalid(edit)">
         <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
         <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
         <span class="component-title"> {{ edit.data.title | translate }}</span>
