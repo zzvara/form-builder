@@ -1,35 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, Signal } from '@angular/core';
 import { ContextAction } from '@components/header/header.model';
-import { MenuOption, MenuState } from '@models/menu-option.model';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { MenuOption } from '@models/menu-option.model';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeaderService {
-  private readonly headerOptions: BehaviorSubject<MenuState> = new BehaviorSubject<MenuState>({
-    options: [MenuOption.HOME, MenuOption.SETTINGS],
-    activeOptions: [],
-  });
+  private readonly _headerOptions = signal<MenuOption[]>([MenuOption.HOME, MenuOption.SETTINGS]);
+  private readonly _activeOptions = signal<MenuOption[]>([]);
 
-  private readonly contextActions: BehaviorSubject<ContextAction[]> = new BehaviorSubject<ContextAction[]>([]);
+  private readonly _contextActions = signal<ContextAction[]>([]);
+
+  public readonly headerOptions: Signal<MenuOption[]> = this._headerOptions.asReadonly();
+  public readonly activeOptions: Signal<MenuOption[]> = this._activeOptions.asReadonly();
+
+  public readonly contextActions: Signal<ContextAction[]> = this._contextActions.asReadonly();
+
   private readonly saveTriggered: Subject<void> = new Subject<void>();
   private readonly undoTriggered: Subject<void> = new Subject<void>();
 
   setOptions(options: MenuOption[], activeOptions: MenuOption[] = []): void {
-    this.headerOptions.next({ options, activeOptions });
-  }
-
-  getOptions(): Observable<MenuState> {
-    return this.headerOptions.asObservable();
+    this._headerOptions.set(options);
+    this._activeOptions.set(activeOptions);
   }
 
   setContextActions(actions: ContextAction[]): void {
-    this.contextActions.next(actions);
-  }
-
-  getContextActions(): Observable<ContextAction[]> {
-    return this.contextActions.asObservable();
+    this._contextActions.set(actions);
   }
 
   triggerSave(): void {

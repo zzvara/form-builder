@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,16 +32,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentLanguage = signal<LanguageEnum>(LanguageEnum.EN);
   currentTheme = signal<ThemeEnum>(ThemeEnum.LIGHT);
 
-  private menuData = toSignal(this.headerService.getOptions(), {
-    initialValue: { options: [] as MenuOption[], activeOptions: [] as MenuOption[] }
-  });
-
-  headerOptions = computed(() => this.menuData().options);
-  activeOptions = computed(() => this.menuData().activeOptions);
-
-  contextActions = toSignal(this.headerService.getContextActions(), {
-    initialValue: [] as ContextAction[]
-  });
+  headerOptions = this.headerService.headerOptions;
+  activeOptions = this.headerService.activeOptions;
+  contextActions = this.headerService.contextActions;
 
   ngOnInit(): void {
     const savedLang = localStorage.getItem(LocalStorageKey.LANGUAGE);
