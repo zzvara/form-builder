@@ -21,7 +21,7 @@ import { CardViewComponent } from './card-view/card-view.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.less'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush, // <-- 2. Zoneless-hez kötelező
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     NzContentComponent,
@@ -36,6 +36,7 @@ import { CardViewComponent } from './card-view/card-view.component';
 export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly questionnaireService = inject(ProjectService<Questionnaire>);
+
   projects = toSignal(this.questionnaireService.list(), { initialValue: [] });
   isListView = signal(true);
 

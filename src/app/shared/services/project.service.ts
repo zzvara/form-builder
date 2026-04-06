@@ -1,27 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
-
 /**
  * This service provides functionality to manage a collection of projects.
  * Projects are generic, allowing for flexibility in the types of projects managed.
  */
 export class ProjectService<T extends Project> {
-  private items: T[] = []; // Holds the current list of projects
-  private readonly itemsSubject = new BehaviorSubject<T[]>([]);
+  private readonly itemsSignal: WritableSignal<T[]> = signal<T[]>([]);
   private readonly storageKey: string = 'project';
 
   constructor() {
-    // Attempt to load saved projects from local storage
     const savedData = localStorage.getItem(this.storageKey);
     if (savedData) {
-      this.items = JSON.parse(savedData) as T[];
-      this.itemsSubject.next([...this.items]);
+      try {
+        const parsedData = JSON.parse(savedData) as T[];
+        this.itemsSignal.set(parsedData);
+      } catch (e) {
+        console.error('Failed to parse projects from local storage', e);
+        this.itemsSignal.set([]);
+      }
     }
   }
 
@@ -34,18 +35,15 @@ export class ProjectService<T extends Project> {
   }
 
   /**
-   * This method returns an observable that emits the current list of projects.
-   * It allows subscribers to reactively receive updates when the project list changes.
-   * @returns {Observable<T[]>} An observable of the current list of projects.
+   * This method returns a signal that emits the current list of projects.
+   * @returns {Signal<T[]>} A readonly signal of the current list of projects.
    */
-  list(): Observable<T[]> {
-    return this.itemsSubject.asObservable();
+  list(): Signal<T[]> {
+    return this.itemsSignal.asReadonly();
   }
 
   /**
    * Adds a new project to the list and persists the updated list to local storage.
-   * It assigns a new unique ID to the project, updates the internal list and the observable,
-   * and then updates the local storage with the new list of projects.
    * @param {T} data - The project data to add.
    * @returns {void}
    */
@@ -55,9 +53,11 @@ export class ProjectService<T extends Project> {
     data.created = now.split('T')[0];
     data.modified = now.split('T')[0];
 
-    this.items.push(data);
-    this.itemsSubject.next([...this.items]);
-    localStorage.setItem(this.storageKey, JSON.stringify(this.items));
+    this.itemsSignal.update((items) => {
+      const newItems = [...items, data];
+      localStorage.setItem(this.storageKey, JSON.stringify(newItems));
+      return newItems;
+    });
 
     const projectHistoryKey = `${this.storageKey}-history-${data.id}`;
     const initialVersion: ProjectVersion<T> = {
@@ -70,37 +70,31 @@ export class ProjectService<T extends Project> {
 
   /**
    * Removes a project by its ID from the list and updates local storage.
-   * It also removes the project's history from local storage.
-   * It filters out the project with the given ID from the internal list, updates the observable,
-   * and persists the updated list to local storage.
+   * @param {string} projectId
    * @returns {void}
-   * @param projectId
    */
   remove(projectId: string): void {
-    // Remove the project from the list
-    this.items = this.items.filter((item) => item.id !== projectId);
-    this.itemsSubject.next([...this.items]);
-    localStorage.setItem(this.storageKey, JSON.stringify(this.items));
+    this.itemsSignal.update((items) => {
+      const newItems = items.filter((item) => item.id !== projectId);
+      localStorage.setItem(this.storageKey, JSON.stringify(newItems));
+      return newItems;
+    });
 
-    // Remove the project's history from local storage
     const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
     localStorage.removeItem(projectHistoryKey);
   }
 
   /**
    * Retrieves the history of versions for a specific project from local storage.
-   * It constructs a unique key for the project's history based on the project ID,
-   * retrieves the history from local storage, and returns it.
-   * @param {number} projectId - The ID of the project whose history is to be retrieved.
-   * @returns {ProjectVersion<T>[]} An array of project versions, which are of generic type T.
+   * @param {string} projectId - The ID of the project whose history is to be retrieved.
+   * @returns {ProjectVersion<T>[]} An array of project versions.
    */
   getProjectHistory(projectId: string): ProjectVersion<T>[] {
     const key = `${this.storageKey}-history-${projectId}`;
     let history = JSON.parse(localStorage.getItem(key) ?? '[]') as ProjectVersion<T>[];
 
-    // ha még nincs bejegyzés, generálunk egyet
     if (history.length === 0) {
-      const proj = this.items.find((i) => i.id === projectId);
+      const proj = this.itemsSignal().find((i) => i.id === projectId);
       if (proj) {
         const now = proj.created ? new Date(proj.created).toISOString() : new Date().toISOString();
         history = [
@@ -119,11 +113,9 @@ export class ProjectService<T extends Project> {
 
   /**
    * Retrieves a specific version of a project by its ID and version number.
-   * This method is intended to be implemented, providing functionality to access
-   * a particular version of a project's data.
-   * @param {number} projectId - The ID of the project.
+   * @param {string} projectId - The ID of the project.
    * @param {number} versionNum - The version number of the project to retrieve.
-   * @returns {T | undefined} The project data of the specified version if found, otherwise undefined.
+   * @returns {T | undefined} The project data of the specified version if found.
    */
   getProjectVersion(projectId: string, versionNum: number): T | undefined {
     const projectHistory = this.getProjectHistory(projectId);
@@ -133,83 +125,87 @@ export class ProjectService<T extends Project> {
 
   /**
    * Reverts a project to a specific version by its ID and version number.
-   * This method updates the current project data to the specified version
-   * and persists the updated list to local storage.
-   * @param {number} projectId - The ID of the project.
+   * @param {string} projectId - The ID of the project.
    * @param {number} versionNum - The version number of the project to revert to.
-   * @returns {boolean} True if the project is successfully reverted, false otherwise.
+   * @returns {boolean} True if the project is successfully reverted.
    */
   revertToVersion(projectId: string, versionNum: number): boolean {
     const projectHistory = this.getProjectHistory(projectId);
     const version = projectHistory.find((v) => v.versionNum === versionNum);
 
     if (version) {
-      const index = this.items.findIndex((item) => item.id === projectId);
-      if (index !== -1) {
-        this.items[index] = version.project;
-        this.items[index].modified = new Date().toISOString().split('T')[0];
-        this.itemsSubject.next([...this.items]);
-        localStorage.setItem(this.storageKey, JSON.stringify(this.items));
-        return true;
-      }
+      let isReverted = false;
+
+      this.itemsSignal.update((items) => {
+        const newItems = [...items];
+        const index = newItems.findIndex((item) => item.id === projectId);
+
+        if (index !== -1) {
+          newItems[index] = version.project;
+          newItems[index].modified = new Date().toISOString().split('T')[0];
+          localStorage.setItem(this.storageKey, JSON.stringify(newItems));
+          isReverted = true;
+        }
+
+        return newItems;
+      });
+
+      return isReverted;
     }
     return false;
   }
 
   /**
    * Updates the information of an existing project.
-   * It finds the project by ID, updates its data, and then persists the updated list to local storage.
-   * If the project is successfully updated, it returns true. Otherwise, it returns false.
-   * @param {number} id - The ID of the project to update.
+   * @param {string} id - The ID of the project to update.
    * @param {T} data - The updated project data.
-   * @returns {boolean} True if the project is successfully updated, false otherwise.
+   * @returns {boolean} True if the project is successfully updated.
    */
   update(id: string, data: T): boolean {
-    const index = this.items.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      const previousVersion = { ...this.items[index] };
-      const projectHistoryKey = `${this.storageKey}-history-${id}`;
-      const projectHistory: ProjectVersion<T>[] = JSON.parse(
-        localStorage.getItem(projectHistoryKey) || '[]',
-      );
+    let isUpdated = false;
 
-      // Check if the new data is the same as the latest version in history
-      const latestVersion = projectHistory[projectHistory.length - 1]?.project;
-      if (latestVersion && JSON.stringify(latestVersion) === JSON.stringify(data)) {
-        return false;
+    this.itemsSignal.update((items) => {
+      const newItems = [...items];
+      const index = newItems.findIndex((item) => item.id === id);
+
+      if (index !== -1) {
+        const previousVersion = { ...newItems[index] };
+        const projectHistoryKey = `${this.storageKey}-history-${id}`;
+        const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+
+        const latestVersion = projectHistory[projectHistory.length - 1]?.project;
+        if (latestVersion && JSON.stringify(latestVersion) === JSON.stringify(data)) {
+          return items; // No change detected
+        }
+
+        const versionNum = projectHistory.length + 1;
+        const projectVersion: ProjectVersion<T> = {
+          versionNum: versionNum,
+          project: previousVersion,
+          created: new Date().toISOString(),
+        };
+
+        projectHistory.push(projectVersion);
+        localStorage.setItem(projectHistoryKey, JSON.stringify(projectHistory));
+
+        newItems[index] = data;
+        newItems[index].modified = new Date().toISOString().split('T')[0];
+        localStorage.setItem(this.storageKey, JSON.stringify(newItems));
+        isUpdated = true;
       }
 
-      // Create a new version entry for the project's history
-      const versionNum = projectHistory.length + 1;
+      return isUpdated ? newItems : items;
+    });
 
-      const projectVersion: ProjectVersion<T> = {
-        versionNum: versionNum,
-        project: previousVersion,
-        created: new Date().toISOString(),
-      };
-
-      projectHistory.push(projectVersion);
-
-      localStorage.setItem(projectHistoryKey, JSON.stringify(projectHistory));
-
-      // Update the project data
-      this.items[index] = data;
-      this.items[index].modified = new Date().toISOString().split('T')[0];
-      this.itemsSubject.next([...this.items]);
-      localStorage.setItem(this.storageKey, JSON.stringify(this.items));
-      return true;
-    } else {
-      return false;
-    }
+    return isUpdated;
   }
 
   /**
    * Searches for projects by their ID and returns a list of projects that match.
-   * This method filters the internal list of projects by the specified ID and returns the result.
-   * @param {number} id - The ID of the project to search for.
+   * @param {string} id - The ID of the project to search for.
    * @returns {T[]} An array of projects that match the specified ID.
    */
   searchData(id: string): T[] {
-    return this.items.filter((item) => item.id === id);
+    return this.itemsSignal().filter((item) => item.id === id);
   }
 }

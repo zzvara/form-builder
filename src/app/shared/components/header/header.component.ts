@@ -12,6 +12,7 @@ import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { EventService } from '@app/shared/services/event.service';
+
 import { NzHeaderComponent } from 'ng-zorro-antd/layout';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -89,13 +90,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const currentActive = this.activeOptions();
     const currentHeaders = this.headerOptions();
 
-    if (currentActive.includes(toChange)) {
-      this.headerService.setOptions(
-        currentHeaders,
-        currentActive.filter((option) => option !== toChange)
-      );
+    const isCurrentlyActive = currentActive.includes(toChange);
+
+    if (isCurrentlyActive) {
+      const updatedActive = currentActive.filter((option) => option !== toChange);
+      this.headerService.setOptions(currentHeaders, updatedActive);
     } else {
-      this.headerService.setOptions(currentHeaders, [...currentActive, toChange]);
+      const updatedActive = [...currentActive, toChange];
+      this.headerService.setOptions(currentHeaders, updatedActive);
     }
   }
 
