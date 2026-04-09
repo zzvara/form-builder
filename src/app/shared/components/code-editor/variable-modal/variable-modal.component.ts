@@ -20,6 +20,7 @@ export class VariableModalComponent {
     @Inject(NZ_MODAL_DATA) public readonly data: { selectedVariables: CodeEditorVariable[]; allVariables: CodeEditorVariable[] }
   ) {
     this.allVariables = this.data.allVariables.map((item) => ({
+      key: item.elementId,
       title: item.title,
       type: item.type,
       elementId: item.elementId,
@@ -29,7 +30,6 @@ export class VariableModalComponent {
   }
 
   onChange(event: TransferChange) {
-    console.log(event);
     if (event.from === 'left' && event.to === 'right') {
       const elementIds = event.list.map((item) => item['elementId']);
       this.selectedVariables.push(...this.data.allVariables.filter((item) => elementIds.includes(item.elementId)));

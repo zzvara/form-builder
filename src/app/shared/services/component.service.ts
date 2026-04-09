@@ -15,8 +15,6 @@ import { translateComponentType } from '@app/pages/edit/config/edit-data-config'
 export class ComponentService {
   component$: BehaviorSubject<EditList[]> = new BehaviorSubject([] as EditList[]);
 
-  // @Todo: The logic related to components and stages will need to be outsourced to this service later.
-
   constructor(
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
@@ -39,68 +37,91 @@ export class ComponentService {
   getVariableList(targetId: string): CodeEditorVariable[] {
     this.checkVariable();
     const list = this.getItemsBeforeId(targetId)
-      .filter(this.instanceOfFormInputDataPipe.transform)
-      .map((item: FormInputData) => {
+      .filter((item) => this.instanceOfFormInputDataPipe.transform(item))
+      .map((item: any) => {
+        const formInput = item as FormInputData;
         if (
-          item.data &&
-          item.data.id &&
-          item.customTitle &&
-          item.customTitle.trim() !== '' &&
-          item.type !== 'SectionComponent' &&
-          item.type !== 'PictureInputComponent'
+          formInput.data &&
+          formInput.data.id &&
+          formInput.customTitle &&
+          formInput.customTitle.trim() !== '' &&
+          formInput.type !== 'SectionComponent' &&
+          formInput.type !== 'PictureInputComponent'
         ) {
-          const variableType = this.getVariableType(item.type);
+          const variableType = this.getVariableType(formInput.type);
           if (variableType === null) {
             return null;
           }
           return {
-            elementId: item.data!.id!,
-            title: item.customTitle!,
+            elementId: formInput.data!.id!,
+            title: formInput.customTitle!,
             type: variableType,
           };
         }
         return null;
       });
 
-    return list.filter((variable) => !!variable);
+    return list.filter((variable) => !!variable) as CodeEditorVariable[];
   }
 
   checkVariable(): void {
-    const components = this.component$.value;
-    components.forEach((component, componentIndex) => {
-      const item = component.data;
-
-      if (!item.codeEditor || !item.codeEditor.data || !item.codeEditor.data.variables) {
-        return;
-      }
-
-      item.codeEditor.data.variables = item.codeEditor.data.variables.filter(
-        (variable) => this.getItemById(variable.elementId) && this.isVariableValid(variable.elementId, componentIndex, components)
-      );
-    });
+    const items = this.component$.value.map(c => c.data);
+    this.validateVariablesRecursively(items);
   }
 
-  private isVariableValid(variableElementId: string, currentIndex: number, components: EditList[]): boolean {
-    const index = components.findIndex((c) => c.data && c.data.data && c.data.data.id === variableElementId);
-    return index !== -1 && index < currentIndex;
+  private validateVariablesRecursively(items: (SectionList | FormInputData)[]): void {
+    for (const item of items) {
+      this.validateItemVariables(item);
+
+      if (this.instanceOfSectionListPipe.transform(item)) {
+        const section = item as SectionList;
+        if (section.sectionInputs && section.sectionInputs.length > 0) {
+          this.validateVariablesRecursively(section.sectionInputs);
+        }
+      }
+    }
+  }
+
+  private validateItemVariables(item: SectionList | FormInputData): void {
+    if (!item.codeEditor || !item.codeEditor.data || !item.codeEditor.data.variables) {
+      return;
+    }
+
+    const targetId = this.instanceOfFormInputDataPipe.transform(item)
+      ? (item as FormInputData).data?.id
+      : (item as SectionList).sectionId;
+
+    if (!targetId) return;
+
+    item.codeEditor.data.variables = item.codeEditor.data.variables.filter((variable) => {
+      const existsGlobally = !!this.getItemById(variable.elementId);
+      const validItemsBefore = this.getItemsBeforeId(targetId);
+      const isValidScope = validItemsBefore.some(i =>
+        this.instanceOfFormInputDataPipe.transform(i) && (i as FormInputData).data?.id === variable.elementId
+      );
+
+      return existsGlobally && isValidScope;
+    });
   }
 
   private findItemById(targetId: string, items: (SectionList | FormInputData)[]): SectionList | FormInputData | undefined {
     for (const item of items) {
-      if (this.instanceOfFormInputDataPipe.transform(item)) {
-        if (item.data?.id === targetId) {
-          return item;
-        }
-      } else if (this.instanceOfSectionListPipe.transform(item)) {
-        if (item.sectionId === targetId) {
+
+      if (this.instanceOfSectionListPipe.transform(item)) {
+        const section = item as SectionList;
+        if (section.sectionId === targetId) {
           return item;
         }
 
-        if (item.sectionInputs.length > 0) {
-          const foundInSection = this.findItemById(targetId, item.sectionInputs);
+        if (section.sectionInputs.length > 0) {
+          const foundInSection = this.findItemById(targetId, section.sectionInputs);
           if (foundInSection) {
             return foundInSection;
           }
+        }
+      } else if (this.instanceOfFormInputDataPipe.transform(item)) {
+        if ((item as FormInputData).data?.id === targetId) {
+          return item;
         }
       }
     }
@@ -115,25 +136,27 @@ export class ComponentService {
     const result: (SectionList | FormInputData)[] = [];
 
     for (const item of items) {
-      if (this.instanceOfFormInputDataPipe.transform(item)) {
-        if (item.data?.id === targetId) {
-          return { list: result, found: true };
-        }
-        result.push(item);
-      } else if (this.instanceOfSectionListPipe.transform(item)) {
-        if (item.sectionId === targetId || item.data.id === targetId || item.data.sectionId === targetId) {
-          return { list: result, found: true };
-        }
+      const isTargetFormInput = this.instanceOfFormInputDataPipe.transform(item) && (item as FormInputData).data?.id === targetId;
+      const isTargetSection = this.instanceOfSectionListPipe.transform(item) && (item as SectionList).sectionId === targetId;
 
+      if (isTargetFormInput || isTargetSection) {
+        return { list: result, found: true };
+      }
+
+      if (this.instanceOfSectionListPipe.transform(item)) {
+        const section = item as SectionList;
         result.push(item);
 
-        if (item.sectionInputs.length > 0) {
-          const childFind = this.findItemsBeforeId(targetId, item.sectionInputs);
+        if (section.sectionInputs && section.sectionInputs.length > 0) {
+          const childFind = this.findItemsBeforeId(targetId, section.sectionInputs);
           result.push(...childFind.list);
+
           if (childFind.found) {
             return { list: result, found: true };
           }
         }
+      } else if (this.instanceOfFormInputDataPipe.transform(item)) {
+        result.push(item);
       }
     }
 

@@ -4,7 +4,6 @@
   </nz-sider>
   <nz-layout class="inner-layout">
     <nz-content>
-      <!-- @todo Hacky styling, "margin-bottom: 50px" is rarely intended and could cause issues. -->
       <div
         class="form-container"
         id="sectionDropList"
@@ -13,9 +12,8 @@
         [cdkDropListData]="editList"
         [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
       >
-        @for (edit of editList; track edit) {
+        @for (edit of editList; track edit.id || $index) {
           @if (edit.data | instanceOfSectionList) {
-            <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
             <nz-card
               [id]="edit.id"
               [nzTitle]="sectionTitle"
@@ -54,7 +52,6 @@
                 <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)" class="button-spacing">
                   <span nz-icon nzType="redo" nzTheme="outline"></span>
                 </button>
-                <!-- @todo The templates are filled with different margins. These must be uniform as well, maybe we should prefer classes, such as m-l-10? -->
                 <button
                   nz-popconfirm
                   [nzPopconfirmTitle]="'COMPONENTS.INPUT_HOLDER.POP_REMOVE' | translate"
@@ -72,7 +69,7 @@
                 </button>
               </ng-template>
 
-              @for (item of edit.data.sectionInputs; track item) {
+              @for (item of edit.data.sectionInputs; track item.data?.id || $index) {
                 <ng-template #inputTitleTemp>
                   <app-edit-name [edit]="item" [names]="names" (updateName)="updateName()"></app-edit-name>
                 </ng-template>
@@ -95,7 +92,6 @@
               <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
             </ng-template>
 
-            <!-- @todo Again, a large built-in width and lots of margins, the code should be reviewed for similar cases. -->
             <app-input-holder
               class="element-box standalone-input-holder"
               cdkDrag
@@ -123,7 +119,7 @@
       (cdkDropListDropped)="dropIntoEdit($event)"
       [cdkDropListData]="editList"
     >
-      @for (edit of editList; track edit) {
+      @for (edit of editList; track edit.id || $index) {
         @if (edit.data | instanceOfSectionList) {
           <div class="component-item section-item" cdkDrag [cdkDragData]="edit">
             <div class="section-header">
@@ -136,8 +132,8 @@
                 "
               ></nz-icon>
               <span class="component-title">{{
-                edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
-              }}</span>
+                  edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
+                }}</span>
               <span class="hover-icon" (click)="scrollToElement(edit.data.data.id)">
                 <span nz-icon nzType="aim" nzTheme="outline"></span>
               </span>
