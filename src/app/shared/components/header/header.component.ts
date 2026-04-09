@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '@services/header/header.service';
 import { JsonService } from '@services/json.service';
 import { Subscription } from 'rxjs';
@@ -12,12 +12,19 @@ import { LanguageEnum } from '@app/shared/interfaces/language.enum';
 import { ChangeDetectorRef } from '@angular/core';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { EventService } from '@app/shared/services/event.service';
+import { NzHeaderComponent } from 'ng-zorro-antd/layout';
+import { CommonModule } from '@angular/common';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, NzHeaderComponent, TranslatePipe, NzDropdownModule, NzButtonComponent, NzIconModule, NzMenuModule],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   headerOptions: MenuOption[] = [];

@@ -15,10 +15,12 @@ import {
   disabledSeconds,
 } from '@helpers/date-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
 import { QuillEditorComponent } from 'ngx-quill';
@@ -26,7 +28,7 @@ import { QuillEditorComponent } from 'ngx-quill';
 @Component({
   selector: 'app-time-picker-edit',
   templateUrl: './time-picker-edit.component.html',
-  styleUrls: [],
+  styleUrls: ['./time-picker-edit.component.less'],
   standalone: true,
   imports: [
     NzDividerComponent,
@@ -36,10 +38,12 @@ import { QuillEditorComponent } from 'ngx-quill';
     QuillEditorComponent,
     NzTimePickerComponent,
     NzInputNumberComponent,
-    TranslateModule,
+    NzCheckboxModule,
+    NzInputModule,
+    TranslatePipe,
     ReactiveFormsModule,
-    DatePipe
-  ]
+    DatePipe,
+  ],
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, TimePickerComponentData> {
   override ngOnInit(): void {

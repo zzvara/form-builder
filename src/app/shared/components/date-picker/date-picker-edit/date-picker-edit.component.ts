@@ -1,6 +1,7 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
 import {
@@ -12,14 +13,39 @@ import {
   getDisabledTimeConfigForMinDate,
 } from '@helpers/date-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
-import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, NzDatePickerComponent, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzOptionComponent } from 'ng-zorro-antd/select';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-date-picker-edit',
   templateUrl: './date-picker-edit.component.html',
-  styleUrls: [],
-  standalone: false,
+  styleUrls: ['./date-picker-edit.component.less'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    TranslatePipe,
+    DatePipe,
+    NzDividerComponent,
+    NzFormLabelComponent,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    QuillEditorComponent,
+    NzDatePickerComponent,
+    NzOptionComponent,
+    NzInputModule,
+    NzCheckboxComponent,
+    NzButtonModule,
+    NzIconModule,
+  ],
 })
 export class DatePickerEditComponent<
   T extends Date | Date[] = Date,

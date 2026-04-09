@@ -1,16 +1,42 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
 import { ErrorType } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-input-edit',
   templateUrl: './input-edit.component.html',
-  styleUrls: [],
-  standalone: false,
+  styleUrls: ['./input-edit.component.less'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    TranslatePipe,
+    NzDividerComponent,
+    NzFormLabelComponent,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    QuillEditorComponent,
+    NzInputGroupComponent,
+    NzInputNumberComponent,
+    NzTooltipModule,
+    NzInputModule,
+    NzCheckboxComponent,
+    NzButtonModule,
+    NzIconModule,
+  ],
 })
 export class InputEditComponent<T extends InputComponentData = InputComponentData> extends AbstractFieldLikeEditForm<string, T> {
   override ngOnInit(): void {

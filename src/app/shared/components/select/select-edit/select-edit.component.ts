@@ -2,16 +2,49 @@ import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
+import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
+import { TranslatePipe } from '@ngx-translate/core';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
+import { QuillModule } from 'ngx-quill';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-select-edit',
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    MutateTextDirective,
+    ReactiveFormsModule,
+    CdkDropList,
+    CdkDrag,
+    NzDividerComponent,
+    NzFormItemComponent,
+    NzTableModule,
+    NzIconModule,
+    NzFormControlComponent,
+    NzInputGroupComponent,
+    NzFormLabelComponent,
+    QuillModule,
+    NzSelectModule,
+    NzInputModule,
+    NzCheckboxComponent,
+    NzButtonModule,
+    NzIconModule,
+    TranslatePipe,
+  ],
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
   newOption!: FormControl<string | null>;

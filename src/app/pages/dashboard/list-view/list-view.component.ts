@@ -1,16 +1,30 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ProjectType } from '@interfaces/project';
 import { ColumnItem } from '@app/shared/interfaces/column-item.model';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
+import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    NzTableComponent,
+    NzTableModule,
+    NzTooltipModule,
+    NzPopconfirmModule,
+    SafeHtmlPipe,
+    TranslatePipe,
+    DatePipe,
+  ],
 })
 export class ListViewComponent implements OnInit {
   @Input() projects: Observable<Questionnaire[]> = of([]);
