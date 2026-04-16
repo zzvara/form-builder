@@ -7,7 +7,7 @@ import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
 import { AfterViewInit, Component, DestroyRef, EventEmitter, Input, OnInit, Output, TemplateRef, Type, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormsModule, NgForm, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { getInputGroups, translateComponentType } from '@pages/edit/config/edit-data-config';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { FormInputData } from '@interfaces/form-input-data';
@@ -22,6 +22,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'app-input-holder',
@@ -42,6 +44,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzPopconfirmModule,
     NzButtonModule,
     NzInputModule,
+    NzSwitchModule,
     TranslatePipe,
   ],
 })

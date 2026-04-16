@@ -10,7 +10,7 @@ import { ProjectService } from '@services/project.service';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
@@ -40,6 +40,7 @@ import { QuillEditorComponent } from 'ngx-quill';
     NzCheckboxComponent,
     NzInputModule,
     NzIconModule,
+    NzFormModule,
     TranslatePipe,
   ],
 })

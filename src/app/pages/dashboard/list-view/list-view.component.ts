@@ -10,6 +10,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { DatePipe } from '@angular/common';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-list-view',
@@ -21,6 +22,7 @@ import { DatePipe } from '@angular/common';
     NzTableModule,
     NzTooltipModule,
     NzPopconfirmModule,
+    NzIconModule,
     SafeHtmlPipe,
     TranslatePipe,
     DatePipe,

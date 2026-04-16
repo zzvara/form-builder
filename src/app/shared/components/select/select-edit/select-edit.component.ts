@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
@@ -30,6 +30,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     ReactiveFormsModule,
     CdkDropList,
     CdkDrag,
+    NzFormModule,
     NzDividerComponent,
     NzFormItemComponent,
     NzTableModule,

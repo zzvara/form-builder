@@ -9,7 +9,7 @@ import { CustomValidators } from '@validators/custom-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
@@ -19,12 +19,13 @@ import { QuillEditorComponent } from 'ngx-quill';
 @Component({
   selector: 'app-input-edit',
   templateUrl: './input-edit.component.html',
-  styleUrls: ['./input-edit.component.less'],
+  styleUrls: [],
   standalone: true,
   imports: [
     ReactiveFormsModule,
     TranslatePipe,
     NzDividerComponent,
+    NzFormModule,
     NzFormLabelComponent,
     NzFormItemComponent,
     NzFormControlComponent,

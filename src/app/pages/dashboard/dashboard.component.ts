@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { ListViewComponent } from './list-view/list-view.component';
 import { CardViewComponent } from './card-view/card-view.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,6 +26,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     NzContentComponent,
     NzIconModule,
     NzTooltipModule,
+    NzButtonModule,
     ListViewComponent,
     CardViewComponent,
     TranslatePipe,

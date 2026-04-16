@@ -1,5 +1,6 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
@@ -10,8 +11,8 @@ import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -20,11 +21,12 @@ import { QuillModule } from 'ngx-quill';
 @Component({
   selector: 'app-checkbox-group-edit',
   templateUrl: './checkbox-group-edit.component.html',
-  styleUrls: ['./checkbox-group-edit.component.less'],
+  styleUrls: [],
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
-    NzDividerComponent,
+    NzDividerModule,
     NzFormControlComponent,
     NzFormItemComponent,
     NzTableModule,
@@ -37,6 +39,7 @@ import { QuillModule } from 'ngx-quill';
     QuillModule,
     NzInputModule,
     NzCheckboxModule,
+    NzFormModule,
     TranslatePipe,
   ],
 })

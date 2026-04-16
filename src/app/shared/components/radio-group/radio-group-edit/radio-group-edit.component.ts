@@ -12,7 +12,7 @@ import { ListValidators } from '@validators/list-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzFormModule, NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
@@ -22,10 +22,11 @@ import { QuillModule } from 'ngx-quill';
 @Component({
   selector: 'app-radio-group-edit',
   templateUrl: './radio-group-edit.component.html',
-  styleUrls: ['./radio-group-edit.component.less'],
+  styleUrls: [],
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    NzFormModule,
     NzDividerComponent,
     NzFormItemComponent,
     NzTableModule,

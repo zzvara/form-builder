@@ -6,7 +6,7 @@ import { TextareaComponentData } from '@components/textarea/interfaces/textarea-
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
@@ -15,11 +15,12 @@ import { QuillEditorComponent } from 'ngx-quill';
 @Component({
   selector: 'app-textarea-edit',
   templateUrl: './textarea-edit.component.html',
-  styleUrls: ['./textarea-edit.component.less'],
+  styleUrls: [],
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
+    NzFormModule,
     NzDividerComponent,
     NzFormLabelComponent,
     NzFormItemComponent,

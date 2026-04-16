@@ -19,7 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
@@ -28,9 +28,10 @@ import { QuillEditorComponent } from 'ngx-quill';
 @Component({
   selector: 'app-time-picker-edit',
   templateUrl: './time-picker-edit.component.html',
-  styleUrls: ['./time-picker-edit.component.less'],
+  styleUrls: [],
   standalone: true,
   imports: [
+    NzFormModule,
     NzDividerComponent,
     NzFormLabelComponent,
     NzFormItemComponent,

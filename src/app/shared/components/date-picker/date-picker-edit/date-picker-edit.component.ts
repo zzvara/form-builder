@@ -19,25 +19,27 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { DisabledTimeConfig, DisabledTimeFn, NzDateMode, NzDatePickerComponent, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
 import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-date-picker-edit',
   templateUrl: './date-picker-edit.component.html',
-  styleUrls: ['./date-picker-edit.component.less'],
+  styleUrls: [],
   standalone: true,
   imports: [
     ReactiveFormsModule,
     TranslatePipe,
     DatePipe,
     NzDividerComponent,
+    NzFormModule,
     NzFormLabelComponent,
     NzFormItemComponent,
     NzFormControlComponent,
+    NzSelectModule,
     QuillEditorComponent,
     NzDatePickerComponent,
     NzOptionComponent,
