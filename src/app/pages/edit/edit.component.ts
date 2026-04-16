@@ -208,6 +208,7 @@ export class EditComponent implements OnInit, OnChanges {
 
         newItem.data.id = newItemId;
         newItem.data.sectionId = event.container.id;
+        newItem.data.draft = true;
         const newInputEdit: EditList = {
           id: newItemId,
           data: newItem,
@@ -333,10 +334,18 @@ export class EditComponent implements OnInit, OnChanges {
     return this.isInputInvalid(edit.data as FormInputData);
   }
 
+  isComponentDraft(edit: EditList): boolean {
+    if (this.instanceOfSectionListPipe.transform(edit.data)) {
+      return false;
+    }
+
+    return (edit.data as FormInputData).data?.draft ?? false;
+  }
+
   isInputInvalid(input: FormInputData): boolean {
     if (!input?.data) return true;
     const val = input.data.questionValue;
-    return !val || val.trim().length === 0;
+    return (!val || val.trim().length === 0) && !input.data.draft;
   }
 
   /**

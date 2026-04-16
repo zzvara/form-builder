@@ -2,9 +2,10 @@
   [nzTitle]="titleTemplate"
   [nzExtra]="headerButtons"
   [ngClass]="{
-    'valid-style': inputHolderForm.valid,
-    'invalid-style': inputHolderForm.invalid,
+    'valid-style': isValid(),
+    'invalid-style': !isValid(),
     'card-container': true,
+    'draft-style': inputData.draft
   }"
 >
   <form #inputHolderForm="ngForm" nz-form class="form-container">
@@ -13,7 +14,7 @@
         <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
       </nz-form-label>
 
-      <nz-form-control [nzValidateStatus]="!this.inputData.questionValue ? 'error' : 'success'" nzErrorTip="">
+      <nz-form-control [nzValidateStatus]="(!inputData.draft && !this.inputData.questionValue) ? 'error' : 'success'" nzErrorTip="">
         @if (!inlineEdit.enabled) {
           <span>{{ inputData.questionValue }}</span>
         } @else {
@@ -32,7 +33,7 @@
           </nz-input-group>
 
           <ng-template #suffixTemplate>
-            @if (!inputData.questionValue) {
+            @if (!inputData.draft && !inputData.questionValue) {
               <i nz-icon nzType="warning" (click)="inputData.questionValue = ''; change()" class="error-icon"></i>
             }
           </ng-template>
@@ -78,16 +79,18 @@
 
 <ng-template #titleTemplate>
   <div style="display: flex; flex-direction: row; align-items: center">
-    @if (inputHolderForm.invalid) {
-      <nz-icon
-        class="mr-12 error-icon"
-        nzType="exclamation-circle"
-        nzTheme="fill"
-        nz-tooltip
-        [nzTooltipTitle]="'COMPONENTS.INPUT_HOLDER.INVALID_INPUT' | translate"
-        nzTooltipColor="red"
-      />
-    }
+    <div style="display: flex; flex-direction: row; align-items: center; gap: 6px; margin-right: 12px;">
+      @if (!isValid()) {
+        <nz-icon
+          class="error-icon"
+          nzType="exclamation-circle"
+          nzTheme="fill"
+          nz-tooltip
+          [nzTooltipTitle]="'COMPONENTS.INPUT_HOLDER.INVALID_INPUT' | translate"
+          nzTooltipColor="red"
+        />
+      }
+    </div>
 
     <ng-container [ngTemplateOutlet]="customTitle"></ng-container>
   </div>
@@ -126,4 +129,5 @@
   >
     <span nz-icon nzType="delete" nzTheme="outline"></span>
   </button>
+  <nz-switch [ngModel]="!inputData.draft" (ngModelChange)="onDraftChange(!$event)" [nzCheckedChildren]="'COMPONENTS.INPUT_HOLDER.ACTIVE_INPUT' | translate" [nzUnCheckedChildren]="'COMPONENTS.INPUT_HOLDER.DRAFT_INPUT' | translate" class="button-spacing"/>
 </ng-template>
