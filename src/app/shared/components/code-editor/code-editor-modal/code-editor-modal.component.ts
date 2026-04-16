@@ -121,7 +121,9 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
     if (this.elementId && this.elementId !== '') {
       this.selectedElement = this.componentService.getItemById(this.elementId);
       if (this.selectedElement) {
-        this.selectedElementCodeMirror = structuredClone(this.selectedElement.codeEditor);
+        this.selectedElementCodeMirror = this.selectedElement.codeEditor
+          ? structuredClone(this.selectedElement.codeEditor)
+          : { enabled: false };
       }
 
       this.variableList = this.componentService.getVariableList(this.elementId);

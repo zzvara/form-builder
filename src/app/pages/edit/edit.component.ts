@@ -359,6 +359,10 @@ export class EditComponent implements OnInit, OnChanges {
     this.names = this.getCustomTitles();
   }
 
+  public isLogicEnabled(item: any): boolean {
+    return !!item?.codeEditor?.enabled;
+  }
+
   private getCustomTitles(): string[] {
     return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
   }

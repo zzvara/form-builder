@@ -1,5 +1,6 @@
 {
   "COMPONENTS": {
+    "CODE_MIRROR": "Feltétel bekapcsolva",
     "CONDITION_SETTINGS": {
       "LABELS": {
         "ENABLE": "Engedélyezés",

@@ -1,5 +1,6 @@
 {
   "COMPONENTS": {
+    "CODE_MIRROR": "Condition on",
     "CONDITION_SETTINGS": {
       "LABELS": {
         "ENABLE": "Enable",
@@ -14,7 +15,7 @@
       "WARNINGS": {
         "CODE": "There are {{ count }} warnings in the code!"
       },
-      "NEW_VARIABLE": "Adding variables",
+      "NEW_VARIABLE": "Add variables",
       "VARIABLE_MODAL": {
         "TITLE": "Selecting variables",
         "AVAILABLE_VARIABLES": "Available variables",
