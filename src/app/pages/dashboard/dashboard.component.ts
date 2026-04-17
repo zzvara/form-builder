@@ -18,8 +18,7 @@ import { RoutePath } from '@app/shared/models/route-path.model';
 export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly questionnaireService = inject(ProjectService<Questionnaire>);
-
-  projects = this.questionnaireService.list();
+  projects = this.questionnaireService.items;
   isListView = signal(true);
   projectTypes = ProjectType;
 

@@ -1,7 +1,3 @@
-<!--
-~ <<licensetext>>
--->
-
 <nz-layout>
   <div>
     <form nz-form class="form-margin-top" (ngSubmit)="submitForm()" [formGroup]="form">
@@ -18,9 +14,9 @@
             formControlName="title"
             (change)="updateForm()"
             required
-            [ngClass]="{ 'input-error': form.controls['title'].invalid && (form.controls['title'].touched || saveFailed) }"
+            [ngClass]="{ 'input-error': form.controls['title'].invalid && (form.controls['title'].touched || saveFailed()) }"
           />
-          @if (form.controls['title'].invalid && (form.controls['title'].touched || saveFailed)) {
+          @if (form.controls['title'].invalid && (form.controls['title'].touched || saveFailed())) {
             <div>
               <span class="error-message">{{ 'FORM.TITLE_REQUIRED' | translate }}</span>
             </div>
@@ -42,7 +38,7 @@
         >
         </quill-editor>
 
-        @if (form.controls['description'].invalid && (form.controls['description'].touched || saveFailed)) {
+        @if (form.controls['description'].invalid && (form.controls['description'].touched || saveFailed())) {
           <div>
             <span class="error-message">{{ 'FORM.DESCRIPTION_REQUIRED' | translate }}</span>
           </div>
@@ -69,7 +65,7 @@
       <nz-form-item class="same_line item-margin-bottom">
         <label nz-checkbox formControlName="hasdeadline"></label>
         <nz-form-label [nzNoColon]="true"
-          >{{ 'GENERAL.DEADLINE' | translate }}
+        >{{ 'GENERAL.DEADLINE' | translate }}
           <i
             nz-icon
             nzType="question-circle"
@@ -86,7 +82,7 @@
       <nz-form-item class="same_line mb-8">
         <label nz-checkbox formControlName="haslimit"></label>
         <nz-form-label [nzNoColon]="true"
-          >{{ 'GENERAL.TIME_LIMIT' | translate }}
+        >{{ 'GENERAL.TIME_LIMIT' | translate }}
           <i
             class="icon-margin-small"
             nz-icon
@@ -100,16 +96,16 @@
         }
       </nz-form-item>
 
-      @if (formExists) {
+      @if (formExists()) {
         <ng-container>
           <div>
             <div class="mb-8">
               <nz-form-label>{{ 'GENERAL.CREATED' | translate }}</nz-form-label>
-              <nz-form-label [nzNoColon]="true">{{ project.created | date: DateFormat.DATE }}</nz-form-label>
+              <nz-form-label [nzNoColon]="true">{{ project().created | date: DateFormat.DATE }}</nz-form-label>
             </div>
             <div class="mb-8">
               <nz-form-label>{{ 'GENERAL.MODIFIED' | translate }}</nz-form-label>
-              <nz-form-label [nzNoColon]="true">{{ project.modified | date: DateFormat.DATE }}</nz-form-label>
+              <nz-form-label [nzNoColon]="true">{{ project().modified | date: DateFormat.DATE }}</nz-form-label>
             </div>
           </div>
         </ng-container>
