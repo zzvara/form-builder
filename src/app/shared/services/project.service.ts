@@ -1,4 +1,4 @@
-import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, Signal } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,7 +10,15 @@ import { v4 as uuidv4 } from 'uuid';
  * Projects are generic, allowing for flexibility in the types of projects managed.
  */
 export class ProjectService<T extends Project> {
-  private readonly itemsSignal: WritableSignal<T[]> = signal<T[]>([]); // Holds the current list of projects reactively
+  private readonly _items = signal<T[]>([]);
+
+  /**
+   * This method returns a signal that emits the current list of projects.
+   * It allows subscribers to reactively receive updates when the project list changes.
+   * @returns {Signal<T[]>} A signal of the current list of projects.
+   */
+  public readonly items: Signal<T[]> = this._items.asReadonly();
+
   private readonly storageKey: string = 'project';
 
   constructor() {
@@ -18,7 +26,7 @@ export class ProjectService<T extends Project> {
     const savedData = localStorage.getItem(this.storageKey);
     if (savedData) {
       const parsedData = JSON.parse(savedData) as T[];
-      this.itemsSignal.set(parsedData);
+      this._items.set(parsedData);
     }
   }
 
@@ -28,15 +36,6 @@ export class ProjectService<T extends Project> {
    */
   private generateNextId(): string {
     return uuidv4();
-  }
-
-  /**
-   * This method returns a signal that emits the current list of projects.
-   * It allows subscribers to reactively receive updates when the project list changes.
-   * @returns {Signal<T[]>} A signal of the current list of projects.
-   */
-  list(): Signal<T[]> {
-    return this.itemsSignal.asReadonly();
   }
 
   /**
@@ -52,7 +51,7 @@ export class ProjectService<T extends Project> {
     data.created = now.split('T')[0];
     data.modified = now.split('T')[0];
 
-    this.itemsSignal.update((items) => {
+    this._items.update((items) => {
       const newItems = [...items, data];
       localStorage.setItem(this.storageKey, JSON.stringify(newItems));
       return newItems;
@@ -77,7 +76,7 @@ export class ProjectService<T extends Project> {
    */
   remove(projectId: string): void {
     // Remove the project from the list
-    this.itemsSignal.update((items) => {
+    this._items.update((items) => {
       const newItems = items.filter((item) => item.id !== projectId);
       localStorage.setItem(this.storageKey, JSON.stringify(newItems));
       return newItems;
@@ -101,7 +100,7 @@ export class ProjectService<T extends Project> {
 
     // ha még nincs bejegyzés, generálunk egyet
     if (history.length === 0) {
-      const proj = this.itemsSignal().find((i) => i.id === projectId);
+      const proj = this._items().find((i) => i.id === projectId);
       if (proj) {
         const now = proj.created ? new Date(proj.created).toISOString() : new Date().toISOString();
         history = [
@@ -147,7 +146,7 @@ export class ProjectService<T extends Project> {
     if (version) {
       let isReverted = false;
 
-      this.itemsSignal.update((items) => {
+      this._items.update((items) => {
         const newItems = [...items];
         const index = newItems.findIndex((item) => item.id === projectId);
 
@@ -177,7 +176,7 @@ export class ProjectService<T extends Project> {
   update(id: string, data: T): boolean {
     let isUpdated = false;
 
-    this.itemsSignal.update((items) => {
+    this._items.update((items) => {
       const newItems = [...items];
       const index = newItems.findIndex((item) => item.id === id);
 
@@ -224,6 +223,6 @@ export class ProjectService<T extends Project> {
    * @returns {T[]} An array of projects that match the specified ID.
    */
   searchData(id: string): T[] {
-    return this.itemsSignal().filter((item) => item.id === id);
+    return this._items().filter((item) => item.id === id);
   }
 }
