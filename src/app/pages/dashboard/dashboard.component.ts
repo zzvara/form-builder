@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
@@ -37,9 +36,9 @@ export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly questionnaireService = inject(ProjectService<Questionnaire>);
 
-  projects = toSignal(this.questionnaireService.list(), { initialValue: [] });
-  isListView = signal(true);
+  projects = this.questionnaireService.list();
 
+  isListView = signal(true);
   projectTypes = ProjectType;
 
   ngOnInit(): void {
