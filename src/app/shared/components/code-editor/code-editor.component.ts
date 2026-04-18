@@ -11,7 +11,7 @@ import { basicSetup, EditorView } from 'codemirror';
 
 @Component({
   selector: 'app-code-editor',
-  standalone: false,
+  standalone: true,
   templateUrl: './code-editor.component.html',
   styleUrl: './code-editor.component.css',
 })

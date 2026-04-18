@@ -1,13 +1,20 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
+import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: [],
-  standalone: false,
+  styleUrls: ['./number-input.component.less'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, NzFormItemComponent, NzFormControlComponent, NzInputNumberComponent, NzTooltipModule, NzIconModule],
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
   override edit(): void {

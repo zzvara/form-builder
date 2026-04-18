@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -6,24 +6,46 @@ import { ColumnItem } from '@app/shared/interfaces/column-item.model';
 import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
-import { basicSetup, EditorView } from 'codemirror';
-import { Compartment, EditorState } from '@codemirror/state';
-import { json, jsonLanguage, jsonParseLinter } from '@codemirror/lang-json';
-import { linter, lintGutter } from '@codemirror/lint';
-import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
-import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
-import { EventService } from '@app/shared/services/event.service';
-import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
+import { NzLayoutComponent } from 'ng-zorro-antd/layout';
+import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';
+import { NzDescriptionsComponent, NzDescriptionsItemComponent } from 'ng-zorro-antd/descriptions';
+import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { DatePipe, JsonPipe, KeyValuePipe, UpperCasePipe } from '@angular/common';
+import { CodeEditorComponent } from '@app/shared/components/code-editor/code-editor.component';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
   selector: 'app-results-page',
   templateUrl: './results-page.component.html',
   styleUrls: ['./results-page.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    NzLayoutComponent,
+    NzTabsComponent,
+    NzTabComponent,
+    NzDescriptionsComponent,
+    NzDescriptionsItemComponent,
+    SafeHtmlPipe,
+    NzTooltipModule,
+    UpperCasePipe,
+    TranslatePipe,
+    DatePipe,
+    KeyValuePipe,
+    CodeEditorComponent,
+    NzPopconfirmModule,
+    JsonPipe,
+    NzButtonComponent,
+    NzIconModule,
+    NzPopoverModule,
+  ],
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
   @Input() page?: number;

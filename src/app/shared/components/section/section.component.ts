@@ -1,11 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
+import { NzCardComponent } from 'ng-zorro-antd/card';
+import { NzFormItemComponent } from 'ng-zorro-antd/form';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    NzFormItemComponent,
+    NzCardComponent,
+  ]
 })
 export class SectionComponent implements FormComponentMarker {
   @Input() data: any;

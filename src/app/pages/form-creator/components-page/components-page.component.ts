@@ -1,13 +1,24 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ApplicationModule, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
+import { NzLayoutComponent } from 'ng-zorro-antd/layout';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
+import { DatePipe } from '@angular/common';
+import { RedoUndoComponent } from '@app/shared/components/redo-undo/redo-undo.component';
+import { FormsModule } from '@angular/forms';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 interface DiffItem {
   key: string;
@@ -18,7 +29,22 @@ interface DiffItem {
   selector: 'app-components-page',
   templateUrl: './components-page.component.html',
   styleUrls: ['./components-page.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    FormsModule,
+    NzLayoutComponent,
+    EditComponent,
+    NzTooltipModule,
+    NzDropdownModule,
+    DatePipe,
+    RedoUndoComponent,
+    NzButtonComponent,
+    NzCheckboxComponent,
+    NzIconModule,
+    NzMenuModule,
+    NzPopoverModule,
+    TranslatePipe,
+  ],
 })
 export class ComponentsPageComponent implements OnInit {
   @ViewChild(EditComponent) editComponent!: EditComponent;

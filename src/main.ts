@@ -1,10 +1,12 @@
-import { provideZoneChangeDetection } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from '@app/app.module';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { version } from './version';
+import { AppComponent } from '@app/app.component';
+import { appConfig } from '@app/app.config';
 
 console.log('App version:', version);
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()] })
-  .catch((err) => console.error(err));
+registerLocaleData(en);
+
+bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));

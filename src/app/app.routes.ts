@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { FormCreatorComponent } from '@pages/form-creator/form-creator.component';
 import { headerResolver } from '@resolvers/header.resolver';
-import { TitleStrategy } from '@angular/router';
-import { TranslatedTitleStrategy } from './core/title-strategy';
 import { RoutePath } from './shared/models/route-path.model';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: RoutePath.DASHBOARD,
     component: DashboardComponent,
@@ -33,10 +30,3 @@ const routes: Routes = [
     title: 'TITLE.DASHBOARD',
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [{ provide: TitleStrategy, useClass: TranslatedTitleStrategy }],
-})
-export class AppRoutingModule {}

@@ -1,15 +1,28 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
-import { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
+import { TranslatePipe } from '@ngx-translate/core';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzFormItemComponent } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzUploadChangeParam, NzUploadComponent, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-picture-input',
   templateUrl: './picture-input.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslatePipe,
+    NzFormItemComponent,
+    NzUploadComponent,
+    NzIconModule,
+    NzButtonComponent,
+  ]
 })
 export class PictureInputComponent
   extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent>
