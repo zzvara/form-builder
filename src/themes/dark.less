@@ -5,10 +5,12 @@
 // White and primary are already available (@white, @primary-color)
 @darkest: #1a1a1a;
 @dark: #2e2e2e;
+@medium-light: #393939;
 @medium: #545454;
 @light: #a6a6a6;
 @lightest: #cccccc;
 @error-color: #ff4d4f;
+@error-hover-color: #d9363e;
 @primary: #1890ff;
 
 // optional overrides
@@ -178,6 +180,18 @@ td {
   border-color: @light;
 }
 
+.ant-btn-default {
+  border-color: @light;
+}
+
+.ant-btn-default.ant-btn-dangerous {
+  border-color: @error-color;
+}
+
+.ant-btn-default.ant-btn-dangerous:hover {
+  border-color: @error-hover-color;
+}
+
 // Scrollbar
 
 :root {
@@ -192,4 +206,16 @@ td {
 
 .ql-snow .ql-fill {
   fill: @light;
+}
+
+:root {
+  --draft-bg: @medium-light;
+}
+
+app-input-holder .draft-style .form-container {
+  background-color: var(--draft-bg);
+}
+
+app-input-holder .draft-style .ant-input-affix-wrapper {
+  background-color: var(--draft-bg);
 }
