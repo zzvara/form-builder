@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal, ChangeDetectionStrategy, inject } from '@angular/core';
+import { DatePipe, JsonPipe, KeyValuePipe, UpperCasePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -7,7 +9,6 @@ import { StatisticsService } from '@pages/form-creator/results-page/services/sta
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
@@ -15,7 +16,6 @@ import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';
 import { NzDescriptionsComponent, NzDescriptionsItemComponent } from 'ng-zorro-antd/descriptions';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
-import { DatePipe, JsonPipe, KeyValuePipe, UpperCasePipe } from '@angular/common';
 import { CodeEditorComponent } from '@app/shared/components/code-editor/code-editor.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -27,6 +27,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   templateUrl: './results-page.component.html',
   styleUrls: ['./results-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzLayoutComponent,
     NzTabsComponent,
@@ -48,17 +49,33 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   ],
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
+
+  private readonly projectService = inject(ProjectService<Project>);
+  private readonly jsonService = inject(JsonService);
+  private readonly statisticsService = inject(StatisticsService);
+  private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router);
+
   @Input() page?: number;
   @Input() projectId: string | undefined;
   @Input() versionNum?: number;
 
   @Output() setPage = new EventEmitter<number>();
 
-  project?: Project;
-  projectHistory: ProjectVersion<Project>[] = [];
-  sectionInputStats: { [key: string]: number | string } = {};
-  latestVersionNum?: number;
-  sectionInputs: FormInputData[] = [];
+  private readonly _project = signal<Project | undefined>(undefined);
+  public readonly project = this._project.asReadonly();
+
+  private readonly _projectHistory = signal<ProjectVersion<Project>[]>([]);
+  public readonly projectHistory = this._projectHistory.asReadonly();
+
+  private readonly _sectionInputStats = signal<{ [key: string]: number | string }>({});
+  public readonly sectionInputStats = this._sectionInputStats.asReadonly();
+
+  private readonly _latestVersionNum = signal<number | undefined>(undefined);
+  public readonly latestVersionNum = this._latestVersionNum.asReadonly();
+
+  private readonly _sectionInputs = signal<FormInputData[]>([]);
+  public readonly sectionInputs = this._sectionInputs.asReadonly();
 
   columnsConfig: ColumnItem[] = [
     {
@@ -79,42 +96,39 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   CodeEditorMode = CodeEditorMode;
   CodeEditorType = CodeEditorType;
 
-  constructor(
-    private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService,
-    private readonly statisticsService: StatisticsService,
-    private readonly translate: TranslateService,
-    private readonly router: Router,
-  ) {}
-
   ngOnInit(): void {
     if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
-      this.latestVersionNum =
-        this.projectHistory.length > 0
-          ? this.projectHistory[this.projectHistory.length - 1].versionNum
-          : undefined;
-      this.project = this.projectService.getProjectVersion(
-        this.projectId,
-        this.latestVersionNum ?? 1,
-      );
+      const history = this.projectService.getProjectHistory(this.projectId);
+      this._projectHistory.set(history);
+
+      const latestNum = history.length > 0 ? history[history.length - 1].versionNum : undefined;
+      this._latestVersionNum.set(latestNum);
+
+      const proj = this.projectService.getProjectVersion(this.projectId, latestNum ?? 1);
+      this._project.set(proj);
 
       this.calculateSectionInputStats();
     }
 
-    this.project?.editList!.forEach((section) => {
-      if ('sectionInputs' in section.data) {
-        section.data.sectionInputs.forEach((input) => {
-          this.sectionInputs.push(input);
-        });
-      }
-    });
+    const currentProject = this._project();
+    if (currentProject?.editList) {
+      const inputs: FormInputData[] = [];
+      currentProject.editList.forEach((section) => {
+        if ('sectionInputs' in section.data) {
+          section.data.sectionInputs.forEach((input) => {
+            inputs.push(input);
+          });
+        }
+      });
+      this._sectionInputs.set(inputs);
+    }
   }
 
   nextPage() {
-    this.page! += 1;
-    this.onsetPage(this.page!);
-
+    if (this.page !== undefined) {
+      this.page += 1;
+      this.onsetPage(this.page);
+    }
     this.router.navigate(['/']);
   }
 
@@ -123,24 +137,27 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   }
 
   saveProjectWithHistoryToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectWithHistoryToJson(this.project, this.projectHistory);
+    const proj = this._project();
+    if (proj) {
+      this.jsonService.saveProjectWithHistoryToJson(proj, this._projectHistory());
     }
   }
 
   saveProjectToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectToJson(this.project);
+    const proj = this._project();
+    if (proj) {
+      this.jsonService.saveProjectToJson(proj);
     }
   }
 
   private calculateSectionInputStats(): void {
-    if (this.project) {
-      this.sectionInputStats = this.statisticsService.calculateSectionInputStats(this.project);
+    const proj = this._project();
+    if (proj) {
+      this._sectionInputStats.set(this.statisticsService.calculateSectionInputStats(proj));
     }
   }
 
   ngOnDestroy(): void {
-    this.jsonService.destroy();
+    this.jsonService.clearJsonData();
   }
 }

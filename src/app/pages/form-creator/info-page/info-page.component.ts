@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, signal, Signal, WritableSignal, OnDestroy, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, signal, Signal, WritableSignal, OnDestroy, ChangeDetectionStrategy, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -46,10 +47,12 @@ import { QuillEditorComponent } from 'ngx-quill';
   ],
 })
 export class InfoPageComponent implements OnInit, OnDestroy {
+
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly projectService = inject(ProjectService<Project>);
   private readonly jsonService = inject(JsonService);
+  private readonly destroyRef = inject(DestroyRef); // <-- DestroyRef hozzáadva a memóriaszivárgás ellen
 
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
@@ -92,36 +95,40 @@ export class InfoPageComponent implements OnInit, OnDestroy {
   DateFormat = DateFormat;
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.params = params;
-      if (params['id']) {
-        this._formExists.set(true);
-        this._formId.set(params['id']);
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        this.params = params;
+        if (params['id']) {
+          this._formExists.set(true);
+          this._formId.set(params['id']);
 
-        const foundProject = this.projectService.searchData(this._formId())?.[0] || null;
-        if (foundProject) {
-          this._project.set(foundProject);
-          this.initializeForm();
+          const foundProject = this.projectService.searchData(this._formId())?.[0] || null;
+          if (foundProject) {
+            this._project.set(foundProject);
+            this.initializeForm();
+          }
         }
-      }
 
-      if (params['type']) {
-        const newType = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
-        this._project.update((p) => ({ ...p, type: newType }));
-        this.form.patchValue({
-          type: newType === ProjectType.TEST,
-        });
-      }
-    });
+        if (params['type']) {
+          const newType = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+          this._project.update((p) => ({ ...p, type: newType }));
+          this.form.patchValue({
+            type: newType === ProjectType.TEST,
+          });
+        }
+      });
 
     this.formData.emit(this._project().type);
 
-    this.jsonService.getJsonData().subscribe((data) => {
-      if (data && data.project) {
-        this._project.update((p) => ({ ...p, ...data.project }));
-        this.initializeForm();
-      }
-    });
+    this.jsonService.getJsonData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        if (data && data.project) {
+          this._project.update((p) => ({ ...p, ...data.project }));
+          this.initializeForm();
+        }
+      });
   }
 
   initializeForm(): void {
