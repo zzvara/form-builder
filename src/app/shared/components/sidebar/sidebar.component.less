@@ -28,6 +28,14 @@ section {
   color: @accent-danger;
 }
 
+.sidebar-drag-handle {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
 :host ::ng-deep {
   .ant-card {
     width: @width-full;
