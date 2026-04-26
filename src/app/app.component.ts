@@ -1,8 +1,6 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HeaderService } from '@services/header/header.service';
-import { MenuOption } from '@models/menu-option.model';
 
 @Component({
   selector: 'app-root',
@@ -12,5 +10,12 @@ import { MenuOption } from '@models/menu-option.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
+  constructor(private headerService: HeaderService) {
 
+    this.headerService.onSave()
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+
+      });
+  }
 }

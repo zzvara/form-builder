@@ -1,6 +1,6 @@
 <nz-layout>
   <div>
-    <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"> </app-edit>
+    <app-edit [inlineEdit]="inlineEdit()" [projectId]="projectId" [versionNum]="currentVersionNum()"> </app-edit>
 
     <div nz-row id="footerdiv" class="version-footer">
       <div nz-col nzSpan="22" class="footer-spacer"></div>
@@ -28,7 +28,7 @@
             [nzOverlayStyle]="{ 'max-height': '250px', 'overflow-y': 'auto' }"
             class="version-selector"
           >
-            {{ currentVersionNum ? ('VERSION' | translate) + ' ' + currentVersionNum : ('COMPONENTS.SELECT_VERSION' | translate) }}
+            {{ currentVersionNum() ? ('VERSION' | translate) + ' ' + currentVersionNum() : ('COMPONENTS.SELECT_VERSION' | translate) }}
             <i nz-icon nzType="down"></i>
           </button>
           <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()">
@@ -36,7 +36,7 @@
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
             <ul nz-menu>
-              @for (version of projectHistory; track trackByVersion($index, version)) {
+              @for (version of projectHistory(); track trackByVersion($index, version)) {
                 <li nz-menu-item (click)="revertToVersion(version.versionNum)">
                   <span> {{ 'VERSION' | translate }} {{ version.versionNum }} </span>
                   <span
@@ -68,7 +68,7 @@
           <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
         </div>
         <div class="inline-edit-container">
-          <label nz-checkbox [(ngModel)]="inlineEdit.enabled">
+          <label nz-checkbox [ngModel]="inlineEdit().enabled" (ngModelChange)="onInlineEditChange($event)">
             {{ 'COMPONENTS.INLINE_EDIT' | translate }}
           </label>
         </div>

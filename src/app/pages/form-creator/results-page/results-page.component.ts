@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal, Signal, WritableSignal } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -9,14 +9,6 @@ import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
-import { basicSetup, EditorView } from 'codemirror';
-import { Compartment, EditorState } from '@codemirror/state';
-import { json, jsonLanguage, jsonParseLinter } from '@codemirror/lang-json';
-import { linter, lintGutter } from '@codemirror/lint';
-import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
-import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
-import { EventService } from '@app/shared/services/event.service';
-import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
 
 @Component({
@@ -32,11 +24,20 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
 
   @Output() setPage = new EventEmitter<number>();
 
-  project?: Project;
-  projectHistory: ProjectVersion<Project>[] = [];
-  sectionInputStats: { [key: string]: number | string } = {};
-  latestVersionNum?: number;
-  sectionInputs: FormInputData[] = [];
+  private readonly _project = signal<Project | undefined>(undefined);
+  public readonly project = this._project.asReadonly();
+
+  private readonly _projectHistory = signal<ProjectVersion<Project>[]>([]);
+  public readonly projectHistory = this._projectHistory.asReadonly();
+
+  private readonly _sectionInputStats = signal<{ [key: string]: number | string }>({});
+  public readonly sectionInputStats = this._sectionInputStats.asReadonly();
+
+  private readonly _latestVersionNum = signal<number | undefined>(undefined);
+  public readonly latestVersionNum = this._latestVersionNum.asReadonly();
+
+  private readonly _sectionInputs = signal<FormInputData[]>([]);
+  public readonly sectionInputs = this._sectionInputs.asReadonly();
 
   columnsConfig: ColumnItem[] = [
     {
@@ -67,26 +68,37 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
-      this.latestVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : undefined;
-      this.project = this.projectService.getProjectVersion(this.projectId, this.latestVersionNum ?? 1);
+      const history = this.projectService.getProjectHistory(this.projectId);
+      this._projectHistory.set(history);
+
+      const latestNum = history.length > 0 ? history[history.length - 1].versionNum : undefined;
+      this._latestVersionNum.set(latestNum);
+
+      const proj = this.projectService.getProjectVersion(this.projectId, latestNum ?? 1);
+      this._project.set(proj);
 
       this.calculateSectionInputStats();
     }
 
-    this.project?.editList!.forEach((section) => {
-      if ('sectionInputs' in section.data) {
-        section.data.sectionInputs.forEach((input) => {
-          this.sectionInputs.push(input);
-        });
-      }
-    });
+    const currentProject = this._project();
+    if (currentProject?.editList) {
+      const inputs: FormInputData[] = [];
+      currentProject.editList.forEach((section) => {
+        if ('sectionInputs' in section.data) {
+          section.data.sectionInputs.forEach((input) => {
+            inputs.push(input);
+          });
+        }
+      });
+      this._sectionInputs.set(inputs);
+    }
   }
 
   nextPage() {
-    this.page! += 1;
-    this.onsetPage(this.page!);
-
+    if (this.page !== undefined) {
+      this.page += 1;
+      this.onsetPage(this.page);
+    }
     this.router.navigate(['/']);
   }
 
@@ -95,24 +107,27 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   }
 
   saveProjectWithHistoryToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectWithHistoryToJson(this.project, this.projectHistory);
+    const proj = this._project();
+    if (proj) {
+      this.jsonService.saveProjectWithHistoryToJson(proj, this._projectHistory());
     }
   }
 
   saveProjectToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectToJson(this.project);
+    const proj = this._project();
+    if (proj) {
+      this.jsonService.saveProjectToJson(proj);
     }
   }
 
   private calculateSectionInputStats(): void {
-    if (this.project) {
-      this.sectionInputStats = this.statisticsService.calculateSectionInputStats(this.project);
+    const proj = this._project();
+    if (proj) {
+      this._sectionInputStats.set(this.statisticsService.calculateSectionInputStats(proj));
     }
   }
 
   ngOnDestroy(): void {
-    this.jsonService.destroy();
+    this.jsonService.clearJsonData();
   }
 }

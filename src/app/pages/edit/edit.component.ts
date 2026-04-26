@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren, signal, Signal, WritableSignal } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
+import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 
 @Component({
   selector: 'app-edit',
@@ -31,10 +32,16 @@ export class EditComponent implements OnInit, OnChanges {
 
   @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;
 
-  sideBarData = getSideBarData(this, this.translate);
+  private readonly _sideBarData: WritableSignal<SidebarData[]> = signal([]);
+  public readonly sideBarData: Signal<SidebarData[]> = this._sideBarData.asReadonly();
 
-  editList: EditList[] = [];
-  names: string[] = [];
+  private readonly _editList: WritableSignal<EditList[]> = signal([]);
+  public readonly editList: Signal<EditList[]> = this._editList.asReadonly();
+
+  private readonly _names: WritableSignal<string[]> = signal([]);
+  public readonly names: Signal<string[]> = this._names.asReadonly();
+
+  // -----------------------------
 
   LayoutEnum = LayoutEnum;
 
@@ -47,7 +54,7 @@ export class EditComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.sideBarData = getSideBarData(this, this.translate);
+    this._sideBarData.set(getSideBarData(this, this.translate));
     this.loadProject();
     this.initializeUndoRedo();
   }
@@ -57,90 +64,73 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionIds: () => string[] = () =>
-    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => sect.id);
+    this._editList().filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
-    // If editList is empty but there's JSON data with editList, use that instead
-    if (this.editList.length === 0 && this.projectId) {
+    if (this._editList().length === 0 && this.projectId) {
       const project = this.projectService.searchData(this.projectId)[0];
       if (project?.editList && project.editList.length > 0) {
-        this.editList = cloneDeep(project.editList);
-        this.names = this.getCustomTitles();
+        this._editList.set(cloneDeep(project.editList));
+        this._names.set(this.getCustomTitles());
       }
     }
 
-    return this.editList.flatMap((edit) => {
+    return this._editList().flatMap((edit) => {
       if (this.instanceOfSectionListPipe.transform(edit.data)) {
-        return edit.data.sectionInputs;
+        return (edit.data as SectionList).sectionInputs;
       }
-      return edit.data;
+      return edit.data as FormInputData;
     });
   };
 
   sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
     item.data && (this.instanceOfFormInputDataPipe.transform(item.data) || this.instanceOfFormInputDataPipe.transform(item.data.data));
 
-  /**
-   * Saves the current state of the form inputs to the project.
-   * It then calls the project service to persist the updated project data.
-   * @returns {void}
-   */
   saveForm(): void {
     const project = this.projectService.searchData(this.projectId!)[0];
     if (project) {
       project.editList = [];
-      for (const edit of this.editList) {
+      for (const edit of this._editList()) {
         project.editList.push(cloneDeep(edit));
       }
-      this.names = this.getCustomTitles();
+      this._names.set(this.getCustomTitles());
       this.projectService.update(this.projectId!, project);
     }
   }
 
-  /**
-   * Loads project form inputs based on the current project ID and version number.
-   * If a project and its form inputs are found, it updates the formInputs array with the project's form inputs.
-   * @returns {void}
-   */
   private loadProject(): void {
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       if (project?.editList) {
-        this.editList = cloneDeep(project.editList);
-        this.names = this.getCustomTitles();
-        this.undoRedoService.saveState(this.editList);
+        this._editList.set(cloneDeep(project.editList));
+        this._names.set(this.getCustomTitles());
+        this.undoRedoService.saveState(this._editList());
       }
     }
   }
 
-  /**
-   * Initializes the undo/redo service by saving the current state of the form inputs.
-   * @returns {void}
-   */
   private initializeUndoRedo(): void {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
       this.undoRedoService.clearHistory();
-      this.undoRedoService.saveState(this.editList);
+      this.undoRedoService.saveState(this._editList());
     }
   }
 
   undoRedo(undoRedoEvent: UndoRedoEnum): void {
     if (undoRedoEvent === UndoRedoEnum.UNDO) {
-      this.editList = this.undoRedoService.undo() ?? [];
-      this.names = this.getCustomTitles();
+      this._editList.set(this.undoRedoService.undo() ?? []);
+      this._names.set(this.getCustomTitles());
     } else {
-      this.editList = this.undoRedoService.redo() ?? [];
-      this.names = this.getCustomTitles();
+      this._editList.set(this.undoRedoService.redo() ?? []);
+      this._names.set(this.getCustomTitles());
     }
   }
 
   dropIntoEdit(event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>): void {
-    // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
-      // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else if (this.instanceOfFormInputDataPipe.transform(event.item.data) && !event.item.data.data?.id) {
-      const droppedInput: FormInputData = event.item.data;
+      const droppedInput: FormInputData = event.item.data as FormInputData;
       if (droppedInput.title === 'SECTION') {
         const newSectionId = uuidv4();
         const newSectionEdit: EditList = {
@@ -150,86 +140,84 @@ export class EditComponent implements OnInit, OnChanges {
             layout: LayoutEnum.VERTICAL,
             reorderEnabled: false,
             sectionInputs: [],
-            type: droppedInput.type,
+            type: droppedInput.type as any,
           },
         };
-        this.names = this.getCustomTitles();
         event.container.data.splice(event.currentIndex, 0, newSectionEdit);
       } else {
-        // Create a deep copy of the dropped item with updated ID
         const newItemId = uuidv4();
         const newItem: FormInputData = cloneDeep(droppedInput);
 
-        // Initialize data if it's null
         if (!newItem.data) {
-          newItem.data = {};
+          newItem.data = {} as any;
         }
 
-        newItem.data.id = newItemId;
-        newItem.data.sectionId = event.container.id;
-        newItem.data.draft = true;
+        newItem.data!.id = newItemId;
+        newItem.data!.sectionId = event.container.id;
+        newItem.data!.draft = true;
         const newInputEdit: EditList = {
           id: newItemId,
           data: newItem,
         };
 
-        this.names = this.getCustomTitles();
-
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
     } else if (this.instanceOfFormInputDataPipe.transform(event.item.data)) {
-      // Initialize data if it's null
-      if (!event.item.data.data) {
-        event.item.data.data = {};
+      // JAVÍTÁS: Kimentjük egy változóba és explicit szólunk a TS-nek, hogy nem null
+      const formInputData = event.item.data as FormInputData;
+
+      if (!formInputData.data) {
+        formInputData.data = {} as any;
       }
 
-      event.item.data.data.sectionId = event.container.id;
+      formInputData.data!.sectionId = event.container.id;
+
       const transferredInput: EditList = {
-        id: event.item.data.data.id!,
-        data: event.item.data,
+        id: formInputData.data!.id!,
+        data: formInputData,
       };
-      this.names = this.getCustomTitles();
+
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
 
+    this._editList.update(list => [...list]);
+    this._names.set(this.getCustomTitles());
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
+    this.undoRedoService.saveState(this._editList());
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
     const eventData: CdkDragDrop<FormInputData[]> = event as CdkDragDrop<FormInputData[]>;
     const draggable: CdkDrag = eventData.item;
-    const data: EditList = draggable.data;
+    const data: EditList = draggable.data as EditList;
     const innerData: FormInputData = data.data as FormInputData;
-    // Check if the item was moved within the same container
+
     if (event.previousContainer === event.container) {
-      // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else if (this.getSectionIds().includes(event.container.id) && this.getSectionIds().includes(event.previousContainer.id)) {
-      // Move items between sections
       const sectionList = data.data as SectionList;
       sectionList.sectionId = event.container.id;
-      event.container.data.splice(event.currentIndex, 0, draggable.data);
+      event.container.data.splice(event.currentIndex, 0, draggable.data as FormInputData);
       event.previousContainer.data.splice(event.previousIndex, 1);
     } else if (!innerData.data?.id) {
-      // Add a completely new item to any drop list
-      const droppedInput: FormInputData = draggable.data;
+      const droppedInput: FormInputData = draggable.data as FormInputData;
       const newItemId = uuidv4();
       const newItem: FormInputData = cloneDeep(droppedInput);
       newItem.data!.id = newItemId;
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else {
-      // Move existing item from edit area to section
-      const droppedInput: FormInputData = draggable.data;
+      const droppedInput: FormInputData = draggable.data as FormInputData;
       const movedItem: FormInputData = cloneDeep(droppedInput);
       const toMove: any = movedItem.data;
       event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
+
+    this._editList.update(list => [...list]);
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
+    this.undoRedoService.saveState(this._editList());
   }
 
   getEditDropListConnectedTo(): string[] {
@@ -244,21 +232,17 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   removeEditComponent(edit: EditList): void {
-    const ind = this.editList.findIndex((item) => item.id === edit.id);
-    this.editList = this.editList.filter((e) => e.id !== edit.id);
-    this.names = this.getCustomTitles();
-
+    this._editList.update(list => list.filter((e) => e.id !== edit.id));
+    this._names.set(this.getCustomTitles());
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
+    this.undoRedoService.saveState(this._editList());
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
-    const ind = this.editList.findIndex((sec) => sec.id === sect.sectionId);
-    const component = sect.sectionInputs.find((item) => item.data!.id === componentId);
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
-
+    this._editList.update(list => [...list]);
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
+    this.undoRedoService.saveState(this._editList());
   }
 
   getSectionInputStyle(sect: SectionList): { [p: string]: string } {
@@ -279,17 +263,18 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       sect.layout = LayoutEnum.VERTICAL;
     }
-    this.undoRedoService.saveState(this.editList);
+    this._editList.update(list => [...list]);
+    this.undoRedoService.saveState(this._editList());
   }
 
   isFormInvalid(): boolean {
     return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
   }
+
   isComponentInvalid(edit: EditList): boolean {
     if (this.instanceOfSectionListPipe.transform(edit.data)) {
-      return edit.data.sectionInputs.some((inp) => this.isInputInvalid(inp));
+      return (edit.data as SectionList).sectionInputs.some((inp) => this.isInputInvalid(inp));
     }
-
     return this.isInputInvalid(edit.data as FormInputData);
   }
 
@@ -297,7 +282,6 @@ export class EditComponent implements OnInit, OnChanges {
     if (this.instanceOfSectionListPipe.transform(edit.data)) {
       return false;
     }
-
     return (edit.data as FormInputData).data?.draft ?? false;
   }
 
@@ -307,15 +291,8 @@ export class EditComponent implements OnInit, OnChanges {
     return (!val || val.trim().length === 0) && !input.data.draft;
   }
 
-  /**
-   * Handles the event when the value of a form input changes.
-   * This method updates the corresponding form input's value based on the selection made by the user.
-   * @param sect
-   * @param event - The event object containing the new value of the form input.
-   * @returns {void}
-   */
   onValueChanged<D extends InputData<T>, T>(event: D): void {
-    this.undoRedoService.saveState(this.editList);
+    this.undoRedoService.saveState(this._editList());
   }
 
   scrollToElement(elementId: string): void {
@@ -329,12 +306,12 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   updateName(): void {
-    this.names = this.getCustomTitles();
+    this._names.set(this.getCustomTitles());
     this.updateRepeated();
   }
 
   private getCustomTitles(): string[] {
-    return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
+    return this._editList().filter((e) => e.data.customTitle).map((e) => e.data.customTitle as string);
   }
 
   returnChildren(sect: SectionList): { title: string; id: string }[] {
@@ -346,7 +323,6 @@ export class EditComponent implements OnInit, OnChanges {
         id: id,
       });
     }
-
     return returnVal;
   }
 
@@ -355,16 +331,17 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private getReferencables(id: string): string[] {
-    const ind = this.editList.findIndex((item) => item.id === id);
+    const currentList = this._editList();
+    const ind = currentList.findIndex((item) => item.id === id);
 
-    const list: EditList[] = cloneDeep(this.editList);
+    const list: EditList[] = cloneDeep(currentList);
     list.splice(ind);
 
     return list.flatMap((input) => {
       const isSectionList = this.instanceOfSectionListPipe.transform(input.data);
 
       if (isSectionList) {
-        return (input.data as SectionList).sectionInputs.filter((item) => this.isReferencable(item)).map((item) => item.customTitle);
+        return (input.data as SectionList).sectionInputs.filter((item) => this.isReferencable(item)).map((item) => item.customTitle as string);
       }
 
       return this.isReferencable(input.data as FormInputData) && input.data.customTitle ? [input.data.customTitle] : [];
@@ -372,11 +349,26 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private updateRepeated() {
-    this.editList
+    const currentList = this._editList();
+    currentList
       .filter((item) => item.data.type === 'RepeatedSectionComponent')
       .forEach((item) => {
         const repeatedSection = item.data as RepeatedSectionList;
         repeatedSection.referencableInputs = this.getReferencables(item.id);
       });
+
+    this._editList.update(list => [...list]);
+  }
+
+  public isLogicEnabled(item: any): boolean {
+    return !!item?.codeEditor?.enabled;
+  }
+
+  public getConditionTooltip(item: any): string {
+    const code = item?.codeEditor?.data?.code;
+    if (code && code.trim() !== '') {
+      return code;
+    }
+    return this.translate.instant('COMPONENTS.CODE_MIRROR');
   }
 }
