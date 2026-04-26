@@ -333,13 +333,6 @@ export class EditComponent implements OnInit, OnChanges {
     return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
   }
 
-  /**
-   * Handles the event when the value of a form input changes.
-   * This method updates the corresponding form input's value based on the selection made by the user.
-   * @param sect
-   * @param event - The event object containing the new value of the form input.
-   * @returns {void}
-   */
   onValueChanged<D extends InputData<T>, T>(event: D): void {
     this.undoRedoService.saveState(this.editList);
     this.componentService.component$.next(this.editList);
@@ -361,6 +354,14 @@ export class EditComponent implements OnInit, OnChanges {
 
   public isLogicEnabled(item: any): boolean {
     return !!item?.codeEditor?.enabled;
+  }
+
+  public getConditionTooltip(item: any): string {
+    const code = item?.codeEditor?.data?.code;
+    if (code && code.trim() !== '') {
+      return code;
+    }
+    return this.translate.instant('COMPONENTS.CODE_MIRROR');
   }
 
   private getCustomTitles(): string[] {

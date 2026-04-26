@@ -41,7 +41,7 @@
             >
               <ng-template #sectionTitle>
                 @if (isLogicEnabled(edit.data)) {
-                  <nz-icon nzType="code" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'COMPONENTS.CODE_MIRROR' | translate" style="font-size: 16px; margin-right: 8px;"></nz-icon>
+                  <nz-icon nzType="code" nzTheme="outline" nz-tooltip [nzTooltipTitle]="getConditionTooltip(edit.data)" style="font-size: 16px; margin-right: 8px;"></nz-icon>
                 }
                 <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
               </ng-template>
@@ -75,7 +75,7 @@
               @for (item of edit.data.sectionInputs; track item.data?.id || $index) {
                 <ng-template #inputTitleTemp>
                   @if (isLogicEnabled(item)) {
-                    <nz-icon nzType="code" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'COMPONENTS.CODE_MIRROR' | translate" style="font-size: 16px; margin-right: 8px;"></nz-icon>
+                    <nz-icon nzType="code" nzTheme="outline" nz-tooltip [nzTooltipTitle]="getConditionTooltip(item)" style="font-size: 16px; margin-right: 8px"></nz-icon>
                   }
                   <app-edit-name [edit]="item" [names]="names" (updateName)="updateName()"></app-edit-name>
                 </ng-template>
@@ -96,7 +96,7 @@
           } @else if (edit.data | instanceOfFormInputData) {
             <ng-template #inputTitleTemp>
               @if (isLogicEnabled(edit.data)) {
-                <nz-icon nzType="code" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'COMPONENTS.CODE_MIRROR' | translate" style=" font-size: 16px; margin-right: 8px;"></nz-icon>
+                <nz-icon nzType="code" nzTheme="outline" nz-tooltip [nzTooltipTitle]="getConditionTooltip(edit.data)" style="font-size: 16px; margin-right: 8px;"></nz-icon>
               }
               <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
             </ng-template>
