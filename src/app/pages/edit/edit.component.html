@@ -109,13 +109,15 @@
             <nz-collapse-panel nzActive [nzShowArrow]="false" [nzHeader]="nzHeader" style="padding: 0">
               <ng-template #nzHeader>
                 <div class="component-item section-header">
-                  <nz-icon class="mr-4"
-                    [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"></nz-icon>
+                  <div class="component-drag-handle" cdkDragHandle>
+                    <nz-icon class="mr-4"
+                      [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"></nz-icon>
 
-                  <span class="component-title">
-                    {{ edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
-                    }}
-                  </span>
+                    <span class="component-title">
+                      {{ edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
+                      }}
+                    </span>
+                  </div>
 
                   <span class="hover-icon" (click)="scrollToElement(edit.id); $event.stopPropagation()">
                     <span nz-icon nzType="aim"></span>
@@ -136,10 +138,13 @@
         </div>
       </div>
       } @else if (edit.data | instanceOfFormInputData) {
-      <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)" [class.invalid-component]="isComponentInvalid(edit)">
-        <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
-        <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
-        <span class="component-title"> {{ edit.data.title | translate }}</span>
+      <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)"
+        [class.invalid-component]="isComponentInvalid(edit)">
+        <div class="component-drag-handle" cdkDragHandle>
+          <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
+          <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
+          <span class="component-title"> {{ edit.data.title | translate }}</span>
+        </div>
         <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
           <span nz-icon nzType="aim" nzTheme="outline"></span>
         </span>

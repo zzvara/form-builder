@@ -68,7 +68,11 @@ nz-content {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  cursor: move;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .cdk-drag-preview {
@@ -88,6 +92,10 @@ nz-content {
 .element-list.cdk-drop-list-dragging .element-box:not(.cdk-drag-placeholder) {
   padding: @spacing0;
   .transition-move;
+}
+
+.cdk-drop-list-dragging {
+  cursor: grabbing;
 }
 
 .sider-sticky {
@@ -176,8 +184,19 @@ nz-content {
     margin-bottom: @spacing4;
     border: 1px solid @border-light;
     border-radius: 5px;
-    cursor: move;
     position: relative;
+
+    .component-drag-handle {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
 
     &.section-item {
       flex-direction: column;

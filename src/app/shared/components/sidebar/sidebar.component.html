@@ -19,7 +19,9 @@
         [cdkDropListSortingDisabled]="true">
         @for (item of group.groupContents; track item.type) {
         <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
-          <span><b>{{ item.title | translate }}</b></span>
+          <div class="sidebar-drag-handle" cdkDragHandle>
+            <span><b>{{ item.title | translate }}</b></span>
+          </div>
 
           <ng-container *cdkDragPlaceholder>
             @switch (item.type) {
