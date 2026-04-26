@@ -1,18 +1,49 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
 import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzFormModule, NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
+import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-radio-group-edit',
   templateUrl: './radio-group-edit.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NzFormModule,
+    NzDividerComponent,
+    NzFormItemComponent,
+    NzTableModule,
+    DragDropModule,
+    NzIconModule,
+    NzButtonModule,
+    NzFormControlComponent,
+    NzInputGroupComponent,
+    MutateTextDirective,
+    NzFormLabelComponent,
+    QuillModule,
+    NzOptionComponent,
+    NzInputModule,
+    NzCheckboxModule,
+    NzSelectModule,
+    TranslatePipe,
+  ],
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {
   newOption!: FormControl<string | null>;

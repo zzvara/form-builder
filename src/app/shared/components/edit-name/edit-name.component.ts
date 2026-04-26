@@ -1,15 +1,35 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditList } from '@app/pages/edit/interfaces/edit-list';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
+import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
 import { FormService } from '@app/shared/services/form.service';
 import { ValidatorService } from '@app/shared/services/validator.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { NzFormControlComponent } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-edit-name',
   templateUrl: './edit-name.component.html',
   styleUrl: './edit-name.component.less',
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzIconModule,
+    InstanceOfFormInputDataPipe,
+    ComponentIconsPipe,
+    NzTooltipModule,
+    NzFormControlComponent,
+    NzInputGroupComponent,
+    NzInputModule,
+    TranslatePipe,
+  ],
 })
 export class EditNameComponent implements OnChanges {
   @Input() names: string[] = [];

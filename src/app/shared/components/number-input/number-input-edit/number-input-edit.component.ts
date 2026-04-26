@@ -1,15 +1,41 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-number-input-edit',
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    TranslatePipe,
+    NzDividerComponent,
+    NzFormModule,
+    NzFormLabelComponent,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    QuillModule,
+    NzInputNumberComponent,
+    NzTooltipModule,
+    NzInputModule,
+    NzCheckboxComponent,
+    NzButtonModule,
+    NzIconModule,
+  ],
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, NumberInputComponentData> {
   override ngOnInit(): void {

@@ -1,20 +1,48 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-checkbox-group-edit',
   templateUrl: './checkbox-group-edit.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzDividerModule,
+    NzFormControlComponent,
+    NzFormItemComponent,
+    NzTableModule,
+    NzButtonModule,
+    DragDropModule,
+    NzIconModule,
+    NzInputGroupComponent,
+    MutateTextDirective,
+    NzFormLabelComponent,
+    QuillModule,
+    NzInputModule,
+    NzCheckboxModule,
+    NzFormModule,
+    TranslatePipe,
+  ],
 })
-
 export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions[], CheckboxGroupData> {
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');

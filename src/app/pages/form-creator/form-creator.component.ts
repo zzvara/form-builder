@@ -3,15 +3,27 @@ import { ProjectType } from '@app/shared/interfaces/project';
 import { ViewChild } from '@angular/core';
 import { InfoPageComponent } from './info-page/info-page.component';
 import { ComponentsPageComponent } from './components-page/components-page.component';
+import { NzLayoutComponent } from 'ng-zorro-antd/layout';
+import { NzStepComponent, NzStepsComponent } from 'ng-zorro-antd/steps';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ResultsPageComponent } from './results-page/results-page.component';
 
 @Component({
   selector: 'app-form-creator',
   templateUrl: './form-creator.component.html',
   styleUrls: ['./form-creator.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    NzLayoutComponent,
+    NzStepComponent,
+    NzStepsComponent,
+    TranslatePipe,
+    InfoPageComponent,
+    ComponentsPageComponent,
+    ResultsPageComponent,
+  ],
 })
 export class FormCreatorComponent {
-
   @ViewChild(InfoPageComponent)
   infoPageComponent?: InfoPageComponent;
 

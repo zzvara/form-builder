@@ -1,5 +1,7 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+
+import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostListener, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
@@ -13,16 +15,61 @@ import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
+import { NzContentComponent, NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout';
+import { SidebarComponent } from '@app/shared/components/sidebar/sidebar.component';
+import { NzCardComponent } from 'ng-zorro-antd/card';
+import { EditNameComponent } from '@app/shared/components/edit-name/edit-name.component';
+import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
+import { InstanceOfRepeatedSectionPipe } from '@app/shared/pipes/instance-of-repeated-section.pipe';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { CommonModule } from '@angular/common';
+import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzLayoutComponent,
+    NzSiderComponent,
+    SidebarComponent,
+    NzContentComponent,
+    DragDropModule,
+    InstanceOfSectionListPipe,
+    NzCardComponent,
+    EditNameComponent,
+    TranslatePipe,
+    NzSelectComponent,
+    InstanceOfRepeatedSectionPipe,
+    NzOptionComponent,
+    NzPopconfirmModule,
+    NzPopoverModule,
+    NzDrawerModule,
+    InputHolderComponent,
+    InstanceOfFormInputDataPipe,
+    NzCollapseComponent,
+    NzCollapsePanelComponent,
+    NzIconModule,
+    ComponentIconsPipe,
+    NzButtonComponent,
+    NzSwitchComponent,
+    NzInputNumberComponent,
+  ]
 })
 export class EditComponent implements OnInit, OnChanges {
   @Input() inlineEdit!: InlineEdit;
