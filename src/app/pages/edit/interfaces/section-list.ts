@@ -5,7 +5,6 @@ import { translateComponentType } from '../config/edit-data-config';
 export interface SectionList {
   sectionId: string;
   layout: LayoutEnum;
-  reorderEnabled: boolean;
   sectionInputs: FormInputData[];
   type: keyof typeof translateComponentType;
 

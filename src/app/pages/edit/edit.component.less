@@ -116,10 +116,6 @@ nz-content {
   color: @accent-danger;
 }
 
-.button-spacing {
-  margin-left: @spacing12;
-}
-
 .input-holder {
   margin: @spacing8;
   padding: @spacing0;
@@ -147,6 +143,76 @@ nz-content {
 .draft-component {
   background-color: var(--draft-bg);
   opacity: 0.9;
+}
+
+.section-buttons {
+  display: flex;
+  align-items: center;
+  gap: @spacing8;
+  padding: @spacing8;
+}
+
+.section-actions {
+  display: flex;
+  gap: @spacing8;
+}
+
+.repeated-settings-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: @spacing8;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.repeated-trigger-icon {
+  margin-bottom: -3px;
+}
+
+.repeated-trigger-text {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.repeated-settings-panel {
+  min-width: 260px;
+}
+
+.repeated-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: @spacing8;
+
+  nz-select,
+  nz-input-number {
+    display: block;
+  }
+}
+
+.repeated-label {
+  color: @secondary-text;
+  font-size: @font-size-small;
+}
+
+.repeated-width {
+  width: 100%;
+}
+
+.repeated-settings-drawer {
+  padding-right: @spacing8;
+  padding-bottom: @spacing12;
+  min-height: 180px;
+}
+
+.repeated-drawer-outer .ant-drawer-content-wrapper {
+  max-height: 70vh;
+}
+
+.repeated-drawer-outer .ant-drawer-body {
+  overflow: visible;
 }
 
 .right-sider {
@@ -278,6 +344,14 @@ nz-content {
     width: 100% !important;
     margin-bottom: 20px;
     max-width: 100% !important;
+  }
+
+  .repeated-settings-trigger {
+    max-width: 170px;
+  }
+
+  .repeated-trigger-text {
+    max-width: 100px;
   }
 }
 

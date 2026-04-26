@@ -171,6 +171,7 @@
       "REPEATED": {
         "GIVEN": "Given number",
         "INPUT": "Another input",
+        "UNSPECIFIED": "Unspecified",
         "PLACEHOLDER": "Select a named input",
         "REPEAT_LABEL": "Repeat based on",
         "TITLE": "Repeated Section"

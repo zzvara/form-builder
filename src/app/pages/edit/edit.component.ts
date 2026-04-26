@@ -1,5 +1,7 @@
+
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
@@ -24,7 +26,8 @@ import { EditNameComponent } from '@app/shared/components/edit-name/edit-name.co
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
 import { InstanceOfRepeatedSectionPipe } from '@app/shared/pipes/instance-of-repeated-section.pipe';
-import { NzPopconfirmComponent, NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { CommonModule } from '@angular/common';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -32,6 +35,7 @@ import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe'
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzSwitchComponent } from 'ng-zorro-antd/switch';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
   selector: 'app-edit',
@@ -54,6 +58,8 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
     InstanceOfRepeatedSectionPipe,
     NzOptionComponent,
     NzPopconfirmModule,
+    NzPopoverModule,
+    NzDrawerModule,
     InputHolderComponent,
     InstanceOfFormInputDataPipe,
     NzCollapseComponent,
@@ -76,6 +82,9 @@ export class EditComponent implements OnInit, OnChanges {
 
   editList: EditList[] = [];
   names: string[] = [];
+  isMobileView = false;
+  repeatedSettingsDrawerVisible = false;
+  activeRepeatedSection: RepeatedSectionList | null = null;
 
   LayoutEnum = LayoutEnum;
 
@@ -89,12 +98,18 @@ export class EditComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.sideBarData = getSideBarData(this, this.translate);
+    this.updateViewMode();
     this.loadProject();
     this.initializeUndoRedo();
   }
 
   ngOnChanges() {
     this.loadProject();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.updateViewMode();
   }
 
   getSectionIds: () => string[] = () =>
@@ -189,7 +204,6 @@ export class EditComponent implements OnInit, OnChanges {
           data: {
             sectionId: newSectionId,
             layout: LayoutEnum.VERTICAL,
-            reorderEnabled: false,
             sectionInputs: [],
             type: droppedInput.type,
           },
@@ -278,9 +292,6 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionDropListConnectedTo(sect: SectionList): string[] {
-    if (sect.reorderEnabled) {
-      return [];
-    }
     return this.getSectionIds().concat(['sectionDropList']);
   }
 
@@ -323,8 +334,59 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
+  openRepeatedSettings(section: RepeatedSectionList): void {
+    this.updateRepeated();
+    this.activeRepeatedSection = section;
+    if (this.isMobileView) {
+      this.repeatedSettingsDrawerVisible = true;
+    }
+  }
+
+  closeRepeatedSettingsDrawer(): void {
+    this.repeatedSettingsDrawerVisible = false;
+    this.activeRepeatedSection = null;
+  }
+
+  onRepeatedPopoverVisibleChange(visible: boolean, section: RepeatedSectionList): void {
+    if (visible) {
+      this.openRepeatedSettings(section);
+    }
+  }
+
+  getRepeatedSettingsSummary(section: RepeatedSectionList): string {
+    if (section.repeatByOther) {
+      return section.referencedInput || this.translate.instant('COMPONENTS.SECTION.REPEATED.UNSPECIFIED');
+    }
+
+    return `${section.repeatTimes}x`;
+  }
+
+  hasRepeatedSettingsError(section: RepeatedSectionList): boolean {
+    if (!section.repeatByOther) {
+      return !section.repeatTimes || section.repeatTimes < 1;
+    }
+
+    const referencedInput = section.referencedInput?.trim();
+    if (!referencedInput) {
+      return true;
+    }
+
+    return !section.referencableInputs?.includes(referencedInput);
+  }
+
+  hasRepeatedSettingsErrorForEdit(edit: EditList): boolean {
+    if (!this.instanceOfSectionListPipe.transform(edit.data) || edit.data.type !== 'RepeatedSectionComponent') {
+      return false;
+    }
+
+    return this.hasRepeatedSettingsError(edit.data as RepeatedSectionList);
+  }
+
   isFormInvalid(): boolean {
-    return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
+    this.updateRepeated();
+
+    const hasRepeatedValidationError = this.editList.some((edit) => this.hasRepeatedSettingsErrorForEdit(edit));
+    return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid()) || hasRepeatedValidationError;
   }
   isComponentInvalid(edit: EditList): boolean {
     if (this.instanceOfSectionListPipe.transform(edit.data)) {
@@ -419,5 +481,12 @@ export class EditComponent implements OnInit, OnChanges {
         const repeatedSection = item.data as RepeatedSectionList;
         repeatedSection.referencableInputs = this.getReferencables(item.id);
       });
+  }
+
+  private updateViewMode(): void {
+    this.isMobileView = window.innerWidth <= 1200;
+    if (!this.isMobileView && this.repeatedSettingsDrawerVisible) {
+      this.closeRepeatedSettingsDrawer();
+    }
   }
 }

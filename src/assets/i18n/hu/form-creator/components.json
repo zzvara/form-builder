@@ -180,6 +180,7 @@
         "GIVEN": "Megadott szám",
         "INPUT": "Másik input",
         "PLACEHOLDER": "Válassz egy elnevezett mezőt",
+        "UNSPECIFIED": "Nincs megadva",
         "REPEAT_LABEL": "Ismétlés eszerint",
         "TITLE": "Ismételt szekció"
       },
