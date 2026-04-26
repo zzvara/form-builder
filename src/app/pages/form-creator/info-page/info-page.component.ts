@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter, signal, Signal, WritableSignal, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, signal, Signal, WritableSignal, OnDestroy, DestroyRef, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { Project, ProjectType } from '@interfaces/project';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -90,6 +91,8 @@ export class InfoPageComponent implements OnInit, OnDestroy {
   params: Params = {};
   DateFormat = DateFormat;
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
@@ -98,36 +101,40 @@ export class InfoPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.params = params;
-      if (params['id']) {
-        this._formExists.set(true);
-        this._formId.set(params['id']);
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        this.params = params;
+        if (params['id']) {
+          this._formExists.set(true);
+          this._formId.set(params['id']);
 
-        const foundProject = this.projectService.searchData(this._formId())?.[0] || null;
-        if (foundProject) {
-          this._project.set(foundProject);
-          this.initializeForm();
+          const foundProject = this.projectService.searchData(this._formId())?.[0] || null;
+          if (foundProject) {
+            this._project.set(foundProject);
+            this.initializeForm();
+          }
         }
-      }
 
-      if (params['type']) {
-        const newType = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
-        this._project.update(p => ({ ...p, type: newType }));
-        this.form.patchValue({
-          type: newType === ProjectType.TEST,
-        });
-      }
-    });
+        if (params['type']) {
+          const newType = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+          this._project.update(p => ({ ...p, type: newType }));
+          this.form.patchValue({
+            type: newType === ProjectType.TEST,
+          });
+        }
+      });
 
     this.formData.emit(this._project().type);
 
-    this.jsonService.getJsonData().subscribe((data) => {
-      if (data && data.project) {
-        this._project.update(p => ({ ...p, ...data.project }));
-        this.initializeForm();
-      }
-    });
+    this.jsonService.getJsonData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        if (data && data.project) {
+          this._project.update(p => ({ ...p, ...data.project }));
+          this.initializeForm();
+        }
+      });
   }
 
   initializeForm(): void {
@@ -181,7 +188,7 @@ export class InfoPageComponent implements OnInit, OnDestroy {
     this.updateForm();
 
     let currentProjectId: string;
-    const currentProject = this._project(); // Kinyerjük a signal aktuális értékét
+    const currentProject = this._project();
 
     if (this._formExists() && this._formId() !== '') {
       this.projectService.update(this._formId(), currentProject);
@@ -192,7 +199,6 @@ export class InfoPageComponent implements OnInit, OnDestroy {
       currentProjectId = currentProject.id;
     }
 
-    // Update the URL with &id=projectId
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { id: currentProjectId },
