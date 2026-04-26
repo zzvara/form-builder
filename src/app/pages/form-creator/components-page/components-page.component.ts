@@ -65,19 +65,22 @@ export class ComponentsPageComponent implements OnInit {
    * Then, it increments the page number and emits an event to notify parent components of the page change.
    */
   nextPage() {
-    this.saveForm();
-    this.page! += 1;
-    this.onsetPage(this.page!);
+    const saved = this.saveForm();
+    if (saved) {
+      this.page! += 1;
+      this.onsetPage(this.page!);
+    }
   }
 
-  saveForm() {
-    if (!this.editComponent) return;
+  saveForm(): boolean {
+    if (!this.editComponent) return false;
 
     if (this.editComponent.isFormInvalid()) {
       this.jumpToFirstError();
-      return;
+      return false;
     }
     this.editComponent.saveForm();
+    return true;
   }
 
   jumpToFirstError() {
@@ -87,6 +90,13 @@ export class ComponentsPageComponent implements OnInit {
 
     if (invalidInput?.data?.id) {
       this.editComponent.scrollToElement(invalidInput.data.id);
+      return;
+    }
+
+    const invalidRepeatedSection = this.editComponent.editList.find((item) => this.editComponent.hasRepeatedSettingsErrorForEdit(item));
+
+    if (invalidRepeatedSection?.id) {
+      this.editComponent.scrollToElement(invalidRepeatedSection.id);
       return;
     }
 

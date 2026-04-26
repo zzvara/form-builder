@@ -4,6 +4,30 @@
   </nz-sider>
   <nz-layout class="inner-layout">
     <nz-content>
+      <ng-template #repeatedSettingsFields let-section>
+        <div class="repeated-settings-form">
+          <label class="repeated-label">{{ 'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate }}:</label>
+          <nz-select class="repeated-width" ngDefaultControl [(ngModel)]="section.repeatByOther">
+            <nz-option [nzValue]="true" [nzLabel]="'COMPONENTS.SECTION.REPEATED.INPUT' | translate"></nz-option>
+            <nz-option [nzValue]="false" [nzLabel]="'COMPONENTS.SECTION.REPEATED.GIVEN' | translate"></nz-option>
+          </nz-select>
+
+          @if (!section.repeatByOther) {
+          <nz-input-number class="repeated-width" ngDefaultControl [(ngModel)]="section.repeatTimes" nzMin="1" />
+          }
+
+          @if (section.repeatByOther) {
+          <nz-select class="repeated-width" ngDefaultControl nzShowSearch nzAllowClear
+            [nzPlaceHolder]="'COMPONENTS.SECTION.REPEATED.PLACEHOLDER' | translate"
+            [(ngModel)]="section.referencedInput">
+            @for (item of section.referencableInputs; track item) {
+            <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+            }
+          </nz-select>
+          }
+        </div>
+      </ng-template>
+
       <!-- @todo Hacky styling, "margin-bottom: 50px" is rarely intended and could cause issues. -->
       <div class="form-container" id="sectionDropList" cdkDropList (cdkDropListDropped)="dropIntoEdit($event)"
         [cdkDropListData]="editList" [cdkDropListConnectedTo]="getEditDropListConnectedTo()">
@@ -29,33 +53,36 @@
           <ng-template #sectionTitle>
             <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
           </ng-template>
-
           <ng-template #sectionButtons>
             <div class="section-buttons">
               @if (edit.data | instanceOfRepeatedSection) {
-              <div class="repeated-settings">
-                <div class="repeated-select">
-                  <span>{{ 'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate }}:</span>
-                  <nz-select class="repeated-width" [(ngModel)]="edit.data.repeatByOther">
-                    <nz-option [nzValue]="true" [nzLabel]="'COMPONENTS.SECTION.REPEATED.INPUT' | translate"></nz-option>
-                    <nz-option [nzValue]="false"
-                      [nzLabel]="'COMPONENTS.SECTION.REPEATED.GIVEN' | translate"></nz-option>
-                  </nz-select>
+              @if (!isMobileView) {
+              <button nz-button nzType="default" class="repeated-settings-trigger" nz-popover nzPopoverTrigger="click"
+                [nzPopoverContent]="repeatedSettingsContent" nzPopoverPlacement="bottomRight"
+                [nzDanger]="hasRepeatedSettingsErrorForEdit(edit)"
+                (nzPopoverVisibleChange)="onRepeatedPopoverVisibleChange($event, edit.data)">
+                <span nz-icon class="repeated-trigger-icon"
+                  [nzType]="hasRepeatedSettingsErrorForEdit(edit) ? 'exclamation-circle' : 'setting'"
+                  nzTheme="outline"></span>
+                <span class="repeated-trigger-text">{{ getRepeatedSettingsSummary(edit.data) }}</span>
+              </button>
+              <ng-template #repeatedSettingsContent>
+                <div class="repeated-settings-panel">
+                  <ng-container [ngTemplateOutlet]="repeatedSettingsFields"
+                    [ngTemplateOutletContext]="{ $implicit: edit.data }"></ng-container>
                 </div>
-                <nz-input-number class="repeated-width" ngDefaultControl [hidden]="edit.data.repeatByOther"
-                  [(ngModel)]="edit.data.repeatTimes" nzMin="1" />
-                <nz-select ngDefaultControl [hidden]="!edit.data.repeatByOther" nzShowSearch nzAllowClear
-                  [nzPlaceHolder]="'COMPONENTS.SECTION.REPEATED.PLACEHOLDER' | translate"
-                  [(ngModel)]="edit.data.referencedInput">
-                  @for (item of edit.data.referencableInputs; track item) {
-                  <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
-                  }
-                </nz-select>
-              </div>
+              </ng-template>
+              } @else {
+              <button nz-button nzType="default" class="repeated-settings-trigger"
+                [nzDanger]="hasRepeatedSettingsErrorForEdit(edit)" (click)="openRepeatedSettings(edit.data)">
+                <span nz-icon class="repeated-trigger-icon"
+                  [nzType]="hasRepeatedSettingsErrorForEdit(edit) ? 'exclamation-circle' : 'setting'"
+                  nzTheme="outline"></span>
+                <span class="repeated-trigger-text">{{ getRepeatedSettingsSummary(edit.data) }}</span>
+              </button>
               }
-              <div>
-                <span>{{ 'COMPONENTS.REORDER' | translate }}: </span>
-                <nz-switch [(ngModel)]="edit.data.reorderEnabled"></nz-switch>
+              }
+              <div class="section-actions">
                 <button nz-button nzType="default" nzShape="circle" (click)="sectionLayoutChange(edit.data)"
                   class="button-spacing">
                   <span nz-icon nzType="redo" nzTheme="outline"></span>
@@ -108,10 +135,13 @@
           <nz-collapse [nzBordered]="false">
             <nz-collapse-panel nzActive [nzShowArrow]="false" [nzHeader]="nzHeader" style="padding: 0">
               <ng-template #nzHeader>
-                <div class="component-item section-header">
-                  <nz-icon class="mr-4"
+                <div class="component-item section-header" [class.invalid-component]="hasRepeatedSettingsErrorForEdit(edit)">
+                  @if(hasRepeatedSettingsErrorForEdit(edit)){
+                    <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon"></span>
+                  } @else {
+                    <nz-icon class="mr-4"
                     [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"></nz-icon>
-
+                  }
                   <span class="component-title">
                     {{ edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
                     }}
@@ -136,7 +166,8 @@
         </div>
       </div>
       } @else if (edit.data | instanceOfFormInputData) {
-      <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)" [class.invalid-component]="isComponentInvalid(edit)">
+      <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)"
+        [class.invalid-component]="isComponentInvalid(edit)">
         <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
         <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
         <span class="component-title"> {{ edit.data.title | translate }}</span>
@@ -148,4 +179,17 @@
       }
     </div>
   </nz-sider>
+
+  <nz-drawer [nzVisible]="repeatedSettingsDrawerVisible" [nzPlacement]="'bottom'" [nzHeight]="'60vh'"
+    [nzTitle]="'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate" (nzOnClose)="closeRepeatedSettingsDrawer()"
+    class="repeated-drawer-outer">
+    <ng-container *nzDrawerContent>
+      @if (activeRepeatedSection) {
+      <div class="repeated-settings-drawer">
+        <ng-container [ngTemplateOutlet]="repeatedSettingsFields"
+          [ngTemplateOutletContext]="{ $implicit: activeRepeatedSection }"></ng-container>
+      </div>
+      }
+    </ng-container>
+  </nz-drawer>
 </nz-layout>

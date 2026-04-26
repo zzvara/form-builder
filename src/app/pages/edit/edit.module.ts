@@ -21,10 +21,12 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 const ngZorro = [
   NzLayoutModule,
@@ -40,6 +42,8 @@ const ngZorro = [
   NzOptionComponent,
   NzSelectComponent,
   NzInputNumberModule,
+  NzPopoverModule,
+  NzDrawerModule,
 ];
 
 @NgModule({
@@ -52,7 +56,6 @@ const ngZorro = [
     DragDropModule,
     SharedModule,
     TranslatePipe,
-    FormsModule,
     InstanceOfSectionListPipe,
     InstanceOfFormInputDataPipe,
     InstanceOfRepeatedSectionPipe,
