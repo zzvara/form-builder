@@ -24,7 +24,15 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
   standalone: true,
-  imports: [CommonModule, NzHeaderComponent, TranslatePipe, NzDropdownModule, NzButtonComponent, NzIconModule, NzMenuModule],
+  imports: [
+    CommonModule,
+    NzHeaderComponent,
+    TranslatePipe,
+    NzDropdownModule,
+    NzButtonComponent,
+    NzIconModule,
+    NzMenuModule,
+  ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   headerOptions: MenuOption[] = [];
@@ -46,30 +54,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly jsonService: JsonService,
     private readonly translate: TranslateService,
     private readonly eventService: EventService,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.currentLanguage =
-      localStorage.getItem(LocalStorageKey.LANGUAGE) && localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
+      localStorage.getItem(LocalStorageKey.LANGUAGE) &&
+      localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
         ? LanguageEnum.HU
         : LanguageEnum.EN;
     this.translate.use(this.currentLanguage);
     this.jsonService.clearJsonData();
     this.optionsSub = this.headerService
       .getOptions()
-      .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
+      .subscribe(
+        (options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options),
+      );
 
-    this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
+    this.actionsSub = this.headerService
+      .getContextActions()
+      .subscribe((actions) => (this.contextActions = actions));
     this.currentTheme =
-      localStorage.getItem(LocalStorageKey.THEME) && localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
+      localStorage.getItem(LocalStorageKey.THEME) &&
+      localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
         ? ThemeEnum.LIGHT
         : ThemeEnum.DARK;
 
     if (this.currentTheme === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }
-    this.currentTheme = localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.DARK ? ThemeEnum.DARK : ThemeEnum.LIGHT;
+    this.currentTheme =
+      localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.DARK
+        ? ThemeEnum.DARK
+        : ThemeEnum.LIGHT;
     if (this.currentTheme === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }
@@ -84,7 +101,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.activeOptions.includes(toChange)) {
       this.headerService.setOptions(
         this.headerOptions,
-        this.activeOptions.filter((option) => option !== toChange)
+        this.activeOptions.filter((option) => option !== toChange),
       );
     } else {
       this.headerService.setOptions(this.headerOptions, [...this.activeOptions, toChange]);

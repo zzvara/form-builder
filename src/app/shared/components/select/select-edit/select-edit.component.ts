@@ -11,7 +11,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+  NzFormModule,
+} from 'ng-zorro-antd/form';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
@@ -47,7 +52,10 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     TranslatePipe,
   ],
 })
-export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
+export class SelectEditComponent extends AbstractFieldLikeEditForm<
+  string | string[],
+  SelectComponentData
+> {
   newOption!: FormControl<string | null>;
   editingIndex: number | null = null;
   editValue: string = '';
@@ -150,7 +158,9 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   removeOption(option: AbstractControl<string>, optionIndex: number) {
     this.options.removeAt(optionIndex);
     if (Array.isArray(this.getDefaultValues())) {
-      this.setDefaultValue((this.getDefaultValues() as string[]).filter((opt) => opt !== option.value));
+      this.setDefaultValue(
+        (this.getDefaultValues() as string[]).filter((opt) => opt !== option.value),
+      );
     } else {
       this.setDefaultValue('');
     }

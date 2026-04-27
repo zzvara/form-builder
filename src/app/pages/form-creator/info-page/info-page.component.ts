@@ -10,7 +10,12 @@ import { ProjectService } from '@services/project.service';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+  NzFormModule,
+} from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
@@ -84,7 +89,7 @@ export class InfoPageComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService
+    private readonly jsonService: JsonService,
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +105,8 @@ export class InfoPageComponent implements OnInit {
         }
       }
       if (params['type']) {
-        this.project.type = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.project.type =
+          params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
         this.form.patchValue({
           type: this.project.type === ProjectType.TEST,
         });
@@ -133,7 +139,9 @@ export class InfoPageComponent implements OnInit {
   updateForm() {
     this.project.title = this.form.controls['title'].value!;
     this.project.description = this.form.controls['description'].value!;
-    this.project.type = this.form.controls['type'].value ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+    this.project.type = this.form.controls['type'].value
+      ? ProjectType.TEST
+      : ProjectType.QUESTIONNAIRE;
     this.project.deadline = this.form.controls['deadline'].value!;
     this.project.deadline_checkbox = this.form.controls['hasdeadline'].value!;
     this.project.time_checkbox = this.form.controls['haslimit'].value!;

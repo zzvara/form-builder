@@ -8,7 +8,10 @@ import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 
 @Directive()
-export abstract class AbstractFieldLikeEditForm<T, D extends FieldLikeInputData<T>> extends AbstractEditForm<T, D> {
+export abstract class AbstractFieldLikeEditForm<
+  T,
+  D extends FieldLikeInputData<T>,
+> extends AbstractEditForm<T, D> {
   protected readonly Infinity = Infinity;
 
   override ngOnInit(): void {
@@ -20,14 +23,16 @@ export abstract class AbstractFieldLikeEditForm<T, D extends FieldLikeInputData<
       }),
       requiredMessage: new FormControl(
         null,
-        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('required'))
+        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('required')),
       ),
       showTooltip: new FormControl(false, {
         updateOn: UpdateOnStrategy.CHANGE,
       }),
       tooltipText: new FormControl(
         null,
-        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('showTooltip'))
+        CustomValidators.validateRequiredIf(() =>
+          this.getStrictControlValue<boolean>('showTooltip'),
+        ),
       ),
     });
     this.connectValidations({

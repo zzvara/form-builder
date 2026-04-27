@@ -169,7 +169,9 @@ export class ProjectService<T extends Project> {
     if (index !== -1) {
       const previousVersion = { ...this.items[index] };
       const projectHistoryKey = `${this.storageKey}-history-${id}`;
-      const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+      const projectHistory: ProjectVersion<T>[] = JSON.parse(
+        localStorage.getItem(projectHistoryKey) || '[]',
+      );
 
       // Check if the new data is the same as the latest version in history
       const latestVersion = projectHistory[projectHistory.length - 1]?.project;

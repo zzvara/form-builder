@@ -7,7 +7,9 @@
         nz-icon
         nzType="question-circle"
         nz-tooltip
-        [nzTooltipTitle]="'DASHBOARD.' + (isListView ? 'CARD_VIEW_TOOLTIP' : 'LIST_VIEW_TOOLTIP') | translate"
+        [nzTooltipTitle]="
+          'DASHBOARD.' + (isListView ? 'CARD_VIEW_TOOLTIP' : 'LIST_VIEW_TOOLTIP') | translate
+        "
       ></i>
     </div>
   </div>
@@ -24,7 +26,10 @@
       }
     </div>
 
-    <ng-container [ngTemplateOutlet]="viewTemp" [ngTemplateOutletContext]="{ type: projectTypes.QUESTIONNAIRE }"></ng-container>
+    <ng-container
+      [ngTemplateOutlet]="viewTemp"
+      [ngTemplateOutletContext]="{ type: projectTypes.QUESTIONNAIRE }"
+    ></ng-container>
 
     <div>
       <h3>{{ 'DASHBOARD.TESTS' | translate }}</h3>
@@ -37,13 +42,20 @@
       }
     </div>
 
-    <ng-container [ngTemplateOutlet]="viewTemp" [ngTemplateOutletContext]="{ type: projectTypes.TEST }"></ng-container>
+    <ng-container
+      [ngTemplateOutlet]="viewTemp"
+      [ngTemplateOutletContext]="{ type: projectTypes.TEST }"
+    ></ng-container>
   </div>
 
   <ng-template #viewTemp let-type="type">
     @if (isListView) {
-      <app-list-view [type]="type" [projects]="projects$" (editProject)="editProject($event)" (deleteProject)="deleteProject($event)">
-      </app-list-view>
+      <app-list-view
+        [type]="type"
+        [projects]="projects$"
+        (editProject)="editProject($event)"
+        (deleteProject)="deleteProject($event)"
+      ></app-list-view>
     } @else {
       <app-card-view
         [type]="type"

@@ -7,7 +7,9 @@ import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
 
 @Directive()
-export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>> implements FormComponentMarker, OnInit {
+export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>>
+  implements FormComponentMarker, OnInit
+{
   @Input() label?: TemplateRef<any>;
   @Input() data!: D;
   @Input() inlineEdit: InlineEdit = { enabled: true };
@@ -18,7 +20,7 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
 
   constructor(
     protected modalService: ModalServiceService<T, D, E>,
-    protected translate: TranslateService
+    protected translate: TranslateService,
   ) {}
 
   defaultOnEditSubscribeEvent: (result: boolean | undefined) => void = (result) => {

@@ -105,7 +105,9 @@ const pictureInputOptions: PictureInputComponentData = {
 };
 
 const selectInputOptions = (translateService: TranslateService): SelectComponentData => ({
-  selectOptions: Array.from({ length: 2 }).map((_, index: number) => translateService.instant('COMPONENTS.OPTION', { number: index + 1 })),
+  selectOptions: Array.from({ length: 2 }).map((_, index: number) =>
+    translateService.instant('COMPONENTS.OPTION', { number: index + 1 }),
+  ),
   required: false,
   draft: true,
   requiredMessage: '',
@@ -209,7 +211,10 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
 }
 
 // The data shown in the edit sidebar
-export function getSideBarData(component: EditComponent, translate: TranslateService): SidebarData[] {
+export function getSideBarData(
+  component: EditComponent,
+  translate: TranslateService,
+): SidebarData[] {
   return [
     {
       groupName: 'COMPONENTS.BASIC_INPUTS',

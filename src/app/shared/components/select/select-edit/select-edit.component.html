@@ -1,47 +1,64 @@
 <form id="selectEditFormID" nz-form nzLayout="vertical" [formGroup]="formData">
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.SELECTION' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.SELECTION' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <nz-form-item>
     <ng-template #listHeader>
       <div class="list-header">{{ 'COMPONENTS.COMBOBOX.CHOICES_VALUES' | translate }}</div>
     </ng-template>
     <nz-form-control formArrayName="selectOptions">
-      <nz-table #basicTables [nzData]="options.controls" [nzFrontPagination]="false" [nzShowPagination]="false">
+      <nz-table
+        #basicTables
+        [nzData]="options.controls"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+      >
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-        @for (option of options.controls; track option.value; let i = $index) {
-          <tr cdkDrag [cdkDragData]="option">
-            <td nzAlign="left">
-              <div style="display: flex; align-items: center; gap: 8px;">
+          @for (option of options.controls; track option.value; let i = $index) {
+            <tr cdkDrag [cdkDragData]="option">
+              <td nzAlign="left">
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <span
+                    cdkDragHandle
+                    nz-icon
+                    nzType="drag"
+                    nzTheme="outline"
+                    style="cursor: grab; color: #bfbfbf; font-size: 16px"
+                  ></span>
 
-                <span cdkDragHandle nz-icon nzType="drag" nzTheme="outline" style="cursor: grab; color: #bfbfbf; font-size: 16px;"></span>
-
-                @if (editingIndex !== i) {
-                  <span style="padding-right: 4px; flex-grow: 1;">{{ option.value }}</span>
-                  <button nz-button nzType="link" (click)="startEdit(i, option.value)">
-                    <nz-icon nzType="edit" nzTheme="outline"></nz-icon>
-                  </button>
-                  <button nz-button nzType="link" nzDanger (click)="removeOption(option, i)">
-                    <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
-                  </button>
-                } @else {
-                <input nz-input [formControl]="editControl" style="width: 150px" />
-                <button nz-button nzType="link" (click)="saveEdit(i)">
-                  <nz-icon nzType="check" nzTheme="outline"></nz-icon>
-                </button>
-                <button nz-button nzType="link" (click)="cancelEdit()">
-                  <nz-icon nzType="close" nzTheme="outline"></nz-icon>
-                </button>
-                @if (editError) {
-                  <div style="color: red; text-align: center; margin-left: 8px;">{{ editError }}</div>
-                }
-              }
-              </div>
-            </td>
-          </tr>
-        }
+                  @if (editingIndex !== i) {
+                    <span style="padding-right: 4px; flex-grow: 1">{{ option.value }}</span>
+                    <button nz-button nzType="link" (click)="startEdit(i, option.value)">
+                      <nz-icon nzType="edit" nzTheme="outline"></nz-icon>
+                    </button>
+                    <button nz-button nzType="link" nzDanger (click)="removeOption(option, i)">
+                      <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
+                    </button>
+                  } @else {
+                    <input nz-input [formControl]="editControl" style="width: 150px" />
+                    <button nz-button nzType="link" (click)="saveEdit(i)">
+                      <nz-icon nzType="check" nzTheme="outline"></nz-icon>
+                    </button>
+                    <button nz-button nzType="link" (click)="cancelEdit()">
+                      <nz-icon nzType="close" nzTheme="outline"></nz-icon>
+                    </button>
+                    @if (editError) {
+                      <div style="color: red; text-align: center; margin-left: 8px">
+                        {{ editError }}
+                      </div>
+                    }
+                  }
+                </div>
+              </td>
+            </tr>
+          }
         </tbody>
       </nz-table>
       @if (options.invalid) {
-        <span class="error-text">{{ 'COMPONENTS.COMBOBOX.RECORD_MORE_OPTION' | translate }} {{ getMinOptions() }}</span>
+        <span class="error-text">
+          {{ 'COMPONENTS.COMBOBOX.RECORD_MORE_OPTION' | translate }} {{ getMinOptions() }}
+        </span>
       }
     </nz-form-control>
   </nz-form-item>
@@ -61,13 +78,19 @@
           <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
         }
         @if (hasErrors(control, 'listContainsItem')) {
-          <div>{{ 'COMPONENTS.COMBOBOX.OPTION_ALREADY' | translate }}{{ control.errors['listContainsItem'] }}!</div>
+          <div>
+            {{ 'COMPONENTS.COMBOBOX.OPTION_ALREADY' | translate
+            }}{{ control.errors['listContainsItem'] }}!
+          </div>
         }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
 
   <nz-form-item>
     <nz-form-label nzRequired>
@@ -90,11 +113,16 @@
     <nz-form-control>
       <quill-editor
         formControlName="descriptionValue"
-        [style]="{ height: '150px', width:'100%' }" [placeholder]="''"/>
+        [style]="{ height: '150px', width: '100%' }"
+        [placeholder]="''"
+      />
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.PLACEHOLDER' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.PLACEHOLDER' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
 
   <nz-form-item>
     <nz-form-label>
@@ -110,7 +138,9 @@
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="setDefaultValue">{{ 'COMPONENTS.SET_DEFAULT_VALUE?' | translate }}</label>
+        <label nz-checkbox formControlName="setDefaultValue">
+          {{ 'COMPONENTS.SET_DEFAULT_VALUE?' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
 
@@ -120,7 +150,11 @@
           {{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}
         </nz-form-label>
         <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-          <nz-select formControlName="defaultValue" [nzMode]="isMultipleChoice ? 'multiple' : 'default'" nzAllowClear>
+          <nz-select
+            formControlName="defaultValue"
+            [nzMode]="isMultipleChoice ? 'multiple' : 'default'"
+            nzAllowClear
+          >
             @for (option of optionsValues; track option) {
               <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
             }
@@ -135,20 +169,30 @@
     }
   </div>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.DROPDOWN' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.DROPDOWN' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
 
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="isMultipleChoice">{{ 'COMPONENTS.COMBOBOX.MULTIPLE' | translate }}</label>
+      <label nz-checkbox formControlName="isMultipleChoice">
+        {{ 'COMPONENTS.COMBOBOX.MULTIPLE' | translate }}
+      </label>
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
 
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">{{ 'COMPONENTS.IS_REQUIRED' | translate }}</label>
+        <label nz-checkbox formControlName="required">
+          {{ 'COMPONENTS.IS_REQUIRED' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
 
@@ -169,18 +213,23 @@
     }
   </div>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.TOOLTIP' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.TOOLTIP' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
 
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="showTooltip">{{ 'COMPONENTS.INPUT_TOOLTIP' | translate }}</label>
+        <label nz-checkbox formControlName="showTooltip">
+          {{ 'COMPONENTS.INPUT_TOOLTIP' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
 
     @if (getControlValue('showTooltip')) {
       <nz-form-item>
-        <nz-form-label nzRequired> {{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</nz-form-label>
+        <nz-form-label nzRequired>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</nz-form-label>
         <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
           <input nz-input formControlName="tooltipText" />
         </nz-form-control>

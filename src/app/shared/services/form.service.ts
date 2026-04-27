@@ -25,7 +25,7 @@ export class FormService {
       },
       {
         updateOn: UpdateOnStrategy.CHANGE,
-      }
+      },
     );
   }
 }

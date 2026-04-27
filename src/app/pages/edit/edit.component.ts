@@ -1,4 +1,10 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
@@ -63,7 +69,7 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
     NzButtonComponent,
     NzSwitchComponent,
     NzInputNumberComponent,
-  ]
+  ],
 })
 export class EditComponent implements OnInit, OnChanges {
   @Input() inlineEdit!: InlineEdit;
@@ -84,7 +90,7 @@ export class EditComponent implements OnInit, OnChanges {
     private undoRedoService: UndoRedoService<EditList[]>,
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
-    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
+    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe,
   ) {}
 
   ngOnInit() {
@@ -98,7 +104,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionIds: () => string[] = () =>
-    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => sect.id);
+    this.editList
+      .filter((edit) => this.instanceOfSectionListPipe.transform(edit.data))
+      .map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
     // If editList is empty but there's JSON data with editList, use that instead
@@ -118,8 +126,13 @@ export class EditComponent implements OnInit, OnChanges {
     });
   };
 
-  sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
-    item.data && (this.instanceOfFormInputDataPipe.transform(item.data) || this.instanceOfFormInputDataPipe.transform(item.data.data));
+  sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (
+    item,
+    _list,
+  ) =>
+    item.data &&
+    (this.instanceOfFormInputDataPipe.transform(item.data) ||
+      this.instanceOfFormInputDataPipe.transform(item.data.data));
 
   /**
    * Saves the current state of the form inputs to the project.
@@ -175,12 +188,17 @@ export class EditComponent implements OnInit, OnChanges {
     }
   }
 
-  dropIntoEdit(event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>): void {
+  dropIntoEdit(
+    event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>,
+  ): void {
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (this.instanceOfFormInputDataPipe.transform(event.item.data) && !event.item.data.data?.id) {
+    } else if (
+      this.instanceOfFormInputDataPipe.transform(event.item.data) &&
+      !event.item.data.data?.id
+    ) {
       const droppedInput: FormInputData = event.item.data;
       if (droppedInput.title === 'SECTION') {
         const newSectionId = uuidv4();
@@ -238,7 +256,9 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
+  dropIntoSection(
+    event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>,
+  ): void {
     const eventData: CdkDragDrop<FormInputData[]> = event as CdkDragDrop<FormInputData[]>;
     const draggable: CdkDrag = eventData.item;
     const data: EditList = draggable.data;
@@ -247,7 +267,10 @@ export class EditComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (this.getSectionIds().includes(event.container.id) && this.getSectionIds().includes(event.previousContainer.id)) {
+    } else if (
+      this.getSectionIds().includes(event.container.id) &&
+      this.getSectionIds().includes(event.previousContainer.id)
+    ) {
       // Move items between sections
       const sectionList = data.data as SectionList;
       sectionList.sectionId = event.container.id;
@@ -304,7 +327,10 @@ export class EditComponent implements OnInit, OnChanges {
 
   getSectionInputStyle(sect: SectionList): { [p: string]: string } {
     let width: number;
-    if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
+    if (
+      sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) ||
+      sect.layout === LayoutEnum.VERTICAL
+    ) {
       width = 100;
     } else {
       width = 100 / sect.sectionInputs.length - 1;
@@ -324,7 +350,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   isFormInvalid(): boolean {
-    return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
+    return (
+      this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid())
+    );
   }
   isComponentInvalid(edit: EditList): boolean {
     if (this.instanceOfSectionListPipe.transform(edit.data)) {
@@ -375,7 +403,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private getCustomTitles(): string[] {
-    return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
+    return this.editList
+      .filter((e) => e.data.customTitle)
+      .map((e) => e.data.customTitle) as string[];
   }
 
   returnChildren(sect: SectionList): { title: string; id: string }[] {
@@ -392,7 +422,10 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private isReferencable(input: FormInputData): input is FormInputData & { customTitle: string } {
-    return (input.type === 'CheckboxGroupComponent' || input.type === 'NumberInputComponent') && !!input.customTitle;
+    return (
+      (input.type === 'CheckboxGroupComponent' || input.type === 'NumberInputComponent') &&
+      !!input.customTitle
+    );
   }
 
   private getReferencables(id: string): string[] {
@@ -405,10 +438,14 @@ export class EditComponent implements OnInit, OnChanges {
       const isSectionList = this.instanceOfSectionListPipe.transform(input.data);
 
       if (isSectionList) {
-        return (input.data as SectionList).sectionInputs.filter((item) => this.isReferencable(item)).map((item) => item.customTitle);
+        return (input.data as SectionList).sectionInputs
+          .filter((item) => this.isReferencable(item))
+          .map((item) => item.customTitle);
       }
 
-      return this.isReferencable(input.data as FormInputData) && input.data.customTitle ? [input.data.customTitle] : [];
+      return this.isReferencable(input.data as FormInputData) && input.data.customTitle
+        ? [input.data.customTitle]
+        : [];
     });
   }
 

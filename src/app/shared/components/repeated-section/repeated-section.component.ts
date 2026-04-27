@@ -9,9 +9,6 @@ import { NzCardComponent } from 'ng-zorro-antd/card';
   templateUrl: './repeated-section.component.html',
   styleUrls: [],
   standalone: true,
-  imports: [
-    NzFormItemComponent,
-    NzCardComponent,
-  ]
+  imports: [NzFormItemComponent, NzCardComponent],
 })
 export class RepeatedSectionComponent extends SectionComponent implements FormComponentMarker {}
