@@ -26,7 +26,11 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     NzIconModule,
   ],
 })
-export class DatePickerComponent extends AbstractDatePickerComponent<Date, DatePickerComponentData, DatePickerEditComponent> {
+export class DatePickerComponent extends AbstractDatePickerComponent<
+  Date,
+  DatePickerComponentData,
+  DatePickerEditComponent
+> {
   override edit(): void {
     this.modalService
       .openModal({

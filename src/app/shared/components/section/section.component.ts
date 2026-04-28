@@ -8,10 +8,7 @@ import { NzFormItemComponent } from 'ng-zorro-antd/form';
   templateUrl: './section.component.html',
   styleUrls: [],
   standalone: true,
-  imports: [
-    NzFormItemComponent,
-    NzCardComponent,
-  ]
+  imports: [NzFormItemComponent, NzCardComponent],
 })
 export class SectionComponent implements FormComponentMarker {
   @Input() data: any;

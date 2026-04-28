@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class ModalServiceService<T, D extends InputData, E extends AbstractEditForm<T, D>> {
   constructor(
     private modal: NzModalService,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   openModal(modalData: ModalData<D, E>): Observable<boolean | undefined> {
@@ -22,7 +22,7 @@ export class ModalServiceService<T, D extends InputData, E extends AbstractEditF
 
   openModalAndGet<RetType>(
     modalData: ModalData<D, E>,
-    dataGetter: ((instance: E) => RetType) | null = null
+    dataGetter: ((instance: E) => RetType) | null = null,
   ): Observable<RetType | undefined> {
     // Get the translated button labels
     const closeLabel = this.translate.instant('GENERAL.CANCEL');

@@ -1,6 +1,10 @@
 <nz-layout>
   <div>
-    <app-edit [inlineEdit]="inlineEdit" [projectId]="projectId" [versionNum]="currentVersionNum"> </app-edit>
+    <app-edit
+      [inlineEdit]="inlineEdit"
+      [projectId]="projectId"
+      [versionNum]="currentVersionNum"
+    ></app-edit>
 
     <div nz-row id="footerdiv" class="version-footer">
       <div nz-col nzSpan="22" class="footer-spacer"></div>
@@ -17,7 +21,12 @@
           {{ 'GENERAL.NEXT' | translate }}
         </button>
         <div class="version-controls">
-          <button nz-button nzType="default" (click)="navigateVersion(-1)" [disabled]="!hasPreviousVersion()">
+          <button
+            nz-button
+            nzType="default"
+            (click)="navigateVersion(-1)"
+            [disabled]="!hasPreviousVersion()"
+          >
             {{ 'COMPONENTS.PREVIOUS_VERSION' | translate }}
           </button>
           <button
@@ -28,22 +37,35 @@
             [nzOverlayStyle]="{ 'max-height': '250px', 'overflow-y': 'auto' }"
             class="version-selector"
           >
-            {{ currentVersionNum ? ('VERSION' | translate) + ' ' + currentVersionNum : ('COMPONENTS.SELECT_VERSION' | translate) }}
+            {{
+              currentVersionNum
+                ? ('VERSION' | translate) + ' ' + currentVersionNum
+                : ('COMPONENTS.SELECT_VERSION' | translate)
+            }}
             <i nz-icon nzType="down"></i>
           </button>
-          <button nz-button nzType="default" (click)="navigateVersion(1)" [disabled]="!hasNextVersion()">
+          <button
+            nz-button
+            nzType="default"
+            (click)="navigateVersion(1)"
+            [disabled]="!hasNextVersion()"
+          >
             {{ 'COMPONENTS.NEXT_VERSION' | translate }}
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
             <ul nz-menu>
               @for (version of projectHistory; track trackByVersion($index, version)) {
                 <li nz-menu-item (click)="revertToVersion(version.versionNum)">
-                  <span> {{ 'VERSION' | translate }} {{ version.versionNum }} </span>
+                  <span>{{ 'VERSION' | translate }} {{ version.versionNum }}</span>
                   <span
                     nz-popover
                     nzPopoverTrigger="hover"
                     nz-tooltip
-                    [nzTooltipTitle]="('GENERAL.CREATED' | translate) + ': ' + (version.created | date: DateFormat.SHORT)"
+                    [nzTooltipTitle]="
+                      ('GENERAL.CREATED' | translate) +
+                      ': ' +
+                      (version.created | date: DateFormat.SHORT)
+                    "
                     class="version-icon-wrapper"
                   >
                     <i nz-icon nzType="field-time"></i>
@@ -53,7 +75,10 @@
                       nz-button
                       nzType="text"
                       (click)="openDiffModal(version)"
-                      [nz-tooltip]="'COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE' | translate: { version: version.versionNum - 1 }"
+                      [nz-tooltip]="
+                        'COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE'
+                          | translate: { version: version.versionNum - 1 }
+                      "
                       class="version-icon-wrapper"
                     >
                       <i nz-icon nzType="diff"></i>
@@ -65,7 +90,7 @@
           </nz-dropdown-menu>
         </div>
         <div class="redo-undo-container">
-          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
+          <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"></app-redo-undo>
         </div>
         <div class="inline-edit-container">
           <label nz-checkbox [(ngModel)]="inlineEdit.enabled">

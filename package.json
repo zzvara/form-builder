@@ -6,7 +6,12 @@
     "start": "node_modules/.bin/ng serve",
     "build": "ng build",
     "watch": "node_modules/.bin/ng build --watch --configuration development",
-    "test": "node_modules/.bin/ng test"
+    "test": "node_modules/.bin/ng test",
+    "lint": "ng lint",
+    "lint:fix": "ng lint --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "check": "npm run lint && npm run test -- --watch=false --browsers=ChromeHeadless && npm run build"
   },
   "private": true,
   "dependencies": {
@@ -48,8 +53,11 @@
     "@angular/build": "^21.2.1",
     "@angular/cli": "^21.2.1",
     "@angular/compiler-cli": "^21.2.2",
+    "@eslint/js": "^10.0.1",
     "@types/diff": "^7.0.2",
     "@types/jasmine": "~5.1.7",
+    "angular-eslint": "21.3.1",
+    "eslint": "^10.0.3",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
@@ -57,7 +65,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "less": "^4.2.0",
-    "prettier": "^3.5.3",
-    "typescript": "5.9.3"
+    "prettier": "^3.8.3",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.56.1"
   }
 }

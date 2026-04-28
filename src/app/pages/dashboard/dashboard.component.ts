@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly questionnaireService: ProjectService<Questionnaire>
+    private readonly questionnaireService: ProjectService<Questionnaire>,
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +68,9 @@ export class DashboardComponent implements OnInit {
 
   toggleView(): void {
     this.isListView = !this.isListView;
-    localStorage.setItem(LocalStorageKey.VIEW_PREFERENCE, this.isListView ? ViewType.LIST : ViewType.CARD);
+    localStorage.setItem(
+      LocalStorageKey.VIEW_PREFERENCE,
+      this.isListView ? ViewType.LIST : ViewType.CARD,
+    );
   }
 }

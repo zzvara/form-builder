@@ -6,7 +6,12 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
-import { AppstoreOutline, HomeOutline, PlusOutline, SettingOutline } from '@ant-design/icons-angular/icons';
+import {
+  AppstoreOutline,
+  HomeOutline,
+  PlusOutline,
+  SettingOutline,
+} from '@ant-design/icons-angular/icons';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { importProvidersFrom } from '@angular/core';
 import { QuillModule } from 'ngx-quill';

@@ -47,11 +47,15 @@ export class EditNameComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes['names'] &&
-      JSON.stringify(changes['names'].currentValue) !== JSON.stringify(changes['names'].previousValue) &&
+      JSON.stringify(changes['names'].currentValue) !==
+        JSON.stringify(changes['names'].previousValue) &&
       this.isEditName
     ) {
       this.updateNameFieldValidators(this.names);
-    } else if (changes['edit'] && JSON.stringify(changes['edit'].currentValue) !== JSON.stringify(changes['edit'].previousValue)) {
+    } else if (
+      changes['edit'] &&
+      JSON.stringify(changes['edit'].currentValue) !== JSON.stringify(changes['edit'].previousValue)
+    ) {
       if ('id' in this.edit) {
         this.editList = this.edit;
       } else if ('title' in this.edit) {
@@ -84,7 +88,10 @@ export class EditNameComponent implements OnChanges {
     this.isEditName = state;
 
     if (this.isEditName) {
-      this.form = this.formService.createComponentNameForm(this.names, ('id' in this.edit ? this.edit.data : this.edit).customTitle);
+      this.form = this.formService.createComponentNameForm(
+        this.names,
+        ('id' in this.edit ? this.edit.data : this.edit).customTitle,
+      );
     } else {
       this.form = new FormGroup([]);
     }

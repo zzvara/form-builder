@@ -5,6 +5,11 @@ export interface ErrorType {
   errorMessage: string;
 }
 
-export function getErrorMessageList(control: AbstractControl<string>, errors: ErrorType[]): string[] {
-  return errors.filter((error) => control.hasError(error.errorName)).map((error) => error.errorMessage);
+export function getErrorMessageList(
+  control: AbstractControl<string>,
+  errors: ErrorType[],
+): string[] {
+  return errors
+    .filter((error) => control.hasError(error.errorName))
+    .map((error) => error.errorMessage);
 }

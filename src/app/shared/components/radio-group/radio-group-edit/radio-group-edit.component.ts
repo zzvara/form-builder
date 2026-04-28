@@ -1,7 +1,14 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
 import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
@@ -12,7 +19,12 @@ import { ListValidators } from '@validators/list-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormModule, NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import {
+  NzFormModule,
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+} from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
@@ -87,7 +99,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
       }),
       requiredMessage: new FormControl(
         null,
-        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('required'))
+        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('required')),
       ),
       isButton: new FormControl(null, {
         updateOn: UpdateOnStrategy.CHANGE,
@@ -120,7 +132,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
           this.formBuilder.group({
             option_id: new FormControl(option.option_id, Validators.required),
             option_description: new FormControl(option.option_description, Validators.required),
-          })
+          }),
         );
       });
     }
@@ -136,7 +148,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
         this.formBuilder.group({
           option_id: new FormControl(option.option_id, Validators.required),
           option_description: new FormControl(option.option_description, Validators.required),
-        })
+        }),
       );
     });
   }
@@ -203,7 +215,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
       this.formBuilder.group({
         option_id: new FormControl(this.getNextId(), Validators.required),
         option_description: new FormControl(this.newOptionValue, Validators.required),
-      })
+      }),
     );
     this.newOptionValue = '';
     this.options.markAsDirty();

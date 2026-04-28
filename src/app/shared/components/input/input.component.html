@@ -1,6 +1,6 @@
 <nz-form-item>
   @if (label) {
-    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+    <ng-container [ngTemplateOutlet]="label"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
@@ -28,7 +28,13 @@
 </ng-template>
 <ng-template #prefixTemplate>
   @if (data.showTooltip) {
-    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" class="icon-margin"></span>
+    <span
+      nz-icon
+      nz-tooltip
+      [nzTooltipTitle]="data.tooltipText"
+      nzType="info-circle"
+      class="icon-margin"
+    ></span>
   }
 </ng-template>
 <ng-template #suffixTemplateCounter>

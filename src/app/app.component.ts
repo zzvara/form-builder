@@ -27,7 +27,9 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private readonly headerService: HeaderService) {}
 
   ngOnInit(): void {
-    this.headerService.getOptions().subscribe((options) => (this.activeOptions = options.activeOptions));
+    this.headerService
+      .getOptions()
+      .subscribe((options) => (this.activeOptions = options.activeOptions));
   }
 
   ngOnDestroy(): void {

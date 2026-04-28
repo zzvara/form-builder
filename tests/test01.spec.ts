@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Questionnaire Creation Flow', () => {
-
   test.setTimeout(100000);
 
   test('should create a new Questionnaire successfully', async ({ page }) => {
@@ -27,8 +26,13 @@ test.describe('Questionnaire Creation Flow', () => {
     if (sourceBox && targetBox) {
       await page.mouse.move(sourceBox.x + sourceBox.width / 2, sourceBox.y + sourceBox.height / 2);
       await page.mouse.down();
-      await page.mouse.move(sourceBox.x + sourceBox.width / 2 + 10, sourceBox.y + sourceBox.height / 2 + 10);
-      await page.mouse.move(targetBox.x + targetBox.width / 2, targetBox.y + (targetBox.height / 4), { steps: 20 });
+      await page.mouse.move(
+        sourceBox.x + sourceBox.width / 2 + 10,
+        sourceBox.y + sourceBox.height / 2 + 10,
+      );
+      await page.mouse.move(targetBox.x + targetBox.width / 2, targetBox.y + targetBox.height / 4, {
+        steps: 20,
+      });
       await page.mouse.up();
     }
 

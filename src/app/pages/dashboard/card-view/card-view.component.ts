@@ -46,7 +46,9 @@ export class CardViewComponent implements OnInit {
   DateFormat = DateFormat;
 
   ngOnInit(): void {
-    this.projects.subscribe((projects) => (this.projectList = projects.filter((project) => project.type === this.type)));
+    this.projects.subscribe(
+      (projects) => (this.projectList = projects.filter((project) => project.type === this.type)),
+    );
   }
 
   onDeleteProject(id: string): void {

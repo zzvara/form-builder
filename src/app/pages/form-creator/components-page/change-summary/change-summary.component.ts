@@ -1,4 +1,12 @@
-import { Component, OnInit, OnChanges, Input, SimpleChanges, Optional, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  Input,
+  SimpleChanges,
+  Optional,
+  Inject,
+} from '@angular/core';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
@@ -37,7 +45,7 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
     @Optional()
     @Inject(NZ_MODAL_DATA)
     private modalData: { items: ChangeInput[] } | null,
-    private modalRef: NzModalRef
+    private modalRef: NzModalRef,
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +101,9 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
       return { key: item.key, open: false, addedItems: added, removedItems: removed };
     });
 
-    const hasChanges = this.diffItems.some((d) => d.addedItems.length > 0 || d.removedItems.length > 0);
+    const hasChanges = this.diffItems.some(
+      (d) => d.addedItems.length > 0 || d.removedItems.length > 0,
+    );
     if (!hasChanges) {
       // No real changes: show a placeholder section instead of leaving it blank
       this.diffItems = [

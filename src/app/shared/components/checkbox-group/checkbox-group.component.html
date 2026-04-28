@@ -1,12 +1,21 @@
 <nz-form-item>
   @if (label) {
-    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+    <ng-container [ngTemplateOutlet]="label"></ng-container>
   }
 
-  <nz-checkbox-group class="checkbox-group" [(ngModel)]="data.defaultValue" [disabled]="!inlineEdit.enabled">
+  <nz-checkbox-group
+    class="checkbox-group"
+    [(ngModel)]="data.defaultValue"
+    [disabled]="!inlineEdit.enabled"
+  >
     <nz-checkbox-group class="checkbox-group">
       @for (option of data.defaultValue; track option.value) {
-        <label nz-checkbox [nzValue]="option.value" [nzDisabled]="option.disabled" [ngModel]="option.checked">
+        <label
+          nz-checkbox
+          [nzValue]="option.value"
+          [nzDisabled]="option.disabled"
+          [ngModel]="option.checked"
+        >
           {{ option.label }}
         </label>
       }

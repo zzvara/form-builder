@@ -1,5 +1,8 @@
 <form id="pictureInputEditFormID" nz-form [formGroup]="formData">
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <nz-form-label nzRequired>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
@@ -19,7 +22,9 @@
     <nz-form-control>
       <quill-editor
         formControlName="descriptionValue"
-        [style]="{ height: '150px', width:'100%' }" [placeholder]="''"/>
+        [style]="{ height: '150px', width: '100%' }"
+        [placeholder]="''"
+      />
     </nz-form-control>
   </nz-form-item>
 

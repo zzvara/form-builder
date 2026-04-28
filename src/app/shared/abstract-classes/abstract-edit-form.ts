@@ -1,7 +1,18 @@
 import { DestroyRef, Directive, Inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ControlConnection, ControlConnectionData, DataSetterType } from '@interfaces/control-connection';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import {
+  ControlConnection,
+  ControlConnectionData,
+  DataSetterType,
+} from '@interfaces/control-connection';
 import { InputData, InputDataKeys } from '@interfaces/input-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,12 +22,14 @@ import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
-  protected readonly formData: FormGroup = this.formBuilder.group<{ [key in InputDataKeys<D>]?: FormControl<any> }>(
+  protected readonly formData: FormGroup = this.formBuilder.group<{
+    [key in InputDataKeys<D>]?: FormControl<any>;
+  }>(
     {},
     {
       updateOn: this.formUpdateOn,
       validators: this.formValidators,
-    }
+    },
   );
 
   protected initialValues!: D;
@@ -25,7 +38,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     @Inject(NZ_MODAL_DATA) private nzModalData: D,
     protected destroyRef: DestroyRef,
     protected formBuilder: FormBuilder,
-    protected translate: TranslateService
+    protected translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -176,7 +189,9 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
 
   //---------CONTROL CHANGE METHODS---------------------------------------------------------------------------------------
 
-  setControlValuesBasedOnChanges(controls: { [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; additionalData?: DataSetterType }[] }) {
+  setControlValuesBasedOnChanges(controls: {
+    [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; additionalData?: DataSetterType }[];
+  }) {
     this.setAnyControlValuesBasedOnChanges(controls as ControlConnection);
   }
   setAnyControlValuesBasedOnChanges(controls: ControlConnection) {
@@ -192,7 +207,9 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
    *
    * @param controls
    */
-  connectValidations(controls: { [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; recursiveCall?: boolean }[] }) {
+  connectValidations(controls: {
+    [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; recursiveCall?: boolean }[];
+  }) {
     this.connectAnyValidations(controls as ControlConnection);
   }
   connectAnyValidations(controls: ControlConnection) {
@@ -213,12 +230,17 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     });
   }
 
-  executeBasedOnChanges(controls: ControlConnection, execute: (conn: ControlConnectionData, caller: AbstractControl) => void) {
+  executeBasedOnChanges(
+    controls: ControlConnection,
+    execute: (conn: ControlConnectionData, caller: AbstractControl) => void,
+  ) {
     Object.entries(controls).forEach(([key, value]) => {
       const currControl = this.getControl(key);
       currControl?.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => value.forEach((connectedControlData) => execute(connectedControlData, currControl)));
+        .subscribe(() =>
+          value.forEach((connectedControlData) => execute(connectedControlData, currControl)),
+        );
     });
   }
 

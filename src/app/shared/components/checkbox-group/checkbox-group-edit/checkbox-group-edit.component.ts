@@ -2,9 +2,18 @@ import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
+import {
+  CheckboxGroupData,
+  CheckboxOptions,
+} from '@components/checkbox-group/interfaces/checkbox-group-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -12,7 +21,12 @@ import { ListValidators } from '@validators/list-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+  NzFormModule,
+} from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -43,7 +57,10 @@ import { QuillModule } from 'ngx-quill';
     TranslatePipe,
   ],
 })
-export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions[], CheckboxGroupData> {
+export class CheckboxGroupEditComponent extends AbstractEditForm<
+  CheckboxOptions[],
+  CheckboxGroupData
+> {
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');
   editingIndex: number | null = null;
@@ -80,7 +97,7 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
       }),
       requiredMessage: new FormControl(
         null,
-        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('required'))
+        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('required')),
       ),
     });
 
@@ -114,7 +131,7 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
             value: new FormControl(option.value, Validators.required),
             disabled: new FormControl(option.disabled),
             checked: new FormControl(option.checked),
-          })
+          }),
         );
       });
     }
@@ -132,7 +149,7 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
           value: new FormControl(option.value, Validators.required),
           disabled: new FormControl(option.disabled),
           checked: new FormControl(option.checked),
-        })
+        }),
       );
     });
   }
@@ -159,7 +176,7 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
         value: new FormControl(this.getNextId(), Validators.required),
         disabled: new FormControl(false),
         checked: new FormControl(false),
-      })
+      }),
     );
     this.newOptionValue = '';
     this.options.markAsDirty();

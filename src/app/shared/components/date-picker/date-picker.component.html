@@ -1,6 +1,6 @@
 <nz-form-item>
   @if (label) {
-    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+    <ng-container [ngTemplateOutlet]="label"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
@@ -23,8 +23,7 @@
       (ngModelChange)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
       class="date-picker"
-    >
-    </nz-date-picker>
+    ></nz-date-picker>
     <ng-container *ngTemplateOutlet="suffixTemplate" />
   </nz-form-control>
 </nz-form-item>
@@ -35,11 +34,19 @@
 </ng-template>
 <ng-template #prefixTemplate>
   @if (data.showTooltip) {
-    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" class="icon-margin"></span>
+    <span
+      nz-icon
+      nz-tooltip
+      [nzTooltipTitle]="data.tooltipText"
+      nzType="info-circle"
+      class="icon-margin"
+    ></span>
   }
 </ng-template>
 <ng-template #suffixTemplate>
   @if (data.inlineMode) {
-    <div class="selected-date">{{ 'COMPONENTS.SELECTED_RAGE' | translate }}: {{ data.defaultValue | date: getFullFormat }}</div>
+    <div class="selected-date">
+      {{ 'COMPONENTS.SELECTED_RAGE' | translate }}: {{ data.defaultValue | date: getFullFormat }}
+    </div>
   }
 </ng-template>

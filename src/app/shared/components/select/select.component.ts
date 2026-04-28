@@ -23,9 +23,13 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     NzOptionComponent,
     NzTooltipModule,
     NzIconModule,
-  ]
+  ],
 })
-export class SelectComponent extends AbstractFieldLikeInputs<string | string[], SelectComponentData, SelectEditComponent> {
+export class SelectComponent extends AbstractFieldLikeInputs<
+  string | string[],
+  SelectComponentData,
+  SelectEditComponent
+> {
   override edit(): void {
     this.modalService
       .openModal({
