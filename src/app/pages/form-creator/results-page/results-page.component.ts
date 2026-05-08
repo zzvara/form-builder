@@ -1,14 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
-import { JsonService } from '@services/json.service';
-import { ProjectService } from '@services/project.service';
-import { ColumnItem } from '@app/shared/interfaces/column-item.model';
-import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import type { Project, ProjectVersion } from '@interfaces/project';
+import type { JsonService } from '@services/json.service';
+import type { ProjectService } from '@services/project.service';
+import type { ColumnItem } from '@app/shared/interfaces/column-item.model';
+import type { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
-import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import type { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import type { Router } from '@angular/router';
+import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';
@@ -48,6 +50,12 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   ],
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
+  private readonly projectService = inject<ProjectService<Project>>(ProjectService);
+  private readonly jsonService = inject(JsonService);
+  private readonly statisticsService = inject(StatisticsService);
+  private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router);
+
   @Input() page?: number;
   @Input() projectId: string | undefined;
   @Input() versionNum?: number;
@@ -56,7 +64,7 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
 
   project?: Project;
   projectHistory: ProjectVersion<Project>[] = [];
-  sectionInputStats: { [key: string]: number | string } = {};
+  sectionInputStats: Record<string, number | string> = {};
   latestVersionNum?: number;
   sectionInputs: FormInputData[] = [];
 
@@ -78,14 +86,6 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   DateFormat = DateFormat;
   CodeEditorMode = CodeEditorMode;
   CodeEditorType = CodeEditorType;
-
-  constructor(
-    private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService,
-    private readonly statisticsService: StatisticsService,
-    private readonly translate: TranslateService,
-    private readonly router: Router,
-  ) {}
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {

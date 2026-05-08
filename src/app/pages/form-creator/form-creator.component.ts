@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import type { ChangeDetectorRef } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProjectType } from '@app/shared/interfaces/project';
 import { ViewChild } from '@angular/core';
 import { InfoPageComponent } from './info-page/info-page.component';
@@ -24,13 +25,15 @@ import { ResultsPageComponent } from './results-page/results-page.component';
   ],
 })
 export class FormCreatorComponent {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   @ViewChild(InfoPageComponent)
   infoPageComponent?: InfoPageComponent;
 
   @ViewChild(ComponentsPageComponent)
   componentsPageComponent?: ComponentsPageComponent;
 
-  projectId: string = '';
+  projectId = '';
   currentVersionNum?: number;
   projectType: ProjectType = ProjectType.TEST;
   page = 0;
@@ -38,8 +41,6 @@ export class FormCreatorComponent {
   componentValid = false;
 
   ProjectType = ProjectType;
-
-  constructor(private readonly cdr: ChangeDetectorRef) {}
 
   checkInfoForm() {
     if (this.infoPageComponent) {

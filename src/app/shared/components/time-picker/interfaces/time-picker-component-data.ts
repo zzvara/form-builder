@@ -1,4 +1,4 @@
-import { FieldLikeInputData } from '@interfaces/field-like-input-data';
+import type { FieldLikeInputData } from '@interfaces/field-like-input-data';
 
 export interface TimePickerComponentData extends FieldLikeInputData<Date> {
   minTime: boolean;

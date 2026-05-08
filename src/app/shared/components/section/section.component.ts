@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormComponentMarker } from '@interfaces/form-component-marker';
+import type { FormComponentMarker } from '@interfaces/form-component-marker';
 import { NzCardComponent } from 'ng-zorro-antd/card';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
 

@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import type { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { MenuOption } from '@models/menu-option.model';
 import { RoutePath } from '@models/route-path.model';
 import { HeaderService } from '@services/header/header.service';

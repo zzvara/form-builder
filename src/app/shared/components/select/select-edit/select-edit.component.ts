@@ -1,9 +1,11 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
+import type { AbstractControl, FormArray } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import { SelectComponentData } from '@components/select/interfaces/select-component-data';
+import type { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
@@ -58,7 +60,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
 > {
   newOption!: FormControl<string | null>;
   editingIndex: number | null = null;
-  editValue: string = '';
+  editValue = '';
   editError: string | null = null;
   editControl: FormControl = new FormControl('');
 

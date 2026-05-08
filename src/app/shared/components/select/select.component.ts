@@ -2,7 +2,7 @@ import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-in
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SelectComponentData } from '@components/select/interfaces/select-component-data';
+import type { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { SelectEditComponent } from '@components/select/select-edit/select-edit.component';
 import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';

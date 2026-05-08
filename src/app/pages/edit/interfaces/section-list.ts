@@ -1,6 +1,6 @@
-import { FormInputData } from '@interfaces/form-input-data';
-import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
-import { translateComponentType } from '../config/edit-data-config';
+import type { FormInputData } from '@interfaces/form-input-data';
+import type { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
+import type { translateComponentType } from '../config/edit-data-config';
 
 export interface SectionList {
   sectionId: string;

@@ -1,13 +1,13 @@
-import { InputData } from '@interfaces/input-data';
+import type { InputData } from '@interfaces/input-data';
 
 export interface CheckboxGroupData extends InputData<CheckboxOptions[]> {
   required: boolean;
   requiredMessage?: string;
 }
 
-export type CheckboxOptions = {
+export interface CheckboxOptions {
   label: string;
   value: number;
   disabled?: boolean;
   checked?: boolean;
-};
+}

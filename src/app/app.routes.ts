@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { FormCreatorComponent } from '@pages/form-creator/form-creator.component';
 import { headerResolver } from '@resolvers/header.resolver';

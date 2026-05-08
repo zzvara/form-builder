@@ -1,17 +1,13 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import type { AbstractControl, FormArray } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
-import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
+import type { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
+import type { ErrorType } from '@helpers/error-helper';
+import { getErrorMessageList } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';

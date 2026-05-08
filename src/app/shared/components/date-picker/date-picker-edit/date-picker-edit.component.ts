@@ -1,8 +1,9 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
+import type { AbstractControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import type { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
 import {
   getDisabledDateConfig,
@@ -17,13 +18,13 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
-import {
+import type {
   DisabledTimeConfig,
   DisabledTimeFn,
   NzDateMode,
-  NzDatePickerComponent,
   SupportTimeOptions,
 } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
   NzFormControlComponent,

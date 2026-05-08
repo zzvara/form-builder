@@ -1,9 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ProjectType } from '@interfaces/project';
-import { ColumnItem } from '@app/shared/interfaces/column-item.model';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import type { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import type { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import type { ProjectType } from '@interfaces/project';
+import type { ColumnItem } from '@app/shared/interfaces/column-item.model';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
@@ -29,6 +32,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   ],
 })
 export class ListViewComponent implements OnInit {
+  private translate = inject(TranslateService);
+
   @Input() projects: Observable<Questionnaire[]> = of([]);
   @Input() type?: ProjectType;
 
@@ -39,8 +44,6 @@ export class ListViewComponent implements OnInit {
   columnsConfig: ColumnItem[] = [];
 
   DateFormat = DateFormat;
-
-  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.projects.subscribe((projects) => {

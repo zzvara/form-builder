@@ -1,15 +1,9 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  Input,
-  SimpleChanges,
-  Optional,
-  Inject,
-} from '@angular/core';
+import type { OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import type { NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IconTypePipe } from '@app/shared/pipes/icon-type.pipe';
 
@@ -37,16 +31,12 @@ interface DiffItem {
   styleUrls: ['./change-summary.component.less'],
 })
 export class ChangeSummaryComponent implements OnInit, OnChanges {
+  private modalData = inject(NZ_MODAL_DATA, { optional: true });
+  private modalRef = inject(NzModalRef);
+
   @Input() items: ChangeInput[] = [];
 
   diffItems: DiffItem[] = [];
-
-  constructor(
-    @Optional()
-    @Inject(NZ_MODAL_DATA)
-    private modalData: { items: ChangeInput[] } | null,
-    private modalRef: NzModalRef,
-  ) {}
 
   ngOnInit(): void {
     // If opened as a modal, build diffs from the injected data

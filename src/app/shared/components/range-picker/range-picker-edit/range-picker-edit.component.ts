@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
-import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
+import type { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';

@@ -2,7 +2,7 @@ import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-in
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
+import type { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TextareaEditComponent } from '@components/textarea/textarea-edit/textarea-edit.component';
 import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';

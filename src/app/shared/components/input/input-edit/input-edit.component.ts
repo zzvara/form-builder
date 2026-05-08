@@ -1,8 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { InputComponentData } from '@components/input/interfaces/input-component-data';
-import { ErrorType } from '@helpers/error-helper';
+import type { InputComponentData } from '@components/input/interfaces/input-component-data';
+import type { ErrorType } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';

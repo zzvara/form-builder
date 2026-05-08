@@ -2,7 +2,7 @@ import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-in
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import type { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
 import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';

@@ -1,11 +1,12 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import type { ApplicationConfig } from '@angular/core';
+import { provideZoneChangeDetection } from '@angular/core';
 import { HttpBackend, provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, TitleStrategy } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
-import { IconDefinition } from '@ant-design/icons-angular';
+import type { IconDefinition } from '@ant-design/icons-angular';
 import {
   AppstoreOutline,
   HomeOutline,

@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { HeaderService } from '@services/header/header.service';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import type { Subscription } from 'rxjs';
+import type { HeaderService } from '@services/header/header.service';
 import { MenuOption } from '@models/menu-option.model';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -18,13 +19,13 @@ import { NzLayoutComponent } from 'ng-zorro-antd/layout';
   imports: [RouterOutlet, HeaderComponent, NzLayoutComponent],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private readonly headerService = inject(HeaderService);
+
   activeOptions: MenuOption[] = []; // @todo Unused variable. A value is given, but never used.
   optionsSub?: Subscription; // @todo Unused variable.
   options = MenuOption; // @todo Unused variable.
 
-  title = 'form-builder'; // @todo Unused variable. The related test must be aligned after changing this.
-
-  constructor(private readonly headerService: HeaderService) {}
+  title = 'form-builder';
 
   ngOnInit(): void {
     this.headerService

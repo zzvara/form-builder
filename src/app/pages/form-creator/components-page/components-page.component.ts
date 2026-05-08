@@ -1,21 +1,22 @@
+import type { ChangeDetectorRef, OnInit, AfterViewInit } from '@angular/core';
 import {
   ApplicationModule,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
+import type { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
-import { ProjectService } from '@services/project.service';
-import { InlineEdit } from '@interfaces/inline-edit';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import type { ProjectService } from '@services/project.service';
+import type { InlineEdit } from '@interfaces/inline-edit';
+import type { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
+import type { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import type { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
@@ -55,7 +56,12 @@ interface DiffItem {
     TranslatePipe,
   ],
 })
-export class ComponentsPageComponent implements OnInit {
+export class ComponentsPageComponent implements OnInit, AfterViewInit {
+  private modal = inject(NzModalService);
+  private translate = inject(TranslateService);
+  private projectService = inject<ProjectService<Project>>(ProjectService);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: string | undefined;
@@ -69,13 +75,6 @@ export class ComponentsPageComponent implements OnInit {
   currentVersionNum?: number;
 
   DateFormat = DateFormat;
-
-  constructor(
-    private modal: NzModalService,
-    private translate: TranslateService,
-    private projectService: ProjectService<Project>,
-    private cdr: ChangeDetectorRef,
-  ) {}
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -211,7 +210,7 @@ export class ComponentsPageComponent implements OnInit {
 
     const curr = version.project;
     const old = prev.project;
-    const keys = Object.keys(curr) as Array<keyof Project>;
+    const keys = Object.keys(curr) as (keyof Project)[];
 
     return keys
       .filter((key) => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))
@@ -223,7 +222,7 @@ export class ComponentsPageComponent implements OnInit {
   }
   public getChangeItemsForVersion(
     version: ProjectVersion<Project>,
-  ): Array<{ key: string; before: any; after: any }> {
+  ): { key: string; before: any; after: any }[] {
     return this.getDiffItems(version).map((d) => ({
       key: d.key,
       before: d.before,

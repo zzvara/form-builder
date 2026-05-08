@@ -45,7 +45,7 @@ module.exports = defineConfig([
       // Ignores variables starting with "_" → useful for intentionally unused params
       '@typescript-eslint/no-unused-vars': [
         'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
 
       // Ensures type-only imports are explicitly marked with "import type"
@@ -70,7 +70,7 @@ module.exports = defineConfig([
 
       // Enforces usage of standalone components/directives/pipes
       // Ensures modern Angular architecture and avoids mixing NgModules unintentionally
-      '@angular-eslint/prefer-standalone': 'error'
+      '@angular-eslint/prefer-standalone': 'error',
     },
   },
   {
@@ -79,7 +79,7 @@ module.exports = defineConfig([
     rules: {
       // Prevents negating async pipe results directly (e.g. !(obs$ | async))
       // Can lead to multiple subscriptions and confusing template behavior
-      '@angular-eslint/template/no-negated-async': 'error'
+      '@angular-eslint/template/no-negated-async': 'error',
     },
   },
 ]);

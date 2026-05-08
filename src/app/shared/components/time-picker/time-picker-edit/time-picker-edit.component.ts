@@ -2,7 +2,7 @@ import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import type { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
   disabledHours,
   disabledMaxHours,

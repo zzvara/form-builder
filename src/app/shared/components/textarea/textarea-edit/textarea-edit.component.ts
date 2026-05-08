@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
-import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
+import type { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';

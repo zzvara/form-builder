@@ -1,25 +1,22 @@
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  DragDropModule,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
-import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import type { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import type { OnChanges, OnInit, QueryList } from '@angular/core';
+import { Component, Input, ViewChildren, inject } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
-import { FormInputData } from '@interfaces/form-input-data';
-import { InlineEdit } from '@interfaces/inline-edit';
-import { InputData } from '@interfaces/input-data';
-import { Project } from '@interfaces/project';
+import type { FormInputData } from '@interfaces/form-input-data';
+import type { InlineEdit } from '@interfaces/inline-edit';
+import type { InputData } from '@interfaces/input-data';
+import type { Project } from '@interfaces/project';
 import { getSideBarData } from '@pages/edit/config/edit-data-config';
-import { EditList } from '@pages/edit/interfaces/edit-list';
+import type { EditList } from '@pages/edit/interfaces/edit-list';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
-import { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
-import { ProjectService } from '@services/project.service';
-import { UndoRedoService } from '@services/undo-redo.service';
+import type { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
+import type { ProjectService } from '@services/project.service';
+import type { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import type { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
@@ -72,6 +69,12 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
   ],
 })
 export class EditComponent implements OnInit, OnChanges {
+  private projectService = inject<ProjectService<Project>>(ProjectService);
+  private undoRedoService = inject<UndoRedoService<EditList[]>>(UndoRedoService);
+  private translate = inject(TranslateService);
+  private instanceOfSectionListPipe = inject(InstanceOfSectionListPipe);
+  private instanceOfFormInputDataPipe = inject(InstanceOfFormInputDataPipe);
+
   @Input() inlineEdit!: InlineEdit;
   @Input() projectId?: string;
   @Input() versionNum?: number;
@@ -84,14 +87,6 @@ export class EditComponent implements OnInit, OnChanges {
   names: string[] = [];
 
   LayoutEnum = LayoutEnum;
-
-  constructor(
-    private projectService: ProjectService<Project>,
-    private undoRedoService: UndoRedoService<EditList[]>,
-    private translate: TranslateService,
-    private instanceOfSectionListPipe: InstanceOfSectionListPipe,
-    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe,
-  ) {}
 
   ngOnInit() {
     this.sideBarData = getSideBarData(this, this.translate);
@@ -325,7 +320,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList): { [p: string]: string } {
+  getSectionInputStyle(sect: SectionList): Record<string, string> {
     let width: number;
     if (
       sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) ||
@@ -411,7 +406,7 @@ export class EditComponent implements OnInit, OnChanges {
   returnChildren(sect: SectionList): { title: string; id: string }[] {
     const returnVal: { title: string; id: string }[] = [];
     for (const input of sect.sectionInputs) {
-      let id: string = input.data?.id || '';
+      const id: string = input.data?.id || '';
       returnVal.push({
         title: input.title,
         id: id,

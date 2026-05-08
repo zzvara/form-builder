@@ -1,20 +1,18 @@
-import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { Injectable } from '@angular/core';
-import { InputData } from '@interfaces/input-data';
-import { ModalData } from '@interfaces/modal-data';
-import { TranslateService } from '@ngx-translate/core';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { Observable } from 'rxjs';
+import type { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import { Injectable, inject } from '@angular/core';
+import type { InputData } from '@interfaces/input-data';
+import type { ModalData } from '@interfaces/modal-data';
+import type { TranslateService } from '@ngx-translate/core';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { NzModalService } from 'ng-zorro-antd/modal';
+import type { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ModalServiceService<T, D extends InputData, E extends AbstractEditForm<T, D>> {
-  constructor(
-    private modal: NzModalService,
-    private translate: TranslateService,
-  ) {}
+  private modal = inject(NzModalService);
+  private translate = inject(TranslateService);
 
   openModal(modalData: ModalData<D, E>): Observable<boolean | undefined> {
     return this.openModalAndGet<boolean>(modalData);

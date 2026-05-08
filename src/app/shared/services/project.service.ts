@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
-import { BehaviorSubject, Observable } from 'rxjs';
+import type { Project, ProjectVersion } from '@interfaces/project';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({

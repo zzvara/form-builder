@@ -1,8 +1,6 @@
-import { AbstractControl } from '@angular/forms';
+import type { AbstractControl } from '@angular/forms';
 
-export interface ControlConnection {
-  [key: string]: ControlConnectionData[];
-}
+export type ControlConnection = Record<string, ControlConnectionData[]>;
 
 export interface ControlConnectionData {
   name: string;

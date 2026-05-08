@@ -1,17 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ContextAction } from '@components/header/header.model';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { HeaderService } from '@services/header/header.service';
-import { JsonService } from '@services/json.service';
-import { Subscription } from 'rxjs';
+import type { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import type { HeaderService } from '@services/header/header.service';
+import type { JsonService } from '@services/json.service';
+import type { Subscription } from 'rxjs';
 import { RoutePath } from '@app/shared/models/route-path.model';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
-import { ChangeDetectorRef } from '@angular/core';
+import type { ChangeDetectorRef } from '@angular/core';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
-import { EventService } from '@app/shared/services/event.service';
+import type { EventService } from '@app/shared/services/event.service';
 import { NzHeaderComponent } from 'ng-zorro-antd/layout';
 import { CommonModule } from '@angular/common';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
@@ -35,6 +37,13 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
   ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  private readonly router = inject(Router);
+  private readonly headerService = inject(HeaderService);
+  private readonly jsonService = inject(JsonService);
+  private readonly translate = inject(TranslateService);
+  private readonly eventService = inject(EventService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   headerOptions: MenuOption[] = [];
   activeOptions: MenuOption[] = [];
   contextActions: ContextAction[] = [];
@@ -47,15 +56,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   LanguageEnum = LanguageEnum;
   ThemeEnum = ThemeEnum;
-
-  constructor(
-    private readonly router: Router,
-    private readonly headerService: HeaderService,
-    private readonly jsonService: JsonService,
-    private readonly translate: TranslateService,
-    private readonly eventService: EventService,
-    private readonly cdr: ChangeDetectorRef,
-  ) {}
 
   ngOnInit(): void {
     this.currentLanguage =

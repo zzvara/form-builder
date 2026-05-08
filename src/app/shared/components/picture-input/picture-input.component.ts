@@ -1,19 +1,17 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import {
-  NzUploadChangeParam,
-  NzUploadComponent,
-  NzUploadFile,
-  NzUploadXHRArgs,
-} from 'ng-zorro-antd/upload';
-import { Observable, Subscription } from 'rxjs';
+import type { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
+import { NzUploadComponent } from 'ng-zorro-antd/upload';
+import type { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-picture-input',

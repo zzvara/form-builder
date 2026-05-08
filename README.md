@@ -105,6 +105,7 @@ The project uses ESLint, Angular ESLint, and Prettier to ensure consistent code 
 ### Visual Studio Code
 
 **Required extensions**
+
 - ESLint
 - Prettier - Code formatter
 - Angular Language Service
@@ -117,16 +118,14 @@ The project uses ESLint, Angular ESLint, and Prettier to ensure consistent code 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.validate": [
-    "typescript",
-    "html"
-  ],
+  "eslint.validate": ["typescript", "html"],
   "eslint.run": "onType",
   "prettier.requireConfig": true
 }
 ```
 
 **Result**
+
 - Lint errors shown while typing
 - Automatic fixes on save
 - Template and TypeScript linting enabled
@@ -149,6 +148,7 @@ Go to: Settings -> Languages & Frameworks -> JavaScript -> Prettier
 - Enable "Run on save"
 
 **Result**
+
 - Inline lint errors
 - Auto-formatting on save
 - Angular template validation support

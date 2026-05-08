@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 

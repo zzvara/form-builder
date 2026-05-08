@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
-import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
+import type { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import type { Router } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
-import { ProjectService } from '@services/project.service';
+import type { ProjectService } from '@services/project.service';
 import { ViewType } from '@app/shared/interfaces/view-type.enum';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { RoutePath } from '@app/shared/models/route-path.model';
@@ -33,14 +35,12 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   ],
 })
 export class DashboardComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly questionnaireService = inject<ProjectService<Questionnaire>>(ProjectService);
+
   projects$: Observable<Questionnaire[]> = of([]);
   isListView = true;
   projectTypes = ProjectType;
-
-  constructor(
-    private readonly router: Router,
-    private readonly questionnaireService: ProjectService<Questionnaire>,
-  ) {}
 
   ngOnInit(): void {
     this.projects$ = this.questionnaireService.list();

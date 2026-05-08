@@ -2,7 +2,7 @@ import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-in
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import type { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import { TimePickerEditComponent } from '@components/time-picker/time-picker-edit/time-picker-edit.component';
 import { disabledHours, disabledMinutes, disabledSeconds } from '@helpers/date-helper';
 import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';

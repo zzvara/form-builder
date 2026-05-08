@@ -1,30 +1,30 @@
-import { DestroyRef, Directive, Inject, OnInit } from '@angular/core';
+import type { DestroyRef, OnInit } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
-import {
+import type { AbstractControl, FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import type {
   ControlConnection,
   ControlConnectionData,
   DataSetterType,
 } from '@interfaces/control-connection';
-import { InputData, InputDataKeys } from '@interfaces/input-data';
+import type { InputData, InputDataKeys } from '@interfaces/input-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
-import { TranslateService } from '@ngx-translate/core';
+import type { TranslateService } from '@ngx-translate/core';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 
 @Directive()
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
+  private nzModalData = inject<D>(NZ_MODAL_DATA);
+  protected destroyRef = inject(DestroyRef);
+  protected formBuilder = inject(FormBuilder);
+  protected translate = inject(TranslateService);
+
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
-  protected readonly formData: FormGroup = this.formBuilder.group<{
-    [key in InputDataKeys<D>]?: FormControl<any>;
-  }>(
+  protected readonly formData: FormGroup = this.formBuilder.group<
+    Partial<Record<InputDataKeys<D>, FormControl<any>>>
+  >(
     {},
     {
       updateOn: this.formUpdateOn,
@@ -33,13 +33,6 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   );
 
   protected initialValues!: D;
-
-  constructor(
-    @Inject(NZ_MODAL_DATA) private nzModalData: D,
-    protected destroyRef: DestroyRef,
-    protected formBuilder: FormBuilder,
-    protected translate: TranslateService,
-  ) {}
 
   ngOnInit() {
     this.initialValues = this.nzModalData;
@@ -106,19 +99,19 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
 
   //---------FORM CONTROLS------------------------------------------------------------------------------------------------
 
-  protected addControls(controls: { [key in InputDataKeys<D>]?: AbstractControl }) {
-    this.addAnyControls(controls as { [key: string]: AbstractControl });
+  protected addControls(controls: Partial<Record<InputDataKeys<D>, AbstractControl>>) {
+    this.addAnyControls(controls as Record<string, AbstractControl>);
   }
-  protected addAnyControls(controls: { [key: string]: AbstractControl }) {
+  protected addAnyControls(controls: Record<string, AbstractControl>) {
     Object.entries(controls).forEach(([key, value]) => {
       this.formData.addControl(key, value);
     });
   }
 
-  protected setControls(controls: { [key in InputDataKeys<D>]?: AbstractControl }) {
-    this.setAnyControls(controls as { [key: string]: AbstractControl });
+  protected setControls(controls: Partial<Record<InputDataKeys<D>, AbstractControl>>) {
+    this.setAnyControls(controls as Record<string, AbstractControl>);
   }
-  protected setAnyControls(controls: { [key: string]: AbstractControl }) {
+  protected setAnyControls(controls: Record<string, AbstractControl>) {
     Object.entries(controls).forEach(([key, value]) => {
       this.formData.setControl(key, value);
     });
@@ -189,9 +182,11 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
 
   //---------CONTROL CHANGE METHODS---------------------------------------------------------------------------------------
 
-  setControlValuesBasedOnChanges(controls: {
-    [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; additionalData?: DataSetterType }[];
-  }) {
+  setControlValuesBasedOnChanges(
+    controls: Partial<
+      Record<InputDataKeys<D>, { name: InputDataKeys<D>; additionalData?: DataSetterType }[]>
+    >,
+  ) {
     this.setAnyControlValuesBasedOnChanges(controls as ControlConnection);
   }
   setAnyControlValuesBasedOnChanges(controls: ControlConnection) {
@@ -207,9 +202,11 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
    *
    * @param controls
    */
-  connectValidations(controls: {
-    [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; recursiveCall?: boolean }[];
-  }) {
+  connectValidations(
+    controls: Partial<
+      Record<InputDataKeys<D>, { name: InputDataKeys<D>; recursiveCall?: boolean }[]>
+    >,
+  ) {
     this.connectAnyValidations(controls as ControlConnection);
   }
   connectAnyValidations(controls: ControlConnection) {

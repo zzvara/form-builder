@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxGroupEditComponent } from '@components/checkbox-group/checkbox-group-edit/checkbox-group-edit.component';
-import {
+import type {
   CheckboxGroupData,
   CheckboxOptions,
 } from '@components/checkbox-group/interfaces/checkbox-group-data';

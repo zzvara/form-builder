@@ -1,4 +1,5 @@
-import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { SelectEditComponent } from '@components/select/select-edit/select-edit.component';
 
 describe('ModalComponent', () => {

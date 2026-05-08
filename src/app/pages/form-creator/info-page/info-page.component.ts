@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import type { OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import type { ActivatedRoute, Params, Router } from '@angular/router';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
-import { Project, ProjectType } from '@interfaces/project';
+import type { Project } from '@interfaces/project';
+import { ProjectType } from '@interfaces/project';
 import { TranslatePipe } from '@ngx-translate/core';
-import { JsonService } from '@services/json.service';
-import { ProjectService } from '@services/project.service';
+import type { JsonService } from '@services/json.service';
+import type { ProjectService } from '@services/project.service';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -49,7 +51,12 @@ import { QuillEditorComponent } from 'ngx-quill';
     TranslatePipe,
   ],
 })
-export class InfoPageComponent implements OnInit {
+export class InfoPageComponent implements OnInit, OnDestroy {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly projectService = inject<ProjectService<Project>>(ProjectService);
+  private readonly jsonService = inject(JsonService);
+
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() projectId = new EventEmitter<string>();
@@ -84,13 +91,6 @@ export class InfoPageComponent implements OnInit {
   params: Params = {};
 
   DateFormat = DateFormat;
-
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService,
-  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {

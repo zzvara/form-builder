@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { RadioGroupEditComponent } from '@components/radio-group/radio-group-edit/radio-group-edit.component';
 

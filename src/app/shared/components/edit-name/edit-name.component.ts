@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import type { OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EditList } from '@app/pages/edit/interfaces/edit-list';
-import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import type { EditList } from '@app/pages/edit/interfaces/edit-list';
+import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
-import { FormService } from '@app/shared/services/form.service';
+import type { FormService } from '@app/shared/services/form.service';
 import { ValidatorService } from '@app/shared/services/validator.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzFormControlComponent } from 'ng-zorro-antd/form';
@@ -32,17 +33,17 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   ],
 })
 export class EditNameComponent implements OnChanges {
+  private formService = inject(FormService);
+
   @Input() names: string[] = [];
   @Input() edit!: EditList | FormInputData;
-  @Output() updateName: EventEmitter<void> = new EventEmitter();
+  @Output() updateName = new EventEmitter<void>();
 
   form: FormGroup = new FormGroup([]);
   editList?: EditList;
   editFormInput?: FormInputData;
 
   isEditName = false;
-
-  constructor(private formService: FormService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (

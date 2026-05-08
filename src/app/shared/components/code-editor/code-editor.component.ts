@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import type { AfterViewInit, ElementRef, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
-import { EventService } from '@app/shared/services/event.service';
+import type { EventService } from '@app/shared/services/event.service';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { linter, lintGutter } from '@codemirror/lint';
-import { Compartment, EditorState, Extension } from '@codemirror/state';
+import type { Extension } from '@codemirror/state';
+import { Compartment, EditorState } from '@codemirror/state';
 import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
 import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { basicSetup, EditorView } from 'codemirror';
@@ -16,6 +18,8 @@ import { basicSetup, EditorView } from 'codemirror';
   styleUrl: './code-editor.component.css',
 })
 export class CodeEditorComponent implements OnInit, AfterViewInit {
+  private readonly eventService = inject(EventService);
+
   @Input() mode = CodeEditorMode.VIEW;
   @Input() type = CodeEditorType.JSON;
   @Input() code = '';
@@ -32,8 +36,6 @@ export class CodeEditorComponent implements OnInit, AfterViewInit {
       this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark,
     ),
   ];
-
-  constructor(private readonly eventService: EventService) {}
 
   ngOnInit(): void {
     if (this.type === CodeEditorType.JSON) {

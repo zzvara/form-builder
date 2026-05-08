@@ -2,7 +2,7 @@ import { AbstractDatePickerComponent } from '@abstract-classes/abstract-date-pic
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
+import type { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
 import { RangePickerEditComponent } from '@components/range-picker/range-picker-edit/range-picker-edit.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzDatePickerModule, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';

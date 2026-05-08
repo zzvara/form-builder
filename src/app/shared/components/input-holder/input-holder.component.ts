@@ -2,29 +2,21 @@
  * <<licensetext>>
  */
 
-import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { AbstractInput } from '@abstract-classes/abstract-input';
+import type { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import type { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  DestroyRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  TemplateRef,
-  Type,
-  ViewChild,
-} from '@angular/core';
+import type { AfterViewInit, DestroyRef, OnInit, TemplateRef, Type } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormsModule, NgForm, NgModel } from '@angular/forms';
+import type { NgForm, NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { getInputGroups, translateComponentType } from '@pages/edit/config/edit-data-config';
-import { FormComponentMarker } from '@interfaces/form-component-marker';
-import { FormInputData } from '@interfaces/form-input-data';
-import { InlineEdit } from '@interfaces/inline-edit';
-import { InputData } from '@interfaces/input-data';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import type { FormComponentMarker } from '@interfaces/form-component-marker';
+import type { FormInputData } from '@interfaces/form-input-data';
+import type { InlineEdit } from '@interfaces/inline-edit';
+import type { InputData } from '@interfaces/input-data';
+import type { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NzCardComponent } from 'ng-zorro-antd/card';
 import {
   NzFormControlComponent,
@@ -70,6 +62,9 @@ export class InputHolderComponent<
 >
   implements OnInit, AfterViewInit
 {
+  private destroyRef = inject(DestroyRef);
+  private translate = inject(TranslateService);
+
   @Input() formInput!: FormInputData<D, T>;
   get inputData(): D {
     return this.formInput.data!;
@@ -90,11 +85,6 @@ export class InputHolderComponent<
     data: D;
     inlineEdit: InlineEdit;
   };
-
-  constructor(
-    private destroyRef: DestroyRef,
-    private translate: TranslateService,
-  ) {}
 
   get componentType(): Type<FormComponentMarker> {
     return translateComponentType[this.formInput.type];

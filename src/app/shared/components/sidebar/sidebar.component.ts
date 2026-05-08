@@ -1,8 +1,9 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
+import type { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
@@ -33,7 +34,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 export class SidebarComponent implements OnInit {
   @Input() sidebarData: SidebarData[] = [];
 
-  searchTerm: string = '';
+  searchTerm = '';
   filteredData: SidebarData[] = [];
 
   ngOnInit() {
