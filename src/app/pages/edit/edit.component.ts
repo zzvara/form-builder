@@ -67,7 +67,6 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     NzIconModule,
     ComponentIconsPipe,
     NzButtonComponent,
-    NzSwitchComponent,
     NzInputNumberComponent,
   ],
 })
