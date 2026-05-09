@@ -10,7 +10,10 @@
               </nz-descriptions-item>
               <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
                 <ng-template #descriptionTooltipTemp>
-                  <span class="ql-editor custom-tooltip" [innerHTML]="project.description | safeHtml"></span>
+                  <span
+                    class="ql-editor custom-tooltip"
+                    [innerHTML]="project.description | safeHtml"
+                  ></span>
                 </ng-template>
                 <div
                   class="ql-editor view-mode"
@@ -30,7 +33,9 @@
               }
               @if (project.deadline_checkbox) {
                 <nz-descriptions-item [nzTitle]="'PROJECT.DEADLINE_CHECKBOX' | translate">
-                  {{ 'RESULTS.BOOLEAN.' + (project.deadline_checkbox ? 'TRUE' : 'FALSE') | translate }}
+                  {{
+                    'RESULTS.BOOLEAN.' + (project.deadline_checkbox ? 'TRUE' : 'FALSE') | translate
+                  }}
                 </nz-descriptions-item>
               }
               @if (project.time_limit) {
@@ -74,10 +79,18 @@
         }
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_JSON' | translate" class="json">
-        <app-code-editor [mode]="CodeEditorMode.VIEW" [type]="CodeEditorType.JSON" [code]="this.project | json"></app-code-editor>
+        <app-code-editor
+          [mode]="CodeEditorMode.VIEW"
+          [type]="CodeEditorType.JSON"
+          [code]="this.project | json"
+        ></app-code-editor>
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_HISTORY_JSON' | translate" class="json">
-        <app-code-editor [mode]="CodeEditorMode.VIEW" [type]="CodeEditorType.JSON" [code]="this.projectHistory | json"></app-code-editor>
+        <app-code-editor
+          [mode]="CodeEditorMode.VIEW"
+          [type]="CodeEditorType.JSON"
+          [code]="this.projectHistory | json"
+        ></app-code-editor>
       </nz-tab>
     </nz-tabs>
     <div nz-row nzJustify="start" nzAlign="bottom" id="footerdiv">

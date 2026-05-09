@@ -6,14 +6,13 @@ Open-source yet another form-builder based on Angular and [NG-Zorro](https://ng.
 
 ## Role assignments
 
-| Role | Members                                                  |
-|-|----------------------------------------------------------|
-| Stakeholder | Barnabás Balázs, Zoltán Zvara                            |
-| Shepherd | Lázár Máté                                           |
-| Taskmaster | Bederna Kristóf                                               |
-| UI/UX master | Horváth Janka                                            |
-| Engineer | Bederna Kristóf, Horváth Janka, Lázár Máté |
-
+| Role         | Members                                    |
+| ------------ | ------------------------------------------ |
+| Stakeholder  | Barnabás Balázs, Zoltán Zvara              |
+| Shepherd     | Lázár Máté                                 |
+| Taskmaster   | Bederna Kristóf                            |
+| UI/UX master | Horváth Janka                              |
+| Engineer     | Bederna Kristóf, Horváth Janka, Lázár Máté |
 
 ## Role definitions
 
@@ -40,6 +39,7 @@ This role ensures products are functional, aesthetically pleasing, and intuitive
 ## Role responsibilities
 
 ### Engineer
+
 - Develop high-quality, maintainable, and efficient code.
 - Collaborate with designers and other engineers.
 - Participate in code reviews and contribute to best practices.
@@ -47,11 +47,13 @@ This role ensures products are functional, aesthetically pleasing, and intuitive
 - Write unit tests.
 
 ### Shepherd
+
 - Conduct thorough code reviews for engineers' work.
 - Provide constructive feedback to improve code quality and adherence to standards.
 - Assist in technical decision-making and resolving conflicts.
 
 ### Taskmaster
+
 - Attend team meetings, planning sessions, and stakeholder discussions.
 - Capture, document, and break down high-level ideas into specific tasks.
 - Define task descriptions and acceptance criteria.
@@ -60,6 +62,7 @@ This role ensures products are functional, aesthetically pleasing, and intuitive
 - Track the status of tasks and identify potential blockers.
 
 ### UI/UX expert
+
 - Strictly follow the [NG-Zorro design system](https://ng.ant.design/components/overview/en).
 - Ensure that the UI/UX of the form-builder looks mistakenly as an example or part of the NG-Zorro component library.
 - Ensure that only NG-Zorro standard components, icons, and styles are used, and the Stakeholder must approve any deviation from the standard.
@@ -95,6 +98,63 @@ To maintain the highest quality standard, all code must be reviewed before mergi
 - **Documentation**: Critical parts of the system must be documented, either through inline comments or external documentation.
 - **Consistency**: Follow agreed-upon coding standards and architectural principles.
 
+## IDE Setup (Linting & Formatting)
+
+The project uses ESLint, Angular ESLint, and Prettier to ensure consistent code quality. Proper IDE configuration enables real-time linting, automatic fixes, and consistent formatting.
+
+### Visual Studio Code
+
+**Required extensions**
+- ESLint
+- Prettier - Code formatter
+- Angular Language Service
+
+**Recommended settings (`.vscode/settings.json`)**
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "typescript",
+    "html"
+  ],
+  "eslint.run": "onType",
+  "prettier.requireConfig": true
+}
+```
+
+**Result**
+- Lint errors shown while typing
+- Automatic fixes on save
+- Template and TypeScript linting enabled
+- Consistent formatting via Prettier
+
+### IntelliJ IDEA / WebStorm
+
+**Enable ESLint**
+
+Go to: Settings -> Languages & Frameworks -> JavaScript -> Code Quality Tools -> ESLint
+
+- Enable automatic ESLint configuration (or point to `node_modules/eslint`)
+- Enable "Run ESLint on save"
+
+**Enable Prettier**
+
+Go to: Settings -> Languages & Frameworks -> JavaScript -> Prettier
+
+- Set Prettier package path to `node_modules/prettier`
+- Enable "Run on save"
+
+**Result**
+- Inline lint errors
+- Auto-formatting on save
+- Angular template validation support
+
+> **Note:** CI enforces the same rules, so issues will be caught even without IDE configuration. IDE setup is recommended but not required.
+
 ### UI/UX quality first
 
 We prioritize user experience by adhering to the NG-Zorro design system, ensuring a cohesive, intuitive, high-quality interface.
@@ -117,6 +177,7 @@ We prioritize user experience by adhering to the NG-Zorro design system, ensurin
 #### Examples of good quality in UI/UX
 
 To illustrate what a well-designed UI/UX looks like when adhering to best practices, we provide the following examples:
+
 - [Enlink](https://themeforest.net/item/enlink-angular-admin-template/23804615#)
 - [Egret](https://themeforest.net/item/egret-angular-4-material-design-admin-template/20161805)
 - [Cuba](https://themeforest.net/item/cuba-bootstrap-responsive-admin-dashboard-template/27530933)

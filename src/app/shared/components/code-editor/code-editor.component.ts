@@ -28,7 +28,9 @@ export class CodeEditorComponent implements OnInit, AfterViewInit {
     basicSetup,
     EditorView.lineWrapping,
     lintGutter(),
-    this.editorTheme.of(this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark),
+    this.editorTheme.of(
+      this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark,
+    ),
   ];
 
   constructor(private readonly eventService: EventService) {}
@@ -76,7 +78,9 @@ export class CodeEditorComponent implements OnInit, AfterViewInit {
   editorChangeTheme(): void {
     if (this.editorView) {
       this.editorView.dispatch({
-        effects: this.editorTheme.reconfigure(this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark),
+        effects: this.editorTheme.reconfigure(
+          this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark,
+        ),
       });
     }
   }

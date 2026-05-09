@@ -21,17 +21,23 @@ nz-content {
   justify-content: space-between;
   gap: clamp(@spacing8, 2vw, @spacing16);
 
-  > :first-child { margin-right: clamp(@spacing8, 2vw, @spacing16); }
+  > :first-child {
+    margin-right: clamp(@spacing8, 2vw, @spacing16);
+  }
 
   > div {
     display: flex;
     align-items: center;
     cursor: pointer;
 
-    > :first-child { margin-right: clamp(@spacing2, 1vw, @spacing4); }
+    > :first-child {
+      margin-right: clamp(@spacing2, 1vw, @spacing4);
+    }
   }
 
-  i[nz-icon] { margin-left: clamp(@spacing2, 1vw, @spacing4); }
+  i[nz-icon] {
+    margin-left: clamp(@spacing2, 1vw, @spacing4);
+  }
 }
 
 .view {
@@ -47,7 +53,9 @@ nz-content {
     flex-wrap: wrap;
     margin-bottom: @gap-item;
 
-    &:last-of-type { margin-top: @gap-questionnaire; }
+    &:last-of-type {
+      margin-top: @gap-questionnaire;
+    }
 
     > h3 {
       margin: 0 clamp(@spacing4, 1vw, @spacing8) 0 0;
@@ -68,5 +76,7 @@ button[nz-button],
   justify-content: center;
   gap: clamp(@spacing4, 1vw, @spacing8);
 
-  > nz-icon { font-size: clamp(16px, 2vw, 20px); }
+  > nz-icon {
+    font-size: clamp(16px, 2vw, 20px);
+  }
 }

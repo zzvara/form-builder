@@ -45,7 +45,9 @@ export class SidebarComponent implements OnInit {
       this.filteredData = this.sidebarData
         .map((group) => ({
           ...group,
-          groupContents: group.groupContents.filter((item) => item.title.toLowerCase().includes(this.searchTerm.toLowerCase())),
+          groupContents: group.groupContents.filter((item) =>
+            item.title.toLowerCase().includes(this.searchTerm.toLowerCase()),
+          ),
         }))
         .filter((group) => group.groupContents.length > 0);
     } else {

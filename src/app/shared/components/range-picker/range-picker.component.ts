@@ -25,7 +25,11 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     NzDatePickerModule,
   ],
 })
-export class RangePickerComponent extends AbstractDatePickerComponent<Date[], RangePickerComponentData, RangePickerEditComponent> {
+export class RangePickerComponent extends AbstractDatePickerComponent<
+  Date[],
+  RangePickerComponentData,
+  RangePickerEditComponent
+> {
   override edit(): void {
     this.modalService
       .openModal({

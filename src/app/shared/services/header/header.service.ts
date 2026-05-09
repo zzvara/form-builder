@@ -12,7 +12,9 @@ export class HeaderService {
     activeOptions: [],
   });
 
-  private readonly contextActions: BehaviorSubject<ContextAction[]> = new BehaviorSubject<ContextAction[]>([]);
+  private readonly contextActions: BehaviorSubject<ContextAction[]> = new BehaviorSubject<
+    ContextAction[]
+  >([]);
   private readonly saveTriggered: Subject<void> = new Subject<void>();
   private readonly undoTriggered: Subject<void> = new Subject<void>();
 

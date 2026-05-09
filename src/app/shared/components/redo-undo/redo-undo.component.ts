@@ -12,12 +12,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   templateUrl: './redo-undo.component.html',
   styleUrls: [],
   standalone: true,
-  imports: [
-    NzTooltipModule,
-    NzButtonComponent,
-    NzIconModule,
-    TranslatePipe
-  ],
+  imports: [NzTooltipModule, NzButtonComponent, NzIconModule, TranslatePipe],
 })
 export class RedoUndoComponent {
   @Output() sectionInputsChange = new EventEmitter<UndoRedoEnum>();

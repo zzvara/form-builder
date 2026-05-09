@@ -20,10 +20,14 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     NzTimePickerModule,
     CommonModule,
     FormsModule,
-    NzTooltipModule
+    NzTooltipModule,
   ],
 })
-export class TimePickerComponent extends AbstractFieldLikeInputs<Date, TimePickerComponentData, TimePickerEditComponent> {
+export class TimePickerComponent extends AbstractFieldLikeInputs<
+  Date,
+  TimePickerComponentData,
+  TimePickerEditComponent
+> {
   override edit(): void {
     this.modalService
       .openModal({

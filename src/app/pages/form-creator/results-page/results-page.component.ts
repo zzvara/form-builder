@@ -84,14 +84,20 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
     private readonly jsonService: JsonService,
     private readonly statisticsService: StatisticsService,
     private readonly translate: TranslateService,
-    private readonly router: Router
+    private readonly router: Router,
   ) {}
 
   ngOnInit(): void {
     if (this.projectId !== undefined) {
       this.projectHistory = this.projectService.getProjectHistory(this.projectId);
-      this.latestVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : undefined;
-      this.project = this.projectService.getProjectVersion(this.projectId, this.latestVersionNum ?? 1);
+      this.latestVersionNum =
+        this.projectHistory.length > 0
+          ? this.projectHistory[this.projectHistory.length - 1].versionNum
+          : undefined;
+      this.project = this.projectService.getProjectVersion(
+        this.projectId,
+        this.latestVersionNum ?? 1,
+      );
 
       this.calculateSectionInputStats();
     }

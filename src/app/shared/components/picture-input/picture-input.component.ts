@@ -7,7 +7,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzUploadChangeParam, NzUploadComponent, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
+import {
+  NzUploadChangeParam,
+  NzUploadComponent,
+  NzUploadFile,
+  NzUploadXHRArgs,
+} from 'ng-zorro-antd/upload';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -22,7 +27,7 @@ import { Observable, Subscription } from 'rxjs';
     NzUploadComponent,
     NzIconModule,
     NzButtonComponent,
-  ]
+  ],
 })
 export class PictureInputComponent
   extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent>

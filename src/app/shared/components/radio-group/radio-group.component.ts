@@ -12,15 +12,13 @@ import { NzRadioGroupComponent, NzRadioModule } from 'ng-zorro-antd/radio';
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.less',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NzFormItemComponent,
-    NzRadioGroupComponent,
-    NzRadioModule
-  ],
+  imports: [CommonModule, FormsModule, NzFormItemComponent, NzRadioGroupComponent, NzRadioModule],
 })
-export class RadioGroupComponent extends AbstractInput<number, RadioGroupData, RadioGroupEditComponent> {
+export class RadioGroupComponent extends AbstractInput<
+  number,
+  RadioGroupData,
+  RadioGroupEditComponent
+> {
   override edit(): void {
     this.modalService
       .openModal({

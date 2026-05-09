@@ -1,16 +1,16 @@
 {
-    "HEADER": {
-        "FORM_BUILDER": "Form Builder",
-        "LANGUAGE": {
-            "EN": "English",
-            "HU": "Hungarian"
-        },
-        "IMPORT": "Import questionnaire in JSON format",
-        "HOME": "Back to main page",
-        "THEME": {
-            "TITLE": "Theme: ",
-            "LIGHT": "Light",
-            "DARK": "Dark"
-        }
+  "HEADER": {
+    "FORM_BUILDER": "Form Builder",
+    "LANGUAGE": {
+      "EN": "English",
+      "HU": "Hungarian"
+    },
+    "IMPORT": "Import questionnaire in JSON format",
+    "HOME": "Back to main page",
+    "THEME": {
+      "TITLE": "Theme: ",
+      "LIGHT": "Light",
+      "DARK": "Dark"
     }
+  }
 }

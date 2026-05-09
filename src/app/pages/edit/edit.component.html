@@ -29,16 +29,30 @@
       </ng-template>
 
       <!-- @todo Hacky styling, "margin-bottom: 50px" is rarely intended and could cause issues. -->
-      <div class="form-container" id="sectionDropList" cdkDropList (cdkDropListDropped)="dropIntoEdit($event)"
-        [cdkDropListData]="editList" [cdkDropListConnectedTo]="getEditDropListConnectedTo()">
+      <div
+        class="form-container"
+        id="sectionDropList"
+        cdkDropList
+        (cdkDropListDropped)="dropIntoEdit($event)"
+        [cdkDropListData]="editList"
+        [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
+      >
         @for (edit of editList; track edit) {
-        @if (edit.data | instanceOfSectionList) {
-        <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
-        <nz-card [id]="edit.id" [nzTitle]="sectionTitle" [nzExtra]="sectionButtons" cdkDrag cdkDropList
-          [cdkDropListOrientation]="edit.data.layout"
-          [cdkDropListConnectedTo]="getSectionDropListConnectedTo(edit.data)"
-          [cdkDropListData]="edit.data.sectionInputs || []" [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
-          (cdkDropListDropped)="dropIntoSection($event)" class="element-list p-3 section-card" [nzBodyStyle]="
+          @if (edit.data | instanceOfSectionList) {
+            <!-- @todo Built-in widths will probably break responsiveness. Maybe we should prefer flex design? -->
+            <nz-card
+              [id]="edit.id"
+              [nzTitle]="sectionTitle"
+              [nzExtra]="sectionButtons"
+              cdkDrag
+              cdkDropList
+              [cdkDropListOrientation]="edit.data.layout"
+              [cdkDropListConnectedTo]="getSectionDropListConnectedTo(edit.data)"
+              [cdkDropListData]="edit.data.sectionInputs || []"
+              [cdkDropListEnterPredicate]="sectionDropListEnterPredicate"
+              (cdkDropListDropped)="dropIntoSection($event)"
+              class="element-list p-3 section-card"
+              [nzBodyStyle]="
                 edit.data.layout === LayoutEnum.HORIZONTAL
                   ? {
                       display: 'flex',
@@ -98,27 +112,51 @@
             </div>
           </ng-template>
 
-          @for (item of edit.data.sectionInputs; track item) {
-          <ng-template #inputTitleTemp>
-            <app-edit-name [edit]="item" [names]="names" (updateName)="updateName()"></app-edit-name>
-          </ng-template>
+              @for (item of edit.data.sectionInputs; track item) {
+                <ng-template #inputTitleTemp>
+                  <app-edit-name
+                    [edit]="item"
+                    [names]="names"
+                    (updateName)="updateName()"
+                  ></app-edit-name>
+                </ng-template>
 
-          <app-input-holder [id]="item.data?.id" class="element-box input-holder" cdkDrag [customTitle]="inputTitleTemp"
-            [cdkDragData]="item" [ngStyle]="getSectionInputStyle(edit.data)" [formInput]="item"
-            [inlineEdit]="inlineEdit" (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
-            (changedEvent)="onValueChanged($event)" />
+                <app-input-holder
+                  [id]="item.data?.id"
+                  class="element-box input-holder"
+                  cdkDrag
+                  [customTitle]="inputTitleTemp"
+                  [cdkDragData]="item"
+                  [ngStyle]="getSectionInputStyle(edit.data)"
+                  [formInput]="item"
+                  [inlineEdit]="inlineEdit"
+                  (removeComponentEvent)="removeSectionComponent(edit.data, $event)"
+                  (changedEvent)="onValueChanged($event)"
+                />
+              }
+            </nz-card>
+          } @else if (edit.data | instanceOfFormInputData) {
+            <ng-template #inputTitleTemp>
+              <app-edit-name
+                [edit]="edit"
+                [names]="names"
+                (updateName)="updateName()"
+              ></app-edit-name>
+            </ng-template>
+
+            <!-- @todo Again, a large built-in width and lots of margins, the code should be reviewed for similar cases. -->
+            <app-input-holder
+              class="element-box standalone-input-holder"
+              cdkDrag
+              [id]="edit.id"
+              [customTitle]="inputTitleTemp"
+              [cdkDragData]="edit"
+              [formInput]="edit.data"
+              [inlineEdit]="inlineEdit"
+              (removeComponentEvent)="removeEditComponent(edit)"
+              (changedEvent)="onValueChanged($event)"
+            />
           }
-        </nz-card>
-        } @else if (edit.data | instanceOfFormInputData) {
-        <ng-template #inputTitleTemp>
-          <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
-        </ng-template>
-
-        <!-- @todo Again, a large built-in width and lots of margins, the code should be reviewed for similar cases. -->
-        <app-input-holder class="element-box standalone-input-holder" cdkDrag [id]="edit.id"
-          [customTitle]="inputTitleTemp" [cdkDragData]="edit" [formInput]="edit.data" [inlineEdit]="inlineEdit"
-          (removeComponentEvent)="removeEditComponent(edit)" (changedEvent)="onValueChanged($event)" />
-        }
         }
       </div>
     </nz-content>
@@ -126,8 +164,14 @@
 
   <nz-sider nzWidth="300px" class="right-sider">
     <h3>{{ 'COMPONENTS.USED_COMPONENTS' | translate }}</h3>
-    <div class="components-list" id="structureList" cdkDropList [cdkDropListConnectedTo]="[]"
-      (cdkDropListDropped)="dropIntoEdit($event)" [cdkDropListData]="editList">
+    <div
+      class="components-list"
+      id="structureList"
+      cdkDropList
+      [cdkDropListConnectedTo]="[]"
+      (cdkDropListDropped)="dropIntoEdit($event)"
+      [cdkDropListData]="editList"
+    >
       @for (edit of editList; track edit) {
       @if (edit.data | instanceOfSectionList) {
       <div class="section-item" cdkDrag [cdkDragData]="edit">
@@ -136,17 +180,17 @@
             <nz-collapse-panel nzActive [nzShowArrow]="false" [nzHeader]="nzHeader" style="padding: 0">
               <ng-template #nzHeader>
                 <div class="component-item section-header" [class.invalid-component]="hasRepeatedSettingsErrorForEdit(edit)">
-                  @if(hasRepeatedSettingsErrorForEdit(edit)){
-                    <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon"></span>
-                  } @else {
-                    <nz-icon class="mr-4"
-                    [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"></nz-icon>
-                  }
-                  <span class="component-title">
-                    {{ edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate)
-                    }}
-                  </span>
-
+                  <div class="component-drag-handle" cdkDragHandle>
+                    @if(hasRepeatedSettingsErrorForEdit(edit)){
+                      <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon"></span>
+                    } @else {
+                      <nz-icon class="mr-4" [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"></nz-icon>
+                    }
+                    <span class="component-title">
+                      {{ edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate) }}
+                    </span>
+                  </div>
+          
                   <span class="hover-icon" (click)="scrollToElement(edit.id); $event.stopPropagation()">
                     <span nz-icon nzType="aim"></span>
                   </span>
@@ -168,9 +212,11 @@
       } @else if (edit.data | instanceOfFormInputData) {
       <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)"
         [class.invalid-component]="isComponentInvalid(edit)">
-        <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
-        <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
-        <span class="component-title"> {{ edit.data.title | translate }}</span>
+        <div class="component-drag-handle" cdkDragHandle>
+          <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
+          <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
+          <span class="component-title"> {{ edit.data.title | translate }}</span>
+        </div>
         <span class="hover-icon" (click)="edit.id && scrollToElement(edit.id)">
           <span nz-icon nzType="aim" nzTheme="outline"></span>
         </span>

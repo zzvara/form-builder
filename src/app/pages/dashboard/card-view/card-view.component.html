@@ -5,7 +5,10 @@
         <div class="description">
           <nz-card-meta [nzTitle]="project.title" [nzDescription]="null"></nz-card-meta>
           <ng-template #descriptionTooltipTemp>
-            <span class="ql-editor custom-tooltip" [innerHTML]="project.description | safeHtml"></span>
+            <span
+              class="ql-editor custom-tooltip"
+              [innerHTML]="project.description | safeHtml"
+            ></span>
           </ng-template>
 
           <div
@@ -19,10 +22,18 @@
 
         <div class="card-footer">
           <p>{{ 'GENERAL.CREATED' | translate }}: {{ project.created | date: DateFormat.DATE }}</p>
-          <p>{{ 'GENERAL.MODIFIED' | translate }}: {{ project.modified | date: DateFormat.DATE }}</p>
+          <p>
+            {{ 'GENERAL.MODIFIED' | translate }}: {{ project.modified | date: DateFormat.DATE }}
+          </p>
         </div>
         <ng-template #actionEdit>
-          <span (click)="onEditProject(project.id)" nz-icon nzType="edit" nzTheme="outline" class="edit-icon"></span>
+          <span
+            (click)="onEditProject(project.id)"
+            nz-icon
+            nzType="edit"
+            nzTheme="outline"
+            class="edit-icon"
+          ></span>
         </ng-template>
         <ng-template #actionDelete>
           <span
@@ -33,8 +44,7 @@
             nzType="delete"
             nzTheme="outline"
             class="delete-icon"
-          >
-          </span>
+          ></span>
         </ng-template>
       </nz-card>
     </div>

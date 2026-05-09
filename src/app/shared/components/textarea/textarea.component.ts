@@ -19,10 +19,14 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     NzFormItemComponent,
     NzFormControlComponent,
     NzTooltipModule,
-    NzInputModule
+    NzInputModule,
   ],
 })
-export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaComponentData, TextareaEditComponent> {
+export class TextareaComponent extends AbstractFieldLikeInputs<
+  string,
+  TextareaComponentData,
+  TextareaEditComponent
+> {
   override edit(): void {
     this.modalService
       .openModal({

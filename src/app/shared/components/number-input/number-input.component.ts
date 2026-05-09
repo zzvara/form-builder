@@ -14,9 +14,21 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.less'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NzFormItemComponent, NzFormControlComponent, NzInputNumberComponent, NzTooltipModule, NzIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    NzInputNumberComponent,
+    NzTooltipModule,
+    NzIconModule,
+  ],
 })
-export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
+export class NumberInputComponent extends AbstractFieldLikeInputs<
+  number,
+  NumberInputComponentData,
+  NumberInputEditComponent
+> {
   override edit(): void {
     this.modalService
       .openModal({

@@ -9,7 +9,12 @@ import { CustomValidators } from '@validators/custom-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+  NzFormModule,
+} from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
@@ -39,7 +44,9 @@ import { QuillEditorComponent } from 'ngx-quill';
     NzIconModule,
   ],
 })
-export class InputEditComponent<T extends InputComponentData = InputComponentData> extends AbstractFieldLikeEditForm<string, T> {
+export class InputEditComponent<
+  T extends InputComponentData = InputComponentData,
+> extends AbstractFieldLikeEditForm<string, T> {
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
@@ -49,20 +56,22 @@ export class InputEditComponent<T extends InputComponentData = InputComponentDat
       minLengthNumber: new FormControl(null, {
         updateOn: UpdateOnStrategy.CHANGE,
         validators: [
-          CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('minLength')),
+          CustomValidators.validateRequiredIf(() =>
+            this.getStrictControlValue<boolean>('minLength'),
+          ),
           CustomValidators.validateMinIf(() => this.getStrictControlValue<boolean>('minLength'), 1),
           CustomValidators.validateMinWithMaxIf(
             () => ({
               maxOn: this.getStrictControlValue<boolean>('maxLength'),
               maxNum: this.getStrictControlValue<number>('maxLengthNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('minLength')
+            () => this.getStrictControlValue<boolean>('minLength'),
           ),
         ],
       }),
       minLengthMessage: new FormControl(
         null,
-        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('minLength'))
+        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('minLength')),
       ),
       maxLength: new FormControl(false, {
         updateOn: UpdateOnStrategy.CHANGE,
@@ -70,14 +79,16 @@ export class InputEditComponent<T extends InputComponentData = InputComponentDat
       maxLengthNumber: new FormControl(null, {
         updateOn: UpdateOnStrategy.CHANGE,
         validators: [
-          CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('maxLength')),
+          CustomValidators.validateRequiredIf(() =>
+            this.getStrictControlValue<boolean>('maxLength'),
+          ),
           CustomValidators.validateMinIf(() => this.getStrictControlValue<boolean>('minLength'), 1),
           CustomValidators.validateMaxWithMinIf(
             () => ({
               minOn: this.getStrictControlValue<boolean>('minLength'),
               minNum: this.getStrictControlValue<number>('minLengthNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('maxLength')
+            () => this.getStrictControlValue<boolean>('maxLength'),
           ),
         ],
       }),
@@ -91,7 +102,11 @@ export class InputEditComponent<T extends InputComponentData = InputComponentDat
     // this.notifyFormGroupOnValueChanges(["required","minLength","maxLength","minLengthNumber","maxLengthNumber","showCharacterCounter"], this.formData);
     // ▼▼▼▼▼ marad az alábbi módszer (manuálisan megmondani, hogy melyik változásakor melyik mások értékelődjenek ki) ▼▼▼▼▼
     this.connectValidations({
-      minLength: [{ name: 'minLengthNumber' }, { name: 'minLengthMessage' }, { name: 'defaultValue' }],
+      minLength: [
+        { name: 'minLengthNumber' },
+        { name: 'minLengthMessage' },
+        { name: 'defaultValue' },
+      ],
       maxLength: [{ name: 'maxLengthNumber' }, { name: 'defaultValue' }],
       minLengthNumber: [{ name: 'maxLengthNumber' }, { name: 'defaultValue' }],
       maxLengthNumber: [{ name: 'minLengthNumber', recursiveCall: true }, { name: 'defaultValue' }],
@@ -132,7 +147,7 @@ export class InputEditComponent<T extends InputComponentData = InputComponentDat
         errorName: 'minlength',
         errorMessage: this.getStrictControlValue<string>('minLengthMessage').replace(
           '{{..}}',
-          String(this.getStrictControlValue<number>('minLengthNumber'))
+          String(this.getStrictControlValue<number>('minLengthNumber')),
         ),
       },
     ]);

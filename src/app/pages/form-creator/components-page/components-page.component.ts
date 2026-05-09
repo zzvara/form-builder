@@ -1,4 +1,13 @@
-import { ApplicationModule, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  ApplicationModule,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
@@ -65,7 +74,7 @@ export class ComponentsPageComponent implements OnInit {
     private modal: NzModalService,
     private translate: TranslateService,
     private projectService: ProjectService<Project>,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   /**
@@ -77,7 +86,10 @@ export class ComponentsPageComponent implements OnInit {
     if (this.projectId !== undefined) {
       this.projectHistory = this.projectService.getProjectHistory(this.projectId);
 
-      this.currentVersionNum = this.projectHistory.length > 0 ? this.projectHistory[this.projectHistory.length - 1].versionNum : 1;
+      this.currentVersionNum =
+        this.projectHistory.length > 0
+          ? this.projectHistory[this.projectHistory.length - 1].versionNum
+          : 1;
       this.versionChange.emit(this.currentVersionNum);
     }
   }
@@ -110,29 +122,35 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   jumpToFirstError() {
-    if (!this.editComponent) return;
+  if (!this.editComponent) return;
 
-    const invalidInput = this.editComponent.getAllFormInputs().find((inp) => this.editComponent.isInputInvalid(inp));
+  const invalidInput = this.editComponent
+    .getAllFormInputs()
+    .find((inp) => this.editComponent.isInputInvalid(inp));
 
-    if (invalidInput?.data?.id) {
-      this.editComponent.scrollToElement(invalidInput.data.id);
-      return;
-    }
-
-    const invalidRepeatedSection = this.editComponent.editList.find((item) => this.editComponent.hasRepeatedSettingsErrorForEdit(item));
-
-    if (invalidRepeatedSection?.id) {
-      this.editComponent.scrollToElement(invalidRepeatedSection.id);
-      return;
-    }
-
-    const invalidSection = this.editComponent.editList.find((item) => this.editComponent.isComponentInvalid(item));
-
-    if (invalidSection?.id) {
-      this.editComponent.scrollToElement(invalidSection.id);
-      return;
-    }
+  if (invalidInput?.data?.id) {
+    this.editComponent.scrollToElement(invalidInput.data.id);
+    return;
   }
+
+  const invalidRepeatedSection = this.editComponent.editList.find((item) =>
+    this.editComponent.hasRepeatedSettingsErrorForEdit(item),
+  );
+
+  if (invalidRepeatedSection?.id) {
+    this.editComponent.scrollToElement(invalidRepeatedSection.id);
+    return;
+  }
+
+  const invalidSection = this.editComponent.editList.find((item) =>
+    this.editComponent.isComponentInvalid(item),
+  );
+
+  if (invalidSection?.id) {
+    this.editComponent.scrollToElement(invalidSection.id);
+    return;
+  }
+}
 
   /**
    * Emits an event to set the current page in the parent component.
@@ -156,7 +174,10 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {boolean} True if the current version number is not the latest, indicating that a next version exists.
    */
   hasNextVersion(): boolean {
-    return this.currentVersionNum !== undefined && this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1);
+    return (
+      this.currentVersionNum !== undefined &&
+      this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1)
+    );
   }
 
   /**
@@ -212,15 +233,23 @@ export class ComponentsPageComponent implements OnInit {
         after: JSON.stringify(curr[key]),
       }));
   }
-  public getChangeItemsForVersion(version: ProjectVersion<Project>): Array<{ key: string; before: any; after: any }> {
-    return this.getDiffItems(version).map((d) => ({ key: d.key, before: d.before, after: d.after }));
+  public getChangeItemsForVersion(
+    version: ProjectVersion<Project>,
+  ): Array<{ key: string; before: any; after: any }> {
+    return this.getDiffItems(version).map((d) => ({
+      key: d.key,
+      before: d.before,
+      after: d.after,
+    }));
   }
   openDiffModal(version: ProjectVersion<Project>): void {
     const prev = version.versionNum - 1;
     const title =
       prev > 0
         ? this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', { version: prev })
-        : this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', { version: version.versionNum });
+        : this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', {
+            version: version.versionNum,
+          });
 
     this.modal.create({
       nzTitle: title,

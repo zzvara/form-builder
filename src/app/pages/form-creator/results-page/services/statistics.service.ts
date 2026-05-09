@@ -32,7 +32,7 @@ export class StatisticsService {
         }
         return stats;
       },
-      {} as { [key: string]: number }
+      {} as { [key: string]: number },
     );
   }
 }
