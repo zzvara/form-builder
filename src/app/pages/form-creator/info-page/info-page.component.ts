@@ -1,17 +1,53 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { Project, ProjectType } from '@interfaces/project';
+import { TranslatePipe } from '@ngx-translate/core';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+  NzFormModule,
+} from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzLayoutComponent } from 'ng-zorro-antd/layout';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
   styleUrls: ['./info-page.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzLayoutComponent,
+    NzFormLabelComponent,
+    NzFormControlComponent,
+    QuillEditorComponent,
+    NzFormItemComponent,
+    NzSwitchComponent,
+    NzTooltipModule,
+    NzDatePickerComponent,
+    NzTimePickerComponent,
+    NzButtonComponent,
+    NzCheckboxComponent,
+    NzInputModule,
+    NzIconModule,
+    NzFormModule,
+    TranslatePipe,
+  ],
 })
 export class InfoPageComponent implements OnInit {
   @Input() page?: number;
@@ -53,7 +89,7 @@ export class InfoPageComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService
+    private readonly jsonService: JsonService,
   ) {}
 
   ngOnInit(): void {
@@ -69,7 +105,8 @@ export class InfoPageComponent implements OnInit {
         }
       }
       if (params['type']) {
-        this.project.type = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.project.type =
+          params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
         this.form.patchValue({
           type: this.project.type === ProjectType.TEST,
         });
@@ -102,7 +139,9 @@ export class InfoPageComponent implements OnInit {
   updateForm() {
     this.project.title = this.form.controls['title'].value!;
     this.project.description = this.form.controls['description'].value!;
-    this.project.type = this.form.controls['type'].value ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+    this.project.type = this.form.controls['type'].value
+      ? ProjectType.TEST
+      : ProjectType.QUESTIONNAIRE;
     this.project.deadline = this.form.controls['deadline'].value!;
     this.project.deadline_checkbox = this.form.controls['hasdeadline'].value!;
     this.project.time_checkbox = this.form.controls['haslimit'].value!;

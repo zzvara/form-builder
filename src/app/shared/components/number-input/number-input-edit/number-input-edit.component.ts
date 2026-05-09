@@ -1,17 +1,51 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+  NzFormModule,
+} from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-number-input-edit',
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    TranslatePipe,
+    NzDividerComponent,
+    NzFormModule,
+    NzFormLabelComponent,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    QuillModule,
+    NzInputNumberComponent,
+    NzTooltipModule,
+    NzInputModule,
+    NzCheckboxComponent,
+    NzButtonModule,
+    NzIconModule,
+  ],
 })
-export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, NumberInputComponentData> {
+export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
+  number,
+  NumberInputComponentData
+> {
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
@@ -27,7 +61,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
               maxOn: this.getStrictControlValue<boolean>('max'),
               maxNum: this.getStrictControlValue<number>('maxNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('min')
+            () => this.getStrictControlValue<boolean>('min'),
           ),
         ],
       }),
@@ -43,7 +77,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
               minOn: this.getStrictControlValue<boolean>('min'),
               minNum: this.getStrictControlValue<number>('minNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('max')
+            () => this.getStrictControlValue<boolean>('max'),
           ),
         ],
       }),
@@ -56,7 +90,10 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
       }),
       formatter: new FormControl(null, [
         CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('format')),
-        CustomValidators.validateContainsIf(() => this.getStrictControlValue<boolean>('format'), '{{..}}'),
+        CustomValidators.validateContainsIf(
+          () => this.getStrictControlValue<boolean>('format'),
+          '{{..}}',
+        ),
       ]),
     });
     this.initializeFormValues();
@@ -65,7 +102,11 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
       min: [{ name: 'minNumber' }, { name: 'defaultValue' }],
       max: [{ name: 'maxNumber' }, { name: 'defaultValue' }],
       minNumber: [{ name: 'maxNumber' }, { name: 'stepNumber' }, { name: 'defaultValue' }],
-      maxNumber: [{ name: 'minNumber', recursiveCall: true }, { name: 'stepNumber' }, { name: 'defaultValue' }],
+      maxNumber: [
+        { name: 'minNumber', recursiveCall: true },
+        { name: 'stepNumber' },
+        { name: 'defaultValue' },
+      ],
       format: [{ name: 'formatter' }, { name: 'defaultValue' }],
     });
     this.setControlValuesBasedOnChanges({
@@ -106,7 +147,8 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
 
   get inputFormatter(): (value: number) => string {
     if (this.getStrictControlValue('format') && this.getStrictControlValue('formatter')) {
-      return (value) => this.getStrictControlValue<string>('formatter').replace('{{..}}', String(value));
+      return (value) =>
+        this.getStrictControlValue<string>('formatter').replace('{{..}}', String(value));
     }
     return (value) => String(value);
   }
@@ -120,7 +162,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, 
             this.getStrictControlValue<string>('formatter').substring(0, specIndex),
             this.getStrictControlValue<string>('formatter').substring(
               specIndex + 3,
-              this.getStrictControlValue<string>('formatter').length
+              this.getStrictControlValue<string>('formatter').length,
             ),
           ];
           return Number(value.replace(before, '').replace(after, ''));

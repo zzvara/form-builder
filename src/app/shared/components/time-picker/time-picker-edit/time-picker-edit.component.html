@@ -1,5 +1,8 @@
 <form id="datePickerEditFormID" nz-form [formGroup]="formData">
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <nz-form-label nzRequired>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label>
   <nz-form-item>
     <nz-form-control [nzErrorTip]="questionErrors">
@@ -19,10 +22,15 @@
     <nz-form-control>
       <quill-editor
         formControlName="descriptionValue"
-        [style]="{ height: '150px', width:'100%' }" [placeholder]="''"/>
+        [style]="{ height: '150px', width: '100%' }"
+        [placeholder]="''"
+      />
     </nz-form-control>
   </nz-form-item>
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.PLACEHOLDER' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.PLACEHOLDER' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <nz-form-label>
     {{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}
   </nz-form-label>
@@ -36,12 +44,16 @@
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="setDefaultValue">{{ 'COMPONENTS.SET_DEFAULT_VALUE?' | translate }}</label>
+        <label nz-checkbox formControlName="setDefaultValue">
+          {{ 'COMPONENTS.SET_DEFAULT_VALUE?' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
       <div>
-        <nz-form-label [nzRequired]="getControlValue('required')">{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }} </nz-form-label>
+        <nz-form-label [nzRequired]="getControlValue('required')">
+          {{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
             <nz-time-picker
@@ -59,13 +71,16 @@
               class="time-picker"
             ></nz-time-picker>
           </nz-form-control>
-          <ng-template #defaultValueErrorTemplate let-control> helpers </ng-template>
+          <ng-template #defaultValueErrorTemplate let-control>helpers</ng-template>
         </nz-form-item>
       </div>
     }
   </div>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.TIME_SETTINGS' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.TIME_SETTINGS' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <nz-form-label nzRequired>
     {{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}
   </nz-form-label>
@@ -82,24 +97,36 @@
 
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="use12Hours">{{ 'COMPONENTS.TIME_PICKER.12_HOUR_FORMAT' | translate }}</label>
+      <label nz-checkbox formControlName="use12Hours">
+        {{ 'COMPONENTS.TIME_PICKER.12_HOUR_FORMAT' | translate }}
+      </label>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="hideDisabledOptions">{{ 'COMPONENTS.TIME_PICKER.HIDE_DISABLED_OPTIONS' | translate }}</label>
+      <label nz-checkbox formControlName="hideDisabledOptions">
+        {{ 'COMPONENTS.TIME_PICKER.HIDE_DISABLED_OPTIONS' | translate }}
+      </label>
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.STEP_SETTINGS' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.STEP_SETTINGS' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <div class="section-container">
     <nz-form-label nzRequired>
       {{ 'COMPONENTS.TIME_PICKER.SET_HOUR_STEP' | translate }}
     </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="hourStepNumberErrors">
-        <nz-input-number formControlName="hourStep" [nzMin]="1" [nzMax]="24" [nzStep]="1"></nz-input-number>
+        <nz-input-number
+          formControlName="hourStep"
+          [nzMin]="1"
+          [nzMax]="24"
+          [nzStep]="1"
+        ></nz-input-number>
       </nz-form-control>
       <ng-template #hourStepNumberErrors let-control>
         @if (hasErrors(control, 'required')) {
@@ -116,7 +143,12 @@
     </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="minuteStepNumberErrors">
-        <nz-input-number formControlName="minuteStep" [nzMin]="1" [nzMax]="60" [nzStep]="1"></nz-input-number>
+        <nz-input-number
+          formControlName="minuteStep"
+          [nzMin]="1"
+          [nzMax]="60"
+          [nzStep]="1"
+        ></nz-input-number>
       </nz-form-control>
       <ng-template #minuteStepNumberErrors let-control>
         @if (hasErrors(control, 'required')) {
@@ -133,7 +165,12 @@
     </nz-form-label>
     <nz-form-item>
       <nz-form-control [nzErrorTip]="secondStepNumberErrors">
-        <nz-input-number formControlName="secondStep" [nzMin]="1" [nzMax]="60" [nzStep]="1"></nz-input-number>
+        <nz-input-number
+          formControlName="secondStep"
+          [nzMin]="1"
+          [nzMax]="60"
+          [nzStep]="1"
+        ></nz-input-number>
       </nz-form-control>
       <ng-template #secondStepNumberErrors let-control>
         @if (hasErrors(control, 'required')) {
@@ -146,11 +183,16 @@
     </nz-form-item>
   </div>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">{{ 'COMPONENTS.IS_REQUIRED' | translate }}</label>
+        <label nz-checkbox formControlName="required">
+          {{ 'COMPONENTS.IS_REQUIRED' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
@@ -161,7 +203,10 @@
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
             <!-- @Todo: FormControlName translate ? -->
-            <input nz-input formControlName="{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}" />
+            <input
+              nz-input
+              formControlName="{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}"
+            />
           </nz-form-control>
           <ng-template #requiredErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {
@@ -174,14 +219,16 @@
 
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="minTime">{{ 'COMPONENTS.TIME_PICKER.MIN_TIME_REQUIRED' | translate }}</label>
+        <label nz-checkbox formControlName="minTime">
+          {{ 'COMPONENTS.TIME_PICKER.MIN_TIME_REQUIRED' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('minTime')) {
       <div>
-        <nz-form-label nzRequired
-          ><span>{{ 'COMPONENTS.TIME_PICKER.MIN_TIME' | translate }}</span></nz-form-label
-        >
+        <nz-form-label nzRequired>
+          <span>{{ 'COMPONENTS.TIME_PICKER.MIN_TIME' | translate }}</span>
+        </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minTimeErrorMessageTemplate">
             <nz-time-picker
@@ -217,7 +264,9 @@
 
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="maxTime">{{ 'COMPONENTS.TIME_PICKER.MAX_TIME_REQUIRED' | translate }}</label>
+        <label nz-checkbox formControlName="maxTime">
+          {{ 'COMPONENTS.TIME_PICKER.MAX_TIME_REQUIRED' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('maxTime')) {
@@ -259,16 +308,21 @@
     }
   </div>
 
-  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.TOOLTIP' | translate }}" nzOrientation="left"></nz-divider>
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.TOOLTIP' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
   <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="showTooltip">{{ 'COMPONENTS.INPUT_TOOLTIP' | translate }}</label>
+        <label nz-checkbox formControlName="showTooltip">
+          {{ 'COMPONENTS.INPUT_TOOLTIP' | translate }}
+        </label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
       <div>
-        <nz-form-label nzRequired>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }} </nz-form-label>
+        <nz-form-label nzRequired>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
             <input nz-input formControlName="tooltipText" />

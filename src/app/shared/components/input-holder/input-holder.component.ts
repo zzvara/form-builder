@@ -4,24 +4,70 @@
 
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { AbstractInput } from '@abstract-classes/abstract-input';
-import { NgComponentOutlet } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, EventEmitter, Input, OnInit, Output, TemplateRef, Type, ViewChild } from '@angular/core';
+import { CommonModule, NgComponentOutlet } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  Type,
+  ViewChild,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgForm, NgModel } from '@angular/forms';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { getInputGroups, translateComponentType } from '@pages/edit/config/edit-data-config';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { NzCardComponent } from 'ng-zorro-antd/card';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+} from 'ng-zorro-antd/form';
+import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
+import { QuillEditorComponent } from 'ngx-quill';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'app-input-holder',
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzCardComponent,
+    NzFormLabelComponent,
+    NzFormControlComponent,
+    NzInputGroupComponent,
+    NzFormItemComponent,
+    QuillEditorComponent,
+    NzIconModule,
+    NzTooltipModule,
+    NzPopconfirmModule,
+    NzButtonModule,
+    NzInputModule,
+    NzSwitchModule,
+    TranslatePipe,
+  ],
 })
-export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>
+export class InputHolderComponent<
+  T = any,
+  D extends InputData<T> = InputData,
+  E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>,
+>
   implements OnInit, AfterViewInit
 {
   @Input() formInput!: FormInputData<D, T>;
@@ -47,7 +93,7 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
 
   constructor(
     private destroyRef: DestroyRef,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   get componentType(): Type<FormComponentMarker> {
@@ -70,9 +116,11 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
     if (this.inputOutlet) {
       setTimeout(() => {
         if (this.embeddedComponent && this.embeddedComponent.edited) {
-          this.embeddedComponent.edited.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: D) => {
-            this.changedEvent.emit(data);
-          });
+          this.embeddedComponent.edited
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((data: D) => {
+              this.changedEvent.emit(data);
+            });
         }
       });
     }
@@ -83,7 +131,9 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
   }
 
   resetComponent() {
-    const defaultData: FormInputData<D, T> | undefined = getInputGroups(this.translate).find((group) => group.type === this.formInput.type);
+    const defaultData: FormInputData<D, T> | undefined = getInputGroups(this.translate).find(
+      (group) => group.type === this.formInput.type,
+    );
     if (defaultData) {
       Object.keys(this.inputData)
         .filter((key) => key !== 'id' && key !== 'sectionId')
@@ -105,9 +155,9 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
   }
 
   onDraftChange(value: boolean) {
-  this.inputData.draft = value;
-  this.changedEvent.emit(this.inputData);
-}
+    this.inputData.draft = value;
+    this.changedEvent.emit(this.inputData);
+  }
 
   isValid() {
     return (this.form?.valid ?? false) || this.inputData.draft;

@@ -1,6 +1,7 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
   disabledHours,
@@ -14,15 +15,46 @@ import {
   disabledSeconds,
 } from '@helpers/date-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+  NzFormModule,
+} from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-time-picker-edit',
   templateUrl: './time-picker-edit.component.html',
   styleUrls: [],
-  standalone: false,
+  standalone: true,
+  imports: [
+    NzFormModule,
+    NzDividerComponent,
+    NzFormLabelComponent,
+    NzFormItemComponent,
+    NzFormControlComponent,
+    QuillEditorComponent,
+    NzTimePickerComponent,
+    NzInputNumberComponent,
+    NzCheckboxModule,
+    NzInputModule,
+    TranslatePipe,
+    ReactiveFormsModule,
+    DatePipe,
+  ],
 })
-export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, TimePickerComponentData> {
+export class TimePickerEditComponent extends AbstractFieldLikeEditForm<
+  Date,
+  TimePickerComponentData
+> {
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
@@ -38,7 +70,7 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, Tim
               maxOn: this.getStrictControlValue<boolean>('maxTime'),
               maxTime: this.getStrictControlValue<Date>('maxTimeValue'),
             }),
-            () => this.getStrictControlValue<boolean>('minTime')
+            () => this.getStrictControlValue<boolean>('minTime'),
           ),
         ],
       }),
@@ -54,7 +86,7 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, Tim
               minOn: this.getStrictControlValue<boolean>('minTime'),
               minTime: this.getStrictControlValue<Date>('minTimeValue'),
             }),
-            () => this.getStrictControlValue<boolean>('maxTime')
+            () => this.getStrictControlValue<boolean>('maxTime'),
           ),
         ],
       }),
@@ -66,8 +98,16 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, Tim
         updateOn: UpdateOnStrategy.CHANGE,
       }),
       hourStep: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(24)]),
-      minuteStep: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(60)]),
-      secondStep: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(60)]),
+      minuteStep: new FormControl(null, [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(60),
+      ]),
+      secondStep: new FormControl(null, [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(60),
+      ]),
     });
     this.initializeFormValues();
 

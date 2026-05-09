@@ -19,12 +19,16 @@ const HEADER_CONFIGS = [
   },
 ];
 
-export const headerResolver: ResolveFn<null> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): null => {
+export const headerResolver: ResolveFn<null> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot,
+): null => {
   const headerService = inject(HeaderService);
 
   headerService.setOptions(
-    HEADER_CONFIGS.find((config) => config.path === route.routeConfig?.path?.match(/([^/]+)$/)?.[0])?.menuOptions ??
-      HEADER_CONFIGS.find((config) => config.path === RoutePath.DASHBOARD)!.menuOptions
+    HEADER_CONFIGS.find((config) => config.path === route.routeConfig?.path?.match(/([^/]+)$/)?.[0])
+      ?.menuOptions ??
+      HEADER_CONFIGS.find((config) => config.path === RoutePath.DASHBOARD)!.menuOptions,
   );
 
   return null;

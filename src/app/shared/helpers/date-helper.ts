@@ -27,18 +27,32 @@ export interface MinMaxDateable {
 
 export function getDisabledDateConfig(data: MinMaxDateable): (current: Date) => boolean {
   return (current: Date): boolean => {
-    if (data.minDate && data.minDateValue && defaultDateComparers[data.mode](current, data.minDateValue) < 0) {
+    if (
+      data.minDate &&
+      data.minDateValue &&
+      defaultDateComparers[data.mode](current, data.minDateValue) < 0
+    ) {
       return true;
     }
-    return !!(data.maxDate && data.maxDateValue && defaultDateComparers[data.mode](current, data.maxDateValue) > 0);
+    return !!(
+      data.maxDate &&
+      data.maxDateValue &&
+      defaultDateComparers[data.mode](current, data.maxDateValue) > 0
+    );
   };
 }
 
-export function getDisabledDatesForMaxDate(maxDate: Date, mode: NzDateMode): (current: Date) => boolean {
+export function getDisabledDatesForMaxDate(
+  maxDate: Date,
+  mode: NzDateMode,
+): (current: Date) => boolean {
   return (current: Date): boolean => maxDate && defaultDateComparers[mode](current, maxDate) > 0;
 }
 
-export function getDisabledDatesForMinDate(minDate: Date, mode: NzDateMode): (current: Date) => boolean {
+export function getDisabledDatesForMinDate(
+  minDate: Date,
+  mode: NzDateMode,
+): (current: Date) => boolean {
   return (current: Date): boolean => minDate && defaultDateComparers[mode](current, minDate) < 0;
 }
 
@@ -116,7 +130,10 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
   };
 }
 
-export function getDisabledTimeConfigForMaxDate(currentDate: Date, maxDate: Date): DisabledTimeConfig {
+export function getDisabledTimeConfigForMaxDate(
+  currentDate: Date,
+  maxDate: Date,
+): DisabledTimeConfig {
   return {
     nzDisabledHours: (): number[] => {
       const hours: number[] = [];
@@ -166,7 +183,10 @@ export function getDisabledTimeConfigForMaxDate(currentDate: Date, maxDate: Date
   };
 }
 
-export function getDisabledTimeConfigForMinDate(currentDate: Date, minDate: Date): DisabledTimeConfig {
+export function getDisabledTimeConfigForMinDate(
+  currentDate: Date,
+  minDate: Date,
+): DisabledTimeConfig {
   return {
     nzDisabledHours: (): number[] => {
       const hours: number[] = [];
@@ -245,7 +265,9 @@ export function disabledMaxHours(maxTime: Date): (() => number[]) | undefined {
   };
 }
 
-export function disabledMinutes(data: TimePickerComponentData): ((hour: number) => number[]) | undefined {
+export function disabledMinutes(
+  data: TimePickerComponentData,
+): ((hour: number) => number[]) | undefined {
   return (hour) => {
     if (hour) {
       const minutes: number[] = [];
@@ -285,7 +307,9 @@ export function disabledMaxMinutes(maxTime: Date): ((hour: number) => number[]) 
   };
 }
 
-export function disabledSeconds(data: TimePickerComponentData): ((hour: number, minute: number) => number[]) | undefined {
+export function disabledSeconds(
+  data: TimePickerComponentData,
+): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
     if (hour && minute) {
       const seconds: number[] = [];
@@ -300,7 +324,9 @@ export function disabledSeconds(data: TimePickerComponentData): ((hour: number, 
     return range(0, 60);
   };
 }
-export function disabledMinSeconds(minTime: Date): ((hour: number, minute: number) => number[]) | undefined {
+export function disabledMinSeconds(
+  minTime: Date,
+): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
     if (hour && minute) {
       const seconds: number[] = [];
@@ -312,7 +338,9 @@ export function disabledMinSeconds(minTime: Date): ((hour: number, minute: numbe
     return range(0, 60);
   };
 }
-export function disabledMaxSeconds(maxTime: Date): ((hour: number, minute: number) => number[]) | undefined {
+export function disabledMaxSeconds(
+  maxTime: Date,
+): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
     if (hour && minute) {
       const seconds: number[] = [];

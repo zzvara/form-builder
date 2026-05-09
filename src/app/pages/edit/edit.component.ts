@@ -1,4 +1,10 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
@@ -13,16 +19,57 @@ import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { InstanceOfSectionListPipe } from '@app/shared/pipes/instance-of-section-list.pipe';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
+import { NzContentComponent, NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout';
+import { SidebarComponent } from '@app/shared/components/sidebar/sidebar.component';
+import { NzCardComponent } from 'ng-zorro-antd/card';
+import { EditNameComponent } from '@app/shared/components/edit-name/edit-name.component';
+import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
+import { InstanceOfRepeatedSectionPipe } from '@app/shared/pipes/instance-of-repeated-section.pipe';
+import { NzPopconfirmComponent, NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { CommonModule } from '@angular/common';
+import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzLayoutComponent,
+    NzSiderComponent,
+    SidebarComponent,
+    NzContentComponent,
+    DragDropModule,
+    InstanceOfSectionListPipe,
+    NzCardComponent,
+    EditNameComponent,
+    TranslatePipe,
+    NzSelectComponent,
+    InstanceOfRepeatedSectionPipe,
+    NzOptionComponent,
+    NzPopconfirmModule,
+    InputHolderComponent,
+    InstanceOfFormInputDataPipe,
+    NzCollapseComponent,
+    NzCollapsePanelComponent,
+    NzIconModule,
+    ComponentIconsPipe,
+    NzButtonComponent,
+    NzSwitchComponent,
+    NzInputNumberComponent,
+  ],
 })
 export class EditComponent implements OnInit, OnChanges {
   @Input() inlineEdit!: InlineEdit;
@@ -43,7 +90,7 @@ export class EditComponent implements OnInit, OnChanges {
     private undoRedoService: UndoRedoService<EditList[]>,
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
-    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
+    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe,
   ) {}
 
   ngOnInit() {
@@ -57,7 +104,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionIds: () => string[] = () =>
-    this.editList.filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => sect.id);
+    this.editList
+      .filter((edit) => this.instanceOfSectionListPipe.transform(edit.data))
+      .map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
     // If editList is empty but there's JSON data with editList, use that instead
@@ -77,8 +126,13 @@ export class EditComponent implements OnInit, OnChanges {
     });
   };
 
-  sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (item, _list) =>
-    item.data && (this.instanceOfFormInputDataPipe.transform(item.data) || this.instanceOfFormInputDataPipe.transform(item.data.data));
+  sectionDropListEnterPredicate: (item: CdkDrag, list: CdkDropList<FormInputData[]>) => boolean = (
+    item,
+    _list,
+  ) =>
+    item.data &&
+    (this.instanceOfFormInputDataPipe.transform(item.data) ||
+      this.instanceOfFormInputDataPipe.transform(item.data.data));
 
   /**
    * Saves the current state of the form inputs to the project.
@@ -134,12 +188,17 @@ export class EditComponent implements OnInit, OnChanges {
     }
   }
 
-  dropIntoEdit(event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>): void {
+  dropIntoEdit(
+    event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>,
+  ): void {
     // Check if the item was moved within the same container
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (this.instanceOfFormInputDataPipe.transform(event.item.data) && !event.item.data.data?.id) {
+    } else if (
+      this.instanceOfFormInputDataPipe.transform(event.item.data) &&
+      !event.item.data.data?.id
+    ) {
       const droppedInput: FormInputData = event.item.data;
       if (droppedInput.title === 'SECTION') {
         const newSectionId = uuidv4();
@@ -197,7 +256,9 @@ export class EditComponent implements OnInit, OnChanges {
     this.undoRedoService.saveState(this.editList);
   }
 
-  dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
+  dropIntoSection(
+    event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>,
+  ): void {
     const eventData: CdkDragDrop<FormInputData[]> = event as CdkDragDrop<FormInputData[]>;
     const draggable: CdkDrag = eventData.item;
     const data: EditList = draggable.data;
@@ -206,7 +267,10 @@ export class EditComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // Move the item within the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (this.getSectionIds().includes(event.container.id) && this.getSectionIds().includes(event.previousContainer.id)) {
+    } else if (
+      this.getSectionIds().includes(event.container.id) &&
+      this.getSectionIds().includes(event.previousContainer.id)
+    ) {
       // Move items between sections
       const sectionList = data.data as SectionList;
       sectionList.sectionId = event.container.id;
@@ -263,7 +327,10 @@ export class EditComponent implements OnInit, OnChanges {
 
   getSectionInputStyle(sect: SectionList): { [p: string]: string } {
     let width: number;
-    if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) || sect.layout === LayoutEnum.VERTICAL) {
+    if (
+      sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) ||
+      sect.layout === LayoutEnum.VERTICAL
+    ) {
       width = 100;
     } else {
       width = 100 / sect.sectionInputs.length - 1;
@@ -283,7 +350,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   isFormInvalid(): boolean {
-    return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid());
+    return (
+      this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid())
+    );
   }
   isComponentInvalid(edit: EditList): boolean {
     if (this.instanceOfSectionListPipe.transform(edit.data)) {
@@ -334,7 +403,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private getCustomTitles(): string[] {
-    return this.editList.filter((e) => e.data.customTitle).map((e) => e.data.customTitle) as string[];
+    return this.editList
+      .filter((e) => e.data.customTitle)
+      .map((e) => e.data.customTitle) as string[];
   }
 
   returnChildren(sect: SectionList): { title: string; id: string }[] {
@@ -351,7 +422,10 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private isReferencable(input: FormInputData): input is FormInputData & { customTitle: string } {
-    return (input.type === 'CheckboxGroupComponent' || input.type === 'NumberInputComponent') && !!input.customTitle;
+    return (
+      (input.type === 'CheckboxGroupComponent' || input.type === 'NumberInputComponent') &&
+      !!input.customTitle
+    );
   }
 
   private getReferencables(id: string): string[] {
@@ -364,10 +438,14 @@ export class EditComponent implements OnInit, OnChanges {
       const isSectionList = this.instanceOfSectionListPipe.transform(input.data);
 
       if (isSectionList) {
-        return (input.data as SectionList).sectionInputs.filter((item) => this.isReferencable(item)).map((item) => item.customTitle);
+        return (input.data as SectionList).sectionInputs
+          .filter((item) => this.isReferencable(item))
+          .map((item) => item.customTitle);
       }
 
-      return this.isReferencable(input.data as FormInputData) && input.data.customTitle ? [input.data.customTitle] : [];
+      return this.isReferencable(input.data as FormInputData) && input.data.customTitle
+        ? [input.data.customTitle]
+        : [];
     });
   }
 

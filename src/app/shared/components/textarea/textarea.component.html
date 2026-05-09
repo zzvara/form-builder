@@ -1,6 +1,6 @@
 <nz-form-item>
   @if (label) {
-    <ng-container [ngTemplateOutlet]="label"> </ng-container>
+    <ng-container [ngTemplateOutlet]="label"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
@@ -28,10 +28,18 @@
 <ng-template #footerTemplate>
   <div class="footer-container">
     @if (data.showTooltip) {
-      <div nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle" class="tooltip-icon"></div>
+      <div
+        nz-icon
+        nz-tooltip
+        [nzTooltipTitle]="data.tooltipText"
+        nzType="info-circle"
+        class="tooltip-icon"
+      ></div>
     }
     @if (data.maxLength && data.showCharacterCounter) {
-      <div class="character-counter">{{ inputComponent.value.length }}/{{ data.maxLengthNumber }}</div>
+      <div class="character-counter">
+        {{ inputComponent.value.length }}/{{ data.maxLengthNumber }}
+      </div>
     }
   </div>
 </ng-template>

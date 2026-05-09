@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '@services/header/header.service';
 import { JsonService } from '@services/json.service';
 import { Subscription } from 'rxjs';
@@ -12,12 +12,27 @@ import { LanguageEnum } from '@app/shared/interfaces/language.enum';
 import { ChangeDetectorRef } from '@angular/core';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { EventService } from '@app/shared/services/event.service';
+import { NzHeaderComponent } from 'ng-zorro-antd/layout';
+import { CommonModule } from '@angular/common';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    NzHeaderComponent,
+    TranslatePipe,
+    NzDropdownModule,
+    NzButtonComponent,
+    NzIconModule,
+    NzMenuModule,
+  ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   headerOptions: MenuOption[] = [];
@@ -39,30 +54,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly jsonService: JsonService,
     private readonly translate: TranslateService,
     private readonly eventService: EventService,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.currentLanguage =
-      localStorage.getItem(LocalStorageKey.LANGUAGE) && localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
+      localStorage.getItem(LocalStorageKey.LANGUAGE) &&
+      localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
         ? LanguageEnum.HU
         : LanguageEnum.EN;
     this.translate.use(this.currentLanguage);
     this.jsonService.clearJsonData();
     this.optionsSub = this.headerService
       .getOptions()
-      .subscribe((options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options));
+      .subscribe(
+        (options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options),
+      );
 
-    this.actionsSub = this.headerService.getContextActions().subscribe((actions) => (this.contextActions = actions));
+    this.actionsSub = this.headerService
+      .getContextActions()
+      .subscribe((actions) => (this.contextActions = actions));
     this.currentTheme =
-      localStorage.getItem(LocalStorageKey.THEME) && localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
+      localStorage.getItem(LocalStorageKey.THEME) &&
+      localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
         ? ThemeEnum.LIGHT
         : ThemeEnum.DARK;
 
     if (this.currentTheme === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }
-    this.currentTheme = localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.DARK ? ThemeEnum.DARK : ThemeEnum.LIGHT;
+    this.currentTheme =
+      localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.DARK
+        ? ThemeEnum.DARK
+        : ThemeEnum.LIGHT;
     if (this.currentTheme === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }
@@ -77,7 +101,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.activeOptions.includes(toChange)) {
       this.headerService.setOptions(
         this.headerOptions,
-        this.activeOptions.filter((option) => option !== toChange)
+        this.activeOptions.filter((option) => option !== toChange),
       );
     } else {
       this.headerService.setOptions(this.headerOptions, [...this.activeOptions, toChange]);

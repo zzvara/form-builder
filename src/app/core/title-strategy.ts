@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class TranslatedTitleStrategy extends TitleStrategy {
   constructor(
     private readonly title: Title,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {
     super();
   }
