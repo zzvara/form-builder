@@ -1,0 +1,23 @@
+app-code-editor {
+  & .code-editor {
+    max-height: 120px;
+  }
+}
+
+.custom-label {
+  &.required-label::before {
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: '*';
+  }
+  &::after {
+    content: ':';
+    position: relative;
+    top: -0.5px;
+    margin: 0 8px 0 2px;
+  }
+}

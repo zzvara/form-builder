@@ -10,7 +10,7 @@
     </nz-form-control>
     <ng-template #questionErrors let-control>
       @if (hasErrors(control, 'required')) {
-        <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
+      <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
       }
     </ng-template>
   </nz-form-item>
@@ -49,32 +49,32 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('setDefaultValue')) {
-      <div>
-        <nz-form-label [nzRequired]="getControlValue('required')">
-          {{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}
-        </nz-form-label>
-        <nz-form-item>
-          <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
-            <nz-date-picker
-              [nzPlaceHolder]="'COMPONENTS.SELECT_DATE' | translate"
-              formControlName="defaultValue"
-              [nzMode]="getControlValue('mode')"
-              [nzFormat]="getFullFormat"
-              [nzDisabledDate]="getDisabledDateConfig(rawFormData)"
-              [nzDisabledTime]="disabledTime"
-              [nzShowTime]="getTimeOptions"
-              [nzShowWeekNumber]="getControlValue('showWeekNumber')"
-              [nzShowToday]="true"
-              class="date-picker"
-            ></nz-date-picker>
-          </nz-form-control>
-          <ng-template #defaultValueErrorTemplate let-control>
-            @for (message of getErrorMessages(control); track message) {
-              <div>{{ message }}</div>
-            }
-          </ng-template>
-        </nz-form-item>
-      </div>
+    <div>
+      <nz-form-label [nzRequired]="getControlValue('required')">
+        {{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}
+      </nz-form-label>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
+          <nz-date-picker
+            [nzPlaceHolder]="'COMPONENTS.SELECT_DATE' | translate"
+            formControlName="defaultValue"
+            [nzMode]="getControlValue('mode')"
+            [nzFormat]="getFullFormat"
+            [nzDisabledDate]="getDisabledDateConfig(rawFormData)"
+            [nzDisabledTime]="disabledTime"
+            [nzShowTime]="getTimeOptions"
+            [nzShowWeekNumber]="getControlValue('showWeekNumber')"
+            [nzShowToday]="true"
+            class="date-picker"
+          ></nz-date-picker>
+        </nz-form-control>
+        <ng-template #defaultValueErrorTemplate let-control>
+          @for (message of getErrorMessages(control); track message) {
+          <div>{{ message }}</div>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
     }
   </div>
 
@@ -89,7 +89,7 @@
     <nz-form-control>
       <nz-select formControlName="mode" nzPlaceHolder="Mode">
         @for (item of datePickerModes; track item.mode) {
-          <nz-option [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
+        <nz-option [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
         }
       </nz-select>
     </nz-form-control>
@@ -104,7 +104,7 @@
     </nz-form-control>
     <ng-template #dateFormatErrors let-control>
       @if (hasErrors(control, 'required')) {
-        <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
+      <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
       }
     </ng-template>
   </nz-form-item>
@@ -122,21 +122,21 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTime')) {
-      <div>
-        <nz-form-label nzRequired>
-          {{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}
-        </nz-form-label>
-        <nz-form-item>
-          <nz-form-control [nzErrorTip]="timeFormatErrors">
-            <input nz-input formControlName="timeFormat" />
-          </nz-form-control>
-          <ng-template #timeFormatErrors let-control>
-            @if (hasErrors(control, 'required')) {
-              <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
-            }
-          </ng-template>
-        </nz-form-item>
-      </div>
+    <div>
+      <nz-form-label nzRequired>
+        {{ 'COMPONENTS.TIME_PICKER.TIME_FORMAT' | translate }}
+      </nz-form-label>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="timeFormatErrors">
+          <input nz-input formControlName="timeFormat" />
+        </nz-form-control>
+        <ng-template #timeFormatErrors let-control>
+          @if (hasErrors(control, 'required')) {
+          <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
     }
   </div>
 
@@ -173,21 +173,21 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('required')) {
-      <div>
-        <nz-form-label [nzRequired]="getControlValue('required')">
-          {{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}
-        </nz-form-label>
-        <nz-form-item>
-          <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-            <input nz-input formControlName="requiredMessage" />
-          </nz-form-control>
-          <ng-template #requiredErrorMessageTemplate let-control>
-            @if (hasErrors(control, 'required')) {
-              <div>{{ 'COMPONENTS.IS_FIELD_REQUIRED' | translate }}</div>
-            }
-          </ng-template>
-        </nz-form-item>
-      </div>
+    <div>
+      <nz-form-label [nzRequired]="getControlValue('required')">
+        {{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}
+      </nz-form-label>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
+          <input nz-input formControlName="requiredMessage" />
+        </nz-form-control>
+        <ng-template #requiredErrorMessageTemplate let-control>
+          @if (hasErrors(control, 'required')) {
+          <div>{{ 'COMPONENTS.IS_FIELD_REQUIRED' | translate }}</div>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
     }
 
     <nz-form-item>
@@ -198,39 +198,39 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('minDate')) {
-      <div>
-        <nz-form-label nzRequired>
-          {{ 'COMPONENTS.DATE_PICKER.MIN_DATE' | translate }}
-        </nz-form-label>
-        <nz-form-item>
-          <nz-form-control [nzErrorTip]="minDateErrorMessageTemplate">
-            <nz-date-picker
-              [nzPlaceHolder]="'COMPONENTS.DATE_PICKER.SELECT_MIN_DATE' | translate"
-              formControlName="minDateValue"
-              [nzMode]="getControlValue('mode')"
-              [nzFormat]="getFullFormat"
-              [nzDisabledDate]="getDisabledDatesForMin"
-              [nzDisabledTime]="disabledTimeConfigForMin"
-              [nzShowTime]="getTimeOptions"
-              [nzShowWeekNumber]="getControlValue('showWeekNumber')"
-              [nzShowToday]="true"
-              class="date-picker"
-            ></nz-date-picker>
-          </nz-form-control>
-          <ng-template #minDateErrorMessageTemplate let-control>
-            @if (hasErrors(control, 'required')) {
-              <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
-            }
-            @if (hasErrors(control, 'minMaxError')) {
-              <div>
-                {{ 'COMPONENTS.DATE_PICKER.MIN_ERROR' | translate }} ({{
-                  control.errors['minMaxError'] | date: getFullFormat
-                }})!
-              </div>
-            }
-          </ng-template>
-        </nz-form-item>
-      </div>
+    <div>
+      <nz-form-label nzRequired>
+        {{ 'COMPONENTS.DATE_PICKER.MIN_DATE' | translate }}
+      </nz-form-label>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="minDateErrorMessageTemplate">
+          <nz-date-picker
+            [nzPlaceHolder]="'COMPONENTS.DATE_PICKER.SELECT_MIN_DATE' | translate"
+            formControlName="minDateValue"
+            [nzMode]="getControlValue('mode')"
+            [nzFormat]="getFullFormat"
+            [nzDisabledDate]="getDisabledDatesForMin"
+            [nzDisabledTime]="disabledTimeConfigForMin"
+            [nzShowTime]="getTimeOptions"
+            [nzShowWeekNumber]="getControlValue('showWeekNumber')"
+            [nzShowToday]="true"
+            class="date-picker"
+          ></nz-date-picker>
+        </nz-form-control>
+        <ng-template #minDateErrorMessageTemplate let-control>
+          @if (hasErrors(control, 'required')) {
+          <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
+          }
+          @if (hasErrors(control, 'minMaxError')) {
+          <div>
+            {{ 'COMPONENTS.DATE_PICKER.MIN_ERROR' | translate }} ({{
+            control.errors['minMaxError'] | date: getFullFormat
+            }})!
+          </div>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
     }
 
     <nz-form-item>
@@ -241,39 +241,39 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('maxDate')) {
-      <div>
-        <nz-form-label nzRequired>
-          {{ 'COMPONENTS.DATE_PICKER.MAX_DATE' | translate }}
-        </nz-form-label>
-        <nz-form-item>
-          <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
-            <nz-date-picker
-              [nzPlaceHolder]="'COMPONENTS.DATE_PICKER.SELECT_MAX_DATE' | translate"
-              formControlName="maxDateValue"
-              [nzMode]="getControlValue('mode')"
-              [nzFormat]="getFullFormat"
-              [nzDisabledDate]="getDisabledDatesForMax"
-              [nzDisabledTime]="disabledTimeConfigForMax"
-              [nzShowTime]="getTimeOptions"
-              [nzShowWeekNumber]="getControlValue('showWeekNumber')"
-              [nzShowToday]="true"
-              class="date-picker"
-            ></nz-date-picker>
-          </nz-form-control>
-          <ng-template #maxDateErrorMessageTemplate let-control>
-            @if (hasErrors(control, 'required')) {
-              <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
-            }
-            @if (hasErrors(control, 'maxMinError')) {
-              <div>
-                {{ 'COMPONENTS.DATE_PICKER.MAX_ERROR' | translate }} ({{
-                  control.errors['maxMinError'] | date: getFullFormat
-                }})!
-              </div>
-            }
-          </ng-template>
-        </nz-form-item>
-      </div>
+    <div>
+      <nz-form-label nzRequired>
+        {{ 'COMPONENTS.DATE_PICKER.MAX_DATE' | translate }}
+      </nz-form-label>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
+          <nz-date-picker
+            [nzPlaceHolder]="'COMPONENTS.DATE_PICKER.SELECT_MAX_DATE' | translate"
+            formControlName="maxDateValue"
+            [nzMode]="getControlValue('mode')"
+            [nzFormat]="getFullFormat"
+            [nzDisabledDate]="getDisabledDatesForMax"
+            [nzDisabledTime]="disabledTimeConfigForMax"
+            [nzShowTime]="getTimeOptions"
+            [nzShowWeekNumber]="getControlValue('showWeekNumber')"
+            [nzShowToday]="true"
+            class="date-picker"
+          ></nz-date-picker>
+        </nz-form-control>
+        <ng-template #maxDateErrorMessageTemplate let-control>
+          @if (hasErrors(control, 'required')) {
+          <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
+          }
+          @if (hasErrors(control, 'maxMinError')) {
+          <div>
+            {{ 'COMPONENTS.DATE_PICKER.MAX_ERROR' | translate }} ({{
+            control.errors['maxMinError'] | date: getFullFormat
+            }})!
+          </div>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
     }
   </div>
   <nz-divider
@@ -289,19 +289,21 @@
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTooltip')) {
-      <div>
-        <nz-form-label nzRequired>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</nz-form-label>
-        <nz-form-item>
-          <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
-            <input nz-input formControlName="tooltipText" />
-          </nz-form-control>
-          <ng-template #tooltipTextErrorMessageTemplate let-control>
-            @if (hasErrors(control, 'required')) {
-              <div>{{ 'COMPONENTS.PROVIDE_TOOLTIP' | translate }}</div>
-            }
-          </ng-template>
-        </nz-form-item>
-      </div>
+    <div>
+      <nz-form-label nzRequired>{{ 'COMPONENTS.TOOLTIP_TEXT' | translate }}</nz-form-label>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="tooltipTextErrorMessageTemplate">
+          <input nz-input formControlName="tooltipText" />
+        </nz-form-control>
+        <ng-template #tooltipTextErrorMessageTemplate let-control>
+          @if (hasErrors(control, 'required')) {
+          <div>{{ 'COMPONENTS.PROVIDE_TOOLTIP' | translate }}</div>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
     }
   </div>
 </form>
+
+<app-code-editor-modal [elementId]="nzModalData.id"></app-code-editor-modal>
