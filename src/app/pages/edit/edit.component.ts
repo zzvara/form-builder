@@ -68,6 +68,7 @@ import { ModalService } from '@app/shared/services/modal.service';
     NzIconModule,
     ComponentIconsPipe,
     NzButtonComponent,
+    NzSwitchComponent,
     NzInputNumberComponent,
     NzSwitchComponent,
   ],
