@@ -1,1 +1,27 @@
 <div #editor class="code-editor"></div>
+
+@if (mode === CodeEditorMode.EDIT) {
+  @if (errorCodeEditor || currentErrorsLength) {
+    <ng-template #errorTemp>
+      @if (errorCodeEditor) {
+        <div>
+          {{ 'COMPONENTS.CONDITION_SETTINGS.ERRORS.' + errorCodeEditor | translate }}
+        </div>
+      }
+      @if (currentErrorsLength) {
+        <div>
+          {{ 'COMPONENTS.CONDITION_SETTINGS.ERRORS.CODE' | translate: { count: currentErrorsLength } }}
+        </div>
+      }
+    </ng-template>
+    <nz-alert class="mt-8" nzType="error" [nzMessage]="errorTemp"></nz-alert>
+  }
+
+  @if (currentWarningsLength) {
+    <nz-alert
+      class="mt-8"
+      nzType="warning"
+      [nzMessage]="'COMPONENTS.CONDITION_SETTINGS.WARNINGS.CODE' | translate: { count: currentWarningsLength }"
+    ></nz-alert>
+  }
+}

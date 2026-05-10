@@ -65,6 +65,7 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
   editControl: FormControl = new FormControl('');
   editingIndex: number | null = null;
   editError: string | null = null;
+
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
@@ -189,11 +190,13 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
+
   startEdit(i: number, value: string) {
     this.editingIndex = i;
     this.editError = null;
     this.editControl = new FormControl(value, Validators.required);
   }
+
   saveEdit(i: number) {
     const newValue = this.editControl.value?.trim();
     if (!newValue) return;
@@ -209,10 +212,12 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
     this.editingIndex = null;
     this.editError = null;
   }
+
   cancelEdit() {
     this.editingIndex = null;
     this.editError = null;
   }
+
   getMinOptions(): number {
     const error: any = this.getError(this.options, 'minLengthError');
     return error.min - error.current;
