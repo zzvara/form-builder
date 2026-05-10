@@ -19,7 +19,6 @@
             "index": "src/index.html",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "webWorkerTsConfig": "tsconfig.worker.json",
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -93,7 +92,6 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "webWorkerTsConfig": "tsconfig.worker.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.less"],
             "scripts": []

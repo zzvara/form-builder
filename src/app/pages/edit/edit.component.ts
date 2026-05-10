@@ -1,7 +1,6 @@
+
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
@@ -25,9 +24,11 @@ import { SidebarComponent } from '@app/shared/components/sidebar/sidebar.compone
 import { NzCardComponent } from 'ng-zorro-antd/card';
 import { EditNameComponent } from '@app/shared/components/edit-name/edit-name.component';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
 import { InstanceOfRepeatedSectionPipe } from '@app/shared/pipes/instance-of-repeated-section.pipe';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { CommonModule } from '@angular/common';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
@@ -35,8 +36,6 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzSwitchComponent } from 'ng-zorro-antd/switch';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
-import { ComponentService } from '@app/shared/services/component.service';
-import { ModalService } from '@app/shared/services/modal.service';
 
 @Component({
   selector: 'app-edit',
@@ -70,7 +69,6 @@ import { ModalService } from '@app/shared/services/modal.service';
     NzButtonComponent,
     NzSwitchComponent,
     NzInputNumberComponent,
-    NzSwitchComponent,
   ],
 })
 export class EditComponent implements OnInit, OnChanges {
@@ -91,10 +89,8 @@ export class EditComponent implements OnInit, OnChanges {
   LayoutEnum = LayoutEnum;
 
   constructor(
-    private modalService: ModalService,
     private projectService: ProjectService<Project>,
     private undoRedoService: UndoRedoService<EditList[]>,
-    private componentService: ComponentService,
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe,
@@ -126,7 +122,7 @@ export class EditComponent implements OnInit, OnChanges {
     if (this.editList.length === 0 && this.projectId) {
       const project = this.projectService.searchData(this.projectId)[0];
       if (project?.editList && project.editList.length > 0) {
-        this.editList = this.cleanCorruptedData(cloneDeep(project.editList));
+        this.editList = cloneDeep(project.editList);
         this.names = this.getCustomTitles();
       }
     }
@@ -135,7 +131,7 @@ export class EditComponent implements OnInit, OnChanges {
       if (this.instanceOfSectionListPipe.transform(edit.data)) {
         return edit.data.sectionInputs;
       }
-      return edit.data as FormInputData;
+      return edit.data;
     });
   };
 
@@ -173,52 +169,11 @@ export class EditComponent implements OnInit, OnChanges {
     if (this.projectId !== undefined) {
       const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
       if (project?.editList) {
-        this.editList = this.cleanCorruptedData(cloneDeep(project.editList));
+        this.editList = cloneDeep(project.editList);
         this.names = this.getCustomTitles();
         this.undoRedoService.saveState(this.editList);
       }
-      this.componentService.component$.next(this.editList);
     }
-  }
-
-  /**
-   * This method will find old bad data (empty IDs or bad packaging)
-   * and completely fix it on load!
-   */
-  private cleanCorruptedData(list: EditList[]): EditList[] {
-    for (const edit of list) {
-      if (!edit.id || edit.id === '') {
-        edit.id = uuidv4();
-      }
-
-      if (this.instanceOfFormInputDataPipe.transform(edit.data)) {
-        const inputData = edit.data as FormInputData;
-        if (inputData.data && (!inputData.data.id || inputData.data.id === '')) {
-          inputData.data.id = uuidv4();
-        }
-      }
-
-      if (this.instanceOfSectionListPipe.transform(edit.data)) {
-        const section = edit.data as SectionList;
-        if (!section.sectionInputs) {
-          section.sectionInputs = [];
-        }
-
-        section.sectionInputs = section.sectionInputs.map((input: any) => {
-          let cleaned = input;
-          if (input.id && input.data && !input.type) {
-            cleaned = input.data;
-          }
-
-          if (cleaned.data && (!cleaned.data.id || cleaned.data.id === '')) {
-            cleaned.data.id = uuidv4();
-          }
-
-          return cleaned;
-        });
-      }
-    }
-    return list;
   }
 
   /**
@@ -229,7 +184,6 @@ export class EditComponent implements OnInit, OnChanges {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
       this.undoRedoService.clearHistory();
       this.undoRedoService.saveState(this.editList);
-      this.componentService.component$.next(this.editList);
     }
   }
 
@@ -237,11 +191,9 @@ export class EditComponent implements OnInit, OnChanges {
     if (undoRedoEvent === UndoRedoEnum.UNDO) {
       this.editList = this.undoRedoService.undo() ?? [];
       this.names = this.getCustomTitles();
-      this.componentService.component$.next(this.editList);
     } else {
       this.editList = this.undoRedoService.redo() ?? [];
       this.names = this.getCustomTitles();
-      this.componentService.component$.next(this.editList);
     }
   }
 
@@ -264,16 +216,8 @@ export class EditComponent implements OnInit, OnChanges {
           data: {
             sectionId: newSectionId,
             layout: LayoutEnum.VERTICAL,
-            reorderEnabled: false,
             sectionInputs: [],
             type: droppedInput.type,
-            data: {
-              id: newSectionId,
-              sectionId: newSectionId,
-            },
-            codeEditor: {
-              enabled: false,
-            },
           },
         };
         this.names = this.getCustomTitles();
@@ -286,14 +230,6 @@ export class EditComponent implements OnInit, OnChanges {
         // Initialize data if it's null
         if (!newItem.data) {
           newItem.data = {};
-        }
-
-        newItem.codeEditor = {
-          enabled: droppedInput.codeEditor?.enabled ?? false,
-        };
-
-        if (droppedInput.customTitle && droppedInput.customTitle !== '') {
-          newItem.customTitle = droppedInput.customTitle;
         }
 
         newItem.data.id = newItemId;
@@ -314,10 +250,6 @@ export class EditComponent implements OnInit, OnChanges {
         event.item.data.data = {};
       }
 
-      if (event.item.data.codeEditor) {
-        event.item.data.codeEditor.enabled = false;
-      }
-
       event.item.data.data.sectionId = event.container.id;
       const transferredInput: EditList = {
         id: event.item.data.data.id!,
@@ -330,7 +262,6 @@ export class EditComponent implements OnInit, OnChanges {
 
     this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
   }
 
   dropIntoSection(
@@ -351,7 +282,7 @@ export class EditComponent implements OnInit, OnChanges {
       // Move items between sections
       const sectionList = data.data as SectionList;
       sectionList.sectionId = event.container.id;
-      event.container.data.splice(event.currentIndex, 0, draggable.data as FormInputData);
+      event.container.data.splice(event.currentIndex, 0, draggable.data);
       event.previousContainer.data.splice(event.previousIndex, 1);
     } else if (!innerData.data?.id) {
       // Add a completely new item to any drop list
@@ -362,24 +293,15 @@ export class EditComponent implements OnInit, OnChanges {
       newItem.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else {
-      // Move existing item from edit area to section or from section to edit area
-      const droppedInput: any = draggable.data;
-      const movedItem = cloneDeep(droppedInput);
-
-      let toMove: FormInputData;
-
-      if (this.instanceOfFormInputDataPipe.transform(movedItem)) {
-        toMove = movedItem;
-      } else {
-        toMove = movedItem.data;
-      }
-
+      // Move existing item from edit area to section
+      const droppedInput: FormInputData = draggable.data;
+      const movedItem: FormInputData = cloneDeep(droppedInput);
+      const toMove: any = movedItem.data;
       event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
     this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
   }
 
   getEditDropListConnectedTo(): string[] {
@@ -387,33 +309,31 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   getSectionDropListConnectedTo(sect: SectionList): string[] {
-    if (sect.reorderEnabled) {
-      return [];
-    }
     return this.getSectionIds().concat(['sectionDropList']);
   }
 
   removeEditComponent(edit: EditList): void {
+    const ind = this.editList.findIndex((item) => item.id === edit.id);
     this.editList = this.editList.filter((e) => e.id !== edit.id);
     this.names = this.getCustomTitles();
 
     this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
+    const ind = this.editList.findIndex((sec) => sec.id === sect.sectionId);
+    const component = sect.sectionInputs.find((item) => item.data!.id === componentId);
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
 
     this.updateRepeated();
     this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
   }
 
   getSectionInputStyle(sect: SectionList): { [p: string]: string } {
     let width: number;
     if (
-      sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit as any)) ||
+      sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data)) ||
       sect.layout === LayoutEnum.VERTICAL
     ) {
       width = 100;
@@ -425,10 +345,6 @@ export class EditComponent implements OnInit, OnChanges {
     };
   }
 
-  sectionEdit(sectionData: SectionList): void {
-    this.modalService.openSectionModal(sectionData);
-  }
-
   sectionLayoutChange(sect: SectionList): void {
     if (sect.layout === LayoutEnum.VERTICAL) {
       sect.layout = LayoutEnum.HORIZONTAL;
@@ -436,7 +352,6 @@ export class EditComponent implements OnInit, OnChanges {
       sect.layout = LayoutEnum.VERTICAL;
     }
     this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
   }
 
   openRepeatedSettings(section: RepeatedSectionList): void {
@@ -493,7 +408,6 @@ export class EditComponent implements OnInit, OnChanges {
     const hasRepeatedValidationError = this.editList.some((edit) => this.hasRepeatedSettingsErrorForEdit(edit));
     return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid()) || hasRepeatedValidationError;
   }
-
   isComponentInvalid(edit: EditList): boolean {
     if (this.instanceOfSectionListPipe.transform(edit.data)) {
       return edit.data.sectionInputs.some((inp) => this.isInputInvalid(inp));
@@ -525,7 +439,6 @@ export class EditComponent implements OnInit, OnChanges {
    */
   onValueChanged<D extends InputData<T>, T>(event: D): void {
     this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
   }
 
   scrollToElement(elementId: string): void {
@@ -541,18 +454,6 @@ export class EditComponent implements OnInit, OnChanges {
   updateName(): void {
     this.names = this.getCustomTitles();
     this.updateRepeated();
-  }
-
-  public isLogicEnabled(item: any): boolean {
-    return !!item?.codeEditor?.enabled;
-  }
-
-  public getConditionTooltip(item: any): string {
-    const code = item?.codeEditor?.data?.code;
-    if (code && code.trim() !== '') {
-      return code;
-    }
-    return this.translate.instant('COMPONENTS.CODE_MIRROR');
   }
 
   private getCustomTitles(): string[] {

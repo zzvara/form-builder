@@ -143,9 +143,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'InputComponent',
       data: textInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.NUMBER_FIELD.TITLE',
@@ -153,9 +150,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'NumberInputComponent',
       data: numberInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.DATE_PICKER.TITLE',
@@ -163,9 +157,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'DatePickerComponent',
       data: dateInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.RANGE_PICKER.TITLE',
@@ -173,9 +164,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'RangePickerComponent',
       data: rangeInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.TIME_PICKER.TITLE',
@@ -183,9 +171,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'TimePickerComponent',
       data: timeInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.TEXT_AREA.TITLE',
@@ -193,9 +178,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'TextareaComponent',
       data: textAreaInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.PICTURE_INPUT.TITLE',
@@ -203,9 +185,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'PictureInputComponent',
       data: pictureInputOptions,
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.COMBOBOX.TITLE',
@@ -213,9 +192,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'SelectComponent',
       data: selectInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.RADIO_GROUP.TITLE',
@@ -223,9 +199,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'RadioGroupComponent',
       data: radioGroupInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
     {
       title: 'COMPONENTS.CHECKBOX_GROUP.TITLE',
@@ -233,9 +206,6 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       descriptionPlaceholder: '',
       type: 'CheckboxGroupComponent',
       data: checkboxGroupInputOptions(translate),
-      codeEditor: {
-        enabled: false,
-      },
     },
   ];
 }
@@ -261,9 +231,6 @@ export function getSideBarData(
           title: 'COMPONENTS.SECTION.TITLE.SINGULAR',
           type: 'SectionComponent',
           data: null,
-          codeEditor: {
-            enabled: false,
-          },
         },
         {
           title: 'COMPONENTS.SECTION.REPEATED.TITLE',
