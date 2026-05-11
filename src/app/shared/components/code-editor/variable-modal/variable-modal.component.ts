@@ -1,13 +1,32 @@
 import { Component, Inject } from '@angular/core';
 import { CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
 import { CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
-import { TransferChange, TransferItem } from 'ng-zorro-antd/transfer';
+import {NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef} from 'ng-zorro-antd/modal';
+import {NzTransferComponent, TransferChange, TransferItem} from 'ng-zorro-antd/transfer';
+import {TranslatePipe} from "@ngx-translate/core";
+import {VariableIconPipe} from "@shared/pipes/variable-icon.pipe";
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
+import {FormsModule} from "@angular/forms";
+import {NzTagComponent} from "ng-zorro-antd/tag";
+import {CodeEditorComponent} from "@components/code-editor/code-editor.component";
 
 @Component({
   selector: 'app-variable-modal',
-  standalone: false,
+  standalone: true,
   templateUrl: './variable-modal.component.html',
+  imports: [
+    TranslatePipe,
+    VariableIconPipe,
+    NzDividerModule,
+    NzIconModule,
+    NzTooltipDirective,
+    FormsModule,
+    NzTransferComponent,
+    NzModalFooterDirective,
+
+  ]
 })
 export class VariableModalComponent {
   allVariables: TransferItem[] = [];

@@ -15,6 +15,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-picture-input-edit',
@@ -34,6 +35,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzCheckboxModule,
     NzButtonModule,
     NzIconModule,
+    CodeEditorModalComponent
   ],
 })
 export class PictureInputEditComponent extends AbstractEditForm<

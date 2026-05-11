@@ -269,6 +269,9 @@ export function getSideBarData(
           title: 'COMPONENTS.SECTION.REPEATED.TITLE',
           type: 'RepeatedSectionComponent',
           data: null,
+          codeEditor: {
+            enabled: false,
+          },
         },
       ],
     },

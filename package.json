@@ -39,6 +39,7 @@
     "@types/lodash-es": "^4.17.12",
     "codemirror": "^6.0.2",
     "diff": "^7.0.0",
+    "events": "^3.3.0",
     "flag-icons": "^7.3.2",
     "jshint": "^2.13.6",
     "lodash-es": "^4.17.21",

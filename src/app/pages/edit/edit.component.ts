@@ -37,6 +37,7 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { ComponentService } from '@app/shared/services/component.service';
 import { ModalService } from '@app/shared/services/modal.service';
+import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
 
 @Component({
   selector: 'app-edit',
@@ -70,6 +71,7 @@ import { ModalService } from '@app/shared/services/modal.service';
     NzButtonComponent,
     NzInputNumberComponent,
     NzSwitchComponent,
+    NzTooltipDirective,
   ],
 })
 export class EditComponent implements OnInit, OnChanges {

@@ -5,14 +5,33 @@ import { CodeEditorData, CodeEditorVariable } from '@app/shared/interfaces/code-
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { ComponentService } from '@app/shared/services/component.service';
 import { ModalService } from '@app/shared/services/modal.service';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import {NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef} from 'ng-zorro-antd/modal';
 import { CodeEditorComponent } from '../code-editor.component';
+import {TranslatePipe} from "@ngx-translate/core";
+import {VariableIconPipe} from "@shared/pipes/variable-icon.pipe";
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
+import {FormsModule} from "@angular/forms";
+import {NzTagComponent} from "ng-zorro-antd/tag";
 
 @Component({
   selector: 'app-code-editor-modal',
-  standalone: false,
+  standalone: true,
   templateUrl: './code-editor-modal.component.html',
   styleUrl: './code-editor-modal.component.css',
+  imports: [
+    TranslatePipe,
+    VariableIconPipe,
+    NzDividerModule,
+    NzIconModule,
+    NzTooltipDirective,
+    FormsModule,
+    NzTagComponent,
+    CodeEditorComponent,
+    NzModalFooterDirective,
+
+  ]
 })
 export class CodeEditorModalComponent implements OnInit, OnChanges {
   @Input() elementId?: string;

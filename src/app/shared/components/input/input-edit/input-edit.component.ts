@@ -20,6 +20,7 @@ import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillEditorComponent } from 'ngx-quill';
+import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-input-edit',
@@ -42,6 +43,7 @@ import { QuillEditorComponent } from 'ngx-quill';
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
+    CodeEditorModalComponent
   ],
 })
 export class InputEditComponent<

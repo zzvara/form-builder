@@ -9,6 +9,7 @@ import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form'
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
+import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-text-input',

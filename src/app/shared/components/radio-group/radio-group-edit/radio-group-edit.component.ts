@@ -30,6 +30,7 @@ import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
+import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-radio-group-edit',
@@ -50,11 +51,11 @@ import { QuillModule } from 'ngx-quill';
     MutateTextDirective,
     NzFormLabelComponent,
     QuillModule,
-    NzOptionComponent,
     NzInputModule,
     NzCheckboxModule,
     NzSelectModule,
     TranslatePipe,
+    CodeEditorModalComponent
   ],
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {

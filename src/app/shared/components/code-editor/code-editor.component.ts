@@ -25,12 +25,18 @@ import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
 import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { basicSetup, EditorView } from 'codemirror';
 import { JSHINT } from 'jshint';
+import {NzAlertComponent} from "ng-zorro-antd/alert";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-code-editor',
   standalone: true,
   templateUrl: './code-editor.component.html',
   styleUrl: './code-editor.component.css',
+  imports: [
+    NzAlertComponent,
+    TranslatePipe
+  ]
 })
 export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() mode = CodeEditorMode.VIEW;

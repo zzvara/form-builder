@@ -31,6 +31,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
+import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-checkbox-group-edit',
@@ -55,6 +56,7 @@ import { QuillModule } from 'ngx-quill';
     NzCheckboxModule,
     NzFormModule,
     TranslatePipe,
+    CodeEditorModalComponent
   ],
 })
 export class CheckboxGroupEditComponent extends AbstractEditForm<

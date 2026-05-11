@@ -19,6 +19,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillModule } from 'ngx-quill';
+import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+
 
 @Component({
   selector: 'app-number-input-edit',
@@ -40,6 +42,7 @@ import { QuillModule } from 'ngx-quill';
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
+    CodeEditorModalComponent
   ],
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<

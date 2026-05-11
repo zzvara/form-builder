@@ -8,7 +8,6 @@ import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form'
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
-
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
