@@ -1,6 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
 import { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
@@ -12,13 +12,17 @@ import { ListValidators } from '@validators/list-validators';
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.less'],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectEditComponent extends AbstractFieldLikeEditForm<string | string[], SelectComponentData> {
   newOption!: FormControl<string | null>;
-  editingIndex: number | null = null;
-  editValue: string = '';
-  editError: string | null = null;
   editControl: FormControl = new FormControl('');
+
+  private readonly _editingIndex: WritableSignal<number | null> = signal(null);
+  public readonly editingIndex: Signal<number | null> = this._editingIndex.asReadonly();
+
+  private readonly _editError: WritableSignal<string | null> = signal(null);
+  public readonly editError: Signal<string | null> = this._editError.asReadonly();
 
   get options(): FormArray {
     return this.formData.controls['selectOptions'] as FormArray;
@@ -38,10 +42,6 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     this.newOption.setValue(value);
   }
 
-  get isMultipleChoice(): boolean {
-    return this.formData.controls['isMultipleChoice'].getRawValue();
-  }
-
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
@@ -51,6 +51,16 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
       }),
     });
 
+    this.connectValidations({
+      isMultipleChoice: [{ name: 'defaultValue' }],
+    });
+
+    this.setControlValuesBasedOnChanges({
+      isMultipleChoice: [{ name: 'defaultValue', additionalData: () => null }],
+    });
+
+    this.initializeFormValues();
+
     this.newOption = new FormControl(null, {
       updateOn: UpdateOnStrategy.CHANGE,
       validators: [
@@ -59,8 +69,6 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
         CustomValidators.validateIsInList(() => this.optionsValues),
       ],
     });
-
-    this.initializeFormValues();
   }
 
   override initializeFormValues() {
@@ -75,36 +83,22 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
   override saveData() {
     super.saveData();
     this.initialValues.selectOptions = this.rawFormData.selectOptions;
-    this.initialValues.questionValue = this.rawFormData.questionValue;
-    this.initialValues.descriptionValue = this.rawFormData.descriptionValue;
-    if (!this.getControlValue('setDefaultValue') || !this.rawFormData.defaultValue) {
-      if (this.rawFormData.isMultipleChoice) {
-        this.initialValues.defaultValue = [];
-      } else {
-        this.initialValues.defaultValue = '';
-      }
-    } else {
-      this.initialValues.defaultValue = this.rawFormData.defaultValue;
-    }
-    this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
     this.initialValues.isMultipleChoice = this.rawFormData.isMultipleChoice;
+  }
+
+  override get defaultValueValidators() {
+    return CustomValidators.executeValidationsConditionally([
+      {
+        condition: () => this.getStrictControlValue<boolean>('required'),
+        validation: Validators.required,
+      },
+    ]);
   }
 
   override get defaultValueUpdateOn() {
     return UpdateOnStrategy.CHANGE;
   }
 
-  //----------------------------------------------------------------------------------------------------------------------
-
-  getDefaultValues(): string | string[] {
-    return this.formData.controls['defaultValue'].getRawValue();
-  }
-
-  setDefaultValue(values: string | string[]): void {
-    this.formData.controls['defaultValue'].setValue(values);
-  }
-
-  // Add a new option
   addOption() {
     this.options.push(new FormControl(this.newOptionValue, Validators.required));
     this.newOptionValue = '';
@@ -112,53 +106,51 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     this.options.markAsTouched();
   }
 
-  // Remove an existing option
-  removeOption(option: AbstractControl<string>, optionIndex: number) {
+  removeOption(optionIndex: number) {
     this.options.removeAt(optionIndex);
-    if (Array.isArray(this.getDefaultValues())) {
-      this.setDefaultValue((this.getDefaultValues() as string[]).filter((opt) => opt !== option.value));
-    } else {
-      this.setDefaultValue('');
-    }
+    this.getStrictControl('defaultValue')?.setValue(undefined);
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
 
-  startEdit(index: number, value: string) {
-    this.editingIndex = index;
-    this.editValue = value;
-    this.editControl.setValue(value);
-    this.editError = null;
+  startEdit(i: number, value: string) {
+    this._editingIndex.set(i);
+    this._editError.set(null);
+    this.editControl = new FormControl(value, Validators.required);
   }
+
   saveEdit(index: number) {
     const newValue = this.editControl.value?.trim();
 
     if (!newValue) {
-      this.editingIndex = null;
+      this._editingIndex.set(null);
       return;
     }
     const values = this.optionsValues.filter((_, i) => i !== index);
     if (values.includes(newValue)) {
-      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      this._editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
-    this.editError = null;
+    this._editError.set(null);
     const control = this.options.at(index) as FormControl;
     control.setValue(newValue);
     control.markAsDirty();
     control.markAsTouched();
-    const defaults = this.getDefaultValues();
+
+    const defaults = this.getStrictControlValue<string | string[]>('defaultValue');
     if (Array.isArray(defaults)) {
       const updated = defaults.map((v) => (v === this.optionsValues[index] ? newValue : v));
-      this.setDefaultValue(updated);
+      this.getStrictControl('defaultValue')?.setValue(updated);
     } else if (defaults === this.optionsValues[index]) {
-      this.setDefaultValue(newValue);
+      this.getStrictControl('defaultValue')?.setValue(newValue);
     }
-    this.editingIndex = null;
+
+    this._editingIndex.set(null);
   }
+
   cancelEdit() {
-    this.editingIndex = null;
-    this.editError = null;
+    this._editingIndex.set(null);
+    this._editError.set(null);
   }
 
   getMinOptions(): number {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
 
@@ -7,5 +7,6 @@ import { RangePickerComponentData } from '@components/range-picker/interfaces/ra
   templateUrl: './range-picker-edit.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RangePickerEditComponent extends DatePickerEditComponent<Date[], RangePickerComponentData> {}

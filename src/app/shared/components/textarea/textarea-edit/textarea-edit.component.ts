@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 
@@ -7,5 +7,6 @@ import { TextareaComponentData } from '@components/textarea/interfaces/textarea-
   templateUrl: './textarea-edit.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextareaEditComponent extends InputEditComponent<TextareaComponentData> {}

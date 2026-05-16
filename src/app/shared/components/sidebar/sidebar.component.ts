@@ -1,38 +1,45 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, signal, Signal, computed, WritableSignal } from '@angular/core';
 import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush, // Már be volt állítva, szuper!
   standalone: false,
 })
-export class SidebarComponent implements OnInit {
-  @Input() sidebarData: SidebarData[] = [];
+export class SidebarComponent {
 
-  searchTerm: string = '';
-  filteredData: SidebarData[] = [];
 
-  ngOnInit() {
-    this.filteredData = this.sidebarData;
+  private readonly _sidebarData: WritableSignal<SidebarData[]> = signal([]);
+  @Input() set sidebarData(value: SidebarData[]) {
+    this._sidebarData.set(value || []);
   }
 
-  filterItems() {
-    if (this.searchTerm) {
-      this.filteredData = this.sidebarData
-        .map((group) => ({
-          ...group,
-          groupContents: group.groupContents.filter((item) => item.title.toLowerCase().includes(this.searchTerm.toLowerCase())),
-        }))
-        .filter((group) => group.groupContents.length > 0);
-    } else {
-      this.filteredData = this.sidebarData;
+  private readonly _searchTerm: WritableSignal<string> = signal('');
+  public readonly searchTerm: Signal<string> = this._searchTerm.asReadonly();
+
+  public readonly filteredData: Signal<SidebarData[]> = computed(() => {
+    const term = this._searchTerm().toLowerCase();
+    const data = this._sidebarData();
+
+    if (!term) {
+      return data;
     }
+
+    return data
+      .map((group) => ({
+        ...group,
+        groupContents: group.groupContents.filter((item) => item.title.toLowerCase().includes(term)),
+      }))
+      .filter((group) => group.groupContents.length > 0);
+  });
+
+  onSearchChange(term: string): void {
+    this._searchTerm.set(term);
   }
 
-  clearSearch() {
-    this.searchTerm = '';
-    this.filteredData = this.sidebarData;
+  clearSearch(): void {
+    this._searchTerm.set('');
   }
 }

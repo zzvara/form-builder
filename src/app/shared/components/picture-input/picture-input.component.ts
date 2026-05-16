@@ -1,5 +1,5 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
 import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
 import { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
@@ -10,17 +10,22 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './picture-input.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PictureInputComponent
   extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent>
   implements OnInit
 {
-  fileList: NzUploadFile[] = [];
+  private readonly _fileList: WritableSignal<NzUploadFile[]> = signal([]);
+  public readonly fileList: Signal<NzUploadFile[]> = this._fileList.asReadonly();
 
   override onChange(event: Event | NzUploadChangeParam): void {
     if ((event as NzUploadChangeParam).file) {
       const info = event as NzUploadChangeParam;
-      this.fileList = info.fileList;
+
+      // ÚJ: Signal frissítése a .set() segítségével
+      this._fileList.set(info.fileList);
+
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
@@ -56,6 +61,7 @@ export class PictureInputComponent
 
     return obs.subscribe();
   };
+
   onDownload = (file: NzUploadFile): void => {
     const storedBase64 = localStorage.getItem(file.name) || (file.response as string);
 
@@ -71,6 +77,7 @@ export class PictureInputComponent
       console.error('The file content cannot be found (LocalStorage or URL missing).');
     }
   };
+
   onRemove = (file: NzUploadFile): boolean => {
     localStorage.removeItem(file.name);
     return true;

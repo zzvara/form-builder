@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 
 @Component({
@@ -6,6 +6,7 @@ import { FormComponentMarker } from '@interfaces/form-component-marker';
   templateUrl: './section.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SectionComponent implements FormComponentMarker {
   @Input() data: any;

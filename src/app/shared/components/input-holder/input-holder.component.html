@@ -67,12 +67,14 @@
     </ng-template>
 
     <div class="input-preview-container" (mousedown)="$event.stopPropagation()">
-      <ng-container
-        *ngComponentOutlet="
-          componentType;
-          inputs: { data: componentInputs.data, inlineEdit: componentInputs.inlineEdit, label: inputPreviewTemp }
-        "
-      ></ng-container>
+      @if (componentInputs()) {
+        <ng-container
+          *ngComponentOutlet="
+            componentType;
+            inputs: { data: componentInputs()!.data, inlineEdit: componentInputs()!.inlineEdit, label: inputPreviewTemp }
+          "
+        ></ng-container>
+      }
     </div>
   </form>
 </nz-card>

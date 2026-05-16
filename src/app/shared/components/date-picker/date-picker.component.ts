@@ -1,5 +1,5 @@
 import { AbstractDatePickerComponent } from '@abstract-classes/abstract-date-picker-input';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 
@@ -8,6 +8,7 @@ import { DatePickerComponentData } from '@components/date-picker/interfaces/date
   templateUrl: './date-picker.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatePickerComponent extends AbstractDatePickerComponent<Date, DatePickerComponentData, DatePickerEditComponent> {
   override edit(): void {

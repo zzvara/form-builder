@@ -1,5 +1,5 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TextareaEditComponent } from '@components/textarea/textarea-edit/textarea-edit.component';
 
@@ -8,6 +8,7 @@ import { TextareaEditComponent } from '@components/textarea/textarea-edit/textar
   templateUrl: './textarea.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextareaComponent extends AbstractFieldLikeInputs<string, TextareaComponentData, TextareaEditComponent> {
   override edit(): void {

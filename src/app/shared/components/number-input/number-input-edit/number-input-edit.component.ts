@@ -1,5 +1,5 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
@@ -10,6 +10,7 @@ import { CustomValidators } from '@validators/custom-validators';
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<number, NumberInputComponentData> {
   override ngOnInit(): void {

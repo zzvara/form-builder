@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { PictureInputComponentData } from '../interfaces/picture-input-component-data';
 
@@ -7,6 +7,7 @@ import { PictureInputComponentData } from '../interfaces/picture-input-component
   templateUrl: './picture-input-edit.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PictureInputEditComponent extends AbstractEditForm<string | null, PictureInputComponentData> {
   override ngOnInit(): void {

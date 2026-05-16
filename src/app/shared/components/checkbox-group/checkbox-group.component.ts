@@ -1,5 +1,5 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CheckboxGroupEditComponent } from '@components/checkbox-group/checkbox-group-edit/checkbox-group-edit.component';
 import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
 
@@ -8,6 +8,7 @@ import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/i
   templateUrl: './checkbox-group.component.html',
   styleUrl: './checkbox-group.component.less',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckboxGroupComponent extends AbstractInput<CheckboxOptions[], CheckboxGroupData, CheckboxGroupEditComponent> {
   override edit(): void {

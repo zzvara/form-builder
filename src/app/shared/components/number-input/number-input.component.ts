@@ -1,5 +1,5 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
 
@@ -8,6 +8,7 @@ import { NumberInputEditComponent } from '@components/number-input/number-input-
   templateUrl: './number-input.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumberInputComponent extends AbstractFieldLikeInputs<number, NumberInputComponentData, NumberInputEditComponent> {
   override edit(): void {

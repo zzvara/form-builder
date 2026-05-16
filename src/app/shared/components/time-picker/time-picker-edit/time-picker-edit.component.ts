@@ -1,5 +1,5 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
@@ -21,6 +21,7 @@ import { CustomValidators } from '@validators/custom-validators';
   templateUrl: './time-picker-edit.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, TimePickerComponentData> {
   override ngOnInit(): void {
@@ -78,7 +79,6 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<Date, Tim
       maxTimeValue: [{ name: 'minTimeValue', recursiveCall: true }],
     });
     this.setControlValuesBasedOnChanges({
-      // maxDateValue change calls minDateValue recursively, so no need to include it here either
       maxTimeValue: [{ name: 'defaultValue', additionalData: () => null }],
       timeFormat: [
         { name: 'maxTimeValue', additionalData: () => null },

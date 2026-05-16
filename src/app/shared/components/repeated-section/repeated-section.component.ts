@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { SectionComponent } from '../section/section.component';
 
@@ -7,5 +7,6 @@ import { SectionComponent } from '../section/section.component';
   templateUrl: './repeated-section.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RepeatedSectionComponent extends SectionComponent implements FormComponentMarker {}

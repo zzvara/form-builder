@@ -1,5 +1,5 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
 import { ErrorType } from '@helpers/error-helper';
@@ -11,6 +11,7 @@ import { CustomValidators } from '@validators/custom-validators';
   templateUrl: './input-edit.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputEditComponent<T extends InputComponentData = InputComponentData> extends AbstractFieldLikeEditForm<string, T> {
   override ngOnInit(): void {
@@ -60,9 +61,6 @@ export class InputEditComponent<T extends InputComponentData = InputComponentDat
     });
     this.initializeFormValues();
 
-    //TODO: nem működik
-    // this.notifyFormGroupOnValueChanges(["required","minLength","maxLength","minLengthNumber","maxLengthNumber","showCharacterCounter"], this.formData);
-    // ▼▼▼▼▼ marad az alábbi módszer (manuálisan megmondani, hogy melyik változásakor melyik mások értékelődjenek ki) ▼▼▼▼▼
     this.connectValidations({
       minLength: [{ name: 'minLengthNumber' }, { name: 'minLengthMessage' }, { name: 'defaultValue' }],
       maxLength: [{ name: 'maxLengthNumber' }, { name: 'defaultValue' }],

@@ -73,7 +73,7 @@
   <nz-form-item>
     <nz-form-control>
       <nz-select formControlName="mode" nzPlaceHolder="Mode">
-        @for (item of datePickerModes; track item.mode) {
+        @for (item of datePickerModes(); track item.mode) {
           <nz-option [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
         }
       </nz-select>
@@ -98,8 +98,8 @@
     <nz-form-item>
       <nz-form-control>
         <label nz-checkbox formControlName="showTime" [nzDisabled]="getControlValue('mode') !== 'date'">{{
-          'COMPONENTS.SHOW_TIME?' | translate
-        }}</label>
+            'COMPONENTS.SHOW_TIME?' | translate
+          }}</label>
       </nz-form-control>
     </nz-form-item>
     @if (getControlValue('showTime')) {

@@ -1,5 +1,5 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import { TimePickerEditComponent } from '@components/time-picker/time-picker-edit/time-picker-edit.component';
 import { disabledHours, disabledMinutes, disabledSeconds } from '@helpers/date-helper';
@@ -9,6 +9,7 @@ import { disabledHours, disabledMinutes, disabledSeconds } from '@helpers/date-h
   templateUrl: './time-picker.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimePickerComponent extends AbstractFieldLikeInputs<Date, TimePickerComponentData, TimePickerEditComponent> {
   override edit(): void {

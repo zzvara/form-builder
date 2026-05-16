@@ -1,5 +1,5 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
 import { RadioGroupEditComponent } from '@components/radio-group/radio-group-edit/radio-group-edit.component';
 
@@ -8,6 +8,7 @@ import { RadioGroupEditComponent } from '@components/radio-group/radio-group-edi
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.less',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioGroupComponent extends AbstractInput<number, RadioGroupData, RadioGroupEditComponent> {
   override edit(): void {

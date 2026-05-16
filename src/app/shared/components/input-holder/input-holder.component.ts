@@ -5,7 +5,22 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { NgComponentOutlet } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, EventEmitter, Input, OnInit, Output, TemplateRef, Type, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  Type,
+  ViewChild,
+  ChangeDetectionStrategy,
+  signal,
+  Signal,
+  WritableSignal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgForm, NgModel } from '@angular/forms';
 import { getInputGroups, translateComponentType } from '@pages/edit/config/edit-data-config';
@@ -20,6 +35,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.less'],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>>
   implements OnInit, AfterViewInit
@@ -40,10 +56,8 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
 
   @Input() inlineEdit: InlineEdit = { enabled: true };
 
-  componentInputs!: {
-    data: D;
-    inlineEdit: InlineEdit;
-  };
+  private readonly _componentInputs: WritableSignal<{ data: D; inlineEdit: InlineEdit } | undefined> = signal(undefined);
+  public readonly componentInputs: Signal<{ data: D; inlineEdit: InlineEdit } | undefined> = this._componentInputs.asReadonly();
 
   constructor(
     private destroyRef: DestroyRef,
@@ -51,18 +65,18 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
   ) {}
 
   get componentType(): Type<FormComponentMarker> {
-    return translateComponentType[this.formInput.type];
+    return translateComponentType[this.formInput.type as keyof typeof translateComponentType];
   }
 
   get embeddedComponent(): AbstractInput<T, D, E> {
-    return this.inputOutlet['_componentRef']?.instance;
+    return (this.inputOutlet as any)['_componentRef']?.instance;
   }
 
   ngOnInit(): void {
-    this.componentInputs = {
+    this._componentInputs.set({
       data: this.inputData,
       inlineEdit: this.inlineEdit,
-    };
+    });
   }
 
   ngAfterViewInit() {
@@ -88,7 +102,7 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
       Object.keys(this.inputData)
         .filter((key) => key !== 'id' && key !== 'sectionId')
         .forEach((key) => {
-          this.inputData[key as keyof D] = defaultData.data![key as keyof D];
+          (this.inputData as any)[key as keyof D] = defaultData.data![key as keyof D];
         });
       this.changedEvent.emit(this.inputData);
     }
@@ -105,9 +119,9 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
   }
 
   onDraftChange(value: boolean) {
-  this.inputData.draft = value;
-  this.changedEvent.emit(this.inputData);
-}
+    this.inputData.draft = value;
+    this.changedEvent.emit(this.inputData);
+  }
 
   isValid() {
     return (this.form?.valid ?? false) || this.inputData.draft;

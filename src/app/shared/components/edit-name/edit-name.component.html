@@ -6,7 +6,7 @@
     [nzTooltipTitle]="((edit.data | instanceOfFormInputData) ? edit.data.title : 'COMPONENTS.SECTION.TITLE.SINGULAR') | translate"
   ></nz-icon>
 
-  @if (isEditName) {
+  @if (isEditName()) {
     <form nz-form [formGroup]="form">
       <nz-form-control [nzValidateStatus]="form.controls['name']">
         <ng-template #suffixTemplate>
@@ -62,10 +62,10 @@
       }}
     </ng-template>
 
-    @if (editList) {
-      <ng-container [ngTemplateOutlet]="nameTemplate" [ngTemplateOutletContext]="{ data: editList.data }"></ng-container>
-    } @else if (editFormInput) {
-      <ng-container [ngTemplateOutlet]="nameTemplate" [ngTemplateOutletContext]="{ data: editFormInput }"></ng-container>
+    @if (editList()) {
+      <ng-container [ngTemplateOutlet]="nameTemplate" [ngTemplateOutletContext]="{ data: editList()!.data }"></ng-container>
+    } @else if (editFormInput()) {
+      <ng-container [ngTemplateOutlet]="nameTemplate" [ngTemplateOutletContext]="{ data: editFormInput() }"></ng-container>
     }
 
     <nz-icon class="ml-4 action-icon" nzType="edit" (click)="setEditMode(true)" (mousedown)="$event.stopPropagation()"></nz-icon>

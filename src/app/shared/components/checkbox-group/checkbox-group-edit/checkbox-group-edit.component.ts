@@ -1,25 +1,27 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
 import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
-import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-checkbox-group-edit',
   templateUrl: './checkbox-group-edit.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions[], CheckboxGroupData> {
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');
-  editingIndex: number | null = null;
-  editError: string | null = null;
+  private readonly _editingIndex: WritableSignal<number | null> = signal(null);
+  public readonly editingIndex: Signal<number | null> = this._editingIndex.asReadonly();
+  private readonly _editError: WritableSignal<string | null> = signal(null);
+  public readonly editError: Signal<string | null> = this._editError.asReadonly();
+
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
@@ -144,11 +146,13 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
+
   startEdit(i: number, value: string) {
-    this.editingIndex = i;
-    this.editError = null;
+    this._editingIndex.set(i);
+    this._editError.set(null);
     this.editControl = new FormControl(value, Validators.required);
   }
+
   saveEdit(i: number) {
     const newValue = this.editControl.value?.trim();
     if (!newValue) return;
@@ -156,18 +160,20 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<CheckboxOptions
     const otherValues = this.optionDescriptions.filter((_, idx) => idx !== i);
 
     if (otherValues.includes(newValue)) {
-      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      this._editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
 
     this.options.at(i).patchValue({ label: newValue });
-    this.editingIndex = null;
-    this.editError = null;
+    this._editingIndex.set(null);
+    this._editError.set(null);
   }
+
   cancelEdit() {
-    this.editingIndex = null;
-    this.editError = null;
+    this._editingIndex.set(null);
+    this._editError.set(null);
   }
+
   getMinOptions(): number {
     const error: any = this.getError(this.options, 'minLengthError');
     return error.min - error.current;

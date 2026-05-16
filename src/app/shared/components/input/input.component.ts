@@ -1,5 +1,5 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
 import { ErrorType } from '@helpers/error-helper';
@@ -9,6 +9,7 @@ import { ErrorType } from '@helpers/error-helper';
   templateUrl: './input.component.html',
   styleUrls: [],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputComponent extends AbstractFieldLikeInputs<string, InputComponentData, InputEditComponent> {
   override edit(): void {
