@@ -16,6 +16,10 @@ import {
   TemplateRef,
   Type,
   ViewChild,
+  ChangeDetectionStrategy,
+  signal,
+  Signal,
+  WritableSignal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
@@ -44,6 +48,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -60,6 +65,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     NzInputModule,
     NzSwitchModule,
     TranslatePipe,
+    NgComponentOutlet,
   ],
 })
 export class InputHolderComponent<
@@ -85,10 +91,8 @@ export class InputHolderComponent<
 
   @Input() inlineEdit: InlineEdit = { enabled: true };
 
-  componentInputs!: {
-    data: D;
-    inlineEdit: InlineEdit;
-  };
+  private readonly _componentInputs: WritableSignal<{ data: D; inlineEdit: InlineEdit } | undefined> = signal(undefined);
+  public readonly componentInputs: Signal<{ data: D; inlineEdit: InlineEdit } | undefined> = this._componentInputs.asReadonly();
 
   constructor(
     private destroyRef: DestroyRef,
@@ -96,18 +100,18 @@ export class InputHolderComponent<
   ) {}
 
   get componentType(): Type<FormComponentMarker> {
-    return translateComponentType[this.formInput.type];
+    return translateComponentType[this.formInput.type as keyof typeof translateComponentType];
   }
 
   get embeddedComponent(): AbstractInput<T, D, E> {
-    return this.inputOutlet['_componentRef']?.instance;
+    return (this.inputOutlet as any)['_componentRef']?.instance;
   }
 
   ngOnInit(): void {
-    this.componentInputs = {
+    this._componentInputs.set({
       data: this.inputData,
       inlineEdit: this.inlineEdit,
-    };
+    });
   }
 
   ngAfterViewInit() {
@@ -137,7 +141,7 @@ export class InputHolderComponent<
       Object.keys(this.inputData)
         .filter((key) => key !== 'id' && key !== 'sectionId')
         .forEach((key) => {
-          this.inputData[key as keyof D] = defaultData.data![key as keyof D];
+          (this.inputData as any)[key as keyof D] = defaultData.data![key as keyof D];
         });
       this.changedEvent.emit(this.inputData);
     }

@@ -1,6 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
@@ -29,14 +29,16 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-time-picker-edit',
   templateUrl: './time-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
     NzFormModule,
     NzDividerComponent,
     NzFormLabelComponent,
@@ -50,7 +52,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     TranslatePipe,
     ReactiveFormsModule,
     DatePipe,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<
@@ -120,7 +122,6 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<
       maxTimeValue: [{ name: 'minTimeValue', recursiveCall: true }],
     });
     this.setControlValuesBasedOnChanges({
-      // maxDateValue change calls minDateValue recursively, so no need to include it here either
       maxTimeValue: [{ name: 'defaultValue', additionalData: () => null }],
       timeFormat: [
         { name: 'maxTimeValue', additionalData: () => null },
