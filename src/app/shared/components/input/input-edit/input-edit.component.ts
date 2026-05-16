@@ -1,32 +1,28 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
 import { ErrorType } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import {
-  NzFormControlComponent,
-  NzFormItemComponent,
-  NzFormLabelComponent,
-  NzFormModule,
-} from 'ng-zorro-antd/form';
+import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent, NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-input-edit',
   templateUrl: './input-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     TranslatePipe,
@@ -43,12 +39,12 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
   ],
 })
 export class InputEditComponent<
   T extends InputComponentData = InputComponentData,
 > extends AbstractFieldLikeEditForm<string, T> {
+
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
@@ -100,9 +96,6 @@ export class InputEditComponent<
     });
     this.initializeFormValues();
 
-    //TODO: nem működik
-    // this.notifyFormGroupOnValueChanges(["required","minLength","maxLength","minLengthNumber","maxLengthNumber","showCharacterCounter"], this.formData);
-    // ▼▼▼▼▼ marad az alábbi módszer (manuálisan megmondani, hogy melyik változásakor melyik mások értékelődjenek ki) ▼▼▼▼▼
     this.connectValidations({
       minLength: [
         { name: 'minLengthNumber' },
@@ -113,6 +106,7 @@ export class InputEditComponent<
       minLengthNumber: [{ name: 'maxLengthNumber' }, { name: 'defaultValue' }],
       maxLengthNumber: [{ name: 'minLengthNumber', recursiveCall: true }, { name: 'defaultValue' }],
     });
+
     this.setControlValuesBasedOnChanges({
       maxLengthNumber: [{ name: 'defaultValue', additionalData: () => null }],
     });
@@ -137,6 +131,7 @@ export class InputEditComponent<
       ? this.getStrictControlValue<number>('maxLengthNumber')
       : null;
   }
+
   get minLengthOrNull() {
     return this.getStrictControlValue('minLength') && this.getStrictControlValue('minLengthNumber')
       ? this.getStrictControlValue<number>('minLengthNumber')

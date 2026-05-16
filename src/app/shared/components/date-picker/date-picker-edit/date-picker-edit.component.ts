@@ -1,7 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
 import { AbstractControl, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
 import {
@@ -15,6 +16,7 @@ import {
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import {
@@ -35,13 +37,14 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-date-picker-edit',
   templateUrl: './date-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     TranslatePipe,
@@ -66,13 +69,15 @@ export class DatePickerEditComponent<
   T extends Date | Date[] = Date,
   D extends DatePickerComponentData<T> = DatePickerComponentData<T>,
 > extends AbstractFieldLikeEditForm<T, D> {
-  datePickerModes: { mode: NzDateMode; label: string }[] = [
+
+  private readonly _datePickerModes: WritableSignal<{ mode: NzDateMode; label: string }[]> = signal([
     { mode: 'decade', label: this.translate.instant('COMPONENTS.DATE_PICKER.DECADE') },
     { mode: 'year', label: this.translate.instant('COMPONENTS.DATE_PICKER.YEAR') },
     { mode: 'month', label: this.translate.instant('COMPONENTS.DATE_PICKER.MONTH') },
     { mode: 'week', label: this.translate.instant('COMPONENTS.DATE_PICKER.WEEK') },
     { mode: 'date', label: this.translate.instant('COMPONENTS.DATE_PICKER.FULL_DATE') },
-  ];
+  ]);
+  public readonly datePickerModes: Signal<{ mode: NzDateMode; label: string }[]> = this._datePickerModes.asReadonly();
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -140,13 +145,11 @@ export class DatePickerEditComponent<
       maxDate: [{ name: 'maxDateValue' }, { name: 'defaultValue' }],
       minDateValue: [{ name: 'maxDateValue' }, { name: 'defaultValue' }],
       maxDateValue: [{ name: 'minDateValue', recursiveCall: true }],
-      // maxDateValue change calls minDateValue recursively, so no need to include it here
       showTime: [{ name: 'timeFormat' }],
     });
+
     this.setControlValuesBasedOnChanges({
-      // maxDateValue change calls minDateValue recursively, so no need to include it here either
       maxDateValue: [{ name: 'defaultValue', additionalData: () => null }],
-      // maxDateValue change sets defaultValue to null, so no need to include it here
       mode: [
         { name: 'maxDateValue', additionalData: () => null },
         { name: 'minDateValue', additionalData: () => null },
@@ -233,6 +236,7 @@ export class DatePickerEditComponent<
     }
     return undefined;
   }
+
   get getDisabledDatesForMax() {
     if (this.getStrictControlValue('minDate')) {
       return getDisabledDatesForMinDate(
@@ -254,6 +258,7 @@ export class DatePickerEditComponent<
     }
     return undefined;
   };
+
   disabledTimeConfigForMax: DisabledTimeFn = (
     current: Date | Date[],
   ): DisabledTimeConfig | undefined => {

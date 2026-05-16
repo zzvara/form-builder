@@ -1,7 +1,7 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -9,11 +9,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import {
-  CheckboxGroupData,
-  CheckboxOptions,
-} from '@components/checkbox-group/interfaces/checkbox-group-data';
+import { CheckboxGroupData, CheckboxOptions } from '@components/checkbox-group/interfaces/checkbox-group-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -31,13 +29,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-checkbox-group-edit',
   templateUrl: './checkbox-group-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -56,7 +54,6 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxModule,
     NzFormModule,
     TranslatePipe,
-    CodeEditorModalComponent
   ],
 })
 export class CheckboxGroupEditComponent extends AbstractEditForm<
@@ -65,8 +62,12 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
 > {
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');
-  editingIndex: number | null = null;
-  editError: string | null = null;
+
+  private readonly _editingIndex: WritableSignal<number | null> = signal(null);
+  public readonly editingIndex: Signal<number | null> = this._editingIndex.asReadonly();
+
+  private readonly _editError: WritableSignal<string | null> = signal(null);
+  public readonly editError: Signal<string | null> = this._editError.asReadonly();
 
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
@@ -194,8 +195,8 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
   }
 
   startEdit(i: number, value: string) {
-    this.editingIndex = i;
-    this.editError = null;
+    this._editingIndex.set(i);
+    this._editError.set(null);
     this.editControl = new FormControl(value, Validators.required);
   }
 
@@ -206,18 +207,18 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
     const otherValues = this.optionDescriptions.filter((_, idx) => idx !== i);
 
     if (otherValues.includes(newValue)) {
-      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      this._editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
 
     this.options.at(i).patchValue({ label: newValue });
-    this.editingIndex = null;
-    this.editError = null;
+    this._editingIndex.set(null);
+    this._editError.set(null);
   }
 
   cancelEdit() {
-    this.editingIndex = null;
-    this.editError = null;
+    this._editingIndex.set(null);
+    this._editError.set(null);
   }
 
   getMinOptions(): number {

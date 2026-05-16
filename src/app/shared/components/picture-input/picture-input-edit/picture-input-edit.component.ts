@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { PictureInputComponentData } from '../interfaces/picture-input-component-data';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PictureInputComponentData } from '../interfaces/picture-input-component-data';
+import { TranslatePipe } from '@ngx-translate/core';
+import { QuillEditorComponent } from 'ngx-quill';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
   NzFormControlComponent,
@@ -9,19 +13,15 @@ import {
   NzFormLabelComponent,
   NzFormModule,
 } from 'ng-zorro-antd/form';
-import { TranslatePipe } from '@ngx-translate/core';
-import { QuillEditorComponent } from 'ngx-quill';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-picture-input-edit',
   templateUrl: './picture-input-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     TranslatePipe,
@@ -35,7 +35,6 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxModule,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
   ],
 })
 export class PictureInputEditComponent extends AbstractEditForm<

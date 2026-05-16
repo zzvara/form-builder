@@ -1,14 +1,14 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, signal, Signal, WritableSignal, computed, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
-import { InputHolderComponent } from '../input-holder/input-holder.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
+import { InputHolderComponent } from '../input-holder/input-holder.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,33 +30,43 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzIconModule,
   ],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnChanges {
   @Input() sidebarData: SidebarData[] = [];
 
-  searchTerm: string = '';
-  filteredData: SidebarData[] = [];
+  private readonly _sidebarData: WritableSignal<SidebarData[]> = signal([]);
+  private readonly _searchTerm: WritableSignal<string> = signal('');
 
-  ngOnInit() {
-    this.filteredData = this.sidebarData;
-  }
+  public readonly searchTerm: Signal<string> = this._searchTerm.asReadonly();
 
-  filterItems() {
-    if (this.searchTerm) {
-      this.filteredData = this.sidebarData
-        .map((group) => ({
-          ...group,
-          groupContents: group.groupContents.filter((item) =>
-            item.title.toLowerCase().includes(this.searchTerm.toLowerCase()),
-          ),
-        }))
-        .filter((group) => group.groupContents.length > 0);
-    } else {
-      this.filteredData = this.sidebarData;
+  public readonly filteredData: Signal<SidebarData[]> = computed(() => {
+    const term = this._searchTerm().toLowerCase();
+    const data = this._sidebarData();
+
+    if (!term) {
+      return data;
+    }
+
+    return data
+      .map((group) => ({
+        ...group,
+        groupContents: group.groupContents.filter((item) =>
+          item.title.toLowerCase().includes(term)
+        ),
+      }))
+      .filter((group) => group.groupContents.length > 0);
+  });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['sidebarData']) {
+      this._sidebarData.set(this.sidebarData || []);
     }
   }
 
-  clearSearch() {
-    this.searchTerm = '';
-    this.filteredData = this.sidebarData;
+  onSearchChange(term: string): void {
+    this._searchTerm.set(term);
+  }
+
+  clearSearch(): void {
+    this._searchTerm.set('');
   }
 }

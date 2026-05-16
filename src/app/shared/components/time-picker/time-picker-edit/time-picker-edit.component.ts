@@ -1,7 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { DatePipe, CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
   disabledHours,
@@ -17,6 +18,7 @@ import {
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
@@ -29,14 +31,16 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-time-picker-edit',
   templateUrl: './time-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
+    ReactiveFormsModule,
     NzFormModule,
     NzDividerComponent,
     NzFormLabelComponent,
@@ -47,10 +51,9 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzInputNumberComponent,
     NzCheckboxModule,
     NzInputModule,
+    NzButtonModule,
     TranslatePipe,
-    ReactiveFormsModule,
     DatePipe,
-    CodeEditorModalComponent
   ],
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<
@@ -119,8 +122,8 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<
       minTimeValue: [{ name: 'maxTimeValue' }, { name: 'defaultValue' }],
       maxTimeValue: [{ name: 'minTimeValue', recursiveCall: true }],
     });
+
     this.setControlValuesBasedOnChanges({
-      // maxDateValue change calls minDateValue recursively, so no need to include it here either
       maxTimeValue: [{ name: 'defaultValue', additionalData: () => null }],
       timeFormat: [
         { name: 'maxTimeValue', additionalData: () => null },
@@ -161,12 +164,14 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<
     }
     return undefined;
   }
+
   getDisabledMaxMinutes() {
     if (this.getStrictControlValue('maxTime') && this.getStrictControlValue('maxTimeValue')) {
       return disabledMaxMinutes(this.getStrictControlValue<Date>('maxTimeValue'));
     }
     return undefined;
   }
+
   getDisabledMaxSeconds() {
     if (this.getStrictControlValue('maxTime') && this.getStrictControlValue('maxTimeValue')) {
       return disabledMaxSeconds(this.getStrictControlValue<Date>('maxTimeValue'));
@@ -180,12 +185,14 @@ export class TimePickerEditComponent extends AbstractFieldLikeEditForm<
     }
     return undefined;
   }
+
   getDisabledMinMinutes() {
     if (this.getStrictControlValue('minTime') && this.getStrictControlValue('minTimeValue')) {
       return disabledMinMinutes(this.getStrictControlValue<Date>('minTimeValue'));
     }
     return undefined;
   }
+
   getDisabledMinSeconds() {
     if (this.getStrictControlValue('minTime') && this.getStrictControlValue('minTimeValue')) {
       return disabledMinSeconds(this.getStrictControlValue<Date>('minTimeValue'));

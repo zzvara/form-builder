@@ -1,5 +1,5 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
@@ -19,14 +19,13 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillModule } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
-
 
 @Component({
   selector: 'app-number-input-edit',
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     TranslatePipe,
@@ -42,7 +41,6 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
   ],
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
@@ -112,6 +110,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
       ],
       format: [{ name: 'formatter' }, { name: 'defaultValue' }],
     });
+
     this.setControlValuesBasedOnChanges({
       maxNumber: [{ name: 'defaultValue', additionalData: () => null }],
     });
@@ -142,6 +141,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
       ? this.getStrictControlValue<number>('maxNumber')
       : Infinity;
   }
+
   get minNumOrNegInf() {
     return this.getStrictControlValue('min') && this.getStrictControlValue('minNumber')
       ? this.getStrictControlValue<number>('minNumber')

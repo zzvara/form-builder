@@ -1,15 +1,8 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
+import { Component, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
+import { AbstractControl, FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
 import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
@@ -20,49 +13,53 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
-  NzFormModule,
   NzFormControlComponent,
   NzFormItemComponent,
   NzFormLabelComponent,
+  NzFormModule,
 } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
-import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-radio-group-edit',
   templateUrl: './radio-group-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     NzFormModule,
     NzDividerComponent,
     NzFormItemComponent,
+    NzFormLabelComponent,
+    NzFormControlComponent,
     NzTableModule,
     DragDropModule,
     NzIconModule,
     NzButtonModule,
-    NzFormControlComponent,
     NzInputGroupComponent,
-    MutateTextDirective,
-    NzFormLabelComponent,
-    QuillModule,
     NzInputModule,
     NzCheckboxModule,
     NzSelectModule,
     TranslatePipe,
-    CodeEditorModalComponent
+    QuillModule,
   ],
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');
-  editingIndex: number | null = null;
-  editError: string | null = null;
+
+  private readonly _editingIndex: WritableSignal<number | null> = signal(null);
+  public readonly editingIndex: Signal<number | null> = this._editingIndex.asReadonly();
+
+  private readonly _editError: WritableSignal<string | null> = signal(null);
+  public readonly editError: Signal<string | null> = this._editError.asReadonly();
+
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
@@ -73,18 +70,21 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
   get options(): FormArray {
     return this.formData.controls['options'] as FormArray;
   }
+
   get optionObjects(): typeof this.initialValues.options {
     if (this.formData) {
       return this.options.controls.map((ctrl) => ctrl.value);
     }
     return [];
   }
+
   get optionIds(): number[] {
     if (this.formData) {
       return this.options.controls.map((ctrl) => ctrl.value.option_id);
     }
     return [];
   }
+
   get optionDescriptions(): string[] {
     if (this.formData) {
       return this.options.controls.map((ctrl) => ctrl.value.option_description);
@@ -180,10 +180,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     return UpdateOnStrategy.CHANGE;
   }
 
-  //----------------------------------------------------------------------------------------------------------------------
-
   setupDefaultValueCheckBox() {
-    //Add custom form control
     this.addAnyControls({
       setDefaultValue: new FormControl<boolean>(true, {
         updateOn: UpdateOnStrategy.CHANGE,
@@ -204,13 +201,10 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     ];
   }
 
-  //----------------------------------------------------------------------------------------------------------------------
-
   getNextId() {
     return Math.max(...this.optionIds.concat(0)) + 1;
   }
 
-  // Add a new option
   addOption() {
     this.options.push(
       this.formBuilder.group({
@@ -223,33 +217,35 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     this.options.markAsTouched();
   }
 
-  // Remove an existing option
   removeOption(optionIndex: number) {
     this.options.removeAt(optionIndex);
     this.getStrictControl('defaultValue')?.setValue(undefined);
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
+
   startEdit(i: number, value: string) {
-    this.editingIndex = i;
-    this.editError = null;
+    this._editingIndex.set(i);
+    this._editError.set(null);
     this.editControl = new FormControl(value, Validators.required);
   }
+
   saveEdit(i: number) {
     const newValue = this.editControl.value?.trim();
     if (!newValue) return;
     const otherValues = this.optionDescriptions.filter((_, idx) => idx !== i);
     if (otherValues.includes(newValue)) {
-      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      this._editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
-    this.options.at(i).patchValue({ label: newValue });
-    this.editingIndex = null;
-    this.editError = null;
+    this.options.at(i).patchValue({ option_description: newValue });
+    this._editingIndex.set(null);
+    this._editError.set(null);
   }
+
   cancelEdit() {
-    this.editingIndex = null;
-    this.editError = null;
+    this._editingIndex.set(null);
+    this._editError.set(null);
   }
 
   getMinOptions(): number {
