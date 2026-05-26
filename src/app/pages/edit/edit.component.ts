@@ -524,6 +524,7 @@ export class EditComponent implements OnInit, OnChanges {
    * @param event - The event object containing the new value of the form input.
    * @returns {void}
    */
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
   onValueChanged<D extends InputData<T>, T>(event: D): void {
     this.undoRedoService.saveState(this.editList);
     this.componentService.component$.next(this.editList);
@@ -565,7 +566,7 @@ export class EditComponent implements OnInit, OnChanges {
   returnChildren(sect: SectionList): { title: string; id: string }[] {
     const returnVal: { title: string; id: string }[] = [];
     for (const input of sect.sectionInputs) {
-      let id: string = input.data?.id || '';
+      const id: string = input.data?.id || '';
       returnVal.push({
         title: input.title,
         id: id,
