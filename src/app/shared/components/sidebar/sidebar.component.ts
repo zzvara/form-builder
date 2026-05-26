@@ -1,5 +1,15 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Input, signal, Signal, WritableSignal, computed, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  signal,
+  Signal,
+  WritableSignal,
+  computed,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -7,6 +17,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+
 import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 import { InputHolderComponent } from '../input-holder/input-holder.component';
 

@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+
 import { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -49,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentLanguage = signal<LanguageEnum>(LanguageEnum.EN);
   currentTheme = signal<ThemeEnum>(ThemeEnum.LIGHT);
 
+  // Reaktív állapotkezelés Signalokkal
   private menuData = toSignal(this.headerService.getOptions(), {
     initialValue: { options: [] as MenuOption[], activeOptions: [] as MenuOption[] },
   });
@@ -89,16 +91,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   changeMenuItemState(toChange: MenuOption) {
     const currentActive = this.activeOptions();
     const currentHeaders = this.headerOptions();
-
     const isCurrentlyActive = currentActive.includes(toChange);
 
-    if (isCurrentlyActive) {
-      const updatedActive = currentActive.filter((option) => option !== toChange);
-      this.headerService.setOptions(currentHeaders, updatedActive);
-    } else {
-      const updatedActive = [...currentActive, toChange];
-      this.headerService.setOptions(currentHeaders, updatedActive);
-    }
+    const updatedActive = isCurrentlyActive
+      ? currentActive.filter((option) => option !== toChange)
+      : [...currentActive, toChange];
+
+    this.headerService.setOptions(currentHeaders, updatedActive);
   }
 
   executeAction(action: ContextAction): void {
@@ -121,13 +120,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   uploadJson(file: File): void {
-    this.jsonService.uploadJson(file).subscribe((data) => {
-      this.jsonService.setJsonData(data);
-      this.router.navigate([RoutePath.NEW], {
-        queryParams: { type: data.type },
-        state: { projectData: data },
+    this.jsonService.uploadJson(file)
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => {
+        this.jsonService.setJsonData(data);
+        this.router.navigate([RoutePath.NEW], {
+          queryParams: { type: data.type },
+          state: { projectData: data },
+        });
       });
-    });
   }
 
   setLanguage(lang: LanguageEnum): void {
