@@ -35,6 +35,10 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     return [];
   }
 
+  get isMultipleChoice(): boolean {
+    return this.getStrictControlValue<boolean>('isMultipleChoice') ?? false;
+  }
+
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
