@@ -5,7 +5,7 @@ import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // Már be volt állítva, szuper!
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
 export class SidebarComponent {

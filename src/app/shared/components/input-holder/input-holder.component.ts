@@ -52,7 +52,7 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
 
   @ViewChild('inputHolderForm') form!: NgForm;
   @ViewChild('questionInput') questionInput!: NgModel;
-  @ViewChild(NgComponentOutlet, { static: true }) inputOutlet!: NgComponentOutlet;
+  @ViewChild(NgComponentOutlet) inputOutlet!: NgComponentOutlet;
 
   @Input() inlineEdit: InlineEdit = { enabled: true };
 
@@ -68,8 +68,8 @@ export class InputHolderComponent<T = any, D extends InputData<T> = InputData, E
     return translateComponentType[this.formInput.type as keyof typeof translateComponentType];
   }
 
-  get embeddedComponent(): AbstractInput<T, D, E> {
-    return (this.inputOutlet as any)['_componentRef']?.instance;
+  get embeddedComponent(): AbstractInput<T, D, E> | undefined {
+    return (this.inputOutlet as any)?.['_componentRef']?.instance;
   }
 
   ngOnInit(): void {

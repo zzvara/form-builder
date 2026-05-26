@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import { HttpBackend, HttpClient, provideHttpClient } from '@angular/common/http';
 import en from '@angular/common/locales/en';
-import { NgModule } from '@angular/core';
+import { NgModule, provideZonelessChangeDetection } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -77,6 +77,11 @@ export function HttpLoaderFactory(handler: HttpBackend): TranslateLoader {
       },
     }),
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }, provideHttpClient()],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: NZ_ICONS, useValue: icons },
+    provideHttpClient(),
+    provideZonelessChangeDetection()
+  ],
 })
 export class AppModule {}
