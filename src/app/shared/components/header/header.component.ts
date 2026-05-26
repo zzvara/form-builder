@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, signal, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
@@ -33,12 +34,14 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     NzMenuModule,
   ],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly headerService = inject(HeaderService);
   private readonly jsonService = inject(JsonService);
   private readonly translate = inject(TranslateService);
   private readonly eventService = inject(EventService);
+
+  private readonly destroyRef = inject(DestroyRef);
 
   LanguageEnum = LanguageEnum;
   ThemeEnum = ThemeEnum;
@@ -69,9 +72,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.eventService.themeChange.next(theme);
   }
 
-  ngOnDestroy(): void {
-    this.jsonService.destroy();
-  }
 
   navigateToHome(): void {
     this.router.navigate([RoutePath.DASHBOARD]);
@@ -111,13 +111,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   uploadJson(file: File): void {
-    this.jsonService.uploadJson(file).subscribe((data) => {
-      this.jsonService.setJsonData(data);
-      this.router.navigate([RoutePath.NEW], {
-        queryParams: { type: data.type },
-        state: { projectData: data },
+    this.jsonService.uploadJson(file)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        this.jsonService.setJsonData(data);
+        this.router.navigate([RoutePath.NEW], {
+          queryParams: { type: data.type },
+          state: { projectData: data },
+        });
       });
-    });
   }
 
   setLanguage(lang: LanguageEnum): void {

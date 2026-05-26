@@ -1,8 +1,6 @@
-<form id="selectEditFormID" nz-form nzLayout="vertical" [formGroup]="formData">
-  <nz-divider
-    nzText="{{ 'COMPONENTS.DIVIDERS.SELECTION' | translate }}"
-    nzOrientation="left"
-  ></nz-divider>
+<form id="selectEditFormID" nz-form nzLayout="vertical" [formGroup]="formData" class="settings-form">
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.SELECTION' | translate }}" nzOrientation="left"></nz-divider>
+
   <nz-form-item>
     <nz-form-control formArrayName="options">
       <nz-table
@@ -95,10 +93,8 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-  <nz-divider
-    nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}"
-    nzOrientation="left"
-  ></nz-divider>
+
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}" nzOrientation="left"></nz-divider>
 
   <nz-form-item>
     <nz-form-label nzRequired>
@@ -116,7 +112,7 @@
 
   <nz-form-item>
     <nz-form-label>
-      {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
+      {{ 'GENERAL.DESCRIPTION' | translate }}
     </nz-form-label>
     <nz-form-control>
       <quill-editor
@@ -127,18 +123,45 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-divider
-    nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}"
-    nzOrientation="left"
-  ></nz-divider>
-  <div class="required-section">
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.DEFAULT' | translate }}" nzOrientation="left"></nz-divider>
+
+  <div class="section-container">
     <nz-form-item>
       <nz-form-control>
-        <label nz-checkbox formControlName="required">
-          {{ 'COMPONENTS.IS_REQUIRED' | translate }}
-        </label>
+        <label nz-checkbox formControlName="setDefaultValue">{{ 'COMPONENTS.SET_DEFAULT_VALUE?' | translate }}</label>
       </nz-form-control>
     </nz-form-item>
+
+    @if (getControlValue('setDefaultValue')) {
+      <nz-form-item>
+        <nz-form-label [nzRequired]="getControlValue('required')">
+          <span>{{ 'COMPONENTS.SET_DEFAULT_VALUE' | translate }}</span>
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="defaultValueErrorTemplate">
+          <nz-select formControlName="defaultValue" nzAllowClear>
+            @for (option of optionObjects; track option.option_id) {
+              <nz-option [nzLabel]="option.option_description" [nzValue]="option.option_id"></nz-option>
+            }
+          </nz-select>
+        </nz-form-control>
+        <ng-template #defaultValueErrorTemplate let-control>
+          @for (message of getErrorMessages(control); track message) {
+            <div>{{ message }}</div>
+          }
+        </ng-template>
+      </nz-form-item>
+    }
+  </div>
+
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.VALIDATION' | translate }}" nzOrientation="left"></nz-divider>
+
+  <div class="section-container">
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="required">{{ 'COMPONENTS.IS_REQUIRED' | translate }}</label>
+      </nz-form-control>
+    </nz-form-item>
+
     @if (getControlValue('required')) {
       <nz-form-item>
         <nz-form-label [nzRequired]="getControlValue('required')">
@@ -155,6 +178,14 @@
       </nz-form-item>
     }
   </div>
+
+  <nz-divider nzText="{{ 'COMPONENTS.DIVIDERS.DISPLAY_MODE' | translate }}" nzOrientation="left"></nz-divider>
+
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="isButton">{{ 'COMPONENTS.RADIO_GROUP.SHOW_AS_BUTTON' | translate }}</label>
+    </nz-form-control>
+  </nz-form-item>
 </form>
 
 <app-code-editor-modal [elementId]="nzModalData.id"></app-code-editor-modal>

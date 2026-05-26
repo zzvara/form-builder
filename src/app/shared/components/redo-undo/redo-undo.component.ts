@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ChangeDetectionStrategy, computed, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -19,8 +19,8 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 export class RedoUndoComponent {
   @Output() sectionInputsChange = new EventEmitter<UndoRedoEnum>();
 
-  public readonly canUndo: Signal<boolean> = computed(() => this.undoRedoService.canUndo());
-  public readonly canRedo: Signal<boolean> = computed(() => this.undoRedoService.canRedo());
+  public readonly canUndo: Signal<boolean> = this.undoRedoService.canUndo;
+  public readonly canRedo: Signal<boolean> = this.undoRedoService.canRedo;
 
   constructor(private undoRedoService: UndoRedoService<SectionList[]>) {}
 
