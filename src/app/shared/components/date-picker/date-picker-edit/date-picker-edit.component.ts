@@ -61,8 +61,7 @@ import { CodeEditorModalComponent } from "@components/code-editor/code-editor-mo
     NzInputModule,
     NzCheckboxComponent,
     NzButtonModule,
-    NzIconModule,
-    CodeEditorModalComponent
+    NzIconModule
   ],
 })
 export class DatePickerEditComponent<

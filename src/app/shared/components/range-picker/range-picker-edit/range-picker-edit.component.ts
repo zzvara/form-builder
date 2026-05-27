@@ -38,8 +38,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzOptionComponent,
     NzCheckboxModule,
     DatePipe,
-    NzInputModule,
-    CodeEditorModalComponent
+    NzInputModule
   ],
 })
 export class RangePickerEditComponent extends DatePickerEditComponent<

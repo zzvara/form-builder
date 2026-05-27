@@ -31,6 +31,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
 import { QuillEditorComponent } from 'ngx-quill';
+import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-time-picker-edit',
@@ -54,6 +55,7 @@ import { QuillEditorComponent } from 'ngx-quill';
     NzButtonModule,
     TranslatePipe,
     DatePipe,
+    CodeEditorModalComponent,
   ],
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<

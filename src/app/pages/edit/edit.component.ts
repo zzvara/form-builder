@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input, OnChanges, OnInit, QueryList, ViewChildren, signal, Signal, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
@@ -279,9 +279,12 @@ export class EditComponent implements OnInit, OnChanges {
           newItem.customTitle = droppedInput.customTitle;
         }
 
-        newItem.data.id = newItemId;
-        newItem.data.sectionId = event.container.id;
-        newItem.data.draft = true;
+        if (newItem.data) {
+          newItem.data.id = newItemId;
+          newItem.data.sectionId = event.container.id;
+          newItem.data.draft = true;
+        }
+
         const newInputEdit: EditList = {
           id: newItemId,
           data: newItem,
@@ -300,9 +303,12 @@ export class EditComponent implements OnInit, OnChanges {
         formInputData.codeEditor.enabled = false;
       }
 
-      formInputData.data.sectionId = event.container.id;
+      if (formInputData.data) {
+        formInputData.data.sectionId = event.container.id;
+      }
+
       const transferredInput: EditList = {
-        id: formInputData.data.id!,
+        id: formInputData.data?.id ?? uuidv4(),
         data: formInputData,
       };
 
@@ -339,8 +345,10 @@ export class EditComponent implements OnInit, OnChanges {
       const droppedInput: FormInputData = draggable.data as FormInputData;
       const newItemId = uuidv4();
       const newItem: FormInputData = cloneDeep(droppedInput);
-      newItem.data!.id = newItemId;
-      newItem.data!.sectionId = event.container.id;
+      if (newItem.data) {
+        newItem.data.id = newItemId;
+        newItem.data.sectionId = event.container.id;
+      }
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else {
       const droppedInput: any = draggable.data;
@@ -384,7 +392,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
-    sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
+    sect.sectionInputs = sect.sectionInputs.filter((input) => input.data?.id !== componentId);
 
     this._editList.update(list => [...list]);
     this.updateRepeated();

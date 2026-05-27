@@ -20,6 +20,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 import { InputHolderComponent } from '../input-holder/input-holder.component';
+import {ComponentIconsPipe} from "@shared/pipes/used-component-icons.pipe";
 
 @Component({
   selector: 'app-sidebar',
@@ -36,9 +37,9 @@ import { InputHolderComponent } from '../input-holder/input-holder.component';
     NzCollapsePanelComponent,
     DragDropModule,
     NzCardModule,
-    InputHolderComponent,
     NzInputModule,
     NzIconModule,
+    ComponentIconsPipe,
   ],
 })
 export class SidebarComponent implements OnChanges {

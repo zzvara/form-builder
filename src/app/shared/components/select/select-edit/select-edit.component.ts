@@ -10,8 +10,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-
-// Ng-Zorro importok
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
@@ -86,10 +84,6 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
     this.newOption.setValue(value);
   }
 
-  get isMultipleChoice(): boolean {
-    return this.formData.controls['isMultipleChoice'].getRawValue();
-  }
-
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({
@@ -160,8 +154,9 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<string | stri
 
   removeOption(option: AbstractControl<string>, optionIndex: number) {
     this.options.removeAt(optionIndex);
-    if (Array.isArray(this.getDefaultValues())) {
-      this.setDefaultValue((this.getDefaultValues() as string[]).filter((opt) => opt !== option.value));
+    const defaults = this.getDefaultValues();
+    if (Array.isArray(defaults)) {
+      this.setDefaultValue(defaults.filter((opt) => opt !== option.value));
     } else {
       this.setDefaultValue('');
     }

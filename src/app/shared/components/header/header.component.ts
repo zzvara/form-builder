@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 
 import { ContextAction } from '@components/header/header.model';
@@ -31,7 +31,6 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     NzHeaderComponent,
     TranslatePipe,
     NzDropdownModule,
-    NzButtonComponent,
     NzIconModule,
     NzMenuModule,
   ],
@@ -43,24 +42,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService);
   private readonly eventService = inject(EventService);
 
+  readonly menuOptions = MenuOption;
+  headerOptions = this.headerService.headerOptions;
+  activeOptions = this.headerService.activeOptions;
+  contextActions = this.headerService.contextActions;
+
   LanguageEnum = LanguageEnum;
   ThemeEnum = ThemeEnum;
-  options = MenuOption;
 
   currentLanguage = signal<LanguageEnum>(LanguageEnum.EN);
   currentTheme = signal<ThemeEnum>(ThemeEnum.LIGHT);
-
-  // Reaktív állapotkezelés Signalokkal
-  private menuData = toSignal(this.headerService.getOptions(), {
-    initialValue: { options: [] as MenuOption[], activeOptions: [] as MenuOption[] },
-  });
-
-  headerOptions = computed(() => this.menuData().options);
-  activeOptions = computed(() => this.menuData().activeOptions);
-
-  contextActions = toSignal(this.headerService.getContextActions(), {
-    initialValue: [] as ContextAction[],
-  });
 
   ngOnInit(): void {
     const savedLang = localStorage.getItem(LocalStorageKey.LANGUAGE);
@@ -94,7 +85,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const isCurrentlyActive = currentActive.includes(toChange);
 
     const updatedActive = isCurrentlyActive
-      ? currentActive.filter((option) => option !== toChange)
+      ? currentActive.filter((option: MenuOption) => option !== toChange)
       : [...currentActive, toChange];
 
     this.headerService.setOptions(currentHeaders, updatedActive);
