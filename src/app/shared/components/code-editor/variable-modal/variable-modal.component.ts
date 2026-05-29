@@ -9,8 +9,6 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
 import {FormsModule} from "@angular/forms";
-import {NzTagComponent} from "ng-zorro-antd/tag";
-import {CodeEditorComponent} from "@components/code-editor/code-editor.component";
 
 @Component({
   selector: 'app-variable-modal',

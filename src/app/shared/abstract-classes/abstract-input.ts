@@ -39,6 +39,7 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
     this.edited.emit(modifiedData);
   }
 
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
   onChange($event: Event) {
     if (this.previousValue !== this.data.defaultValue) {
       this.onEdit(this.data);

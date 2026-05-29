@@ -223,7 +223,9 @@
           <div cdkDrag [cdkDragData]="edit" class="component-item" [class.draft-component]="isComponentDraft(edit)"
                [class.invalid-component]="isComponentInvalid(edit)">
             <div class="component-drag-handle" cdkDragHandle>
-              <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon" *ngIf="isComponentInvalid(edit)"></span>
+            @if (isComponentInvalid(edit)) {
+              <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon"></span>
+            }
               <span nz-icon [nzType]="edit.data.type | ComponentIconsPipe" nzTheme="outline"></span>
               <span class="component-title"> {{ edit.data.customTitle ? edit.data.customTitle : (edit.data.title | translate) }}</span>
             </div>
