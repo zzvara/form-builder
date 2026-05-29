@@ -22,6 +22,8 @@ export class FormBuilderStore {
   currentVersion = signal<number | undefined>(undefined);
   isComponentsFormValid = signal<boolean>(false);
 
+  // Page validity
+
   isInfoValid = computed(() => {
     const project = this.project();
     return project?.title && project?.type;
@@ -32,27 +34,31 @@ export class FormBuilderStore {
     return (project?.editList?.length ?? 0) > 0 && this.isComponentsFormValid();
   });
 
-  canGoNext = computed(() => {
+  // Navigating through pages
+
+  canGoNextPage = computed(() => {
     const step = this.currentStep();
     if (step === 0) return this.isInfoValid();
     if (step === 1) return this.isComponentsValid();
     return true;
   });
 
-  setStep(step: number) {
+  setPageStep(step: number) {
     if (step < 0 || step > 2) return;
     this.currentStep.set(step);
   }
 
-  next() {
+  nextPage() {
     const current = this.currentStep();
-    if (current < 2 && this.canGoNext()) this.currentStep.set(current + 1);
+    if (current < 2 && this.canGoNextPage()) this.currentStep.set(current + 1);
   }
 
-  prev() {
+  previousPage() {
     const current = this.currentStep();
     if (current > 0) this.currentStep.set(current - 1);
   }
+
+  // Project handling
 
   private loadProject(projectId: string): boolean {
     const projects = this.projectService.searchData(projectId);
@@ -70,7 +76,7 @@ export class FormBuilderStore {
     this.currentVersion.set(undefined);
     this.isComponentsFormValid.set(false);
     this.project.set({ ...INITIAL_FORM, type, id: '' });
-    this.clearHistory();
+    this.clearEditHistory();
   }
 
   setProject(projectId: string) {
@@ -79,7 +85,7 @@ export class FormBuilderStore {
       this.currentStep.set(0);
       this.currentVersion.set(undefined);
       this.isComponentsFormValid.set(this.project()?.isComponentsValid ?? false);
-      this.clearHistory();
+      this.clearEditHistory();
       const initialEditList = this.project()?.editList ?? [];
       this.saveEditHistory(initialEditList);
     } else {
@@ -92,6 +98,20 @@ export class FormBuilderStore {
   updateProject(data: Partial<Project>) {
     this.project.update((proj) => (proj ? { ...proj, ...data } : proj));
   }
+
+  saveProject() {
+    const project = this.project();
+    if (!project) return;
+
+    if (!project.id || project.id === '') {
+      this.projectService.add(project);
+      this.project.set(project);
+    } else {
+      this.projectService.update(project.id, project);
+    }
+  }
+
+  // Versioning
 
   initVersionNumber(versionNum: number | undefined) {
     if (!versionNum) return;
@@ -116,17 +136,7 @@ export class FormBuilderStore {
     }
   }
 
-  saveProject() {
-    const project = this.project();
-    if (!project) return;
-
-    if (!project.id || project.id === '') {
-      this.projectService.add(project);
-      this.project.set(project);
-    } else {
-      this.projectService.update(project.id, project);
-    }
-  }
+  // Undo-redo
 
   saveEditHistory(state: EditList[]) {
     this.undoRedoService.saveState(state);
@@ -148,7 +158,7 @@ export class FormBuilderStore {
     }
   }
 
-  clearHistory() {
+  clearEditHistory() {
     this.undoRedoService.clearHistory();
   }
 }

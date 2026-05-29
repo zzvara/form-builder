@@ -62,7 +62,7 @@ export class ComponentsPageComponent implements OnInit {
 
   nextPage() {
     this.store.saveProject();
-    this.store.next();
+    this.store.nextPage();
   }
 
   navigateVersion(offset: number): void {

@@ -142,6 +142,6 @@ export class InfoPageComponent implements OnInit, OnDestroy {
     }
 
     this._saveFailed.set(false);
-    this.store.next();
+    this.store.nextPage();
   }
 }

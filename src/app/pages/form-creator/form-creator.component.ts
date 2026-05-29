@@ -14,20 +14,20 @@ export class FormCreatorComponent {
   constructor(public store: FormBuilderStore) {}
 
   toInfoPage() {
-    this.store.setStep(0);
+    this.store.setPageStep(0);
   }
 
   toCompPage() {
     if (this.store.currentStep() >= 1 || this.store.isInfoValid()) {
       this.store.saveProject();
-      this.store.setStep(1);
+      this.store.setPageStep(1);
     }
   }
 
   toAnswPage() {
     if (this.store.currentStep() >= 2 || (this.store.isInfoValid() && this.store.isComponentsValid())) {
       this.store.saveProject();
-      this.store.setStep(2);
+      this.store.setPageStep(2);
     }
   }
 }
