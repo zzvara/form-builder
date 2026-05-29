@@ -189,7 +189,9 @@ export class FormBuilderStore {
       if (version) {
         this.loadProject(this.projectId());
       } else {
-        console.error('Failed to revert to version', versionNum);
+        this.translate.get('ERRORS.VERSION_REVERT_FAILED').subscribe((res: string) => {
+          this.message.error(res);
+        });
       }
     }
   }
