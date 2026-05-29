@@ -6,6 +6,7 @@ import { InlineEdit } from '@interfaces/inline-edit';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
 import { TranslateService } from '@ngx-translate/core';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 
@@ -22,29 +23,19 @@ interface DiffItem {
   standalone: false,
 })
 export class ComponentsPageComponent implements OnInit {
-  @ViewChild(EditComponent) editComponent!: EditComponent;
-
-  @Input() projectId: string | undefined;
-  @Input() page?: number;
-  @Output() setPage = new EventEmitter<number>();
-  @Output() versionChange = new EventEmitter<number>();
-
   private readonly _inlineEdit = signal<InlineEdit>({ enabled: true });
   public readonly inlineEdit: Signal<InlineEdit> = this._inlineEdit.asReadonly();
 
   private readonly _projectHistory = signal<ProjectVersion<Project>[]>([]);
   public readonly projectHistory: Signal<ProjectVersion<Project>[]> = this._projectHistory.asReadonly();
 
-  private readonly _currentVersionNum = signal<number | undefined>(undefined);
-  public readonly currentVersionNum: Signal<number | undefined> = this._currentVersionNum.asReadonly();
-
   public readonly hasPreviousVersion = computed(() => {
-    const current = this._currentVersionNum();
+    const current = this.store.currentVersion();
     return current !== undefined && current > 1;
   });
 
   public readonly hasNextVersion = computed(() => {
-    const current = this._currentVersionNum();
+    const current = this.store.currentVersion();
     const history = this._projectHistory();
     return current !== undefined && history.some((v) => v.versionNum === current + 1);
   });
@@ -55,83 +46,30 @@ export class ComponentsPageComponent implements OnInit {
     private modal: NzModalService,
     private translate: TranslateService,
     private projectService: ProjectService<Project>,
-    private cdr: ChangeDetectorRef
+    public store: FormBuilderStore
   ) {}
 
   ngOnInit(): void {
-    if (this.projectId !== undefined) {
-      const history = this.projectService.getProjectHistory(this.projectId);
+    const id = this.store.projectId();
+    if (id) {
+      const history = this.projectService.getProjectHistory(id);
       this._projectHistory.set(history);
 
       const latestVersionNum = history.length > 0 ? history[history.length - 1].versionNum : 1;
-      this._currentVersionNum.set(latestVersionNum);
-
-      this.versionChange.emit(this._currentVersionNum());
+      this.store.initVersionNumber(latestVersionNum);
     }
-  }
-
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
   }
 
   nextPage() {
-    this.saveForm();
-    if (this.page !== undefined) {
-      this.page += 1;
-      this.onsetPage(this.page);
-    }
-  }
-
-  saveForm() {
-    if (!this.editComponent) return;
-
-    if (this.editComponent.isFormInvalid()) {
-      this.jumpToFirstError();
-      return;
-    }
-    this.editComponent.saveForm();
-  }
-
-  jumpToFirstError() {
-    if (!this.editComponent) return;
-
-    const invalidInput = this.editComponent.getAllFormInputs().find((inp) => this.editComponent.isInputInvalid(inp));
-
-    if (invalidInput?.data?.id) {
-      this.editComponent.scrollToElement(invalidInput.data.id);
-      return;
-    }
-
-      const invalidSection = this.editComponent.editList().find((item) => this.editComponent.isComponentInvalid(item));
-
-    if (invalidSection?.id) {
-      this.editComponent.scrollToElement(invalidSection.id);
-      return;
-    }
-  }
-
-  onsetPage(page: number): void {
-    this.setPage.emit(page);
+    this.store.saveProject();
+    this.store.next();
   }
 
   navigateVersion(offset: number): void {
-    const current = this._currentVersionNum();
+    const current = this.store.currentVersion();
     if (current !== undefined) {
       const newVersionNum = current + offset;
-      this.revertToVersion(newVersionNum);
-    }
-  }
-
-  revertToVersion(versionNum: number): void {
-    if (this.projectId !== undefined) {
-      const version = this.projectService.revertToVersion(this.projectId, versionNum);
-      if (version) {
-        this._currentVersionNum.set(versionNum);
-        this.versionChange.emit(this._currentVersionNum());
-        this.editComponent.ngOnInit();
-      } else {
-        console.error('Failed to revert to version', versionNum);
-      }
+      this.store.setVersion(newVersionNum);
     }
   }
 
@@ -140,7 +78,7 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   selectVersion(versionNum: number) {
-    this.revertToVersion(versionNum);
+    this.store.setVersion(versionNum);
   }
 
   getDiffItems(version: ProjectVersion<Project>): DiffItem[] {
@@ -183,11 +121,15 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   onSectionInputsChange(undoRedoEvent: UndoRedoEnum): void {
-    this.editComponent.undoRedo(undoRedoEvent);
+    if (undoRedoEvent === UndoRedoEnum.UNDO) {
+      this.store.undoEdit();
+    } else {
+      this.store.redoEdit();
+    }
   }
 
   get isNextButtonDisabled(): boolean {
-    return this.editComponent ? this.editComponent.isFormInvalid() : true;
+    return !this.store.isComponentsValid();
   }
 
   onInlineEditChange(enabled: boolean): void {

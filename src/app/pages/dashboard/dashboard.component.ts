@@ -7,6 +7,7 @@ import { ProjectService } from '@services/project.service';
 import { ViewType } from '@app/shared/interfaces/view-type.enum';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { RoutePath } from '@app/shared/models/route-path.model';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +19,7 @@ import { RoutePath } from '@app/shared/models/route-path.model';
 export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly questionnaireService = inject(ProjectService<Questionnaire>);
+  private readonly store = inject(FormBuilderStore);
   projects = this.questionnaireService.items;
   isListView = signal(true);
   projectTypes = ProjectType;
@@ -30,6 +32,7 @@ export class DashboardComponent implements OnInit {
   }
 
   createProject(type: ProjectType): void {
+    this.store.initNewProject(type);
     this.router.navigate([RoutePath.NEW], { queryParams: { type } });
   }
 
@@ -38,6 +41,7 @@ export class DashboardComponent implements OnInit {
   }
 
   editProject(id: string) {
+    this.store.setProject(id);
     this.router.navigate([RoutePath.EDIT], { queryParams: { id } });
   }
 

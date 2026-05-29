@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal, Signal, WritableSignal } from '@angular/core';
+import { Component, OnDestroy, computed } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 
 @Component({
   selector: 'app-results-page',
@@ -17,27 +18,37 @@ import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.en
   styleUrls: ['./results-page.component.less'],
   standalone: false,
 })
-export class ResultsPageComponent implements OnInit, OnDestroy {
-  @Input() page?: number;
-  @Input() projectId: string | undefined;
-  @Input() versionNum?: number;
+export class ResultsPageComponent implements OnDestroy {
+  public readonly project = this.store.project;
 
-  @Output() setPage = new EventEmitter<number>();
+  public readonly projectHistory = computed(() => {
+    this.projectService.items();
+    const projectId = this.store.projectId();
+    return projectId ? this.projectService.getProjectHistory(projectId) : [];
+  });
 
-  private readonly _project = signal<Project | undefined>(undefined);
-  public readonly project = this._project.asReadonly();
+  public readonly sectionInputStats = computed(() => {
+    const proj = this.project();
+    return proj ? this.statisticsService.calculateSectionInputStats(proj) : {};
+  });
 
-  private readonly _projectHistory = signal<ProjectVersion<Project>[]>([]);
-  public readonly projectHistory = this._projectHistory.asReadonly();
+  public readonly latestVersionNum = computed(() => {
+    const history = this.projectHistory();
+    return history.length > 0 ? history[history.length - 1].versionNum : undefined;
+  });
 
-  private readonly _sectionInputStats = signal<{ [key: string]: number | string }>({});
-  public readonly sectionInputStats = this._sectionInputStats.asReadonly();
-
-  private readonly _latestVersionNum = signal<number | undefined>(undefined);
-  public readonly latestVersionNum = this._latestVersionNum.asReadonly();
-
-  private readonly _sectionInputs = signal<FormInputData[]>([]);
-  public readonly sectionInputs = this._sectionInputs.asReadonly();
+  public readonly sectionInputs = computed(() => {
+    const proj = this.project();
+    const inputs: FormInputData[] = [];
+    if (proj?.editList) {
+      proj.editList.forEach((section) => {
+        if ('sectionInputs' in section.data) {
+          section.data.sectionInputs.forEach((input) => inputs.push(input));
+        }
+      });
+    }
+    return inputs;
+  });
 
   columnsConfig: ColumnItem[] = [
     {
@@ -63,67 +74,25 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
     private readonly jsonService: JsonService,
     private readonly statisticsService: StatisticsService,
     private readonly translate: TranslateService,
-    private readonly router: Router
+    private readonly router: Router,
+    public readonly store: FormBuilderStore
   ) {}
 
-  ngOnInit(): void {
-    if (this.projectId !== undefined) {
-      const history = this.projectService.getProjectHistory(this.projectId);
-      this._projectHistory.set(history);
-
-      const latestNum = history.length > 0 ? history[history.length - 1].versionNum : undefined;
-      this._latestVersionNum.set(latestNum);
-
-      const proj = this.projectService.getProjectVersion(this.projectId, latestNum ?? 1);
-      this._project.set(proj);
-
-      this.calculateSectionInputStats();
-    }
-
-    const currentProject = this._project();
-    if (currentProject?.editList) {
-      const inputs: FormInputData[] = [];
-      currentProject.editList.forEach((section) => {
-        if ('sectionInputs' in section.data) {
-          section.data.sectionInputs.forEach((input) => {
-            inputs.push(input);
-          });
-        }
-      });
-      this._sectionInputs.set(inputs);
-    }
-  }
-
   nextPage() {
-    if (this.page !== undefined) {
-      this.page += 1;
-      this.onsetPage(this.page);
-    }
     this.router.navigate(['/']);
   }
 
-  onsetPage(page: number): void {
-    this.setPage.emit(page);
-  }
-
   saveProjectWithHistoryToJson(): void {
-    const proj = this._project();
+    const proj = this.project();
     if (proj) {
-      this.jsonService.saveProjectWithHistoryToJson(proj, this._projectHistory());
+      this.jsonService.saveProjectWithHistoryToJson(proj, this.projectHistory());
     }
   }
 
   saveProjectToJson(): void {
-    const proj = this._project();
+    const proj = this.project();
     if (proj) {
       this.jsonService.saveProjectToJson(proj);
-    }
-  }
-
-  private calculateSectionInputStats(): void {
-    const proj = this._project();
-    if (proj) {
-      this._sectionInputStats.set(this.statisticsService.calculateSectionInputStats(proj));
     }
   }
 

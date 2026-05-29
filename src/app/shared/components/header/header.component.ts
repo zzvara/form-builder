@@ -11,6 +11,7 @@ import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { EventService } from '@app/shared/services/event.service';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
   private readonly eventService = inject(EventService);
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly store = inject(FormBuilderStore);
 
   LanguageEnum = LanguageEnum;
   ThemeEnum = ThemeEnum;
@@ -56,7 +58,6 @@ export class HeaderComponent implements OnInit {
     }
     this.eventService.themeChange.next(theme);
   }
-
 
   navigateToHome(): void {
     this.router.navigate([RoutePath.DASHBOARD]);
@@ -96,15 +97,19 @@ export class HeaderComponent implements OnInit {
   }
 
   uploadJson(file: File): void {
-    this.jsonService.uploadJson(file)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data) => {
-        this.jsonService.setJsonData(data);
-        this.router.navigate([RoutePath.NEW], {
-          queryParams: { type: data.type },
-          state: { projectData: data },
-        });
+    this.jsonService.uploadJson(file).subscribe((data) => {
+      this.jsonService.setJsonData(data);
+
+      if (data.project) {
+        this.store.initNewProject(data.project.type);
+        this.store.updateProject(data.project);
+      }
+
+      this.router.navigate([RoutePath.NEW], {
+        queryParams: { type: data.type },
+        state: { projectData: data },
       });
+    });
   }
 
   setLanguage(lang: LanguageEnum): void {
