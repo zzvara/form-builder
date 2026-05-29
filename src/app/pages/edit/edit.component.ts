@@ -222,7 +222,7 @@ export class EditComponent implements OnInit, OnChanges {
 
   private initializeUndoRedo(): void {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
-      this.store.clearHistory();
+      this.store.clearEditHistory();
       this.store.saveEditHistory(this._editList());
       this.componentService.component$.next(this._editList());
     }

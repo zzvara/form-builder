@@ -34,7 +34,6 @@ export class FormCreatorComponent {
   projectId: string = '';
   currentVersionNum?: number;
   projectType: ProjectType = ProjectType.TEST;
-  page = 0;
   infoValid = false;
   componentValid = false;
 
@@ -76,35 +75,33 @@ export class FormCreatorComponent {
 
   setPage(p: number) {
     if (p <= 2) {
-      this.page = p;
+      this.store.setStep(p);
     }
   }
 
   nextPage() {
-    if (this.page < 2) {
-      this.page += 1;
+    if (this.store.currentStep() < 2) {
+      this.store.setStep(this.store.currentStep() + 1);
     }
   }
 
   toInfoPage() {
-    if (this.page >= 0) {
-      this.page = 0;
-    }
+    this.store.setStep(0);
   }
 
   toCompPage() {
-    if (this.page >= 1 || this.checkInfoForm()) {
+    if (this.store.currentStep() >= 1 || this.checkInfoForm()) {
       this.infoPageComponent?.submitForm();
       this.store.saveProject();
-      this.page = 1;
+      this.store.setStep(1);
     }
   }
 
   toAnswPage() {
-    if (this.page >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
+    if (this.store.currentStep() >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
       this.componentsPageComponent?.saveForm();
       this.store.saveProject();
-      this.page = 2;
+      this.store.setStep(2);
     }
   }
 }
