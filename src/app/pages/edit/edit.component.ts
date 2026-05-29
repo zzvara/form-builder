@@ -8,12 +8,12 @@ import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
 import { Project } from '@interfaces/project';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 import { getSideBarData } from '@pages/edit/config/edit-data-config';
 import { EditList } from '@pages/edit/interfaces/edit-list';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
 import { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
 import { ProjectService } from '@services/project.service';
-import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -105,7 +105,7 @@ export class EditComponent implements OnInit, OnChanges {
   constructor(
     private modalService: ModalService,
     private projectService: ProjectService<Project>,
-    private undoRedoService: UndoRedoService<EditList[]>,
+    private store: FormBuilderStore,
     private componentService: ComponentService,
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
@@ -161,6 +161,12 @@ export class EditComponent implements OnInit, OnChanges {
       this._names.set(this.getCustomTitles());
       this.projectService.update(this.projectId!, project);
     }
+    this.pushToStore();
+  }
+
+  public pushToStore() {
+    this.store.updateProject({ editList: cloneDeep(this._editList()), isComponentsValid: !this.isFormInvalid() });
+    this.store.isComponentsFormValid.set(!this.isFormInvalid());
   }
 
   private loadProject(): void {
@@ -169,9 +175,12 @@ export class EditComponent implements OnInit, OnChanges {
       if (project?.editList) {
         this._editList.set(this.cleanCorruptedData(cloneDeep(project.editList)));
         this._names.set(this.getCustomTitles());
-        this.undoRedoService.saveState(this._editList());
+        this.store.saveEditHistory(this._editList());
       }
       this.componentService.component$.next(this._editList());
+      setTimeout(() => {
+        this.store.isComponentsFormValid.set(!this.isFormInvalid());
+      });
     }
   }
 
@@ -213,22 +222,23 @@ export class EditComponent implements OnInit, OnChanges {
 
   private initializeUndoRedo(): void {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
-      this.undoRedoService.clearHistory();
-      this.undoRedoService.saveState(this._editList());
+      this.store.clearHistory();
+      this.store.saveEditHistory(this._editList());
       this.componentService.component$.next(this._editList());
     }
   }
 
   undoRedo(undoRedoEvent: UndoRedoEnum): void {
     if (undoRedoEvent === UndoRedoEnum.UNDO) {
-      this._editList.set(this.undoRedoService.undo() ?? []);
+      this._editList.set(this.store.undoEdit() ?? []);
       this._names.set(this.getCustomTitles());
       this.componentService.component$.next(this._editList());
     } else {
-      this._editList.set(this.undoRedoService.redo() ?? []);
+      this._editList.set(this.store.redoEdit() ?? []);
       this._names.set(this.getCustomTitles());
       this.componentService.component$.next(this._editList());
     }
+    this.pushToStore();
   }
 
   dropIntoEdit(event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>): void {
@@ -309,8 +319,9 @@ export class EditComponent implements OnInit, OnChanges {
 
     this._editList.update(list => [...list]);
     this.updateRepeated();
-    this.undoRedoService.saveState(this._editList());
+    this.store.saveEditHistory(this._editList());
     this.componentService.component$.next(this._editList());
+    this.pushToStore();
   }
 
   dropIntoSection(event: CdkDragDrop<FormInputData[], EditList[] | FormInputData[], EditList | FormInputData>): void {
@@ -350,8 +361,9 @@ export class EditComponent implements OnInit, OnChanges {
 
     this._editList.update(list => [...list]);
     this.updateRepeated();
-    this.undoRedoService.saveState(this._editList());
+    this.store.saveEditHistory(this._editList());
     this.componentService.component$.next(this._editList());
+    this.pushToStore();
   }
 
   getEditDropListConnectedTo(): string[] {
@@ -369,16 +381,18 @@ export class EditComponent implements OnInit, OnChanges {
     this._editList.update(list => list.filter((e) => e.id !== edit.id));
     this._names.set(this.getCustomTitles());
     this.updateRepeated();
-    this.undoRedoService.saveState(this._editList());
+    this.store.saveEditHistory(this._editList());
     this.componentService.component$.next(this._editList());
+    this.pushToStore();
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
     this._editList.update(list => [...list]);
     this.updateRepeated();
-    this.undoRedoService.saveState(this._editList());
+    this.store.saveEditHistory(this._editList());
     this.componentService.component$.next(this._editList());
+    this.pushToStore();
   }
 
   getSectionInputStyle(sect: SectionList): { [p: string]: string } {
@@ -404,8 +418,9 @@ export class EditComponent implements OnInit, OnChanges {
       sect.layout = LayoutEnum.VERTICAL;
     }
     this._editList.update(list => [...list]);
-    this.undoRedoService.saveState(this._editList());
+    this.store.saveEditHistory(this._editList());
     this.componentService.component$.next(this._editList());
+    this.pushToStore();
   }
 
   openRepeatedSettings(section: RepeatedSectionList): void {
@@ -481,8 +496,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   onValueChanged<D extends InputData<T>, T>(event: D): void {
-    this.undoRedoService.saveState(this._editList());
+    this.store.saveEditHistory(this._editList());
     this.componentService.component$.next(this._editList());
+    this.pushToStore();
   }
 
   scrollToElement(elementId: string): void {
@@ -498,6 +514,8 @@ export class EditComponent implements OnInit, OnChanges {
   updateName(): void {
     this._names.set(this.getCustomTitles());
     this.updateRepeated();
+    this.store.saveEditHistory(this._editList());
+    this.pushToStore();
   }
 
   public isLogicEnabled(item: any): boolean {

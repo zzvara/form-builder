@@ -7,6 +7,7 @@ import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzStepComponent, NzStepsComponent } from 'ng-zorro-antd/steps';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ResultsPageComponent } from './results-page/results-page.component';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 
 @Component({
   selector: 'app-form-creator',
@@ -39,7 +40,10 @@ export class FormCreatorComponent {
 
   ProjectType = ProjectType;
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  constructor(
+    private readonly cdr: ChangeDetectorRef,
+    public store: FormBuilderStore
+  ) {}
 
   checkInfoForm() {
     if (this.infoPageComponent) {
@@ -91,6 +95,7 @@ export class FormCreatorComponent {
   toCompPage() {
     if (this.page >= 1 || this.checkInfoForm()) {
       this.infoPageComponent?.submitForm();
+      this.store.saveProject();
       this.page = 1;
     }
   }
@@ -98,6 +103,7 @@ export class FormCreatorComponent {
   toAnswPage() {
     if (this.page >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
       this.componentsPageComponent?.saveForm();
+      this.store.saveProject();
       this.page = 2;
     }
   }

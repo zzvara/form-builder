@@ -11,6 +11,7 @@ import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { EventService } from '@app/shared/services/event.service';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 import { NzHeaderComponent } from 'ng-zorro-antd/layout';
 import { CommonModule } from '@angular/common';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
@@ -40,6 +41,7 @@ export class HeaderComponent implements OnInit {
   private readonly jsonService = inject(JsonService);
   private readonly translate = inject(TranslateService);
   private readonly eventService = inject(EventService);
+  private readonly store = inject(FormBuilderStore);
 
   private readonly destroyRef = inject(DestroyRef);
 
@@ -71,7 +73,6 @@ export class HeaderComponent implements OnInit {
     }
     this.eventService.themeChange.next(theme);
   }
-
 
   navigateToHome(): void {
     this.router.navigate([RoutePath.DASHBOARD]);
@@ -115,6 +116,12 @@ export class HeaderComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
         this.jsonService.setJsonData(data);
+
+        if (data.project) {
+          this.store.initNewProject(data.project.type);
+          this.store.updateProject(data.project);
+        }
+
         this.router.navigate([RoutePath.NEW], {
           queryParams: { type: data.type },
           state: { projectData: data },
