@@ -75,33 +75,33 @@ export class FormCreatorComponent {
 
   setPage(p: number) {
     if (p <= 2) {
-      this.store.setStep(p);
+      this.store.setPageStep(p);
     }
   }
 
   nextPage() {
     if (this.store.currentStep() < 2) {
-      this.store.setStep(this.store.currentStep() + 1);
+      this.store.setPageStep(this.store.currentStep() + 1);
     }
   }
 
   toInfoPage() {
-    this.store.setStep(0);
+    this.store.setPageStep(0);
   }
 
   toCompPage() {
     if (this.store.currentStep() >= 1 || this.checkInfoForm()) {
       this.infoPageComponent?.submitForm();
       this.store.saveProject();
-      this.store.setStep(1);
+      this.store.setPageStep(1);
     }
   }
 
   toAnswPage() {
     if (this.store.currentStep() >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
-      this.componentsPageComponent?.saveForm();
+      this.componentsPageComponent?.editComponent?.saveForm();
       this.store.saveProject();
-      this.store.setStep(2);
+      this.store.setPageStep(2);
     }
   }
 }

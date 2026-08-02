@@ -352,7 +352,7 @@ export class EditComponent implements OnInit, OnChanges {
       if (this.instanceOfFormInputDataPipe.transform(movedItem)) {
         toMove = movedItem;
       } else {
-        toMove = movedItem.data as any;
+        toMove = (movedItem as any).data as FormInputData;
       }
 
       event.container.data.splice(event.currentIndex, 0, toMove as any);

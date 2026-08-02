@@ -48,7 +48,7 @@
           <app-redo-undo (sectionInputsChange)="onSectionInputsChange($event)"> </app-redo-undo>
         </div>
         <div class="inline-edit-container">
-          <label nz-checkbox [ngModel]="inlineEdit().enabled" (ngModelChange)="onInlineEditChange($event)">
+          <label nz-checkbox [nzChecked]="inlineEdit().enabled" (nzCheckedChange)="onInlineEditChange($event)">
             {{ 'COMPONENTS.INLINE_EDIT' | translate }}
           </label>
         </div>

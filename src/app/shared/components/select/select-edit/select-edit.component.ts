@@ -94,10 +94,6 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
     this.newOption.setValue(value);
   }
 
-  get isMultipleChoice(): boolean {
-    return this.formData.controls['isMultipleChoice'].getRawValue();
-  }
-
   override ngOnInit(): void {
     super.ngOnInit();
     this.addControls({

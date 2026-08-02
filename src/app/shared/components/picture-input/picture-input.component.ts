@@ -29,7 +29,6 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
     NzUploadComponent,
     NzIconModule,
     NzButtonComponent,
-    CodeEditorModalComponent,
   ],
 })
 export class PictureInputComponent
