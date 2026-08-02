@@ -18,7 +18,6 @@
             },
             "index": "src/index.html",
             "polyfills": [
-              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "webWorkerTsConfig": "tsconfig.worker.json",
@@ -94,8 +93,7 @@
           "builder": "@angular/build:karma",
           "options": {
             "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+
             ],
             "tsConfig": "tsconfig.spec.json",
             "webWorkerTsConfig": "tsconfig.worker.json",
