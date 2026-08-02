@@ -1,13 +1,6 @@
-import {
-  ApplicationModule,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild, signal, Signal, computed } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
@@ -15,14 +8,13 @@ import { InlineEdit } from '@interfaces/inline-edit';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
-import { DatePipe } from '@angular/common';
 import { RedoUndoComponent } from '@app/shared/components/redo-undo/redo-undo.component';
-import { FormsModule } from '@angular/forms';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -34,6 +26,7 @@ interface DiffItem {
   before: string;
   after: string;
 }
+
 @Component({
   selector: 'app-components-page',
   templateUrl: './components-page.component.html',
@@ -63,10 +56,22 @@ export class ComponentsPageComponent implements OnInit {
   @Output() setPage = new EventEmitter<number>();
   @Output() versionChange = new EventEmitter<number>();
 
-  inlineEdit: InlineEdit = { enabled: true };
+  private readonly _inlineEdit = signal<InlineEdit>({ enabled: true });
+  public readonly inlineEdit: Signal<InlineEdit> = this._inlineEdit.asReadonly();
 
-  projectHistory: ProjectVersion<Project>[] = [];
-  currentVersionNum?: number;
+  private readonly _projectHistory = signal<ProjectVersion<Project>[]>([]);
+  public readonly projectHistory: Signal<ProjectVersion<Project>[]> = this._projectHistory.asReadonly();
+
+  public readonly hasPreviousVersion = computed(() => {
+    const current = this.store.currentVersion();
+    return current !== undefined && current > 1;
+  });
+
+  public readonly hasNextVersion = computed(() => {
+    const current = this.store.currentVersion();
+    const history = this._projectHistory();
+    return current !== undefined && history.some((v) => v.versionNum === current + 1);
+  });
 
   DateFormat = DateFormat;
 
@@ -74,23 +79,19 @@ export class ComponentsPageComponent implements OnInit {
     private modal: NzModalService,
     private translate: TranslateService,
     private projectService: ProjectService<Project>,
-    private cdr: ChangeDetectorRef,
+    public store: FormBuilderStore,
+    private cdr: ChangeDetectorRef
   ) {}
 
-  /**
-   * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
-   * Otherwise, it defaults the current version number to 1.
-   * @returns {void}
-   */
   ngOnInit(): void {
-    if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
+    const id = this.projectId || this.store.projectId();
+    if (id) {
+      const history = this.projectService.getProjectHistory(id);
+      this._projectHistory.set(history);
 
-      this.currentVersionNum =
-        this.projectHistory.length > 0
-          ? this.projectHistory[this.projectHistory.length - 1].versionNum
-          : 1;
-      this.versionChange.emit(this.currentVersionNum);
+      const latestVersionNum = history.length > 0 ? history[history.length - 1].versionNum : 1;
+      this.store.initVersionNumber(latestVersionNum);
+      this.versionChange.emit(this.store.currentVersion());
     }
   }
 
@@ -98,127 +99,39 @@ export class ComponentsPageComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  /**
-   * Saves the current form state by calling saveForm on the editComponent.
-   * Then, it increments the page number and emits an event to notify parent components of the page change.
-   */
   nextPage() {
-    const saved = this.saveForm();
-    if (saved) {
-      this.page! += 1;
-      this.onsetPage(this.page!);
+    this.store.saveProject();
+    if (this.page !== undefined) {
+      this.page += 1;
+      this.onsetPage(this.page);
     }
   }
 
-  saveForm(): boolean {
-    if (!this.editComponent) return false;
-
-    if (this.editComponent.isFormInvalid()) {
-      this.jumpToFirstError();
-      return false;
-    }
-    this.editComponent.saveForm();
-    return true;
-  }
-
-  jumpToFirstError() {
-  if (!this.editComponent) return;
-
-  const invalidInput = this.editComponent
-    .getAllFormInputs()
-    .find((inp) => this.editComponent.isInputInvalid(inp));
-
-  if (invalidInput?.data?.id) {
-    this.editComponent.scrollToElement(invalidInput.data.id);
-    return;
-  }
-
-  const invalidRepeatedSection = this.editComponent.editList.find((item) =>
-    this.editComponent.hasRepeatedSettingsErrorForEdit(item),
-  );
-
-  if (invalidRepeatedSection?.id) {
-    this.editComponent.scrollToElement(invalidRepeatedSection.id);
-    return;
-  }
-
-  const invalidSection = this.editComponent.editList.find((item) =>
-    this.editComponent.isComponentInvalid(item),
-  );
-
-  if (invalidSection?.id) {
-    this.editComponent.scrollToElement(invalidSection.id);
-    return;
-  }
-}
-
-  /**
-   * Emits an event to set the current page in the parent component.
-   * @param {number} page - The new page number to navigate to.
-   * @returns {void}
-   */
   onsetPage(page: number): void {
     this.setPage.emit(page);
   }
 
-  /**
-   * Checks if there is a previous version of the project available.
-   * @returns {boolean} True if the current version number is greater than 1, indicating that previous versions exist.
-   */
-  hasPreviousVersion(): boolean {
-    return this.currentVersionNum !== undefined && this.currentVersionNum > 1;
-  }
-
-  /**
-   * Checks if there is a next version of the project available.
-   * @returns {boolean} True if the current version number is not the latest, indicating that a next version exists.
-   */
-  hasNextVersion(): boolean {
-    return (
-      this.currentVersionNum !== undefined &&
-      this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1)
-    );
-  }
-
-  /**
-   * Navigates to a different version of the project based on the given offset.
-   * @param {number} offset - The number to add to the current version number to navigate to the new version.
-   * @returns {void}
-   */
   navigateVersion(offset: number): void {
-    if (this.currentVersionNum !== undefined) {
-      const newVersionNum = this.currentVersionNum + offset;
-      this.revertToVersion(newVersionNum);
+    const current = this.store.currentVersion();
+    if (current !== undefined) {
+      const newVersionNum = current + offset;
+      this.store.setVersion(newVersionNum);
+      this.versionChange.emit(this.store.currentVersion());
     }
   }
 
-  /**
-   * Reverts the project to a specified version.
-   * @param versionNum - The version number to revert the project to.
-   * @returns {void}
-   */
-  revertToVersion(versionNum: number): void {
-    if (this.projectId !== undefined) {
-      const version = this.projectService.revertToVersion(this.projectId, versionNum);
-      if (version) {
-        this.currentVersionNum = versionNum;
-        this.versionChange.emit(this.currentVersionNum);
-        this.editComponent.ngOnInit();
-      } else {
-        console.error('Failed to revert to version', versionNum);
-      }
-    }
-  }
   trackByVersion(index: number, version: ProjectVersion<Project>): number {
-    return version.versionNum; // Track by the version number
+    return version.versionNum;
   }
 
   selectVersion(versionNum: number) {
-    this.revertToVersion(versionNum);
+    this.store.setVersion(versionNum);
+    this.versionChange.emit(this.store.currentVersion());
   }
 
   getDiffItems(version: ProjectVersion<Project>): DiffItem[] {
-    const prev = this.projectHistory.find((v) => v.versionNum === version.versionNum - 1);
+    const history = this._projectHistory();
+    const prev = history.find((v) => v.versionNum === version.versionNum - 1);
     if (!prev) return [];
 
     const curr = version.project;
@@ -233,23 +146,19 @@ export class ComponentsPageComponent implements OnInit {
         after: JSON.stringify(curr[key]),
       }));
   }
+
   public getChangeItemsForVersion(
-    version: ProjectVersion<Project>,
+    version: ProjectVersion<Project>
   ): Array<{ key: string; before: any; after: any }> {
-    return this.getDiffItems(version).map((d) => ({
-      key: d.key,
-      before: d.before,
-      after: d.after,
-    }));
+    return this.getDiffItems(version).map((d) => ({ key: d.key, before: d.before, after: d.after }));
   }
+
   openDiffModal(version: ProjectVersion<Project>): void {
     const prev = version.versionNum - 1;
     const title =
       prev > 0
         ? this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', { version: prev })
-        : this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', {
-            version: version.versionNum,
-          });
+        : this.translate.instant('COMPONENTS.CHANGE_SUMMARY.CHANGES_SINCE', { version: version.versionNum });
 
     this.modal.create({
       nzTitle: title,
@@ -262,10 +171,18 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   onSectionInputsChange(undoRedoEvent: UndoRedoEnum): void {
-    this.editComponent.undoRedo(undoRedoEvent);
+    if (undoRedoEvent === UndoRedoEnum.UNDO) {
+      this.store.undoEdit();
+    } else {
+      this.store.redoEdit();
+    }
   }
 
   get isNextButtonDisabled(): boolean {
-    return this.editComponent ? this.editComponent.isFormInvalid() : true;
+    return !this.store.isComponentsValid();
+  }
+
+  onInlineEditChange(enabled: boolean): void {
+    this._inlineEdit.update(state => ({ ...state, enabled }));
   }
 }

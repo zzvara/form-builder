@@ -1,6 +1,6 @@
 <nz-layout>
   <nz-sider class="sider-sticky" nzWidth="300px">
-    <app-sidebar [sidebarData]="sideBarData" />
+    <app-sidebar [sidebarData]="sideBarData()" />
   </nz-sider>
   <nz-layout class="inner-layout">
     <nz-content>
@@ -33,10 +33,10 @@
         id="sectionDropList"
         cdkDropList
         (cdkDropListDropped)="dropIntoEdit($event)"
-        [cdkDropListData]="editList"
+        [cdkDropListData]="editList()"
         [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
       >
-        @for (edit of editList; track edit.id || $index) {
+        @for (edit of editList(); track edit.id || $index) {
           @if (edit.data | instanceOfSectionList) {
             <nz-card
               [id]="edit.id"
@@ -66,12 +66,12 @@
                 @if (isLogicEnabled(edit.data)) {
                   <nz-icon nzType="code" nzTheme="outline" nz-tooltip [nzTooltipTitle]="getConditionTooltip(edit.data)" style="font-size: 16px; margin-right: 8px;"></nz-icon>
                 }
-                <app-edit-name [edit]="edit" [names]="names" (updateName)="updateName()"></app-edit-name>
+                <app-edit-name [edit]="edit" [names]="names()" (updateName)="updateName()"></app-edit-name>
               </ng-template>
               <ng-template #sectionButtons>
                 <div class="section-buttons">
                   @if (edit.data | instanceOfRepeatedSection) {
-                    @if (!isMobileView) {
+                    @if (!isMobileView()) {
                       <button nz-button nzType="default" class="repeated-settings-trigger" nz-popover nzPopoverTrigger="click"
                               [nzPopoverContent]="repeatedSettingsContent" nzPopoverPlacement="bottomRight"
                               [nzDanger]="hasRepeatedSettingsErrorForEdit(edit)"
@@ -124,7 +124,7 @@
                   }
                   <app-edit-name
                     [edit]="item"
-                    [names]="names"
+                    [names]="names()"
                     (updateName)="updateName()"
                   ></app-edit-name>
                 </ng-template>
@@ -150,7 +150,7 @@
               }
               <app-edit-name
                 [edit]="edit"
-                [names]="names"
+                [names]="names()"
                 (updateName)="updateName()"
               ></app-edit-name>
             </ng-template>
@@ -180,9 +180,9 @@
       cdkDropList
       [cdkDropListConnectedTo]="[]"
       (cdkDropListDropped)="dropIntoEdit($event)"
-      [cdkDropListData]="editList"
+      [cdkDropListData]="editList()"
     >
-      @for (edit of editList; track edit.id || $index) {
+      @for (edit of editList(); track edit.id || $index) {
         @if (edit.data | instanceOfSectionList) {
           <div class="section-item" cdkDrag [cdkDragData]="edit">
             <div class="section-children">
@@ -194,8 +194,8 @@
                         @if(hasRepeatedSettingsErrorForEdit(edit)){
                           <span nz-icon nzType="warning" nzTheme="fill" class="warning-icon"></span>
                         } @else {
-                        <nz-icon class="mr-4" [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"></nz-icon>
-                      }
+                          <nz-icon class="mr-4" [nzType]="((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe"></nz-icon>
+                        }
                         <span class="component-title">
                           {{ edit.data.customTitle ? edit.data.customTitle : ('COMPONENTS.SECTION.TITLE.SINGULAR' | translate) }}
                         </span>
@@ -236,14 +236,14 @@
     </div>
   </nz-sider>
 
-  <nz-drawer [nzVisible]="repeatedSettingsDrawerVisible" [nzPlacement]="'bottom'" [nzHeight]="'60vh'"
+  <nz-drawer [nzVisible]="repeatedSettingsDrawerVisible()" [nzPlacement]="'bottom'" [nzHeight]="'60vh'"
              [nzTitle]="'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate" (nzOnClose)="closeRepeatedSettingsDrawer()"
              class="repeated-drawer-outer">
     <ng-container *nzDrawerContent>
-      @if (activeRepeatedSection) {
+      @if (activeRepeatedSection()) {
         <div class="repeated-settings-drawer">
           <ng-container [ngTemplateOutlet]="repeatedSettingsFields"
-                        [ngTemplateOutletContext]="{ $implicit: activeRepeatedSection }"></ng-container>
+                        [ngTemplateOutletContext]="{ $implicit: activeRepeatedSection() }"></ng-container>
         </div>
       }
     </ng-container>

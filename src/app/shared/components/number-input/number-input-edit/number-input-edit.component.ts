@@ -1,5 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
@@ -19,15 +20,16 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillModule } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
-
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-number-input-edit',
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     NzDividerComponent,
@@ -42,7 +44,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
@@ -64,7 +66,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
               maxOn: this.getStrictControlValue<boolean>('max'),
               maxNum: this.getStrictControlValue<number>('maxNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('min'),
+            () => this.getStrictControlValue<boolean>('min')
           ),
         ],
       }),
@@ -80,7 +82,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
               minOn: this.getStrictControlValue<boolean>('min'),
               minNum: this.getStrictControlValue<number>('minNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('max'),
+            () => this.getStrictControlValue<boolean>('max')
           ),
         ],
       }),
@@ -95,7 +97,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
         CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('format')),
         CustomValidators.validateContainsIf(
           () => this.getStrictControlValue<boolean>('format'),
-          '{{..}}',
+          '{{..}}'
         ),
       ]),
     });
@@ -165,7 +167,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
             this.getStrictControlValue<string>('formatter').substring(0, specIndex),
             this.getStrictControlValue<string>('formatter').substring(
               specIndex + 3,
-              this.getStrictControlValue<string>('formatter').length,
+              this.getStrictControlValue<string>('formatter').length
             ),
           ];
           return Number(value.replace(before, '').replace(after, ''));

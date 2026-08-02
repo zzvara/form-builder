@@ -12,5 +12,9 @@
     "DASHBOARD": "Kezdőlap",
     "EDIT_FORM": "Űrlap szerkesztése",
     "NEW_FORM": "Új űrlap"
+  },
+  "ERRORS": {
+    "PROJECT_NOT_FOUND": "A projekt nem található.",
+    "VERSION_REVERT_FAILED": "Verzió visszaállítása sikertelen."
   }
 }
