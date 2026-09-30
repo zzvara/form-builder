@@ -1,7 +1,8 @@
 import {
   ApplicationModule,
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
+  signal,
   EventEmitter,
   Input,
   OnInit,
@@ -39,6 +40,7 @@ interface DiffItem {
   templateUrl: './components-page.component.html',
   styleUrls: ['./components-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     NzLayoutComponent,
@@ -65,8 +67,8 @@ export class ComponentsPageComponent implements OnInit {
 
   inlineEdit: InlineEdit = { enabled: true };
 
-  projectHistory: ProjectVersion<Project>[] = [];
-  currentVersionNum?: number;
+  readonly projectHistory = signal<ProjectVersion<Project>[]>([]);
+  readonly currentVersionNum = signal<number | undefined>(undefined);
 
   DateFormat = DateFormat;
 
@@ -74,7 +76,6 @@ export class ComponentsPageComponent implements OnInit {
     private modal: NzModalService,
     private translate: TranslateService,
     private projectService: ProjectService<Project>,
-    private cdr: ChangeDetectorRef,
   ) {}
 
   /**
@@ -84,18 +85,15 @@ export class ComponentsPageComponent implements OnInit {
    */
   ngOnInit(): void {
     if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
+      this.projectHistory.set(this.projectService.getProjectHistory(this.projectId));
 
-      this.currentVersionNum =
-        this.projectHistory.length > 0
-          ? this.projectHistory[this.projectHistory.length - 1].versionNum
-          : 1;
-      this.versionChange.emit(this.currentVersionNum);
+      this.currentVersionNum.set(
+        this.projectHistory().length > 0
+          ? this.projectHistory()[this.projectHistory().length - 1].versionNum
+          : 1,
+      );
+      this.versionChange.emit(this.currentVersionNum()!);
     }
-  }
-
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
   }
 
   /**
@@ -166,7 +164,7 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {boolean} True if the current version number is greater than 1, indicating that previous versions exist.
    */
   hasPreviousVersion(): boolean {
-    return this.currentVersionNum !== undefined && this.currentVersionNum > 1;
+    return this.currentVersionNum() !== undefined && this.currentVersionNum()! > 1;
   }
 
   /**
@@ -175,8 +173,8 @@ export class ComponentsPageComponent implements OnInit {
    */
   hasNextVersion(): boolean {
     return (
-      this.currentVersionNum !== undefined &&
-      this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1)
+      this.currentVersionNum() !== undefined &&
+      this.projectHistory().some((v) => v.versionNum === this.currentVersionNum()! + 1)
     );
   }
 
@@ -186,8 +184,8 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {void}
    */
   navigateVersion(offset: number): void {
-    if (this.currentVersionNum !== undefined) {
-      const newVersionNum = this.currentVersionNum + offset;
+    if (this.currentVersionNum() !== undefined) {
+      const newVersionNum = this.currentVersionNum()! + offset;
       this.revertToVersion(newVersionNum);
     }
   }
@@ -201,8 +199,8 @@ export class ComponentsPageComponent implements OnInit {
     if (this.projectId !== undefined) {
       const version = this.projectService.revertToVersion(this.projectId, versionNum);
       if (version) {
-        this.currentVersionNum = versionNum;
-        this.versionChange.emit(this.currentVersionNum);
+        this.currentVersionNum.set(versionNum);
+        this.versionChange.emit(versionNum);
         this.editComponent.ngOnInit();
       } else {
         console.error('Failed to revert to version', versionNum);
@@ -218,7 +216,7 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   getDiffItems(version: ProjectVersion<Project>): DiffItem[] {
-    const prev = this.projectHistory.find((v) => v.versionNum === version.versionNum - 1);
+    const prev = this.projectHistory().find((v) => v.versionNum === version.versionNum - 1);
     if (!prev) return [];
 
     const curr = version.project;

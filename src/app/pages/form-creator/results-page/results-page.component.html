@@ -2,8 +2,7 @@
   <div>
     <nz-tabs>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_INFORMATION' | translate">
-        @if (project) {
-          @if (project) {
+        @if (project(); as project) {
             <nz-descriptions nzBordered [nzColumn]="1">
               <nz-descriptions-item [nzTitle]="'GENERAL.TITLE' | translate">
                 {{ project.title }}
@@ -55,21 +54,20 @@
                 {{ project.modified | date: DateFormat.DATE }}
               </nz-descriptions-item>
             </nz-descriptions>
-          }
         }
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.SECTION_INPUTS' | translate">
-        @if (project?.editList?.length) {
-          @if (sectionInputStats) {
+        @if (project()?.editList?.length) {
+          @if (sectionInputStats()) {
             <nz-descriptions nzBordered [nzColumn]="1">
-              @if (latestVersionNum) {
+              @if (latestVersionNum()) {
                 <nz-descriptions-item [nzTitle]="'VERSION' | translate">
-                  {{ latestVersionNum }}
+                  {{ latestVersionNum() }}
                 </nz-descriptions-item>
               }
               <nz-descriptions-item [nzTitle]="'PROJECT.SECTION_INPUTS_STATISTICS' | translate">
                 <ul class="statistics-list">
-                  @for (stat of sectionInputStats | keyvalue; track stat) {
+                  @for (stat of sectionInputStats() | keyvalue; track stat) {
                     <li>{{ stat.key | translate }}: {{ stat.value }}</li>
                   }
                 </ul>
@@ -82,14 +80,14 @@
         <app-code-editor
           [mode]="CodeEditorMode.VIEW"
           [type]="CodeEditorType.JSON"
-          [code]="this.project | json"
+          [code]="project() | json"
         ></app-code-editor>
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_HISTORY_JSON' | translate" class="json">
         <app-code-editor
           [mode]="CodeEditorMode.VIEW"
           [type]="CodeEditorType.JSON"
-          [code]="this.projectHistory | json"
+          [code]="projectHistory() | json"
         ></app-code-editor>
       </nz-tab>
     </nz-tabs>

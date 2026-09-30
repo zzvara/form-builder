@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from '@services/project.service';
@@ -21,6 +20,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     NzContentComponent,
@@ -32,23 +32,20 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     TranslatePipe,
   ],
 })
-export class DashboardComponent implements OnInit {
-  projects$: Observable<Questionnaire[]> = of([]);
-  isListView = true;
+export class DashboardComponent {
+  get projects() {
+    return this.questionnaireService.projects;
+  }
+  readonly isListView = signal(
+    !localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE) ||
+      localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE) === ViewType.LIST,
+  );
   projectTypes = ProjectType;
 
   constructor(
     private readonly router: Router,
     private readonly questionnaireService: ProjectService<Questionnaire>,
   ) {}
-
-  ngOnInit(): void {
-    this.projects$ = this.questionnaireService.list();
-    const savedView = localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE);
-    if (savedView) {
-      this.isListView = savedView === ViewType.LIST;
-    }
-  }
 
   createProject(type: ProjectType): void {
     if (type === ProjectType.TEST) {
@@ -67,10 +64,10 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleView(): void {
-    this.isListView = !this.isListView;
+    this.isListView.update((isListView) => !isListView);
     localStorage.setItem(
       LocalStorageKey.VIEW_PREFERENCE,
-      this.isListView ? ViewType.LIST : ViewType.CARD,
+      this.isListView() ? ViewType.LIST : ViewType.CARD,
     );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { SectionList } from '@app/pages/edit/interfaces/section-list';
 import { CodeEditorMode, CodeEditorType, CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
 import { CodeEditorData, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
@@ -14,9 +14,11 @@ import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
 import {FormsModule} from "@angular/forms";
 import {NzTagComponent} from "ng-zorro-antd/tag";
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 
 @Component({
   selector: 'app-code-editor-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   templateUrl: './code-editor-modal.component.html',
   styleUrl: './code-editor-modal.component.css',
@@ -28,6 +30,7 @@ import {NzTagComponent} from "ng-zorro-antd/tag";
     NzTooltipDirective,
     FormsModule,
     NzTagComponent,
+    NzCheckboxComponent,
     CodeEditorComponent,
     NzModalFooterDirective,
 
@@ -38,10 +41,10 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
 
   @ViewChild(CodeEditorComponent) codeEditorElement?: CodeEditorComponent;
 
+  private readonly cdr = inject(ChangeDetectorRef);
+
   selectedElement?: SectionList | FormInputData;
-  selectedElementCodeMirror: CodeEditorData = {
-    enabled: false,
-  };
+  selectedElementCodeMirror: CodeEditorData = { enabled: false };
   variableList: CodeEditorVariable[] = [];
   isModal = false;
 
@@ -112,7 +115,10 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
 
     modal.afterClose.subscribe((variables?: CodeEditorVariable[]) => {
       if (variables && this.selectedElementCodeMirror.data) {
-        this.selectedElementCodeMirror.data.variables = variables.sort((a, b) => a.title.localeCompare(b.title));
+        this.selectedElementCodeMirror.data.variables = variables.sort((a, b) =>
+          a.title.localeCompare(b.title),
+        );
+        this.cdr.markForCheck();
       }
     });
   }

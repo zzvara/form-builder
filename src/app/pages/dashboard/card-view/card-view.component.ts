@@ -1,5 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  EventEmitter,
+  input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { ProjectType } from '@interfaces/project';
@@ -11,13 +19,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-card-view',
   templateUrl: './card-view.component.html',
   styleUrls: ['./card-view.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzTableModule,
     NzCardComponent,
@@ -33,23 +41,19 @@ import { Observable, of } from 'rxjs';
   ],
   encapsulation: ViewEncapsulation.Emulated,
 })
-export class CardViewComponent implements OnInit {
-  @Input() projects: Observable<Questionnaire[]> = of([]);
-  @Input() type?: ProjectType;
+export class CardViewComponent {
+  readonly projects = input<Questionnaire[]>([]);
+  readonly type = input<ProjectType>();
 
   @Output() deleteProject = new EventEmitter<string>();
   @Output() createProject = new EventEmitter<ProjectType>();
   @Output() editProject = new EventEmitter<string>();
 
-  projectList: Questionnaire[] = [];
+  readonly projectList = computed(() =>
+    this.projects().filter((project) => project.type === this.type()),
+  );
 
   DateFormat = DateFormat;
-
-  ngOnInit(): void {
-    this.projects.subscribe(
-      (projects) => (this.projectList = projects.filter((project) => project.type === this.type)),
-    );
-  }
 
   onDeleteProject(id: string): void {
     this.deleteProject.emit(id);

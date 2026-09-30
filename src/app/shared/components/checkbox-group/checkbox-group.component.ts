@@ -1,6 +1,6 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxGroupEditComponent } from '@components/checkbox-group/checkbox-group-edit/checkbox-group-edit.component';
 import {
@@ -13,6 +13,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
 
 @Component({
   selector: 'app-checkbox-group',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './checkbox-group.component.html',
   styleUrl: './checkbox-group.component.less',
   standalone: true,

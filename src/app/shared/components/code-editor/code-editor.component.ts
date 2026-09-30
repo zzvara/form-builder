@@ -1,6 +1,8 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
   EventEmitter,
   Input,
@@ -10,7 +12,9 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CodeEditorMode, CodeEditorType, CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { CodeEditorError, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
@@ -24,12 +28,14 @@ import { keymap, ViewUpdate } from '@codemirror/view';
 import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
 import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { basicSetup, EditorView } from 'codemirror';
-import { JSHINT } from 'jshint';
 import {NzAlertComponent} from "ng-zorro-antd/alert";
 import {TranslatePipe} from "@ngx-translate/core";
 
+declare const JSHINT: typeof import('jshint').JSHINT;
+
 @Component({
   selector: 'app-code-editor',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   templateUrl: './code-editor.component.html',
   styleUrl: './code-editor.component.css',
@@ -54,9 +60,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   lastCursorPosition = 0;
 
   generatedVariable = '';
-  currentErrorsLength = 0;
-  currentWarningsLength = 0;
-  errorCodeEditor?: string;
+  readonly currentErrorsLength = signal<number>(0);
+  readonly currentWarningsLength = signal<number>(0);
+  readonly errorCodeEditor = signal<string | undefined>(undefined);
 
   // JsHint Config: https://jshint.com/docs/options/
   jsHintConfig = {
@@ -67,6 +73,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   private codeWorker?: Worker;
   private editorView!: EditorView;
   private editorTheme = new Compartment();
+  private readonly theme = toSignal(this.eventService.themeChange, {
+    initialValue: ThemeEnum.LIGHT,
+  });
   private editorExtensions: Extension[] = [
     basicSetup,
     EditorView.lineWrapping,
@@ -79,6 +88,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   CodeEditorMode = CodeEditorMode;
 
   constructor(private readonly eventService: EventService) {
+    effect(() => {
+      this.theme();
+      this.editorChangeTheme();
+    });
+
     if (typeof Worker !== 'undefined') {
       this.codeWorker = new Worker(new URL('./../../workers/code-runner.worker', import.meta.url), { type: 'module' });
     }
@@ -100,9 +114,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     }
 
     this.editorChangeTheme();
-    this.eventService.themeChange.subscribe(() => {
-      this.editorChangeTheme();
-    });
   }
 
   ngOnDestroy(): void {
@@ -149,7 +160,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     if (this.editorView) {
       this.editorView.dispatch({
         effects: this.editorTheme.reconfigure(
-          this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark,
+          this.theme() === ThemeEnum.LIGHT ? basicLight : basicDark,
         ),
       });
     }
@@ -212,9 +223,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   private evaluateCode(editorState: EditorState) {
-    this.errorCodeEditor = undefined;
+    this.errorCodeEditor.set(undefined);
 
-    if (this.currentErrorsLength !== 0) {
+    if (this.currentErrorsLength() !== 0) {
       return;
     }
 
@@ -228,7 +239,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     try {
       const timeout = setTimeout(() => {
         this.codeWorker?.terminate();
-        this.errorCodeEditor = 'RUN_CODE';
+        this.errorCodeEditor.set('RUN_CODE');
       }, 10_000);
 
       this.codeWorker.onmessage = (message: MessageEvent) => {
@@ -237,7 +248,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
         const data = message.data as { error?: string; success: boolean; result?: any };
         if (!data.success) {
           console.error('Worker error:', data.error);
-          this.errorCodeEditor = 'RUN_CODE';
+          this.errorCodeEditor.set('RUN_CODE');
           return;
         }
 
@@ -249,20 +260,20 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
             isValid: true,
           });
         } else {
-          this.errorCodeEditor = 'RETURN';
+          this.errorCodeEditor.set('RETURN');
         }
       };
 
       this.codeWorker.postMessage({ code: fullCode });
     } catch (error) {
       console.error('Error', error);
-      this.errorCodeEditor = 'RUN_CODE';
+      this.errorCodeEditor.set('RUN_CODE');
     }
   }
 
   private jsLinter(view: EditorView): Diagnostic[] {
     this.editing = false;
-    this.errorCodeEditor = undefined;
+    this.errorCodeEditor.set(undefined);
 
     const doc = view.state.doc.toString();
     const code = `${this.generatedVariable}${doc}`;
@@ -284,8 +295,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
       return { from: pos.from, to: pos.to, code: error.code, a: error.a, b: error.b, c: error.c, d: error.d, reason: error.reason };
     });
 
-    this.currentErrorsLength = errors.filter((error) => error.code.indexOf('E') >= 0).length;
-    this.currentWarningsLength = errors.filter((error) => error.code.indexOf('W') >= 0).length;
+    this.currentErrorsLength.set(errors.filter((error) => error.code.indexOf('E') >= 0).length);
+    this.currentWarningsLength.set(errors.filter((error) => error.code.indexOf('W') >= 0).length);
 
     if (errors.length === 0) {
       this.evaluateCode(view.state);

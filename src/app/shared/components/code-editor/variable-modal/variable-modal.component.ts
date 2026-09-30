@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
 import { CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
 import {NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef} from 'ng-zorro-antd/modal';
@@ -14,6 +14,7 @@ import {CodeEditorComponent} from "@components/code-editor/code-editor.component
 
 @Component({
   selector: 'app-variable-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   templateUrl: './variable-modal.component.html',
   imports: [

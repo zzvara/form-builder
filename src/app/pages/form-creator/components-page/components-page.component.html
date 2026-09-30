@@ -3,7 +3,7 @@
     <app-edit
       [inlineEdit]="inlineEdit"
       [projectId]="projectId"
-      [versionNum]="currentVersionNum"
+      [versionNum]="currentVersionNum()"
     ></app-edit>
 
     <div nz-row id="footerdiv" class="version-footer">
@@ -38,8 +38,8 @@
             class="version-selector"
           >
             {{
-              currentVersionNum
-                ? ('VERSION' | translate) + ' ' + currentVersionNum
+              currentVersionNum()
+                ? ('VERSION' | translate) + ' ' + currentVersionNum()
                 : ('COMPONENTS.SELECT_VERSION' | translate)
             }}
             <i nz-icon nzType="down"></i>
@@ -54,7 +54,7 @@
           </button>
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
             <ul nz-menu>
-              @for (version of projectHistory; track trackByVersion($index, version)) {
+              @for (version of projectHistory(); track trackByVersion($index, version)) {
                 <li nz-menu-item (click)="revertToVersion(version.versionNum)">
                   <span>{{ 'VERSION' | translate }} {{ version.versionNum }}</span>
                   <span

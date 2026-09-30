@@ -1,5 +1,7 @@
 import {
   Component,
+  ChangeDetectionStrategy,
+  signal,
   OnInit,
   OnChanges,
   Input,
@@ -32,6 +34,7 @@ interface DiffItem {
 @Component({
   selector: 'app-change-summary',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NzIconModule, TranslatePipe, IconTypePipe],
   templateUrl: './change-summary.component.html',
   styleUrls: ['./change-summary.component.less'],
@@ -39,7 +42,7 @@ interface DiffItem {
 export class ChangeSummaryComponent implements OnInit, OnChanges {
   @Input() items: ChangeInput[] = [];
 
-  diffItems: DiffItem[] = [];
+  readonly diffItems = signal<DiffItem[]>([]);
 
   constructor(
     @Optional()
@@ -82,43 +85,47 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
    */
   private buildDiffs(rawItems: ChangeInput[]): void {
     if (!rawItems || rawItems.length === 0) {
-      this.diffItems = [
+      this.diffItems.set([
         {
           key: 'editList',
           open: true,
           addedItems: [],
           removedItems: [],
         },
-      ];
+      ]);
       return;
     }
 
-    this.diffItems = rawItems.map((item) => {
-      const beforeArr = this.safeParseArray(item.before);
-      const afterArr = this.safeParseArray(item.after);
-      const added = afterArr.filter((a) => !beforeArr.some((b) => b.id === a.id));
-      const removed = beforeArr.filter((b) => !afterArr.some((a) => a.id === b.id));
-      return { key: item.key, open: false, addedItems: added, removedItems: removed };
-    });
+    this.diffItems.set(
+      rawItems.map((item) => {
+        const beforeArr = this.safeParseArray(item.before);
+        const afterArr = this.safeParseArray(item.after);
+        const added = afterArr.filter((a) => !beforeArr.some((b) => b.id === a.id));
+        const removed = beforeArr.filter((b) => !afterArr.some((a) => a.id === b.id));
+        return { key: item.key, open: false, addedItems: added, removedItems: removed };
+      }),
+    );
 
-    const hasChanges = this.diffItems.some(
+    const hasChanges = this.diffItems().some(
       (d) => d.addedItems.length > 0 || d.removedItems.length > 0,
     );
     if (!hasChanges) {
       // No real changes: show a placeholder section instead of leaving it blank
-      this.diffItems = [
+      this.diffItems.set([
         {
           key: 'editList',
           open: true,
           addedItems: [],
           removedItems: [],
         },
-      ];
+      ]);
     }
   }
 
   toggle(d: DiffItem): void {
-    d.open = !d.open;
+    this.diffItems.update((items) =>
+      items.map((item) => (item === d ? { ...item, open: !item.open } : item)),
+    );
   }
 
   close(): void {

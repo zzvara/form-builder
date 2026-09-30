@@ -1,6 +1,6 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
@@ -13,6 +13,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
 
 @Component({
   selector: 'app-text-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.less'],
   standalone: true,
