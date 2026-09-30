@@ -1,6 +1,6 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label()) {
+    <ng-container [ngTemplateOutlet]="label()"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
@@ -8,18 +8,18 @@
     <!-- @todo 50% might be problematic if we wish to be responsive -->
     <nz-date-picker
       #inputComponent
-      [nzMode]="data.mode"
+      [nzMode]="state().mode"
       [nzFormat]="getFullFormat"
-      [nzInline]="data.inlineMode"
-      [required]="data.required"
-      [nzDisabledDate]="getDisabledDateConfig(data)"
+      [nzInline]="state().inlineMode"
+      [required]="state().required"
+      [nzDisabledDate]="getDisabledDateConfig(state())"
       [nzDisabledTime]="disabledTime"
       [nzShowTime]="getTimeOptions"
-      [nzShowWeekNumber]="data.showWeekNumber"
+      [nzShowWeekNumber]="state().showWeekNumber"
       [nzShowToday]="true"
-      [disabled]="!inlineEdit.enabled"
-      [nzPlaceHolder]="data.placeholderValue ?? ''"
-      [(ngModel)]="data.defaultValue"
+      [disabled]="!inlineEdit().enabled"
+      [nzPlaceHolder]="state().placeholderValue ?? ''"
+      [(ngModel)]="state().defaultValue"
       (ngModelChange)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
       class="date-picker"
@@ -33,20 +33,20 @@
   }
 </ng-template>
 <ng-template #prefixTemplate>
-  @if (data.showTooltip) {
+  @if (state().showTooltip) {
     <span
       nz-icon
       nz-tooltip
-      [nzTooltipTitle]="data.tooltipText"
+      [nzTooltipTitle]="state().tooltipText"
       nzType="info-circle"
       class="icon-margin"
     ></span>
   }
 </ng-template>
 <ng-template #suffixTemplate>
-  @if (data.inlineMode) {
+  @if (state().inlineMode) {
     <div class="selected-date">
-      {{ 'COMPONENTS.SELECTED_RAGE' | translate }}: {{ data.defaultValue | date: getFullFormat }}
+      {{ 'COMPONENTS.SELECTED_RAGE' | translate }}: {{ state().defaultValue | date: getFullFormat }}
     </div>
   }
 </ng-template>

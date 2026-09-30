@@ -1,21 +1,21 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label()) {
+    <ng-container [ngTemplateOutlet]="label()"></ng-container>
   }
 
   <nz-upload
-    [nzDisabled]="!inlineEdit.enabled"
+    [nzDisabled]="!inlineEdit().enabled"
     [nzCustomRequest]="uploadToLocalStorage"
     [nzHeaders]="{ authorization: 'authorization-text' }"
     (nzChange)="onChange($event)"
-    [nzFileList]="fileList"
+    [nzFileList]="fileList()"
     [nzDownload]="onDownload"
     [nzRemove]="onRemove"
     nzListType="picture"
   >
     <button nz-button type="button">
       <span nz-icon nzType="upload"></span>
-      {{ data.placeholderValue || ('COMPONENTS.PICTURE_INPUT.CLICK_TO_UPLOAD' | translate) }}
+      {{ state().placeholderValue || ('COMPONENTS.PICTURE_INPUT.CLICK_TO_UPLOAD' | translate) }}
     </button>
   </nz-upload>
 </nz-form-item>

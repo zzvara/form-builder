@@ -1,15 +1,15 @@
 <nz-divider [nzText]="'COMPONENTS.DIVIDERS.CODE_EDITOR' | translate" nzOrientation="left"></nz-divider>
 
 <div class="display-flex flex-direction-column flex-direction-column gap-8">
-  <label nz-checkbox [ngModel]="selectedElementCodeMirror.enabled" (ngModelChange)="onEnabledChange($event)">{{
+  <label nz-checkbox [ngModel]="selectedElementCodeMirror().enabled" (ngModelChange)="onEnabledChange($event)">{{
     'COMPONENTS.CONDITION_SETTINGS.LABELS.ENABLE' | translate
   }}</label>
 
-  @if (selectedElementCodeMirror.enabled && selectedElementCodeMirror.data) {
+  @if (selectedElementCodeMirror().enabled && selectedElementCodeMirror().data; as codeMirrorData) {
     <div>
       <label class="custom-label">{{ 'COMPONENTS.CONDITION_SETTINGS.LABELS.VARIABLES' | translate }}</label>
       <div class="display-flex flex-direction-row flex-wrap-wrap gap-8">
-        @for (variable of selectedElementCodeMirror.data.variables; track variable; let index = $index) {
+        @for (variable of codeMirrorData.variables; track variable; let index = $index) {
           <nz-tag nzMode="closeable" class="m-0 cursor-pointer" (click)="insertVariable(index)" (nzOnClose)="removeVariable($event, index)">
             <nz-icon
               [nzType]="variable.type | variableIcon"
@@ -38,8 +38,8 @@
       <app-code-editor
         [mode]="CodeEditorMode.EDIT"
         [type]="CodeEditorType.JAVA_SCRIPT"
-        [code]="selectedElementCodeMirror.data.code"
-        [variables]="selectedElementCodeMirror.data.variables"
+        [code]="codeMirrorData.code"
+        [variables]="codeMirrorData.variables"
         (updateCodeEditor)="updateCodeEditor($event)"
       ></app-code-editor>
     </div>
@@ -52,7 +52,7 @@
     <button
       nz-button
       nzType="primary"
-      [disabled]="selectedElementCodeMirror.enabled && selectedElementCodeMirror.data && !selectedElementCodeMirror.data.isValid"
+      [disabled]="selectedElementCodeMirror().enabled && selectedElementCodeMirror().data && !selectedElementCodeMirror().data?.isValid"
       (click)="saveModal()"
     >
       {{ 'SAVE' | translate }}

@@ -1,6 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
@@ -36,6 +36,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
   templateUrl: './time-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzFormModule,
     NzDividerComponent,

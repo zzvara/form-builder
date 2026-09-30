@@ -1,6 +1,6 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label()) {
+    <ng-container [ngTemplateOutlet]="label()"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
@@ -8,17 +8,17 @@
     <!-- @todo Grid instead of min-width: 50%? Will this be responsive enough like this? -->
     <nz-input-number
       #inputComponent
-      [required]="data.required"
+      [required]="state().required"
       [nzMin]="minNumber"
       [nzMax]="maxNumber"
       [nzFormatter]="inputFormatter"
       [nzParser]="inputParser"
-      [disabled]="!inlineEdit.enabled"
-      [nzPlaceHolder]="data.placeholderValue ?? ''"
-      [(ngModel)]="data.defaultValue"
+      [disabled]="!inlineEdit().enabled"
+      [nzPlaceHolder]="state().placeholderValue ?? ''"
+      [(ngModel)]="state().defaultValue"
       (change)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
-      [nzStep]="data.stepNumber"
+      [nzStep]="state().stepNumber"
       class="number-input"
     />
   </nz-form-control>
@@ -29,11 +29,11 @@
   }
 </ng-template>
 <ng-template #prefixTemplate>
-  @if (data.showTooltip) {
+  @if (state().showTooltip) {
     <span
       nz-icon
       nz-tooltip
-      [nzTooltipTitle]="data.tooltipText"
+      [nzTooltipTitle]="state().tooltipText"
       nzType="info-circle"
       class="icon-margin"
     ></span>

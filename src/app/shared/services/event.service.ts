@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 import { ThemeEnum } from '../enums/theme.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
-  themeChange = new BehaviorSubject(ThemeEnum.LIGHT);
+  readonly theme = signal(ThemeEnum.LIGHT);
 }

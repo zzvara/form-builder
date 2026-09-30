@@ -1,20 +1,27 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { Directive, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Directive, OnInit, TemplateRef, input, output, untracked } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalServiceService } from '@services/modal/modal-service.service';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
+import { mutableSignal, touch } from '@helpers/signal-helper';
 
 @Directive()
 export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>>
   implements FormComponentMarker, OnInit
 {
-  @Input() label?: TemplateRef<any>;
-  @Input() data!: D;
-  @Input() inlineEdit: InlineEdit = { enabled: true };
+  readonly label = input<TemplateRef<unknown>>();
+  readonly data = input.required<D>();
+  readonly inlineEdit = input<InlineEdit>({ enabled: true });
 
-  @Output() edited = new EventEmitter<D>();
+  readonly edited = output<D>();
+
+  /**
+   * The current state of the input data. The object is mutated in place (inline edit, edit modal),
+   * so it's exposed as a signal which can be notified about these mutations.
+   */
+  readonly state = mutableSignal(this.data);
 
   previousValue?: T;
 
@@ -25,12 +32,13 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
 
   defaultOnEditSubscribeEvent: (result: boolean | undefined) => void = (result) => {
     if (result) {
-      this.onEdit(this.data);
+      touch(this.state);
+      this.onEdit(untracked(this.state));
     }
   };
 
   ngOnInit() {
-    this.previousValue = this.data.defaultValue;
+    this.previousValue = this.state().defaultValue;
   }
 
   abstract edit(): void;
@@ -40,9 +48,10 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
   }
 
   onChange($event: Event) {
-    if (this.previousValue !== this.data.defaultValue) {
-      this.onEdit(this.data);
-      this.previousValue = this.data.defaultValue;
+    const data = this.state();
+    if (this.previousValue !== data.defaultValue) {
+      this.onEdit(data);
+      this.previousValue = data.defaultValue;
     }
   }
 }

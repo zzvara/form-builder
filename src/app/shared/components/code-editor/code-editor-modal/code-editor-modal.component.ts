@@ -1,4 +1,14 @@
-import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  computed,
+  effect,
+  input,
+  signal,
+  untracked,
+  viewChild,
+} from '@angular/core';
 import { SectionList } from '@app/pages/edit/interfaces/section-list';
 import { CodeEditorMode, CodeEditorType, CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
 import { CodeEditorData, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
@@ -20,6 +30,7 @@ import {NzTagComponent} from "ng-zorro-antd/tag";
   standalone: true,
   templateUrl: './code-editor-modal.component.html',
   styleUrl: './code-editor-modal.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     VariableIconPipe,
@@ -33,17 +44,19 @@ import {NzTagComponent} from "ng-zorro-antd/tag";
 
   ]
 })
-export class CodeEditorModalComponent implements OnInit, OnChanges {
-  @Input() elementId?: string;
+export class CodeEditorModalComponent {
+  readonly elementId = input<string>();
 
-  @ViewChild(CodeEditorComponent) codeEditorElement?: CodeEditorComponent;
+  private readonly codeEditorElement = viewChild(CodeEditorComponent);
 
-  selectedElement?: SectionList | FormInputData;
-  selectedElementCodeMirror: CodeEditorData = {
+  readonly selectedElement = signal<SectionList | FormInputData | undefined>(undefined);
+  readonly selectedElementCodeMirror = signal<CodeEditorData>({
     enabled: false,
-  };
-  variableList: CodeEditorVariable[] = [];
-  isModal = false;
+  });
+  readonly variableList = signal<CodeEditorVariable[]>([]);
+  readonly isModal: boolean;
+
+  private readonly targetElementId = computed(() => this.data?.elementId || this.elementId());
 
   CodeEditorMode = CodeEditorMode;
   CodeEditorType = CodeEditorType;
@@ -54,21 +67,13 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
     private nzModalRef: NzModalRef,
     private modalService: ModalService,
     @Inject(NZ_MODAL_DATA) public readonly data: { elementId: string }
-  ) {}
+  ) {
+    this.isModal = !!this.data?.elementId;
 
-  ngOnInit(): void {
-    if (this.data && this.data.elementId) {
-      this.elementId = this.data.elementId;
-      this.isModal = true;
-    }
-
-    this.getSelectedElement();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['elementId'] && changes['elementId'].currentValue !== changes['elementId'].previousValue) {
-      this.getSelectedElement();
-    }
+    effect(() => {
+      const elementId = this.targetElementId();
+      untracked(() => this.getSelectedElement(elementId));
+    });
   }
 
   closeModal(): void {
@@ -76,50 +81,58 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
   }
 
   saveModal(): void {
-    if (this.selectedElement) {
-      this.selectedElement.codeEditor = this.selectedElementCodeMirror;
+    const selectedElement = this.selectedElement();
+    if (selectedElement) {
+      selectedElement.codeEditor = this.selectedElementCodeMirror();
       this.closeModal();
     }
   }
 
   onEnabledChange(event: boolean): void {
-    this.selectedElementCodeMirror.enabled = event;
-    if (event && !this.selectedElementCodeMirror.data) {
-      this.selectedElementCodeMirror.data = {
-        code: '',
-        isValid: false,
-        variables: [],
-      };
-    }
+    this.selectedElementCodeMirror.update((codeMirror) => ({
+      ...codeMirror,
+      enabled: event,
+      data:
+        event && !codeMirror.data
+          ? {
+              code: '',
+              isValid: false,
+              variables: [],
+            }
+          : codeMirror.data,
+    }));
   }
 
   updateCodeEditor(event: { code?: string; isValid: boolean }): void {
-    if (this.selectedElementCodeMirror.data) {
-      this.selectedElementCodeMirror.data.isValid = event.isValid;
-      if (event.code) {
-        this.selectedElementCodeMirror.data.code = event.code;
-      }
-    }
+    this.updateCodeMirrorData((data) => ({
+      ...data,
+      isValid: event.isValid,
+      code: event.code ? event.code : data.code,
+    }));
   }
 
   openVariableModal(): void {
+    const codeMirrorData = this.selectedElementCodeMirror().data;
     const modal = this.modalService.openVariableModal(
-      this.selectedElementCodeMirror.data && this.selectedElementCodeMirror.data.variables
-        ? this.selectedElementCodeMirror.data.variables
-        : [],
-      this.variableList
+      codeMirrorData && codeMirrorData.variables ? codeMirrorData.variables : [],
+      this.variableList()
     );
 
     modal.afterClose.subscribe((variables?: CodeEditorVariable[]) => {
-      if (variables && this.selectedElementCodeMirror.data) {
-        this.selectedElementCodeMirror.data.variables = variables.sort((a, b) => a.title.localeCompare(b.title));
+      if (variables) {
+        this.updateCodeMirrorData((data) => ({
+          ...data,
+          variables: [...variables].sort((a, b) => a.title.localeCompare(b.title)),
+        }));
       }
     });
   }
 
   insertVariable(index: number) {
-    if (this.codeEditorElement && this.selectedElementCodeMirror.data) {
-      this.codeEditorElement.insertVariable(this.selectedElementCodeMirror.data.variables[index]);
+    const codeEditor = this.codeEditorElement();
+    const codeMirrorData = this.selectedElementCodeMirror().data;
+    if (codeEditor && codeMirrorData) {
+      codeEditor.insertVariable(codeMirrorData.variables[index]);
     }
   }
 
@@ -127,25 +140,34 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
     event.preventDefault();
     event.stopPropagation();
 
-    if (this.selectedElementCodeMirror.data) {
-      this.selectedElementCodeMirror.data.variables.splice(index, 1);
-    }
-
-    if (this.codeEditorElement && this.selectedElementCodeMirror.data) {
-      this.codeEditorElement.reloadJsHint();
-    }
+    // The code editor reloads its linter when it receives the new variable list
+    this.updateCodeMirrorData((data) => ({
+      ...data,
+      variables: data.variables.filter((_, variableIndex) => variableIndex !== index),
+    }));
   }
 
-  private getSelectedElement() {
-    if (this.elementId && this.elementId !== '') {
-      this.selectedElement = this.componentService.getItemById(this.elementId);
-      if (this.selectedElement) {
-        this.selectedElementCodeMirror = this.selectedElement.codeEditor
-          ? structuredClone(this.selectedElement.codeEditor)
-          : { enabled: false };
+  private updateCodeMirrorData(
+    updater: (data: NonNullable<CodeEditorData['data']>) => NonNullable<CodeEditorData['data']>,
+  ): void {
+    this.selectedElementCodeMirror.update((codeMirror) =>
+      codeMirror.data ? { ...codeMirror, data: updater(codeMirror.data) } : codeMirror,
+    );
+  }
+
+  private getSelectedElement(elementId: string | undefined) {
+    if (elementId && elementId !== '') {
+      const selectedElement = this.componentService.getItemById(elementId);
+      this.selectedElement.set(selectedElement);
+      if (selectedElement) {
+        this.selectedElementCodeMirror.set(
+          selectedElement.codeEditor
+            ? structuredClone(selectedElement.codeEditor)
+            : { enabled: false },
+        );
       }
 
-      this.variableList = this.componentService.getVariableList(this.elementId);
+      this.variableList.set(this.componentService.getVariableList(elementId));
     }
   }
 }

@@ -1,11 +1,10 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  OnInit,
-  OnChanges,
-  Input,
-  SimpleChanges,
-  Optional,
   Inject,
+  Optional,
+  computed,
+  input,
 } from '@angular/core';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -35,11 +34,16 @@ interface DiffItem {
   imports: [NzIconModule, TranslatePipe, IconTypePipe],
   templateUrl: './change-summary.component.html',
   styleUrls: ['./change-summary.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChangeSummaryComponent implements OnInit, OnChanges {
-  @Input() items: ChangeInput[] = [];
+export class ChangeSummaryComponent {
+  readonly items = input<ChangeInput[]>([]);
 
-  diffItems: DiffItem[] = [];
+  // If opened as a modal, the diffs are built from the injected data,
+  // if used inline (popover), they are rebuilt whenever the items input changes
+  readonly diffItems = computed<DiffItem[]>(() =>
+    this.buildDiffs(this.modalData ? this.modalData.items : this.items()),
+  );
 
   constructor(
     @Optional()
@@ -47,20 +51,6 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
     private modalData: { items: ChangeInput[] } | null,
     private modalRef: NzModalRef,
   ) {}
-
-  ngOnInit(): void {
-    // If opened as a modal, build diffs from the injected data
-    if (this.modalData) {
-      this.buildDiffs(this.modalData.items);
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // If used inline (popover), rebuild diffs whenever @Input() items change
-    if (changes['items'] && !this.modalData) {
-      this.buildDiffs(this.items);
-    }
-  }
 
   /**
    * Safely parse a JSON string into an array of RawItem.
@@ -80,9 +70,9 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
    * Generate diffItems based on the provided raw items.
    * If there are no items or no actual changes, fall back to a single 'editList' section.
    */
-  private buildDiffs(rawItems: ChangeInput[]): void {
+  private buildDiffs(rawItems: ChangeInput[]): DiffItem[] {
     if (!rawItems || rawItems.length === 0) {
-      this.diffItems = [
+      return [
         {
           key: 'editList',
           open: true,
@@ -90,10 +80,9 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
           removedItems: [],
         },
       ];
-      return;
     }
 
-    this.diffItems = rawItems.map((item) => {
+    const diffItems = rawItems.map((item) => {
       const beforeArr = this.safeParseArray(item.before);
       const afterArr = this.safeParseArray(item.after);
       const added = afterArr.filter((a) => !beforeArr.some((b) => b.id === a.id));
@@ -101,12 +90,12 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
       return { key: item.key, open: false, addedItems: added, removedItems: removed };
     });
 
-    const hasChanges = this.diffItems.some(
+    const hasChanges = diffItems.some(
       (d) => d.addedItems.length > 0 || d.removedItems.length > 0,
     );
     if (!hasChanges) {
       // No real changes: show a placeholder section instead of leaving it blank
-      this.diffItems = [
+      return [
         {
           key: 'editList',
           open: true,
@@ -115,10 +104,7 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
         },
       ];
     }
-  }
-
-  toggle(d: DiffItem): void {
-    d.open = !d.open;
+    return diffItems;
   }
 
   close(): void {

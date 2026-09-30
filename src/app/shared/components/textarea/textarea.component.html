@@ -1,18 +1,18 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label()) {
+    <ng-container [ngTemplateOutlet]="label()"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
     <textarea
       #inputComponent
       nz-input
-      [required]="data.required"
-      [minlength]="data.minLength ? (data.minLengthNumber ?? null) : null"
-      [maxlength]="data.maxLength ? (data.maxLengthNumber ?? null) : null"
-      [disabled]="!inlineEdit.enabled"
-      [placeholder]="data.placeholderValue ?? ''"
-      [(ngModel)]="data.defaultValue"
+      [required]="state().required"
+      [minlength]="state().minLength ? (state().minLengthNumber ?? null) : null"
+      [maxlength]="state().maxLength ? (state().maxLengthNumber ?? null) : null"
+      [disabled]="!inlineEdit().enabled"
+      [placeholder]="state().placeholderValue ?? ''"
+      [(ngModel)]="state().defaultValue"
       (change)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
       nzAutosize
@@ -27,18 +27,18 @@
 </ng-template>
 <ng-template #footerTemplate>
   <div class="footer-container">
-    @if (data.showTooltip) {
+    @if (state().showTooltip) {
       <div
         nz-icon
         nz-tooltip
-        [nzTooltipTitle]="data.tooltipText"
+        [nzTooltipTitle]="state().tooltipText"
         nzType="info-circle"
         class="tooltip-icon"
       ></div>
     }
-    @if (data.maxLength && data.showCharacterCounter) {
+    @if (state().maxLength && state().showCharacterCounter) {
       <div class="character-counter">
-        {{ inputComponent.value.length }}/{{ data.maxLengthNumber }}
+        {{ inputComponent.value.length }}/{{ state().maxLengthNumber }}
       </div>
     }
   </div>

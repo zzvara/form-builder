@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, Inject, OnInit, ViewChild } from '@angular/core';
+import { DestroyRef, Directive, Inject, OnInit, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -21,7 +21,7 @@ import { CodeEditorModalComponent } from '../components/code-editor/code-editor-
 
 @Directive()
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
-  @ViewChild(CodeEditorModalComponent) codeEditorModalElement?: CodeEditorModalComponent;
+  readonly codeEditorModalElement = viewChild(CodeEditorModalComponent);
 
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
@@ -79,13 +79,11 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     this.initialValues.defaultValue = this.rawFormData.defaultValue;
     this.initialValues.placeholderValue = this.rawFormData.placeholderValue;
 
-    if (
-      this.codeEditorModalElement &&
-      this.codeEditorModalElement.selectedElement &&
-      this.codeEditorModalElement.selectedElementCodeMirror &&
-      this.codeEditorModalElement.selectedElement.codeEditor
-    ) {
-      this.codeEditorModalElement.selectedElement.codeEditor = this.codeEditorModalElement.selectedElementCodeMirror;
+    const codeEditorModal = this.codeEditorModalElement();
+    const selectedElement = codeEditorModal?.selectedElement();
+    const selectedElementCodeMirror = codeEditorModal?.selectedElementCodeMirror();
+    if (selectedElement && selectedElementCodeMirror && selectedElement.codeEditor) {
+      selectedElement.codeEditor = selectedElementCodeMirror;
     }
   }
 
@@ -166,10 +164,9 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   }
   get isInvalid(): boolean {
     const isFormInvalid = this.formData.invalid && !this.rawFormData.draft;
+    const codeEditorState = this.codeEditorModalElement()?.selectedElementCodeMirror();
     const isCodeEditorInvalid =
-      !!this.codeEditorModalElement &&
-      this.codeEditorModalElement.selectedElementCodeMirror.enabled &&
-      !this.codeEditorModalElement.selectedElementCodeMirror.data?.isValid;
+      !!codeEditorState && codeEditorState.enabled && !codeEditorState.data?.isValid;
 
     return isFormInvalid || isCodeEditorInvalid;
   }

@@ -1,12 +1,11 @@
 import {
-  ApplicationModule,
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
-  ViewChild,
+  input,
+  output,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
@@ -39,6 +38,7 @@ interface DiffItem {
   templateUrl: './components-page.component.html',
   styleUrls: ['./components-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     NzLayoutComponent,
@@ -56,17 +56,17 @@ interface DiffItem {
   ],
 })
 export class ComponentsPageComponent implements OnInit {
-  @ViewChild(EditComponent) editComponent!: EditComponent;
+  readonly editComponent = viewChild(EditComponent);
 
-  @Input() projectId: string | undefined;
-  @Input() page?: number;
-  @Output() setPage = new EventEmitter<number>();
-  @Output() versionChange = new EventEmitter<number>();
+  readonly projectId = input<string>();
+  readonly page = input<number>();
+  readonly setPage = output<number>();
+  readonly versionChange = output<number>();
 
-  inlineEdit: InlineEdit = { enabled: true };
+  readonly inlineEdit = signal<InlineEdit>({ enabled: true });
 
-  projectHistory: ProjectVersion<Project>[] = [];
-  currentVersionNum?: number;
+  readonly projectHistory = signal<ProjectVersion<Project>[]>([]);
+  readonly currentVersionNum = signal<number | undefined>(undefined);
 
   DateFormat = DateFormat;
 
@@ -74,7 +74,6 @@ export class ComponentsPageComponent implements OnInit {
     private modal: NzModalService,
     private translate: TranslateService,
     private projectService: ProjectService<Project>,
-    private cdr: ChangeDetectorRef,
   ) {}
 
   /**
@@ -83,19 +82,16 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {void}
    */
   ngOnInit(): void {
-    if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
+    const projectId = this.projectId();
+    if (projectId !== undefined) {
+      const projectHistory = this.projectService.getProjectHistory(projectId);
+      this.projectHistory.set(projectHistory);
 
-      this.currentVersionNum =
-        this.projectHistory.length > 0
-          ? this.projectHistory[this.projectHistory.length - 1].versionNum
-          : 1;
-      this.versionChange.emit(this.currentVersionNum);
+      this.currentVersionNum.set(
+        projectHistory.length > 0 ? projectHistory[projectHistory.length - 1].versionNum : 1,
+      );
+      this.versionChange.emit(this.currentVersionNum()!);
     }
-  }
-
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
   }
 
   /**
@@ -105,52 +101,53 @@ export class ComponentsPageComponent implements OnInit {
   nextPage() {
     const saved = this.saveForm();
     if (saved) {
-      this.page! += 1;
-      this.onsetPage(this.page!);
+      this.onsetPage(this.page()! + 1);
     }
   }
 
   saveForm(): boolean {
-    if (!this.editComponent) return false;
+    const editComponent = this.editComponent();
+    if (!editComponent) return false;
 
-    if (this.editComponent.isFormInvalid()) {
+    if (editComponent.isFormInvalid()) {
       this.jumpToFirstError();
       return false;
     }
-    this.editComponent.saveForm();
+    editComponent.saveForm();
     return true;
   }
 
   jumpToFirstError() {
-  if (!this.editComponent) return;
+    const editComponent = this.editComponent();
+    if (!editComponent) return;
 
-  const invalidInput = this.editComponent
-    .getAllFormInputs()
-    .find((inp) => this.editComponent.isInputInvalid(inp));
+    const invalidInput = editComponent
+      .getAllFormInputs()
+      .find((inp) => editComponent.isInputInvalid(inp));
 
-  if (invalidInput?.data?.id) {
-    this.editComponent.scrollToElement(invalidInput.data.id);
-    return;
+    if (invalidInput?.data?.id) {
+      editComponent.scrollToElement(invalidInput.data.id);
+      return;
+    }
+
+    const invalidRepeatedSection = editComponent
+      .editList()
+      .find((item) => editComponent.hasRepeatedSettingsErrorForEdit(item));
+
+    if (invalidRepeatedSection?.id) {
+      editComponent.scrollToElement(invalidRepeatedSection.id);
+      return;
+    }
+
+    const invalidSection = editComponent
+      .editList()
+      .find((item) => editComponent.isComponentInvalid(item));
+
+    if (invalidSection?.id) {
+      editComponent.scrollToElement(invalidSection.id);
+      return;
+    }
   }
-
-  const invalidRepeatedSection = this.editComponent.editList.find((item) =>
-    this.editComponent.hasRepeatedSettingsErrorForEdit(item),
-  );
-
-  if (invalidRepeatedSection?.id) {
-    this.editComponent.scrollToElement(invalidRepeatedSection.id);
-    return;
-  }
-
-  const invalidSection = this.editComponent.editList.find((item) =>
-    this.editComponent.isComponentInvalid(item),
-  );
-
-  if (invalidSection?.id) {
-    this.editComponent.scrollToElement(invalidSection.id);
-    return;
-  }
-}
 
   /**
    * Emits an event to set the current page in the parent component.
@@ -166,7 +163,8 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {boolean} True if the current version number is greater than 1, indicating that previous versions exist.
    */
   hasPreviousVersion(): boolean {
-    return this.currentVersionNum !== undefined && this.currentVersionNum > 1;
+    const currentVersionNum = this.currentVersionNum();
+    return currentVersionNum !== undefined && currentVersionNum > 1;
   }
 
   /**
@@ -174,9 +172,10 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {boolean} True if the current version number is not the latest, indicating that a next version exists.
    */
   hasNextVersion(): boolean {
+    const currentVersionNum = this.currentVersionNum();
     return (
-      this.currentVersionNum !== undefined &&
-      this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1)
+      currentVersionNum !== undefined &&
+      this.projectHistory().some((v) => v.versionNum === currentVersionNum + 1)
     );
   }
 
@@ -186,8 +185,9 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {void}
    */
   navigateVersion(offset: number): void {
-    if (this.currentVersionNum !== undefined) {
-      const newVersionNum = this.currentVersionNum + offset;
+    const currentVersionNum = this.currentVersionNum();
+    if (currentVersionNum !== undefined) {
+      const newVersionNum = currentVersionNum + offset;
       this.revertToVersion(newVersionNum);
     }
   }
@@ -198,12 +198,13 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {void}
    */
   revertToVersion(versionNum: number): void {
-    if (this.projectId !== undefined) {
-      const version = this.projectService.revertToVersion(this.projectId, versionNum);
+    const projectId = this.projectId();
+    if (projectId !== undefined) {
+      const version = this.projectService.revertToVersion(projectId, versionNum);
       if (version) {
-        this.currentVersionNum = versionNum;
-        this.versionChange.emit(this.currentVersionNum);
-        this.editComponent.ngOnInit();
+        this.currentVersionNum.set(versionNum);
+        this.versionChange.emit(versionNum);
+        this.editComponent()?.reload();
       } else {
         console.error('Failed to revert to version', versionNum);
       }
@@ -218,7 +219,7 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   getDiffItems(version: ProjectVersion<Project>): DiffItem[] {
-    const prev = this.projectHistory.find((v) => v.versionNum === version.versionNum - 1);
+    const prev = this.projectHistory().find((v) => v.versionNum === version.versionNum - 1);
     if (!prev) return [];
 
     const curr = version.project;
@@ -262,10 +263,15 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   onSectionInputsChange(undoRedoEvent: UndoRedoEnum): void {
-    this.editComponent.undoRedo(undoRedoEvent);
+    this.editComponent()?.undoRedo(undoRedoEvent);
+  }
+
+  onInlineEditChange(enabled: boolean): void {
+    this.inlineEdit.set({ enabled });
   }
 
   get isNextButtonDisabled(): boolean {
-    return this.editComponent ? this.editComponent.isFormInvalid() : true;
+    const editComponent = this.editComponent();
+    return editComponent ? editComponent.isFormInvalid() : true;
   }
 }

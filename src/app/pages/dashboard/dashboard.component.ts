@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import type { Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from '@services/project.service';
@@ -21,6 +21,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     NzContentComponent,
@@ -33,20 +34,21 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   ],
 })
 export class DashboardComponent implements OnInit {
-  projects$: Observable<Questionnaire[]> = of([]);
-  isListView = true;
+  readonly projects: Signal<Questionnaire[]>;
+  readonly isListView = signal(true);
   projectTypes = ProjectType;
 
   constructor(
     private readonly router: Router,
     private readonly questionnaireService: ProjectService<Questionnaire>,
-  ) {}
+  ) {
+    this.projects = this.questionnaireService.list();
+  }
 
   ngOnInit(): void {
-    this.projects$ = this.questionnaireService.list();
     const savedView = localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE);
     if (savedView) {
-      this.isListView = savedView === ViewType.LIST;
+      this.isListView.set(savedView === ViewType.LIST);
     }
   }
 
@@ -67,10 +69,10 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleView(): void {
-    this.isListView = !this.isListView;
+    this.isListView.update((isListView) => !isListView);
     localStorage.setItem(
       LocalStorageKey.VIEW_PREFERENCE,
-      this.isListView ? ViewType.LIST : ViewType.CARD,
+      this.isListView() ? ViewType.LIST : ViewType.CARD,
     );
   }
 }

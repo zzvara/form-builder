@@ -1,5 +1,5 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
@@ -30,33 +30,27 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzIconModule,
   ],
 })
-export class SidebarComponent implements OnInit {
-  @Input() sidebarData: SidebarData[] = [];
+export class SidebarComponent {
+  readonly sidebarData = input<SidebarData[]>([]);
 
-  searchTerm: string = '';
-  filteredData: SidebarData[] = [];
-
-  ngOnInit() {
-    this.filteredData = this.sidebarData;
-  }
-
-  filterItems() {
-    if (this.searchTerm) {
-      this.filteredData = this.sidebarData
-        .map((group) => ({
-          ...group,
-          groupContents: group.groupContents.filter((item) =>
-            item.title.toLowerCase().includes(this.searchTerm.toLowerCase()),
-          ),
-        }))
-        .filter((group) => group.groupContents.length > 0);
-    } else {
-      this.filteredData = this.sidebarData;
+  readonly searchTerm = signal('');
+  readonly filteredData = computed<SidebarData[]>(() => {
+    const searchTerm = this.searchTerm().toLowerCase();
+    const sidebarData = this.sidebarData();
+    if (!searchTerm) {
+      return sidebarData;
     }
-  }
+    return sidebarData
+      .map((group) => ({
+        ...group,
+        groupContents: group.groupContents.filter((item) =>
+          item.title.toLowerCase().includes(searchTerm),
+        ),
+      }))
+      .filter((group) => group.groupContents.length > 0);
+  });
 
   clearSearch() {
-    this.searchTerm = '';
-    this.filteredData = this.sidebarData;
+    this.searchTerm.set('');
   }
 }

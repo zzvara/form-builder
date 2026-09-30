@@ -1,6 +1,6 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxGroupEditComponent } from '@components/checkbox-group/checkbox-group-edit/checkbox-group-edit.component';
 import {
@@ -16,6 +16,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
   templateUrl: './checkbox-group.component.html',
   styleUrl: './checkbox-group.component.less',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -35,7 +36,7 @@ export class CheckboxGroupComponent extends AbstractInput<
       .openModal({
         modalTitle: this.translate.instant('COMPONENTS.CHECKBOX_GROUP.MODAL_CHECKBOX_GROUP_TITLE'),
         modalContent: CheckboxGroupEditComponent,
-        modalData: this.data,
+        modalData: this.state(),
       })
       .subscribe(this.defaultOnEditSubscribeEvent);
   }

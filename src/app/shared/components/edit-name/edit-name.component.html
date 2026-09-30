@@ -1,29 +1,30 @@
+@let editData = edit().data;
 <div class="custom-title">
   <nz-icon
     class="mr-4"
     [nzType]="
-      ((edit.data | instanceOfFormInputData) ? edit.data.type : 'layout') | ComponentIconsPipe
+      ((editData | instanceOfFormInputData) ? editData.type : 'layout') | ComponentIconsPipe
     "
     nz-tooltip
     [nzTooltipTitle]="
-      ((edit.data | instanceOfFormInputData)
-        ? edit.data.title
+      ((editData | instanceOfFormInputData)
+        ? editData.title
         : 'COMPONENTS.SECTION.TITLE.SINGULAR'
       ) | translate
     "
   ></nz-icon>
 
-  @if (isEditName) {
-    <form nz-form [formGroup]="form">
-      <nz-form-control [nzValidateStatus]="form.controls['name']">
+  @if (isEditName()) {
+    <form nz-form [formGroup]="form()">
+      <nz-form-control [nzValidateStatus]="form().controls['name']">
         <ng-template #suffixTemplate>
-          @if (form.controls['name'].invalid) {
+          @if (form().controls['name'].invalid) {
             <ng-template #errorTooltipTemplate>
-              @if (form.controls['name'].hasError('required')) {
+              @if (form().controls['name'].hasError('required')) {
                 {{ 'COMPONENTS.NAME_EDIT.ERRORS.REQUIRED' | translate }}
-              } @else if (form.controls['name'].hasError('invalidJsVariableName')) {
+              } @else if (form().controls['name'].hasError('invalidJsVariableName')) {
                 {{ 'COMPONENTS.NAME_EDIT.ERRORS.INVALID_JS_VARIABLE_NAME' | translate }}
-              } @else if (form.controls['name'].hasError('notUnique')) {
+              } @else if (form().controls['name'].hasError('notUnique')) {
                 {{ 'COMPONENTS.NAME_EDIT.ERRORS.NOT_UNIQUE' | translate }}
               }
             </ng-template>
@@ -56,7 +57,7 @@
             formControlName="name"
             type="text"
             [placeholder]="'COMPONENTS.NAME_EDIT.PLACEHOLDER' | translate"
-            [class.ant-input-status-error]="form.controls['name'].invalid"
+            [class.ant-input-status-error]="form().controls['name'].invalid"
             nz-tooltip
             [nzTooltipTitle]="inputTooltipTemplate"
           />
@@ -86,12 +87,12 @@
       }}
     </ng-template>
 
-    @if (editList) {
+    @if (editList(); as editList) {
       <ng-container
         [ngTemplateOutlet]="nameTemplate"
         [ngTemplateOutletContext]="{ data: editList.data }"
       ></ng-container>
-    } @else if (editFormInput) {
+    } @else if (editFormInput(); as editFormInput) {
       <ng-container
         [ngTemplateOutlet]="nameTemplate"
         [ngTemplateOutletContext]="{ data: editFormInput }"

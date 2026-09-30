@@ -19,7 +19,7 @@ export abstract class AbstractFieldLikeInputs<
     return [
       {
         errorName: 'required',
-        errorMessage: this.data.requiredMessage!,
+        errorMessage: this.state().requiredMessage!,
       },
     ];
   }

@@ -1,6 +1,18 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  effect,
+  inject,
+  input,
+  signal,
+  untracked,
+  viewChildren,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
@@ -44,6 +56,10 @@ import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(window:resize)': 'onWindowResize()',
+  },
   imports: [
     CommonModule,
     FormsModule,
@@ -74,22 +90,24 @@ import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
     NzTooltipDirective,
   ],
 })
-export class EditComponent implements OnInit, OnChanges {
-  @Input() inlineEdit!: InlineEdit;
-  @Input() projectId?: string;
-  @Input() versionNum?: number;
+export class EditComponent implements OnInit {
+  readonly inlineEdit = input.required<InlineEdit>();
+  readonly projectId = input<string>();
+  readonly versionNum = input<number>();
 
-  @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;
+  readonly inputComponents = viewChildren(InputHolderComponent);
 
   sideBarData = getSideBarData(this, this.translate);
 
-  editList: EditList[] = [];
-  names: string[] = [];
-  isMobileView = false;
-  repeatedSettingsDrawerVisible = false;
-  activeRepeatedSection: RepeatedSectionList | null = null;
+  readonly editList = signal<EditList[]>([]);
+  readonly names = signal<string[]>([]);
+  readonly isMobileView = signal(false);
+  readonly repeatedSettingsDrawerVisible = signal(false);
+  readonly activeRepeatedSection = signal<RepeatedSectionList | null>(null);
 
   LayoutEnum = LayoutEnum;
+
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private modalService: ModalService,
@@ -99,40 +117,50 @@ export class EditComponent implements OnInit, OnChanges {
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe,
-  ) {}
+  ) {
+    // (Re)load the project whenever the edited project or its version changes
+    effect(() => {
+      this.projectId();
+      this.versionNum();
+      untracked(() => this.reload());
+    });
+  }
 
   ngOnInit() {
     this.sideBarData = getSideBarData(this, this.translate);
     this.updateViewMode();
+  }
+
+  /**
+   * Loads the project and resets the undo/redo history.
+   * @returns {void}
+   */
+  reload(): void {
     this.loadProject();
     this.initializeUndoRedo();
   }
 
-  ngOnChanges() {
-    this.loadProject();
-  }
-
-  @HostListener('window:resize')
   onWindowResize(): void {
     this.updateViewMode();
   }
 
   getSectionIds: () => string[] = () =>
-    this.editList
+    this.editList()
       .filter((edit) => this.instanceOfSectionListPipe.transform(edit.data))
       .map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
     // If editList is empty but there's JSON data with editList, use that instead
-    if (this.editList.length === 0 && this.projectId) {
-      const project = this.projectService.searchData(this.projectId)[0];
+    const projectId = this.projectId();
+    if (this.editList().length === 0 && projectId) {
+      const project = this.projectService.searchData(projectId)[0];
       if (project?.editList && project.editList.length > 0) {
-        this.editList = this.cleanCorruptedData(cloneDeep(project.editList));
-        this.names = this.getCustomTitles();
+        this.editList.set(this.cleanCorruptedData(cloneDeep(project.editList)));
+        this.names.set(this.getCustomTitles());
       }
     }
 
-    return this.editList.flatMap((edit) => {
+    return this.editList().flatMap((edit) => {
       if (this.instanceOfSectionListPipe.transform(edit.data)) {
         return edit.data.sectionInputs;
       }
@@ -154,14 +182,15 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   saveForm(): void {
-    const project = this.projectService.searchData(this.projectId!)[0];
+    const projectId = this.projectId()!;
+    const project = this.projectService.searchData(projectId)[0];
     if (project) {
       project.editList = [];
-      for (const edit of this.editList) {
+      for (const edit of this.editList()) {
         project.editList.push(cloneDeep(edit));
       }
-      this.names = this.getCustomTitles();
-      this.projectService.update(this.projectId!, project);
+      this.names.set(this.getCustomTitles());
+      this.projectService.update(projectId, project);
     }
   }
 
@@ -171,14 +200,15 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   private loadProject(): void {
-    if (this.projectId !== undefined) {
-      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
+    const projectId = this.projectId();
+    if (projectId !== undefined) {
+      const project = this.projectService.getProjectVersion(projectId, this.versionNum() ?? 1);
       if (project?.editList) {
-        this.editList = this.cleanCorruptedData(cloneDeep(project.editList));
-        this.names = this.getCustomTitles();
-        this.undoRedoService.saveState(this.editList);
+        this.editList.set(this.cleanCorruptedData(cloneDeep(project.editList)));
+        this.names.set(this.getCustomTitles());
+        this.undoRedoService.saveState(this.editList());
       }
-      this.componentService.component$.next(this.editList);
+      this.componentService.setComponents(this.editList());
     }
   }
 
@@ -229,21 +259,38 @@ export class EditComponent implements OnInit, OnChanges {
   private initializeUndoRedo(): void {
     if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
       this.undoRedoService.clearHistory();
-      this.undoRedoService.saveState(this.editList);
-      this.componentService.component$.next(this.editList);
+      this.undoRedoService.saveState(this.editList());
+      this.componentService.setComponents(this.editList());
     }
   }
 
   undoRedo(undoRedoEvent: UndoRedoEnum): void {
     if (undoRedoEvent === UndoRedoEnum.UNDO) {
-      this.editList = this.undoRedoService.undo() ?? [];
-      this.names = this.getCustomTitles();
-      this.componentService.component$.next(this.editList);
+      this.editList.set(this.undoRedoService.undo() ?? []);
     } else {
-      this.editList = this.undoRedoService.redo() ?? [];
-      this.names = this.getCustomTitles();
-      this.componentService.component$.next(this.editList);
+      this.editList.set(this.undoRedoService.redo() ?? []);
     }
+    this.names.set(this.getCustomTitles());
+    this.componentService.setComponents(this.editList());
+  }
+
+  /**
+   * Notifies the consumers of the edit list that its items were modified in place.
+   * @returns {void}
+   */
+  private refreshView(): void {
+    this.editList.update((editList) => [...editList]);
+  }
+
+  /**
+   * Publishes the in place modified edit list: refreshes the view, saves the undo/redo state
+   * and notifies the component service.
+   * @returns {void}
+   */
+  private commit(): void {
+    this.refreshView();
+    this.undoRedoService.saveState(this.editList());
+    this.componentService.setComponents(this.editList());
   }
 
   dropIntoEdit(
@@ -277,7 +324,7 @@ export class EditComponent implements OnInit, OnChanges {
             },
           },
         };
-        this.names = this.getCustomTitles();
+        this.names.set(this.getCustomTitles());
         event.container.data.splice(event.currentIndex, 0, newSectionEdit);
       } else {
         // Create a deep copy of the dropped item with updated ID
@@ -305,7 +352,7 @@ export class EditComponent implements OnInit, OnChanges {
           data: newItem,
         };
 
-        this.names = this.getCustomTitles();
+        this.names.set(this.getCustomTitles());
 
         event.container.data.splice(event.currentIndex, 0, newInputEdit);
       }
@@ -324,14 +371,13 @@ export class EditComponent implements OnInit, OnChanges {
         id: event.item.data.data.id!,
         data: event.item.data,
       };
-      this.names = this.getCustomTitles();
+      this.names.set(this.getCustomTitles());
       event.container.data.splice(event.currentIndex, 0, transferredInput);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
 
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
+    this.commit();
   }
 
   dropIntoSection(
@@ -379,8 +425,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.previousContainer.data.splice(event.previousIndex, 1);
     }
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
+    this.commit();
   }
 
   getEditDropListConnectedTo(): string[] {
@@ -395,20 +440,18 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   removeEditComponent(edit: EditList): void {
-    this.editList = this.editList.filter((e) => e.id !== edit.id);
-    this.names = this.getCustomTitles();
+    this.editList.set(this.editList().filter((e) => e.id !== edit.id));
+    this.names.set(this.getCustomTitles());
 
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
+    this.commit();
   }
 
   removeSectionComponent(sect: SectionList, componentId: string): void {
     sect.sectionInputs = sect.sectionInputs.filter((input) => input.data!.id !== componentId);
 
     this.updateRepeated();
-    this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
+    this.commit();
   }
 
   getSectionInputStyle(sect: SectionList): { [p: string]: string } {
@@ -427,7 +470,11 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   sectionEdit(sectionData: SectionList): void {
-    this.modalService.openSectionModal(sectionData);
+    // The modal updates the code editor settings of the section in place
+    this.modalService
+      .openSectionModal(sectionData)
+      .afterClose.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.refreshView());
   }
 
   sectionLayoutChange(sect: SectionList): void {
@@ -436,21 +483,20 @@ export class EditComponent implements OnInit, OnChanges {
     } else {
       sect.layout = LayoutEnum.VERTICAL;
     }
-    this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
+    this.commit();
   }
 
   openRepeatedSettings(section: RepeatedSectionList): void {
     this.updateRepeated();
-    this.activeRepeatedSection = section;
-    if (this.isMobileView) {
-      this.repeatedSettingsDrawerVisible = true;
+    this.activeRepeatedSection.set(section);
+    if (this.isMobileView()) {
+      this.repeatedSettingsDrawerVisible.set(true);
     }
   }
 
   closeRepeatedSettingsDrawer(): void {
-    this.repeatedSettingsDrawerVisible = false;
-    this.activeRepeatedSection = null;
+    this.repeatedSettingsDrawerVisible.set(false);
+    this.activeRepeatedSection.set(null);
   }
 
   onRepeatedPopoverVisibleChange(visible: boolean, section: RepeatedSectionList): void {
@@ -491,8 +537,8 @@ export class EditComponent implements OnInit, OnChanges {
   isFormInvalid(): boolean {
     this.updateRepeated();
 
-    const hasRepeatedValidationError = this.editList.some((edit) => this.hasRepeatedSettingsErrorForEdit(edit));
-    return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid()) || hasRepeatedValidationError;
+    const hasRepeatedValidationError = this.editList().some((edit) => this.hasRepeatedSettingsErrorForEdit(edit));
+    return this.getAllFormInputs().length === 0 || this.inputComponents().some((inp) => !inp.isValid()) || hasRepeatedValidationError;
   }
 
   isComponentInvalid(edit: EditList): boolean {
@@ -525,8 +571,7 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   onValueChanged<D extends InputData<T>, T>(event: D): void {
-    this.undoRedoService.saveState(this.editList);
-    this.componentService.component$.next(this.editList);
+    this.commit();
   }
 
   scrollToElement(elementId: string): void {
@@ -540,7 +585,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   updateName(): void {
-    this.names = this.getCustomTitles();
+    this.names.set(this.getCustomTitles());
     this.updateRepeated();
   }
 
@@ -557,7 +602,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private getCustomTitles(): string[] {
-    return this.editList
+    return this.editList()
       .filter((e) => e.data.customTitle)
       .map((e) => e.data.customTitle) as string[];
   }
@@ -583,9 +628,9 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private getReferencables(id: string): string[] {
-    const ind = this.editList.findIndex((item) => item.id === id);
+    const ind = this.editList().findIndex((item) => item.id === id);
 
-    const list: EditList[] = cloneDeep(this.editList);
+    const list: EditList[] = cloneDeep(this.editList());
     list.splice(ind);
 
     return list.flatMap((input) => {
@@ -604,7 +649,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private updateRepeated() {
-    this.editList
+    this.editList()
       .filter((item) => item.data.type === 'RepeatedSectionComponent')
       .forEach((item) => {
         const repeatedSection = item.data as RepeatedSectionList;
@@ -613,8 +658,8 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   private updateViewMode(): void {
-    this.isMobileView = window.innerWidth <= 1200;
-    if (!this.isMobileView && this.repeatedSettingsDrawerVisible) {
+    this.isMobileView.set(window.innerWidth <= 1200);
+    if (!this.isMobileView() && this.repeatedSettingsDrawerVisible()) {
       this.closeRepeatedSettingsDrawer();
     }
   }

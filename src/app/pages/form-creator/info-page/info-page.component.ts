@@ -1,5 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnDestroy,
+  OnInit,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+  untracked,
+} from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
@@ -29,6 +42,7 @@ import { QuillEditorComponent } from 'ngx-quill';
   templateUrl: './info-page.component.html',
   styleUrls: ['./info-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -49,28 +63,33 @@ import { QuillEditorComponent } from 'ngx-quill';
     TranslatePipe,
   ],
 })
-export class InfoPageComponent implements OnInit {
-  @Input() page?: number;
-  @Output() setPage = new EventEmitter<number>();
-  @Output() projectId = new EventEmitter<string>();
-  @Output() formData = new EventEmitter<ProjectType>();
+export class InfoPageComponent implements OnInit, OnDestroy {
+  readonly page = input<number>();
+  readonly setPage = output<number>();
+  readonly projectId = output<string>();
+  readonly formData = output<ProjectType>();
 
-  project = {
-    id: '',
-    title: '',
-    description: '',
-    type: ProjectType.QUESTIONNAIRE,
-    time_checkbox: false,
-    deadline_checkbox: false,
-    time_limit: 0,
-    deadline: '',
-    created: new Date().toISOString().split('T')[0],
-    modified: new Date().toISOString().split('T')[0],
-  };
+  // The project object is shared with the ProjectService and updated in place (the version history relies on it),
+  // so every set notifies the consumers
+  readonly project = signal<Project>(
+    {
+      id: '',
+      title: '',
+      description: '',
+      type: ProjectType.QUESTIONNAIRE,
+      time_checkbox: false,
+      deadline_checkbox: false,
+      time_limit: 0,
+      deadline: '',
+      created: new Date().toISOString().split('T')[0],
+      modified: new Date().toISOString().split('T')[0],
+    },
+    { equal: () => false },
+  );
 
-  formExists = false;
-  formId = '';
-  saveFailed = false;
+  readonly formExists = signal(false);
+  readonly formId = signal('');
+  readonly saveFailed = signal(false);
 
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -81,103 +100,116 @@ export class InfoPageComponent implements OnInit {
     haslimit: new FormControl(false),
     limit: new FormControl(0),
   });
+  readonly hasDeadline = toSignal(this.form.controls.hasdeadline.valueChanges, {
+    initialValue: this.form.controls.hasdeadline.value,
+  });
+  readonly hasLimit = toSignal(this.form.controls.haslimit.valueChanges, {
+    initialValue: this.form.controls.haslimit.value,
+  });
   params: Params = {};
 
   DateFormat = DateFormat;
+
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly projectService: ProjectService<Project>,
     private readonly jsonService: JsonService,
-  ) {}
+  ) {
+    effect(() => {
+      const data = this.jsonService.jsonData();
+      // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
+      if (data) {
+        untracked(() => {
+          this.project.update((project) => ({ ...project, ...data.project }));
+          this.initializeForm();
+        });
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.params = params;
       if (params['id']) {
-        this.formExists = true;
-        this.formId = params['id'];
+        this.formExists.set(true);
+        this.formId.set(params['id']);
+        this.projectId.emit(params['id']);
 
-        this.project = this.projectService.searchData(this.formId)?.[0] || null;
-        if (this.project) {
+        const project = this.projectService.searchData(params['id'])?.[0];
+        if (project) {
+          this.project.set(project);
           this.initializeForm();
         }
       }
       if (params['type']) {
-        this.project.type =
+        const project = this.project();
+        project.type =
           params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.project.set(project);
         this.form.patchValue({
-          type: this.project.type === ProjectType.TEST,
+          type: project.type === ProjectType.TEST,
         });
       }
     });
 
-    this.formData.emit(this.project.type);
-
-    this.jsonService.getJsonData().subscribe((data) => {
-      // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
-      if (data) {
-        this.project = { ...this.project, ...data.project };
-        this.initializeForm();
-      }
-    });
+    this.formData.emit(this.project().type);
   }
-
   initializeForm(): void {
+    const project = this.project();
     this.form.patchValue({
-      title: this.project.title || '',
-      description: this.project.description || '',
-      type: this.project.type === ProjectType.TEST,
-      deadline: this.project.deadline || '',
-      hasdeadline: this.project.deadline_checkbox || false,
-      haslimit: this.project.time_checkbox || false,
-      limit: this.project.time_limit || 0,
+      title: project.title || '',
+      description: project.description || '',
+      type: project.type === ProjectType.TEST,
+      deadline: project.deadline || '',
+      hasdeadline: project.deadline_checkbox || false,
+      haslimit: project.time_checkbox || false,
+      limit: project.time_limit || 0,
     });
   }
 
   updateForm() {
-    this.project.title = this.form.controls['title'].value!;
-    this.project.description = this.form.controls['description'].value!;
-    this.project.type = this.form.controls['type'].value
-      ? ProjectType.TEST
-      : ProjectType.QUESTIONNAIRE;
-    this.project.deadline = this.form.controls['deadline'].value!;
-    this.project.deadline_checkbox = this.form.controls['hasdeadline'].value!;
-    this.project.time_checkbox = this.form.controls['haslimit'].value!;
-    if (this.project.time_checkbox) {
-      this.project.time_limit = this.form.controls['limit'].value!;
+    const controls = this.form.controls;
+    const project = this.project();
+    project.title = controls['title'].value!;
+    project.description = controls['description'].value!;
+    project.type = controls['type'].value ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+    project.deadline = controls['deadline'].value!;
+    project.deadline_checkbox = controls['hasdeadline'].value!;
+    project.time_checkbox = controls['haslimit'].value!;
+    if (project.time_checkbox) {
+      project.time_limit = controls['limit'].value!;
     }
-    this.formData.emit(this.project.type);
+    this.project.set(project);
+    this.formData.emit(project.type);
   }
 
   ngOnDestroy() {
-    if (this.formExists && this.formId !== '') {
-      this.projectId.emit(this.formId);
-    } else {
-      this.projectId.emit(this.project.id);
-    }
-
     this.jsonService.clearJsonData();
   }
 
   submitForm() {
     if (this.form.invalid) {
-      this.saveFailed = true;
+      this.saveFailed.set(true);
       return;
     }
 
     this.updateForm();
 
     let projectId: string;
+    const project = this.project();
 
-    if (this.formExists && this.formId !== '') {
-      this.projectService.update(this.formId, this.project);
-      projectId = this.formId;
+    if (this.formExists() && this.formId() !== '') {
+      this.projectService.update(this.formId(), project);
+      projectId = this.formId();
     } else {
-      this.projectService.add(this.project);
-      projectId = this.project.id;
+      // The project service assigns the id of the new project
+      this.projectService.add(project);
+      projectId = project.id;
     }
+    this.projectId.emit(projectId);
 
     // Update the URL with &id=projectId
     this.router.navigate([], {
@@ -187,9 +219,8 @@ export class InfoPageComponent implements OnInit {
       replaceUrl: true,
     });
 
-    this.page! += 1;
-    this.onsetPage(this.page!);
-    this.saveFailed = false;
+    this.onsetPage(this.page()! + 1);
+    this.saveFailed.set(false);
   }
 
   onsetPage(page: number): void {

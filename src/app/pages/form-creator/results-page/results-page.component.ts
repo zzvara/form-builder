@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -27,6 +35,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   templateUrl: './results-page.component.html',
   styleUrls: ['./results-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzLayoutComponent,
     NzTabsComponent,
@@ -48,17 +57,17 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   ],
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
-  @Input() page?: number;
-  @Input() projectId: string | undefined;
-  @Input() versionNum?: number;
+  readonly page = input<number>();
+  readonly projectId = input<string>();
+  readonly versionNum = input<number>();
 
-  @Output() setPage = new EventEmitter<number>();
+  readonly setPage = output<number>();
 
-  project?: Project;
-  projectHistory: ProjectVersion<Project>[] = [];
-  sectionInputStats: { [key: string]: number | string } = {};
-  latestVersionNum?: number;
-  sectionInputs: FormInputData[] = [];
+  readonly project = signal<Project | undefined>(undefined);
+  readonly projectHistory = signal<ProjectVersion<Project>[]>([]);
+  readonly sectionInputStats = signal<{ [key: string]: number | string }>({});
+  readonly latestVersionNum = signal<number | undefined>(undefined);
+  readonly sectionInputs = signal<FormInputData[]>([]);
 
   columnsConfig: ColumnItem[] = [
     {
@@ -88,32 +97,29 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
-      this.latestVersionNum =
-        this.projectHistory.length > 0
-          ? this.projectHistory[this.projectHistory.length - 1].versionNum
-          : undefined;
-      this.project = this.projectService.getProjectVersion(
-        this.projectId,
-        this.latestVersionNum ?? 1,
-      );
+    const projectId = this.projectId();
+    if (projectId !== undefined) {
+      const projectHistory = this.projectService.getProjectHistory(projectId);
+      const latestVersionNum =
+        projectHistory.length > 0 ? projectHistory[projectHistory.length - 1].versionNum : undefined;
+      this.projectHistory.set(projectHistory);
+      this.latestVersionNum.set(latestVersionNum);
+      this.project.set(this.projectService.getProjectVersion(projectId, latestVersionNum ?? 1));
 
       this.calculateSectionInputStats();
     }
 
-    this.project?.editList!.forEach((section) => {
+    const sectionInputs: FormInputData[] = [];
+    this.project()?.editList!.forEach((section) => {
       if ('sectionInputs' in section.data) {
-        section.data.sectionInputs.forEach((input) => {
-          this.sectionInputs.push(input);
-        });
+        sectionInputs.push(...section.data.sectionInputs);
       }
     });
+    this.sectionInputs.set(sectionInputs);
   }
 
   nextPage() {
-    this.page! += 1;
-    this.onsetPage(this.page!);
+    this.onsetPage(this.page()! + 1);
 
     this.router.navigate(['/']);
   }
@@ -123,20 +129,23 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   }
 
   saveProjectWithHistoryToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectWithHistoryToJson(this.project, this.projectHistory);
+    const project = this.project();
+    if (project) {
+      this.jsonService.saveProjectWithHistoryToJson(project, this.projectHistory());
     }
   }
 
   saveProjectToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectToJson(this.project);
+    const project = this.project();
+    if (project) {
+      this.jsonService.saveProjectToJson(project);
     }
   }
 
   private calculateSectionInputStats(): void {
-    if (this.project) {
-      this.sectionInputStats = this.statisticsService.calculateSectionInputStats(this.project);
+    const project = this.project();
+    if (project) {
+      this.sectionInputStats.set(this.statisticsService.calculateSectionInputStats(project));
     }
   }
 

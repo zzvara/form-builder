@@ -1,5 +1,5 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
 import { ErrorType } from '@helpers/error-helper';
@@ -27,6 +27,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
   templateUrl: './input-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     TranslatePipe,

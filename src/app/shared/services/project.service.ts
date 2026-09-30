@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import type { Signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 export class ProjectService<T extends Project> {
   private items: T[] = []; // Holds the current list of projects
-  private readonly itemsSubject = new BehaviorSubject<T[]>([]);
+  private readonly itemsSignal = signal<T[]>([]);
   private readonly storageKey: string = 'project';
 
   constructor() {
@@ -21,7 +21,7 @@ export class ProjectService<T extends Project> {
     const savedData = localStorage.getItem(this.storageKey);
     if (savedData) {
       this.items = JSON.parse(savedData) as T[];
-      this.itemsSubject.next([...this.items]);
+      this.itemsSignal.set([...this.items]);
     }
   }
 
@@ -34,17 +34,17 @@ export class ProjectService<T extends Project> {
   }
 
   /**
-   * This method returns an observable that emits the current list of projects.
-   * It allows subscribers to reactively receive updates when the project list changes.
-   * @returns {Observable<T[]>} An observable of the current list of projects.
+   * This method returns a read-only signal holding the current list of projects.
+   * It allows consumers to reactively receive updates when the project list changes.
+   * @returns {Signal<T[]>} A signal of the current list of projects.
    */
-  list(): Observable<T[]> {
-    return this.itemsSubject.asObservable();
+  list(): Signal<T[]> {
+    return this.itemsSignal.asReadonly();
   }
 
   /**
    * Adds a new project to the list and persists the updated list to local storage.
-   * It assigns a new unique ID to the project, updates the internal list and the observable,
+   * It assigns a new unique ID to the project, updates the internal list and the signal,
    * and then updates the local storage with the new list of projects.
    * @param {T} data - The project data to add.
    * @returns {void}
@@ -56,7 +56,7 @@ export class ProjectService<T extends Project> {
     data.modified = now.split('T')[0];
 
     this.items.push(data);
-    this.itemsSubject.next([...this.items]);
+    this.itemsSignal.set([...this.items]);
     localStorage.setItem(this.storageKey, JSON.stringify(this.items));
 
     const projectHistoryKey = `${this.storageKey}-history-${data.id}`;
@@ -71,7 +71,7 @@ export class ProjectService<T extends Project> {
   /**
    * Removes a project by its ID from the list and updates local storage.
    * It also removes the project's history from local storage.
-   * It filters out the project with the given ID from the internal list, updates the observable,
+   * It filters out the project with the given ID from the internal list, updates the signal,
    * and persists the updated list to local storage.
    * @returns {void}
    * @param projectId
@@ -79,7 +79,7 @@ export class ProjectService<T extends Project> {
   remove(projectId: string): void {
     // Remove the project from the list
     this.items = this.items.filter((item) => item.id !== projectId);
-    this.itemsSubject.next([...this.items]);
+    this.itemsSignal.set([...this.items]);
     localStorage.setItem(this.storageKey, JSON.stringify(this.items));
 
     // Remove the project's history from local storage
@@ -148,7 +148,7 @@ export class ProjectService<T extends Project> {
       if (index !== -1) {
         this.items[index] = version.project;
         this.items[index].modified = new Date().toISOString().split('T')[0];
-        this.itemsSubject.next([...this.items]);
+        this.itemsSignal.set([...this.items]);
         localStorage.setItem(this.storageKey, JSON.stringify(this.items));
         return true;
       }
@@ -195,7 +195,7 @@ export class ProjectService<T extends Project> {
       // Update the project data
       this.items[index] = data;
       this.items[index].modified = new Date().toISOString().split('T')[0];
-      this.itemsSubject.next([...this.items]);
+      this.itemsSignal.set([...this.items]);
       localStorage.setItem(this.storageKey, JSON.stringify(this.items));
       return true;
     } else {

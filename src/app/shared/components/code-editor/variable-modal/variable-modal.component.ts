@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
 import { CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
 import {NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef} from 'ng-zorro-antd/modal';
@@ -16,6 +16,7 @@ import {CodeEditorComponent} from "@components/code-editor/code-editor.component
   selector: 'app-variable-modal',
   standalone: true,
   templateUrl: './variable-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslatePipe,
     VariableIconPipe,
@@ -29,7 +30,7 @@ import {CodeEditorComponent} from "@components/code-editor/code-editor.component
   ]
 })
 export class VariableModalComponent {
-  allVariables: TransferItem[] = [];
+  readonly allVariables: TransferItem[];
   private selectedVariables: CodeEditorVariable[] = [];
 
   CodeEditorVariableType = CodeEditorVariableType;

@@ -5,21 +5,21 @@
     'valid-style': isValid(),
     'invalid-style': !isValid(),
     'card-container': true,
-    'draft-style': inputData.draft,
+    'draft-style': inputData().draft,
   }"
 >
   <form #inputHolderForm="ngForm" nz-form class="form-container">
-    <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit.enabled }">
+    <nz-form-item [ngClass]="{ 'form-item': true, 'form-item-border': !inlineEdit().enabled }">
       <nz-form-label nzRequired>
         <span>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</span>
       </nz-form-label>
 
       <nz-form-control
-        [nzValidateStatus]="!inputData.draft && !this.inputData.questionValue ? 'error' : 'success'"
+        [nzValidateStatus]="!inputData().draft && !inputData().questionValue ? 'error' : 'success'"
         nzErrorTip=""
       >
-        @if (!inlineEdit.enabled) {
-          <span>{{ inputData.questionValue }}</span>
+        @if (!inlineEdit().enabled) {
+          <span>{{ inputData().questionValue }}</span>
         } @else {
           <nz-input-group [nzSuffix]="suffixTemplate">
             <input
@@ -27,20 +27,20 @@
               nzSize="small"
               name="inputQuestion"
               required
-              [placeholder]="formInput.questionPlaceholder"
+              [placeholder]="formInputState().questionPlaceholder"
               (mousedown)="$event.stopPropagation()"
-              [(ngModel)]="inputData.questionValue"
+              [(ngModel)]="inputData().questionValue"
               [ngModelOptions]="{ updateOn: 'change' }"
               (ngModelChange)="change()"
             />
           </nz-input-group>
 
           <ng-template #suffixTemplate>
-            @if (!inputData.draft && !inputData.questionValue) {
+            @if (!inputData().draft && !inputData().questionValue) {
               <i
                 nz-icon
                 nzType="warning"
-                (click)="inputData.questionValue = ''; change()"
+                (click)="inputData().questionValue = ''; change()"
                 class="error-icon"
               ></i>
             }
@@ -55,13 +55,13 @@
       </nz-form-label>
 
       <nz-form-control>
-        <span class="pre-wrap" [hidden]="inlineEdit.enabled">{{ inputData.descriptionValue }}</span>
+        <span class="pre-wrap" [hidden]="inlineEdit().enabled">{{ inputData().descriptionValue }}</span>
         <quill-editor
-          [hidden]="!inlineEdit.enabled"
+          [hidden]="!inlineEdit().enabled"
           [style]="{ height: '150px', width: '100%' }"
           (mousedown)="$event.stopPropagation()"
           [placeholder]="''"
-          [(ngModel)]="inputData.descriptionValue"
+          [(ngModel)]="inputData().descriptionValue"
           name="inputDescription"
           [ngModelOptions]="{ updateOn: 'change' }"
           (ngModelChange)="change()"
@@ -78,10 +78,10 @@
     <div class="input-preview-container" (mousedown)="$event.stopPropagation()">
       <ng-container
         *ngComponentOutlet="
-          componentType;
+          componentType();
           inputs: {
-            data: componentInputs.data,
-            inlineEdit: componentInputs.inlineEdit,
+            data: componentInputs().data,
+            inlineEdit: componentInputs().inlineEdit,
             label: inputPreviewTemp,
           }
         "
@@ -107,7 +107,7 @@
       }
     </div>
 
-    <ng-container [ngTemplateOutlet]="customTitle"></ng-container>
+    <ng-container [ngTemplateOutlet]="customTitle()"></ng-container>
   </div>
 </ng-template>
 
@@ -151,7 +151,7 @@
     <span nz-icon nzType="delete" nzTheme="outline"></span>
   </button>
   <nz-switch
-    [ngModel]="!inputData.draft"
+    [ngModel]="!inputData().draft"
     (ngModelChange)="onDraftChange(!$event)"
     [nzCheckedChildren]="'COMPONENTS.INPUT_HOLDER.ACTIVE_INPUT' | translate"
     [nzUnCheckedChildren]="'COMPONENTS.INPUT_HOLDER.DRAFT_INPUT' | translate"

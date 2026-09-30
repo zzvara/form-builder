@@ -1,22 +1,22 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label()) {
+    <ng-container [ngTemplateOutlet]="label()"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
     <ng-container *ngTemplateOutlet="prefixTemplate" />
     <nz-select
       #inputComponent
-      [required]="data.required"
-      [disabled]="!inlineEdit.enabled"
-      [nzPlaceHolder]="data.placeholderValue ?? ''"
-      [nzMode]="data.isMultipleChoice ? 'multiple' : 'default'"
-      [(ngModel)]="data.defaultValue"
+      [required]="state().required"
+      [disabled]="!inlineEdit().enabled"
+      [nzPlaceHolder]="state().placeholderValue ?? ''"
+      [nzMode]="state().isMultipleChoice ? 'multiple' : 'default'"
+      [(ngModel)]="state().defaultValue"
       (ngModelChange)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
       nzAllowClear
     >
-      @for (answerOption of data.selectOptions; track answerOption) {
+      @for (answerOption of state().selectOptions; track answerOption) {
         <nz-option [nzValue]="answerOption" [nzLabel]="answerOption"></nz-option>
       }
     </nz-select>
@@ -28,7 +28,7 @@
   }
 </ng-template>
 <ng-template #prefixTemplate>
-  @if (data.showTooltip) {
-    <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle"></span>
+  @if (state().showTooltip) {
+    <span nz-icon nz-tooltip [nzTooltipTitle]="state().tooltipText" nzType="info-circle"></span>
   }
 </ng-template>

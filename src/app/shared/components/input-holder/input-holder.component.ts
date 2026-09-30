@@ -7,18 +7,19 @@ import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
   TemplateRef,
   Type,
-  ViewChild,
+  computed,
+  input,
+  output,
+  untracked,
+  viewChild,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
+import { mutableSignal, touch } from '@helpers/signal-helper';
 import { getInputGroups, translateComponentType } from '@pages/edit/config/edit-data-config';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { FormInputData } from '@interfaces/form-input-data';
@@ -44,6 +45,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -67,102 +69,102 @@ export class InputHolderComponent<
   D extends InputData<T> = InputData,
   E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>,
 >
-  implements OnInit, AfterViewInit
+  implements AfterViewInit
 {
-  @Input() formInput!: FormInputData<D, T>;
-  get inputData(): D {
-    return this.formInput.data!;
-  }
+  readonly formInput = input.required<FormInputData<D, T>>();
 
-  @Input() customTitle!: TemplateRef<any>;
+  /**
+   * The current state of the edited form input. Its data is mutated in place (inline edit, edit modal, reset),
+   * so it's exposed as a signal which can be notified about these mutations.
+   */
+  readonly formInputState = mutableSignal(this.formInput);
+  readonly inputData = computed<D>(() => this.formInputState().data!, { equal: () => false });
 
-  @Output() changedEvent = new EventEmitter<D>();
-  @Output() removeComponentEvent = new EventEmitter<string>();
+  readonly customTitle = input<TemplateRef<unknown>>();
+  readonly inlineEdit = input<InlineEdit>({ enabled: true });
 
-  @ViewChild('inputHolderForm') form!: NgForm;
-  @ViewChild('questionInput') questionInput!: NgModel;
-  @ViewChild(NgComponentOutlet, { static: true }) inputOutlet!: NgComponentOutlet;
+  readonly changedEvent = output<D>();
+  readonly removeComponentEvent = output<string>();
 
-  @Input() inlineEdit: InlineEdit = { enabled: true };
+  private readonly form = viewChild<NgForm>('inputHolderForm');
+  private readonly questionInput = viewChild<NgModel>('questionInput');
+  private readonly inputOutlet = viewChild.required(NgComponentOutlet);
 
-  componentInputs!: {
-    data: D;
-    inlineEdit: InlineEdit;
-  };
+  readonly componentType = computed<Type<FormComponentMarker>>(
+    () => translateComponentType[this.formInputState().type],
+  );
+
+  readonly componentInputs = computed(() => ({
+    data: this.inputData(),
+    inlineEdit: this.inlineEdit(),
+  }));
 
   constructor(
     private destroyRef: DestroyRef,
     private translate: TranslateService,
   ) {}
 
-  get componentType(): Type<FormComponentMarker> {
-    return translateComponentType[this.formInput.type];
-  }
-
-  get embeddedComponent(): AbstractInput<T, D, E> {
-    return this.inputOutlet['_componentRef']?.instance;
-  }
-
-  ngOnInit(): void {
-    this.componentInputs = {
-      data: this.inputData,
-      inlineEdit: this.inlineEdit,
-    };
+  get embeddedComponent(): AbstractInput<T, D, E> | null {
+    return this.inputOutlet().componentInstance as AbstractInput<T, D, E> | null;
   }
 
   ngAfterViewInit() {
-    this.questionInput?.control?.markAsTouched();
-    if (this.inputOutlet) {
-      setTimeout(() => {
-        if (this.embeddedComponent && this.embeddedComponent.edited) {
-          this.embeddedComponent.edited
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((data: D) => {
-              this.changedEvent.emit(data);
-            });
-        }
+    this.questionInput()?.control?.markAsTouched();
+    const embeddedComponent = this.embeddedComponent;
+    if (embeddedComponent && embeddedComponent.edited) {
+      const subscription = embeddedComponent.edited.subscribe((data: D) => {
+        this.onChanged(data);
       });
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
   }
 
   removeComponent() {
-    this.removeComponentEvent.emit(this.inputData.id);
+    this.removeComponentEvent.emit(untracked(this.inputData).id!);
   }
 
   resetComponent() {
+    const formInput = untracked(this.formInputState);
     const defaultData: FormInputData<D, T> | undefined = getInputGroups(this.translate).find(
-      (group) => group.type === this.formInput.type,
+      (group) => group.type === formInput.type,
     );
     if (defaultData) {
-      Object.keys(this.inputData)
+      // A new data object is created, so the embedded input component receives the reset values as well
+      const inputData = { ...formInput.data! };
+      Object.keys(inputData)
         .filter((key) => key !== 'id' && key !== 'sectionId')
         .forEach((key) => {
-          this.inputData[key as keyof D] = defaultData.data![key as keyof D];
+          inputData[key as keyof D] = defaultData.data![key as keyof D];
         });
-      this.changedEvent.emit(this.inputData);
+      formInput.data = inputData;
+      this.onChanged(inputData);
     }
   }
 
   editComponent() {
-    if (this.embeddedComponent) {
-      this.embeddedComponent.edit();
-    }
+    this.embeddedComponent?.edit();
   }
 
   change() {
-    this.changedEvent.emit(this.inputData);
+    this.onChanged(untracked(this.inputData));
   }
 
   onDraftChange(value: boolean) {
-    this.inputData.draft = value;
-    this.changedEvent.emit(this.inputData);
+    const inputData = untracked(this.inputData);
+    inputData.draft = value;
+    this.onChanged(inputData);
   }
 
   isValid() {
-    return (this.form?.valid ?? false) || this.inputData.draft;
+    return (this.form()?.valid ?? false) || this.inputData().draft;
   }
 
   isPristine() {
-    return this.form?.pristine ?? true;
+    return this.form()?.pristine ?? true;
+  }
+
+  private onChanged(data: D) {
+    touch(this.formInputState);
+    this.changedEvent.emit(data);
   }
 }

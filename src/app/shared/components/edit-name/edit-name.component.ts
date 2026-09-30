@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  output,
+  signal,
+  untracked,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditList } from '@app/pages/edit/interfaces/edit-list';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
@@ -18,6 +27,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   templateUrl: './edit-name.component.html',
   styleUrl: './edit-name.component.less',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -31,53 +41,49 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     TranslatePipe,
   ],
 })
-export class EditNameComponent implements OnChanges {
-  @Input() names: string[] = [];
-  @Input() edit!: EditList | FormInputData;
-  @Output() updateName: EventEmitter<void> = new EventEmitter();
+export class EditNameComponent {
+  readonly names = input<string[]>([]);
+  readonly edit = input.required<EditList | FormInputData>();
+  readonly updateName = output<void>();
 
-  form: FormGroup = new FormGroup([]);
-  editList?: EditList;
-  editFormInput?: FormInputData;
+  readonly form = signal<FormGroup>(new FormGroup([]));
+  readonly editList = computed<EditList | undefined>(() => {
+    const edit = this.edit();
+    return 'id' in edit ? edit : undefined;
+  });
+  readonly editFormInput = computed<FormInputData | undefined>(() => {
+    const edit = this.edit();
+    return !('id' in edit) && 'title' in edit ? edit : undefined;
+  });
 
-  isEditName = false;
+  readonly isEditName = signal(false);
 
-  constructor(private formService: FormService) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['names'] &&
-      JSON.stringify(changes['names'].currentValue) !==
-        JSON.stringify(changes['names'].previousValue) &&
-      this.isEditName
-    ) {
-      this.updateNameFieldValidators(this.names);
-    } else if (
-      changes['edit'] &&
-      JSON.stringify(changes['edit'].currentValue) !== JSON.stringify(changes['edit'].previousValue)
-    ) {
-      if ('id' in this.edit) {
-        this.editList = this.edit;
-      } else if ('title' in this.edit) {
-        this.editFormInput = this.edit;
+  constructor(private formService: FormService) {
+    effect(() => {
+      const names = this.names();
+      if (untracked(this.isEditName)) {
+        untracked(() => this.updateNameFieldValidators(names));
       }
-    }
+    });
   }
 
   saveName(): void {
-    this.form.updateValueAndValidity();
+    const form = this.form();
+    form.updateValueAndValidity();
 
-    if (this.form.valid) {
-      if (this.editList) {
-        this.editList.data.customTitle = this.form.controls['name'].value;
-      } else if (this.editFormInput) {
-        this.editFormInput.customTitle = this.form.controls['name'].value;
+    if (form.valid) {
+      const editList = this.editList();
+      const editFormInput = this.editFormInput();
+      if (editList) {
+        editList.data.customTitle = form.controls['name'].value;
+      } else if (editFormInput) {
+        editFormInput.customTitle = form.controls['name'].value;
       }
       this.setEditMode(false);
       this.updateName.emit();
     } else {
-      this.form.markAllAsTouched();
-      Object.values(this.form.controls).forEach((control) => {
+      form.markAllAsTouched();
+      Object.values(form.controls).forEach((control) => {
         control.markAsDirty();
         control.updateValueAndValidity();
       });
@@ -85,26 +91,30 @@ export class EditNameComponent implements OnChanges {
   }
 
   setEditMode(state: boolean): void {
-    this.isEditName = state;
+    this.isEditName.set(state);
 
-    if (this.isEditName) {
-      this.form = this.formService.createComponentNameForm(
-        this.names,
-        ('id' in this.edit ? this.edit.data : this.edit).customTitle,
+    if (state) {
+      const edit = this.edit();
+      this.form.set(
+        this.formService.createComponentNameForm(
+          this.names(),
+          ('id' in edit ? edit.data : edit).customTitle,
+        ),
       );
     } else {
-      this.form = new FormGroup([]);
+      this.form.set(new FormGroup([]));
     }
   }
 
   private updateNameFieldValidators(names: string[]) {
-    this.form.controls['name'].clearValidators();
-    this.form.controls['name'].addValidators([
+    const form = this.form();
+    form.controls['name'].clearValidators();
+    form.controls['name'].addValidators([
       Validators.required,
       ValidatorService.validVariableNameValidator(),
       ValidatorService.uniqueNameValidator(names),
     ]);
-    this.form.controls['name'].updateValueAndValidity();
-    this.form.updateValueAndValidity();
+    form.controls['name'].updateValueAndValidity();
+    form.updateValueAndValidity();
   }
 }

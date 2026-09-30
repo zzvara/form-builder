@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import type { Signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 interface ProjectData {
   project: Project;
@@ -12,8 +13,8 @@ interface ProjectData {
   providedIn: 'root',
 })
 export class JsonService {
-  private jsonDataSubject = new BehaviorSubject<ProjectData | null>(null);
-  jsonData$ = this.jsonDataSubject.asObservable();
+  private readonly jsonDataSignal = signal<ProjectData | null>(null);
+  readonly jsonData: Signal<ProjectData | null> = this.jsonDataSignal.asReadonly();
 
   /**
    * Validates if a project has the required properties.
@@ -144,20 +145,12 @@ export class JsonService {
   }
 
   /**
-   * Updates the JSON data in the BehaviorSubject.
+   * Updates the JSON data signal.
    * @param {ProjectData} data - The new JSON data to set.
    * @returns {void}
    */
   setJsonData(data: ProjectData): void {
-    this.jsonDataSubject.next(data);
-  }
-
-  /**
-   * Retrieves the current JSON data as an Observable.
-   * @returns {Observable<ProjectData | null>} - Observable of the current JSON data.
-   */
-  getJsonData(): Observable<ProjectData | null> {
-    return this.jsonData$;
+    this.jsonDataSignal.set(data);
   }
 
   /**
@@ -165,15 +158,15 @@ export class JsonService {
    * @returns {void}
    */
   clearJsonData(): void {
-    this.jsonDataSubject.next(null);
+    this.jsonDataSignal.set(null);
   }
 
   /**
-   * Performs cleanup by completing the BehaviorSubject.
+   * Performs cleanup by clearing the stored JSON data.
    * Should be called when the service is no longer needed.
    * @returns {void}
    */
   destroy(): void {
-    this.jsonDataSubject.complete();
+    this.clearJsonData();
   }
 }

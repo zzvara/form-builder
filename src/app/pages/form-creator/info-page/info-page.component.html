@@ -20,10 +20,10 @@
             required
             [ngClass]="{
               'input-error':
-                form.controls['title'].invalid && (form.controls['title'].touched || saveFailed),
+                form.controls['title'].invalid && (form.controls['title'].touched || saveFailed()),
             }"
           />
-          @if (form.controls['title'].invalid && (form.controls['title'].touched || saveFailed)) {
+          @if (form.controls['title'].invalid && (form.controls['title'].touched || saveFailed())) {
             <div>
               <span class="error-message">{{ 'FORM.TITLE_REQUIRED' | translate }}</span>
             </div>
@@ -46,7 +46,7 @@
 
         @if (
           form.controls['description'].invalid &&
-          (form.controls['description'].touched || saveFailed)
+          (form.controls['description'].touched || saveFailed())
         ) {
           <div>
             <span class="error-message">{{ 'FORM.DESCRIPTION_REQUIRED' | translate }}</span>
@@ -88,7 +88,7 @@
             class="icon-margin-small"
           ></i>
         </nz-form-label>
-        @if (form.controls['hasdeadline'].value) {
+        @if (hasDeadline()) {
           <nz-date-picker
             [nzFormat]="DateFormat.DATE"
             id="deadline"
@@ -110,7 +110,7 @@
             [nzTooltipTitle]="'FORM.TIME_LIMIT_TOOLTIP' | translate"
           ></i>
         </nz-form-label>
-        @if (form.controls['haslimit'].value) {
+        @if (hasLimit()) {
           <nz-time-picker
             [nzFormat]="DateFormat.HOUR_MINUTE"
             formControlName="limit"
@@ -119,19 +119,19 @@
         }
       </nz-form-item>
 
-      @if (formExists) {
+      @if (formExists()) {
         <ng-container>
           <div>
             <div class="mb-8">
               <nz-form-label>{{ 'GENERAL.CREATED' | translate }}</nz-form-label>
               <nz-form-label [nzNoColon]="true">
-                {{ project.created | date: DateFormat.DATE }}
+                {{ project().created | date: DateFormat.DATE }}
               </nz-form-label>
             </div>
             <div class="mb-8">
               <nz-form-label>{{ 'GENERAL.MODIFIED' | translate }}</nz-form-label>
               <nz-form-label [nzNoColon]="true">
-                {{ project.modified | date: DateFormat.DATE }}
+                {{ project().modified | date: DateFormat.DATE }}
               </nz-form-label>
             </div>
           </div>

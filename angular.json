@@ -17,7 +17,9 @@
               "base": "dist/form-builder"
             },
             "index": "src/index.html",
-            "polyfills": ["zone.js"],
+            "define": {
+              "process.env.NODE_DEBUG": "false"
+            },
             "tsConfig": "tsconfig.app.json",
             "webWorkerTsConfig": "tsconfig.worker.json",
             "assets": [
@@ -91,7 +93,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "webWorkerTsConfig": "tsconfig.worker.json",
             "assets": ["src/favicon.ico", "src/assets"],

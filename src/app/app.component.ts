@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { HeaderService } from '@services/header/header.service';
 import { MenuOption } from '@models/menu-option.model';
 import { RouterOutlet } from '@angular/router';
@@ -15,24 +14,14 @@ import { NzLayoutComponent } from 'ng-zorro-antd/layout';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, HeaderComponent, NzLayoutComponent],
 })
-export class AppComponent implements OnInit, OnDestroy {
-  activeOptions: MenuOption[] = []; // @todo Unused variable. A value is given, but never used.
-  optionsSub?: Subscription; // @todo Unused variable.
+export class AppComponent {
+  readonly activeOptions = computed<MenuOption[]>(() => this.headerService.activeOptions()); // @todo Unused variable. A value is given, but never used.
   options = MenuOption; // @todo Unused variable.
 
   title = 'form-builder'; // @todo Unused variable. The related test must be aligned after changing this.
 
   constructor(private readonly headerService: HeaderService) {}
-
-  ngOnInit(): void {
-    this.headerService
-      .getOptions()
-      .subscribe((options) => (this.activeOptions = options.activeOptions));
-  }
-
-  ngOnDestroy(): void {
-    this.optionsSub?.unsubscribe(); // @todo Unnecessary lifecycle hook.
-  }
 }

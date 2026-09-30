@@ -12,16 +12,18 @@ export abstract class AbstractDatePickerComponent<
   protected readonly getDisabledDateConfig = getDisabledDateConfig;
 
   disabledTime: DisabledTimeFn = (current: Date | Date[]): DisabledTimeConfig | undefined => {
-    if (this.data.showTime) {
-      return getDisabledTimeConfig(this.data, current as Date);
+    const data = this.state();
+    if (data.showTime) {
+      return getDisabledTimeConfig(data, current as Date);
     }
     return undefined;
   };
 
   get getTimeOptions(): SupportTimeOptions | null {
-    if (this.data.showTime) {
+    const data = this.state();
+    if (data.showTime) {
       return {
-        nzFormat: this.data.timeFormat,
+        nzFormat: data.timeFormat,
         nzHideDisabledOptions: false,
       };
     }
@@ -29,9 +31,10 @@ export abstract class AbstractDatePickerComponent<
   }
 
   get getFullFormat() {
-    if (this.data.showTime) {
-      return this.data.dateFormat + this.data.timeFormat;
+    const data = this.state();
+    if (data.showTime) {
+      return data.dateFormat + data.timeFormat;
     }
-    return this.data.dateFormat;
+    return data.dateFormat;
   }
 }

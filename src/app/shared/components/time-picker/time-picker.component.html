@@ -1,6 +1,6 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label()) {
+    <ng-container [ngTemplateOutlet]="label()"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
@@ -8,19 +8,19 @@
     <!-- @todo width: 50%, responsiveness, etc. -->
     <nz-time-picker
       #inputComponent
-      [nzFormat]="data.timeFormat"
-      [required]="data.required"
-      [nzDisabledHours]="disabledHours(data)"
-      [nzDisabledMinutes]="disabledMinutes(data)"
-      [nzDisabledSeconds]="disabledSeconds(data)"
-      [nzUse12Hours]="data.use12Hours"
-      [nzHideDisabledOptions]="data.hideDisabledOptions"
-      [nzHourStep]="data.hourStep"
-      [nzMinuteStep]="data.minuteStep"
-      [nzSecondStep]="data.secondStep"
-      [disabled]="!inlineEdit.enabled"
-      [nzPlaceHolder]="data.placeholderValue ?? ''"
-      [(ngModel)]="data.defaultValue"
+      [nzFormat]="state().timeFormat"
+      [required]="state().required"
+      [nzDisabledHours]="disabledHours(state())"
+      [nzDisabledMinutes]="disabledMinutes(state())"
+      [nzDisabledSeconds]="disabledSeconds(state())"
+      [nzUse12Hours]="state().use12Hours"
+      [nzHideDisabledOptions]="state().hideDisabledOptions"
+      [nzHourStep]="state().hourStep"
+      [nzMinuteStep]="state().minuteStep"
+      [nzSecondStep]="state().secondStep"
+      [disabled]="!inlineEdit().enabled"
+      [nzPlaceHolder]="state().placeholderValue ?? ''"
+      [(ngModel)]="state().defaultValue"
       (ngModelChange)="onChange($event)"
       (mousedown)="$event.stopPropagation()"
       class="time-picker"
@@ -33,11 +33,11 @@
   }
 </ng-template>
 <ng-template #prefixTemplate>
-  @if (data.showTooltip) {
+  @if (state().showTooltip) {
     <span
       nz-icon
       nz-tooltip
-      [nzTooltipTitle]="data.tooltipText"
+      [nzTooltipTitle]="state().tooltipText"
       nzType="info-circle"
       class="tooltip-icon"
     ></span>

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import type { Signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { EditList } from '@app/pages/edit/interfaces/edit-list';
-import { BehaviorSubject } from 'rxjs';
 import { InstanceOfSectionListPipe } from '../pipes/instance-of-section-list.pipe';
 import { SectionList } from '@app/pages/edit/interfaces/section-list';
 import { FormInputData } from '../interfaces/form-input-data';
@@ -13,24 +13,31 @@ import { translateComponentType } from '@app/pages/edit/config/edit-data-config'
   providedIn: 'root',
 })
 export class ComponentService {
-  component$: BehaviorSubject<EditList[]> = new BehaviorSubject([] as EditList[]);
+  private readonly componentsSignal = signal<EditList[]>([]);
+  readonly components: Signal<EditList[]> = this.componentsSignal.asReadonly();
 
   constructor(
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
-  ) {
-    this.component$.subscribe(() => {
-      this.checkVariable();
-    });
+  ) {}
+
+  /**
+   * Publishes the current list of components and revalidates the code editor variables.
+   * @param {EditList[]} components - The current components of the editor.
+   * @returns {void}
+   */
+  setComponents(components: EditList[]): void {
+    this.componentsSignal.set([...components]);
+    this.checkVariable();
   }
 
   getItemById(targetId: string): SectionList | FormInputData | undefined {
-    const items = this.component$.value.map((item) => item.data);
+    const items = this.components().map((item) => item.data);
     return this.findItemById(targetId, items);
   }
 
   getItemsBeforeId(targetId: string): (SectionList | FormInputData)[] {
-    const items = this.component$.value.map((item) => item.data);
+    const items = this.components().map((item) => item.data);
     return items.length > 0 ? this.findItemsBeforeId(targetId, items).list : [];
   }
 
@@ -65,7 +72,7 @@ export class ComponentService {
   }
 
   checkVariable(): void {
-    const items = this.component$.value.map(c => c.data);
+    const items = this.components().map(c => c.data);
     this.validateVariablesRecursively(items);
   }
 

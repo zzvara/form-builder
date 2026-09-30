@@ -1,6 +1,6 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label()) {
+    <ng-container [ngTemplateOutlet]="label()"></ng-container>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
@@ -9,12 +9,12 @@
         #inputComponent="ngModel"
         nz-input
         type="text"
-        [required]="data.required"
-        [minlength]="data.minLength ? (data.minLengthNumber ?? null) : null"
-        [maxlength]="data.maxLength ? (data.maxLengthNumber ?? null) : null"
-        [disabled]="!inlineEdit.enabled"
-        [placeholder]="data.placeholderValue ?? ''"
-        [(ngModel)]="data.defaultValue"
+        [required]="state().required"
+        [minlength]="state().minLength ? (state().minLengthNumber ?? null) : null"
+        [maxlength]="state().maxLength ? (state().maxLengthNumber ?? null) : null"
+        [disabled]="!inlineEdit().enabled"
+        [placeholder]="state().placeholderValue ?? ''"
+        [(ngModel)]="state().defaultValue"
         (change)="onChange($event)"
         (mousedown)="$event.stopPropagation()"
       />
@@ -27,18 +27,18 @@
   }
 </ng-template>
 <ng-template #prefixTemplate>
-  @if (data.showTooltip) {
+  @if (state().showTooltip) {
     <span
       nz-icon
       nz-tooltip
-      [nzTooltipTitle]="data.tooltipText"
+      [nzTooltipTitle]="state().tooltipText"
       nzType="info-circle"
       class="icon-margin"
     ></span>
   }
 </ng-template>
 <ng-template #suffixTemplateCounter>
-  @if (data.maxLength && data.showCharacterCounter) {
-    <span>{{ (inputComponent.value ?? '').length }}/{{ data.maxLengthNumber }}</span>
+  @if (state().maxLength && state().showCharacterCounter) {
+    <span>{{ (inputComponent.value ?? '').length }}/{{ state().maxLengthNumber }}</span>
   }
 </ng-template>

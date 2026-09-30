@@ -1,7 +1,7 @@
 <div style="display: flex; gap: 8px">
   <button
     nz-button
-    [disabled]="!canUndo"
+    [disabled]="!canUndo()"
     (click)="undoBtn()"
     [nz-tooltip]="'COMPONENTS.UNDO_TOOLTIP' | translate"
   >
@@ -9,7 +9,7 @@
   </button>
   <button
     nz-button
-    [disabled]="!canRedo"
+    [disabled]="!canRedo()"
     (click)="redoBtn()"
     [nz-tooltip]="'COMPONENTS.REDO_TOOLTIP' | translate"
   >

@@ -1,6 +1,6 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
@@ -16,6 +16,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -37,19 +38,17 @@ export class InputComponent extends AbstractFieldLikeInputs<
       .openModal({
         modalTitle: this.translate.instant('COMPONENTS.INPUT.MODEL_TITLE_TEXT_INPUT'),
         modalContent: InputEditComponent,
-        modalData: this.data,
+        modalData: this.state(),
       })
       .subscribe(this.defaultOnEditSubscribeEvent);
   }
 
   override errorList(): ErrorType[] {
+    const data = this.state();
     return super.errorList().concat([
       {
         errorName: 'minlength',
-        errorMessage: this.data.minLengthMessage!.replace(
-          '{{..}}',
-          String(this.data.minLengthNumber!),
-        ),
+        errorMessage: data.minLengthMessage!.replace('{{..}}', String(data.minLengthNumber!)),
       },
     ]);
   }

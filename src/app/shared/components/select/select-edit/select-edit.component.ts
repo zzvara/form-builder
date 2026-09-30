@@ -1,6 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import { SelectComponentData } from '@components/select/interfaces/select-component-data';
@@ -31,6 +31,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MutateTextDirective,
     ReactiveFormsModule,
@@ -59,10 +60,10 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
   SelectComponentData
 > {
   newOption!: FormControl<string | null>;
-  editingIndex: number | null = null;
-  editValue: string = '';
-  editError: string | null = null;
-  editControl: FormControl = new FormControl('');
+  readonly editingIndex = signal<number | null>(null);
+  readonly editValue = signal('');
+  readonly editError = signal<string | null>(null);
+  readonly editControl: FormControl = new FormControl('');
 
   get options(): FormArray {
     return this.formData.controls['selectOptions'] as FormArray;
@@ -171,24 +172,24 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
   }
 
   startEdit(index: number, value: string) {
-    this.editingIndex = index;
-    this.editValue = value;
+    this.editingIndex.set(index);
+    this.editValue.set(value);
     this.editControl.setValue(value);
-    this.editError = null;
+    this.editError.set(null);
   }
   saveEdit(index: number) {
     const newValue = this.editControl.value?.trim();
 
     if (!newValue) {
-      this.editingIndex = null;
+      this.editingIndex.set(null);
       return;
     }
     const values = this.optionsValues.filter((_, i) => i !== index);
     if (values.includes(newValue)) {
-      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      this.editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
-    this.editError = null;
+    this.editError.set(null);
     const control = this.options.at(index) as FormControl;
     control.setValue(newValue);
     control.markAsDirty();
@@ -200,11 +201,11 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
     } else if (defaults === this.optionsValues[index]) {
       this.setDefaultValue(newValue);
     }
-    this.editingIndex = null;
+    this.editingIndex.set(null);
   }
   cancelEdit() {
-    this.editingIndex = null;
-    this.editError = null;
+    this.editingIndex.set(null);
+    this.editError.set(null);
   }
 
   getMinOptions(): number {

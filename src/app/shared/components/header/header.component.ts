@@ -1,15 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnDestroy,
+  OnInit,
+  computed,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '@services/header/header.service';
 import { JsonService } from '@services/json.service';
-import { Subscription } from 'rxjs';
 import { RoutePath } from '@app/shared/models/route-path.model';
 import { LocalStorageKey } from '@app/shared/constants/localStorage.constant';
 import { LanguageEnum } from '@app/shared/interfaces/language.enum';
-import { ChangeDetectorRef } from '@angular/core';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { EventService } from '@app/shared/services/event.service';
 import { NzHeaderComponent } from 'ng-zorro-antd/layout';
@@ -24,6 +31,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     NzHeaderComponent,
@@ -35,15 +43,12 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
   ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  headerOptions: MenuOption[] = [];
-  activeOptions: MenuOption[] = [];
-  contextActions: ContextAction[] = [];
+  readonly headerOptions = computed<MenuOption[]>(() => this.headerService.options().options);
+  readonly activeOptions = computed<MenuOption[]>(() => this.headerService.activeOptions());
+  readonly contextActions = computed<ContextAction[]>(() => this.headerService.actions());
   options = MenuOption;
-  currentLanguage: LanguageEnum = LanguageEnum.EN;
-  currentTheme: ThemeEnum = ThemeEnum.LIGHT;
-
-  private optionsSub?: Subscription;
-  private actionsSub?: Subscription;
+  readonly currentLanguage = signal<LanguageEnum>(LanguageEnum.EN);
+  readonly currentTheme = signal<ThemeEnum>(ThemeEnum.LIGHT);
 
   LanguageEnum = LanguageEnum;
   ThemeEnum = ThemeEnum;
@@ -54,43 +59,37 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly jsonService: JsonService,
     private readonly translate: TranslateService,
     private readonly eventService: EventService,
-    private readonly cdr: ChangeDetectorRef,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
-    this.currentLanguage =
+    this.currentLanguage.set(
       localStorage.getItem(LocalStorageKey.LANGUAGE) &&
-      localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
+        localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
         ? LanguageEnum.HU
-        : LanguageEnum.EN;
-    this.translate.use(this.currentLanguage);
+        : LanguageEnum.EN,
+    );
+    this.translate.use(this.currentLanguage());
     this.jsonService.clearJsonData();
-    this.optionsSub = this.headerService
-      .getOptions()
-      .subscribe(
-        (options) => ({ options: this.headerOptions, activeOptions: this.activeOptions } = options),
-      );
-
-    this.actionsSub = this.headerService
-      .getContextActions()
-      .subscribe((actions) => (this.contextActions = actions));
-    this.currentTheme =
+    this.currentTheme.set(
       localStorage.getItem(LocalStorageKey.THEME) &&
-      localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
+        localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
         ? ThemeEnum.LIGHT
-        : ThemeEnum.DARK;
+        : ThemeEnum.DARK,
+    );
 
-    if (this.currentTheme === ThemeEnum.DARK) {
+    if (this.currentTheme() === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }
-    this.currentTheme =
+    this.currentTheme.set(
       localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.DARK
         ? ThemeEnum.DARK
-        : ThemeEnum.LIGHT;
-    if (this.currentTheme === ThemeEnum.DARK) {
+        : ThemeEnum.LIGHT,
+    );
+    if (this.currentTheme() === ThemeEnum.DARK) {
       this.setTheme(ThemeEnum.DARK);
     }
-    this.eventService.themeChange.next(this.currentTheme);
+    this.eventService.theme.set(this.currentTheme());
   }
 
   navigateToHome(): void {
@@ -98,13 +97,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   changeMenuItemState(toChange: MenuOption) {
-    if (this.activeOptions.includes(toChange)) {
+    const headerOptions = this.headerOptions();
+    const activeOptions = this.activeOptions();
+    if (activeOptions.includes(toChange)) {
       this.headerService.setOptions(
-        this.headerOptions,
-        this.activeOptions.filter((option) => option !== toChange),
+        headerOptions,
+        activeOptions.filter((option) => option !== toChange),
       );
     } else {
-      this.headerService.setOptions(this.headerOptions, [...this.activeOptions, toChange]);
+      this.headerService.setOptions(headerOptions, [...activeOptions, toChange]);
     }
   }
 
@@ -129,30 +130,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   uploadJson(file: File): void {
-    this.jsonService.uploadJson(file).subscribe((data) => {
-      this.jsonService.setJsonData(data);
-      this.router.navigate([RoutePath.NEW], {
-        queryParams: { type: data.type },
-        state: { projectData: data },
+    this.jsonService
+      .uploadJson(file)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        this.jsonService.setJsonData(data);
+        this.router.navigate([RoutePath.NEW], {
+          queryParams: { type: data.type },
+          state: { projectData: data },
+        });
       });
-    });
   }
 
   ngOnDestroy(): void {
-    this.optionsSub?.unsubscribe();
-    this.actionsSub?.unsubscribe();
     this.jsonService.destroy();
   }
 
   setLanguage(lang: LanguageEnum): void {
-    this.currentLanguage = lang;
+    this.currentLanguage.set(lang);
     this.translate.use(lang);
     localStorage.setItem(LocalStorageKey.LANGUAGE, lang);
   }
 
   setTheme(theme: ThemeEnum): void {
     localStorage.setItem(LocalStorageKey.THEME, theme);
-    this.currentTheme = theme;
+    this.currentTheme.set(theme);
 
     const existingLink = document.getElementById('theme-link') as HTMLLinkElement | null;
 
@@ -160,7 +162,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       existingLink.parentNode?.removeChild(existingLink);
     }
 
-    this.eventService.themeChange.next(theme);
+    this.eventService.theme.set(theme);
 
     if (theme === ThemeEnum.DARK) {
       const link = document.createElement('link');

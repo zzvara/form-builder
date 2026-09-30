@@ -1,37 +1,34 @@
-import { Injectable } from '@angular/core';
+import type { Signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { ContextAction } from '@components/header/header.model';
 import { MenuOption, MenuState } from '@models/menu-option.model';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeaderService {
-  private readonly headerOptions: BehaviorSubject<MenuState> = new BehaviorSubject<MenuState>({
+  private readonly headerOptions = signal<MenuState>({
     options: [MenuOption.HOME, MenuOption.SETTINGS],
     activeOptions: [],
   });
+  private readonly contextActions = signal<ContextAction[]>([]);
 
-  private readonly contextActions: BehaviorSubject<ContextAction[]> = new BehaviorSubject<
-    ContextAction[]
-  >([]);
+  readonly options: Signal<MenuState> = this.headerOptions.asReadonly();
+  readonly actions: Signal<ContextAction[]> = this.contextActions.asReadonly();
+  readonly activeOptions: Signal<MenuOption[]> = computed(
+    () => this.headerOptions().activeOptions,
+  );
+
   private readonly saveTriggered: Subject<void> = new Subject<void>();
   private readonly undoTriggered: Subject<void> = new Subject<void>();
 
   setOptions(options: MenuOption[], activeOptions: MenuOption[] = []): void {
-    this.headerOptions.next({ options, activeOptions });
-  }
-
-  getOptions(): Observable<MenuState> {
-    return this.headerOptions.asObservable();
+    this.headerOptions.set({ options, activeOptions });
   }
 
   setContextActions(actions: ContextAction[]): void {
-    this.contextActions.next(actions);
-  }
-
-  getContextActions(): Observable<ContextAction[]> {
-    return this.contextActions.asObservable();
+    this.contextActions.set(actions);
   }
 
   triggerSave(): void {
