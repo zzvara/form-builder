@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectEditComponent } from '@components/select/select-edit/select-edit.component';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
-import { provideZonelessChangeDetection } from '@angular/core';
 import { appConfig } from '@app/app.config';
 
 describe('ModalComponent', () => {
@@ -13,7 +12,6 @@ describe('ModalComponent', () => {
       imports: [SelectEditComponent],
       providers: [
         ...appConfig.providers,
-        provideZonelessChangeDetection(),
         {
           provide: NZ_MODAL_DATA,
           useValue: { selectOptions: [], isMultipleChoice: false },

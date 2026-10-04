@@ -4,7 +4,6 @@ import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { appConfig } from '@app/app.config';
 import { ProjectService } from '@services/project.service';
 import { Project, ProjectType } from '@interfaces/project';
-import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -13,7 +12,7 @@ describe('DashboardComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [DashboardComponent],
-      providers: [...appConfig.providers, provideZonelessChangeDetection()],
+      providers: appConfig.providers,
     });
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
