@@ -6,8 +6,6 @@ import {
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-declare const JSHINT: typeof import('jshint').JSHINT;
-
 @Component({
   standalone: true,
   template: '{{ count() }}',
@@ -18,10 +16,6 @@ class SignalComponent {
 }
 
 describe('zoneless change detection', () => {
-  it('loads the browser-ready JavaScript linter', () => {
-    expect(JSHINT('const answer = 42;', { esnext: true })).toBeTrue();
-  });
-
   it('renders signal updates without Zone.js', async () => {
     TestBed.configureTestingModule({
       imports: [SignalComponent],

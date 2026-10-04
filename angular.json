@@ -42,7 +42,7 @@
                 "inject": false
               }
             ],
-            "scripts": ["node_modules/jshint/dist/jshint.js"],
+            "scripts": [],
             "browser": "src/main.ts"
           },
           "configurations": {
@@ -104,7 +104,7 @@
               }
             ],
             "styles": ["src/styles.less"],
-            "scripts": ["node_modules/jshint/dist/jshint.js"]
+            "scripts": []
           }
         },
         "lint": {

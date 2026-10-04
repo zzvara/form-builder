@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
+  inject,
   ElementRef,
   EventEmitter,
   Input,
@@ -19,6 +20,7 @@ import { CodeEditorMode, CodeEditorType, CodeEditorVariableType } from '@app/sha
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { CodeEditorError, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
 import { EventService } from '@app/shared/services/event.service';
+import { JavaScriptLinterService } from '@app/shared/services/javascript-linter.service';
 import { defaultKeymap } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
@@ -30,8 +32,6 @@ import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { basicSetup, EditorView } from 'codemirror';
 import {NzAlertComponent} from "ng-zorro-antd/alert";
 import {TranslatePipe} from "@ngx-translate/core";
-
-declare const JSHINT: typeof import('jshint').JSHINT;
 
 @Component({
   selector: 'app-code-editor',
@@ -71,6 +71,10 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   };
 
   private codeWorker?: Worker;
+  private readonly javascriptLinter = inject(JavaScriptLinterService);
+  private destroyed = false;
+  private lintRevision = 0;
+  private validatedDoc?: EditorState['doc'];
   private editorView!: EditorView;
   private editorTheme = new Compartment();
   private readonly theme = toSignal(this.eventService.themeChange, {
@@ -117,6 +121,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true;
+    this.editorDestroy();
     if (this.codeWorker) {
       this.codeWorker.terminate();
     }
@@ -135,6 +141,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   editorDestroy(): void {
+    this.lintRevision++;
+    this.validatedDoc = undefined;
     if (this.editorView) {
       this.editorView.destroy();
     }
@@ -185,6 +193,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   reloadJsHint(): void {
+    this.lintRevision++;
+    this.validatedDoc = undefined;
     this.updateCodeEditor.emit({ isValid: false });
     if (this.editorView) {
       const newState = EditorState.create({
@@ -225,7 +235,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   private evaluateCode(editorState: EditorState) {
     this.errorCodeEditor.set(undefined);
 
-    if (this.currentErrorsLength() !== 0) {
+    if (this.currentErrorsLength() !== 0 || this.validatedDoc !== editorState.doc) {
       return;
     }
 
@@ -271,18 +281,34 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     }
   }
 
-  private jsLinter(view: EditorView): Diagnostic[] {
+  private async jsLinter(view: EditorView): Promise<Diagnostic[]> {
     this.editing = false;
     this.errorCodeEditor.set(undefined);
 
-    const doc = view.state.doc.toString();
-    const code = `${this.generatedVariable}${doc}`;
+    const state = view.state;
+    const revision = ++this.lintRevision;
+    const variables = this.generatedVariable;
+    const code = `${variables}${state.doc.toString()}`;
+    const isCurrent = () => !this.destroyed && this.editorView === view &&
+      view.state.doc === state.doc && this.generatedVariable === variables &&
+      this.lintRevision === revision;
+    let lintErrors;
+    try {
+      lintErrors = await this.javascriptLinter.lint(code, this.jsHintConfig);
+    } catch {
+      if (!isCurrent()) return [];
+      this.validatedDoc = undefined;
+      this.currentErrorsLength.set(1);
+      this.currentWarningsLength.set(0);
+      this.updateCodeEditor.emit({ isValid: false });
+      return [{ from: 0, to: 0, severity: 'error', message: 'JavaScript validation could not be loaded. Edit the code to retry.' }];
+    }
+    if (!isCurrent()) return [];
 
-    JSHINT(code, this.jsHintConfig);
-
-    const errors: CodeEditorError[] = JSHINT.errors.map((error) => {
+    const errors: CodeEditorError[] = lintErrors.map((error) => {
       let pos = { from: 0, to: 0 };
-      const line = view.state.doc.line(error.line - 1);
+      const lineNumber = Math.max(1, Math.min(state.doc.lines, error.line - 1));
+      const line = state.doc.line(lineNumber);
       const spaces = this.countLeadingAndTrailingSpaces(line.text);
       if (error.code === 'W033') {
         pos.from = line.to;
@@ -295,6 +321,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
       return { from: pos.from, to: pos.to, code: error.code, a: error.a, b: error.b, c: error.c, d: error.d, reason: error.reason };
     });
 
+    this.validatedDoc = state.doc;
     this.currentErrorsLength.set(errors.filter((error) => error.code.indexOf('E') >= 0).length);
     this.currentWarningsLength.set(errors.filter((error) => error.code.indexOf('W') >= 0).length);
 
