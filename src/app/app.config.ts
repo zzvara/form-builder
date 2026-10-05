@@ -57,7 +57,6 @@ export const appConfig: ApplicationConfig = {
       }),
       NzModalModule,
     ),
-    // QuillModule.forRoot() also enables Zone.js change detection.
     provideQuillConfig({
       theme: 'snow',
       modules: {
