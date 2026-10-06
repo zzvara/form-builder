@@ -33,7 +33,6 @@ import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
     NzCheckboxComponent,
     CodeEditorComponent,
     NzModalFooterDirective,
-
   ]
 })
 export class CodeEditorModalComponent implements OnInit, OnChanges {
