@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import type { Project, ProjectVersion } from '@interfaces/project';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -13,7 +14,9 @@ import { v4 as uuidv4 } from 'uuid';
  */
 export class ProjectService<T extends Project> {
   private items: T[] = []; // Holds the current list of projects
-  private readonly itemsSubject = new BehaviorSubject<T[]>([]);
+  private readonly projectsState = signal<T[]>([]);
+  readonly projects = this.projectsState.asReadonly();
+  private readonly projects$ = new BehaviorSubject<T[]>([]);
   private readonly storageKey: string = 'project';
 
   constructor() {
@@ -21,8 +24,14 @@ export class ProjectService<T extends Project> {
     const savedData = localStorage.getItem(this.storageKey);
     if (savedData) {
       this.items = JSON.parse(savedData) as T[];
-      this.itemsSubject.next([...this.items]);
+      this.publishProjects();
     }
+  }
+
+  private publishProjects(): void {
+    const projects = [...this.items];
+    this.projectsState.set(projects);
+    this.projects$.next(projects);
   }
 
   /**
@@ -39,7 +48,7 @@ export class ProjectService<T extends Project> {
    * @returns {Observable<T[]>} An observable of the current list of projects.
    */
   list(): Observable<T[]> {
-    return this.itemsSubject.asObservable();
+    return this.projects$.asObservable();
   }
 
   /**
@@ -56,7 +65,7 @@ export class ProjectService<T extends Project> {
     data.modified = now.split('T')[0];
 
     this.items.push(data);
-    this.itemsSubject.next([...this.items]);
+    this.publishProjects();
     localStorage.setItem(this.storageKey, JSON.stringify(this.items));
 
     const projectHistoryKey = `${this.storageKey}-history-${data.id}`;
@@ -79,7 +88,7 @@ export class ProjectService<T extends Project> {
   remove(projectId: string): void {
     // Remove the project from the list
     this.items = this.items.filter((item) => item.id !== projectId);
-    this.itemsSubject.next([...this.items]);
+    this.publishProjects();
     localStorage.setItem(this.storageKey, JSON.stringify(this.items));
 
     // Remove the project's history from local storage
@@ -148,7 +157,7 @@ export class ProjectService<T extends Project> {
       if (index !== -1) {
         this.items[index] = version.project;
         this.items[index].modified = new Date().toISOString().split('T')[0];
-        this.itemsSubject.next([...this.items]);
+        this.publishProjects();
         localStorage.setItem(this.storageKey, JSON.stringify(this.items));
         return true;
       }
@@ -195,7 +204,7 @@ export class ProjectService<T extends Project> {
       // Update the project data
       this.items[index] = data;
       this.items[index].modified = new Date().toISOString().split('T')[0];
-      this.itemsSubject.next([...this.items]);
+      this.publishProjects();
       localStorage.setItem(this.storageKey, JSON.stringify(this.items));
       return true;
     } else {

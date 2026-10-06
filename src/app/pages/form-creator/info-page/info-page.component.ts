@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
@@ -29,6 +30,7 @@ import { QuillEditorComponent } from 'ngx-quill';
   templateUrl: './info-page.component.html',
   styleUrls: ['./info-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -50,12 +52,13 @@ import { QuillEditorComponent } from 'ngx-quill';
   ],
 })
 export class InfoPageComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() projectId = new EventEmitter<string>();
   @Output() formData = new EventEmitter<ProjectType>();
 
-  project = {
+  private readonly projectState = signal<Project>({
     id: '',
     title: '',
     description: '',
@@ -66,11 +69,17 @@ export class InfoPageComponent implements OnInit {
     deadline: '',
     created: new Date().toISOString().split('T')[0],
     modified: new Date().toISOString().split('T')[0],
-  };
+  });
+  get project(): Project {
+    return this.projectState();
+  }
+  set project(value: Project) {
+    this.projectState.set(value);
+  }
 
-  formExists = false;
+  readonly formExists = signal(false);
   formId = '';
-  saveFailed = false;
+  readonly saveFailed = signal(false);
 
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -93,20 +102,24 @@ export class InfoPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.params = params;
       if (params['id']) {
-        this.formExists = true;
+        this.formExists.set(true);
         this.formId = params['id'];
 
-        this.project = this.projectService.searchData(this.formId)?.[0] || null;
-        if (this.project) {
-          this.initializeForm();
+        const project = this.projectService.searchData(this.formId)?.[0];
+        if (!project) {
+          console.error('Project not found', this.formId);
+          return;
         }
+        this.project = project;
+        this.initializeForm();
       }
       if (params['type']) {
         this.project.type =
           params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.project = { ...this.project };
         this.form.patchValue({
           type: this.project.type === ProjectType.TEST,
         });
@@ -115,7 +128,7 @@ export class InfoPageComponent implements OnInit {
 
     this.formData.emit(this.project.type);
 
-    this.jsonService.getJsonData().subscribe((data) => {
+    this.jsonService.getJsonData().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
       if (data) {
         this.project = { ...this.project, ...data.project };
@@ -148,11 +161,12 @@ export class InfoPageComponent implements OnInit {
     if (this.project.time_checkbox) {
       this.project.time_limit = this.form.controls['limit'].value!;
     }
+    this.project = { ...this.project };
     this.formData.emit(this.project.type);
   }
 
   ngOnDestroy() {
-    if (this.formExists && this.formId !== '') {
+    if (this.formExists() && this.formId !== '') {
       this.projectId.emit(this.formId);
     } else {
       this.projectId.emit(this.project.id);
@@ -163,7 +177,7 @@ export class InfoPageComponent implements OnInit {
 
   submitForm() {
     if (this.form.invalid) {
-      this.saveFailed = true;
+      this.saveFailed.set(true);
       return;
     }
 
@@ -171,7 +185,7 @@ export class InfoPageComponent implements OnInit {
 
     let projectId: string;
 
-    if (this.formExists && this.formId !== '') {
+    if (this.formExists() && this.formId !== '') {
       this.projectService.update(this.formId, this.project);
       projectId = this.formId;
     } else {
@@ -189,7 +203,7 @@ export class InfoPageComponent implements OnInit {
 
     this.page! += 1;
     this.onsetPage(this.page!);
-    this.saveFailed = false;
+    this.saveFailed.set(false);
   }
 
   onsetPage(page: number): void {

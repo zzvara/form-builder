@@ -1,6 +1,9 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
+  effect,
+  inject,
   ElementRef,
   EventEmitter,
   Input,
@@ -10,11 +13,14 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CodeEditorMode, CodeEditorType, CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { CodeEditorError, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
 import { EventService } from '@app/shared/services/event.service';
+import { JavaScriptLinterService } from '@app/shared/services/javascript-linter.service';
 import { defaultKeymap } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
@@ -24,12 +30,12 @@ import { keymap, ViewUpdate } from '@codemirror/view';
 import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
 import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { basicSetup, EditorView } from 'codemirror';
-import { JSHINT } from 'jshint';
 import {NzAlertComponent} from "ng-zorro-antd/alert";
 import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-code-editor',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   templateUrl: './code-editor.component.html',
   styleUrl: './code-editor.component.css',
@@ -54,9 +60,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   lastCursorPosition = 0;
 
   generatedVariable = '';
-  currentErrorsLength = 0;
-  currentWarningsLength = 0;
-  errorCodeEditor?: string;
+  readonly currentErrorsLength = signal<number>(0);
+  readonly currentWarningsLength = signal<number>(0);
+  readonly errorCodeEditor = signal<string | undefined>(undefined);
 
   // JsHint Config: https://jshint.com/docs/options/
   jsHintConfig = {
@@ -65,8 +71,15 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   };
 
   private codeWorker?: Worker;
+  private readonly javascriptLinter = inject(JavaScriptLinterService);
+  private destroyed = false;
+  private lintRevision = 0;
+  private validatedDoc?: EditorState['doc'];
   private editorView!: EditorView;
   private editorTheme = new Compartment();
+  private readonly theme = toSignal(this.eventService.themeChange, {
+    initialValue: ThemeEnum.LIGHT,
+  });
   private editorExtensions: Extension[] = [
     basicSetup,
     EditorView.lineWrapping,
@@ -79,6 +92,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   CodeEditorMode = CodeEditorMode;
 
   constructor(private readonly eventService: EventService) {
+    effect(() => {
+      this.theme();
+      this.editorChangeTheme();
+    });
+
     if (typeof Worker !== 'undefined') {
       this.codeWorker = new Worker(new URL('./../../workers/code-runner.worker', import.meta.url), { type: 'module' });
     }
@@ -100,12 +118,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     }
 
     this.editorChangeTheme();
-    this.eventService.themeChange.subscribe(() => {
-      this.editorChangeTheme();
-    });
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true;
+    this.editorDestroy();
     if (this.codeWorker) {
       this.codeWorker.terminate();
     }
@@ -124,6 +141,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   editorDestroy(): void {
+    this.lintRevision++;
+    this.validatedDoc = undefined;
     if (this.editorView) {
       this.editorView.destroy();
     }
@@ -149,7 +168,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     if (this.editorView) {
       this.editorView.dispatch({
         effects: this.editorTheme.reconfigure(
-          this.eventService.themeChange.value === ThemeEnum.LIGHT ? basicLight : basicDark,
+          this.theme() === ThemeEnum.LIGHT ? basicLight : basicDark,
         ),
       });
     }
@@ -174,6 +193,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   reloadJsHint(): void {
+    this.lintRevision++;
+    this.validatedDoc = undefined;
     this.updateCodeEditor.emit({ isValid: false });
     if (this.editorView) {
       const newState = EditorState.create({
@@ -212,9 +233,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   private evaluateCode(editorState: EditorState) {
-    this.errorCodeEditor = undefined;
+    this.errorCodeEditor.set(undefined);
 
-    if (this.currentErrorsLength !== 0) {
+    if (this.currentErrorsLength() !== 0 || this.validatedDoc !== editorState.doc) {
       return;
     }
 
@@ -228,7 +249,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     try {
       const timeout = setTimeout(() => {
         this.codeWorker?.terminate();
-        this.errorCodeEditor = 'RUN_CODE';
+        this.errorCodeEditor.set('RUN_CODE');
       }, 10_000);
 
       this.codeWorker.onmessage = (message: MessageEvent) => {
@@ -237,7 +258,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
         const data = message.data as { error?: string; success: boolean; result?: any };
         if (!data.success) {
           console.error('Worker error:', data.error);
-          this.errorCodeEditor = 'RUN_CODE';
+          this.errorCodeEditor.set('RUN_CODE');
           return;
         }
 
@@ -249,29 +270,45 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
             isValid: true,
           });
         } else {
-          this.errorCodeEditor = 'RETURN';
+          this.errorCodeEditor.set('RETURN');
         }
       };
 
       this.codeWorker.postMessage({ code: fullCode });
     } catch (error) {
       console.error('Error', error);
-      this.errorCodeEditor = 'RUN_CODE';
+      this.errorCodeEditor.set('RUN_CODE');
     }
   }
 
-  private jsLinter(view: EditorView): Diagnostic[] {
+  private async jsLinter(view: EditorView): Promise<Diagnostic[]> {
     this.editing = false;
-    this.errorCodeEditor = undefined;
+    this.errorCodeEditor.set(undefined);
 
-    const doc = view.state.doc.toString();
-    const code = `${this.generatedVariable}${doc}`;
+    const state = view.state;
+    const revision = ++this.lintRevision;
+    const variables = this.generatedVariable;
+    const code = `${variables}${state.doc.toString()}`;
+    const isCurrent = () => !this.destroyed && this.editorView === view &&
+      view.state.doc === state.doc && this.generatedVariable === variables &&
+      this.lintRevision === revision;
+    let lintErrors;
+    try {
+      lintErrors = await this.javascriptLinter.lint(code, this.jsHintConfig);
+    } catch {
+      if (!isCurrent()) return [];
+      this.validatedDoc = undefined;
+      this.currentErrorsLength.set(1);
+      this.currentWarningsLength.set(0);
+      this.updateCodeEditor.emit({ isValid: false });
+      return [{ from: 0, to: 0, severity: 'error', message: 'JavaScript validation could not be loaded. Edit the code to retry.' }];
+    }
+    if (!isCurrent()) return [];
 
-    JSHINT(code, this.jsHintConfig);
-
-    const errors: CodeEditorError[] = JSHINT.errors.map((error) => {
+    const errors: CodeEditorError[] = lintErrors.map((error) => {
       let pos = { from: 0, to: 0 };
-      const line = view.state.doc.line(error.line - 1);
+      const lineNumber = Math.max(1, Math.min(state.doc.lines, error.line - 1));
+      const line = state.doc.line(lineNumber);
       const spaces = this.countLeadingAndTrailingSpaces(line.text);
       if (error.code === 'W033') {
         pos.from = line.to;
@@ -284,8 +321,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
       return { from: pos.from, to: pos.to, code: error.code, a: error.a, b: error.b, c: error.c, d: error.d, reason: error.reason };
     });
 
-    this.currentErrorsLength = errors.filter((error) => error.code.indexOf('E') >= 0).length;
-    this.currentWarningsLength = errors.filter((error) => error.code.indexOf('W') >= 0).length;
+    this.validatedDoc = state.doc;
+    this.currentErrorsLength.set(errors.filter((error) => error.code.indexOf('E') >= 0).length);
+    this.currentWarningsLength.set(errors.filter((error) => error.code.indexOf('W') >= 0).length);
 
     if (errors.length === 0) {
       this.evaluateCode(view.state);

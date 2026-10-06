@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { cloneDeep } from 'lodash-es';
 
 @Injectable({
@@ -9,6 +9,15 @@ export class UndoRedoService<T> {
   private redoStack: T[] = [];
   private hasInitialStateSaved = false;
   private readonly MAX_STACK_SIZE = 10;
+  private readonly undoAvailability = signal(false);
+  private readonly redoAvailability = signal(false);
+  readonly canUndoState = this.undoAvailability.asReadonly();
+  readonly canRedoState = this.redoAvailability.asReadonly();
+
+  private updateAvailability(): void {
+    this.undoAvailability.set(this.canUndo());
+    this.redoAvailability.set(this.canRedo());
+  }
 
   /**
    * Method to clone the state to avoid reference issues.
@@ -43,6 +52,7 @@ export class UndoRedoService<T> {
       this.undoStack.push(this.cloneState(state));
       this.redoStack = [];
       this.hasInitialStateSaved = true;
+      this.updateAvailability();
     }
   }
 
@@ -55,6 +65,7 @@ export class UndoRedoService<T> {
     if (this.canUndo()) {
       // Current state is at the top of the undoStack (CLONE STATE IMPORTANT!)
       this.redoStack.push(this.cloneState(this.undoStack.pop()!));
+      this.updateAvailability();
       // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
       return this.cloneState(this.undoStack[this.undoStack.length - 1]);
     }
@@ -69,6 +80,7 @@ export class UndoRedoService<T> {
     if (this.canRedo()) {
       // Current state is at the top of the redoStack (CLONE STATE IMPORTANT!)
       this.undoStack.push(this.cloneState(this.redoStack.pop()!));
+      this.updateAvailability();
       // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
       return this.cloneState(this.undoStack[this.undoStack.length - 1]);
     }
@@ -83,6 +95,7 @@ export class UndoRedoService<T> {
     this.undoStack = [];
     this.redoStack = [];
     this.hasInitialStateSaved = false;
+    this.updateAvailability();
   }
 
   /**

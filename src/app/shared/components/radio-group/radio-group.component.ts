@@ -1,6 +1,6 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
 import { RadioGroupEditComponent } from '@components/radio-group/radio-group-edit/radio-group-edit.component';
@@ -9,6 +9,7 @@ import { NzRadioGroupComponent, NzRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
   selector: 'app-radio-group',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.less',
   standalone: true,

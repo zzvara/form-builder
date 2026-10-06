@@ -2,11 +2,11 @@
   "name": "form-builder",
   "version": "0.0.4",
   "scripts": {
-    "ng": "node_modules/.bin/ng",
-    "start": "node_modules/.bin/ng serve",
+    "ng": "ng",
+    "start": "ng serve",
     "build": "ng build",
-    "watch": "node_modules/.bin/ng build --watch --configuration development",
-    "test": "node_modules/.bin/ng test",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "format": "prettier . --write",
@@ -49,8 +49,7 @@
     "quill": "^2.0.2",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1",
-    "uuid": "^11.1.0",
-    "zone.js": "^0.15.0"
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@angular/build": "^21.2.1",

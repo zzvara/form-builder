@@ -1,7 +1,7 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -35,6 +35,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
 
 @Component({
   selector: 'app-checkbox-group-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './checkbox-group-edit.component.html',
   styleUrls: [],
   standalone: true,
@@ -65,8 +66,8 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
 > {
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');
-  editingIndex: number | null = null;
-  editError: string | null = null;
+  readonly editingIndex = signal<number | null>(null);
+  readonly editError = signal<string | null>(null);
 
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
@@ -194,8 +195,8 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
   }
 
   startEdit(i: number, value: string) {
-    this.editingIndex = i;
-    this.editError = null;
+    this.editingIndex.set(i);
+    this.editError.set(null);
     this.editControl = new FormControl(value, Validators.required);
   }
 
@@ -206,18 +207,18 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
     const otherValues = this.optionDescriptions.filter((_, idx) => idx !== i);
 
     if (otherValues.includes(newValue)) {
-      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      this.editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
 
     this.options.at(i).patchValue({ label: newValue });
-    this.editingIndex = null;
-    this.editError = null;
+    this.editingIndex.set(null);
+    this.editError.set(null);
   }
 
   cancelEdit() {
-    this.editingIndex = null;
-    this.editError = null;
+    this.editingIndex.set(null);
+    this.editError.set(null);
   }
 
   getMinOptions(): number {

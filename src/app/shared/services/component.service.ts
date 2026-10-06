@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { EditList } from '@app/pages/edit/interfaces/edit-list';
 import { BehaviorSubject } from 'rxjs';
 import { InstanceOfSectionListPipe } from '../pipes/instance-of-section-list.pipe';
@@ -14,6 +15,7 @@ import { translateComponentType } from '@app/pages/edit/config/edit-data-config'
 })
 export class ComponentService {
   component$: BehaviorSubject<EditList[]> = new BehaviorSubject([] as EditList[]);
+  readonly components = toSignal(this.component$, { initialValue: [] as EditList[] });
 
   constructor(
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,

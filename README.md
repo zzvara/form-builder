@@ -77,6 +77,13 @@ This role ensures products are functional, aesthetically pleasing, and intuitive
 
 # Development guide
 
+The Angular application runs without Zone.js. Components use `OnPush` change detection;
+use signals for view state and signal inputs or Angular template events to notify
+change detection. For Observable sources, bridge into signals with `toSignal` (or use
+the `async` pipe), and clean up imperative subscriptions when components are destroyed.
+Run `npm run build` and `npm run test -- --watch=false --browsers=ChromeHeadless`
+after changes to rendering or state.
+
 ## Principles for development
 
 ### Code quality first

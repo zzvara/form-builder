@@ -1,5 +1,5 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
@@ -24,6 +24,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
 
 @Component({
   selector: 'app-number-input-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
   standalone: true,

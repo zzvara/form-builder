@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
@@ -20,6 +20,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
 
 @Component({
   selector: 'app-textarea-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './textarea-edit.component.html',
   styleUrls: [],
   standalone: true,

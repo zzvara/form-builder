@@ -1,6 +1,6 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import { TimePickerEditComponent } from '@components/time-picker/time-picker-edit/time-picker-edit.component';
@@ -11,6 +11,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-time-picker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './time-picker.component.html',
   styleUrls: ['./time-picker.component.less'],
   standalone: true,

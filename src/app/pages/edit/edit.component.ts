@@ -1,6 +1,7 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, OnChanges, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input, OnChanges, OnInit, QueryList, signal, ViewChildren } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
@@ -44,6 +45,7 @@ import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -83,7 +85,13 @@ export class EditComponent implements OnInit, OnChanges {
 
   sideBarData = getSideBarData(this, this.translate);
 
-  editList: EditList[] = [];
+  private readonly editListState = signal<EditList[]>([]);
+  get editList(): EditList[] {
+    return this.editListState();
+  }
+  set editList(value: EditList[]) {
+    this.editListState.set(value);
+  }
   names: string[] = [];
   isMobileView = false;
   repeatedSettingsDrawerVisible = false;
@@ -99,7 +107,11 @@ export class EditComponent implements OnInit, OnChanges {
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe,
-  ) {}
+  ) {
+    this.componentService.component$
+      .pipe(takeUntilDestroyed())
+      .subscribe((list) => this.editListState.set([...list]));
+  }
 
   ngOnInit() {
     this.sideBarData = getSideBarData(this, this.translate);
