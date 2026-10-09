@@ -1,12 +1,11 @@
 import {
-  ApplicationModule,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild, AfterViewInit,
 } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
@@ -55,7 +54,7 @@ interface DiffItem {
     TranslatePipe,
   ],
 })
-export class ComponentsPageComponent implements OnInit {
+export class ComponentsPageComponent implements OnInit, AfterViewInit {
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: string | undefined;
@@ -223,7 +222,7 @@ export class ComponentsPageComponent implements OnInit {
 
     const curr = version.project;
     const old = prev.project;
-    const keys = Object.keys(curr) as Array<keyof Project>;
+    const keys = Object.keys(curr) as (keyof Project)[];
 
     return keys
       .filter((key) => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))
@@ -235,7 +234,7 @@ export class ComponentsPageComponent implements OnInit {
   }
   public getChangeItemsForVersion(
     version: ProjectVersion<Project>,
-  ): Array<{ key: string; before: any; after: any }> {
+  ): { key: string; before: any; after: any }[] {
     return this.getDiffItems(version).map((d) => ({
       key: d.key,
       before: d.before,

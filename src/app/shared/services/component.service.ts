@@ -13,7 +13,7 @@ import { translateComponentType } from '@app/pages/edit/config/edit-data-config'
   providedIn: 'root',
 })
 export class ComponentService {
-  component$: BehaviorSubject<EditList[]> = new BehaviorSubject([] as EditList[]);
+  component$ = new BehaviorSubject<EditList[]>([] as EditList[]);
 
   constructor(
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,

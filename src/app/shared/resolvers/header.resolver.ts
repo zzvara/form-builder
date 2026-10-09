@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
 import { MenuOption } from '@models/menu-option.model';
 import { RoutePath } from '@models/route-path.model';
 import { HeaderService } from '@services/header/header.service';
@@ -21,7 +21,6 @@ const HEADER_CONFIGS = [
 
 export const headerResolver: ResolveFn<null> = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot,
 ): null => {
   const headerService = inject(HeaderService);
 
