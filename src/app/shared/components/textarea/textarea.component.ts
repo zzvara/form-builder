@@ -1,6 +1,6 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TextareaEditComponent } from '@components/textarea/textarea-edit/textarea-edit.component';
@@ -13,6 +13,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,

@@ -17,6 +17,7 @@ export interface Project {
   created: string;
   modified: string;
   editList?: EditList[];
+  isComponentsValid?: boolean
 }
 
 export interface ProjectVersion<T extends Project> {

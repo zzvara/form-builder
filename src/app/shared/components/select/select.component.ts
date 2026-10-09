@@ -1,6 +1,6 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { SelectEditComponent } from '@components/select/select-edit/select-edit.component';
@@ -14,6 +14,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,

@@ -1,5 +1,5 @@
-import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
@@ -16,14 +16,17 @@ import {
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-range-picker-edit',
   templateUrl: './range-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     NzFormModule,
     NzDividerComponent,
@@ -38,7 +41,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxModule,
     DatePipe,
     NzInputModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class RangePickerEditComponent extends DatePickerEditComponent<

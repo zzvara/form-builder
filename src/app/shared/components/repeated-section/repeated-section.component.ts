@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { SectionComponent } from '../section/section.component';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
@@ -9,6 +10,7 @@ import { NzCardComponent } from 'ng-zorro-antd/card';
   templateUrl: './repeated-section.component.html',
   styleUrls: [],
   standalone: true,
-  imports: [NzFormItemComponent, NzCardComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, NzFormItemComponent, NzCardComponent],
 })
 export class RepeatedSectionComponent extends SectionComponent implements FormComponentMarker {}

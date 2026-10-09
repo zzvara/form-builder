@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { PictureInputComponentData } from '../interfaces/picture-input-component-data';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,14 +16,16 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-picture-input-edit',
   templateUrl: './picture-input-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     NzFormModule,
@@ -35,7 +38,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxModule,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class PictureInputEditComponent extends AbstractEditForm<

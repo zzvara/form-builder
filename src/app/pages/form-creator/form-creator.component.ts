@@ -7,6 +7,7 @@ import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzStepComponent, NzStepsComponent } from 'ng-zorro-antd/steps';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ResultsPageComponent } from './results-page/results-page.component';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 
 @Component({
   selector: 'app-form-creator',
@@ -33,13 +34,15 @@ export class FormCreatorComponent {
   projectId: string = '';
   currentVersionNum?: number;
   projectType: ProjectType = ProjectType.TEST;
-  page = 0;
   infoValid = false;
   componentValid = false;
 
   ProjectType = ProjectType;
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  constructor(
+    private readonly cdr: ChangeDetectorRef,
+    public store: FormBuilderStore
+  ) {}
 
   checkInfoForm() {
     if (this.infoPageComponent) {
@@ -72,33 +75,33 @@ export class FormCreatorComponent {
 
   setPage(p: number) {
     if (p <= 2) {
-      this.page = p;
+      this.store.setPageStep(p);
     }
   }
 
   nextPage() {
-    if (this.page < 2) {
-      this.page += 1;
+    if (this.store.currentStep() < 2) {
+      this.store.setPageStep(this.store.currentStep() + 1);
     }
   }
 
   toInfoPage() {
-    if (this.page >= 0) {
-      this.page = 0;
-    }
+    this.store.setPageStep(0);
   }
 
   toCompPage() {
-    if (this.page >= 1 || this.checkInfoForm()) {
+    if (this.store.currentStep() >= 1 || this.checkInfoForm()) {
       this.infoPageComponent?.submitForm();
-      this.page = 1;
+      this.store.saveProject();
+      this.store.setPageStep(1);
     }
   }
 
   toAnswPage() {
-    if (this.page >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
-      this.componentsPageComponent?.saveForm();
-      this.page = 2;
+    if (this.store.currentStep() >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
+      this.componentsPageComponent?.editComponent?.saveForm();
+      this.store.saveProject();
+      this.store.setPageStep(2);
     }
   }
 }

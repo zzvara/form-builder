@@ -1,6 +1,6 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
@@ -9,13 +9,13 @@ import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form'
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-text-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,

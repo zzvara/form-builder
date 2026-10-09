@@ -1,5 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { InputComponentData } from '@components/input/interfaces/input-component-data';
 import { ErrorType } from '@helpers/error-helper';
@@ -20,14 +21,16 @@ import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-input-edit',
   templateUrl: './input-edit.component.html',
   styleUrls: [],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     NzDividerComponent,
@@ -43,7 +46,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class InputEditComponent<

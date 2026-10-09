@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
 import { NzCardComponent } from 'ng-zorro-antd/card';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
@@ -8,7 +9,8 @@ import { NzFormItemComponent } from 'ng-zorro-antd/form';
   templateUrl: './section.component.html',
   styleUrls: [],
   standalone: true,
-  imports: [NzFormItemComponent, NzCardComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, NzFormItemComponent, NzCardComponent],
 })
 export class SectionComponent implements FormComponentMarker {
   @Input() data: any;
