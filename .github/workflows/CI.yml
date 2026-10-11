@@ -33,6 +33,17 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload unit test coverage
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: unit-test-coverage
+          path: coverage/
+          retention-days: 30
+
       - name: Build Angular project
         run: npm run build
 
