@@ -7,6 +7,7 @@ import { SectionList } from '@app/pages/edit/interfaces/section-list';
 })
 export class InstanceOfSectionListPipe implements PipeTransform {
   transform(object: any): object is SectionList {
+    if (!object || typeof object !== 'object') return false;
     if (
       (object && 'sectionId' in object && 'layout' in object && 'sectionInputs' in object) ||
       object.type == 'SectionComponent' ||

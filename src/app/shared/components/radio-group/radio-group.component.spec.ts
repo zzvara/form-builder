@@ -1,8 +1,11 @@
+import { of } from 'rxjs';
+import { ModalServiceService } from '@services/modal/modal-service.service';
+import { RadioGroupEditComponent } from './radio-group-edit/radio-group-edit.component';
 import { getInputGroups } from '@pages/edit/config/edit-data-config';
 import { TranslateService } from '@ngx-translate/core';
 import { appConfig } from '@app/app.config';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RadioGroupComponent } from '@components/radio-group/radio-group.component';
 
 describe('RadioGroupComponent', () => {
@@ -26,5 +29,23 @@ describe('RadioGroupComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('opens its editor and publishes changes only when saved', () => {
+    const open = spyOn(TestBed.inject(ModalServiceService), 'openModal').and.returnValue(
+      of(undefined),
+    );
+    const edited = spyOn(component.edited, 'emit');
+    component.edit();
+    expect(open).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        modalContent: RadioGroupEditComponent,
+        modalData: component.data,
+      }),
+    );
+    expect(edited).not.toHaveBeenCalled();
+    open.and.returnValue(of(true));
+    component.edit();
+    expect(edited).toHaveBeenCalledOnceWith(component.data);
   });
 });

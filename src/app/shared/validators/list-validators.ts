@@ -16,13 +16,14 @@ export class ListValidators {
         };
       } = {};
 
-      if (minNum && controls.length < minNum) {
+      if (minNum !== undefined && controls.length < minNum) {
         error.minLengthError = {
           min: minNum,
           current: controls.length,
         };
       }
-      if (maxNum && controls.length > maxNum) {
+      
+      if (maxNum !== undefined && controls.length > maxNum) {
         error.maxLengthError = {
           max: maxNum,
           current: controls.length,

@@ -7,10 +7,14 @@ import { FormInputData } from '../interfaces/form-input-data';
 })
 export class InstanceOfFormInputDataPipe implements PipeTransform {
   transform(object: any): object is FormInputData {
+    if (!object || typeof object !== 'object') return false;
     return (
-      object &&
-      ((object.data && 'title' in object.data && 'type' in object.data && 'data' in object.data) ||
-        ('title' in object && 'type' in object && 'data' in object))
+      (object.data &&
+        typeof object.data === 'object' &&
+        'title' in object.data &&
+        'type' in object.data &&
+        'data' in object.data) ||
+      ('title' in object && 'type' in object && 'data' in object)
     );
   }
 }

@@ -27,6 +27,7 @@ import {
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
 import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
@@ -54,6 +55,7 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
     NzInputModule,
     NzCheckboxModule,
     NzSelectModule,
+    NzRadioModule,
     TranslatePipe,
     CodeEditorModalComponent,
   ],
@@ -243,7 +245,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
       this.editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
-    this.options.at(i).patchValue({ label: newValue });
+    this.options.at(i).patchValue({ option_description: newValue });
     this.editingIndex.set(null);
     this.editError.set(null);
   }

@@ -11,7 +11,7 @@ import {
 export class ValidatorService {
   static validVariableNameValidator() {
     return (control: AbstractControl) => {
-      const value = control.value.trim() ?? '';
+      const value = (control.value ?? '').trim();
 
       if (!value) {
         return null;
@@ -23,7 +23,7 @@ export class ValidatorService {
 
   static uniqueNameValidator(names: string[]) {
     return (control: AbstractControl) => {
-      const value = control.value.trim() ?? '';
+      const value = (control.value ?? '').trim();
 
       if (!value) {
         return null;

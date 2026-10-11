@@ -1,9 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { appConfig } from '@app/app.config';
 import { ProjectService } from '@services/project.service';
-import { Project, ProjectType } from '@interfaces/project';
+import type { Project } from '@interfaces/project';
+import { ProjectType } from '@interfaces/project';
+import { Router } from '@angular/router';
+import { RoutePath } from '@models/route-path.model';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -21,6 +25,25 @@ describe('DashboardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  
+  it('navigates to creation and editing with the correct parameters', () => {
+    const navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
+    component.createProject(ProjectType.TEST);
+    expect(navigate).toHaveBeenCalledWith([RoutePath.NEW], {
+      queryParams: { type: ProjectType.TEST },
+    });
+    component.createProject(ProjectType.QUESTIONNAIRE);
+    expect(navigate).toHaveBeenCalledWith([RoutePath.NEW], {
+      queryParams: { type: ProjectType.QUESTIONNAIRE },
+    });
+    component.editProject('project-1');
+    expect(navigate).toHaveBeenCalledWith([RoutePath.EDIT], { queryParams: { id: 'project-1' } });
+  });
+  it('delegates deletion to project storage', () => {
+    const remove = spyOn(TestBed.inject(ProjectService), 'remove');
+    component.deleteProject('project-1');
+    expect(remove).toHaveBeenCalledOnceWith('project-1');
   });
 
   it('allows switching views with Enter and Space', async () => {

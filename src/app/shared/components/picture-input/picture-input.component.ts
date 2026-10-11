@@ -54,27 +54,26 @@ export class PictureInputComponent
   uploadToLocalStorage = (item: NzUploadXHRArgs): Subscription => {
     const obs = new Observable((observer) => {
       const reader = new FileReader();
-      reader.onload = () => {
+      reader.onload = (loadEvent) => {
         const base64 = reader.result as string;
         try {
           localStorage.setItem(item.file.name, base64);
-          item.onSuccess!(base64, item.file, event);
+          item.onSuccess!(base64, item.file, loadEvent);
           observer.complete();
         } catch (e) {
           observer.error(e);
-          item.onError!(e as Error, item.file);
         }
       };
 
       reader.onerror = (err) => {
-        item.onError!(err, item.file);
         observer.error(err);
       };
       reader.readAsDataURL(item.file as any);
     });
 
-    return obs.subscribe();
+    return obs.subscribe({ error: (error) => item.onError?.(error, item.file) });
   };
+  
   onDownload = (file: NzUploadFile): void => {
     const storedBase64 = localStorage.getItem(file.name) || (file.response as string);
 
