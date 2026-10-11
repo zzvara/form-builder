@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
@@ -33,6 +33,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   ],
 })
 export class DashboardComponent {
+  private readonly router = inject(Router);
+  private readonly questionnaireService = inject<ProjectService<Questionnaire>>(ProjectService);
+
   get projects() {
     return this.questionnaireService.projects;
   }
@@ -41,11 +44,6 @@ export class DashboardComponent {
       localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE) === ViewType.LIST,
   );
   projectTypes = ProjectType;
-
-  constructor(
-    private readonly router: Router,
-    private readonly questionnaireService: ProjectService<Questionnaire>,
-  ) {}
 
   createProject(type: ProjectType): void {
     if (type === ProjectType.TEST) {

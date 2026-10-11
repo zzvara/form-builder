@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorService } from './validator.service';
 import { UpdateOnStrategy } from '../interfaces/update-on-strategy';
@@ -7,7 +7,7 @@ import { UpdateOnStrategy } from '../interfaces/update-on-strategy';
   providedIn: 'root',
 })
 export class FormService {
-  constructor(private fb: FormBuilder) {}
+  private fb = inject(FormBuilder);
 
   createComponentNameForm(names: string[], name?: string): FormGroup {
     return this.fb.group(

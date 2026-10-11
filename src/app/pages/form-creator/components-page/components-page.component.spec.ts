@@ -1,3 +1,4 @@
+import { appConfig } from '@app/app.config';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ComponentsPageComponent } from '@pages/form-creator/components-page/components-page.component';
 
@@ -7,7 +8,8 @@ describe('ComponentsPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ComponentsPageComponent],
+      imports: [ComponentsPageComponent],
+      providers: appConfig.providers,
     });
     fixture = TestBed.createComponent(ComponentsPageComponent);
     component = fixture.componentInstance;

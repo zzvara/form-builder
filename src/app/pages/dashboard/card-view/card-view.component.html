@@ -28,6 +28,14 @@
         </div>
         <ng-template #actionEdit>
           <span
+            tabindex="0"
+            [attr.role]="'button'"
+            (keydown.enter)="
+              onEditProject(project.id); $event.preventDefault(); $event.stopPropagation()
+            "
+            (keydown.space)="$event.preventDefault()"
+            (keyup.space)="onEditProject(project.id); $event.stopPropagation()"
+            [attr.aria-label]="'A11Y.EDIT_PROJECT' | translate"
             (click)="onEditProject(project.id)"
             nz-icon
             nzType="edit"

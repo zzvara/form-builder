@@ -24,7 +24,7 @@ import { QuillModule } from 'ngx-quill';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-select-edit',
@@ -61,7 +61,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
 > {
   newOption!: FormControl<string | null>;
   readonly editingIndex = signal<number | null>(null);
-  editValue: string = '';
+  editValue = '';
   readonly editError = signal<string | null>(null);
   editControl: FormControl = new FormControl('');
 

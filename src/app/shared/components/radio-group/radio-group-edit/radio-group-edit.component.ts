@@ -5,7 +5,6 @@ import {
   AbstractControl,
   FormArray,
   FormControl,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -27,10 +26,10 @@ import {
 } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
-import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-radio-group-edit',
@@ -56,7 +55,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxModule,
     NzSelectModule,
     TranslatePipe,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {
@@ -168,7 +167,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     }
   }
 
-  override get defaultValueValidators() {
+  override getDefaultValueValidators() {
     return CustomValidators.executeValidationsConditionally([
       {
         condition: () => this.getStrictControlValue<boolean>('required'),

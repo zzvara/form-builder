@@ -5,9 +5,9 @@ export interface CheckboxGroupData extends InputData<CheckboxOptions[]> {
   requiredMessage?: string;
 }
 
-export type CheckboxOptions = {
+export interface CheckboxOptions {
   label: string;
   value: number;
   disabled?: boolean;
   checked?: boolean;
-};
+}

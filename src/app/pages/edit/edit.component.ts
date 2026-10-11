@@ -1,6 +1,23 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, Input, OnChanges, OnInit, QueryList, signal, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  QueryList,
+  signal,
+  ViewChildren,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
@@ -38,7 +55,7 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { ComponentService } from '@app/shared/services/component.service';
 import { ModalService } from '@app/shared/services/modal.service';
-import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-edit',
@@ -77,6 +94,14 @@ import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
   ],
 })
 export class EditComponent implements OnInit, OnChanges {
+  private modalService = inject(ModalService);
+  private projectService = inject<ProjectService<Project>>(ProjectService);
+  private undoRedoService = inject<UndoRedoService<EditList[]>>(UndoRedoService);
+  private componentService = inject(ComponentService);
+  private translate = inject(TranslateService);
+  private instanceOfSectionListPipe = inject(InstanceOfSectionListPipe);
+  private instanceOfFormInputDataPipe = inject(InstanceOfFormInputDataPipe);
+
   @Input() inlineEdit!: InlineEdit;
   @Input() projectId?: string;
   @Input() versionNum?: number;
@@ -99,15 +124,7 @@ export class EditComponent implements OnInit, OnChanges {
 
   LayoutEnum = LayoutEnum;
 
-  constructor(
-    private modalService: ModalService,
-    private projectService: ProjectService<Project>,
-    private undoRedoService: UndoRedoService<EditList[]>,
-    private componentService: ComponentService,
-    private translate: TranslateService,
-    private instanceOfSectionListPipe: InstanceOfSectionListPipe,
-    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe,
-  ) {
+  constructor() {
     this.componentService.component$
       .pipe(takeUntilDestroyed())
       .subscribe((list) => this.editListState.set([...list]));
@@ -423,7 +440,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.componentService.component$.next(this.editList);
   }
 
-  getSectionInputStyle(sect: SectionList): { [p: string]: string } {
+  getSectionInputStyle(sect: SectionList): Record<string, string> {
     let width: number;
     if (
       sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit as any)) ||
@@ -473,7 +490,9 @@ export class EditComponent implements OnInit, OnChanges {
 
   getRepeatedSettingsSummary(section: RepeatedSectionList): string {
     if (section.repeatByOther) {
-      return section.referencedInput || this.translate.instant('COMPONENTS.SECTION.REPEATED.UNSPECIFIED');
+      return (
+        section.referencedInput || this.translate.instant('COMPONENTS.SECTION.REPEATED.UNSPECIFIED')
+      );
     }
 
     return `${section.repeatTimes}x`;
@@ -493,7 +512,10 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   hasRepeatedSettingsErrorForEdit(edit: EditList): boolean {
-    if (!this.instanceOfSectionListPipe.transform(edit.data) || edit.data.type !== 'RepeatedSectionComponent') {
+    if (
+      !this.instanceOfSectionListPipe.transform(edit.data) ||
+      edit.data.type !== 'RepeatedSectionComponent'
+    ) {
       return false;
     }
 
@@ -503,8 +525,14 @@ export class EditComponent implements OnInit, OnChanges {
   isFormInvalid(): boolean {
     this.updateRepeated();
 
-    const hasRepeatedValidationError = this.editList.some((edit) => this.hasRepeatedSettingsErrorForEdit(edit));
-    return this.getAllFormInputs().length === 0 || this.inputComponents.some((inp) => !inp.isValid()) || hasRepeatedValidationError;
+    const hasRepeatedValidationError = this.editList.some((edit) =>
+      this.hasRepeatedSettingsErrorForEdit(edit),
+    );
+    return (
+      this.getAllFormInputs().length === 0 ||
+      this.inputComponents.some((inp) => !inp.isValid()) ||
+      hasRepeatedValidationError
+    );
   }
 
   isComponentInvalid(edit: EditList): boolean {
@@ -577,7 +605,7 @@ export class EditComponent implements OnInit, OnChanges {
   returnChildren(sect: SectionList): { title: string; id: string }[] {
     const returnVal: { title: string; id: string }[] = [];
     for (const input of sect.sectionInputs) {
-      let id: string = input.data?.id || '';
+      const id: string = input.data?.id || '';
       returnVal.push({
         title: input.title,
         id: id,

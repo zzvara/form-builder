@@ -6,6 +6,7 @@ import {
   input,
   Output,
   signal,
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -38,6 +39,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   ],
 })
 export class ListViewComponent {
+  private translate = inject(TranslateService);
+
   readonly projects = input<Questionnaire[]>([]);
   readonly type = input<ProjectType>();
 
@@ -51,7 +54,7 @@ export class ListViewComponent {
 
   DateFormat = DateFormat;
 
-  constructor(private translate: TranslateService) {
+  constructor() {
     this.setColumnsConfig();
     this.translate.onLangChange.pipe(takeUntilDestroyed()).subscribe(() => this.setColumnsConfig());
   }

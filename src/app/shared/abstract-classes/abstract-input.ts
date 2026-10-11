@@ -19,6 +19,9 @@ import { InputData } from '@interfaces/input-data';
 export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>>
   implements FormComponentMarker, OnInit
 {
+  protected modalService = inject<ModalServiceService<T, D, E>>(ModalServiceService);
+  protected translate = inject(TranslateService);
+
   private readonly changeDetector = inject(ChangeDetectorRef);
   @Input() label?: TemplateRef<any>;
   @Input() data!: D;
@@ -27,11 +30,6 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
   @Output() edited = new EventEmitter<D>();
 
   previousValue?: T;
-
-  constructor(
-    protected modalService: ModalServiceService<T, D, E>,
-    protected translate: TranslateService,
-  ) {}
 
   defaultOnEditSubscribeEvent: (result: boolean | undefined) => void = (result) => {
     if (result) {

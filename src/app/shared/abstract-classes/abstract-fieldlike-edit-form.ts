@@ -76,7 +76,9 @@ export abstract class AbstractFieldLikeEditForm<
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((checked) => {
         if (checked) {
-          this.getStrictControl<string>('defaultValue')?.setValidators(this.defaultValueValidators);
+          this.getStrictControl<string>('defaultValue')?.setValidators(
+            this.getDefaultValueValidators(),
+          );
         } else {
           this.getStrictControl<string>('defaultValue')?.clearValidators();
         }
@@ -86,7 +88,7 @@ export abstract class AbstractFieldLikeEditForm<
     });
   }
 
-  override get defaultValueValidators() {
+  override getDefaultValueValidators() {
     return CustomValidators.executeValidationsConditionally(this.getValidatorsForDefaultValue());
   }
 

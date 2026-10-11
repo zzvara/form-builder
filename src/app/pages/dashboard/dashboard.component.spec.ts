@@ -23,6 +23,25 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('allows switching views with Enter and Space', async () => {
+    const toggle = fixture.nativeElement.querySelector('.toolbar [role="button"]') as HTMLElement;
+    const initialView = component.isListView();
+    expect(toggle.tabIndex).toBe(0);
+
+    toggle.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
+    await fixture.whenStable();
+    expect(component.isListView()).toBe(!initialView);
+
+    const spaceDown = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true });
+    toggle.dispatchEvent(spaceDown);
+    expect(spaceDown.defaultPrevented).toBeTrue();
+    toggle.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', bubbles: true }));
+    await fixture.whenStable();
+    expect(component.isListView()).toBe(initialView);
+  });
+
   it('updates the view when a project is added without Zone.js', async () => {
     const project: Project = {
       id: '',

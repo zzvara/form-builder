@@ -14,6 +14,12 @@
       <span nz-icon nzType="search"></span>
       @if (searchTerm()) {
         <span
+          tabindex="0"
+          [attr.role]="'button'"
+          (keydown.enter)="clearSearch(); $event.preventDefault(); $event.stopPropagation()"
+          (keydown.space)="$event.preventDefault()"
+          (keyup.space)="clearSearch(); $event.stopPropagation()"
+          [attr.aria-label]="'A11Y.CLEAR_SEARCH' | translate"
           nz-icon
           nzType="close"
           nzTheme="outline"
@@ -26,14 +32,21 @@
   <div class="body">
     <nz-collapse [nzBordered]="false">
       @for (group of filteredData(); track group.groupName) {
-      <nz-collapse-panel [nzHeader]="group.groupName | translate" [nzActive]="group.active" cdkDropList
-        [cdkDropListData]="group.groupContents" [cdkDropListConnectedTo]="group.dropListConnectedTo()"
-        [cdkDropListSortingDisabled]="true">
-        @for (item of group.groupContents; track item.type) {
-        <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
-          <div class="sidebar-drag-handle" cdkDragHandle>
-            <span><b>{{ item.title | translate }}</b></span>
-          </div>
+        <nz-collapse-panel
+          [nzHeader]="group.groupName | translate"
+          [nzActive]="group.active"
+          cdkDropList
+          [cdkDropListData]="group.groupContents"
+          [cdkDropListConnectedTo]="group.dropListConnectedTo()"
+          [cdkDropListSortingDisabled]="true"
+        >
+          @for (item of group.groupContents; track item.type) {
+            <nz-card cdkDrag [cdkDragData]="item" [nzBordered]="true">
+              <div class="sidebar-drag-handle" cdkDragHandle>
+                <span>
+                  <b>{{ item.title | translate }}</b>
+                </span>
+              </div>
 
               <ng-container *cdkDragPlaceholder>
                 @switch (item.type) {

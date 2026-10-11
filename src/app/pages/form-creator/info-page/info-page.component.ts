@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -52,6 +62,11 @@ import { QuillEditorComponent } from 'ngx-quill';
   ],
 })
 export class InfoPageComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly projectService = inject<ProjectService<Project>>(ProjectService);
+  private readonly jsonService = inject(JsonService);
+
   private readonly destroyRef = inject(DestroyRef);
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
@@ -94,13 +109,6 @@ export class InfoPageComponent implements OnInit {
 
   DateFormat = DateFormat;
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService,
-  ) {}
-
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.params = params;
@@ -128,13 +136,16 @@ export class InfoPageComponent implements OnInit {
 
     this.formData.emit(this.project.type);
 
-    this.jsonService.getJsonData().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
-      // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
-      if (data) {
-        this.project = { ...this.project, ...data.project };
-        this.initializeForm();
-      }
-    });
+    this.jsonService
+      .getJsonData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
+        if (data) {
+          this.project = { ...this.project, ...data.project };
+          this.initializeForm();
+        }
+      });
   }
 
   initializeForm(): void {

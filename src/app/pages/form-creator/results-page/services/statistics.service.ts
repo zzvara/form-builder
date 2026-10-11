@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Project } from '@interfaces/project';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 
@@ -6,9 +6,9 @@ import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-
   providedIn: 'root',
 })
 export class StatisticsService {
-  constructor(private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe) {}
+  private instanceOfFormInputDataPipe = inject(InstanceOfFormInputDataPipe);
 
-  calculateSectionInputStats(project: Project): { [key: string]: number } {
+  calculateSectionInputStats(project: Project): Record<string, number> {
     if (!project?.editList) {
       return {};
     }
@@ -32,7 +32,7 @@ export class StatisticsService {
         }
         return stats;
       },
-      {} as { [key: string]: number },
+      {} as Record<string, number>,
     );
   }
 }

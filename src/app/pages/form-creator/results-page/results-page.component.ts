@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  signal,
+  inject,
+} from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -49,6 +59,12 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   ],
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
+  private readonly projectService = inject<ProjectService<Project>>(ProjectService);
+  private readonly jsonService = inject(JsonService);
+  private readonly statisticsService = inject(StatisticsService);
+  private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router);
+
   @Input() page?: number;
   @Input() projectId: string | undefined;
   @Input() versionNum?: number;
@@ -57,7 +73,7 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
 
   readonly project = signal<Project | undefined>(undefined);
   readonly projectHistory = signal<ProjectVersion<Project>[]>([]);
-  readonly sectionInputStats = signal<{ [key: string]: number | string }>({});
+  readonly sectionInputStats = signal<Record<string, number | string>>({});
   readonly latestVersionNum = signal<number | undefined>(undefined);
   readonly sectionInputs = signal<FormInputData[]>([]);
 
@@ -80,14 +96,6 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   CodeEditorMode = CodeEditorMode;
   CodeEditorType = CodeEditorType;
 
-  constructor(
-    private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService,
-    private readonly statisticsService: StatisticsService,
-    private readonly translate: TranslateService,
-    private readonly router: Router,
-  ) {}
-
   ngOnInit(): void {
     if (this.projectId !== undefined) {
       this.projectHistory.set(this.projectService.getProjectHistory(this.projectId));
@@ -96,10 +104,9 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
           ? this.projectHistory()[this.projectHistory().length - 1].versionNum
           : undefined,
       );
-      this.project.set(this.projectService.getProjectVersion(
-        this.projectId,
-        this.latestVersionNum() ?? 1,
-      ));
+      this.project.set(
+        this.projectService.getProjectVersion(this.projectId, this.latestVersionNum() ?? 1),
+      );
 
       this.calculateSectionInputStats();
     }
@@ -138,7 +145,9 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
 
   private calculateSectionInputStats(): void {
     if (this.project()) {
-      this.sectionInputStats.set(this.statisticsService.calculateSectionInputStats(this.project()!));
+      this.sectionInputStats.set(
+        this.statisticsService.calculateSectionInputStats(this.project()!),
+      );
     }
   }
 

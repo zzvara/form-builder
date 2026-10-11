@@ -17,6 +17,7 @@ import {
   TemplateRef,
   Type,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
@@ -71,6 +72,9 @@ export class InputHolderComponent<
 >
   implements OnInit, AfterViewInit
 {
+  private destroyRef = inject(DestroyRef);
+  private translate = inject(TranslateService);
+
   @Input() formInput!: FormInputData<D, T>;
   get inputData(): D {
     return this.formInput.data!;
@@ -91,11 +95,6 @@ export class InputHolderComponent<
     data: D;
     inlineEdit: InlineEdit;
   };
-
-  constructor(
-    private destroyRef: DestroyRef,
-    private translate: TranslateService,
-  ) {}
 
   get componentType(): Type<FormComponentMarker> {
     return translateComponentType[this.formInput.type];

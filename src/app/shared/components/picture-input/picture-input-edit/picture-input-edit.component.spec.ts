@@ -1,3 +1,5 @@
+import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { appConfig } from '@app/app.config';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PictureInputEditComponent } from './picture-input-edit.component';
@@ -8,7 +10,12 @@ describe('PictureInputEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PictureInputEditComponent],
+      imports: [PictureInputEditComponent],
+      providers: [
+        ...appConfig.providers,
+        { provide: NzModalRef, useValue: { close: jasmine.createSpy('close') } },
+        { provide: NZ_MODAL_DATA, useValue: {} },
+      ],
     });
     fixture = TestBed.createComponent(PictureInputEditComponent);
     component = fixture.componentInstance;

@@ -4,6 +4,7 @@ import {
   OnDestroy,
   OnInit,
   signal,
+  inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContextAction } from '@components/header/header.model';
@@ -40,6 +41,12 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
   ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  private readonly router = inject(Router);
+  private readonly headerService = inject(HeaderService);
+  private readonly jsonService = inject(JsonService);
+  private readonly translate = inject(TranslateService);
+  private readonly eventService = inject(EventService);
+
   readonly menuState = this.headerService.options;
   readonly headerOptions = () => this.menuState().options;
   readonly activeOptions = () => this.menuState().activeOptions;
@@ -51,18 +58,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   LanguageEnum = LanguageEnum;
   ThemeEnum = ThemeEnum;
 
-  constructor(
-    private readonly router: Router,
-    private readonly headerService: HeaderService,
-    private readonly jsonService: JsonService,
-    private readonly translate: TranslateService,
-    private readonly eventService: EventService,
-  ) {}
-
   ngOnInit(): void {
     this.currentLanguage.set(
       localStorage.getItem(LocalStorageKey.LANGUAGE) &&
-      localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
+        localStorage.getItem(LocalStorageKey.LANGUAGE) === LanguageEnum.HU
         ? LanguageEnum.HU
         : LanguageEnum.EN,
     );
@@ -70,7 +69,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.jsonService.clearJsonData();
     this.currentTheme.set(
       localStorage.getItem(LocalStorageKey.THEME) &&
-      localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
+        localStorage.getItem(LocalStorageKey.THEME) === ThemeEnum.LIGHT
         ? ThemeEnum.LIGHT
         : ThemeEnum.DARK,
     );

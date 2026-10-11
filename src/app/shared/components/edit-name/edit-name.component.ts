@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  signal,
+  inject,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditList } from '@app/pages/edit/interfaces/edit-list';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
@@ -33,17 +43,17 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   ],
 })
 export class EditNameComponent implements OnChanges {
+  private formService = inject(FormService);
+
   @Input() names: string[] = [];
   @Input() edit!: EditList | FormInputData;
-  @Output() updateName: EventEmitter<void> = new EventEmitter();
+  @Output() updateName = new EventEmitter<void>();
 
   form: FormGroup = new FormGroup([]);
   editList?: EditList;
   editFormInput?: FormInputData;
 
   readonly isEditName = signal(false);
-
-  constructor(private formService: FormService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (

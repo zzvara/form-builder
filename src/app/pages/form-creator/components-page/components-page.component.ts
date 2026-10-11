@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
@@ -58,6 +59,10 @@ interface DiffItem {
   ],
 })
 export class ComponentsPageComponent implements OnInit {
+  private modal = inject(NzModalService);
+  private translate = inject(TranslateService);
+  private projectService = inject<ProjectService<Project>>(ProjectService);
+
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: string | undefined;
@@ -71,12 +76,6 @@ export class ComponentsPageComponent implements OnInit {
   readonly currentVersionNum = signal<number | undefined>(undefined);
 
   DateFormat = DateFormat;
-
-  constructor(
-    private modal: NzModalService,
-    private translate: TranslateService,
-    private projectService: ProjectService<Project>,
-  ) {}
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -120,35 +119,35 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   jumpToFirstError() {
-  if (!this.editComponent) return;
+    if (!this.editComponent) return;
 
-  const invalidInput = this.editComponent
-    .getAllFormInputs()
-    .find((inp) => this.editComponent.isInputInvalid(inp));
+    const invalidInput = this.editComponent
+      .getAllFormInputs()
+      .find((inp) => this.editComponent.isInputInvalid(inp));
 
-  if (invalidInput?.data?.id) {
-    this.editComponent.scrollToElement(invalidInput.data.id);
-    return;
+    if (invalidInput?.data?.id) {
+      this.editComponent.scrollToElement(invalidInput.data.id);
+      return;
+    }
+
+    const invalidRepeatedSection = this.editComponent.editList.find((item) =>
+      this.editComponent.hasRepeatedSettingsErrorForEdit(item),
+    );
+
+    if (invalidRepeatedSection?.id) {
+      this.editComponent.scrollToElement(invalidRepeatedSection.id);
+      return;
+    }
+
+    const invalidSection = this.editComponent.editList.find((item) =>
+      this.editComponent.isComponentInvalid(item),
+    );
+
+    if (invalidSection?.id) {
+      this.editComponent.scrollToElement(invalidSection.id);
+      return;
+    }
   }
-
-  const invalidRepeatedSection = this.editComponent.editList.find((item) =>
-    this.editComponent.hasRepeatedSettingsErrorForEdit(item),
-  );
-
-  if (invalidRepeatedSection?.id) {
-    this.editComponent.scrollToElement(invalidRepeatedSection.id);
-    return;
-  }
-
-  const invalidSection = this.editComponent.editList.find((item) =>
-    this.editComponent.isComponentInvalid(item),
-  );
-
-  if (invalidSection?.id) {
-    this.editComponent.scrollToElement(invalidSection.id);
-    return;
-  }
-}
 
   /**
    * Emits an event to set the current page in the parent component.
@@ -221,7 +220,7 @@ export class ComponentsPageComponent implements OnInit {
 
     const curr = version.project;
     const old = prev.project;
-    const keys = Object.keys(curr) as Array<keyof Project>;
+    const keys = Object.keys(curr) as (keyof Project)[];
 
     return keys
       .filter((key) => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))
@@ -233,7 +232,7 @@ export class ComponentsPageComponent implements OnInit {
   }
   public getChangeItemsForVersion(
     version: ProjectVersion<Project>,
-  ): Array<{ key: string; before: any; after: any }> {
+  ): { key: string; before: any; after: any }[] {
     return this.getDiffItems(version).map((d) => ({
       key: d.key,
       before: d.before,

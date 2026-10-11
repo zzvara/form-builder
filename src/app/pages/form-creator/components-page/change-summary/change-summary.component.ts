@@ -6,8 +6,7 @@ import {
   OnChanges,
   Input,
   SimpleChanges,
-  Optional,
-  Inject,
+  inject,
 } from '@angular/core';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -40,16 +39,12 @@ interface DiffItem {
   styleUrls: ['./change-summary.component.less'],
 })
 export class ChangeSummaryComponent implements OnInit, OnChanges {
+  private modalData = inject(NZ_MODAL_DATA, { optional: true });
+  private modalRef = inject(NzModalRef);
+
   @Input() items: ChangeInput[] = [];
 
   readonly diffItems = signal<DiffItem[]>([]);
-
-  constructor(
-    @Optional()
-    @Inject(NZ_MODAL_DATA)
-    private modalData: { items: ChangeInput[] } | null,
-    private modalRef: NzModalRef,
-  ) {}
 
   ngOnInit(): void {
     // If opened as a modal, build diffs from the injected data

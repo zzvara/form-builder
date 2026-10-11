@@ -16,7 +16,11 @@ import {
   signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CodeEditorMode, CodeEditorType, CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
+import {
+  CodeEditorMode,
+  CodeEditorType,
+  CodeEditorVariableType,
+} from '@app/shared/enums/code-editor.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
 import { CodeEditorError, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
 import { EventService } from '@app/shared/services/event.service';
@@ -30,8 +34,8 @@ import { keymap, ViewUpdate } from '@codemirror/view';
 import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
 import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { basicSetup, EditorView } from 'codemirror';
-import {NzAlertComponent} from "ng-zorro-antd/alert";
-import {TranslatePipe} from "@ngx-translate/core";
+import { NzAlertComponent } from 'ng-zorro-antd/alert';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-code-editor',
@@ -39,18 +43,17 @@ import {TranslatePipe} from "@ngx-translate/core";
   standalone: true,
   templateUrl: './code-editor.component.html',
   styleUrl: './code-editor.component.css',
-  imports: [
-    NzAlertComponent,
-    TranslatePipe
-  ]
+  imports: [NzAlertComponent, TranslatePipe],
 })
 export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+  private readonly eventService = inject(EventService);
+
   @Input() mode = CodeEditorMode.VIEW;
   @Input() type = CodeEditorType.JSON;
   @Input() code = '';
   @Input() variables: CodeEditorVariable[] = [];
 
-  @Output() updateCodeEditor: EventEmitter<{ code?: string; isValid: boolean }> = new EventEmitter();
+  @Output() updateCodeEditor = new EventEmitter<{ code?: string; isValid: boolean }>();
 
   @ViewChild('editor', { static: true }) editorElement?: ElementRef;
 
@@ -91,14 +94,16 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
 
   CodeEditorMode = CodeEditorMode;
 
-  constructor(private readonly eventService: EventService) {
+  constructor() {
     effect(() => {
       this.theme();
       this.editorChangeTheme();
     });
 
     if (typeof Worker !== 'undefined') {
-      this.codeWorker = new Worker(new URL('./../../workers/code-runner.worker', import.meta.url), { type: 'module' });
+      this.codeWorker = new Worker(new URL('./../../workers/code-runner.worker', import.meta.url), {
+        type: 'module',
+      });
     }
   }
 
@@ -110,7 +115,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
         keymap.of([...defaultKeymap, ...lintKeymap]),
         javascript(),
         linter(this.jsLinter.bind(this)),
-        this.createUpdateListener()
+        this.createUpdateListener(),
       );
     }
     if (this.mode === CodeEditorMode.VIEW) {
@@ -129,7 +134,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['variables'] && JSON.stringify(changes['variables'].previousValue) !== JSON.stringify(changes['variables'].currentValue)) {
+    if (
+      changes['variables'] &&
+      JSON.stringify(changes['variables'].previousValue) !==
+        JSON.stringify(changes['variables'].currentValue)
+    ) {
       this.generatedVariable = this.generateVariable();
       this.reloadJsHint();
     }
@@ -289,8 +298,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     const revision = ++this.lintRevision;
     const variables = this.generatedVariable;
     const code = `${variables}${state.doc.toString()}`;
-    const isCurrent = () => !this.destroyed && this.editorView === view &&
-      view.state.doc === state.doc && this.generatedVariable === variables &&
+    const isCurrent = () =>
+      !this.destroyed &&
+      this.editorView === view &&
+      view.state.doc === state.doc &&
+      this.generatedVariable === variables &&
       this.lintRevision === revision;
     let lintErrors;
     try {
@@ -301,12 +313,19 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
       this.currentErrorsLength.set(1);
       this.currentWarningsLength.set(0);
       this.updateCodeEditor.emit({ isValid: false });
-      return [{ from: 0, to: 0, severity: 'error', message: 'JavaScript validation could not be loaded. Edit the code to retry.' }];
+      return [
+        {
+          from: 0,
+          to: 0,
+          severity: 'error',
+          message: 'JavaScript validation could not be loaded. Edit the code to retry.',
+        },
+      ];
     }
     if (!isCurrent()) return [];
 
     const errors: CodeEditorError[] = lintErrors.map((error) => {
-      let pos = { from: 0, to: 0 };
+      const pos = { from: 0, to: 0 };
       const lineNumber = Math.max(1, Math.min(state.doc.lines, error.line - 1));
       const line = state.doc.line(lineNumber);
       const spaces = this.countLeadingAndTrailingSpaces(line.text);
@@ -318,7 +337,16 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
         pos.to = line.from + line.text.length - spaces.trailing;
       }
 
-      return { from: pos.from, to: pos.to, code: error.code, a: error.a, b: error.b, c: error.c, d: error.d, reason: error.reason };
+      return {
+        from: pos.from,
+        to: pos.to,
+        code: error.code,
+        a: error.a,
+        b: error.b,
+        c: error.c,
+        d: error.d,
+        reason: error.reason,
+      };
     });
 
     this.validatedDoc = state.doc;
@@ -334,9 +362,14 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
         ({
           from: error.from,
           to: error.to,
-          severity: error.code.indexOf('W') >= 0 ? 'warning' : error.code.indexOf('E') >= 0 ? 'error' : 'hint',
+          severity:
+            error.code.indexOf('W') >= 0
+              ? 'warning'
+              : error.code.indexOf('E') >= 0
+                ? 'error'
+                : 'hint',
           message: error.reason,
-        }) as Diagnostic
+        }) as Diagnostic,
     );
   }
 
@@ -348,8 +381,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     let trailing = 0;
 
     // eleje
-    for (let i = 0; i < text.length; i++) {
-      if (text[i] === ' ') {
+    for (const character of text) {
+      if (character === ' ') {
         leading++;
       } else {
         break;

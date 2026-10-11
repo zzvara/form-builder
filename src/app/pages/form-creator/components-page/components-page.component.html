@@ -55,7 +55,19 @@
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
             <ul nz-menu>
               @for (version of projectHistory(); track trackByVersion($index, version)) {
-                <li nz-menu-item (click)="revertToVersion(version.versionNum)">
+                <li
+                  tabindex="0"
+                  [attr.role]="'menuitem'"
+                  (keydown.enter)="
+                    revertToVersion(version.versionNum);
+                    $event.preventDefault();
+                    $event.stopPropagation()
+                  "
+                  (keydown.space)="$event.preventDefault()"
+                  (keyup.space)="revertToVersion(version.versionNum); $event.stopPropagation()"
+                  nz-menu-item
+                  (click)="revertToVersion(version.versionNum)"
+                >
                   <span>{{ 'VERSION' | translate }} {{ version.versionNum }}</span>
                   <span
                     nz-popover

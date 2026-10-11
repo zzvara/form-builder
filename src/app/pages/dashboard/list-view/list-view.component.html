@@ -40,6 +40,14 @@
         <td>{{ data.modified | date: DateFormat.DATE }}</td>
         <td>
           <span
+            tabindex="0"
+            [attr.role]="'button'"
+            (keydown.enter)="
+              onEditProject(data.id); $event.preventDefault(); $event.stopPropagation()
+            "
+            (keydown.space)="$event.preventDefault()"
+            (keyup.space)="onEditProject(data.id); $event.stopPropagation()"
+            [attr.aria-label]="'A11Y.EDIT_PROJECT' | translate"
             (click)="onEditProject(data.id)"
             nz-icon
             nzType="edit"
