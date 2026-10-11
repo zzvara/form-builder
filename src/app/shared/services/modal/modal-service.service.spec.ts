@@ -7,7 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 describe('ModalServiceService', () => {
-  let service: ModalServiceService<unknown, InputData<unknown>, AbstractEditForm<unknown, InputData<unknown>>>;
+  let service: ModalServiceService<
+    unknown,
+    InputData<unknown>,
+    AbstractEditForm<unknown, InputData<unknown>>
+  >;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

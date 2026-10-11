@@ -10,7 +10,10 @@
       }
       @if (currentErrorsLength()) {
         <div>
-          {{ 'COMPONENTS.CONDITION_SETTINGS.ERRORS.CODE' | translate: { count: currentErrorsLength() } }}
+          {{
+            'COMPONENTS.CONDITION_SETTINGS.ERRORS.CODE'
+              | translate: { count: currentErrorsLength() }
+          }}
         </div>
       }
     </ng-template>
@@ -21,7 +24,10 @@
     <nz-alert
       class="mt-8"
       nzType="warning"
-      [nzMessage]="'COMPONENTS.CONDITION_SETTINGS.WARNINGS.CODE' | translate: { count: currentWarningsLength() }"
+      [nzMessage]="
+        'COMPONENTS.CONDITION_SETTINGS.WARNINGS.CODE'
+          | translate: { count: currentWarningsLength() }
+      "
     ></nz-alert>
   }
 }

@@ -16,7 +16,7 @@ import {
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-range-picker-edit',
@@ -39,7 +39,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxModule,
     DatePipe,
     NzInputModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class RangePickerEditComponent extends DatePickerEditComponent<

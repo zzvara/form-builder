@@ -28,11 +28,13 @@ export class JavaScriptLinterService {
   private module?: Promise<typeof JSHintBrowser>;
 
   async lint(code: string, options: LintOptions): Promise<LintError[]> {
-    const { default: bundle } = await (this.module ??= import('jshint/dist/jshint.js').catch((error) => {
-      // Let a later validation attempt retry loading instead of caching a rejection.
-      this.module = undefined;
-      throw error;
-    }));
+    const { default: bundle } = await (this.module ??= import('jshint/dist/jshint.js').catch(
+      (error) => {
+        // Let a later validation attempt retry loading instead of caching a rejection.
+        this.module = undefined;
+        throw error;
+      },
+    ));
     // The standalone browser bundle exposes JSHINT through a CommonJS default export.
     const { JSHINT } = bundle;
     JSHINT(code, options);

@@ -2,11 +2,21 @@
   <nz-icon
     [nzType]="item.type | variableIcon"
     nz-tooltip
-    [nzTooltipTitle]="'COMPONENTS.CONDITION_SETTINGS.VARIABLE_MODAL.VARIABLE_TYPES.' + item.type | translate"
+    [nzTooltipTitle]="
+      'COMPONENTS.CONDITION_SETTINGS.VARIABLE_MODAL.VARIABLE_TYPES.' + item.type | translate
+    "
     class="mr-8 position-relative"
   >
-    @if (item.type === CodeEditorVariableType.DATE_ARRAY || item.type === CodeEditorVariableType.STRING_ARRAY) {
-      <nz-icon nzType="expand" nzTheme="outline" class="position-absolute font-size-20" style="left: -3px" />
+    @if (
+      item.type === CodeEditorVariableType.DATE_ARRAY ||
+      item.type === CodeEditorVariableType.STRING_ARRAY
+    ) {
+      <nz-icon
+        nzType="expand"
+        nzTheme="outline"
+        class="position-absolute font-size-20"
+        style="left: -3px"
+      />
     }
   </nz-icon>
   <span>{{ item.title }}</span>
@@ -24,6 +34,8 @@
 ></nz-transfer>
 
 <div *nzModalFooter>
-  <button nz-button nzType="default" (click)="closeModal()">{{ 'GENERAL.CANCEL' | translate }}</button>
+  <button nz-button nzType="default" (click)="closeModal()">
+    {{ 'GENERAL.CANCEL' | translate }}
+  </button>
   <button nz-button nzType="primary" (click)="saveModal()">{{ 'SAVE' | translate }}</button>
 </div>

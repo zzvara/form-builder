@@ -14,19 +14,19 @@
         [nzScroll]="{ x: '450px' }"
       >
         <thead>
-        <tr>
-          <th nzWidth="50px" nzAlign="center"></th>
-          <th nzWidth="200px" nzAlign="center">{{ 'GENERAL.DESCRIPTION' | translate }}</th>
-          <th nzWidth="80px" nzAlign="center">
-            {{ 'COMPONENTS.CHECKBOX_GROUP.DISABLED?' | translate }}
-          </th>
-          <th nzWidth="80px" nzAlign="center">
-            {{ 'COMPONENTS.CHECKBOX_GROUP.CHECKED?' | translate }}
-          </th>
-          <th nzWidth="90px" nzAlign="center">
-            {{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}
-          </th>
-        </tr>
+          <tr>
+            <th nzWidth="50px" nzAlign="center"></th>
+            <th nzWidth="200px" nzAlign="center">{{ 'GENERAL.DESCRIPTION' | translate }}</th>
+            <th nzWidth="80px" nzAlign="center">
+              {{ 'COMPONENTS.CHECKBOX_GROUP.DISABLED?' | translate }}
+            </th>
+            <th nzWidth="80px" nzAlign="center">
+              {{ 'COMPONENTS.CHECKBOX_GROUP.CHECKED?' | translate }}
+            </th>
+            <th nzWidth="90px" nzAlign="center">
+              {{ 'COMPONENTS.COMBOBOX.COMBOBOX_REMOVE' | translate }}
+            </th>
+          </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
           @for (option of options.controls; track option.value.value; let i = $index) {

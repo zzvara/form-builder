@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import type { ContextAction } from '@components/header/header.model';
 import type { MenuState } from '@models/menu-option.model';
 import { MenuOption } from '@models/menu-option.model';
-import type { Observable} from 'rxjs';
+import type { Observable } from 'rxjs';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({

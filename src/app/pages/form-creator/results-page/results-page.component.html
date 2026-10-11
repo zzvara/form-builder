@@ -3,57 +3,57 @@
     <nz-tabs>
       <nz-tab [nzTitle]="'PROJECT.PROJECT_INFORMATION' | translate">
         @if (project(); as project) {
-            <nz-descriptions nzBordered [nzColumn]="1">
-              <nz-descriptions-item [nzTitle]="'GENERAL.TITLE' | translate">
-                {{ project.title }}
-              </nz-descriptions-item>
-              <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
-                <ng-template #descriptionTooltipTemp>
-                  <span
-                    class="ql-editor custom-tooltip"
-                    [innerHTML]="project.description | safeHtml"
-                  ></span>
-                </ng-template>
-                <div
-                  class="ql-editor view-mode"
-                  style="max-width: 100%"
+          <nz-descriptions nzBordered [nzColumn]="1">
+            <nz-descriptions-item [nzTitle]="'GENERAL.TITLE' | translate">
+              {{ project.title }}
+            </nz-descriptions-item>
+            <nz-descriptions-item [nzTitle]="'GENERAL.DESCRIPTION' | translate">
+              <ng-template #descriptionTooltipTemp>
+                <span
+                  class="ql-editor custom-tooltip"
                   [innerHTML]="project.description | safeHtml"
-                  nz-tooltip
-                  [nzTooltipTitle]="descriptionTooltipTemp"
-                ></div>
+                ></span>
+              </ng-template>
+              <div
+                class="ql-editor view-mode"
+                style="max-width: 100%"
+                [innerHTML]="project.description | safeHtml"
+                nz-tooltip
+                [nzTooltipTitle]="descriptionTooltipTemp"
+              ></div>
+            </nz-descriptions-item>
+            <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
+              {{ 'FORM.' + (project.type | uppercase) | translate }}
+            </nz-descriptions-item>
+            @if (project.time_checkbox) {
+              <nz-descriptions-item [nzTitle]="'PROJECT.TIME_CHECKBOX' | translate">
+                {{ 'RESULTS.BOOLEAN.' + (project.time_checkbox ? 'TRUE' : 'FALSE') | translate }}
               </nz-descriptions-item>
-              <nz-descriptions-item [nzTitle]="'PROJECT.TYPE' | translate">
-                {{ 'FORM.' + (project.type | uppercase) | translate }}
+            }
+            @if (project.deadline_checkbox) {
+              <nz-descriptions-item [nzTitle]="'PROJECT.DEADLINE_CHECKBOX' | translate">
+                {{
+                  'RESULTS.BOOLEAN.' + (project.deadline_checkbox ? 'TRUE' : 'FALSE') | translate
+                }}
               </nz-descriptions-item>
-              @if (project.time_checkbox) {
-                <nz-descriptions-item [nzTitle]="'PROJECT.TIME_CHECKBOX' | translate">
-                  {{ 'RESULTS.BOOLEAN.' + (project.time_checkbox ? 'TRUE' : 'FALSE') | translate }}
-                </nz-descriptions-item>
-              }
-              @if (project.deadline_checkbox) {
-                <nz-descriptions-item [nzTitle]="'PROJECT.DEADLINE_CHECKBOX' | translate">
-                  {{
-                    'RESULTS.BOOLEAN.' + (project.deadline_checkbox ? 'TRUE' : 'FALSE') | translate
-                  }}
-                </nz-descriptions-item>
-              }
-              @if (project.time_limit) {
-                <nz-descriptions-item [nzTitle]="'GENERAL.TIME_LIMIT' | translate">
-                  {{ project.time_limit | date: DateFormat.TIME }}
-                </nz-descriptions-item>
-              }
-              @if (project.deadline) {
-                <nz-descriptions-item [nzTitle]="'GENERAL.DEADLINE' | translate">
-                  {{ project.deadline | date: DateFormat.DATE }}
-                </nz-descriptions-item>
-              }
-              <nz-descriptions-item [nzTitle]="'GENERAL.CREATED' | translate">
-                {{ project.created | date: DateFormat.DATE }}
+            }
+            @if (project.time_limit) {
+              <nz-descriptions-item [nzTitle]="'GENERAL.TIME_LIMIT' | translate">
+                {{ project.time_limit | date: DateFormat.TIME }}
               </nz-descriptions-item>
-              <nz-descriptions-item [nzTitle]="'GENERAL.MODIFIED' | translate">
-                {{ project.modified | date: DateFormat.DATE }}
+            }
+            @if (project.deadline) {
+              <nz-descriptions-item [nzTitle]="'GENERAL.DEADLINE' | translate">
+                {{ project.deadline | date: DateFormat.DATE }}
               </nz-descriptions-item>
-            </nz-descriptions>
+            }
+            <nz-descriptions-item [nzTitle]="'GENERAL.CREATED' | translate">
+              {{ project.created | date: DateFormat.DATE }}
+            </nz-descriptions-item>
+            <nz-descriptions-item [nzTitle]="'GENERAL.MODIFIED' | translate">
+              {{ project.modified | date: DateFormat.DATE }}
+            </nz-descriptions-item>
+          </nz-descriptions>
         }
       </nz-tab>
       <nz-tab [nzTitle]="'PROJECT.SECTION_INPUTS' | translate">

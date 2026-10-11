@@ -49,14 +49,16 @@ export class SidebarComponent {
   filterItems() {
     const searchTerm = this.searchTerm();
     if (searchTerm) {
-      this.filteredData.set(this.sidebarItems
-        .map((group) => ({
-          ...group,
-          groupContents: group.groupContents.filter((item) =>
-            item.title.toLowerCase().includes(searchTerm.toLowerCase()),
-          ),
-        }))
-        .filter((group) => group.groupContents.length > 0));
+      this.filteredData.set(
+        this.sidebarItems
+          .map((group) => ({
+            ...group,
+            groupContents: group.groupContents.filter((item) =>
+              item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+            ),
+          }))
+          .filter((group) => group.groupContents.length > 0),
+      );
     } else {
       this.filteredData.set(this.sidebarItems);
     }
