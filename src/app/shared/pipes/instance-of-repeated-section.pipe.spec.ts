@@ -8,7 +8,7 @@ describe('InstanceOfRepeatedSectionPipe', () => {
       jasmine.objectContaining({ repeatTimes: 1, repeatByOther: false, referencableInputs: [] }),
     );
   });
-  
+
   it('preserves valid settings and rejects non-sections', () => {
     const section = {
       type: 'RepeatedSectionComponent',

@@ -4,7 +4,7 @@ import { ListValidators } from './list-validators';
 describe('ListValidators', () => {
   const list = (...values: string[]) =>
     new FormArray(values.map((value) => new FormControl(value)));
-  
+
   it('enforces inclusive minimum and maximum lengths', () => {
     const validate = ListValidators.validateListNum(1, 2);
     expect(validate(list())).toEqual({ minLengthError: { min: 1, current: 0 } });

@@ -51,7 +51,7 @@ describe('TextInputComponent', () => {
     control.setErrors({ required: true, minlength: true });
     expect(component.getErrorMessages(control)).toEqual(['Required', 'At least 3 characters']);
   });
-  
+
   it('propagates user changes through the input control', async () => {
     const edited = spyOn(component.edited, 'emit');
     const input: HTMLInputElement = fixture.nativeElement.querySelector('input');

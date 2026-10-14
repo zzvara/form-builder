@@ -31,7 +31,7 @@ describe('ModalService', () => {
       }),
     );
   });
-  
+
   it('opens the code editor with the section id', () => {
     expect(service.openSectionModal(sectionFixture('section')).close).toBe(modalRef.close);
     expect(create).toHaveBeenCalledWith(

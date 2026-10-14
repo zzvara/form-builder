@@ -72,7 +72,7 @@ describe('date helpers', () => {
     expect(dates.compareByMinute(morning, new Date(2026, 3, 6, 9, 16))).toBe(-1);
     expect(dates.compareTimeFull(morning, new Date(2026, 3, 6, 9, 15, 21))).toBe(-1);
   });
-  
+
   it('treats days of the same ISO week as equal across month and year boundaries', () => {
     expect(dates.compareByWeek(new Date(2026, 0, 31), new Date(2026, 1, 1))).toBe(0);
     expect(dates.compareByWeek(new Date(2025, 11, 29), new Date(2026, 0, 4))).toBe(0);
@@ -126,7 +126,7 @@ describe('date helpers', () => {
     expect(dates.disabledMaxMinutes(midnight)!(0)).toEqual(dates.range(1, 60));
     expect(dates.disabledMaxSeconds(midnight)!(0, 0)).toEqual(dates.range(11, 60));
   });
-  
+
   it('combines minimum and maximum time restrictions', () => {
     expect(dates.disabledHours(timeBounds)!()).toEqual([
       ...dates.range(0, 9),

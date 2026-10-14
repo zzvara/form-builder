@@ -13,7 +13,7 @@ describe('getErrorMessageList', () => {
       ]),
     ).toEqual(['Too short', 'Required']);
   });
-  
+
   it('returns no messages for a valid control', () => {
     expect(
       getErrorMessageList(new FormControl('ok', { nonNullable: true }), [

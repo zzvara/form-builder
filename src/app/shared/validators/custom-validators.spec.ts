@@ -121,7 +121,7 @@ describe('CustomValidators', () => {
     expect(validate(new FormControl('prefix'))).toEqual({ containsError: '{{..}}' });
     expect(V.validateContainsIf(() => false, 'x')(new FormControl('y'))).toBeNull();
   });
-  
+
   it('merges enabled validation errors without calling disabled validators', () => {
     const disabled = jasmine.createSpy('disabled');
     const validate = V.executeValidationsConditionally([

@@ -62,7 +62,7 @@ describe('InputHolderComponent', () => {
     expect(component.inputData.defaultValue).toBeUndefined();
     expect(changed).toHaveBeenCalledOnceWith(component.inputData);
   });
-  
+
   it('emits draft changes and removal using the question id', () => {
     component.inputData.id = 'question';
     const removed = spyOn(component.removeComponentEvent, 'emit');

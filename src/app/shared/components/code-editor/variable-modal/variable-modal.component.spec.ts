@@ -37,7 +37,7 @@ describe('VariableModalComponent', () => {
     expect(close).toHaveBeenCalledOnceWith([second]);
     expect(component.data.selectedVariables).toEqual([first]);
   });
-  
+
   it('closes without saving on cancel', () => {
     component.closeModal();
     expect(close).toHaveBeenCalledOnceWith();

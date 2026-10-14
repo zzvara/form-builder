@@ -53,7 +53,7 @@ describe('ComponentsPageComponent', () => {
     expect(scroll).toHaveBeenCalledOnceWith('invalid');
     expect(save).not.toHaveBeenCalled();
   });
-  
+
   it('saves a valid form before advancing', () => {
     spyOn(component.editComponent, 'isFormInvalid').and.returnValue(false);
     const save = spyOn(component.editComponent, 'saveForm');

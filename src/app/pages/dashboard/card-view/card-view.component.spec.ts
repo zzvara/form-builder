@@ -31,7 +31,7 @@ describe('CardViewComponent', () => {
     fixture.componentRef.setInput('type', ProjectType.TEST);
     expect(component.projectList().map((project) => project.id)).toEqual([test.id]);
   });
-  
+
   it('forwards create, edit, and delete requests', () => {
     const create = spyOn(component.createProject, 'emit');
     const edit = spyOn(component.editProject, 'emit');

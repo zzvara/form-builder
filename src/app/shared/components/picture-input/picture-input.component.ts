@@ -73,7 +73,7 @@ export class PictureInputComponent
 
     return obs.subscribe({ error: (error) => item.onError?.(error, item.file) });
   };
-  
+
   onDownload = (file: NzUploadFile): void => {
     const storedBase64 = localStorage.getItem(file.name) || (file.response as string);
 

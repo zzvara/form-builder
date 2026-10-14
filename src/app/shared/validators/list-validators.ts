@@ -22,7 +22,7 @@ export class ListValidators {
           current: controls.length,
         };
       }
-      
+
       if (maxNum !== undefined && controls.length > maxNum) {
         error.maxLengthError = {
           max: maxNum,

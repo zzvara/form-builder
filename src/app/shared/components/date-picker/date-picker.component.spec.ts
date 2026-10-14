@@ -43,7 +43,7 @@ describe('DatePickerComponent', () => {
     );
     expect(edited).toHaveBeenCalledOnceWith(component.data);
   });
-  
+
   it('adds time formatting and restrictions only when showTime is enabled', () => {
     Object.assign(component.data, {
       dateFormat: 'yyyy-MM-dd',

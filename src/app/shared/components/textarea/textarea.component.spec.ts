@@ -39,7 +39,7 @@ describe('TextareaComponent', () => {
     );
     expect(edited).toHaveBeenCalledOnceWith(component.data);
   });
-  
+
   it('updates its value and emits edited data when the user types', async () => {
     const edited = spyOn(component.edited, 'emit');
     const input: HTMLTextAreaElement = fixture.nativeElement.querySelector('textarea');

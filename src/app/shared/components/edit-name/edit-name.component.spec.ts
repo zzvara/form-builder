@@ -47,7 +47,7 @@ describe('EditNameComponent', () => {
     fixture.detectChanges();
     expect(component.form.controls['name'].hasError('notUnique')).toBeTrue();
   });
-  
+
   it('updates wrapped edit-list entries as well as plain inputs', () => {
     const data = inputFixture('wrapped');
     fixture.componentRef.setInput('edit', { id: 'wrapped', data });

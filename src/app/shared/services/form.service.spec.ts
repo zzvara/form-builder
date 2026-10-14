@@ -14,7 +14,7 @@ describe('FormService', () => {
     expect(form.valid).toBeTrue();
     expect(form.updateOn).toBe('change');
   });
-  
+
   it('accepts an initial name and supports resetting the form', () => {
     const form = TestBed.inject(FormService).createComponentNameForm([], 'answer');
     expect(form.value).toEqual({ name: 'answer' });

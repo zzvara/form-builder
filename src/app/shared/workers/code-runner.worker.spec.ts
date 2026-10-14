@@ -25,7 +25,7 @@ describe('code-runner worker', () => {
     });
     expect((await run('return ;;; ???')).success).toBeFalse();
   });
-  
+
   it('reports errors thrown as strings', async () => {
     expect(await run('throw "failure";')).toEqual({ success: false, error: 'failure' });
   });

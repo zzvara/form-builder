@@ -44,7 +44,7 @@ describe('AbstractInput', () => {
     expect(emitted).toHaveBeenCalledOnceWith(component.data);
     expect(markForCheck).toHaveBeenCalledTimes(1);
   });
-  
+
   it('emits modal edits only after a successful save', () => {
     const emitted = spyOn(component.edited, 'emit');
     component.defaultOnEditSubscribeEvent(undefined);

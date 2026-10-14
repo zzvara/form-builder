@@ -20,7 +20,7 @@ describe('headerResolver', () => {
       ]);
     });
   }
-  
+
   it('falls back to dashboard actions for unknown routes', () => {
     TestBed.runInInjectionContext(() =>
       headerResolver(new ActivatedRouteSnapshot(), {} as RouterStateSnapshot),

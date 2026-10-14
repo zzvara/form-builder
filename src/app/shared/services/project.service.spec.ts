@@ -88,7 +88,7 @@ describe('ProjectService persistence', () => {
     service.add(project);
     expect(service.update(project.id, { ...project })).toBeFalse();
   });
-  
+
   it('backfills legacy history and removes history together with a project', () => {
     const project = projectFixture();
     storage.set('project', JSON.stringify([project]));

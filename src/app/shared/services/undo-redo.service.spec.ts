@@ -31,7 +31,7 @@ describe('UndoRedoService availability', () => {
     expect(service.redo()).toBeNull();
     expect(service.undo()).toBe(1);
   });
-  
+
   it('does not create duplicate consecutive states and permits returning to an earlier value', () => {
     const service = new UndoRedoService<number>();
     service.saveState(1);
@@ -54,7 +54,7 @@ describe('UndoRedoService availability', () => {
     service.saveState(42);
     expect(service.undo()).toBeNull();
   });
-  
+
   it('publishes undo and redo availability as signals', () => {
     const service = new UndoRedoService<number[]>();
     service.saveState([1]);

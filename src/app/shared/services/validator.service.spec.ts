@@ -20,7 +20,7 @@ describe('ValidatorService', () => {
     expect(validate(new FormControl(' '))).toBeNull();
     expect(validate(new FormControl(null))).toBeNull();
   });
-  
+
   it('detects duplicate names after trimming without ignoring case', () => {
     const validate = ValidatorService.uniqueNameValidator(['answer']);
     expect(validate(new FormControl(' answer '))).toEqual({ notUnique: true });

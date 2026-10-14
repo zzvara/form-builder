@@ -73,7 +73,7 @@ describe('ListViewComponent', () => {
     expect(titleSort(firstSurvey, secondSurvey)).toBeLessThan(0);
     expect(dateSort(firstSurvey, secondSurvey)).toBeLessThan(0);
   });
-  
+
   it('forwards edit and delete requests', () => {
     const edit = spyOn(component.editProject, 'emit');
     const remove = spyOn(component.deleteProject, 'emit');

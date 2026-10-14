@@ -41,7 +41,7 @@ describe('AbstractFieldLikeEditForm', () => {
     form.getControl('tooltipText')!.setValue('Helpful text');
     expect(form.getControl('tooltipText')!.valid).toBeTrue();
   });
-  
+
   it('clears default-value validators and saved defaults when disabled', () => {
     form.getControl('required')!.setValue(true);
     form.getControl('defaultValue')!.setValue('');

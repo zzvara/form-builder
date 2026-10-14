@@ -42,7 +42,7 @@ describe('TextInputComponent', () => {
     );
     expect(edited).toHaveBeenCalledOnceWith(component.data);
   });
-  
+
   it('honors zero bounds and falls back to unbounded values when disabled', () => {
     Object.assign(component.data, { min: true, minNumber: 0, max: true, maxNumber: 0 });
     expect(component.minNumber).toBe(0);
@@ -52,7 +52,7 @@ describe('TextInputComponent', () => {
     expect(component.minNumber).toBe(-Infinity);
     expect(component.maxNumber).toBe(Infinity);
   });
-  
+
   it('round-trips values through a configured prefix and suffix', () => {
     component.data.format = true;
     component.data.formatter = '$ {{..}} USD';

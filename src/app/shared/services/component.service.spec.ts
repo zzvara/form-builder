@@ -89,7 +89,7 @@ describe('ComponentService', () => {
     service.component$.next([{ id: 'target', data: target }]);
     expect(target.codeEditor.data!.variables).toEqual([]);
   });
-  
+
   it('returns empty collections when no components exist', () => {
     expect(service.getItemsBeforeId('missing')).toEqual([]);
     expect(service.getVariableList('missing')).toEqual([]);

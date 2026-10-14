@@ -26,7 +26,7 @@ describe('TranslatedTitleStrategy', () => {
     translated.complete();
     expect(setTitle).toHaveBeenCalledOnceWith('Questionnaires');
   });
-  
+
   it('leaves the document title unchanged when the route has no title', () => {
     const get = jasmine.createSpy('get');
     TestBed.configureTestingModule({

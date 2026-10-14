@@ -125,7 +125,7 @@ describe('AbstractEditForm', () => {
     expect(form.getControl('defaultValue')!.dirty).toBeTrue();
     expect(form.getControl('defaultValue')!.hasError('required')).toBeTrue();
   });
-  
+
   it('unsubscribes from connected controls when the injection context is destroyed', () => {
     const callback = jasmine.createSpy('callback');
     form.executeBasedOnChanges({ questionValue: [{ name: 'descriptionValue' }] }, callback);

@@ -16,7 +16,7 @@ describe('InstanceOfSectionListPipe', () => {
       jasmine.objectContaining({ sectionId: 'legacy', layout: 'vertical', sectionInputs: [] }),
     );
   });
-  
+
   it('rejects absent and non-section values', () => {
     const pipe = new InstanceOfSectionListPipe();
     for (const value of [null, undefined, 3, '', {}, inputFixture()])

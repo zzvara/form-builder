@@ -26,7 +26,7 @@ describe('DashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
   it('navigates to creation and editing with the correct parameters', () => {
     const navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
     component.createProject(ProjectType.TEST);

@@ -98,7 +98,7 @@ describe('CodeEditorModalComponent', () => {
     expect(selected.codeEditor).toEqual({ enabled: false });
     expect(close).toHaveBeenCalledOnceWith();
   });
-  
+
   it('sorts selected variables and removes the requested variable', () => {
     component.onEnabledChange(true);
     component.openVariableModal();
