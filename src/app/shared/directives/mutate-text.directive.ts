@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
@@ -6,9 +6,9 @@ import { NgControl } from '@angular/forms';
   standalone: true,
 })
 export class MutateTextDirective {
-  @Input() appMutateText: (value: string) => string = (value) => value;
+  private control = inject(NgControl);
 
-  constructor(private control: NgControl) {}
+  @Input() appMutateText: (value: string) => string = (value) => value;
 
   @HostListener('change')
   onChange(): void {

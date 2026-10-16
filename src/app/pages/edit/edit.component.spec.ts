@@ -1,3 +1,4 @@
+import { appConfig } from '@app/app.config';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditComponent } from '@pages/edit/edit.component';
@@ -8,7 +9,8 @@ describe('EditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EditComponent],
+      imports: [EditComponent],
+      providers: appConfig.providers,
     });
     fixture = TestBed.createComponent(EditComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,6 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -17,6 +17,7 @@ import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-picture-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './picture-input.component.html',
   styleUrls: [],
   standalone: true,
@@ -33,12 +34,12 @@ export class PictureInputComponent
   extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent>
   implements OnInit
 {
-  fileList: NzUploadFile[] = [];
+  readonly fileList = signal<NzUploadFile[]>([]);
 
   override onChange(event: Event | NzUploadChangeParam): void {
     if ((event as NzUploadChangeParam).file) {
       const info = event as NzUploadChangeParam;
-      this.fileList = info.fileList;
+      this.fileList.set(info.fileList);
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
       }

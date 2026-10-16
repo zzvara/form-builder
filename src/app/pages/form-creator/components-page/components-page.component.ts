@@ -1,12 +1,14 @@
 import {
   ApplicationModule,
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
+  signal,
   EventEmitter,
   Input,
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
@@ -39,6 +41,7 @@ interface DiffItem {
   templateUrl: './components-page.component.html',
   styleUrls: ['./components-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     NzLayoutComponent,
@@ -56,6 +59,10 @@ interface DiffItem {
   ],
 })
 export class ComponentsPageComponent implements OnInit {
+  private modal = inject(NzModalService);
+  private translate = inject(TranslateService);
+  private projectService = inject<ProjectService<Project>>(ProjectService);
+
   @ViewChild(EditComponent) editComponent!: EditComponent;
 
   @Input() projectId: string | undefined;
@@ -65,17 +72,10 @@ export class ComponentsPageComponent implements OnInit {
 
   inlineEdit: InlineEdit = { enabled: true };
 
-  projectHistory: ProjectVersion<Project>[] = [];
-  currentVersionNum?: number;
+  readonly projectHistory = signal<ProjectVersion<Project>[]>([]);
+  readonly currentVersionNum = signal<number | undefined>(undefined);
 
   DateFormat = DateFormat;
-
-  constructor(
-    private modal: NzModalService,
-    private translate: TranslateService,
-    private projectService: ProjectService<Project>,
-    private cdr: ChangeDetectorRef,
-  ) {}
 
   /**
    * If a projectId is defined, it fetches the project history and sets the current version number to the latest version.
@@ -84,18 +84,15 @@ export class ComponentsPageComponent implements OnInit {
    */
   ngOnInit(): void {
     if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
+      this.projectHistory.set(this.projectService.getProjectHistory(this.projectId));
 
-      this.currentVersionNum =
-        this.projectHistory.length > 0
-          ? this.projectHistory[this.projectHistory.length - 1].versionNum
-          : 1;
-      this.versionChange.emit(this.currentVersionNum);
+      this.currentVersionNum.set(
+        this.projectHistory().length > 0
+          ? this.projectHistory()[this.projectHistory().length - 1].versionNum
+          : 1,
+      );
+      this.versionChange.emit(this.currentVersionNum()!);
     }
-  }
-
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
   }
 
   /**
@@ -122,35 +119,35 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   jumpToFirstError() {
-  if (!this.editComponent) return;
+    if (!this.editComponent) return;
 
-  const invalidInput = this.editComponent
-    .getAllFormInputs()
-    .find((inp) => this.editComponent.isInputInvalid(inp));
+    const invalidInput = this.editComponent
+      .getAllFormInputs()
+      .find((inp) => this.editComponent.isInputInvalid(inp));
 
-  if (invalidInput?.data?.id) {
-    this.editComponent.scrollToElement(invalidInput.data.id);
-    return;
+    if (invalidInput?.data?.id) {
+      this.editComponent.scrollToElement(invalidInput.data.id);
+      return;
+    }
+
+    const invalidRepeatedSection = this.editComponent.editList.find((item) =>
+      this.editComponent.hasRepeatedSettingsErrorForEdit(item),
+    );
+
+    if (invalidRepeatedSection?.id) {
+      this.editComponent.scrollToElement(invalidRepeatedSection.id);
+      return;
+    }
+
+    const invalidSection = this.editComponent.editList.find((item) =>
+      this.editComponent.isComponentInvalid(item),
+    );
+
+    if (invalidSection?.id) {
+      this.editComponent.scrollToElement(invalidSection.id);
+      return;
+    }
   }
-
-  const invalidRepeatedSection = this.editComponent.editList.find((item) =>
-    this.editComponent.hasRepeatedSettingsErrorForEdit(item),
-  );
-
-  if (invalidRepeatedSection?.id) {
-    this.editComponent.scrollToElement(invalidRepeatedSection.id);
-    return;
-  }
-
-  const invalidSection = this.editComponent.editList.find((item) =>
-    this.editComponent.isComponentInvalid(item),
-  );
-
-  if (invalidSection?.id) {
-    this.editComponent.scrollToElement(invalidSection.id);
-    return;
-  }
-}
 
   /**
    * Emits an event to set the current page in the parent component.
@@ -166,7 +163,7 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {boolean} True if the current version number is greater than 1, indicating that previous versions exist.
    */
   hasPreviousVersion(): boolean {
-    return this.currentVersionNum !== undefined && this.currentVersionNum > 1;
+    return this.currentVersionNum() !== undefined && this.currentVersionNum()! > 1;
   }
 
   /**
@@ -175,8 +172,8 @@ export class ComponentsPageComponent implements OnInit {
    */
   hasNextVersion(): boolean {
     return (
-      this.currentVersionNum !== undefined &&
-      this.projectHistory.some((v) => v.versionNum === this.currentVersionNum! + 1)
+      this.currentVersionNum() !== undefined &&
+      this.projectHistory().some((v) => v.versionNum === this.currentVersionNum()! + 1)
     );
   }
 
@@ -186,8 +183,8 @@ export class ComponentsPageComponent implements OnInit {
    * @returns {void}
    */
   navigateVersion(offset: number): void {
-    if (this.currentVersionNum !== undefined) {
-      const newVersionNum = this.currentVersionNum + offset;
+    if (this.currentVersionNum() !== undefined) {
+      const newVersionNum = this.currentVersionNum()! + offset;
       this.revertToVersion(newVersionNum);
     }
   }
@@ -201,8 +198,8 @@ export class ComponentsPageComponent implements OnInit {
     if (this.projectId !== undefined) {
       const version = this.projectService.revertToVersion(this.projectId, versionNum);
       if (version) {
-        this.currentVersionNum = versionNum;
-        this.versionChange.emit(this.currentVersionNum);
+        this.currentVersionNum.set(versionNum);
+        this.versionChange.emit(versionNum);
         this.editComponent.ngOnInit();
       } else {
         console.error('Failed to revert to version', versionNum);
@@ -218,12 +215,12 @@ export class ComponentsPageComponent implements OnInit {
   }
 
   getDiffItems(version: ProjectVersion<Project>): DiffItem[] {
-    const prev = this.projectHistory.find((v) => v.versionNum === version.versionNum - 1);
+    const prev = this.projectHistory().find((v) => v.versionNum === version.versionNum - 1);
     if (!prev) return [];
 
     const curr = version.project;
     const old = prev.project;
-    const keys = Object.keys(curr) as Array<keyof Project>;
+    const keys = Object.keys(curr) as (keyof Project)[];
 
     return keys
       .filter((key) => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))
@@ -235,7 +232,7 @@ export class ComponentsPageComponent implements OnInit {
   }
   public getChangeItemsForVersion(
     version: ProjectVersion<Project>,
-  ): Array<{ key: string; before: any; after: any }> {
+  ): { key: string; before: any; after: any }[] {
     return this.getDiffItems(version).map((d) => ({
       key: d.key,
       before: d.before,

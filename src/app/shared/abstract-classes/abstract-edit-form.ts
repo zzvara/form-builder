@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, Inject, OnInit, ViewChild } from '@angular/core';
+import { DestroyRef, Directive, OnInit, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -21,28 +21,26 @@ import { CodeEditorModalComponent } from '../components/code-editor/code-editor-
 
 @Directive()
 export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnInit {
+  nzModalData = inject<D>(NZ_MODAL_DATA);
+  protected destroyRef = inject(DestroyRef);
+  protected formBuilder = inject(FormBuilder);
+  protected translate = inject(TranslateService);
+
   @ViewChild(CodeEditorModalComponent) codeEditorModalElement?: CodeEditorModalComponent;
 
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
   protected readonly formData: FormGroup = this.formBuilder.group<{
-    [key in InputDataKeys<D>]?: FormControl<any>;
+    [key in keyof D]?: FormControl<any>;
   }>(
     {},
     {
       updateOn: this.formUpdateOn,
-      validators: this.formValidators,
+      validators: this.getFormValidators(),
     },
   );
 
   protected initialValues!: D;
-
-  constructor(
-    @Inject(NZ_MODAL_DATA) public nzModalData: D,
-    protected destroyRef: DestroyRef,
-    protected formBuilder: FormBuilder,
-    protected translate: TranslateService,
-  ) {}
 
   ngOnInit() {
     this.initialValues = this.nzModalData;
@@ -85,7 +83,8 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
       this.codeEditorModalElement.selectedElementCodeMirror &&
       this.codeEditorModalElement.selectedElement.codeEditor
     ) {
-      this.codeEditorModalElement.selectedElement.codeEditor = this.codeEditorModalElement.selectedElementCodeMirror;
+      this.codeEditorModalElement.selectedElement.codeEditor =
+        this.codeEditorModalElement.selectedElementCodeMirror;
     }
   }
 
@@ -93,7 +92,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
     return this.formData.getRawValue();
   }
 
-  protected get formValidators(): ValidatorFn | ValidatorFn[] | null | undefined {
+  protected getFormValidators(): ValidatorFn | ValidatorFn[] | null | undefined {
     return null;
   }
   protected get formUpdateOn(): UpdateOnStrategy {
@@ -101,36 +100,36 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   }
 
   protected get defaultValueControl(): AbstractControl {
-    return new FormControl(this.getDefaultValueValue, {
+    return new FormControl(this.getDefaultValueValue(), {
       updateOn: this.defaultValueUpdateOn,
-      validators: this.defaultValueValidators,
+      validators: this.getDefaultValueValidators(),
     });
   }
-  protected get defaultValueValidators(): ValidatorFn | ValidatorFn[] | null | undefined {
+  protected getDefaultValueValidators(): ValidatorFn | ValidatorFn[] | null | undefined {
     return null;
   }
   protected get defaultValueUpdateOn(): UpdateOnStrategy {
     return UpdateOnStrategy.CHANGE;
   }
-  protected get getDefaultValueValue(): T | null {
+  protected getDefaultValueValue(): T | null {
     return null;
   }
 
   //---------FORM CONTROLS------------------------------------------------------------------------------------------------
 
-  protected addControls(controls: { [key in InputDataKeys<D>]?: AbstractControl }) {
-    this.addAnyControls(controls as { [key: string]: AbstractControl });
+  protected addControls(controls: { [key in keyof D]?: AbstractControl }) {
+    this.addAnyControls(controls as Record<string, AbstractControl>);
   }
-  protected addAnyControls(controls: { [key: string]: AbstractControl }) {
+  protected addAnyControls(controls: Record<string, AbstractControl>) {
     Object.entries(controls).forEach(([key, value]) => {
       this.formData.addControl(key, value);
     });
   }
 
-  protected setControls(controls: { [key in InputDataKeys<D>]?: AbstractControl }) {
-    this.setAnyControls(controls as { [key: string]: AbstractControl });
+  protected setControls(controls: { [key in keyof D]?: AbstractControl }) {
+    this.setAnyControls(controls as Record<string, AbstractControl>);
   }
-  protected setAnyControls(controls: { [key: string]: AbstractControl }) {
+  protected setAnyControls(controls: Record<string, AbstractControl>) {
     Object.entries(controls).forEach(([key, value]) => {
       this.formData.setControl(key, value);
     });
@@ -208,7 +207,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   //---------CONTROL CHANGE METHODS---------------------------------------------------------------------------------------
 
   setControlValuesBasedOnChanges(controls: {
-    [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; additionalData?: DataSetterType }[];
+    [key in keyof D]?: { name: InputDataKeys<D>; additionalData?: DataSetterType }[];
   }) {
     this.setAnyControlValuesBasedOnChanges(controls as ControlConnection);
   }
@@ -226,7 +225,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
    * @param controls
    */
   connectValidations(controls: {
-    [key in InputDataKeys<D>]?: { name: InputDataKeys<D>; recursiveCall?: boolean }[];
+    [key in keyof D]?: { name: InputDataKeys<D>; recursiveCall?: boolean }[];
   }) {
     this.connectAnyValidations(controls as ControlConnection);
   }

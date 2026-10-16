@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -14,6 +15,7 @@ interface ProjectData {
 export class JsonService {
   private jsonDataSubject = new BehaviorSubject<ProjectData | null>(null);
   jsonData$ = this.jsonDataSubject.asObservable();
+  readonly jsonData = toSignal(this.jsonData$, { initialValue: null });
 
   /**
    * Validates if a project has the required properties.

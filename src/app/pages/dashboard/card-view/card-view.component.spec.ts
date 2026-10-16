@@ -8,7 +8,7 @@ describe('CardViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CardViewComponent],
+      imports: [CardViewComponent],
     });
     fixture = TestBed.createComponent(CardViewComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { HttpBackend, provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, TitleStrategy } from '@angular/router';
@@ -14,7 +14,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { importProvidersFrom } from '@angular/core';
-import { QuillModule } from 'ngx-quill';
+import { provideQuillConfig } from 'ngx-quill/config';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import { appRoutes } from './app.routes';
@@ -38,7 +38,7 @@ export function httpLoaderFactory(handler: HttpBackend): TranslateLoader {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection(),
+    provideZonelessChangeDetection(),
     provideHttpClient(),
     provideAnimations(),
     provideRouter(appRoutes),
@@ -55,19 +55,19 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpBackend],
         },
       }),
-      QuillModule.forRoot({
-        theme: 'snow',
-        modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-            [{ script: 'sub' }, { script: 'super' }],
-            ['link', 'image', 'code-block'],
-            ['clean'],
-          ],
-        },
-      }),
       NzModalModule,
     ),
+    provideQuillConfig({
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          [{ script: 'sub' }, { script: 'super' }],
+          ['link', 'image', 'code-block'],
+          ['clean'],
+        ],
+      },
+    }),
   ],
 };

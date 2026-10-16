@@ -7,6 +7,7 @@ import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   EventEmitter,
@@ -16,6 +17,7 @@ import {
   TemplateRef,
   Type,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
@@ -41,6 +43,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'app-input-holder',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.less'],
   standalone: true,
@@ -69,6 +72,9 @@ export class InputHolderComponent<
 >
   implements OnInit, AfterViewInit
 {
+  private destroyRef = inject(DestroyRef);
+  private translate = inject(TranslateService);
+
   @Input() formInput!: FormInputData<D, T>;
   get inputData(): D {
     return this.formInput.data!;
@@ -89,11 +95,6 @@ export class InputHolderComponent<
     data: D;
     inlineEdit: InlineEdit;
   };
-
-  constructor(
-    private destroyRef: DestroyRef,
-    private translate: TranslateService,
-  ) {}
 
   get componentType(): Type<FormComponentMarker> {
     return translateComponentType[this.formInput.type];

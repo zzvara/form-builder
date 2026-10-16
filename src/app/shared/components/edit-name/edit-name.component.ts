@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  signal,
+  inject,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditList } from '@app/pages/edit/interfaces/edit-list';
 import { FormInputData } from '@app/shared/interfaces/form-input-data';
@@ -15,6 +25,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-edit-name',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './edit-name.component.html',
   styleUrl: './edit-name.component.less',
   standalone: true,
@@ -32,24 +43,24 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   ],
 })
 export class EditNameComponent implements OnChanges {
+  private formService = inject(FormService);
+
   @Input() names: string[] = [];
   @Input() edit!: EditList | FormInputData;
-  @Output() updateName: EventEmitter<void> = new EventEmitter();
+  @Output() updateName = new EventEmitter<void>();
 
   form: FormGroup = new FormGroup([]);
   editList?: EditList;
   editFormInput?: FormInputData;
 
-  isEditName = false;
-
-  constructor(private formService: FormService) {}
+  readonly isEditName = signal(false);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes['names'] &&
       JSON.stringify(changes['names'].currentValue) !==
         JSON.stringify(changes['names'].previousValue) &&
-      this.isEditName
+      this.isEditName()
     ) {
       this.updateNameFieldValidators(this.names);
     } else if (
@@ -85,9 +96,9 @@ export class EditNameComponent implements OnChanges {
   }
 
   setEditMode(state: boolean): void {
-    this.isEditName = state;
+    this.isEditName.set(state);
 
-    if (this.isEditName) {
+    if (this.isEditName()) {
       this.form = this.formService.createComponentNameForm(
         this.names,
         ('id' in this.edit ? this.edit.data : this.edit).customTitle,

@@ -1,6 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
@@ -35,10 +35,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-date-picker-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './date-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
@@ -59,7 +60,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class DatePickerEditComponent<

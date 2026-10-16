@@ -1,6 +1,6 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
@@ -10,6 +10,7 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 @Component({
   selector: 'app-number-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.less'],
   standalone: true,

@@ -1,3 +1,5 @@
+import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { appConfig } from '@app/app.config';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
@@ -8,7 +10,12 @@ describe('NumberInputEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NumberInputEditComponent],
+      imports: [NumberInputEditComponent],
+      providers: [
+        ...appConfig.providers,
+        { provide: NzModalRef, useValue: { close: jasmine.createSpy('close') } },
+        { provide: NZ_MODAL_DATA, useValue: {} },
+      ],
     });
     fixture = TestBed.createComponent(NumberInputEditComponent);
     component = fixture.componentInstance;

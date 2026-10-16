@@ -1,4 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  signal,
+  inject,
+} from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
@@ -27,6 +37,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   templateUrl: './results-page.component.html',
   styleUrls: ['./results-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzLayoutComponent,
     NzTabsComponent,
@@ -48,17 +59,23 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
   ],
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
+  private readonly projectService = inject<ProjectService<Project>>(ProjectService);
+  private readonly jsonService = inject(JsonService);
+  private readonly statisticsService = inject(StatisticsService);
+  private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router);
+
   @Input() page?: number;
   @Input() projectId: string | undefined;
   @Input() versionNum?: number;
 
   @Output() setPage = new EventEmitter<number>();
 
-  project?: Project;
-  projectHistory: ProjectVersion<Project>[] = [];
-  sectionInputStats: { [key: string]: number | string } = {};
-  latestVersionNum?: number;
-  sectionInputs: FormInputData[] = [];
+  readonly project = signal<Project | undefined>(undefined);
+  readonly projectHistory = signal<ProjectVersion<Project>[]>([]);
+  readonly sectionInputStats = signal<Record<string, number | string>>({});
+  readonly latestVersionNum = signal<number | undefined>(undefined);
+  readonly sectionInputs = signal<FormInputData[]>([]);
 
   columnsConfig: ColumnItem[] = [
     {
@@ -79,33 +96,25 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   CodeEditorMode = CodeEditorMode;
   CodeEditorType = CodeEditorType;
 
-  constructor(
-    private readonly projectService: ProjectService<Project>,
-    private readonly jsonService: JsonService,
-    private readonly statisticsService: StatisticsService,
-    private readonly translate: TranslateService,
-    private readonly router: Router,
-  ) {}
-
   ngOnInit(): void {
     if (this.projectId !== undefined) {
-      this.projectHistory = this.projectService.getProjectHistory(this.projectId);
-      this.latestVersionNum =
-        this.projectHistory.length > 0
-          ? this.projectHistory[this.projectHistory.length - 1].versionNum
-          : undefined;
-      this.project = this.projectService.getProjectVersion(
-        this.projectId,
-        this.latestVersionNum ?? 1,
+      this.projectHistory.set(this.projectService.getProjectHistory(this.projectId));
+      this.latestVersionNum.set(
+        this.projectHistory().length > 0
+          ? this.projectHistory()[this.projectHistory().length - 1].versionNum
+          : undefined,
+      );
+      this.project.set(
+        this.projectService.getProjectVersion(this.projectId, this.latestVersionNum() ?? 1),
       );
 
       this.calculateSectionInputStats();
     }
 
-    this.project?.editList!.forEach((section) => {
+    this.project()?.editList?.forEach((section) => {
       if ('sectionInputs' in section.data) {
         section.data.sectionInputs.forEach((input) => {
-          this.sectionInputs.push(input);
+          this.sectionInputs.update((inputs) => [...inputs, input]);
         });
       }
     });
@@ -123,20 +132,22 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   }
 
   saveProjectWithHistoryToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectWithHistoryToJson(this.project, this.projectHistory);
+    if (this.project()) {
+      this.jsonService.saveProjectWithHistoryToJson(this.project()!, this.projectHistory());
     }
   }
 
   saveProjectToJson(): void {
-    if (this.project) {
-      this.jsonService.saveProjectToJson(this.project);
+    if (this.project()) {
+      this.jsonService.saveProjectToJson(this.project()!);
     }
   }
 
   private calculateSectionInputStats(): void {
-    if (this.project) {
-      this.sectionInputStats = this.statisticsService.calculateSectionInputStats(this.project);
+    if (this.project()) {
+      this.sectionInputStats.set(
+        this.statisticsService.calculateSectionInputStats(this.project()!),
+      );
     }
   }
 

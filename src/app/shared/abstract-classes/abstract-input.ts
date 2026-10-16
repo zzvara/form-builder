@@ -1,5 +1,14 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { Directive, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Directive,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalServiceService } from '@services/modal/modal-service.service';
 import { FormComponentMarker } from '@interfaces/form-component-marker';
@@ -10,6 +19,10 @@ import { InputData } from '@interfaces/input-data';
 export abstract class AbstractInput<T, D extends InputData<T>, E extends AbstractEditForm<T, D>>
   implements FormComponentMarker, OnInit
 {
+  protected modalService = inject<ModalServiceService<T, D, E>>(ModalServiceService);
+  protected translate = inject(TranslateService);
+
+  private readonly changeDetector = inject(ChangeDetectorRef);
   @Input() label?: TemplateRef<any>;
   @Input() data!: D;
   @Input() inlineEdit: InlineEdit = { enabled: true };
@@ -17,11 +30,6 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
   @Output() edited = new EventEmitter<D>();
 
   previousValue?: T;
-
-  constructor(
-    protected modalService: ModalServiceService<T, D, E>,
-    protected translate: TranslateService,
-  ) {}
 
   defaultOnEditSubscribeEvent: (result: boolean | undefined) => void = (result) => {
     if (result) {
@@ -36,6 +44,7 @@ export abstract class AbstractInput<T, D extends InputData<T>, E extends Abstrac
   abstract edit(): void;
 
   onEdit(modifiedData: D) {
+    this.changeDetector.markForCheck();
     this.edited.emit(modifiedData);
   }
 

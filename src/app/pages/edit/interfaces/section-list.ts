@@ -15,7 +15,7 @@ export interface SectionList {
   };
 
   customTitle?: string;
-  codeEditor: CodeEditorData
+  codeEditor: CodeEditorData;
   reorderEnabled: boolean;
 }
 

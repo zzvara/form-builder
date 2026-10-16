@@ -1,5 +1,5 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { InputData } from '@interfaces/input-data';
 import { ModalData } from '@interfaces/modal-data';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,10 +11,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ModalServiceService<T, D extends InputData, E extends AbstractEditForm<T, D>> {
-  constructor(
-    private modal: NzModalService,
-    private translate: TranslateService,
-  ) {}
+  private modal = inject(NzModalService);
+  private translate = inject(TranslateService);
 
   openModal(modalData: ModalData<D, E>): Observable<boolean | undefined> {
     return this.openModalAndGet<boolean>(modalData);
