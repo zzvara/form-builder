@@ -86,12 +86,35 @@
           <div>
             <button
               nz-button
-              nzType="default"
+              nzType="text"
+              nzSize="large"
+              class="theme-selector-button"
+              (click)="
+                setTheme(currentTheme() === ThemeEnum.LIGHT ? ThemeEnum.DARK : ThemeEnum.LIGHT)
+              "
+            >
+              <span
+                nz-icon
+                [nzType]="currentTheme() === ThemeEnum.LIGHT ? 'sun' : 'moon'"
+                nzTheme="outline"
+              ></span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div>
+            <button
+              nz-button
+              nzType="text"
               nzSize="large"
               [nzDropdownMenu]="languageMenu"
               nz-dropdown
               class="language-selector-button"
             >
+              <span
+                [class]="'fi fi-' + (currentLanguage() === LanguageEnum.EN ? 'gb' : 'hu')"
+                style="margin-right: 8px"
+              ></span>
               {{ 'HEADER.LANGUAGE.' + (currentLanguage() | uppercase) | translate }}
             </button>
           </div>
@@ -126,54 +149,6 @@
               >
                 <span class="fi fi-hu"></span>
                 {{ 'HEADER.LANGUAGE.HU' | translate }}
-              </li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
-        <div>
-          <div>
-            <button
-              nz-button
-              nzType="default"
-              nzSize="large"
-              [nzDropdownMenu]="themeMenu"
-              nz-dropdown
-              class="theme-selector-button"
-            >
-              {{ 'HEADER.THEME.TITLE' | translate }}
-              {{ 'HEADER.THEME.' + currentTheme() | uppercase | translate }}
-            </button>
-          </div>
-
-          <nz-dropdown-menu #themeMenu="nzDropdownMenu">
-            <ul nz-menu>
-              <li
-                tabindex="0"
-                [attr.role]="'menuitem'"
-                (keydown.enter)="
-                  setTheme(ThemeEnum.DARK); $event.preventDefault(); $event.stopPropagation()
-                "
-                (keydown.space)="$event.preventDefault()"
-                (keyup.space)="setTheme(ThemeEnum.DARK); $event.stopPropagation()"
-                nz-menu-item
-                (click)="setTheme(ThemeEnum.DARK)"
-              >
-                <span nz-icon nzType="moon" nzTheme="outline"></span>
-                {{ 'HEADER.THEME.DARK' | translate }}
-              </li>
-              <li
-                tabindex="0"
-                [attr.role]="'menuitem'"
-                (keydown.enter)="
-                  setTheme(ThemeEnum.LIGHT); $event.preventDefault(); $event.stopPropagation()
-                "
-                (keydown.space)="$event.preventDefault()"
-                (keyup.space)="setTheme(ThemeEnum.LIGHT); $event.stopPropagation()"
-                nz-menu-item
-                (click)="setTheme(ThemeEnum.LIGHT)"
-              >
-                <span nz-icon nzType="sun" nzTheme="outline"></span>
-                {{ 'HEADER.THEME.LIGHT' | translate }}
               </li>
             </ul>
           </nz-dropdown-menu>
