@@ -1,5 +1,4 @@
-import type {
-  OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -230,9 +229,7 @@ export class ComponentsPageComponent implements OnInit {
         after: JSON.stringify(curr[key]),
       }));
   }
-  public getChangeItemsForVersion(
-    version: ProjectVersion<Project>,
-  ): { key: string; before: any; after: any }[] {
+  public getChangeItemsForVersion(version: ProjectVersion<Project>): DiffItem[] {
     return this.getDiffItems(version).map((d) => ({
       key: d.key,
       before: d.before,

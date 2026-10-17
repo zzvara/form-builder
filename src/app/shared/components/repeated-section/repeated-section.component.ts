@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import type { FormComponentMarker } from '@interfaces/form-component-marker';
 import { SectionComponent } from '../section/section.component';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';

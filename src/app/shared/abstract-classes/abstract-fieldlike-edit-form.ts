@@ -1,9 +1,9 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { Directive } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import type { AbstractControl, ValidatorFn} from '@angular/forms';
+import type { AbstractControl, ValidatorFn } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
-import type { ErrorType} from '@helpers/error-helper';
+import type { ErrorType } from '@helpers/error-helper';
 import { getErrorMessageList } from '@helpers/error-helper';
 import type { FieldLikeInputData } from '@interfaces/field-like-input-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';

@@ -25,7 +25,7 @@ export class CustomValidators {
     return null;
   }
 
-  static validateIsInList(list: () => any[]) {
+  static validateIsInList(list: () => readonly unknown[]) {
     return (control: AbstractControl) => {
       const value = control.value;
       if (list().some((val) => val === value)) {

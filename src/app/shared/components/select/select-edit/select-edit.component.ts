@@ -1,8 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import type { CdkDragDrop} from '@angular/cdk/drag-drop';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import type { AbstractControl, FormArray} from '@angular/forms';
+import type { AbstractControl, FormArray } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import type { SelectComponentData } from '@components/select/interfaces/select-component-data';
@@ -211,8 +211,8 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
   }
 
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
-    return error.min - error.current;
+    const error = this.getError<{ min: number; current: number }>(this.options, 'minLengthError');
+    return error ? error.min - error.current : 0;
   }
 
   override onReset() {

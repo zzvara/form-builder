@@ -10,7 +10,7 @@ import type { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ModalServiceService<T, D extends InputData, E extends AbstractEditForm<T, D>> {
+export class ModalServiceService<T, D extends InputData<T>, E extends AbstractEditForm<T, D>> {
   private modal = inject(NzModalService);
   private translate = inject(TranslateService);
 

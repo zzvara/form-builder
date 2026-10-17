@@ -1,14 +1,5 @@
-import type {
-  OnInit,
-  OnChanges,
-  SimpleChanges} from '@angular/core';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  Input,
-  inject,
-} from '@angular/core';
+import type { OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, Input, inject } from '@angular/core';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
@@ -21,8 +12,8 @@ interface RawItem {
 }
 interface ChangeInput {
   key: string;
-  before: any;
-  after: any;
+  before: unknown;
+  after: unknown;
 }
 interface DiffItem {
   key: string;
@@ -65,7 +56,7 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
    * Safely parse a JSON string into an array of RawItem.
    * If the input is not a string or is invalid JSON, return an empty array.
    */
-  private safeParseArray(raw: any): RawItem[] {
+  private safeParseArray(raw: unknown): RawItem[] {
     if (typeof raw !== 'string') return [];
     try {
       const parsed = JSON.parse(raw);

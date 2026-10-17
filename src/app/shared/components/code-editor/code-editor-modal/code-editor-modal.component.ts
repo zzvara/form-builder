@@ -1,7 +1,4 @@
-import type {
-  OnChanges,
-  OnInit,
-  SimpleChanges} from '@angular/core';
+import type { OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -16,7 +13,10 @@ import {
   CodeEditorType,
   CodeEditorVariableType,
 } from '@app/shared/enums/code-editor.enum';
-import type { CodeEditorData, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
+import type {
+  CodeEditorData,
+  CodeEditorVariable,
+} from '@app/shared/interfaces/code-editor.interface';
 import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { ComponentService } from '@app/shared/services/component.service';
 import { ModalService } from '@app/shared/services/modal.service';

@@ -1,6 +1,6 @@
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { appConfig } from '@app/app.config';
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';

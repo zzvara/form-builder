@@ -1,15 +1,8 @@
-import type { OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { DestroyRef, Directive, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import type {
-  AbstractControl,
-  FormGroup,
-  ValidatorFn} from '@angular/forms';
-import {
-  FormBuilder,
-  FormControl,
-  Validators,
-} from '@angular/forms';
+import type { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import type {
   ControlConnection,
   ControlConnectionData,
@@ -33,7 +26,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   protected readonly trimString: (value: string) => string = (value: string) => value.trim();
 
   protected readonly formData: FormGroup = this.formBuilder.group<{
-    [key in keyof D]?: FormControl<any>;
+    [key in keyof D]?: FormControl<D[key] | null>;
   }>(
     {},
     {
@@ -233,7 +226,7 @@ export abstract class AbstractEditForm<T, D extends InputData<T>> implements OnI
   }
   connectAnyValidations(controls: ControlConnection) {
     this.executeBasedOnChanges(controls, (connData) => {
-      const control = this.getControl<any>(connData.name);
+      const control = this.getControl<unknown>(connData.name);
       control?.markAsDirty();
       if (connData.recursiveCall) {
         if (connData.alreadyCalled) {

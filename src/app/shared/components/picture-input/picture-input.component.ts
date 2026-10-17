@@ -1,6 +1,6 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule } from '@angular/common';
-import type { OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import type { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
@@ -8,13 +8,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import type {
-  NzUploadChangeParam,
-  NzUploadFile,
-  NzUploadXHRArgs} from 'ng-zorro-antd/upload';
-import {
-  NzUploadComponent
-} from 'ng-zorro-antd/upload';
+import type { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
+import { NzUploadComponent } from 'ng-zorro-antd/upload';
 import type { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
 
@@ -57,7 +52,7 @@ export class PictureInputComponent
   uploadToLocalStorage = (item: NzUploadXHRArgs): Subscription => {
     const obs = new Observable((observer) => {
       const reader = new FileReader();
-      reader.onload = () => {
+      reader.onload = (event) => {
         const base64 = reader.result as string;
         try {
           localStorage.setItem(item.file.name, base64);
@@ -73,7 +68,15 @@ export class PictureInputComponent
         item.onError!(err, item.file);
         observer.error(err);
       };
-      reader.readAsDataURL(item.file as any);
+      // NG-Zorro passes the native file to custom upload handlers.
+      const file = item.file instanceof Blob ? item.file : item.file.originFileObj;
+      if (file instanceof Blob) {
+        reader.readAsDataURL(file);
+      } else {
+        const error = new Error('The upload does not contain a readable file.');
+        item.onError?.(error, item.file);
+        observer.error(error);
+      }
     });
 
     return obs.subscribe();

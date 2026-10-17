@@ -2,7 +2,7 @@ import type { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-field
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { Directive } from '@angular/core';
 import type { AbstractControl } from '@angular/forms';
-import type { ErrorType} from '@helpers/error-helper';
+import type { ErrorType } from '@helpers/error-helper';
 import { getErrorMessageList } from '@helpers/error-helper';
 import type { FieldLikeInputData } from '@interfaces/field-like-input-data';
 

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import type {
-  OnInit, OnDestroy} from '@angular/core';
+import type { OnInit, OnDestroy } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,14 +8,14 @@ import {
   Input,
   Output,
   EventEmitter,
-  signal
+  signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import type { Params} from '@angular/router';
+import type { Params } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
-import type { Project} from '@interfaces/project';
+import type { Project } from '@interfaces/project';
 import { ProjectType } from '@interfaces/project';
 import { TranslatePipe } from '@ngx-translate/core';
 import { JsonService } from '@services/json.service';

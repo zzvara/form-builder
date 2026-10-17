@@ -136,7 +136,7 @@ export class JsonService {
 
           observer.next(json);
           observer.complete();
-        } catch (e) {
+        } catch {
           observer.error(new Error('Failed to parse JSON file. Please ensure the file is valid.'));
         }
       };

@@ -9,7 +9,7 @@ export interface ControlConnectionData {
   additionalData?: DataSetterType;
 }
 
-export type DataSetterType<Caller = any, Value = any> = (
+export type DataSetterType<Caller = unknown, Value = unknown> = (
   caller: AbstractControl<Caller>,
   currentValue: Value,
 ) => Value | null;

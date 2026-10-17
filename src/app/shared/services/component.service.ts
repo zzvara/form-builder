@@ -40,8 +40,7 @@ export class ComponentService {
     this.checkVariable();
     const list = this.getItemsBeforeId(targetId)
       .filter((item) => this.instanceOfFormInputDataPipe.transform(item))
-      .map((item: any) => {
-        const formInput = item as FormInputData;
+      .map((formInput) => {
         if (
           formInput.data &&
           formInput.data.id &&

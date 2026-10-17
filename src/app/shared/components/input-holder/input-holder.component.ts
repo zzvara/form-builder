@@ -5,11 +5,7 @@
 import type { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import type { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
-import type {
-  AfterViewInit,
-  OnInit,
-  TemplateRef,
-  Type} from '@angular/core';
+import type { AfterViewInit, OnInit, TemplateRef, Type } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -68,8 +64,8 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
   ],
 })
 export class InputHolderComponent<
-  T = any,
-  D extends InputData<T> = InputData,
+  T = unknown,
+  D extends InputData<T> = InputData<T>,
   E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>,
 >
   implements OnInit, AfterViewInit
@@ -77,12 +73,12 @@ export class InputHolderComponent<
   private destroyRef = inject(DestroyRef);
   private translate = inject(TranslateService);
 
-  @Input() formInput!: FormInputData<D, T>;
+  @Input() formInput!: FormInputData<D>;
   get inputData(): D {
     return this.formInput.data!;
   }
 
-  @Input() customTitle!: TemplateRef<any>;
+  @Input() customTitle!: TemplateRef<unknown>;
 
   @Output() changedEvent = new EventEmitter<D>();
   @Output() removeComponentEvent = new EventEmitter<string>();
@@ -133,14 +129,16 @@ export class InputHolderComponent<
   }
 
   resetComponent() {
-    const defaultData: FormInputData<D, T> | undefined = getInputGroups(this.translate).find(
+    const defaultData = getInputGroups(this.translate).find(
       (group) => group.type === this.formInput.type,
     );
     if (defaultData) {
+      // The registry entry has the same component type and data shape as this input.
+      const defaults = defaultData.data as D;
       Object.keys(this.inputData)
         .filter((key) => key !== 'id' && key !== 'sectionId')
         .forEach((key) => {
-          this.inputData[key as keyof D] = defaultData.data![key as keyof D];
+          this.inputData[key as keyof D] = defaults[key as keyof D];
         });
       this.changedEvent.emit(this.inputData);
     }

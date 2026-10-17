@@ -1,7 +1,7 @@
 import { getInputGroups } from '@pages/edit/config/edit-data-config';
 import { TranslateService } from '@ngx-translate/core';
 import { appConfig } from '@app/app.config';
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { RadioGroupComponent } from '@components/radio-group/radio-group.component';

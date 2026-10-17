@@ -1,7 +1,7 @@
 import { NZ_MODAL_DATA, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { appConfig } from '@app/app.config';
 import { ApplicationRef } from '@angular/core';
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import type { AbstractControl } from '@angular/forms';
 import type { CdkDragDrop } from '@angular/cdk/drag-drop';

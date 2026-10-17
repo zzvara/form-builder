@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import type { NzModalRef} from 'ng-zorro-antd/modal';
+import type { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import type { CodeEditorVariable } from '../interfaces/code-editor.interface';
 import type { SectionList } from '@app/pages/edit/interfaces/section-list';
@@ -17,7 +17,7 @@ export class ModalService {
   openVariableModal(
     selectedVariables: CodeEditorVariable[],
     allVariables: CodeEditorVariable[],
-  ): NzModalRef<VariableModalComponent, any> {
+  ): NzModalRef<VariableModalComponent, CodeEditorVariable[]> {
     return this.modal.create({
       nzTitle: this.translate.instant('COMPONENTS.CONDITION_SETTINGS.VARIABLE_MODAL.TITLE'),
       nzContent: VariableModalComponent,

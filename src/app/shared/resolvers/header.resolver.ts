@@ -21,7 +21,7 @@ const HEADER_CONFIGS = [
 
 export const headerResolver: ResolveFn<null> = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot,
+  _state: RouterStateSnapshot,
 ): null => {
   const headerService = inject(HeaderService);
 

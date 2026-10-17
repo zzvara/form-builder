@@ -1,7 +1,6 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import type { AbstractControl} from '@angular/forms';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import type { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
@@ -22,10 +21,9 @@ import type {
   DisabledTimeConfig,
   DisabledTimeFn,
   NzDateMode,
-  SupportTimeOptions} from 'ng-zorro-antd/date-picker';
-import {
-  NzDatePickerComponent
+  SupportTimeOptions,
 } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
   NzFormControlComponent,
@@ -155,12 +153,14 @@ export class DatePickerEditComponent<
         { name: 'minDateValue', additionalData: () => null },
         {
           name: 'dateFormat',
-          additionalData: (caller: AbstractControl<NzDateMode>) => defaultDateFormats[caller.value],
+          additionalData: () => defaultDateFormats[this.getStrictControlValue<NzDateMode>('mode')],
         },
         {
           name: 'showTime',
-          additionalData: (caller: AbstractControl<NzDateMode>, current: boolean) =>
-            caller.value !== 'date' ? false : current,
+          additionalData: () =>
+            this.getStrictControlValue<NzDateMode>('mode') !== 'date'
+              ? false
+              : this.getStrictControlValue<boolean>('showTime'),
         },
       ],
       dateFormat: [

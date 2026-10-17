@@ -1,16 +1,10 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import type { CdkDragDrop} from '@angular/cdk/drag-drop';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import type {
-  AbstractControl,
-  FormArray} from '@angular/forms';
-import {
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import type { AbstractControl, FormArray } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import type {
   CheckboxGroupData,
@@ -224,8 +218,8 @@ export class CheckboxGroupEditComponent extends AbstractEditForm<
   }
 
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
-    return error.min - error.current;
+    const error = this.getError<{ min: number; current: number }>(this.options, 'minLengthError');
+    return error ? error.min - error.current : 0;
   }
 
   drop(event: CdkDragDrop<AbstractControl[]>) {

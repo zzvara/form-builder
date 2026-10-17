@@ -2,7 +2,11 @@ import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-in
 import type { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 import type { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { getDisabledDateConfig, getDisabledTimeConfig } from '@helpers/date-helper';
-import type { DisabledTimeConfig, DisabledTimeFn, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
+import type {
+  DisabledTimeConfig,
+  DisabledTimeFn,
+  SupportTimeOptions,
+} from 'ng-zorro-antd/date-picker';
 
 export abstract class AbstractDatePickerComponent<
   T extends Date | Date[],

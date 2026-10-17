@@ -4,7 +4,8 @@ import type {
   OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges} from '@angular/core';
+  SimpleChanges,
+} from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -23,13 +24,16 @@ import {
   CodeEditorVariableType,
 } from '@app/shared/enums/code-editor.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
-import type { CodeEditorError, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
+import type {
+  CodeEditorError,
+  CodeEditorVariable,
+} from '@app/shared/interfaces/code-editor.interface';
 import { EventService } from '@app/shared/services/event.service';
 import { JavaScriptLinterService } from '@app/shared/services/javascript-linter.service';
 import { defaultKeymap } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
-import type { Diagnostic} from '@codemirror/lint';
+import type { Diagnostic } from '@codemirror/lint';
 import { diagnosticCount, linter, lintGutter, lintKeymap } from '@codemirror/lint';
 import type { Extension } from '@codemirror/state';
 import { Compartment, EditorState } from '@codemirror/state';
@@ -268,7 +272,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
       this.codeWorker.onmessage = (message: MessageEvent) => {
         clearTimeout(timeout);
 
-        const data = message.data as { error?: string; success: boolean; result?: any };
+        const data = message.data as { error?: string; success: boolean; result?: unknown };
         if (!data.success) {
           console.error('Worker error:', data.error);
           this.errorCodeEditor.set('RUN_CODE');

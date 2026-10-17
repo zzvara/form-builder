@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
-import type {
-  OnChanges,
-  SimpleChanges} from '@angular/core';
+import type { OnChanges, SimpleChanges } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,

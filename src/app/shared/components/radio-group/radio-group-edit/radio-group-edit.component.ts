@@ -1,5 +1,5 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import type { CdkDragDrop} from '@angular/cdk/drag-drop';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
@@ -9,17 +9,11 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import type {
-  AbstractControl,
-  FormArray} from '@angular/forms';
-import {
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import type { AbstractControl, FormArray } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
 import type { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
-import type { ErrorType} from '@helpers/error-helper';
+import type { ErrorType } from '@helpers/error-helper';
 import { getErrorMessageList } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -261,8 +255,8 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
   }
 
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
-    return error.min - error.current;
+    const error = this.getError<{ min: number; current: number }>(this.options, 'minLengthError');
+    return error ? error.min - error.current : 0;
   }
 
   drop(event: CdkDragDrop<AbstractControl[]>) {

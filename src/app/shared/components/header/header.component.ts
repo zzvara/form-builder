@@ -1,12 +1,5 @@
-import type {
-  OnDestroy,
-  OnInit} from '@angular/core';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  signal,
-  inject,
-} from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import type { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
