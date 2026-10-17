@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { CodeEditorVariable } from '../interfaces/code-editor.interface';
-import { SectionList } from '@app/pages/edit/interfaces/section-list';
+import type { NzModalRef} from 'ng-zorro-antd/modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import type { CodeEditorVariable } from '../interfaces/code-editor.interface';
+import type { SectionList } from '@app/pages/edit/interfaces/section-list';
 import { CodeEditorModalComponent } from '../components/code-editor/code-editor-modal/code-editor-modal.component';
 import { VariableModalComponent } from '../components/code-editor/variable-modal/variable-modal.component';
 

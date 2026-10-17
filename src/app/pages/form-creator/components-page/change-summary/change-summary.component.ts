@@ -1,11 +1,12 @@
+import type {
+  OnInit,
+  OnChanges,
+  SimpleChanges} from '@angular/core';
 import {
   Component,
   ChangeDetectionStrategy,
   signal,
-  OnInit,
-  OnChanges,
   Input,
-  SimpleChanges,
   inject,
 } from '@angular/core';
 

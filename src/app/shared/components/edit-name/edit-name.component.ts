@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
+import type {
+  OnChanges,
+  SimpleChanges} from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
   signal,
   inject,
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EditList } from '@app/pages/edit/interfaces/edit-list';
-import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import type { EditList } from '@app/pages/edit/interfaces/edit-list';
+import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
 import { FormService } from '@app/shared/services/form.service';

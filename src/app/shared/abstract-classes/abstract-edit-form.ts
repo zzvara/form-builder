@@ -1,19 +1,21 @@
-import { DestroyRef, Directive, OnInit, ViewChild, inject } from '@angular/core';
+import type { OnInit} from '@angular/core';
+import { DestroyRef, Directive, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
+import type {
   AbstractControl,
+  FormGroup,
+  ValidatorFn} from '@angular/forms';
+import {
   FormBuilder,
   FormControl,
-  FormGroup,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import {
+import type {
   ControlConnection,
   ControlConnectionData,
   DataSetterType,
 } from '@interfaces/control-connection';
-import { InputData, InputDataKeys } from '@interfaces/input-data';
+import type { InputData, InputDataKeys } from '@interfaces/input-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslateService } from '@ngx-translate/core';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';

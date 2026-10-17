@@ -1,16 +1,18 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import type { CdkDragDrop} from '@angular/cdk/drag-drop';
+import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
+import type {
   AbstractControl,
-  FormArray,
+  FormArray} from '@angular/forms';
+import {
   FormControl,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import {
+import type {
   CheckboxGroupData,
   CheckboxOptions,
 } from '@components/checkbox-group/interfaces/checkbox-group-data';

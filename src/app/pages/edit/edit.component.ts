@@ -1,19 +1,21 @@
-import {
+import type {
   CdkDrag,
   CdkDragDrop,
-  CdkDropList,
+  CdkDropList} from '@angular/cdk/drag-drop';
+import {
   DragDropModule,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
+import type {
+  OnChanges,
+  OnInit,
+  QueryList} from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
   HostListener,
   Input,
-  OnChanges,
-  OnInit,
-  QueryList,
   signal,
   ViewChildren,
   inject,
@@ -22,14 +24,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
-import { FormInputData } from '@interfaces/form-input-data';
-import { InlineEdit } from '@interfaces/inline-edit';
-import { InputData } from '@interfaces/input-data';
-import { Project } from '@interfaces/project';
+import type { FormInputData } from '@interfaces/form-input-data';
+import type { InlineEdit } from '@interfaces/inline-edit';
+import type { InputData } from '@interfaces/input-data';
+import type { Project } from '@interfaces/project';
 import { getSideBarData } from '@pages/edit/config/edit-data-config';
-import { EditList } from '@pages/edit/interfaces/edit-list';
+import type { EditList } from '@pages/edit/interfaces/edit-list';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
-import { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
+import type { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';

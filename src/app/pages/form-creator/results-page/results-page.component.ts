@@ -1,24 +1,25 @@
+import type {
+  OnInit,
+  OnDestroy} from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
-  OnDestroy,
   signal,
   inject,
 } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
+import type { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
-import { ColumnItem } from '@app/shared/interfaces/column-item.model';
+import type { ColumnItem } from '@app/shared/interfaces/column-item.model';
 import { StatisticsService } from '@pages/form-creator/results-page/services/statistics.service';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';

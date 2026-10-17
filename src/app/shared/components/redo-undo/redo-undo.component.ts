@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject } from '@angular/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { TranslatePipe } from '@ngx-translate/core';
-import { SectionList } from '@pages/edit/interfaces/section-list';
+import type { SectionList } from '@pages/edit/interfaces/section-list';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';

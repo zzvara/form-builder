@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Project } from '@interfaces/project';
+import type { Project } from '@interfaces/project';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 
 @Injectable({

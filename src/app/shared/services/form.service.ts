@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import type { FormGroup} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ValidatorService } from './validator.service';
 import { UpdateOnStrategy } from '../interfaces/update-on-strategy';
 

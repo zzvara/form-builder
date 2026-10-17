@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ModalServiceService } from '@services/modal/modal-service.service';
-import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { InputData } from '@interfaces/input-data';
+import type { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import type { InputData } from '@interfaces/input-data';
 import { TranslateService } from '@ngx-translate/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 

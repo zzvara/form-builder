@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from '@services/project.service';
 import { ViewType } from '@app/shared/interfaces/view-type.enum';

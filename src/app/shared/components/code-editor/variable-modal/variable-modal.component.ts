@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
-import { CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
+import type { CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
 import { NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef } from 'ng-zorro-antd/modal';
-import { NzTransferComponent, TransferChange, TransferItem } from 'ng-zorro-antd/transfer';
+import type { TransferChange, TransferItem } from 'ng-zorro-antd/transfer';
+import { NzTransferComponent } from 'ng-zorro-antd/transfer';
 import { TranslatePipe } from '@ngx-translate/core';
 import { VariableIconPipe } from '@shared/pipes/variable-icon.pipe';
 import { NzDividerModule } from 'ng-zorro-antd/divider';

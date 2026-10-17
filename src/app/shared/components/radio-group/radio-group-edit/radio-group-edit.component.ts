@@ -1,5 +1,6 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import type { CdkDragDrop} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,16 +9,18 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
+import type {
   AbstractControl,
-  FormArray,
+  FormArray} from '@angular/forms';
+import {
   FormControl,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
-import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
+import type { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
+import type { ErrorType} from '@helpers/error-helper';
+import { getErrorMessageList } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';

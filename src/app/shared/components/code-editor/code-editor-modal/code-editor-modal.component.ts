@@ -1,22 +1,23 @@
+import type {
+  OnChanges,
+  OnInit,
+  SimpleChanges} from '@angular/core';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
   ViewChild,
   inject,
 } from '@angular/core';
-import { SectionList } from '@app/pages/edit/interfaces/section-list';
+import type { SectionList } from '@app/pages/edit/interfaces/section-list';
 import {
   CodeEditorMode,
   CodeEditorType,
   CodeEditorVariableType,
 } from '@app/shared/enums/code-editor.enum';
-import { CodeEditorData, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
-import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import type { CodeEditorData, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
+import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { ComponentService } from '@app/shared/services/component.service';
 import { ModalService } from '@app/shared/services/modal.service';
 import { NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef } from 'ng-zorro-antd/modal';

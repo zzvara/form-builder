@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Project, ProjectVersion } from '@interfaces/project';
+import type { Project, ProjectVersion } from '@interfaces/project';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 interface ProjectData {

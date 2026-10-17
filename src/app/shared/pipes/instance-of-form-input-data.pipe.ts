@@ -1,5 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { FormInputData } from '../interfaces/form-input-data';
+import type { PipeTransform } from '@angular/core';
+import { Pipe } from '@angular/core';
+import type { FormInputData } from '../interfaces/form-input-data';
 
 @Pipe({
   name: 'instanceOfFormInputData',

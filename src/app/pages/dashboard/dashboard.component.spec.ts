@@ -1,9 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { appConfig } from '@app/app.config';
 import { ProjectService } from '@services/project.service';
-import { Project, ProjectType } from '@interfaces/project';
+import type { Project } from '@interfaces/project';
+import { ProjectType } from '@interfaces/project';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
