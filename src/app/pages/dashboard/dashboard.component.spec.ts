@@ -1,6 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from '@pages/dashboard/dashboard.component';
+import { appConfig } from '@app/app.config';
+import { ProjectService } from '@services/project.service';
+import type { Project } from '@interfaces/project';
+import { ProjectType } from '@interfaces/project';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -8,7 +13,8 @@ describe('DashboardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
+      imports: [DashboardComponent],
+      providers: appConfig.providers,
     });
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
@@ -17,5 +23,44 @@ describe('DashboardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('allows switching views with Enter and Space', async () => {
+    const toggle = fixture.nativeElement.querySelector('.toolbar [role="button"]') as HTMLElement;
+    const initialView = component.isListView();
+    expect(toggle.tabIndex).toBe(0);
+
+    toggle.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
+    await fixture.whenStable();
+    expect(component.isListView()).toBe(!initialView);
+
+    const spaceDown = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true });
+    toggle.dispatchEvent(spaceDown);
+    expect(spaceDown.defaultPrevented).toBeTrue();
+    toggle.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', bubbles: true }));
+    await fixture.whenStable();
+    expect(component.isListView()).toBe(initialView);
+  });
+
+  it('updates the view when a project is added without Zone.js', async () => {
+    const project: Project = {
+      id: '',
+      title: 'Signal survey',
+      description: '',
+      type: ProjectType.QUESTIONNAIRE,
+      time_checkbox: false,
+      deadline_checkbox: false,
+      time_limit: 0,
+      deadline: '',
+      created: '',
+      modified: '',
+    };
+    TestBed.inject(ProjectService<Project>).add(project);
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.textContent).toContain('Signal survey');
+    TestBed.inject(ProjectService<Project>).remove(project.id);
   });
 });

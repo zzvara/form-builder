@@ -1,4 +1,4 @@
-export interface InputData<T = any> {
+export interface InputData<T = unknown> {
   id?: string;
   sectionId?: string;
   questionValue?: string;

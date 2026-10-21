@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray } from '@angular/forms';
+import type { AbstractControl, FormArray } from '@angular/forms';
 
 export class ListValidators {
   //Form group level validator
@@ -36,7 +36,7 @@ export class ListValidators {
     };
   }
 
-  static validateListContains(item: () => any) {
+  static validateListContains(item: () => unknown) {
     return (listControl: AbstractControl) => {
       const controls = (listControl as FormArray).controls;
       if (controls.map((ctrl) => ctrl.getRawValue()).some((val) => val === item())) {

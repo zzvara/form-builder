@@ -9,10 +9,13 @@ addEventListener('message', (message: MessageEvent) => {
       success: true,
       result,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     postMessage({
       success: false,
-      error: error?.message ?? String(error),
+      error:
+        typeof error === 'object' && error !== null && 'message' in error
+          ? (error.message ?? String(error))
+          : String(error),
     });
   }
 });

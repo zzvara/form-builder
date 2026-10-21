@@ -5,10 +5,12 @@
     "LIST_VIEW": "List View",
     "LIST_VIEW_TOOLTIP": "Switch to List View",
     "QUESTIONNAIRES": "Questionnaires",
-    "NEW_QUESTIONNAIRE": "New Questionnaire",
     "TESTS": "Tests",
-    "NEW_TEST": "New Test",
     "ACTION": "Actions",
-    "DELETE_CONFIRMATION": "Delete this project?"
+    "DELETE_CONFIRMATION": "Delete this project?",
+    "EMPTY_QUESTIONNAIRE_DESC": "You don't have any questionnaires yet.\nCreate one to start collecting data!",
+    "EMPTY_TEST_DESC": "You don't have any tests yet.\nCreate one to assess knowledge!",
+    "NEW_QUESTIONNAIRE": "New Questionnaire",
+    "NEW_TEST": "New Test"
   }
 }

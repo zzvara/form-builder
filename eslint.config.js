@@ -45,7 +45,7 @@ module.exports = defineConfig([
       // Ignores variables starting with "_" → useful for intentionally unused params
       '@typescript-eslint/no-unused-vars': [
         'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
 
       // Ensures type-only imports are explicitly marked with "import type"
@@ -55,6 +55,15 @@ module.exports = defineConfig([
       // Discourages use of "any" since it disables type safety
       // Kept as warning because sometimes unavoidable (e.g. external libs)
       '@typescript-eslint/no-explicit-any': 'warn',
+
+      // Allows FormComponentMarker to remain an empty marker interface
+      // while preventing other unnecessary empty interfaces
+      '@typescript-eslint/no-empty-object-type': [
+        'error',
+        {
+          allowWithName: '^FormComponentMarker$',
+        },
+      ],
 
       // Disabled because TypeScript can infer return types well
       // Enforcing this everywhere would add noise without much benefit
@@ -70,16 +79,30 @@ module.exports = defineConfig([
 
       // Enforces usage of standalone components/directives/pipes
       // Ensures modern Angular architecture and avoids mixing NgModules unintentionally
-      '@angular-eslint/prefer-standalone': 'error'
+      '@angular-eslint/prefer-standalone': 'error',
     },
   },
   {
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {
+      // Recognize NG-Zorro checkbox and radio directives applied to <label>.
+      // These directives render their associated native controls internally,
+      // which Angular ESLint cannot inspect during static template analysis.
+      '@angular-eslint/template/label-has-associated-control': [
+        'error',
+        {
+          labelComponents: [
+            {
+              selector: 'label',
+              inputs: ['for', 'htmlFor', 'nz-checkbox', 'nz-radio', 'nz-radio-button'],
+            },
+          ],
+        },
+      ],
       // Prevents negating async pipe results directly (e.g. !(obs$ | async))
       // Can lead to multiple subscriptions and confusing template behavior
-      '@angular-eslint/template/no-negated-async': 'error'
+      '@angular-eslint/template/no-negated-async': 'error',
     },
   },
 ]);

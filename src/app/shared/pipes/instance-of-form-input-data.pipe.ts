@@ -1,16 +1,19 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { FormInputData } from '../interfaces/form-input-data';
+import type { PipeTransform } from '@angular/core';
+import { Pipe } from '@angular/core';
+import type { FormInputData } from '../interfaces/form-input-data';
 
 @Pipe({
   name: 'instanceOfFormInputData',
   standalone: true,
 })
 export class InstanceOfFormInputDataPipe implements PipeTransform {
-  transform(object: any): object is FormInputData {
+  transform(object: unknown): object is FormInputData {
     return (
-      object &&
-      ((object.data && 'title' in object.data && 'type' in object.data && 'data' in object.data) ||
-        ('title' in object && 'type' in object && 'data' in object))
+      typeof object === 'object' &&
+      object !== null &&
+      'title' in object &&
+      'type' in object &&
+      'data' in object
     );
   }
 }
