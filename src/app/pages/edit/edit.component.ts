@@ -1,19 +1,12 @@
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  DragDropModule,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import type { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
+import type { OnChanges, OnInit, QueryList } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
   HostListener,
   Input,
-  OnChanges,
-  OnInit,
-  QueryList,
   signal,
   ViewChildren,
   inject,
@@ -22,14 +15,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
-import { FormInputData } from '@interfaces/form-input-data';
-import { InlineEdit } from '@interfaces/inline-edit';
-import { InputData } from '@interfaces/input-data';
-import { Project } from '@interfaces/project';
+import type { FormInputData } from '@interfaces/form-input-data';
+import type { InlineEdit } from '@interfaces/inline-edit';
+import type { InputData } from '@interfaces/input-data';
+import type { Project } from '@interfaces/project';
 import { getSideBarData } from '@pages/edit/config/edit-data-config';
-import { EditList } from '@pages/edit/interfaces/edit-list';
+import type { EditList } from '@pages/edit/interfaces/edit-list';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
-import { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
+import type { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
 import { ProjectService } from '@services/project.service';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { cloneDeep } from 'lodash-es';
@@ -234,11 +227,9 @@ export class EditComponent implements OnInit, OnChanges {
           section.sectionInputs = [];
         }
 
-        section.sectionInputs = section.sectionInputs.map((input: any) => {
-          let cleaned = input;
-          if (input.id && input.data && !input.type) {
-            cleaned = input.data;
-          }
+        section.sectionInputs = section.sectionInputs.map((input: FormInputData | EditList) => {
+          // Older projects may wrap section inputs in an EditList entry.
+          const cleaned = 'type' in input ? input : (input.data as FormInputData);
 
           if (cleaned.data && (!cleaned.data.id || cleaned.data.id === '')) {
             cleaned.data.id = uuidv4();
@@ -393,7 +384,7 @@ export class EditComponent implements OnInit, OnChanges {
       event.container.data.splice(event.currentIndex, 0, newItem);
     } else {
       // Move existing item from edit area to section or from section to edit area
-      const droppedInput: any = draggable.data;
+      const droppedInput: FormInputData | EditList = draggable.data;
       const movedItem = cloneDeep(droppedInput);
 
       let toMove: FormInputData;
@@ -401,7 +392,7 @@ export class EditComponent implements OnInit, OnChanges {
       if (this.instanceOfFormInputDataPipe.transform(movedItem)) {
         toMove = movedItem;
       } else {
-        toMove = movedItem.data;
+        toMove = movedItem.data as FormInputData;
       }
 
       event.container.data.splice(event.currentIndex, 0, toMove);
@@ -443,7 +434,7 @@ export class EditComponent implements OnInit, OnChanges {
   getSectionInputStyle(sect: SectionList): Record<string, string> {
     let width: number;
     if (
-      sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit as any)) ||
+      sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit)) ||
       sect.layout === LayoutEnum.VERTICAL
     ) {
       width = 100;
@@ -564,7 +555,7 @@ export class EditComponent implements OnInit, OnChanges {
    * @param event - The event object containing the new value of the form input.
    * @returns {void}
    */
-  onValueChanged<D extends InputData<T>, T>(event: D): void {
+  onValueChanged<D extends InputData<T>, T>(_event: D): void {
     this.undoRedoService.saveState(this.editList);
     this.componentService.component$.next(this.editList);
   }
@@ -584,11 +575,11 @@ export class EditComponent implements OnInit, OnChanges {
     this.updateRepeated();
   }
 
-  public isLogicEnabled(item: any): boolean {
+  public isLogicEnabled(item: FormInputData | SectionList | null | undefined): boolean {
     return !!item?.codeEditor?.enabled;
   }
 
-  public getConditionTooltip(item: any): string {
+  public getConditionTooltip(item: FormInputData | SectionList | null | undefined): string {
     const code = item?.codeEditor?.data?.code;
     if (code && code.trim() !== '') {
       return code;

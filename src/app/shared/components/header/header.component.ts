@@ -1,13 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-  signal,
-  inject,
-} from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ContextAction } from '@components/header/header.model';
+import type { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '@services/header/header.service';

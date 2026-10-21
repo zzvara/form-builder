@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
-import { ProjectType } from '@interfaces/project';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { ProjectType } from '@interfaces/project';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCardComponent, NzCardMetaComponent } from 'ng-zorro-antd/card';
 import { NzColDirective, NzGridModule } from 'ng-zorro-antd/grid';

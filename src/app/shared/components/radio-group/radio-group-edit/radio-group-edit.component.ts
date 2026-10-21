@@ -1,16 +1,20 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import type { AbstractControl, FormArray } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
-import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
+import type { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
+import type { ErrorType } from '@helpers/error-helper';
+import { getErrorMessageList } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -59,6 +63,7 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
   ],
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {
+  private readonly cdr = inject(ChangeDetectorRef);
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');
   readonly editingIndex = signal<number | null>(null);
@@ -109,11 +114,10 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     });
 
     this.connectValidations({
-      required: [{ name: 'requiredMessage' }, { name: 'defaultValue' }],
+      required: [{ name: 'requiredMessage' }],
     });
 
     this.initializeFormValues();
-    this.setupDefaultValueCheckBox();
 
     this.newOption = new FormControl(null, {
       updateOn: UpdateOnStrategy.CHANGE,
@@ -123,6 +127,9 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
         CustomValidators.validateIsInList(() => this.optionDescriptions),
       ],
     });
+    this.options.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.newOption.updateValueAndValidity());
   }
 
   override initializeFormValues() {
@@ -141,7 +148,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   override onReset() {
     super.onReset();
-    this.getControl<boolean>('setDefaultValue')?.setValue(true);
+    this.cancelEdit();
     this.newOption.reset();
     this.options.clear();
     this.initialValues.options.forEach((option) => {
@@ -152,28 +159,18 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
         }),
       );
     });
+    this.cdr.markForCheck();
   }
 
   override saveData() {
     super.saveData();
+    this.initialValues.defaultValue = this.rawFormData.defaultValue ?? undefined;
     this.initialValues.isButton = this.rawFormData.isButton;
     this.initialValues.options = this.rawFormData.options;
     this.initialValues.required = this.rawFormData.required;
     if (this.rawFormData.required) {
       this.initialValues.requiredMessage = this.rawFormData.requiredMessage;
     }
-    if (!this.getControlValue('setDefaultValue')) {
-      this.initialValues.defaultValue = undefined;
-    }
-  }
-
-  override getDefaultValueValidators() {
-    return CustomValidators.executeValidationsConditionally([
-      {
-        condition: () => this.getStrictControlValue<boolean>('required'),
-        validation: Validators.required,
-      },
-    ]);
   }
 
   override get defaultValueUpdateOn() {
@@ -182,13 +179,11 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   //----------------------------------------------------------------------------------------------------------------------
 
-  setupDefaultValueCheckBox() {
-    //Add custom form control
-    this.addAnyControls({
-      setDefaultValue: new FormControl<boolean>(true, {
-        updateOn: UpdateOnStrategy.CHANGE,
-      }),
-    });
+  selectDefaultOption(optionId: number, checked: boolean) {
+    const control = this.getStrictControl('defaultValue');
+    control?.setValue(checked ? optionId : undefined);
+    control?.markAsDirty();
+    control?.markAsTouched();
   }
 
   getErrorMessages(control: AbstractControl<string>): string[] {
@@ -212,6 +207,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   // Add a new option
   addOption() {
+    if (this.newOption.invalid) return;
     this.options.push(
       this.formBuilder.group({
         option_id: new FormControl(this.getNextId(), Validators.required),
@@ -225,8 +221,12 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   // Remove an existing option
   removeOption(optionIndex: number) {
+    const optionId = this.options.at(optionIndex).value.option_id;
     this.options.removeAt(optionIndex);
-    this.getStrictControl('defaultValue')?.setValue(undefined);
+    if (this.getControlValue('defaultValue') === optionId) {
+      this.getStrictControl('defaultValue')?.setValue(undefined);
+    }
+    this.cancelEdit();
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
@@ -243,7 +243,9 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
       this.editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
-    this.options.at(i).patchValue({ label: newValue });
+    this.options.at(i).patchValue({ option_description: newValue });
+    this.options.markAsDirty();
+    this.options.markAsTouched();
     this.editingIndex.set(null);
     this.editError.set(null);
   }
@@ -253,11 +255,17 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
   }
 
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
-    return error.min - error.current;
+    const error = this.getError<{ min: number; current: number }>(this.options, 'minLengthError');
+    return error ? error.min - error.current : 0;
   }
 
   drop(event: CdkDragDrop<AbstractControl[]>) {
-    moveItemInArray(this.options.controls, event.previousIndex, event.currentIndex);
+    if (event.previousIndex === event.currentIndex) return;
+    const option = this.options.at(event.previousIndex);
+    this.options.removeAt(event.previousIndex);
+    this.options.insert(event.currentIndex, option);
+    this.options.markAsDirty();
+    this.options.markAsTouched();
+    this.cancelEdit();
   }
 }

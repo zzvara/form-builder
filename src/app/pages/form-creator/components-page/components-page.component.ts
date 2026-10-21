@@ -1,23 +1,22 @@
+import type { OnInit } from '@angular/core';
 import {
-  ApplicationModule,
   ChangeDetectionStrategy,
   Component,
   signal,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
   inject,
 } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
+import type { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
-import { InlineEdit } from '@interfaces/inline-edit';
+import type { InlineEdit } from '@interfaces/inline-edit';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
+import type { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
@@ -230,9 +229,7 @@ export class ComponentsPageComponent implements OnInit {
         after: JSON.stringify(curr[key]),
       }));
   }
-  public getChangeItemsForVersion(
-    version: ProjectVersion<Project>,
-  ): { key: string; before: any; after: any }[] {
+  public getChangeItemsForVersion(version: ProjectVersion<Project>): DiffItem[] {
     return this.getDiffItems(version).map((d) => ({
       key: d.key,
       before: d.before,

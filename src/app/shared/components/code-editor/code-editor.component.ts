@@ -1,17 +1,19 @@
-import {
+import type {
   AfterViewInit,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import {
   ChangeDetectionStrategy,
   Component,
   effect,
   inject,
-  ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
   signal,
 } from '@angular/core';
@@ -22,15 +24,21 @@ import {
   CodeEditorVariableType,
 } from '@app/shared/enums/code-editor.enum';
 import { ThemeEnum } from '@app/shared/enums/theme.enum';
-import { CodeEditorError, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
+import type {
+  CodeEditorError,
+  CodeEditorVariable,
+} from '@app/shared/interfaces/code-editor.interface';
 import { EventService } from '@app/shared/services/event.service';
 import { JavaScriptLinterService } from '@app/shared/services/javascript-linter.service';
 import { defaultKeymap } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
-import { Diagnostic, diagnosticCount, linter, lintGutter, lintKeymap } from '@codemirror/lint';
-import { Compartment, EditorState, Extension } from '@codemirror/state';
-import { keymap, ViewUpdate } from '@codemirror/view';
+import type { Diagnostic } from '@codemirror/lint';
+import { diagnosticCount, linter, lintGutter, lintKeymap } from '@codemirror/lint';
+import type { Extension } from '@codemirror/state';
+import { Compartment, EditorState } from '@codemirror/state';
+import type { ViewUpdate } from '@codemirror/view';
+import { keymap } from '@codemirror/view';
 import { basicDark } from '@fsegurai/codemirror-theme-basic-dark';
 import { basicLight } from '@fsegurai/codemirror-theme-basic-light';
 import { basicSetup, EditorView } from 'codemirror';
@@ -264,7 +272,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
       this.codeWorker.onmessage = (message: MessageEvent) => {
         clearTimeout(timeout);
 
-        const data = message.data as { error?: string; success: boolean; result?: any };
+        const data = message.data as { error?: string; success: boolean; result?: unknown };
         if (!data.success) {
           console.error('Worker error:', data.error);
           this.errorCodeEditor.set('RUN_CODE');

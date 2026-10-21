@@ -1,14 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { EditList } from '@app/pages/edit/interfaces/edit-list';
+import type { EditList } from '@app/pages/edit/interfaces/edit-list';
 import { BehaviorSubject } from 'rxjs';
 import { InstanceOfSectionListPipe } from '../pipes/instance-of-section-list.pipe';
-import { SectionList } from '@app/pages/edit/interfaces/section-list';
-import { FormInputData } from '../interfaces/form-input-data';
+import type { SectionList } from '@app/pages/edit/interfaces/section-list';
+import type { FormInputData } from '../interfaces/form-input-data';
 import { InstanceOfFormInputDataPipe } from '../pipes/instance-of-form-input-data.pipe';
-import { CodeEditorVariable } from '../interfaces/code-editor.interface';
+import type { CodeEditorVariable } from '../interfaces/code-editor.interface';
 import { CodeEditorVariableType } from '../enums/code-editor.enum';
-import { translateComponentType } from '@app/pages/edit/config/edit-data-config';
+import type { translateComponentType } from '@app/pages/edit/config/edit-data-config';
 
 @Injectable({
   providedIn: 'root',
@@ -40,8 +40,7 @@ export class ComponentService {
     this.checkVariable();
     const list = this.getItemsBeforeId(targetId)
       .filter((item) => this.instanceOfFormInputDataPipe.transform(item))
-      .map((item: any) => {
-        const formInput = item as FormInputData;
+      .map((formInput) => {
         if (
           formInput.data &&
           formInput.data.id &&

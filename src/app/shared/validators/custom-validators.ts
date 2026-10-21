@@ -1,6 +1,6 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import type { AbstractControl, ValidatorFn } from '@angular/forms';
 import { compareTimeFull, defaultDateComparers } from '@helpers/date-helper';
-import { NzDateMode } from 'ng-zorro-antd/date-picker';
+import type { NzDateMode } from 'ng-zorro-antd/date-picker';
 
 type CustomValidationErrors =
   | { fieldIsEmpty: true }
@@ -25,7 +25,7 @@ export class CustomValidators {
     return null;
   }
 
-  static validateIsInList(list: () => any[]) {
+  static validateIsInList(list: () => readonly unknown[]) {
     return (control: AbstractControl) => {
       const value = control.value;
       if (list().some((val) => val === value)) {

@@ -1,5 +1,6 @@
 import { appConfig } from '@app/app.config';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { RedoUndoComponent } from '@components/redo-undo/redo-undo.component';
 

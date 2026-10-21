@@ -1,5 +1,5 @@
 import { DateFormat } from '@app/shared/constants/date-format.constant';
-import { NzDateMode } from 'ng-zorro-antd/date-picker';
+import type { NzDateMode } from 'ng-zorro-antd/date-picker';
 
 export type DefaultDateFormats = Record<NzDateMode, string>;
 
