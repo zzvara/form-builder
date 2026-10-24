@@ -5,7 +5,7 @@
 import type { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import type { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
-import type { AfterViewInit, OnInit, TemplateRef, Type } from '@angular/core';
+import type { AfterViewInit, TemplateRef, Type } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -67,9 +67,7 @@ export class InputHolderComponent<
   T = unknown,
   D extends InputData<T> = InputData<T>,
   E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>,
->
-  implements OnInit, AfterViewInit
-{
+> implements AfterViewInit {
   private destroyRef = inject(DestroyRef);
   private translate = inject(TranslateService);
 
@@ -89,24 +87,12 @@ export class InputHolderComponent<
 
   @Input() inlineEdit: InlineEdit = { enabled: true };
 
-  componentInputs!: {
-    data: D;
-    inlineEdit: InlineEdit;
-  };
-
   get componentType(): Type<FormComponentMarker> {
     return translateComponentType[this.formInput.type];
   }
 
   get embeddedComponent(): AbstractInput<T, D, E> {
     return this.inputOutlet['_componentRef']?.instance;
-  }
-
-  ngOnInit(): void {
-    this.componentInputs = {
-      data: this.inputData,
-      inlineEdit: this.inlineEdit,
-    };
   }
 
   ngAfterViewInit() {
@@ -135,11 +121,11 @@ export class InputHolderComponent<
     if (defaultData) {
       // The registry entry has the same component type and data shape as this input.
       const defaults = defaultData.data as D;
-      Object.keys(this.inputData)
-        .filter((key) => key !== 'id' && key !== 'sectionId')
-        .forEach((key) => {
-          this.inputData[key as keyof D] = defaults[key as keyof D];
-        });
+      this.formInput.data = {
+        ...defaults,
+        id: this.inputData.id,
+        sectionId: this.inputData.sectionId,
+      };
       this.changedEvent.emit(this.inputData);
     }
   }

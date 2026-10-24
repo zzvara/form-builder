@@ -1,7 +1,7 @@
 import type { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import type { OnChanges, OnInit, QueryList } from '@angular/core';
+import type { OnChanges, OnInit, QueryList, SimpleChanges } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -104,6 +104,7 @@ export class EditComponent implements OnInit, OnChanges {
   sideBarData = getSideBarData(this, this.translate);
 
   private readonly editListState = signal<EditList[]>([]);
+  private initialized = false;
   get editList(): EditList[] {
     return this.editListState();
   }
@@ -124,14 +125,16 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.initialized = true;
     this.sideBarData = getSideBarData(this, this.translate);
     this.updateViewMode();
     this.loadProject();
-    this.initializeUndoRedo();
   }
 
-  ngOnChanges() {
-    this.loadProject();
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.initialized && (changes['projectId'] || changes['versionNum'])) {
+      this.loadProject();
+    }
   }
 
   @HostListener('window:resize')
@@ -145,15 +148,6 @@ export class EditComponent implements OnInit, OnChanges {
       .map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
-    // If editList is empty but there's JSON data with editList, use that instead
-    if (this.editList.length === 0 && this.projectId) {
-      const project = this.projectService.searchData(this.projectId)[0];
-      if (project?.editList && project.editList.length > 0) {
-        this.editList = this.cleanCorruptedData(cloneDeep(project.editList));
-        this.names = this.getCustomTitles();
-      }
-    }
-
     return this.editList.flatMap((edit) => {
       if (this.instanceOfSectionListPipe.transform(edit.data)) {
         return edit.data.sectionInputs;
@@ -193,15 +187,16 @@ export class EditComponent implements OnInit, OnChanges {
    * @returns {void}
    */
   private loadProject(): void {
-    if (this.projectId !== undefined) {
-      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
-      if (project?.editList) {
-        this.editList = this.cleanCorruptedData(cloneDeep(project.editList));
-        this.names = this.getCustomTitles();
-        this.undoRedoService.saveState(this.editList);
-      }
-      this.componentService.component$.next(this.editList);
-    }
+    const project =
+      this.projectId !== undefined
+        ? this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1)
+        : undefined;
+    this.editList = this.cleanCorruptedData(cloneDeep(project?.editList ?? []));
+    this.names = this.getCustomTitles();
+    this.closeRepeatedSettingsDrawer();
+    this.undoRedoService.clearHistory();
+    this.undoRedoService.saveState(this.editList);
+    this.componentService.component$.next(this.editList);
   }
 
   /**
@@ -240,18 +235,6 @@ export class EditComponent implements OnInit, OnChanges {
       }
     }
     return list;
-  }
-
-  /**
-   * Initializes the undo/redo service by saving the current state of the form inputs.
-   * @returns {void}
-   */
-  private initializeUndoRedo(): void {
-    if (this.getAllFormInputs() && this.getAllFormInputs().length > 0) {
-      this.undoRedoService.clearHistory();
-      this.undoRedoService.saveState(this.editList);
-      this.componentService.component$.next(this.editList);
-    }
   }
 
   undoRedo(undoRedoEvent: UndoRedoEnum): void {
