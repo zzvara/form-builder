@@ -17,6 +17,10 @@ import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { Router } from '@angular/router';
+import { RoutePath } from '@app/shared/models/route-path.model';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { DatePipe } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -33,6 +37,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzTooltipModule,
     NzPopconfirmModule,
     NzIconModule,
+    NzEmptyModule,
+    NzButtonModule,
     SafeHtmlPipe,
     TranslatePipe,
     DatePipe,
@@ -40,6 +46,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 })
 export class ListViewComponent {
   private translate = inject(TranslateService);
+  private router = inject(Router);
 
   readonly projects = input<Questionnaire[]>([]);
   readonly type = input<ProjectType>();
@@ -110,5 +117,12 @@ export class ListViewComponent {
 
   onEditProject(id: string): void {
     this.editProject.emit(id);
+  }
+
+  onCreateNew(): void {
+    const currentType = this.type();
+    if (currentType) {
+      this.router.navigate([RoutePath.NEW], { queryParams: { type: currentType } });
+    }
   }
 }
