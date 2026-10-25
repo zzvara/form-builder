@@ -1,13 +1,26 @@
 <nz-content>
   <div class="toolbar">
-    <div (click)="toggleView()">
-      <span nz-icon nzTheme="outline" [nzType]="isListView() ? 'appstore' : 'unordered-list'"></span>
+    <div
+      tabindex="0"
+      [attr.role]="'button'"
+      (keydown.enter)="toggleView(); $event.preventDefault(); $event.stopPropagation()"
+      (keydown.space)="$event.preventDefault()"
+      (keyup.space)="toggleView(); $event.stopPropagation()"
+      (click)="toggleView()"
+    >
+      <span
+        nz-icon
+        nzTheme="outline"
+        [nzType]="isListView() ? 'appstore' : 'unordered-list'"
+      ></span>
       <span>{{ 'DASHBOARD.' + (isListView() ? 'CARD_VIEW' : 'LIST_VIEW') | translate }}</span>
       <i
         nz-icon
         nzType="question-circle"
         nz-tooltip
-        [nzTooltipTitle]="'DASHBOARD.' + (isListView() ? 'CARD_VIEW_TOOLTIP' : 'LIST_VIEW_TOOLTIP') | translate"
+        [nzTooltipTitle]="
+          'DASHBOARD.' + (isListView() ? 'CARD_VIEW_TOOLTIP' : 'LIST_VIEW_TOOLTIP') | translate
+        "
       ></i>
     </div>
   </div>

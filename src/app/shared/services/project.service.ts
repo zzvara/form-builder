@@ -1,5 +1,7 @@
 import { Injectable, signal, Signal } from '@angular/core';
 import { Project, ProjectVersion } from '@interfaces/project';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -18,6 +20,8 @@ export class ProjectService<T extends Project> {
    * @returns {Signal<T[]>} A signal of the current list of projects.
    */
   public readonly items: Signal<T[]> = this._items.asReadonly();
+  public readonly projects = this.items;
+  private readonly projects$ = new BehaviorSubject<T[]>([]);
 
   private readonly storageKey: string = 'project';
 
@@ -27,7 +31,12 @@ export class ProjectService<T extends Project> {
     if (savedData) {
       const parsedData = JSON.parse(savedData) as T[];
       this._items.set(parsedData);
+      this.publishProjects(parsedData);
     }
+  }
+
+  private publishProjects(projects: T[] = this._items()): void {
+    this.projects$.next([...projects]);
   }
 
   /**
@@ -36,6 +45,10 @@ export class ProjectService<T extends Project> {
    */
   private generateNextId(): string {
     return uuidv4();
+  }
+
+  list(): Observable<T[]> {
+    return this.projects$.asObservable();
   }
 
   /**
@@ -56,6 +69,7 @@ export class ProjectService<T extends Project> {
       localStorage.setItem(this.storageKey, JSON.stringify(newItems));
       return newItems;
     });
+    this.publishProjects();
 
     const projectHistoryKey = `${this.storageKey}-history-${data.id}`;
     const initialVersion: ProjectVersion<T> = {
@@ -81,6 +95,7 @@ export class ProjectService<T extends Project> {
       localStorage.setItem(this.storageKey, JSON.stringify(newItems));
       return newItems;
     });
+    this.publishProjects();
 
     // Remove the project's history from local storage
     const projectHistoryKey = `${this.storageKey}-history-${projectId}`;
@@ -160,6 +175,7 @@ export class ProjectService<T extends Project> {
         return newItems;
       });
 
+      this.publishProjects();
       return isReverted;
     }
     return false;
@@ -213,6 +229,9 @@ export class ProjectService<T extends Project> {
       return isUpdated ? newItems : items;
     });
 
+    if (isUpdated) {
+      this.publishProjects();
+    }
     return isUpdated;
   }
 

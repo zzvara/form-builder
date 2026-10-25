@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, signal, Signal, computed, WritableSignal } from '@angular/core';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
+import type { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
@@ -31,35 +31,41 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   ],
 })
 export class SidebarComponent {
-  private readonly _sidebarData: WritableSignal<SidebarData[]> = signal([]);
-  @Input() set sidebarData(value: SidebarData[]) {
-    this._sidebarData.set(value || []);
+  private sidebarItems: SidebarData[] = [];
+
+  readonly searchTerm = signal('');
+  readonly filteredData = signal<SidebarData[]>([]);
+
+  @Input()
+  set sidebarData(data: SidebarData[]) {
+    this.sidebarItems = data;
+    this.filterItems();
   }
 
-  private readonly _searchTerm: WritableSignal<string> = signal('');
-  public readonly searchTerm: Signal<string> = this._searchTerm.asReadonly();
+  get sidebarData(): SidebarData[] {
+    return this.sidebarItems;
+  }
 
-  public readonly filteredData: Signal<SidebarData[]> = computed(() => {
-    const term = this._searchTerm().toLowerCase();
-    const data = this._sidebarData();
-
-    if (!term) {
-      return data;
+  filterItems() {
+    const searchTerm = this.searchTerm();
+    if (searchTerm) {
+      this.filteredData.set(
+        this.sidebarItems
+          .map((group) => ({
+            ...group,
+            groupContents: group.groupContents.filter((item) =>
+              item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+            ),
+          }))
+          .filter((group) => group.groupContents.length > 0),
+      );
+    } else {
+      this.filteredData.set(this.sidebarItems);
     }
-
-    return data
-      .map((group) => ({
-        ...group,
-        groupContents: group.groupContents.filter((item) => item.title.toLowerCase().includes(term)),
-      }))
-      .filter((group) => group.groupContents.length > 0);
-  });
-
-  onSearchChange(term: string): void {
-    this._searchTerm.set(term);
   }
 
-  clearSearch(): void {
-    this._searchTerm.set('');
+  clearSearch() {
+    this.searchTerm.set('');
+    this.filteredData.set(this.sidebarItems);
   }
 }

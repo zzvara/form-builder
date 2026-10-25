@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, Signal, WritableSignal, OnDestroy, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, Signal, WritableSignal, OnDestroy, DestroyRef, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,6 +31,7 @@ import { QuillEditorComponent } from 'ngx-quill';
   templateUrl: './info-page.component.html',
   styleUrls: ['./info-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,

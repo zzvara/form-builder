@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { PictureInputComponentData } from '../interfaces/picture-input-component-data';
+import type { PictureInputComponentData } from '../interfaces/picture-input-component-data';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
@@ -20,12 +19,11 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
 
 @Component({
   selector: 'app-picture-input-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './picture-input-edit.component.html',
   styleUrls: [],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     NzFormModule,

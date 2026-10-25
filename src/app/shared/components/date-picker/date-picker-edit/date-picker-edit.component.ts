@@ -1,8 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
-import { AbstractControl, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
+import { DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import type { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
 import {
   getDisabledDateConfig,
@@ -17,13 +17,13 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
-import {
+import type {
   DisabledTimeConfig,
   DisabledTimeFn,
   NzDateMode,
-  NzDatePickerComponent,
   SupportTimeOptions,
 } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
   NzFormControlComponent,
@@ -39,14 +39,14 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
 
 @Component({
   selector: 'app-date-picker-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './date-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
+    DatePipe,
     NzDividerComponent,
     NzFormModule,
     NzFormLabelComponent,
@@ -67,14 +67,13 @@ export class DatePickerEditComponent<
   T extends Date | Date[] = Date,
   D extends DatePickerComponentData<T> = DatePickerComponentData<T>,
 > extends AbstractFieldLikeEditForm<T, D> {
-  private readonly _datePickerModes: WritableSignal<{ mode: NzDateMode; label: string }[]> = signal([
+  datePickerModes: { mode: NzDateMode; label: string }[] = [
     { mode: 'decade', label: this.translate.instant('COMPONENTS.DATE_PICKER.DECADE') },
     { mode: 'year', label: this.translate.instant('COMPONENTS.DATE_PICKER.YEAR') },
     { mode: 'month', label: this.translate.instant('COMPONENTS.DATE_PICKER.MONTH') },
     { mode: 'week', label: this.translate.instant('COMPONENTS.DATE_PICKER.WEEK') },
     { mode: 'date', label: this.translate.instant('COMPONENTS.DATE_PICKER.FULL_DATE') },
-  ]);
-  public readonly datePickerModes: Signal<{ mode: NzDateMode; label: string }[]> = this._datePickerModes.asReadonly();
+  ];
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -93,7 +92,7 @@ export class DatePickerEditComponent<
               mode: this.getStrictControlValue<NzDateMode>('mode'),
               showTime: this.getStrictControlValue<boolean>('showTime'),
             }),
-            () => this.getStrictControlValue<boolean>('minDate')
+            () => this.getStrictControlValue<boolean>('minDate'),
           ),
         ],
       }),
@@ -111,7 +110,7 @@ export class DatePickerEditComponent<
               mode: this.getStrictControlValue<NzDateMode>('mode'),
               showTime: this.getStrictControlValue<boolean>('showTime'),
             }),
-            () => this.getStrictControlValue<boolean>('maxDate')
+            () => this.getStrictControlValue<boolean>('maxDate'),
           ),
         ],
       }),
@@ -124,7 +123,9 @@ export class DatePickerEditComponent<
       }),
       timeFormat: new FormControl(
         null,
-        CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('timeFormat'))
+        CustomValidators.validateRequiredIf(() =>
+          this.getStrictControlValue<boolean>('timeFormat'),
+        ),
       ),
       showWeekNumber: new FormControl(false, {
         updateOn: UpdateOnStrategy.CHANGE,
@@ -140,17 +141,26 @@ export class DatePickerEditComponent<
       maxDate: [{ name: 'maxDateValue' }, { name: 'defaultValue' }],
       minDateValue: [{ name: 'maxDateValue' }, { name: 'defaultValue' }],
       maxDateValue: [{ name: 'minDateValue', recursiveCall: true }],
+      // maxDateValue change calls minDateValue recursively, so no need to include it here
       showTime: [{ name: 'timeFormat' }],
     });
     this.setControlValuesBasedOnChanges({
+      // maxDateValue change calls minDateValue recursively, so no need to include it here either
       maxDateValue: [{ name: 'defaultValue', additionalData: () => null }],
+      // maxDateValue change sets defaultValue to null, so no need to include it here
       mode: [
         { name: 'maxDateValue', additionalData: () => null },
         { name: 'minDateValue', additionalData: () => null },
-        { name: 'dateFormat', additionalData: (caller: AbstractControl<NzDateMode>) => defaultDateFormats[caller.value] },
+        {
+          name: 'dateFormat',
+          additionalData: () => defaultDateFormats[this.getStrictControlValue<NzDateMode>('mode')],
+        },
         {
           name: 'showTime',
-          additionalData: (caller: AbstractControl<NzDateMode>, current: boolean) => (caller.value !== 'date' ? false : current),
+          additionalData: () =>
+            this.getStrictControlValue<NzDateMode>('mode') !== 'date'
+              ? false
+              : this.getStrictControlValue<boolean>('showTime'),
         },
       ],
       dateFormat: [
@@ -209,33 +219,52 @@ export class DatePickerEditComponent<
 
   get getFullFormat(): string {
     if (this.getStrictControlValue('showTime')) {
-      return this.getStrictControlValue<string>('dateFormat') + this.getStrictControlValue<string>('timeFormat');
+      return (
+        this.getStrictControlValue<string>('dateFormat') +
+        this.getStrictControlValue<string>('timeFormat')
+      );
     }
     return this.getStrictControlValue<string>('dateFormat');
   }
 
   get getDisabledDatesForMin() {
     if (this.getStrictControlValue('maxDate')) {
-      return getDisabledDatesForMaxDate(this.getStrictControlValue<Date>('maxDateValue'), this.getStrictControlValue<NzDateMode>('mode'));
+      return getDisabledDatesForMaxDate(
+        this.getStrictControlValue<Date>('maxDateValue'),
+        this.getStrictControlValue<NzDateMode>('mode'),
+      );
     }
     return undefined;
   }
   get getDisabledDatesForMax() {
     if (this.getStrictControlValue('minDate')) {
-      return getDisabledDatesForMinDate(this.getStrictControlValue<Date>('minDateValue'), this.getStrictControlValue<NzDateMode>('mode'));
+      return getDisabledDatesForMinDate(
+        this.getStrictControlValue<Date>('minDateValue'),
+        this.getStrictControlValue<NzDateMode>('mode'),
+      );
     }
     return undefined;
   }
 
-  disabledTimeConfigForMin: DisabledTimeFn = (current: Date | Date[]): DisabledTimeConfig | undefined => {
+  disabledTimeConfigForMin: DisabledTimeFn = (
+    current: Date | Date[],
+  ): DisabledTimeConfig | undefined => {
     if (this.getStrictControlValue('showTime') && this.getStrictControlValue('maxDate')) {
-      return getDisabledTimeConfigForMaxDate(current as Date, this.getStrictControlValue('maxDateValue'));
+      return getDisabledTimeConfigForMaxDate(
+        current as Date,
+        this.getStrictControlValue('maxDateValue'),
+      );
     }
     return undefined;
   };
-  disabledTimeConfigForMax: DisabledTimeFn = (current: Date | Date[]): DisabledTimeConfig | undefined => {
+  disabledTimeConfigForMax: DisabledTimeFn = (
+    current: Date | Date[],
+  ): DisabledTimeConfig | undefined => {
     if (this.getStrictControlValue('showTime') && this.getStrictControlValue('minDate')) {
-      return getDisabledTimeConfigForMinDate(current as Date, this.getStrictControlValue('minDateValue'));
+      return getDisabledTimeConfigForMinDate(
+        current as Date,
+        this.getStrictControlValue('minDateValue'),
+      );
     }
     return undefined;
   };

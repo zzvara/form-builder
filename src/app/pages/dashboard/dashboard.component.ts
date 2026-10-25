@@ -1,8 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from '@services/project.service';
 import { ViewType } from '@app/shared/interfaces/view-type.enum';
@@ -36,21 +35,19 @@ import { CardViewComponent } from './card-view/card-view.component';
     TranslatePipe,
   ],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   private readonly router = inject(Router);
-  private readonly questionnaireService = inject(ProjectService<Questionnaire>);
+  private readonly questionnaireService = inject<ProjectService<Questionnaire>>(ProjectService);
   private readonly store = inject(FormBuilderStore);
 
-  projects = this.questionnaireService.items;
-  isListView = signal(true);
-  projectTypes = ProjectType;
-
-  ngOnInit(): void {
-    const savedView = localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE);
-    if (savedView) {
-      this.isListView.set(savedView === ViewType.LIST);
-    }
+  get projects() {
+    return this.questionnaireService.projects;
   }
+  readonly isListView = signal(
+    !localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE) ||
+      localStorage.getItem(LocalStorageKey.VIEW_PREFERENCE) === ViewType.LIST,
+  );
+  projectTypes = ProjectType;
 
   createProject(type: ProjectType): void {
     this.store.initNewProject(type);
@@ -67,7 +64,7 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleView(): void {
-    this.isListView.update(v => !v);
+    this.isListView.update((isListView) => !isListView);
     localStorage.setItem(
       LocalStorageKey.VIEW_PREFERENCE,
       this.isListView() ? ViewType.LIST : ViewType.CARD,

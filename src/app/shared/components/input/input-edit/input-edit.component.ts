@@ -1,9 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { InputComponentData } from '@components/input/interfaces/input-component-data';
-import { ErrorType } from '@helpers/error-helper';
+import type { InputComponentData } from '@components/input/interfaces/input-component-data';
+import type { ErrorType } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -25,12 +24,11 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
 
 @Component({
   selector: 'app-input-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './input-edit.component.html',
   styleUrls: [],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     NzDividerComponent,

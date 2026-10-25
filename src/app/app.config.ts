@@ -1,11 +1,12 @@
-import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+import type { ApplicationConfig } from '@angular/core';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { HttpBackend, provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, TitleStrategy } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
-import { IconDefinition } from '@ant-design/icons-angular';
+import type { IconDefinition } from '@ant-design/icons-angular';
 import {
   AppstoreOutline,
   HomeOutline,
@@ -14,7 +15,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { importProvidersFrom } from '@angular/core';
-import { QuillModule } from 'ngx-quill';
+import { provideQuillConfig } from 'ngx-quill/config';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import { appRoutes } from './app.routes';
@@ -55,19 +56,19 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpBackend],
         },
       }),
-      QuillModule.forRoot({
-        theme: 'snow',
-        modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-            [{ script: 'sub' }, { script: 'super' }],
-            ['link', 'image', 'code-block'],
-            ['clean'],
-          ],
-        },
-      }),
       NzModalModule,
     ),
+    provideQuillConfig({
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          [{ script: 'sub' }, { script: 'super' }],
+          ['link', 'image', 'code-block'],
+          ['clean'],
+        ],
+      },
+    }),
   ],
 };

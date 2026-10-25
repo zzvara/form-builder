@@ -1,9 +1,17 @@
-import { Component, ChangeDetectionStrategy, input, output, computed, ViewEncapsulation } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  EventEmitter,
+  input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
-import { ProjectType } from '@interfaces/project';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { ProjectType } from '@interfaces/project';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCardComponent, NzCardMetaComponent } from 'ng-zorro-antd/card';
 import { NzColDirective, NzGridModule } from 'ng-zorro-antd/grid';
@@ -17,6 +25,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   templateUrl: './card-view.component.html',
   styleUrls: ['./card-view.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzTableModule,
     NzCardComponent,
@@ -31,17 +40,18 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
     NzIconModule,
   ],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardViewComponent {
-  projects = input<Questionnaire[]>([]);
-  type = input<ProjectType>();
+  readonly projects = input<Questionnaire[]>([]);
+  readonly type = input<ProjectType>();
 
-  deleteProject = output<string>();
-  createProject = output<ProjectType>();
-  editProject = output<string>();
+  @Output() deleteProject = new EventEmitter<string>();
+  @Output() createProject = new EventEmitter<ProjectType>();
+  @Output() editProject = new EventEmitter<string>();
 
-  projectList = computed(() => this.projects().filter((project) => project.type === this.type()));
+  readonly projectList = computed(() =>
+    this.projects().filter((project) => project.type === this.type()),
+  );
 
   DateFormat = DateFormat;
 

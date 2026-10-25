@@ -1,6 +1,7 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import type { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, effect, HostListener, Input, OnInit, QueryList, ViewChildren, signal, Signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, HostListener, Input, OnInit, QueryList, ViewChildren, signal, Signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
@@ -9,7 +10,7 @@ import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
 import { FormBuilderStore } from '@app/core/form-builder.store';
 import { getSideBarData } from '@pages/edit/config/edit-data-config';
-import { EditList } from '@pages/edit/interfaces/edit-list';
+import type { EditList } from '@pages/edit/interfaces/edit-list';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
 import { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
 import { cloneDeep } from 'lodash-es';
@@ -43,6 +44,7 @@ import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -193,11 +195,9 @@ export class EditComponent implements OnInit {
           section.sectionInputs = [];
         }
 
-        section.sectionInputs = section.sectionInputs.map((input: any) => {
-          let cleaned = input;
-          if (input.id && input.data && !input.type) {
-            cleaned = input.data;
-          }
+        section.sectionInputs = section.sectionInputs.map((input: FormInputData | EditList) => {
+          // Older projects may wrap section inputs in an EditList entry.
+          const cleaned = 'type' in input ? input : (input.data as FormInputData);
 
           if (cleaned.data && (!cleaned.data.id || cleaned.data.id === '')) {
             cleaned.data.id = uuidv4();
@@ -380,7 +380,7 @@ export class EditComponent implements OnInit {
     this.pushToStore();
   }
 
-  getSectionInputStyle(sect: SectionList): { [p: string]: string } {
+  getSectionInputStyle(sect: SectionList): Record<string, string> {
     let width: number;
     if (sect.sectionInputs.some((edit) => this.instanceOfSectionListPipe.transform(edit.data as any)) || sect.layout === LayoutEnum.VERTICAL) {
       width = 100;
@@ -429,7 +429,9 @@ export class EditComponent implements OnInit {
 
   getRepeatedSettingsSummary(section: RepeatedSectionList): string {
     if (section.repeatByOther) {
-      return section.referencedInput || this.translate.instant('COMPONENTS.SECTION.REPEATED.UNSPECIFIED');
+      return (
+        section.referencedInput || this.translate.instant('COMPONENTS.SECTION.REPEATED.UNSPECIFIED')
+      );
     }
     return `${section.repeatTimes}x`;
   }
@@ -448,7 +450,10 @@ export class EditComponent implements OnInit {
   }
 
   hasRepeatedSettingsErrorForEdit(edit: EditList): boolean {
-    if (!this.instanceOfSectionListPipe.transform(edit.data) || edit.data.type !== 'RepeatedSectionComponent') {
+    if (
+      !this.instanceOfSectionListPipe.transform(edit.data) ||
+      edit.data.type !== 'RepeatedSectionComponent'
+    ) {
       return false;
     }
     return this.hasRepeatedSettingsError(edit.data as RepeatedSectionList);
@@ -503,11 +508,11 @@ export class EditComponent implements OnInit {
     this.pushToStore();
   }
 
-  public isLogicEnabled(item: any): boolean {
+  public isLogicEnabled(item: FormInputData | SectionList | null | undefined): boolean {
     return !!item?.codeEditor?.enabled;
   }
 
-  public getConditionTooltip(item: any): string {
+  public getConditionTooltip(item: FormInputData | SectionList | null | undefined): string {
     const code = item?.codeEditor?.data?.code;
     if (code && code.trim() !== '') {
       return code;
@@ -524,7 +529,7 @@ export class EditComponent implements OnInit {
   returnChildren(sect: SectionList): { title: string; id: string }[] {
     const returnVal: { title: string; id: string }[] = [];
     for (const input of sect.sectionInputs) {
-      let id: string = input.data?.id || '';
+      const id: string = input.data?.id || '';
       returnVal.push({
         title: input.title,
         id: id,

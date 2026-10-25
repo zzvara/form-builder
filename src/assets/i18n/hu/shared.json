@@ -13,8 +13,15 @@
     "EDIT_FORM": "Űrlap szerkesztése",
     "NEW_FORM": "Új űrlap"
   },
-  "ERRORS": {
-    "PROJECT_NOT_FOUND": "A projekt nem található.",
-    "VERSION_REVERT_FAILED": "Verzió visszaállítása sikertelen."
+  "A11Y": {
+    "EDIT_PROJECT": "Projekt szerkesztése",
+    "SCROLL_TO_COMPONENT": "Ugrás a komponenshez",
+    "HOME": "Vissza a főoldalra",
+    "UNDO": "Visszavonás",
+    "SAVE": "Mentés",
+    "TOGGLE_SIDEBAR": "Oldalsáv megjelenítése vagy elrejtése",
+    "IMPORT": "Kérdőív importálása",
+    "CLEAR_SEARCH": "Keresés törlése",
+    "CLEAR_QUESTION": "Kérdés törlése"
   }
 }

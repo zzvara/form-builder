@@ -3,6 +3,12 @@
     <div>
       @if (headerOptions().includes(options.HOME)) {
         <span
+          tabindex="0"
+          [attr.role]="'button'"
+          (keydown.enter)="navigateToHome(); $event.preventDefault(); $event.stopPropagation()"
+          (keydown.space)="$event.preventDefault()"
+          (keyup.space)="navigateToHome(); $event.stopPropagation()"
+          [attr.aria-label]="'A11Y.HOME' | translate"
           (click)="navigateToHome()"
           nz-icon
           nzType="home"
@@ -11,13 +17,43 @@
         ></span>
       }
       @if (headerOptions().includes(options.UNDO)) {
-        <span (click)="handleUndo()" nz-icon nzType="rollback" nzTheme="outline"></span>
+        <span
+          tabindex="0"
+          [attr.role]="'button'"
+          (keydown.enter)="handleUndo(); $event.preventDefault(); $event.stopPropagation()"
+          (keydown.space)="$event.preventDefault()"
+          (keyup.space)="handleUndo(); $event.stopPropagation()"
+          [attr.aria-label]="'A11Y.UNDO' | translate"
+          (click)="handleUndo()"
+          nz-icon
+          nzType="rollback"
+          nzTheme="outline"
+        ></span>
       }
       @if (headerOptions().includes(options.SAVE)) {
-        <span (click)="handleSave()" nz-icon nzType="save" nzTheme="outline"></span>
+        <span
+          tabindex="0"
+          [attr.role]="'button'"
+          (keydown.enter)="handleSave(); $event.preventDefault(); $event.stopPropagation()"
+          (keydown.space)="$event.preventDefault()"
+          (keyup.space)="handleSave(); $event.stopPropagation()"
+          [attr.aria-label]="'A11Y.SAVE' | translate"
+          (click)="handleSave()"
+          nz-icon
+          nzType="save"
+          nzTheme="outline"
+        ></span>
       }
       @if (headerOptions().includes(options.SIDEBAR)) {
         <span
+          tabindex="0"
+          [attr.role]="'button'"
+          (keydown.enter)="
+            changeMenuItemState(options.SIDEBAR); $event.preventDefault(); $event.stopPropagation()
+          "
+          (keydown.space)="$event.preventDefault()"
+          (keyup.space)="changeMenuItemState(options.SIDEBAR); $event.stopPropagation()"
+          [attr.aria-label]="'A11Y.TOGGLE_SIDEBAR' | translate"
           [ngClass]="activeOptions().includes(options.SIDEBAR) ? 'is-active' : ''"
           (click)="changeMenuItemState(options.SIDEBAR)"
           nz-icon
@@ -29,6 +65,12 @@
         <span>
           <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden-input" />
           <span
+            tabindex="0"
+            [attr.role]="'button'"
+            (keydown.enter)="fileInput.click(); $event.preventDefault(); $event.stopPropagation()"
+            (keydown.space)="$event.preventDefault()"
+            (keyup.space)="fileInput.click(); $event.stopPropagation()"
+            [attr.aria-label]="'A11Y.IMPORT' | translate"
             (click)="fileInput.click()"
             nz-icon
             nzType="upload"
@@ -44,18 +86,48 @@
           <div>
             <button
               nz-button
-              nzType="default"
+              nzType="text"
+              nzSize="large"
+              class="theme-selector-button"
+              (click)="
+                setTheme(currentTheme() === ThemeEnum.LIGHT ? ThemeEnum.DARK : ThemeEnum.LIGHT)
+              "
+            >
+              <span
+                nz-icon
+                [nzType]="currentTheme() === ThemeEnum.LIGHT ? 'sun' : 'moon'"
+                nzTheme="outline"
+              ></span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div>
+            <button
+              nz-button
+              nzType="text"
               nzSize="large"
               [nzDropdownMenu]="languageMenu"
               nz-dropdown
               class="language-selector-button"
             >
+              <span
+                [class]="'fi fi-' + (currentLanguage() === LanguageEnum.EN ? 'gb' : 'hu')"
+                style="margin-right: 8px"
+              ></span>
               {{ 'HEADER.LANGUAGE.' + (currentLanguage() | uppercase) | translate }}
             </button>
           </div>
           <nz-dropdown-menu #languageMenu="nzDropdownMenu">
             <ul nz-menu>
               <li
+                tabindex="0"
+                [attr.role]="'menuitem'"
+                (keydown.enter)="
+                  setLanguage(LanguageEnum.EN); $event.preventDefault(); $event.stopPropagation()
+                "
+                (keydown.space)="$event.preventDefault()"
+                (keyup.space)="setLanguage(LanguageEnum.EN); $event.stopPropagation()"
                 nz-menu-item
                 (click)="setLanguage(LanguageEnum.EN)"
                 [class.selected]="currentLanguage() === LanguageEnum.EN"
@@ -64,40 +136,19 @@
                 {{ 'HEADER.LANGUAGE.EN' | translate }}
               </li>
               <li
+                tabindex="0"
+                [attr.role]="'menuitem'"
+                (keydown.enter)="
+                  setLanguage(LanguageEnum.HU); $event.preventDefault(); $event.stopPropagation()
+                "
+                (keydown.space)="$event.preventDefault()"
+                (keyup.space)="setLanguage(LanguageEnum.HU); $event.stopPropagation()"
                 nz-menu-item
                 (click)="setLanguage(LanguageEnum.HU)"
                 [class.selected]="currentLanguage() === LanguageEnum.HU"
               >
                 <span class="fi fi-hu"></span>
                 {{ 'HEADER.LANGUAGE.HU' | translate }}
-              </li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
-        <div>
-          <div>
-            <button
-              nz-button
-              nzType="default"
-              nzSize="large"
-              [nzDropdownMenu]="themeMenu"
-              nz-dropdown
-              class="theme-selector-button"
-            >
-              {{ 'HEADER.THEME.TITLE' | translate }}
-              {{ 'HEADER.THEME.' + currentTheme() | uppercase | translate }}
-            </button>
-          </div>
-
-          <nz-dropdown-menu #themeMenu="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item (click)="setTheme(ThemeEnum.DARK)">
-                <span nz-icon nzType="moon" nzTheme="outline"></span>
-                {{ 'HEADER.THEME.DARK' | translate }}
-              </li>
-              <li nz-menu-item (click)="setTheme(ThemeEnum.LIGHT)">
-                <span nz-icon nzType="sun" nzTheme="outline"></span>
-                {{ 'HEADER.THEME.LIGHT' | translate }}
               </li>
             </ul>
           </nz-dropdown-menu>

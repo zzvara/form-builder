@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ProjectType } from '@app/shared/interfaces/project';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,6 +15,7 @@ import { FormBuilderStore } from '@app/core/form-builder.store';
   templateUrl: './form-creator.component.html',
   styleUrls: ['./form-creator.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzLayoutComponent,
     NzStepComponent,

@@ -1,20 +1,21 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormComponentMarker } from '@interfaces/form-component-marker';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import type { FormComponentMarker } from '@interfaces/form-component-marker';
+import type { SectionList } from '@pages/edit/interfaces/section-list';
+import type { InlineEdit } from '@interfaces/inline-edit';
 import { NzCardComponent } from 'ng-zorro-antd/card';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
 
 @Component({
   selector: 'app-section',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './section.component.html',
   styleUrls: [],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, NzFormItemComponent, NzCardComponent],
+  imports: [NzFormItemComponent, NzCardComponent],
 })
 export class SectionComponent implements FormComponentMarker {
-  @Input() data: any;
-  @Input() inlineEdit: any;
+  @Input() data?: SectionList;
+  @Input() inlineEdit?: InlineEdit;
 
   // Egyelőre ennek a komponensnek nincs semmi értelme, mivel az edit.component saját maga generálja le és tárolja a section-ök adatait
   // @todo In that case can we destroy it?

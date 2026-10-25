@@ -1,8 +1,7 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import type { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -24,12 +23,11 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
 
 @Component({
   selector: 'app-number-input-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     NzDividerComponent,
@@ -66,7 +64,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
               maxOn: this.getStrictControlValue<boolean>('max'),
               maxNum: this.getStrictControlValue<number>('maxNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('min')
+            () => this.getStrictControlValue<boolean>('min'),
           ),
         ],
       }),
@@ -82,7 +80,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
               minOn: this.getStrictControlValue<boolean>('min'),
               minNum: this.getStrictControlValue<number>('minNumber') ?? 0,
             }),
-            () => this.getStrictControlValue<boolean>('max')
+            () => this.getStrictControlValue<boolean>('max'),
           ),
         ],
       }),
@@ -97,7 +95,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
         CustomValidators.validateRequiredIf(() => this.getStrictControlValue<boolean>('format')),
         CustomValidators.validateContainsIf(
           () => this.getStrictControlValue<boolean>('format'),
-          '{{..}}'
+          '{{..}}',
         ),
       ]),
     });
@@ -140,12 +138,12 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
   }
 
   get maxNumOrInf() {
-    return this.getStrictControlValue('max') && this.getStrictControlValue('maxNumber')
+    return this.getStrictControlValue('max') && this.getStrictControlValue('maxNumber') != null
       ? this.getStrictControlValue<number>('maxNumber')
       : Infinity;
   }
   get minNumOrNegInf() {
-    return this.getStrictControlValue('min') && this.getStrictControlValue('minNumber')
+    return this.getStrictControlValue('min') && this.getStrictControlValue('minNumber') != null
       ? this.getStrictControlValue<number>('minNumber')
       : -Infinity;
   }
@@ -166,8 +164,8 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
           const [before, after] = [
             this.getStrictControlValue<string>('formatter').substring(0, specIndex),
             this.getStrictControlValue<string>('formatter').substring(
-              specIndex + 3,
-              this.getStrictControlValue<string>('formatter').length
+              specIndex + '{{..}}'.length,
+              this.getStrictControlValue<string>('formatter').length,
             ),
           ];
           return Number(value.replace(before, '').replace(after, ''));

@@ -10,10 +10,11 @@ export class UndoRedoService<T> {
   private readonly redoStack: WritableSignal<T[]> = signal([]);
   private readonly hasInitialStateSaved: WritableSignal<boolean> = signal(false);
   private readonly MAX_STACK_SIZE = 10;
-
   // Publikus computed signalok a UI számára
   public readonly canUndo: Signal<boolean> = computed(() => this.undoStack().length > 1);
   public readonly canRedo: Signal<boolean> = computed(() => this.redoStack().length > 0);
+  readonly canUndoState = this.canUndo;
+  readonly canRedoState = this.canRedo;
 
   /**
    * Method to clone the state to avoid reference issues.

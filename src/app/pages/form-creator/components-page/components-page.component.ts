@@ -1,10 +1,10 @@
-import { Component, OnInit, signal, Signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, Signal, computed } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Project, ProjectVersion } from '@interfaces/project';
 import { EditComponent } from '@pages/edit/edit.component';
 import { ProjectService } from '@services/project.service';
-import { InlineEdit } from '@interfaces/inline-edit';
+import type { InlineEdit } from '@interfaces/inline-edit';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChangeSummaryComponent } from './change-summary/change-summary.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -32,6 +32,7 @@ interface DiffItem {
   templateUrl: './components-page.component.html',
   styleUrls: ['./components-page.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     NzLayoutComponent,
@@ -114,7 +115,7 @@ export class ComponentsPageComponent implements OnInit {
 
     const curr = version.project;
     const old = prev.project;
-    const keys = Object.keys(curr) as Array<keyof Project>;
+    const keys = Object.keys(curr) as (keyof Project)[];
 
     return keys
       .filter((key) => JSON.stringify(curr[key]) !== JSON.stringify(old[key]))

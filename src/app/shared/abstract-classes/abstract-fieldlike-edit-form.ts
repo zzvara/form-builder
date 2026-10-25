@@ -1,9 +1,11 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
 import { Directive } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/forms';
-import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
-import { FieldLikeInputData } from '@interfaces/field-like-input-data';
+import type { AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import type { ErrorType } from '@helpers/error-helper';
+import { getErrorMessageList } from '@helpers/error-helper';
+import type { FieldLikeInputData } from '@interfaces/field-like-input-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 
@@ -76,7 +78,9 @@ export abstract class AbstractFieldLikeEditForm<
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((checked) => {
         if (checked) {
-          this.getStrictControl<string>('defaultValue')?.setValidators(this.defaultValueValidators);
+          this.getStrictControl<string>('defaultValue')?.setValidators(
+            this.getDefaultValueValidators(),
+          );
         } else {
           this.getStrictControl<string>('defaultValue')?.clearValidators();
         }
@@ -86,7 +90,7 @@ export abstract class AbstractFieldLikeEditForm<
     });
   }
 
-  override get defaultValueValidators() {
+  override getDefaultValueValidators() {
     return CustomValidators.executeValidationsConditionally(this.getValidatorsForDefaultValue());
   }
 

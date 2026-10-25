@@ -1,20 +1,19 @@
 import { AbstractFieldLikeInputs } from '@abstract-classes/abstract-fieldlike-inputs';
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import type { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { NumberInputEditComponent } from '@components/number-input/number-input-edit/number-input-edit.component';
 import { NzFormControlComponent, NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
-
 @Component({
   selector: 'app-number-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.less'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -41,10 +40,10 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<
   }
 
   get minNumber() {
-    return this.data.min && this.data.minNumber ? this.data.minNumber : -Infinity;
+    return this.data.min && this.data.minNumber != null ? this.data.minNumber : -Infinity;
   }
   get maxNumber() {
-    return this.data.max && this.data.maxNumber ? this.data.maxNumber : Infinity;
+    return this.data.max && this.data.maxNumber != null ? this.data.maxNumber : Infinity;
   }
 
   get inputFormatter(): (value: number) => string {
@@ -61,7 +60,7 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<
         if (specIndex > -1) {
           const [before, after] = [
             this.data.formatter!.substring(0, specIndex),
-            this.data.formatter!.substring(specIndex + 3, this.data.formatter!.length),
+            this.data.formatter!.substring(specIndex + '{{..}}'.length),
           ];
           return Number(value.replace(before, '').replace(after, ''));
         }

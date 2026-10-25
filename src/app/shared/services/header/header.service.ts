@@ -1,32 +1,44 @@
-import { Injectable, signal, Signal } from '@angular/core';
-import { ContextAction } from '@components/header/header.model';
+import { Injectable, signal } from '@angular/core';
+import type { ContextAction } from '@components/header/header.model';
+import type { MenuState } from '@models/menu-option.model';
 import { MenuOption } from '@models/menu-option.model';
-import { Observable, Subject } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeaderService {
-  private readonly _headerOptions = signal<MenuOption[]>([MenuOption.HOME, MenuOption.SETTINGS]);
-  private readonly _activeOptions = signal<MenuOption[]>([]);
-
-  private readonly _contextActions = signal<ContextAction[]>([]);
-
-  public readonly headerOptions: Signal<MenuOption[]> = this._headerOptions.asReadonly();
-  public readonly activeOptions: Signal<MenuOption[]> = this._activeOptions.asReadonly();
-
-  public readonly contextActions: Signal<ContextAction[]> = this._contextActions.asReadonly();
-
+  private readonly initialOptions: MenuState = {
+    options: [MenuOption.HOME, MenuOption.SETTINGS],
+    activeOptions: [],
+  };
+  private readonly optionsState = signal<MenuState>(this.initialOptions);
+  readonly options = this.optionsState.asReadonly();
+  private readonly actionsState = signal<ContextAction[]>([]);
+  readonly actions = this.actionsState.asReadonly();
+  private readonly options$ = new BehaviorSubject<MenuState>(this.initialOptions);
+  private readonly actions$ = new BehaviorSubject<ContextAction[]>([]);
   private readonly saveTriggered: Subject<void> = new Subject<void>();
   private readonly undoTriggered: Subject<void> = new Subject<void>();
 
   setOptions(options: MenuOption[], activeOptions: MenuOption[] = []): void {
-    this._headerOptions.set(options);
-    this._activeOptions.set(activeOptions);
+    const state = { options, activeOptions };
+    this.optionsState.set(state);
+    this.options$.next(state);
+  }
+
+  getOptions(): Observable<MenuState> {
+    return this.options$.asObservable();
   }
 
   setContextActions(actions: ContextAction[]): void {
-    this._contextActions.set(actions);
+    this.actionsState.set(actions);
+    this.actions$.next(actions);
+  }
+
+  getContextActions(): Observable<ContextAction[]> {
+    return this.actions$.asObservable();
   }
 
   triggerSave(): void {

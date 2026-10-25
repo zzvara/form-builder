@@ -1,20 +1,17 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import type { AbstractControl, FormArray } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import { SelectComponentData } from '@components/select/interfaces/select-component-data';
+import type { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { CustomValidators } from '@validators/custom-validators';
 import { ListValidators } from '@validators/list-validators';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import {
   NzFormControlComponent,
@@ -33,15 +30,15 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
 
 @Component({
   selector: 'app-select-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './select-edit.component.html',
   styleUrls: ['./select-edit.component.less'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     MutateTextDirective,
     ReactiveFormsModule,
-    DragDropModule,
+    CdkDropList,
+    CdkDrag,
     NzFormModule,
     NzDividerComponent,
     NzFormItemComponent,
@@ -55,6 +52,7 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
     NzInputModule,
     NzCheckboxComponent,
     NzButtonModule,
+    NzIconModule,
     TranslatePipe,
     CodeEditorModalComponent,
   ],
@@ -64,13 +62,10 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
   SelectComponentData
 > {
   newOption!: FormControl<string | null>;
+  readonly editingIndex = signal<number | null>(null);
+  editValue = '';
+  readonly editError = signal<string | null>(null);
   editControl: FormControl = new FormControl('');
-
-  private readonly _editingIndex: WritableSignal<number | null> = signal(null);
-  public readonly editingIndex: Signal<number | null> = this._editingIndex.asReadonly();
-
-  private readonly _editError: WritableSignal<string | null> = signal(null);
-  public readonly editError: Signal<string | null> = this._editError.asReadonly();
 
   get options(): FormArray {
     return this.formData.controls['selectOptions'] as FormArray;
@@ -83,15 +78,15 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
     return [];
   }
 
-  get isMultipleChoice(): boolean {
-    return this.getStrictControlValue<boolean>('isMultipleChoice') ?? false;
-  }
-
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
   set newOptionValue(value: string) {
     this.newOption.setValue(value);
+  }
+
+  get isMultipleChoice(): boolean {
+    return this.formData.controls['isMultipleChoice'].getRawValue();
   }
 
   override ngOnInit(): void {
@@ -103,16 +98,6 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
       }),
     });
 
-    this.connectValidations({
-      isMultipleChoice: [{ name: 'defaultValue' }],
-    });
-
-    this.setControlValuesBasedOnChanges({
-      isMultipleChoice: [{ name: 'defaultValue', additionalData: () => null }],
-    });
-
-    this.initializeFormValues();
-
     this.newOption = new FormControl(null, {
       updateOn: UpdateOnStrategy.CHANGE,
       validators: [
@@ -121,6 +106,8 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
         CustomValidators.validateIsInList(() => this.optionsValues),
       ],
     });
+
+    this.initializeFormValues();
   }
 
   override initializeFormValues() {
@@ -150,18 +137,11 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
     this.initialValues.isMultipleChoice = this.rawFormData.isMultipleChoice;
   }
 
-  override get defaultValueValidators() {
-    return CustomValidators.executeValidationsConditionally([
-      {
-        condition: () => this.getStrictControlValue<boolean>('required'),
-        validation: Validators.required,
-      },
-    ]);
-  }
-
   override get defaultValueUpdateOn() {
     return UpdateOnStrategy.CHANGE;
   }
+
+  //----------------------------------------------------------------------------------------------------------------------
 
   getDefaultValues(): string | string[] {
     return this.formData.controls['defaultValue'].getRawValue();
@@ -171,6 +151,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
     this.formData.controls['defaultValue'].setValue(values);
   }
 
+  // Add a new option
   addOption() {
     this.options.push(new FormControl(this.newOptionValue, Validators.required));
     this.newOptionValue = '';
@@ -178,6 +159,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
     this.options.markAsTouched();
   }
 
+  // Remove an existing option
   removeOption(option: AbstractControl<string>, optionIndex: number) {
     this.options.removeAt(optionIndex);
     if (Array.isArray(this.getDefaultValues())) {
@@ -192,48 +174,46 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
   }
 
   startEdit(index: number, value: string) {
-    this._editingIndex.set(index);
-    this._editError.set(null);
+    this.editingIndex.set(index);
+    this.editValue = value;
     this.editControl.setValue(value);
+    this.editError.set(null);
   }
-
   saveEdit(index: number) {
     const newValue = this.editControl.value?.trim();
 
     if (!newValue) {
-      this._editingIndex.set(null);
+      this.editingIndex.set(null);
       return;
     }
     const values = this.optionsValues.filter((_, i) => i !== index);
     if (values.includes(newValue)) {
-      this._editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
+      this.editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
-    this._editError.set(null);
+    this.editError.set(null);
     const control = this.options.at(index) as FormControl;
+    const previousValue = control.value;
     control.setValue(newValue);
     control.markAsDirty();
     control.markAsTouched();
-
     const defaults = this.getDefaultValues();
     if (Array.isArray(defaults)) {
-      const updated = defaults.map((v) => (v === this.optionsValues[index] ? newValue : v));
+      const updated = defaults.map((v) => (v === previousValue ? newValue : v));
       this.setDefaultValue(updated);
-    } else if (defaults === this.optionsValues[index]) {
+    } else if (defaults === previousValue) {
       this.setDefaultValue(newValue);
     }
-
-    this._editingIndex.set(null);
+    this.editingIndex.set(null);
   }
-
   cancelEdit() {
-    this._editingIndex.set(null);
-    this._editError.set(null);
+    this.editingIndex.set(null);
+    this.editError.set(null);
   }
 
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
-    return error.min - error.current;
+    const error = this.getError<{ min: number; current: number }>(this.options, 'minLengthError');
+    return error ? error.min - error.current : 0;
   }
 
   override onReset() {

@@ -1,8 +1,8 @@
 import { AbstractDatePickerComponent } from '@abstract-classes/abstract-date-picker-input';
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
+import type { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
 import { RangePickerEditComponent } from '@components/range-picker/range-picker-edit/range-picker-edit.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzDatePickerModule, NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -11,10 +11,10 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-range-picker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './range-picker.component.html',
   styleUrls: ['./range-picker.component.less'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,

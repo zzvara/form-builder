@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject } from '@angular/core';
 import { UndoRedoEnum } from '@app/shared/interfaces/undo-redo-type.enum';
 import { TranslatePipe } from '@ngx-translate/core';
-import { EditList } from '@pages/edit/interfaces/edit-list';
+import type { SectionList } from '@pages/edit/interfaces/section-list';
 import { UndoRedoService } from '@services/undo-redo.service';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -10,19 +9,24 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-redo-undo',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './redo-undo.component.html',
   styleUrls: [],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, NzTooltipModule, NzButtonComponent, NzIconModule, TranslatePipe],
+  imports: [NzTooltipModule, NzButtonComponent, NzIconModule, TranslatePipe],
 })
 export class RedoUndoComponent {
+  private undoRedoService = inject<UndoRedoService<SectionList[]>>(UndoRedoService);
+
   @Output() sectionInputsChange = new EventEmitter<UndoRedoEnum>();
 
-  public readonly canUndo: Signal<boolean> = this.undoRedoService.canUndo;
-  public readonly canRedo: Signal<boolean> = this.undoRedoService.canRedo;
+  get canUndo(): boolean {
+    return this.undoRedoService.canUndoState();
+  }
 
-  constructor(private undoRedoService: UndoRedoService<EditList[]>) {}
+  get canRedo(): boolean {
+    return this.undoRedoService.canRedoState();
+  }
 
   undoBtn(): void {
     this.sectionInputsChange.emit(UndoRedoEnum.UNDO);

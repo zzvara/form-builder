@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
-import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
+import type { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
@@ -20,10 +20,10 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
 
 @Component({
   selector: 'app-textarea-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './textarea-edit.component.html',
   styleUrls: [],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,

@@ -1,13 +1,26 @@
-import { Component, OnInit, ChangeDetectionStrategy, input, output, computed, inject, signal, DestroyRef } from '@angular/core';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  EventEmitter,
+  input,
+  Output,
+  signal,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ProjectType } from '@interfaces/project';
-import { ColumnItem } from '@app/shared/interfaces/column-item.model';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import type { ProjectType } from '@interfaces/project';
+import type { ColumnItem } from '@app/shared/interfaces/column-item.model';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { Router } from '@angular/router';
+import { RoutePath } from '@app/shared/models/route-path.model';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { DatePipe } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -24,31 +37,33 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzTooltipModule,
     NzPopconfirmModule,
     NzIconModule,
+    NzEmptyModule,
+    NzButtonModule,
     SafeHtmlPipe,
     TranslatePipe,
     DatePipe,
   ],
 })
-export class ListViewComponent implements OnInit {
-  private readonly translate = inject(TranslateService);
-  private readonly destroyRef = inject(DestroyRef);
+export class ListViewComponent {
+  private translate = inject(TranslateService);
+  private router = inject(Router);
 
-  projects = input<Questionnaire[]>([]);
-  type = input<ProjectType>();
+  readonly projects = input<Questionnaire[]>([]);
+  readonly type = input<ProjectType>();
 
-  deleteProject = output<string>();
-  editProject = output<string>();
+  @Output() deleteProject = new EventEmitter<string>();
+  @Output() editProject = new EventEmitter<string>();
 
-  projectList = computed(() => this.projects().filter((project) => project.type === this.type()));
-  columnsConfig = signal<ColumnItem[]>([]);
+  readonly projectList = computed(() =>
+    this.projects().filter((project) => project.type === this.type()),
+  );
+  readonly columnsConfig = signal<ColumnItem[]>([]);
 
   DateFormat = DateFormat;
 
-  ngOnInit(): void {
+  constructor() {
     this.setColumnsConfig();
-    this.translate.onLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.setColumnsConfig();
-    });
+    this.translate.onLangChange.pipe(takeUntilDestroyed()).subscribe(() => this.setColumnsConfig());
   }
 
   setColumnsConfig(): void {
@@ -102,5 +117,12 @@ export class ListViewComponent implements OnInit {
 
   onEditProject(id: string): void {
     this.editProject.emit(id);
+  }
+
+  onCreateNew(): void {
+    const currentType = this.type();
+    if (currentType) {
+      this.router.navigate([RoutePath.NEW], { queryParams: { type: currentType } });
+    }
   }
 }

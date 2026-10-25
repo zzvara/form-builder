@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject, signal, DestroyRef } from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { ContextAction } from '@components/header/header.model';
+import type { ContextAction } from '@components/header/header.model';
 import { MenuOption } from '@models/menu-option.model';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HeaderService } from '@services/header/header.service';
@@ -35,42 +36,36 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     NzMenuModule,
   ],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly headerService = inject(HeaderService);
   private readonly jsonService = inject(JsonService);
   private readonly translate = inject(TranslateService);
   private readonly eventService = inject(EventService);
   private readonly store = inject(FormBuilderStore);
-
   private readonly destroyRef = inject(DestroyRef);
+
+  readonly menuState = this.headerService.options;
+  readonly headerOptions = () => this.menuState().options;
+  readonly activeOptions = () => this.menuState().activeOptions;
+  readonly contextActions = this.headerService.actions;
+  readonly currentLanguage = signal(LanguageEnum.EN);
+  readonly currentTheme = signal(ThemeEnum.LIGHT);
 
   LanguageEnum = LanguageEnum;
   ThemeEnum = ThemeEnum;
   options = MenuOption;
 
-  currentLanguage = signal<LanguageEnum>(LanguageEnum.EN);
-  currentTheme = signal<ThemeEnum>(ThemeEnum.LIGHT);
-
-  headerOptions = this.headerService.headerOptions;
-  activeOptions = this.headerService.activeOptions;
-  contextActions = this.headerService.contextActions;
-
   ngOnInit(): void {
-    const savedLang = localStorage.getItem(LocalStorageKey.LANGUAGE);
-    const lang = savedLang === LanguageEnum.HU ? LanguageEnum.HU : LanguageEnum.EN;
-    this.currentLanguage.set(lang);
-    this.translate.use(lang);
-
+    const savedLanguage = localStorage.getItem(LocalStorageKey.LANGUAGE);
+    const language = savedLanguage === LanguageEnum.HU ? LanguageEnum.HU : LanguageEnum.EN;
+    this.currentLanguage.set(language);
+    this.translate.use(language);
     this.jsonService.clearJsonData();
-
     const savedTheme = localStorage.getItem(LocalStorageKey.THEME);
     const theme = savedTheme === ThemeEnum.DARK ? ThemeEnum.DARK : ThemeEnum.LIGHT;
     this.currentTheme.set(theme);
-
-    if (theme === ThemeEnum.DARK) {
-      this.applyDarkThemeCss();
-    }
+    if (theme === ThemeEnum.DARK) this.applyDarkThemeCss();
     this.eventService.themeChange.next(theme);
   }
 
@@ -79,16 +74,13 @@ export class HeaderComponent implements OnInit {
   }
 
   changeMenuItemState(toChange: MenuOption) {
-    const currentActive = this.activeOptions();
-    const currentHeaders = this.headerOptions();
-
-    if (currentActive.includes(toChange)) {
+    if (this.activeOptions().includes(toChange)) {
       this.headerService.setOptions(
-        currentHeaders,
-        currentActive.filter((option) => option !== toChange)
+        this.headerOptions(),
+        this.activeOptions().filter((option) => option !== toChange),
       );
     } else {
-      this.headerService.setOptions(currentHeaders, [...currentActive, toChange]);
+      this.headerService.setOptions(this.headerOptions(), [...this.activeOptions(), toChange]);
     }
   }
 
@@ -116,17 +108,17 @@ export class HeaderComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
         this.jsonService.setJsonData(data);
-
-        if (data.project) {
-          this.store.initNewProject(data.project.type);
-          this.store.updateProject(data.project);
-        }
-
+        this.store.initNewProject(data.project.type);
+        this.store.updateProject(data.project);
         this.router.navigate([RoutePath.NEW], {
-          queryParams: { type: data.type },
+          queryParams: { type: data.project.type },
           state: { projectData: data },
         });
       });
+  }
+
+  ngOnDestroy(): void {
+    this.jsonService.clearJsonData();
   }
 
   setLanguage(lang: LanguageEnum): void {
@@ -138,7 +130,6 @@ export class HeaderComponent implements OnInit {
   setTheme(theme: ThemeEnum): void {
     localStorage.setItem(LocalStorageKey.THEME, theme);
     this.currentTheme.set(theme);
-    this.eventService.themeChange.next(theme);
 
     const existingLink = document.getElementById('theme-link') as HTMLLinkElement | null;
     if (existingLink) {
@@ -148,6 +139,7 @@ export class HeaderComponent implements OnInit {
     if (theme === ThemeEnum.DARK) {
       this.applyDarkThemeCss();
     }
+    this.eventService.themeChange.next(theme);
   }
 
   private applyDarkThemeCss(): void {

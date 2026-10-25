@@ -1,8 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ChangeDetectionStrategy, signal, Signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import type { OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  signal,
+  inject,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EditList } from '@app/pages/edit/interfaces/edit-list';
-import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import type { EditList } from '@app/pages/edit/interfaces/edit-list';
+import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { InstanceOfFormInputDataPipe } from '@app/shared/pipes/instance-of-form-input-data.pipe';
 import { ComponentIconsPipe } from '@app/shared/pipes/used-component-icons.pipe';
 import { FormService } from '@app/shared/services/form.service';
@@ -15,10 +24,10 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-edit-name',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './edit-name.component.html',
   styleUrl: './edit-name.component.less',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -33,37 +42,34 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
   ],
 })
 export class EditNameComponent implements OnChanges {
+  private formService = inject(FormService);
+
   @Input() names: string[] = [];
   @Input() edit!: EditList | FormInputData;
-  @Output() updateName: EventEmitter<void> = new EventEmitter();
+  @Output() updateName = new EventEmitter<void>();
 
   form: FormGroup = new FormGroup([]);
+  editList?: EditList;
+  editFormInput?: FormInputData;
 
-  private readonly _editList: WritableSignal<EditList | undefined> = signal(undefined);
-  public readonly editList: Signal<EditList | undefined> = this._editList.asReadonly();
-
-  private readonly _editFormInput: WritableSignal<FormInputData | undefined> = signal(undefined);
-  public readonly editFormInput: Signal<FormInputData | undefined> = this._editFormInput.asReadonly();
-
-  private readonly _isEditName: WritableSignal<boolean> = signal(false);
-  public readonly isEditName: Signal<boolean> = this._isEditName.asReadonly();
-
-  constructor(private formService: FormService) {}
+  readonly isEditName = signal(false);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes['names'] &&
-      JSON.stringify(changes['names'].currentValue) !== JSON.stringify(changes['names'].previousValue) &&
-      this._isEditName()
+      JSON.stringify(changes['names'].currentValue) !==
+        JSON.stringify(changes['names'].previousValue) &&
+      this.isEditName()
     ) {
       this.updateNameFieldValidators(this.names);
-    } else if (changes['edit'] && JSON.stringify(changes['edit'].currentValue) !== JSON.stringify(changes['edit'].previousValue)) {
+    } else if (
+      changes['edit'] &&
+      JSON.stringify(changes['edit'].currentValue) !== JSON.stringify(changes['edit'].previousValue)
+    ) {
       if ('id' in this.edit) {
-        this._editList.set(this.edit as EditList);
-        this._editFormInput.set(undefined);
+        this.editList = this.edit;
       } else if ('title' in this.edit) {
-        this._editFormInput.set(this.edit as FormInputData);
-        this._editList.set(undefined);
+        this.editFormInput = this.edit;
       }
     }
   }
@@ -72,13 +78,10 @@ export class EditNameComponent implements OnChanges {
     this.form.updateValueAndValidity();
 
     if (this.form.valid) {
-      const list = this._editList();
-      const input = this._editFormInput();
-
-      if (list) {
-        list.data.customTitle = this.form.controls['name'].value;
-      } else if (input) {
-        input.customTitle = this.form.controls['name'].value;
+      if (this.editList) {
+        this.editList.data.customTitle = this.form.controls['name'].value;
+      } else if (this.editFormInput) {
+        this.editFormInput.customTitle = this.form.controls['name'].value;
       }
       this.setEditMode(false);
       this.updateName.emit();
@@ -92,10 +95,13 @@ export class EditNameComponent implements OnChanges {
   }
 
   setEditMode(state: boolean): void {
-    this._isEditName.set(state);
+    this.isEditName.set(state);
 
-    if (state) {
-      this.form = this.formService.createComponentNameForm(this.names, ('id' in this.edit ? this.edit.data : this.edit).customTitle);
+    if (this.isEditName()) {
+      this.form = this.formService.createComponentNameForm(
+        this.names,
+        ('id' in this.edit ? this.edit.data : this.edit).customTitle,
+      );
     } else {
       this.form = new FormGroup([]);
     }
