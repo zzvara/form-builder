@@ -32,8 +32,7 @@ export class UndoRedoService<T> {
    */
   private isStateDifferent(state: T): boolean {
     const stack = this.undoStack();
-    // Compare it with the one before last, because the last state is the current one
-    return JSON.stringify(stack[stack.length - 2]) !== JSON.stringify(state);
+    return JSON.stringify(stack[stack.length - 1]) !== JSON.stringify(state);
   }
 
   /**
@@ -44,8 +43,7 @@ export class UndoRedoService<T> {
   saveState(state: T): void {
     const stack = this.undoStack();
     if (!this.hasInitialStateSaved() || stack.length === 0 || this.isStateDifferent(state)) {
-
-      let newStack = [...stack];
+      const newStack = [...stack];
       if (newStack.length >= this.MAX_STACK_SIZE) {
         // Remove the oldest state if the stack size exceeds the limit
         newStack.shift();

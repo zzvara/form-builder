@@ -197,9 +197,10 @@ export class ProjectService<T extends Project> {
       const index = newItems.findIndex((item) => item.id === id);
 
       if (index !== -1) {
-        const previousVersion = { ...newItems[index] };
         const projectHistoryKey = `${this.storageKey}-history-${id}`;
-        const projectHistory: ProjectVersion<T>[] = JSON.parse(localStorage.getItem(projectHistoryKey) || '[]');
+        const projectHistory: ProjectVersion<T>[] = JSON.parse(
+          localStorage.getItem(projectHistoryKey) || '[]',
+        );
 
         // Check if the new data is the same as the latest version in history
         const latestVersion = projectHistory[projectHistory.length - 1]?.project;
@@ -207,12 +208,14 @@ export class ProjectService<T extends Project> {
           return items; // Ha nincs változás, visszatérünk az eredeti listával
         }
 
+        data.modified = new Date().toISOString().split('T')[0];
+
         // Create a new version entry for the project's history
         const versionNum = projectHistory.length + 1;
 
         const projectVersion: ProjectVersion<T> = {
           versionNum: versionNum,
-          project: previousVersion,
+          project: { ...data },
           created: new Date().toISOString(),
         };
 
@@ -221,7 +224,6 @@ export class ProjectService<T extends Project> {
 
         // Update the project data
         newItems[index] = data;
-        newItems[index].modified = new Date().toISOString().split('T')[0];
         localStorage.setItem(this.storageKey, JSON.stringify(newItems));
         isUpdated = true;
       }
