@@ -1,0 +1,44 @@
+<nz-form-item>
+  @if (label) {
+    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  }
+
+  <nz-form-control [nzErrorTip]="errorTemplate">
+    <nz-input-group [nzPrefix]="prefixTemplate" [nzSuffix]="suffixTemplateCounter">
+      <input
+        #inputComponent="ngModel"
+        nz-input
+        type="text"
+        [required]="data.required"
+        [minlength]="data.minLength ? (data.minLengthNumber ?? null) : null"
+        [maxlength]="data.maxLength ? (data.maxLengthNumber ?? null) : null"
+        [disabled]="!inlineEdit.enabled"
+        [placeholder]="data.placeholderValue ?? ''"
+        [(ngModel)]="data.defaultValue"
+        (change)="onChange($event)"
+        (mousedown)="$event.stopPropagation()"
+      />
+    </nz-input-group>
+  </nz-form-control>
+</nz-form-item>
+<ng-template #errorTemplate let-control>
+  @for (message of getErrorMessages(control); track message) {
+    <div>{{ message }}</div>
+  }
+</ng-template>
+<ng-template #prefixTemplate>
+  @if (data.showTooltip) {
+    <span
+      nz-icon
+      nz-tooltip
+      [nzTooltipTitle]="data.tooltipText"
+      nzType="info-circle"
+      class="icon-margin"
+    ></span>
+  }
+</ng-template>
+<ng-template #suffixTemplateCounter>
+  @if (data.maxLength && data.showCharacterCounter) {
+    <span>{{ (inputComponent.value ?? '').length }}/{{ data.maxLengthNumber }}</span>
+  }
+</ng-template>

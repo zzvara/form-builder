@@ -1,0 +1,120 @@
+@import '../../../../breakpoints.less';
+@import '../../../../common.less';
+@import '../../../../typography.less';
+
+nz-layout {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(@spacing16, 2vw, @spacing24) clamp(@spacing4, 5vw, @spacing24);
+}
+
+.formelement {
+  width: @width-full;
+  margin-bottom: clamp(@spacing8, 1.5vw, @spacing20);
+}
+
+hr {
+  margin-top: @spacing0;
+  margin-bottom: clamp(@spacing8, 1.5vw, @spacing12);
+}
+
+#switch {
+  margin-right: @spacing4;
+}
+
+#title,
+#description {
+  font-size: clamp(@font-size-small, 2vw, @font-size-lead);
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: @border-dark;
+  margin-top: -5px;
+  width: @width-full;
+  box-sizing: border-box;
+}
+
+.description-label,
+.title-label {
+  font-weight: bold;
+}
+
+.date-picker {
+  margin-top: -5px;
+}
+
+::ng-deep label[nz-checkbox] {
+  margin-right: clamp(@spacing4, 0.5vw, @spacing8);
+}
+
+.saveBtn {
+  float: left;
+  margin-top: clamp(@spacing16, 1vw, @spacing24);
+}
+
+.error-message {
+  color: @accent-danger;
+  font-size: @font-size-tiny;
+  font-weight: bold;
+}
+
+.input-error {
+  border: @border-default;
+}
+
+.same_line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.icon-margin-small {
+  margin-left: clamp(@spacing2, 0.5vw, @spacing4);
+  display: flex;
+  align-items: center;
+}
+
+.icon-flex {
+  display: flex;
+  align-items: center;
+}
+
+.form-margin-top {
+  margin-top: clamp(@spacing4, 1vw, @spacing8);
+}
+
+.item-margin-bottom {
+  margin-bottom: @spacing4;
+}
+
+.optional-text {
+  color: @gray;
+  padding-left: @spacing4;
+}
+
+nz-form-label {
+  div,
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  h4 {
+    margin-bottom: 0;
+  }
+}
+
+.quill-desc {
+  margin-bottom: @spacing24;
+}
+
+@media (max-width: @breakpoint-md) {
+  .same_line {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .saveBtn {
+    float: none;
+    width: @width-full;
+  }
+}

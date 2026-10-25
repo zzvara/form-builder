@@ -1,0 +1,52 @@
+<nz-form-item>
+  @if (label) {
+    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  }
+
+  <nz-form-control [nzErrorTip]="errorTemplate">
+    <ng-container *ngTemplateOutlet="prefixTemplate" />
+    <!-- @todo 50% might be problematic if we wish to be responsive -->
+    <nz-date-picker
+      #inputComponent
+      [nzMode]="data.mode"
+      [nzFormat]="getFullFormat"
+      [nzInline]="data.inlineMode"
+      [required]="data.required"
+      [nzDisabledDate]="getDisabledDateConfig(data)"
+      [nzDisabledTime]="disabledTime"
+      [nzShowTime]="getTimeOptions"
+      [nzShowWeekNumber]="data.showWeekNumber"
+      [nzShowToday]="true"
+      [disabled]="!inlineEdit.enabled"
+      [nzPlaceHolder]="data.placeholderValue ?? ''"
+      [(ngModel)]="data.defaultValue"
+      (ngModelChange)="onChange($event)"
+      (mousedown)="$event.stopPropagation()"
+      class="date-picker"
+    ></nz-date-picker>
+    <ng-container *ngTemplateOutlet="suffixTemplate" />
+  </nz-form-control>
+</nz-form-item>
+<ng-template #errorTemplate let-control>
+  @for (message of getErrorMessages(control); track message) {
+    <div>{{ message }}</div>
+  }
+</ng-template>
+<ng-template #prefixTemplate>
+  @if (data.showTooltip) {
+    <span
+      nz-icon
+      nz-tooltip
+      [nzTooltipTitle]="data.tooltipText"
+      nzType="info-circle"
+      class="icon-margin"
+    ></span>
+  }
+</ng-template>
+<ng-template #suffixTemplate>
+  @if (data.inlineMode) {
+    <div class="selected-date">
+      {{ 'COMPONENTS.SELECTED_RAGE' | translate }}: {{ data.defaultValue | date: getFullFormat }}
+    </div>
+  }
+</ng-template>

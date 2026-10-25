@@ -1,0 +1,61 @@
+<nz-divider [nzText]="'COMPONENTS.DIVIDERS.CODE_EDITOR' | translate" nzOrientation="left"></nz-divider>
+
+<div class="display-flex flex-direction-column flex-direction-column gap-8">
+  <label nz-checkbox [ngModel]="selectedElementCodeMirror.enabled" (ngModelChange)="onEnabledChange($event)">{{
+    'COMPONENTS.CONDITION_SETTINGS.LABELS.ENABLE' | translate
+  }}</label>
+
+  @if (selectedElementCodeMirror.enabled && selectedElementCodeMirror.data) {
+    <div>
+      <label class="custom-label">{{ 'COMPONENTS.CONDITION_SETTINGS.LABELS.VARIABLES' | translate }}</label>
+      <div class="display-flex flex-direction-row flex-wrap-wrap gap-8">
+        @for (variable of selectedElementCodeMirror.data.variables; track variable; let index = $index) {
+          <nz-tag nzMode="closeable" class="m-0 cursor-pointer" (click)="insertVariable(index)" (nzOnClose)="removeVariable($event, index)">
+            <nz-icon
+              [nzType]="variable.type | variableIcon"
+              nz-tooltip
+              [nzTooltipTitle]="'COMPONENTS.CONDITION_SETTINGS.VARIABLE_MODAL.VARIABLE_TYPES.' + variable.type | translate"
+              class="mr-8 position-relative"
+            >
+              @if (variable.type === CodeEditorVariableType.DATE_ARRAY || variable.type === CodeEditorVariableType.STRING_ARRAY) {
+                <nz-icon nzType="expand" nzTheme="outline" class="font-size-18 position-absolute" style="left: -3px" />
+              }
+            </nz-icon>
+
+            <span class="m-0">{{ variable.title }}</span>
+          </nz-tag>
+        }
+
+        <nz-tag class="editable-tag cursor-pointer m-0" (click)="openVariableModal()" [nzColor]="'blue'">
+          <nz-icon nzType="plus" />
+          {{ 'COMPONENTS.CONDITION_SETTINGS.NEW_VARIABLE' | translate }}
+        </nz-tag>
+      </div>
+    </div>
+
+    <div class="display-flex flex-direction-column w-100">
+      <label class="required-label custom-label">{{ 'COMPONENTS.CONDITION_SETTINGS.LABELS.CODE' | translate }}</label>
+      <app-code-editor
+        [mode]="CodeEditorMode.EDIT"
+        [type]="CodeEditorType.JAVA_SCRIPT"
+        [code]="selectedElementCodeMirror.data.code"
+        [variables]="selectedElementCodeMirror.data.variables"
+        (updateCodeEditor)="updateCodeEditor($event)"
+      ></app-code-editor>
+    </div>
+  }
+</div>
+
+@if (isModal) {
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="closeModal()">{{ 'GENERAL.CANCEL' | translate }}</button>
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="selectedElementCodeMirror.enabled && selectedElementCodeMirror.data && !selectedElementCodeMirror.data.isValid"
+      (click)="saveModal()"
+    >
+      {{ 'SAVE' | translate }}
+    </button>
+  </div>
+}

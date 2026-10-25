@@ -1,0 +1,97 @@
+@import '../../../../common.less';
+
+.valid-style {
+  width: @width-full;
+}
+
+.invalid-style {
+  width: @width-full;
+  border: solid 1px @accent-danger;
+}
+
+.draft-style {
+  width: @width-full;
+  background-color: var(--draft-bg);
+  opacity: 0.9;
+}
+
+.card-container {
+  height: @height-full;
+  max-width: 100%;
+}
+
+.form-container {
+  width: @width-full;
+
+  nz-form-control {
+    flex: unset !important;
+    width: 100%;
+  }
+
+  nz-form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+}
+
+.form-item:not(:last-child) {
+  margin-bottom: @spacing12;
+}
+
+.form-item-border {
+  border-bottom: @border-default;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.id-text {
+  color: @gray-dark;
+}
+
+.error-icon {
+  color: @accent-danger;
+}
+
+.button-spacing {
+  margin-left: clamp(@spacing4, 2vw, @spacing12);
+}
+
+:host ::ng-deep {
+  .custom-header .ant-card-head-title {
+    text-overflow: unset;
+    white-space: normal;
+  }
+
+  .ant-card-head {
+    padding: 0 clamp(@spacing8, 2vw, @spacing24);
+  }
+
+  .ant-card-body {
+    padding: clamp(@spacing12, 3vw, @spacing24);
+  }
+
+  .input-preview-container nz-form-item {
+    margin-bottom: 0;
+  }
+
+  .form-container {
+    width: @width-full;
+    nz-form-control {
+      flex: unset !important;
+      width: 100%;
+    }
+
+    nz-form-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+  }
+}

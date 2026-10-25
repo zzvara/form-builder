@@ -1,0 +1,24 @@
+@import '../../../breakpoints.less';
+@import '../../../common.less';
+
+nz-layout {
+  margin-top: clamp(65px, 10vw, 65px);
+}
+
+nz-steps {
+  width: clamp(80%, 100vw, 83%);
+  margin: auto;
+}
+
+.form-container {
+  width: @width-full;
+  height: auto;
+  margin: auto;
+}
+
+.form-page-container {
+  background-color: @background-white;
+  height: auto;
+  margin: 0 clamp(@spacing16, 5vw, @spacing32);
+  margin-bottom: clamp(@spacing16, 5vw, @spacing24);
+}

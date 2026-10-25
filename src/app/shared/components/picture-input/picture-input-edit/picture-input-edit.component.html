@@ -1,0 +1,41 @@
+<form id="pictureInputEditFormID" nz-form [formGroup]="formData">
+  <nz-divider
+    nzText="{{ 'COMPONENTS.DIVIDERS.GENERAL' | translate }}"
+    nzOrientation="left"
+  ></nz-divider>
+  <nz-form-label nzRequired>{{ 'COMPONENTS.COMPONENT_QUESTION' | translate }}</nz-form-label>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="questionErrors">
+      <input nz-input formControlName="questionValue" />
+    </nz-form-control>
+    <ng-template #questionErrors let-control>
+      @if (hasErrors(control, 'required')) {
+        <div>{{ 'COMPONENTS.CANNOT_BE_EMPTY' | translate }}</div>
+      }
+    </ng-template>
+  </nz-form-item>
+
+  <nz-form-label>
+    {{ 'COMPONENTS.COMPONENT_DESCRIPTION' | translate }}
+  </nz-form-label>
+  <nz-form-item>
+    <nz-form-control>
+      <quill-editor
+        formControlName="descriptionValue"
+        [style]="{ height: '150px', width: '100%' }"
+        [placeholder]="''"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-label>
+    {{ 'COMPONENTS.SET_PLACEHOLDER_VALUE' | translate }}
+  </nz-form-label>
+  <nz-form-item>
+    <nz-form-control>
+      <input nz-input formControlName="placeholderValue" />
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<app-code-editor-modal [elementId]="nzModalData.id"></app-code-editor-modal>

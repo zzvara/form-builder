@@ -1,0 +1,81 @@
+@import '../../../../common.less';
+@import '../../../../typography.less';
+
+:host {
+  display: block;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+* {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.hover-color(@color) {
+  &:hover {
+    color: @color !important;
+  }
+}
+
+p {
+  font-size: @font-size-small;
+  padding: @spacing0;
+  margin: @spacing0;
+}
+
+nz-card {
+  min-height: 192px; //It was 12rem
+
+  span {
+    cursor: pointer;
+    font-size: @font-size-lead;
+    margin-top: @spacing8;
+  }
+}
+
+.edit-icon {
+  .hover-color(@accent-info);
+}
+
+.delete-icon {
+  .hover-color(@accent-danger);
+}
+
+.description {
+  min-height: 48px;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.create-card {
+  cursor: pointer;
+  font-size: 5rem;
+  color: @gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.card-header {
+  min-height: 0px;
+}
+
+.card-footer {
+  margin-top: auto;
+}

@@ -1,0 +1,16 @@
+{
+  "GENERAL": {
+    "NEXT": "Next",
+    "CANCEL": "Cancel",
+    "OK": "OK",
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "CREATED": "Created",
+    "MODIFIED": "Last modified"
+  },
+  "TITLE": {
+    "DASHBOARD": "Dashboard",
+    "EDIT_FORM": "Edit Form",
+    "NEW_FORM": "New Form"
+  }
+}

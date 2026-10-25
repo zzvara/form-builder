@@ -1,0 +1,106 @@
+@import '../../../../breakpoints.less';
+@import '../../../../common.less';
+@import '../../../../typography.less';
+
+body,
+nz-layout {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+nz-layout {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  padding: clamp(@spacing16, 2vw, @spacing24) clamp(@spacing4, 5vw, @spacing24);
+}
+
+.formelement {
+  margin-bottom: clamp(@spacing12, 2vw, @spacing24);
+  width: 100%;
+  max-width: 100%;
+}
+
+#switch {
+  margin-left: clamp(@spacing8, 1vw, @spacing12);
+  margin-right: clamp(@spacing8, 1vw, @spacing12);
+}
+
+#title,
+#description {
+  font-size: clamp(@font-size-tiny, 2vw, @font-size-lead);
+  border-radius: 10px;
+  border-width: 2px;
+  margin-top: -5px;
+  margin-bottom: clamp(@spacing8, 1vw, @spacing12);
+  padding: clamp(@spacing4, 1vw, @spacing8);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.title-label,
+.description-label {
+  font-weight: bold;
+}
+
+.date-picker {
+  margin-top: -5px;
+}
+
+.saveBtn {
+  float: left;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  margin-top: clamp(@spacing8, 1vw, @spacing12);
+}
+
+.error-message {
+  margin-top: clamp(@spacing2, 0.5vw, @spacing4);
+  color: @accent-danger;
+  font-size: clamp(@font-size-tiny, 1vw, @font-size-small);
+  font-weight: bold;
+}
+
+.input-error {
+  border: 1px solid @accent-danger;
+  font-size: clamp(@font-size-tiny, 1vw, @font-size-small);
+}
+
+.same_line {
+  display: flex;
+  align-items: center;
+  gap: clamp(@spacing8, 1vw, @spacing12);
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.created_modifaction {
+  display: flex;
+  align-items: center;
+  gap: clamp(@spacing4, 1vw, @spacing8);
+  flex-direction: row;
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  gap: @spacing8; // <-- Gombok közötti távolság nagyobb lett
+  align-items: center;
+}
+
+.button-group .saveBtn {
+  margin-right: @spacing8;
+  margin-top: 0;
+}
+
+#footerdiv {
+  margin-top: clamp(@spacing8, 1vw, @spacing12);
+}
+
+.statistics-list {
+  margin: 0;
+  padding-left: 20px;
+}
