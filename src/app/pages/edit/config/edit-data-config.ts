@@ -1,33 +1,33 @@
 import { CheckboxGroupComponent } from '@components/checkbox-group/checkbox-group.component';
-import { CheckboxGroupData } from '@components/checkbox-group/interfaces/checkbox-group-data';
+import type { CheckboxGroupData } from '@components/checkbox-group/interfaces/checkbox-group-data';
 import { DatePickerComponent } from '@components/date-picker/date-picker.component';
-import { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
+import type { DatePickerComponentData } from '@components/date-picker/interfaces/date-picker-component-data';
 import { defaultDateFormats } from '@components/date-picker/interfaces/default-date-formats';
 import { InputComponent } from '@components/input/input.component';
-import { InputComponentData } from '@components/input/interfaces/input-component-data';
-import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import type { InputComponentData } from '@components/input/interfaces/input-component-data';
+import type { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { NumberInputComponent } from '@components/number-input/number-input.component';
-import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
+import type { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputComponent } from '@components/picture-input/picture-input.component';
-import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
+import type { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
 import { RadioGroupComponent } from '@components/radio-group/radio-group.component';
-import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
+import type { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
 import { RangePickerComponent } from '@components/range-picker/range-picker.component';
 import { SectionComponent } from '@components/section/section.component';
 import { RepeatedSectionComponent } from '@app/shared/components/repeated-section/repeated-section.component';
-import { SelectComponentData } from '@components/select/interfaces/select-component-data';
+import type { SelectComponentData } from '@components/select/interfaces/select-component-data';
 import { SelectComponent } from '@components/select/select.component';
-import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
-import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
+import type { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
+import type { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TextareaComponent } from '@components/textarea/textarea.component';
-import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import type { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import { TimePickerComponent } from '@components/time-picker/time-picker.component';
-import { EditComponent } from '@pages/edit/edit.component';
-import { FormInputData } from '@interfaces/form-input-data';
-import { TranslateService } from '@ngx-translate/core';
+import type { EditComponent } from '@pages/edit/edit.component';
+import type { FormInputData } from '@interfaces/form-input-data';
+import type { TranslateService } from '@ngx-translate/core';
 
 // Default values of the dragged components
-const textInputOptions = (translateService: TranslateService): InputComponentData => ({
+const textInputOptions = (): InputComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -37,7 +37,7 @@ const textInputOptions = (translateService: TranslateService): InputComponentDat
   showTooltip: false,
   showCharacterCounter: false,
 });
-const numberInputOptions = (translateService: TranslateService): NumberInputComponentData => ({
+const numberInputOptions = (): NumberInputComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -48,7 +48,7 @@ const numberInputOptions = (translateService: TranslateService): NumberInputComp
   format: false,
   formatter: '{{..}}',
 });
-const dateInputOptions = (translateService: TranslateService): DatePickerComponentData => ({
+const dateInputOptions = (): DatePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -62,7 +62,7 @@ const dateInputOptions = (translateService: TranslateService): DatePickerCompone
   showTime: false,
   showWeekNumber: false,
 });
-const rangeInputOptions = (translateService: TranslateService): RangePickerComponentData => ({
+const rangeInputOptions = (): RangePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -76,7 +76,7 @@ const rangeInputOptions = (translateService: TranslateService): RangePickerCompo
   showTime: false,
   showWeekNumber: false,
 });
-const timeInputOptions = (translateService: TranslateService): TimePickerComponentData => ({
+const timeInputOptions = (): TimePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -90,7 +90,7 @@ const timeInputOptions = (translateService: TranslateService): TimePickerCompone
   minuteStep: 1,
   secondStep: 1,
 });
-const textAreaInputOptions = (translateService: TranslateService): TextareaComponentData => ({
+const textAreaInputOptions = (): TextareaComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -135,14 +135,14 @@ const checkboxGroupInputOptions = (translateService: TranslateService): Checkbox
 });
 
 //Used for resetting inputs
-export function getInputGroups(translate: TranslateService): FormInputData<any>[] {
+export function getInputGroups(translate: TranslateService): FormInputData[] {
   return [
     {
       title: 'COMPONENTS.TEXT_FIELD.TITLE',
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'InputComponent',
-      data: textInputOptions(translate),
+      data: textInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -152,7 +152,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'NumberInputComponent',
-      data: numberInputOptions(translate),
+      data: numberInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -162,7 +162,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'DatePickerComponent',
-      data: dateInputOptions(translate),
+      data: dateInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -172,7 +172,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'RangePickerComponent',
-      data: rangeInputOptions(translate),
+      data: rangeInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -182,7 +182,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TimePickerComponent',
-      data: timeInputOptions(translate),
+      data: timeInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -192,7 +192,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TextareaComponent',
-      data: textAreaInputOptions(translate),
+      data: textAreaInputOptions(),
       codeEditor: {
         enabled: false,
       },

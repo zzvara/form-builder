@@ -1,7 +1,7 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
+import type { NumberInputComponentData } from '@components/number-input/interfaces/number-input-component-data';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -19,11 +19,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillModule } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
-
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-number-input-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './number-input-edit.component.html',
   styleUrls: [],
   standalone: true,
@@ -42,7 +42,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
@@ -138,12 +138,12 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
   }
 
   get maxNumOrInf() {
-    return this.getStrictControlValue('max') && this.getStrictControlValue('maxNumber')
+    return this.getStrictControlValue('max') && this.getStrictControlValue('maxNumber') != null
       ? this.getStrictControlValue<number>('maxNumber')
       : Infinity;
   }
   get minNumOrNegInf() {
-    return this.getStrictControlValue('min') && this.getStrictControlValue('minNumber')
+    return this.getStrictControlValue('min') && this.getStrictControlValue('minNumber') != null
       ? this.getStrictControlValue<number>('minNumber')
       : -Infinity;
   }
@@ -164,7 +164,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
           const [before, after] = [
             this.getStrictControlValue<string>('formatter').substring(0, specIndex),
             this.getStrictControlValue<string>('formatter').substring(
-              specIndex + 3,
+              specIndex + '{{..}}'.length,
               this.getStrictControlValue<string>('formatter').length,
             ),
           ];

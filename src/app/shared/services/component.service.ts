@@ -1,24 +1,26 @@
-import { Injectable } from '@angular/core';
-import { EditList } from '@app/pages/edit/interfaces/edit-list';
+import { Injectable, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import type { EditList } from '@app/pages/edit/interfaces/edit-list';
 import { BehaviorSubject } from 'rxjs';
 import { InstanceOfSectionListPipe } from '../pipes/instance-of-section-list.pipe';
-import { SectionList } from '@app/pages/edit/interfaces/section-list';
-import { FormInputData } from '../interfaces/form-input-data';
+import type { SectionList } from '@app/pages/edit/interfaces/section-list';
+import type { FormInputData } from '../interfaces/form-input-data';
 import { InstanceOfFormInputDataPipe } from '../pipes/instance-of-form-input-data.pipe';
-import { CodeEditorVariable } from '../interfaces/code-editor.interface';
+import type { CodeEditorVariable } from '../interfaces/code-editor.interface';
 import { CodeEditorVariableType } from '../enums/code-editor.enum';
-import { translateComponentType } from '@app/pages/edit/config/edit-data-config';
+import type { translateComponentType } from '@app/pages/edit/config/edit-data-config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ComponentService {
-  component$: BehaviorSubject<EditList[]> = new BehaviorSubject([] as EditList[]);
+  private instanceOfSectionListPipe = inject(InstanceOfSectionListPipe);
+  private instanceOfFormInputDataPipe = inject(InstanceOfFormInputDataPipe);
 
-  constructor(
-    private instanceOfSectionListPipe: InstanceOfSectionListPipe,
-    private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
-  ) {
+  component$ = new BehaviorSubject<EditList[]>([] as EditList[]);
+  readonly components = toSignal(this.component$, { initialValue: [] as EditList[] });
+
+  constructor() {
     this.component$.subscribe(() => {
       this.checkVariable();
     });
@@ -38,8 +40,7 @@ export class ComponentService {
     this.checkVariable();
     const list = this.getItemsBeforeId(targetId)
       .filter((item) => this.instanceOfFormInputDataPipe.transform(item))
-      .map((item: any) => {
-        const formInput = item as FormInputData;
+      .map((formInput) => {
         if (
           formInput.data &&
           formInput.data.id &&
@@ -65,7 +66,7 @@ export class ComponentService {
   }
 
   checkVariable(): void {
-    const items = this.component$.value.map(c => c.data);
+    const items = this.component$.value.map((c) => c.data);
     this.validateVariablesRecursively(items);
   }
 
@@ -96,17 +97,21 @@ export class ComponentService {
     item.codeEditor.data.variables = item.codeEditor.data.variables.filter((variable) => {
       const existsGlobally = !!this.getItemById(variable.elementId);
       const validItemsBefore = this.getItemsBeforeId(targetId);
-      const isValidScope = validItemsBefore.some(i =>
-        this.instanceOfFormInputDataPipe.transform(i) && (i as FormInputData).data?.id === variable.elementId
+      const isValidScope = validItemsBefore.some(
+        (i) =>
+          this.instanceOfFormInputDataPipe.transform(i) &&
+          (i as FormInputData).data?.id === variable.elementId,
       );
 
       return existsGlobally && isValidScope;
     });
   }
 
-  private findItemById(targetId: string, items: (SectionList | FormInputData)[]): SectionList | FormInputData | undefined {
+  private findItemById(
+    targetId: string,
+    items: (SectionList | FormInputData)[],
+  ): SectionList | FormInputData | undefined {
     for (const item of items) {
-
       if (this.instanceOfSectionListPipe.transform(item)) {
         const section = item as SectionList;
         if (section.sectionId === targetId) {
@@ -131,13 +136,17 @@ export class ComponentService {
 
   private findItemsBeforeId(
     targetId: string,
-    items: (SectionList | FormInputData)[]
+    items: (SectionList | FormInputData)[],
   ): { list: (SectionList | FormInputData)[]; found: boolean } {
     const result: (SectionList | FormInputData)[] = [];
 
     for (const item of items) {
-      const isTargetFormInput = this.instanceOfFormInputDataPipe.transform(item) && (item as FormInputData).data?.id === targetId;
-      const isTargetSection = this.instanceOfSectionListPipe.transform(item) && (item as SectionList).sectionId === targetId;
+      const isTargetFormInput =
+        this.instanceOfFormInputDataPipe.transform(item) &&
+        (item as FormInputData).data?.id === targetId;
+      const isTargetSection =
+        this.instanceOfSectionListPipe.transform(item) &&
+        (item as SectionList).sectionId === targetId;
 
       if (isTargetFormInput || isTargetSection) {
         return { list: result, found: true };
@@ -163,7 +172,9 @@ export class ComponentService {
     return { list: result, found: false };
   }
 
-  private getVariableType(itemType: keyof typeof translateComponentType): CodeEditorVariableType | null {
+  private getVariableType(
+    itemType: keyof typeof translateComponentType,
+  ): CodeEditorVariableType | null {
     switch (itemType) {
       case 'CheckboxGroupComponent':
       case 'SelectComponent':

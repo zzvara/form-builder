@@ -1,4 +1,4 @@
-import { EditList } from '@app/pages/edit/interfaces/edit-list';
+import type { EditList } from '@app/pages/edit/interfaces/edit-list';
 
 export enum ProjectType {
   QUESTIONNAIRE = 'questionnaire',
@@ -17,6 +17,7 @@ export interface Project {
   created: string;
   modified: string;
   editList?: EditList[];
+  isComponentsValid?: boolean
 }
 
 export interface ProjectVersion<T extends Project> {

@@ -1,4 +1,4 @@
-import { Question, QuestionType } from '@interfaces/question/questions.interface';
+import type { Question, QuestionType } from '@interfaces/question/questions.interface';
 
 export interface DateQuestion extends Question {
   type: QuestionType.DATE;
