@@ -4,9 +4,15 @@ import type { Project } from '@interfaces/project';
 import { ProjectType } from '@interfaces/project';
 import { ProjectService } from './project.service';
 
+interface LocalStorageMock {
+  getItem: jasmine.Spy<(key: string) => string | null>;
+  setItem: jasmine.Spy<(key: string, value: string) => void>;
+  removeItem: jasmine.Spy<(key: string) => void>;
+}
+
 describe('ProjectService', () => {
   let service: ProjectService<Project>;
-  let localStorageMock: any;
+  let localStorageMock: LocalStorageMock;
 
   // Mock project data
   const mockProject: Project = {
