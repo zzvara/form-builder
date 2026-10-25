@@ -24,7 +24,10 @@ describe('DatePickerEditComponent', () => {
         { provide: NzModalRef, useValue: { close: jasmine.createSpy('close') } },
       ],
     });
-    fixture = TestBed.createComponent(DatePickerEditComponent);
+    fixture =
+      TestBed.createComponent<DatePickerEditComponent<Date, DatePickerComponentData<Date>>>(
+        DatePickerEditComponent,
+      );
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

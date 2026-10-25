@@ -1,6 +1,7 @@
 /* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 {
   "extends": "./tsconfig.json",
+  "exclude": [],
   "compilerOptions": {
     "outDir": "./out-tsc/worker",
     "lib": ["es2018", "webworker"],
