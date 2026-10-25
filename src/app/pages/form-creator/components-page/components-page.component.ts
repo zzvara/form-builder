@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild, signal, Signal, computed } from '@angular/core';
+import { Component, OnInit, signal, Signal, computed } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Project, ProjectVersion } from '@interfaces/project';
@@ -49,13 +49,6 @@ interface DiffItem {
   ],
 })
 export class ComponentsPageComponent implements OnInit {
-  @ViewChild(EditComponent) editComponent!: EditComponent;
-
-  @Input() projectId: string | undefined;
-  @Input() page?: number;
-  @Output() setPage = new EventEmitter<number>();
-  @Output() versionChange = new EventEmitter<number>();
-
   private readonly _inlineEdit = signal<InlineEdit>({ enabled: true });
   public readonly inlineEdit: Signal<InlineEdit> = this._inlineEdit.asReadonly();
 
@@ -79,36 +72,23 @@ export class ComponentsPageComponent implements OnInit {
     private modal: NzModalService,
     private translate: TranslateService,
     private projectService: ProjectService<Project>,
-    public store: FormBuilderStore,
-    private cdr: ChangeDetectorRef
+    public store: FormBuilderStore
   ) {}
 
   ngOnInit(): void {
-    const id = this.projectId || this.store.projectId();
+    const id = this.store.projectId();
     if (id) {
       const history = this.projectService.getProjectHistory(id);
       this._projectHistory.set(history);
 
       const latestVersionNum = history.length > 0 ? history[history.length - 1].versionNum : 1;
       this.store.initVersionNumber(latestVersionNum);
-      this.versionChange.emit(this.store.currentVersion());
     }
-  }
-
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
   }
 
   nextPage() {
     this.store.saveProject();
-    if (this.page !== undefined) {
-      this.page += 1;
-      this.onsetPage(this.page);
-    }
-  }
-
-  onsetPage(page: number): void {
-    this.setPage.emit(page);
+    this.store.nextPage();
   }
 
   navigateVersion(offset: number): void {
@@ -116,7 +96,6 @@ export class ComponentsPageComponent implements OnInit {
     if (current !== undefined) {
       const newVersionNum = current + offset;
       this.store.setVersion(newVersionNum);
-      this.versionChange.emit(this.store.currentVersion());
     }
   }
 
@@ -126,7 +105,6 @@ export class ComponentsPageComponent implements OnInit {
 
   selectVersion(versionNum: number) {
     this.store.setVersion(versionNum);
-    this.versionChange.emit(this.store.currentVersion());
   }
 
   getDiffItems(version: ProjectVersion<Project>): DiffItem[] {

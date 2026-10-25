@@ -1,19 +1,17 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, OnChanges, OnInit, QueryList, ViewChildren, signal, Signal, WritableSignal } from '@angular/core';
+import { Component, effect, HostListener, Input, OnInit, QueryList, ViewChildren, signal, Signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { InputHolderComponent } from '@components/input-holder/input-holder.component';
 import { FormInputData } from '@interfaces/form-input-data';
 import { InlineEdit } from '@interfaces/inline-edit';
 import { InputData } from '@interfaces/input-data';
-import { Project } from '@interfaces/project';
 import { FormBuilderStore } from '@app/core/form-builder.store';
 import { getSideBarData } from '@pages/edit/config/edit-data-config';
 import { EditList } from '@pages/edit/interfaces/edit-list';
 import { LayoutEnum } from '@pages/edit/interfaces/layout-enum';
 import { RepeatedSectionList, SectionList } from '@pages/edit/interfaces/section-list';
-import { ProjectService } from '@services/project.service';
 import { cloneDeep } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -75,10 +73,8 @@ import { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
     NzTooltipDirective,
   ],
 })
-export class EditComponent implements OnInit, OnChanges {
+export class EditComponent implements OnInit {
   @Input() inlineEdit!: InlineEdit;
-  @Input() projectId?: string;
-  @Input() versionNum?: number;
 
   @ViewChildren(InputHolderComponent) inputComponents!: QueryList<InputHolderComponent>;
 
@@ -104,23 +100,34 @@ export class EditComponent implements OnInit, OnChanges {
 
   constructor(
     private modalService: ModalService,
-    private projectService: ProjectService<Project>,
     private store: FormBuilderStore,
     private componentService: ComponentService,
     private translate: TranslateService,
     private instanceOfSectionListPipe: InstanceOfSectionListPipe,
     private instanceOfFormInputDataPipe: InstanceOfFormInputDataPipe
-  ) {}
+  ) {
+    let previousRestoration = this.store.historyRestored();
+    effect(() => {
+      const project = this.store.project();
+      const restoration = this.store.historyRestored();
+      if (!project) return;
+
+      this.syncProjectToEditor(project.editList ?? []);
+      this.store.isComponentsFormValid.set(project.isComponentsValid ?? false);
+
+      if (restoration !== previousRestoration) {
+        previousRestoration = restoration;
+        setTimeout(() => this.updateComponentsValidity());
+      }
+    });
+  }
 
   ngOnInit() {
     this._sideBarData.set(getSideBarData(this, this.translate));
     this.updateViewMode();
-    this.loadProject();
+    this.syncProjectToEditor(this.store.project()?.editList ?? []);
     this.initializeUndoRedo();
-  }
-
-  ngOnChanges() {
-    this.loadProject();
+    setTimeout(() => this.updateComponentsValidity());
   }
 
   @HostListener('window:resize')
@@ -132,14 +139,6 @@ export class EditComponent implements OnInit, OnChanges {
     this._editList().filter((edit) => this.instanceOfSectionListPipe.transform(edit.data)).map((sect) => sect.id);
 
   getAllFormInputs: () => FormInputData[] = () => {
-    if (this._editList().length === 0 && this.projectId) {
-      const project = this.projectService.searchData(this.projectId)[0];
-      if (project?.editList && project.editList.length > 0) {
-        this._editList.set(this.cleanCorruptedData(cloneDeep(project.editList)));
-        this._names.set(this.getCustomTitles());
-      }
-    }
-
     return this._editList().flatMap((edit) => {
       if (this.instanceOfSectionListPipe.transform(edit.data)) {
         return (edit.data as SectionList).sectionInputs;
@@ -152,36 +151,27 @@ export class EditComponent implements OnInit, OnChanges {
     item.data && (this.instanceOfFormInputDataPipe.transform(item.data) || this.instanceOfFormInputDataPipe.transform(item.data.data));
 
   saveForm(): void {
-    const project = this.projectService.searchData(this.projectId!)[0];
-    if (project) {
-      project.editList = [];
-      for (const edit of this._editList()) {
-        project.editList.push(cloneDeep(edit));
-      }
-      this._names.set(this.getCustomTitles());
-      this.projectService.update(this.projectId!, project);
-    }
     this.pushToStore();
+    this.store.saveProject();
   }
 
   public pushToStore() {
-    this.store.updateProject({ editList: cloneDeep(this._editList()), isComponentsValid: !this.isFormInvalid() });
-    this.store.isComponentsFormValid.set(!this.isFormInvalid());
+    const isValid = !this.isFormInvalid();
+    this.store.updateProject({ editList: cloneDeep(this._editList()), isComponentsValid: isValid });
+    this.store.isComponentsFormValid.set(isValid);
   }
 
-  private loadProject(): void {
-    if (this.projectId !== undefined) {
-      const project = this.projectService.getProjectVersion(this.projectId, this.versionNum ?? 1);
-      if (project?.editList) {
-        this._editList.set(this.cleanCorruptedData(cloneDeep(project.editList)));
-        this._names.set(this.getCustomTitles());
-        this.store.saveEditHistory(this._editList());
-      }
-      this.componentService.component$.next(this._editList());
-      setTimeout(() => {
-        this.store.isComponentsFormValid.set(!this.isFormInvalid());
-      });
-    }
+  private syncProjectToEditor(editList: EditList[]): void {
+    const cleanedEditList = this.cleanCorruptedData(cloneDeep(editList));
+    this._editList.set(cleanedEditList);
+    this._names.set(this.getCustomTitles());
+    this.componentService.component$.next(cleanedEditList);
+  }
+
+  private updateComponentsValidity(): void {
+    const isValid = !this.isFormInvalid();
+    this.store.isComponentsFormValid.set(isValid);
+    this.store.updateProject({ isComponentsValid: isValid });
   }
 
   private cleanCorruptedData(list: EditList[]): EditList[] {
@@ -230,15 +220,10 @@ export class EditComponent implements OnInit, OnChanges {
 
   undoRedo(undoRedoEvent: UndoRedoEnum): void {
     if (undoRedoEvent === UndoRedoEnum.UNDO) {
-      this._editList.set(this.store.undoEdit() ?? []);
-      this._names.set(this.getCustomTitles());
-      this.componentService.component$.next(this._editList());
+      this.store.undoEdit();
     } else {
-      this._editList.set(this.store.redoEdit() ?? []);
-      this._names.set(this.getCustomTitles());
-      this.componentService.component$.next(this._editList());
+      this.store.redoEdit();
     }
-    this.pushToStore();
   }
 
   dropIntoEdit(event: CdkDragDrop<EditList[], EditList[] | FormInputData[], EditList | FormInputData>): void {

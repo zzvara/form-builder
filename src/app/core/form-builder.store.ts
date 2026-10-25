@@ -34,7 +34,7 @@ export class FormBuilderStore {
    */
   isInfoValid = computed(() => {
     const project = this.project();
-    return project?.title && project?.type;
+    return !!project?.title?.trim() && !!project?.type;
   });
 
   /**
@@ -213,7 +213,7 @@ export class FormBuilderStore {
     const restored = this.undoRedoService.undo();
     if (restored) {
       this.updateProject({ editList: restored });
-      this.historyRestored.set(Date.now());
+      this.historyRestored.update((count) => count + 1);
     }
   }
 
@@ -224,7 +224,7 @@ export class FormBuilderStore {
     const restored = this.undoRedoService.redo();
     if (restored) {
       this.updateProject({ editList: restored });
-      this.historyRestored.set(Date.now());
+      this.historyRestored.update((count) => count + 1);
     }
   }
 

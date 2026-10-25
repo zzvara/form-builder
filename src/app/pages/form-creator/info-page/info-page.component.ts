@@ -92,8 +92,6 @@ export class InfoPageComponent implements OnInit, OnDestroy {
         const newType = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
         if (!this.store.project()) {
           this.store.initNewProject(newType);
-        } else if (this.store.project()?.type !== newType) {
-          this.store.updateProject({ type: newType });
         }
         this.form.patchValue(
           {
@@ -117,9 +115,7 @@ export class InfoPageComponent implements OnInit, OnDestroy {
 
     this.initializeForm();
     this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      if (this.form.valid) {
-        this.updateForm();
-      }
+      this.updateForm();
     });
   }
 

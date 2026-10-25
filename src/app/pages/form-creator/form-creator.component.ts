@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ProjectType } from '@app/shared/interfaces/project';
-import { ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InfoPageComponent } from './info-page/info-page.component';
 import { ComponentsPageComponent } from './components-page/components-page.component';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
@@ -24,65 +25,22 @@ import { FormBuilderStore } from '@app/core/form-builder.store';
     ResultsPageComponent,
   ],
 })
-export class FormCreatorComponent {
-  @ViewChild(InfoPageComponent)
-  infoPageComponent?: InfoPageComponent;
-
-  @ViewChild(ComponentsPageComponent)
-  componentsPageComponent?: ComponentsPageComponent;
-
-  projectId: string = '';
-  currentVersionNum?: number;
-  projectType: ProjectType = ProjectType.TEST;
-  infoValid = false;
-  componentValid = false;
-
+export class FormCreatorComponent implements OnInit {
   ProjectType = ProjectType;
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
-    private readonly cdr: ChangeDetectorRef,
+    private readonly route: ActivatedRoute,
     public store: FormBuilderStore
   ) {}
 
-  checkInfoForm() {
-    if (this.infoPageComponent) {
-      this.infoValid = this.infoPageComponent.form.valid;
-    }
-
-    return this.infoValid;
-  }
-
-  checkComponentsForm() {
-    if (this.componentsPageComponent) {
-      this.componentValid = !this.componentsPageComponent.editComponent.isFormInvalid();
-    }
-
-    return this.componentValid;
-  }
-
-  setProjectId(id: string) {
-    this.projectId = id;
-  }
-
-  setVersionNum(versionNum: number) {
-    this.currentVersionNum = versionNum;
-  }
-
-  handleFormData(data: ProjectType) {
-    this.projectType = data;
-    this.cdr.detectChanges();
-  }
-
-  setPage(p: number) {
-    if (p <= 2) {
-      this.store.setPageStep(p);
-    }
-  }
-
-  nextPage() {
-    if (this.store.currentStep() < 2) {
-      this.store.setPageStep(this.store.currentStep() + 1);
-    }
+  ngOnInit(): void {
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      if (!params['id']) {
+        const type = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        this.store.initNewProject(type);
+      }
+    });
   }
 
   toInfoPage() {
@@ -90,16 +48,18 @@ export class FormCreatorComponent {
   }
 
   toCompPage() {
-    if (this.store.currentStep() >= 1 || this.checkInfoForm()) {
-      this.infoPageComponent?.submitForm();
-      this.store.saveProject();
+    if (this.store.currentStep() >= 1) {
       this.store.setPageStep(1);
+    } else if (this.store.canGoNextPage()) {
+      this.store.saveProject();
+      this.store.nextPage();
     }
   }
 
   toAnswPage() {
-    if (this.store.currentStep() >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
-      this.componentsPageComponent?.editComponent?.saveForm();
+    if (this.store.currentStep() >= 2) {
+      this.store.setPageStep(2);
+    } else if (this.store.isInfoValid() && this.store.isComponentsValid()) {
       this.store.saveProject();
       this.store.setPageStep(2);
     }

@@ -25,7 +25,7 @@
           <nz-dropdown-menu #versionMenu="nzDropdownMenu">
             <ul nz-menu>
               @for (version of projectHistory(); track trackByVersion($index, version)) {
-                <li nz-menu-item (click)="store.setVersion(version.versionNum)">
+                <li nz-menu-item (click)="selectVersion(version.versionNum)">
                   <span> {{ 'VERSION' | translate }} {{ version.versionNum }} </span>
                   <span nz-popover nzPopoverTrigger="hover" nz-tooltip
                         [nzTooltipTitle]="('GENERAL.CREATED' | translate) + ': ' + (version.created | date: DateFormat.SHORT)"
