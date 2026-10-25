@@ -135,7 +135,7 @@ jobs:
       - name: Run unit tests
         run: |
           export CHROME_BIN="$(node -p "require('playwright').chromium.executablePath()")"
-          npm test -- --watch=false --browsers=ChromeHeadless
+          npm test -- --watch=false --browsers=ChromeHeadlessNoSandbox
 
   bump:
     runs-on: ubuntu-latest
