@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Questionnaire Creation Flow', () => {
-  test.setTimeout(100000);
+  test.setTimeout(120000);
 
   test('should create a new Questionnaire successfully', async ({ page }) => {
     await page.goto('/');
@@ -52,7 +52,7 @@ test.describe('Questionnaire Creation Flow', () => {
 
     await page.locator('button.saveBtn').click();
 
-    await expect(page).toHaveURL('http://localhost:4200/');
+    await expect(page).toHaveURL('/');
     await expect(page.getByText(uniqueTitle)).toBeVisible({ timeout: 10000 });
 
     await page.waitForTimeout(10000);

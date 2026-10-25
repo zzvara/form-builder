@@ -7,6 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:e2e": "playwright test",
+    "serve:e2e": "serve -s dist/form-builder/browser",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "format": "prettier . --write",
@@ -73,6 +75,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "less": "^4.2.0",
     "prettier": "^3.8.3",
+    "serve": "^14.2.6",
     "typescript": "5.9.3",
     "typescript-eslint": "8.56.1"
   }

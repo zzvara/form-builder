@@ -82,3 +82,30 @@ npx.cmd playwright show-report
 Select a test in the report to inspect its result and attachments. The current configuration
 records videos for test runs. Traces are recorded on the first retry; local runs have no
 automatic retries by default.
+
+## GitHub Actions
+
+The **CI Pipeline** workflow in `.github/workflows/CI.yml` runs on pull requests targeting
+`main`, pushes to `main`, and manual runs from GitHub's **Actions** tab.
+
+The build job installs dependencies with `npm ci`, builds the application, and uploads it.
+The **Playwright UI tests** job downloads that build, installs Chromium and its Linux
+dependencies, and runs `npm run test:e2e`. Playwright starts the locked local server with
+`npm run serve:e2e -- --listen 4200`; no separate running development server is needed.
+
+CI uses one browser worker, retries failures up to twice, and starts a fresh server on port
+4200 by default. Set the `PLAYWRIGHT_PORT` environment variable to use another port when
+reproducing CI locally alongside a running development server. The questionnaire test
+allows two minutes per attempt, including its deliberate waits.
+
+After a run, open **Actions → CI Pipeline → the workflow run → Artifacts** to download:
+
+- `playwright-report`: the HTML report, including test attachments.
+- `playwright-test-results`: videos, failure screenshots, and traces from the first retry.
+
+Reports and test artifacts are retained for 30 days and uploaded even when tests fail,
+provided the run was not cancelled and the files were produced.
+
+Lint and formatting run in a separate job, so existing lint failures do not prevent the
+browser tests from running. They still make the overall workflow fail and block the
+existing automatic version-bump job, which requires both quality checks and UI tests to pass.
