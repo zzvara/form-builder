@@ -17,6 +17,21 @@ For Playwright, install the Chromium browser used by this project's configuratio
 npx.cmd playwright install chromium
 ```
 
+## Unit tests
+
+Unit tests use Jasmine and Karma and are located in `src/` files ending in `.spec.ts`.
+Run the tests once in headless Chrome:
+
+```powershell
+npm.cmd test -- --watch=false --browsers=ChromeHeadless
+```
+
+To keep the test runner open and rerun tests when files change, use:
+
+```powershell
+npm.cmd test
+```
+
 ## Playwright UI tests
 
 Playwright interacts with the application in a real browser. The configuration in

@@ -1,22 +1,39 @@
-import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { SectionList } from '@app/pages/edit/interfaces/section-list';
-import { CodeEditorMode, CodeEditorType, CodeEditorVariableType } from '@app/shared/enums/code-editor.enum';
-import { CodeEditorData, CodeEditorVariable } from '@app/shared/interfaces/code-editor.interface';
-import { FormInputData } from '@app/shared/interfaces/form-input-data';
+import type { OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  ViewChild,
+  inject,
+} from '@angular/core';
+import type { SectionList } from '@app/pages/edit/interfaces/section-list';
+import {
+  CodeEditorMode,
+  CodeEditorType,
+  CodeEditorVariableType,
+} from '@app/shared/enums/code-editor.enum';
+import type {
+  CodeEditorData,
+  CodeEditorVariable,
+} from '@app/shared/interfaces/code-editor.interface';
+import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { ComponentService } from '@app/shared/services/component.service';
 import { ModalService } from '@app/shared/services/modal.service';
-import {NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef} from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA, NzModalFooterDirective, NzModalRef } from 'ng-zorro-antd/modal';
 import { CodeEditorComponent } from '../code-editor.component';
-import {TranslatePipe} from "@ngx-translate/core";
-import {VariableIconPipe} from "@shared/pipes/variable-icon.pipe";
-import {NzDividerModule} from "ng-zorro-antd/divider";
-import {NzIconModule} from "ng-zorro-antd/icon";
-import {NzTooltipDirective} from "ng-zorro-antd/tooltip";
-import {FormsModule} from "@angular/forms";
-import {NzTagComponent} from "ng-zorro-antd/tag";
+import { TranslatePipe } from '@ngx-translate/core';
+import { VariableIconPipe } from '@shared/pipes/variable-icon.pipe';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { FormsModule } from '@angular/forms';
+import { NzTagComponent } from 'ng-zorro-antd/tag';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 
 @Component({
   selector: 'app-code-editor-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   templateUrl: './code-editor-modal.component.html',
   styleUrl: './code-editor-modal.component.css',
@@ -28,33 +45,33 @@ import {NzTagComponent} from "ng-zorro-antd/tag";
     NzTooltipDirective,
     FormsModule,
     NzTagComponent,
+    NzCheckboxComponent,
     CodeEditorComponent,
     NzModalFooterDirective,
-
-  ]
+  ],
 })
 export class CodeEditorModalComponent implements OnInit, OnChanges {
+  private componentService = inject(ComponentService);
+  private nzModalRef = inject(NzModalRef);
+  private modalService = inject(ModalService);
+  readonly data = inject<{
+    elementId: string;
+  }>(NZ_MODAL_DATA);
+
   @Input() elementId?: string;
 
   @ViewChild(CodeEditorComponent) codeEditorElement?: CodeEditorComponent;
 
+  private readonly cdr = inject(ChangeDetectorRef);
+
   selectedElement?: SectionList | FormInputData;
-  selectedElementCodeMirror: CodeEditorData = {
-    enabled: false,
-  };
+  selectedElementCodeMirror: CodeEditorData = { enabled: false };
   variableList: CodeEditorVariable[] = [];
   isModal = false;
 
   CodeEditorMode = CodeEditorMode;
   CodeEditorType = CodeEditorType;
   CodeEditorVariableType = CodeEditorVariableType;
-
-  constructor(
-    private componentService: ComponentService,
-    private nzModalRef: NzModalRef,
-    private modalService: ModalService,
-    @Inject(NZ_MODAL_DATA) public readonly data: { elementId: string }
-  ) {}
 
   ngOnInit(): void {
     if (this.data && this.data.elementId) {
@@ -66,7 +83,10 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['elementId'] && changes['elementId'].currentValue !== changes['elementId'].previousValue) {
+    if (
+      changes['elementId'] &&
+      changes['elementId'].currentValue !== changes['elementId'].previousValue
+    ) {
       this.getSelectedElement();
     }
   }
@@ -107,12 +127,15 @@ export class CodeEditorModalComponent implements OnInit, OnChanges {
       this.selectedElementCodeMirror.data && this.selectedElementCodeMirror.data.variables
         ? this.selectedElementCodeMirror.data.variables
         : [],
-      this.variableList
+      this.variableList,
     );
 
     modal.afterClose.subscribe((variables?: CodeEditorVariable[]) => {
       if (variables && this.selectedElementCodeMirror.data) {
-        this.selectedElementCodeMirror.data.variables = variables.sort((a, b) => a.title.localeCompare(b.title));
+        this.selectedElementCodeMirror.data.variables = variables.sort((a, b) =>
+          a.title.localeCompare(b.title),
+        );
+        this.cdr.markForCheck();
       }
     });
   }

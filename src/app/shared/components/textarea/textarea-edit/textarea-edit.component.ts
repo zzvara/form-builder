@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputEditComponent } from '@components/input/input-edit/input-edit.component';
-import { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
+import type { TextareaComponentData } from '@components/textarea/interfaces/textarea-component-data';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
@@ -16,10 +16,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-textarea-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './textarea-edit.component.html',
   styleUrls: [],
   standalone: true,
@@ -38,7 +39,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzInputModule,
     NzCheckboxModule,
     TranslatePipe,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class TextareaEditComponent extends InputEditComponent<TextareaComponentData> {}

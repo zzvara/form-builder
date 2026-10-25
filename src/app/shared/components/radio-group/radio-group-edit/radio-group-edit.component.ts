@@ -1,17 +1,20 @@
 import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import type { AbstractControl, FormArray } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MutateTextDirective } from '@app/shared/directives/mutate-text.directive';
-import { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
-import { ErrorType, getErrorMessageList } from '@helpers/error-helper';
+import type { RadioGroupData } from '@components/radio-group/interfaces/radio-group-data';
+import type { ErrorType } from '@helpers/error-helper';
+import { getErrorMessageList } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -27,13 +30,14 @@ import {
 } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
-import { NzOptionComponent, NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-radio-group-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './radio-group-edit.component.html',
   styleUrls: [],
   standalone: true,
@@ -55,14 +59,15 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxModule,
     NzSelectModule,
     TranslatePipe,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroupData> {
+  private readonly cdr = inject(ChangeDetectorRef);
   newOption!: FormControl<string | null>;
   editControl: FormControl = new FormControl('');
-  editingIndex: number | null = null;
-  editError: string | null = null;
+  readonly editingIndex = signal<number | null>(null);
+  readonly editError = signal<string | null>(null);
   get newOptionValue(): string | null {
     return this.newOption.getRawValue();
   }
@@ -109,11 +114,10 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     });
 
     this.connectValidations({
-      required: [{ name: 'requiredMessage' }, { name: 'defaultValue' }],
+      required: [{ name: 'requiredMessage' }],
     });
 
     this.initializeFormValues();
-    this.setupDefaultValueCheckBox();
 
     this.newOption = new FormControl(null, {
       updateOn: UpdateOnStrategy.CHANGE,
@@ -123,6 +127,9 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
         CustomValidators.validateIsInList(() => this.optionDescriptions),
       ],
     });
+    this.options.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.newOption.updateValueAndValidity());
   }
 
   override initializeFormValues() {
@@ -141,7 +148,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   override onReset() {
     super.onReset();
-    this.getControl<boolean>('setDefaultValue')?.setValue(true);
+    this.cancelEdit();
     this.newOption.reset();
     this.options.clear();
     this.initialValues.options.forEach((option) => {
@@ -152,28 +159,18 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
         }),
       );
     });
+    this.cdr.markForCheck();
   }
 
   override saveData() {
     super.saveData();
+    this.initialValues.defaultValue = this.rawFormData.defaultValue ?? undefined;
     this.initialValues.isButton = this.rawFormData.isButton;
     this.initialValues.options = this.rawFormData.options;
     this.initialValues.required = this.rawFormData.required;
     if (this.rawFormData.required) {
       this.initialValues.requiredMessage = this.rawFormData.requiredMessage;
     }
-    if (!this.getControlValue('setDefaultValue')) {
-      this.initialValues.defaultValue = undefined;
-    }
-  }
-
-  override get defaultValueValidators() {
-    return CustomValidators.executeValidationsConditionally([
-      {
-        condition: () => this.getStrictControlValue<boolean>('required'),
-        validation: Validators.required,
-      },
-    ]);
   }
 
   override get defaultValueUpdateOn() {
@@ -182,13 +179,11 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   //----------------------------------------------------------------------------------------------------------------------
 
-  setupDefaultValueCheckBox() {
-    //Add custom form control
-    this.addAnyControls({
-      setDefaultValue: new FormControl<boolean>(true, {
-        updateOn: UpdateOnStrategy.CHANGE,
-      }),
-    });
+  selectDefaultOption(optionId: number, checked: boolean) {
+    const control = this.getStrictControl('defaultValue');
+    control?.setValue(checked ? optionId : undefined);
+    control?.markAsDirty();
+    control?.markAsTouched();
   }
 
   getErrorMessages(control: AbstractControl<string>): string[] {
@@ -212,6 +207,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   // Add a new option
   addOption() {
+    if (this.newOption.invalid) return;
     this.options.push(
       this.formBuilder.group({
         option_id: new FormControl(this.getNextId(), Validators.required),
@@ -225,14 +221,18 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
 
   // Remove an existing option
   removeOption(optionIndex: number) {
+    const optionId = this.options.at(optionIndex).value.option_id;
     this.options.removeAt(optionIndex);
-    this.getStrictControl('defaultValue')?.setValue(undefined);
+    if (this.getControlValue('defaultValue') === optionId) {
+      this.getStrictControl('defaultValue')?.setValue(undefined);
+    }
+    this.cancelEdit();
     this.options.markAsDirty();
     this.options.markAsTouched();
   }
   startEdit(i: number, value: string) {
-    this.editingIndex = i;
-    this.editError = null;
+    this.editingIndex.set(i);
+    this.editError.set(null);
     this.editControl = new FormControl(value, Validators.required);
   }
   saveEdit(i: number) {
@@ -240,24 +240,32 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     if (!newValue) return;
     const otherValues = this.optionDescriptions.filter((_, idx) => idx !== i);
     if (otherValues.includes(newValue)) {
-      this.editError = this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION');
+      this.editError.set(this.translate.instant('COMPONENTS.ERROR_DUPLICATE_OPTION'));
       return;
     }
-    this.options.at(i).patchValue({ label: newValue });
-    this.editingIndex = null;
-    this.editError = null;
+    this.options.at(i).patchValue({ option_description: newValue });
+    this.options.markAsDirty();
+    this.options.markAsTouched();
+    this.editingIndex.set(null);
+    this.editError.set(null);
   }
   cancelEdit() {
-    this.editingIndex = null;
-    this.editError = null;
+    this.editingIndex.set(null);
+    this.editError.set(null);
   }
 
   getMinOptions(): number {
-    const error: any = this.getError(this.options, 'minLengthError');
-    return error.min - error.current;
+    const error = this.getError<{ min: number; current: number }>(this.options, 'minLengthError');
+    return error ? error.min - error.current : 0;
   }
 
   drop(event: CdkDragDrop<AbstractControl[]>) {
-    moveItemInArray(this.options.controls, event.previousIndex, event.currentIndex);
+    if (event.previousIndex === event.currentIndex) return;
+    const option = this.options.at(event.previousIndex);
+    this.options.removeAt(event.previousIndex);
+    this.options.insert(event.currentIndex, option);
+    this.options.markAsDirty();
+    this.options.markAsTouched();
+    this.cancelEdit();
   }
 }

@@ -1,9 +1,7 @@
 import { DateFormat } from '@app/shared/constants/date-format.constant';
-import { NzDateMode } from 'ng-zorro-antd/date-picker';
+import type { NzDateMode } from 'ng-zorro-antd/date-picker';
 
-export type DefaultDateFormats = {
-  [key in NzDateMode]: string;
-};
+export type DefaultDateFormats = Record<NzDateMode, string>;
 
 export const defaultDateFormats: DefaultDateFormats = {
   date: DateFormat.DATE,

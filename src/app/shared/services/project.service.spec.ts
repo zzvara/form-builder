@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import type { Project } from '@interfaces/project';
+import { ProjectType } from '@interfaces/project';
 import { ProjectService } from './project.service';
-import { Project, ProjectType } from '@interfaces/project';
 
 describe('ProjectService', () => {
   let service: ProjectService<Project>;
@@ -31,9 +33,7 @@ describe('ProjectService', () => {
     spyOn(localStorage, 'setItem').and.callFake(localStorageMock.setItem);
     spyOn(localStorage, 'removeItem').and.callFake(localStorageMock.removeItem);
 
-    TestBed.configureTestingModule({
-      providers: [ProjectService],
-    });
+    TestBed.configureTestingModule({ providers: [ProjectService, provideZonelessChangeDetection()] });
 
     service = TestBed.inject(ProjectService);
   });
@@ -285,5 +285,37 @@ describe('ProjectService', () => {
 
       expect(foundProjects).toEqual([]);
     });
+  });
+});
+
+describe('ProjectService signals', () => {
+  it('updates the project list when projects are added and removed', () => {
+    spyOn(localStorage, 'getItem').and.returnValue(null);
+    spyOn(localStorage, 'setItem');
+    spyOn(localStorage, 'removeItem');
+    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection()] });
+    const service = TestBed.inject(ProjectService<Project>);
+    const project: Project = {
+      id: '',
+      title: 'Survey',
+      description: '',
+      type: ProjectType.QUESTIONNAIRE,
+      time_checkbox: false,
+      deadline_checkbox: false,
+      time_limit: 0,
+      deadline: '',
+      created: '',
+      modified: '',
+    };
+
+    expect(service.projects()).toEqual([]);
+    const emissions: Project[][] = [];
+    const subscription = service.list().subscribe((projects) => emissions.push(projects));
+    service.add(project);
+    expect(service.projects()).toEqual([project]);
+    service.remove(project.id);
+    expect(service.projects()).toEqual([]);
+    expect(emissions).toEqual([[], [project], []]);
+    subscription.unsubscribe();
   });
 });

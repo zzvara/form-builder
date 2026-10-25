@@ -7,7 +7,7 @@ Open-source yet another form-builder based on Angular and [NG-Zorro](https://ng.
 ## Role assignments
 
 | Role         | Members                                          |
-| ------------ |--------------------------------------------------|
+| ------------ | ------------------------------------------------ |
 | Stakeholder  | Barnabás Balázs, Zoltán Zvara                    |
 | Shepherd     | Máté Botond Zsigmond                             |
 | Taskmaster   | Horváth Janka                                    |
@@ -77,6 +77,13 @@ This role ensures products are functional, aesthetically pleasing, and intuitive
 
 # Development guide
 
+The Angular application runs without Zone.js. Components use `OnPush` change detection;
+use signals for view state and signal inputs or Angular template events to notify
+change detection. For Observable sources, bridge into signals with `toSignal` (or use
+the `async` pipe), and clean up imperative subscriptions when components are destroyed.
+Run `npm run build` and `npm run test -- --watch=false --browsers=ChromeHeadless`
+after changes to rendering or state.
+
 ## Principles for development
 
 ### Code quality first
@@ -105,6 +112,7 @@ The project uses ESLint, Angular ESLint, and Prettier to ensure consistent code 
 ### Visual Studio Code
 
 **Required extensions**
+
 - ESLint
 - Prettier - Code formatter
 - Angular Language Service
@@ -117,16 +125,14 @@ The project uses ESLint, Angular ESLint, and Prettier to ensure consistent code 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.validate": [
-    "typescript",
-    "html"
-  ],
+  "eslint.validate": ["typescript", "html"],
   "eslint.run": "onType",
   "prettier.requireConfig": true
 }
 ```
 
 **Result**
+
 - Lint errors shown while typing
 - Automatic fixes on save
 - Template and TypeScript linting enabled
@@ -149,6 +155,7 @@ Go to: Settings -> Languages & Frameworks -> JavaScript -> Prettier
 - Enable "Run on save"
 
 **Result**
+
 - Inline lint errors
 - Auto-formatting on save
 - Angular template validation support

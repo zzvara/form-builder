@@ -5,10 +5,12 @@
     "LIST_VIEW": "Lista nézet",
     "LIST_VIEW_TOOLTIP": "Váltás lista nézetre",
     "QUESTIONNAIRES": "Kérdőívek",
-    "NEW_QUESTIONNAIRE": "Új kérdőív létrehozása",
     "TESTS": "Teszt",
-    "NEW_TEST": "Új teszt létrehozása",
     "ACTION": "Művelet",
-    "DELETE_CONFIRMATION": "Biztosan törli ezt a projektet?"
+    "DELETE_CONFIRMATION": "Biztosan törli ezt a projektet?",
+    "EMPTY_QUESTIONNAIRE_DESC": "Jelenleg még nincs egyetlen kérdőíved sem.\nHozz létre egyet az adatgyűjtés megkezdéséhez!",
+    "EMPTY_TEST_DESC": "Jelenleg még nincs egyetlen teszted sem.\nHozz létre egyet a tudás felméréséhez!",
+    "NEW_QUESTIONNAIRE": "Új kérdőív létrehozása", 
+    "NEW_TEST": "Új teszt létrehozása"
   }
 }

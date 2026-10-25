@@ -1,14 +1,13 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
-  "include": [
-    "src/**/*.ts",
-    "playwright.config.ts",
-    "tests/**/*.ts",
-    "e2e/**/*.ts",
-    "tests-examples/**/*.ts"
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.spec.json" },
+    { "path": "./tsconfig.worker.json" }
   ],
-  "exclude": ["src/**/*.worker.ts"],
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {

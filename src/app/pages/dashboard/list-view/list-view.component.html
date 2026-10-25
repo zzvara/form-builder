@@ -1,13 +1,14 @@
 <nz-table
   #table
-  [nzData]="projectList"
+  [nzData]="projectList()"
   nzTableLayout="fixed"
   [nzScroll]="{ x: '600px' }"
   nzPaginationType="small"
+  [nzNoResult]="emptyTemplate"
 >
   <thead>
     <tr>
-      @for (column of columnsConfig; track $index) {
+      @for (column of columnsConfig(); track $index) {
         <th
           [nzSortOrder]="column.sortOrder"
           [nzSortFn]="column.sortFn"
@@ -40,6 +41,14 @@
         <td>{{ data.modified | date: DateFormat.DATE }}</td>
         <td>
           <span
+            tabindex="0"
+            [attr.role]="'button'"
+            (keydown.enter)="
+              onEditProject(data.id); $event.preventDefault(); $event.stopPropagation()
+            "
+            (keydown.space)="$event.preventDefault()"
+            (keyup.space)="onEditProject(data.id); $event.stopPropagation()"
+            [attr.aria-label]="'A11Y.EDIT_PROJECT' | translate"
             (click)="onEditProject(data.id)"
             nz-icon
             nzType="edit"
@@ -62,3 +71,25 @@
     }
   </tbody>
 </nz-table>
+
+<ng-template #emptyTemplate>
+  <nz-empty [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+    <ng-template #contentTpl>
+      <span style="white-space: pre-line;">
+        {{ type() === 'questionnaire' 
+          ? ('DASHBOARD.EMPTY_QUESTIONNAIRE_DESC' | translate) 
+          : ('DASHBOARD.EMPTY_TEST_DESC' | translate) 
+        }}
+      </span>
+    </ng-template>
+    
+    <ng-template #footerTpl>
+      <button nz-button nzType="primary" (click)="onCreateNew()">
+        {{ type() === 'questionnaire' 
+          ? ('DASHBOARD.NEW_QUESTIONNAIRE' | translate) 
+          : ('DASHBOARD.NEW_TEST' | translate) 
+        }}
+      </button>
+    </ng-template>
+  </nz-empty>
+</ng-template>

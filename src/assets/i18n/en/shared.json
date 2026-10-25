@@ -12,5 +12,16 @@
     "DASHBOARD": "Dashboard",
     "EDIT_FORM": "Edit Form",
     "NEW_FORM": "New Form"
+  },
+  "A11Y": {
+    "EDIT_PROJECT": "Edit project",
+    "SCROLL_TO_COMPONENT": "Scroll to component",
+    "HOME": "Back to main page",
+    "UNDO": "Undo",
+    "SAVE": "Save",
+    "TOGGLE_SIDEBAR": "Toggle sidebar",
+    "IMPORT": "Import questionnaire",
+    "CLEAR_SEARCH": "Clear search",
+    "CLEAR_QUESTION": "Clear question"
   }
 }

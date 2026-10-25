@@ -1,4 +1,4 @@
-import { CodeEditorVariableType } from '../enums/code-editor.enum';
+import type { CodeEditorVariableType } from '../enums/code-editor.enum';
 
 export interface CodeEditorData {
   enabled: boolean;

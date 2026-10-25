@@ -1,8 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { InputComponentData } from '@components/input/interfaces/input-component-data';
-import { ErrorType } from '@helpers/error-helper';
+import type { InputComponentData } from '@components/input/interfaces/input-component-data';
+import type { ErrorType } from '@helpers/error-helper';
 import { UpdateOnStrategy } from '@interfaces/update-on-strategy';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CustomValidators } from '@validators/custom-validators';
@@ -20,10 +20,11 @@ import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-input-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './input-edit.component.html',
   styleUrls: [],
   standalone: true,
@@ -43,7 +44,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     NzCheckboxComponent,
     NzButtonModule,
     NzIconModule,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class InputEditComponent<
