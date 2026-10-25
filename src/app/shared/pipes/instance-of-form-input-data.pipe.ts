@@ -8,12 +8,14 @@ import type { FormInputData } from '../interfaces/form-input-data';
 })
 export class InstanceOfFormInputDataPipe implements PipeTransform {
   transform(object: unknown): object is FormInputData {
-    return (
-      typeof object === 'object' &&
-      object !== null &&
-      'title' in object &&
-      'type' in object &&
-      'data' in object
-    );
+    return this.isFormInputData(object);
+  }
+
+  private isFormInputData(value: unknown): value is FormInputData {
+    return this.isRecord(value) && 'title' in value && 'type' in value && 'data' in value;
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
   }
 }

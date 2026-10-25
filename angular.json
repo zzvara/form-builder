@@ -93,6 +93,7 @@
           "options": {
             "polyfills": [],
             "tsConfig": "tsconfig.spec.json",
+            "codeCoverageExclude": ["src/app/testing/**"],
             "webWorkerTsConfig": "tsconfig.worker.json",
             "assets": [
               "src/favicon.ico",

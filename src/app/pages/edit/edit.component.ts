@@ -372,12 +372,13 @@ export class EditComponent implements OnInit, OnChanges {
 
       let toMove: FormInputData;
 
-      if (this.instanceOfFormInputDataPipe.transform(movedItem)) {
+      if ('type' in movedItem && this.instanceOfFormInputDataPipe.transform(movedItem)) {
         toMove = movedItem;
       } else {
         toMove = movedItem.data as FormInputData;
       }
 
+      toMove.data!.sectionId = event.container.id;
       event.container.data.splice(event.currentIndex, 0, toMove);
       event.previousContainer.data.splice(event.previousIndex, 1);
     }

@@ -7,5 +7,5 @@
   },
   "files": ["src/main.ts"],
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.worker.ts"]
+  "exclude": ["src/**/*.spec.ts", "src/**/*.worker.ts", "src/app/testing/**/*.ts"]
 }

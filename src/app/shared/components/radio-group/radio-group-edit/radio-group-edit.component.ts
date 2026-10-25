@@ -31,6 +31,7 @@ import {
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { QuillModule } from 'ngx-quill';
 import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
@@ -58,6 +59,7 @@ import { CodeEditorModalComponent } from '@components/code-editor/code-editor-mo
     NzInputModule,
     NzCheckboxModule,
     NzSelectModule,
+    NzRadioModule,
     TranslatePipe,
     CodeEditorModalComponent,
   ],
@@ -118,6 +120,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     });
 
     this.initializeFormValues();
+    this.setupDefaultValueCheckBox();
 
     this.newOption = new FormControl(null, {
       updateOn: UpdateOnStrategy.CHANGE,
@@ -149,6 +152,7 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
   override onReset() {
     super.onReset();
     this.cancelEdit();
+    this.getControl<boolean>('setDefaultValue')?.setValue(true);
     this.newOption.reset();
     this.options.clear();
     this.initialValues.options.forEach((option) => {
@@ -171,6 +175,9 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     if (this.rawFormData.required) {
       this.initialValues.requiredMessage = this.rawFormData.requiredMessage;
     }
+    if (!this.getControlValue('setDefaultValue')) {
+      this.initialValues.defaultValue = undefined;
+    }
   }
 
   override get defaultValueUpdateOn() {
@@ -184,6 +191,20 @@ export class RadioGroupEditComponent extends AbstractEditForm<number, RadioGroup
     control?.setValue(checked ? optionId : undefined);
     control?.markAsDirty();
     control?.markAsTouched();
+  }
+
+  setupDefaultValueCheckBox(): void {
+    const control = new FormControl<boolean>(true, {
+      updateOn: UpdateOnStrategy.CHANGE,
+    });
+    this.addAnyControls({
+      setDefaultValue: control,
+    });
+    control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled) => {
+      if (!enabled) {
+        this.getStrictControl('defaultValue')?.setValue(undefined);
+      }
+    });
   }
 
   getErrorMessages(control: AbstractControl<string>): string[] {

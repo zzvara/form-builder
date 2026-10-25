@@ -34,8 +34,7 @@ export class UndoRedoService<T> {
    * @returns {boolean} - True if the state is different, false otherwise.
    */
   private isStateDifferent(state: T): boolean {
-    // Compare it with the one before last, because the last state is the current one
-    return JSON.stringify(this.undoStack[this.undoStack.length - 2]) !== JSON.stringify(state);
+    return JSON.stringify(this.undoStack[this.undoStack.length - 1]) !== JSON.stringify(state);
   }
 
   /**

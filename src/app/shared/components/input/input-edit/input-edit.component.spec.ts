@@ -26,4 +26,41 @@ describe('InputEditComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('revalidates dependent minimum and maximum lengths', () => {
+    component.getStrictControl('minLength')!.setValue(true);
+    component.getStrictControl('minLengthNumber')!.setValue(5);
+    component.getStrictControl('maxLength')!.setValue(true);
+    component.getStrictControl('maxLengthNumber')!.setValue(3);
+    expect(component.getStrictControl('minLengthNumber')!.invalid).toBeTrue();
+    expect(component.getStrictControl('maxLengthNumber')!.invalid).toBeTrue();
+    component.getStrictControl('maxLengthNumber')!.setValue(8);
+    expect(component.getStrictControl('minLengthNumber')!.valid).toBeTrue();
+    expect(component.getStrictControl('maxLengthNumber')!.valid).toBeTrue();
+  });
+
+  it('saves length restrictions and their error message to the input data', () => {
+    component.getStrictControl('questionValue')!.setValue('Name');
+    component.getStrictControl('minLength')!.setValue(true);
+    component.getStrictControl('minLengthNumber')!.setValue(2);
+    component.getStrictControl('minLengthMessage')!.setValue('At least {{..}} characters');
+    component.getStrictControl('maxLength')!.setValue(true);
+    component.getStrictControl('maxLengthNumber')!.setValue(10);
+    component.getStrictControl('showCharacterCounter')!.setValue(true);
+    component.saveData();
+    expect(TestBed.inject(NZ_MODAL_DATA)).toEqual(
+      jasmine.objectContaining({
+        questionValue: 'Name',
+        minLength: true,
+        minLengthNumber: 2,
+        maxLength: true,
+        maxLengthNumber: 10,
+        showCharacterCounter: true,
+      }),
+    );
+    expect(component.errorList()).toContain({
+      errorName: 'minlength',
+      errorMessage: 'At least 2 characters',
+    });
+  });
 });

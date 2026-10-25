@@ -176,7 +176,6 @@ export class ProjectService<T extends Project> {
   update(id: string, data: T): boolean {
     const index = this.items.findIndex((item) => item.id === id);
     if (index !== -1) {
-      const previousVersion = { ...this.items[index] };
       const projectHistoryKey = `${this.storageKey}-history-${id}`;
       const projectHistory: ProjectVersion<T>[] = JSON.parse(
         localStorage.getItem(projectHistoryKey) || '[]',
@@ -190,11 +189,13 @@ export class ProjectService<T extends Project> {
 
       // Create a new version entry for the project's history
       const versionNum = projectHistory.length + 1;
+      const now = new Date().toISOString();
+      data.modified = now.split('T')[0];
 
       const projectVersion: ProjectVersion<T> = {
         versionNum: versionNum,
-        project: previousVersion,
-        created: new Date().toISOString(),
+        project: { ...data },
+        created: now,
       };
 
       projectHistory.push(projectVersion);
@@ -203,7 +204,6 @@ export class ProjectService<T extends Project> {
 
       // Update the project data
       this.items[index] = data;
-      this.items[index].modified = new Date().toISOString().split('T')[0];
       this.publishProjects();
       localStorage.setItem(this.storageKey, JSON.stringify(this.items));
       return true;

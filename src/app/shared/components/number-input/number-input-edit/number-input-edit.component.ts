@@ -138,12 +138,12 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
   }
 
   get maxNumOrInf() {
-    return this.getStrictControlValue('max') && this.getStrictControlValue('maxNumber')
+    return this.getStrictControlValue('max') && this.getStrictControlValue('maxNumber') != null
       ? this.getStrictControlValue<number>('maxNumber')
       : Infinity;
   }
   get minNumOrNegInf() {
-    return this.getStrictControlValue('min') && this.getStrictControlValue('minNumber')
+    return this.getStrictControlValue('min') && this.getStrictControlValue('minNumber') != null
       ? this.getStrictControlValue<number>('minNumber')
       : -Infinity;
   }
@@ -164,7 +164,7 @@ export class NumberInputEditComponent extends AbstractFieldLikeEditForm<
           const [before, after] = [
             this.getStrictControlValue<string>('formatter').substring(0, specIndex),
             this.getStrictControlValue<string>('formatter').substring(
-              specIndex + 3,
+              specIndex + '{{..}}'.length,
               this.getStrictControlValue<string>('formatter').length,
             ),
           ];

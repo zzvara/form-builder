@@ -1,4 +1,5 @@
 import { NZ_MODAL_DATA, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { appConfig } from '@app/app.config';
 import { ApplicationRef } from '@angular/core';
 import type { ComponentFixture } from '@angular/core/testing';
@@ -37,13 +38,18 @@ describe('RadioGroupEditComponent', () => {
 
   async function clickDefault(index: number) {
     const rows = fixture.nativeElement.querySelectorAll('tbody tr.cdk-drag');
-    rows[index].querySelector('input[type="checkbox"]').click();
+    rows[index].querySelector('input[type="radio"]').click();
     await fixture.whenStable();
+  }
+
+  function startWithNoOptions() {
+    component.options.clear();
+    component.nzModalData.options = [];
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RadioGroupEditComponent],
+      imports: [NzModalModule, RadioGroupEditComponent],
       providers: [
         ...appConfig.providers,
         { provide: NzModalRef, useValue: { close: jasmine.createSpy('close') } },
@@ -85,7 +91,7 @@ describe('RadioGroupEditComponent', () => {
     expect(labels()).toEqual(['First option', 'Second option', 'Third option', 'Fourth option']);
     const row: HTMLElement = fixture.nativeElement.querySelector('tbody tr:last-child');
     expect(row.querySelectorAll('button').length).toBe(2);
-    expect(row.querySelector('input[type="checkbox"]')).not.toBeNull();
+    expect(row.querySelector('input[type="radio"]')).not.toBeNull();
     expect(component.isInvalid).toBeFalse();
     expect(component.onSave()).toBeTrue();
     expect(component.nzModalData.options[3]).toEqual({
@@ -139,13 +145,19 @@ describe('RadioGroupEditComponent', () => {
     expect(component.getControlValue('defaultValue')).toBe(1);
     await clickDefault(1);
     expect(component.getControlValue('defaultValue')).toBe(2);
-    expect(fixture.nativeElement.querySelectorAll('tbody input:checked').length).toBe(1);
+    expect(fixture.nativeElement.querySelectorAll('tbody input[type="radio"]:checked').length).toBe(
+      1,
+    );
     expect(component.onSave()).toBeTrue();
     expect(component.nzModalData.defaultValue).toBe(2);
 
-    await clickDefault(1);
-    expect(fixture.nativeElement.querySelectorAll('tbody input:checked').length).toBe(0);
-    component.saveData();
+    component.getControl('setDefaultValue')!.setValue(false);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('tbody input[type="radio"]:checked').length).toBe(
+      0,
+    );
+    expect(component.getControlValue('defaultValue')).toBeUndefined();
+    component.onSave();
     expect(component.nzModalData.defaultValue).toBeUndefined();
   });
 
@@ -235,5 +247,107 @@ describe('RadioGroupEditComponent', () => {
     expect(component.isInvalid).toBeFalse();
     expect(component.isPristine).toBeTrue();
     expect(component.nzModalData).toEqual(initial);
+  });
+
+  it('loads saved option descriptions and identifiers into the editor', () => {
+    expect(component.optionIds).toEqual([1, 2, 3]);
+    expect(component.optionDescriptions).toEqual(['First option', 'Second option', 'Third option']);
+    expect(component.getControlValue('defaultValue')).toBeNull();
+  });
+
+  it('reorders existing options without changing their values', () => {
+    startWithNoOptions();
+    for (const label of ['First', 'Second']) {
+      component.newOptionValue = label;
+      component.addOption();
+    }
+    component.drop({ previousIndex: 0, currentIndex: 1 } as Parameters<typeof component.drop>[0]);
+    expect(component.optionIds).toEqual([2, 1]);
+  });
+
+  it('saves options and required validation and restores the saved options on reset', () => {
+    startWithNoOptions();
+    for (const label of ['First', 'Second']) {
+      component.newOptionValue = label;
+      component.addOption();
+    }
+    component.getControl('required')!.setValue(true);
+    component.getControl('requiredMessage')!.setValue('Choose one');
+    component.getControl('isButton')!.setValue(true);
+    component.getControl('defaultValue')!.setValue(2);
+    component.saveData();
+    expect(TestBed.inject(NZ_MODAL_DATA)).toEqual(
+      jasmine.objectContaining({
+        required: true,
+        requiredMessage: 'Choose one',
+        isButton: true,
+        defaultValue: 2,
+        options: component.optionObjects,
+      }),
+    );
+    component.removeOption(0);
+    component.onReset();
+    expect(component.optionDescriptions).toEqual(['First', 'Second']);
+    expect(component.getControlValue('defaultValue')).toBe(2);
+    component.getControl('required')!.setValue(false);
+    component.getControl('setDefaultValue')!.setValue(false);
+    component.saveData();
+    expect(TestBed.inject(NZ_MODAL_DATA).defaultValue).toBeUndefined();
+  });
+
+  it('reports missing choices and required-selection errors and leaves blank edits unchanged', () => {
+    startWithNoOptions();
+    expect(component.getMinOptions()).toBe(2);
+    component.newOptionValue = 'Original';
+    component.addOption();
+    component.startEdit(0, 'Original');
+    component.editControl.setValue('  ');
+    component.saveEdit(0);
+    expect(component.optionDescriptions).toEqual(['Original']);
+    component.getControl('required')!.setValue(true);
+    component.getControl('requiredMessage')!.setValue('Choose one');
+    component.getControl<string>('defaultValue')!.setValue('');
+    expect(component.getControl('defaultValue')?.errors).toBeNull();
+  });
+
+  it('assigns stable unique identifiers when options are added and removed', () => {
+    startWithNoOptions();
+    for (const value of ['First', 'Second', 'Third']) {
+      component.newOptionValue = value;
+      component.addOption();
+    }
+    component.removeOption(1);
+    component.newOptionValue = 'Fourth';
+    component.addOption();
+    expect(component.optionIds).toEqual([1, 3, 4]);
+    expect(component.optionDescriptions).toEqual(['First', 'Third', 'Fourth']);
+  });
+
+  it('renames an option without changing its identifier or selection', () => {
+    startWithNoOptions();
+    component.newOptionValue = 'Original';
+    component.addOption();
+    component.getStrictControl('defaultValue')!.setValue(1);
+    component.startEdit(0, 'Original');
+    component.editControl.setValue(' Renamed ');
+    component.saveEdit(0);
+    expect(component.optionObjects).toEqual([{ option_id: 1, option_description: 'Renamed' }]);
+    expect(component.getStrictControlValue<number>('defaultValue')).toBe(1);
+    expect(component.editingIndex()).toBeNull();
+  });
+
+  it('rejects duplicate labels and leaves the original option intact on cancel', () => {
+    startWithNoOptions();
+    for (const value of ['First', 'Second']) {
+      component.newOptionValue = value;
+      component.addOption();
+    }
+    component.startEdit(0, 'First');
+    component.editControl.setValue('Second');
+    component.saveEdit(0);
+    expect(component.editError()).toBeTruthy();
+    component.cancelEdit();
+    expect(component.optionDescriptions).toEqual(['First', 'Second']);
+    expect(component.editError()).toBeNull();
   });
 });

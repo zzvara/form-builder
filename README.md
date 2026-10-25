@@ -84,6 +84,34 @@ the `async` pipe), and clean up imperative subscriptions when components are des
 Run `npm run build` and `npm run test -- --watch=false --browsers=ChromeHeadless`
 after changes to rendering or state.
 
+## Unit tests
+
+Unit tests use Jasmine and Karma with Chrome. Install dependencies with `npm ci`
+and have Google Chrome installed (or set `CHROME_BIN` to your Chromium executable).
+In Windows PowerShell, use `npm.cmd` if execution policy blocks `npm.ps1`.
+
+```sh
+npm test                 # Watch tests during development
+npm run test:ci          # Run the complete unit suite once in headless Chrome
+npm run test:coverage    # Run the suite and generate coverage/ reports
+```
+
+To run a single spec:
+
+```sh
+npm run test:ci -- --include=src/app/shared/services/project.service.spec.ts
+```
+
+Specs live beside the component, service, pipe, directive, helper, validator, or worker
+they exercise. Shared fixtures and isolated local storage spies live in
+`src/app/testing/fixtures.ts`. Tests cover form editing, validation, persistence and
+version history, undo/redo, import/export, navigation, and custom JavaScript execution.
+Components that inherit behavior are also covered through their shared base classes.
+Coverage reports show remaining untested branches; having a spec does not imply full coverage.
+
+CI runs unit tests in the build job and uploads the `unit-test-coverage` artifact.
+Playwright runs separately for browser workflows.
+
 ## Principles for development
 
 ### Code quality first

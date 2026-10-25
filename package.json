@@ -9,6 +9,8 @@
     "test": "ng test",
     "test:e2e": "playwright test",
     "serve:e2e": "serve -s dist/form-builder/browser",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadlessNoSandbox --progress=false",
+    "test:coverage": "npm run test:ci -- --code-coverage",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "format": "prettier . --write",

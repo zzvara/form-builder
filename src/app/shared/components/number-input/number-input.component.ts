@@ -40,10 +40,10 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<
   }
 
   get minNumber() {
-    return this.data.min && this.data.minNumber ? this.data.minNumber : -Infinity;
+    return this.data.min && this.data.minNumber != null ? this.data.minNumber : -Infinity;
   }
   get maxNumber() {
-    return this.data.max && this.data.maxNumber ? this.data.maxNumber : Infinity;
+    return this.data.max && this.data.maxNumber != null ? this.data.maxNumber : Infinity;
   }
 
   get inputFormatter(): (value: number) => string {
@@ -60,7 +60,7 @@ export class NumberInputComponent extends AbstractFieldLikeInputs<
         if (specIndex > -1) {
           const [before, after] = [
             this.data.formatter!.substring(0, specIndex),
-            this.data.formatter!.substring(specIndex + 3, this.data.formatter!.length),
+            this.data.formatter!.substring(specIndex + '{{..}}'.length),
           ];
           return Number(value.replace(before, '').replace(after, ''));
         }

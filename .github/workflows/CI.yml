@@ -132,10 +132,18 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Run unit tests
+      - name: Run unit tests with coverage
         run: |
           export CHROME_BIN="$(node -p "require('playwright').chromium.executablePath()")"
-          npm test -- --watch=false --browsers=ChromeHeadlessNoSandbox
+          npm run test:coverage
+
+      - name: Upload unit test coverage
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: unit-test-coverage
+          path: coverage/
+          retention-days: 30
 
   bump:
     runs-on: ubuntu-latest
