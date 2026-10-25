@@ -134,8 +134,8 @@ export class JsonService {
 
           observer.next(json);
           observer.complete();
-        } catch (e) {
-          observer.error(new Error('Failed to parse JSON file. Please ensure the file is valid.'));
+        } catch (error: any) {
+          observer.error(new Error('Failed to parse JSON file. Please ensure the file is valid. ' + (error?.message ? ` Error: ${error.message}` : '')));
         }
       };
       reader.onerror = () => observer.error(new Error('Failed to read file'));

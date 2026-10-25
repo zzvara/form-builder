@@ -9,7 +9,6 @@ import {
 } from '@components/checkbox-group/interfaces/checkbox-group-data';
 import { NzCheckboxGroupComponent, NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
 
 @Component({
   selector: 'app-checkbox-group',

@@ -60,7 +60,7 @@ export class SelectEditComponent extends AbstractFieldLikeEditForm<
 > {
   newOption!: FormControl<string | null>;
   editingIndex: number | null = null;
-  editValue: string = '';
+  editValue = '';
   editError: string | null = null;
   editControl: FormControl = new FormControl('');
 

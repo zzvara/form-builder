@@ -6,8 +6,6 @@ import { forbiddenGlobalNames, javascriptKeywords } from '../constants/javascrip
   providedIn: 'root',
 })
 export class ValidatorService {
-  constructor() {}
-
   static validVariableNameValidator() {
     return (control: AbstractControl) => {
       const value = control.value.trim() ?? '';

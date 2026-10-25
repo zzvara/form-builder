@@ -44,7 +44,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
   @Input() code = '';
   @Input() variables: CodeEditorVariable[] = [];
 
-  @Output() updateCodeEditor: EventEmitter<{ code?: string; isValid: boolean }> = new EventEmitter();
+  @Output() updateCodeEditor = new EventEmitter<{ code?: string; isValid: boolean }>();
 
   @ViewChild('editor', { static: true }) editorElement?: ElementRef;
 
@@ -270,7 +270,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, OnChanges, AfterV
     JSHINT(code, this.jsHintConfig);
 
     const errors: CodeEditorError[] = JSHINT.errors.map((error) => {
-      let pos = { from: 0, to: 0 };
+      const pos = { from: 0, to: 0 };
       const line = view.state.doc.line(error.line - 1);
       const spaces = this.countLeadingAndTrailingSpaces(line.text);
       if (error.code === 'W033') {

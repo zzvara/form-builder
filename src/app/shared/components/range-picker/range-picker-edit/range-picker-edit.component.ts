@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { DatePickerEditComponent } from '@components/date-picker/date-picker-edit/date-picker-edit.component';
 import { RangePickerComponentData } from '@components/range-picker/interfaces/range-picker-component-data';
 import { TranslatePipe } from '@ngx-translate/core';

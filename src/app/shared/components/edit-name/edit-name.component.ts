@@ -34,7 +34,7 @@ import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 export class EditNameComponent implements OnChanges {
   @Input() names: string[] = [];
   @Input() edit!: EditList | FormInputData;
-  @Output() updateName: EventEmitter<void> = new EventEmitter();
+  @Output() updateName = new EventEmitter<void>();
 
   form: FormGroup = new FormGroup([]);
   editList?: EditList;

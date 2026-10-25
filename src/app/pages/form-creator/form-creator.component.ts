@@ -30,7 +30,7 @@ export class FormCreatorComponent {
   @ViewChild(ComponentsPageComponent)
   componentsPageComponent?: ComponentsPageComponent;
 
-  projectId: string = '';
+  projectId = '';
   currentVersionNum?: number;
   projectType: ProjectType = ProjectType.TEST;
   page = 0;

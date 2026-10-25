@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
@@ -49,7 +49,7 @@ import { QuillEditorComponent } from 'ngx-quill';
     TranslatePipe,
   ],
 })
-export class InfoPageComponent implements OnInit {
+export class InfoPageComponent implements OnInit, OnDestroy {
   @Input() page?: number;
   @Output() setPage = new EventEmitter<number>();
   @Output() projectId = new EventEmitter<string>();

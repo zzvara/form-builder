@@ -27,7 +27,7 @@ import { FormInputData } from '@interfaces/form-input-data';
 import { TranslateService } from '@ngx-translate/core';
 
 // Default values of the dragged components
-const textInputOptions = (translateService: TranslateService): InputComponentData => ({
+const textInputOptions = (): InputComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -37,7 +37,7 @@ const textInputOptions = (translateService: TranslateService): InputComponentDat
   showTooltip: false,
   showCharacterCounter: false,
 });
-const numberInputOptions = (translateService: TranslateService): NumberInputComponentData => ({
+const numberInputOptions = (): NumberInputComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -48,7 +48,7 @@ const numberInputOptions = (translateService: TranslateService): NumberInputComp
   format: false,
   formatter: '{{..}}',
 });
-const dateInputOptions = (translateService: TranslateService): DatePickerComponentData => ({
+const dateInputOptions = (): DatePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -62,7 +62,7 @@ const dateInputOptions = (translateService: TranslateService): DatePickerCompone
   showTime: false,
   showWeekNumber: false,
 });
-const rangeInputOptions = (translateService: TranslateService): RangePickerComponentData => ({
+const rangeInputOptions = (): RangePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -76,7 +76,7 @@ const rangeInputOptions = (translateService: TranslateService): RangePickerCompo
   showTime: false,
   showWeekNumber: false,
 });
-const timeInputOptions = (translateService: TranslateService): TimePickerComponentData => ({
+const timeInputOptions = (): TimePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -90,7 +90,7 @@ const timeInputOptions = (translateService: TranslateService): TimePickerCompone
   minuteStep: 1,
   secondStep: 1,
 });
-const textAreaInputOptions = (translateService: TranslateService): TextareaComponentData => ({
+const textAreaInputOptions = (): TextareaComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
@@ -142,7 +142,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'InputComponent',
-      data: textInputOptions(translate),
+      data: textInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -152,7 +152,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'NumberInputComponent',
-      data: numberInputOptions(translate),
+      data: numberInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -162,7 +162,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'DatePickerComponent',
-      data: dateInputOptions(translate),
+      data: dateInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -172,7 +172,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'RangePickerComponent',
-      data: rangeInputOptions(translate),
+      data: rangeInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -182,7 +182,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TimePickerComponent',
-      data: timeInputOptions(translate),
+      data: timeInputOptions(),
       codeEditor: {
         enabled: false,
       },
@@ -192,7 +192,7 @@ export function getInputGroups(translate: TranslateService): FormInputData<any>[
       questionPlaceholder: '',
       descriptionPlaceholder: '',
       type: 'TextareaComponent',
-      data: textAreaInputOptions(translate),
+      data: textAreaInputOptions(),
       codeEditor: {
         enabled: false,
       },
