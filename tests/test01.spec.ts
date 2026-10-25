@@ -5,7 +5,13 @@ test.describe('Questionnaire Creation Flow', () => {
 
   test('should create a new Questionnaire successfully', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: /New Questionnaire/i }).click();
+    await page
+      .getByRole('button', {
+        name: 'New Questionnaire',
+        exact: true,
+      })
+      .click();
+    await page.getByRole('button', { name: 'New Questionnaire', exact: true }).click();
     await page.waitForTimeout(10000);
 
     const uniqueTitle = 'Playwright test';
