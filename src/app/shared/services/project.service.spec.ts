@@ -39,7 +39,9 @@ describe('ProjectService', () => {
     spyOn(localStorage, 'setItem').and.callFake(localStorageMock.setItem);
     spyOn(localStorage, 'removeItem').and.callFake(localStorageMock.removeItem);
 
-    TestBed.configureTestingModule({ providers: [ProjectService, provideZonelessChangeDetection()] });
+    TestBed.configureTestingModule({
+      providers: [ProjectService, provideZonelessChangeDetection()],
+    });
 
     service = TestBed.inject(ProjectService);
   });

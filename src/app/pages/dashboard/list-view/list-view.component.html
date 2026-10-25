@@ -75,19 +75,21 @@
 <ng-template #emptyTemplate>
   <nz-empty [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
     <ng-template #contentTpl>
-      <span style="white-space: pre-line;">
-        {{ type() === 'questionnaire' 
-          ? ('DASHBOARD.EMPTY_QUESTIONNAIRE_DESC' | translate) 
-          : ('DASHBOARD.EMPTY_TEST_DESC' | translate) 
+      <span style="white-space: pre-line">
+        {{
+          type() === 'questionnaire'
+            ? ('DASHBOARD.EMPTY_QUESTIONNAIRE_DESC' | translate)
+            : ('DASHBOARD.EMPTY_TEST_DESC' | translate)
         }}
       </span>
     </ng-template>
-    
+
     <ng-template #footerTpl>
       <button nz-button nzType="primary" (click)="onCreateNew()">
-        {{ type() === 'questionnaire' 
-          ? ('DASHBOARD.NEW_QUESTIONNAIRE' | translate) 
-          : ('DASHBOARD.NEW_TEST' | translate) 
+        {{
+          type() === 'questionnaire'
+            ? ('DASHBOARD.NEW_QUESTIONNAIRE' | translate)
+            : ('DASHBOARD.NEW_TEST' | translate)
         }}
       </button>
     </ng-template>
