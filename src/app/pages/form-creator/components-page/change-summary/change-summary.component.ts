@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  Input,
-  SimpleChanges,
-  Optional,
-  Inject,
-} from '@angular/core';
+import type { OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, Input, inject } from '@angular/core';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
@@ -19,8 +12,8 @@ interface RawItem {
 }
 interface ChangeInput {
   key: string;
-  before: any;
-  after: any;
+  before: unknown;
+  after: unknown;
 }
 interface DiffItem {
   key: string;
@@ -32,21 +25,18 @@ interface DiffItem {
 @Component({
   selector: 'app-change-summary',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NzIconModule, TranslatePipe, IconTypePipe],
   templateUrl: './change-summary.component.html',
   styleUrls: ['./change-summary.component.less'],
 })
 export class ChangeSummaryComponent implements OnInit, OnChanges {
+  private modalData = inject(NZ_MODAL_DATA, { optional: true });
+  private modalRef = inject(NzModalRef);
+
   @Input() items: ChangeInput[] = [];
 
-  diffItems: DiffItem[] = [];
-
-  constructor(
-    @Optional()
-    @Inject(NZ_MODAL_DATA)
-    private modalData: { items: ChangeInput[] } | null,
-    private modalRef: NzModalRef,
-  ) {}
+  readonly diffItems = signal<DiffItem[]>([]);
 
   ngOnInit(): void {
     // If opened as a modal, build diffs from the injected data
@@ -66,7 +56,7 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
    * Safely parse a JSON string into an array of RawItem.
    * If the input is not a string or is invalid JSON, return an empty array.
    */
-  private safeParseArray(raw: any): RawItem[] {
+  private safeParseArray(raw: unknown): RawItem[] {
     if (typeof raw !== 'string') return [];
     try {
       const parsed = JSON.parse(raw);
@@ -82,43 +72,47 @@ export class ChangeSummaryComponent implements OnInit, OnChanges {
    */
   private buildDiffs(rawItems: ChangeInput[]): void {
     if (!rawItems || rawItems.length === 0) {
-      this.diffItems = [
+      this.diffItems.set([
         {
           key: 'editList',
           open: true,
           addedItems: [],
           removedItems: [],
         },
-      ];
+      ]);
       return;
     }
 
-    this.diffItems = rawItems.map((item) => {
-      const beforeArr = this.safeParseArray(item.before);
-      const afterArr = this.safeParseArray(item.after);
-      const added = afterArr.filter((a) => !beforeArr.some((b) => b.id === a.id));
-      const removed = beforeArr.filter((b) => !afterArr.some((a) => a.id === b.id));
-      return { key: item.key, open: false, addedItems: added, removedItems: removed };
-    });
+    this.diffItems.set(
+      rawItems.map((item) => {
+        const beforeArr = this.safeParseArray(item.before);
+        const afterArr = this.safeParseArray(item.after);
+        const added = afterArr.filter((a) => !beforeArr.some((b) => b.id === a.id));
+        const removed = beforeArr.filter((b) => !afterArr.some((a) => a.id === b.id));
+        return { key: item.key, open: false, addedItems: added, removedItems: removed };
+      }),
+    );
 
-    const hasChanges = this.diffItems.some(
+    const hasChanges = this.diffItems().some(
       (d) => d.addedItems.length > 0 || d.removedItems.length > 0,
     );
     if (!hasChanges) {
       // No real changes: show a placeholder section instead of leaving it blank
-      this.diffItems = [
+      this.diffItems.set([
         {
           key: 'editList',
           open: true,
           addedItems: [],
           removedItems: [],
         },
-      ];
+      ]);
     }
   }
 
   toggle(d: DiffItem): void {
-    d.open = !d.open;
+    this.diffItems.update((items) =>
+      items.map((item) => (item === d ? { ...item, open: !item.open } : item)),
+    );
   }
 
   close(): void {

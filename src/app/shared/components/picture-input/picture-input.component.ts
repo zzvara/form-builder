@@ -1,22 +1,21 @@
 import { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
+import type { OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import type { PictureInputComponentData } from '@components/picture-input/interfaces/picture-input-component-data';
 import { PictureInputEditComponent } from '@components/picture-input/picture-input-edit/picture-input-edit.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzFormItemComponent } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import {
-  NzUploadChangeParam,
-  NzUploadComponent,
-  NzUploadFile,
-  NzUploadXHRArgs,
-} from 'ng-zorro-antd/upload';
-import { Observable, Subscription } from 'rxjs';
+import type { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
+import { NzUploadComponent } from 'ng-zorro-antd/upload';
+import type { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-picture-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './picture-input.component.html',
   styleUrls: [],
   standalone: true,
@@ -33,12 +32,12 @@ export class PictureInputComponent
   extends AbstractInput<string | null, PictureInputComponentData, PictureInputEditComponent>
   implements OnInit
 {
-  fileList: NzUploadFile[] = [];
+  readonly fileList = signal<NzUploadFile[]>([]);
 
   override onChange(event: Event | NzUploadChangeParam): void {
     if ((event as NzUploadChangeParam).file) {
       const info = event as NzUploadChangeParam;
-      this.fileList = info.fileList;
+      this.fileList.set(info.fileList);
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
@@ -53,27 +52,34 @@ export class PictureInputComponent
   uploadToLocalStorage = (item: NzUploadXHRArgs): Subscription => {
     const obs = new Observable((observer) => {
       const reader = new FileReader();
-      reader.onload = () => {
+      reader.onload = (loadEvent) => {
         const base64 = reader.result as string;
         try {
           localStorage.setItem(item.file.name, base64);
-          item.onSuccess!(base64, item.file, event);
+          item.onSuccess!(base64, item.file, loadEvent);
           observer.complete();
         } catch (e) {
           observer.error(e);
-          item.onError!(e as Error, item.file);
         }
       };
 
       reader.onerror = (err) => {
-        item.onError!(err, item.file);
         observer.error(err);
       };
-      reader.readAsDataURL(item.file as any);
+      // NG-Zorro passes the native file to custom upload handlers.
+      const file = item.file instanceof Blob ? item.file : item.file.originFileObj;
+      if (file instanceof Blob) {
+        reader.readAsDataURL(file);
+      } else {
+        const error = new Error('The upload does not contain a readable file.');
+        item.onError?.(error, item.file);
+        observer.error(error);
+      }
     });
 
-    return obs.subscribe();
+    return obs.subscribe({ error: (error) => item.onError?.(error, item.file) });
   };
+
   onDownload = (file: NzUploadFile): void => {
     const storedBase64 = localStorage.getItem(file.name) || (file.response as string);
 
