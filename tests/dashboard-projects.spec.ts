@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures';
 import {
   addTextQuestion,
   questionnaireRow,
@@ -64,4 +64,39 @@ test('sorts questionnaire titles in both directions', async ({ page }) => {
   await expect(titles).toHaveText(['Alpha survey', 'Middle survey', 'Zebra survey']);
   await titleColumn.click();
   await expect(titles).toHaveText(['Zebra survey', 'Middle survey', 'Alpha survey']);
+});
+
+test('the empty dashboard offers a creation button for each kind of project', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'New Test', exact: true }).click();
+  await expect(page).toHaveURL(/\/new\?type=test/);
+  await expect(page.locator('#switch button')).toHaveText('Test');
+
+  await page.goBack();
+  await page.getByRole('button', { name: 'New Questionnaire', exact: true }).click();
+  await expect(page).toHaveURL(/\/new\?type=questionnaire/);
+  await expect(page.locator('#switch button')).toHaveText('Questionnaire');
+});
+
+test('card view keeps a project when deletion is cancelled and removes it once confirmed', async ({
+  page,
+}) => {
+  const title = 'Card deletion';
+  await startQuestionnaire(page, title);
+  await addTextQuestion(page, 'A saved question');
+  await saveProject(page);
+  await page.getByRole('button', { name: 'Card View' }).click();
+  const card = page.locator('app-card-view .project-card').filter({ hasText: title });
+
+  await card.locator('.delete-icon').click();
+  await expect(page.getByText('Delete this project?', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await expect(card).toBeVisible();
+
+  await card.locator('.delete-icon').click();
+  await page.getByRole('button', { name: 'OK', exact: true }).click();
+  await expect(card).toHaveCount(0);
+  await page.reload();
+  await expect(page.locator('app-card-view')).toHaveCount(2);
+  await expect(card).toHaveCount(0);
 });

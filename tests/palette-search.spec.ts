@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures';
 import { startQuestionnaire } from './helpers/form-builder';
 
 test('finds a component by its complete displayed name', async ({ page }) => {

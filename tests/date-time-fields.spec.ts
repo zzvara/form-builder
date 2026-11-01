@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures';
 import {
   addQuestion,
   reopenQuestionnaire,
@@ -25,8 +25,13 @@ test('range preview saves both calendar endpoints', async ({ page }) => {
   const inputs = holder.locator('.input-preview-container input');
   await inputs.first().click();
   const calendar = page.getByRole('grid').first();
-  await calendar.getByRole('gridcell', { name: '10', exact: true }).click();
-  await calendar.getByRole('gridcell', { name: '15', exact: true }).click();
+  // The six-week grid also shows days of the neighbouring months, whose numbers can repeat.
+  const day = (name: string) =>
+    calendar
+      .getByRole('gridcell', { name, exact: true })
+      .and(page.locator('.ant-picker-cell-in-view'));
+  await day('10').click();
+  await day('15').click();
   await expect(inputs.first()).not.toBeEmpty();
   await expect(inputs.nth(1)).not.toBeEmpty();
   const start = await inputs.first().inputValue();

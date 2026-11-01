@@ -1,39 +1,22 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures';
 import {
   addQuestion,
+  addSection,
   addTextQuestion,
-  dragFromPalette,
+  renameComponent,
   reopenQuestionnaire,
   saveProject,
+  sectionBody,
   startQuestionnaire,
 } from './helpers/form-builder';
-
-async function addSection(page: Page, type: 'Section' | 'Repeated Section') {
-  const search = page.getByRole('textbox', { name: 'Search components' });
-  await search.fill('section');
-  await dragFromPalette(page, type);
-  await search.clear();
-  const section = page.locator('#sectionDropList .section-card');
-  await expect(section).toHaveCount(1);
-  return section;
-}
 
 test('saves a named section with a nested question and restores both after reopening', async ({
   page,
 }) => {
   await startQuestionnaire(page, 'Nested questionnaire');
   const section = await addSection(page, 'Section');
-  const name = section.locator('app-edit-name').first();
-  await name.locator('[nztype="edit"]').click();
-  await name.getByRole('textbox').fill('personalDetails');
-  await name.locator('[nztype="save"]').click();
-  await expect(name).toHaveText('personalDetails');
-  await addQuestion(
-    page,
-    'Single-line Text Field',
-    'Your nested name',
-    section.locator(':scope > .ant-card-body'),
-  );
+  await renameComponent(section, 'personalDetails');
+  await addQuestion(page, 'Single-line Text Field', 'Your nested name', sectionBody(section));
   await expect(section.locator('app-input-holder')).toHaveCount(1);
   await saveProject(page);
   await reopenQuestionnaire(page, 'Nested questionnaire');
@@ -46,7 +29,7 @@ test('deleting a section removes its children and undo restores the complete sec
 }) => {
   await startQuestionnaire(page, 'Recover a section');
   const section = await addSection(page, 'Section');
-  await addQuestion(page, 'Number Field', 'Nested age', section.locator(':scope > .ant-card-body'));
+  await addQuestion(page, 'Number Field', 'Nested age', sectionBody(section));
   await expect(section.locator('app-input-holder')).toHaveCount(1);
   const remove = section
     .locator('.section-actions')
@@ -119,12 +102,7 @@ test('repeated section saves a fixed repetition count with its nested question',
   await settings.getByRole('spinbutton').fill('3');
   await page.getByRole('textbox', { name: 'Search components' }).click();
   await expect(section.locator('.repeated-settings-trigger')).toContainText('3x');
-  await addQuestion(
-    page,
-    'Single-line Text Field',
-    'Repeated name',
-    section.locator(':scope > .ant-card-body'),
-  );
+  await addQuestion(page, 'Single-line Text Field', 'Repeated name', sectionBody(section));
   await expect(section.locator('app-input-holder')).toHaveCount(1);
   await saveProject(page);
   await reopenQuestionnaire(page, 'Repeated questionnaire');
