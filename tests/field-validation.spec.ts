@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures';
 import {
   addQuestion,
   reopenQuestionnaire,
@@ -46,6 +46,8 @@ test('text input enforces the configured maximum length and updates its characte
   await dialog.locator('[formcontrolname="showCharacterCounter"] input').check();
   await dialog.getByRole('button', { name: 'Save', exact: true }).click();
   const preview = holder.locator('.input-preview-container input');
+  // Typing before the limit is applied to the preview would bypass it.
+  await expect(preview).toHaveAttribute('maxlength', '5');
   await preview.pressSequentially('abcdefgh');
   await expect(preview).toHaveValue('abcde');
   await expect(holder.locator('.input-preview-container')).toContainText('5/5');

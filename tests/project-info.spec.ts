@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures';
 import {
   addTextQuestion,
   openResults,
@@ -74,4 +74,35 @@ test('saves a deadline and time limit and restores both controls when reopening'
   await expect(page.locator('[formcontrolname="haslimit"] input')).toBeChecked();
   await expect(deadline).toHaveValue(selectedDeadline);
   await expect(limit).toHaveValue('01:30');
+});
+
+test('keeps rich-text formatting of the description on every screen', async ({ page }) => {
+  const title = 'Formatted description';
+  await page.goto('/');
+  await page
+    .getByRole('button', { name: /New Questionnaire$/ })
+    .first()
+    .click();
+  await page.locator('#title').fill(title);
+  const editor = page.locator('app-info-page .ql-editor');
+  const bold = page.getByRole('button', { name: 'bold', exact: true });
+  await editor.click();
+  await bold.click();
+  await page.keyboard.type('Important');
+  await bold.click();
+  await page.keyboard.type(' details');
+  await expect(editor.locator('strong')).toHaveText('Important');
+  await expect(editor).toHaveText('Important details');
+
+  await page.getByRole('button', { name: 'Next', exact: true }).click();
+  await addTextQuestion(page, 'Formatted question');
+  await openResults(page);
+  const info = page.getByRole('tabpanel', { name: 'Project Info', exact: true });
+  await expect(info.locator('strong')).toHaveText('Important');
+  await page.getByRole('button', { name: 'Save Project', exact: true }).click();
+  await expect(questionnaireRow(page, title).locator('strong')).toHaveText('Important');
+
+  await questionnaireRow(page, title).locator('.edit-icon').click();
+  await expect(editor.locator('strong')).toHaveText('Important');
+  await expect(editor).toHaveText('Important details');
 });

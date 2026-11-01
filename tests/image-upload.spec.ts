@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures';
 import { addQuestion, startQuestionnaire } from './helpers/form-builder';
 
 test('uploads an image, downloads identical bytes, and removes it from the preview', async ({
