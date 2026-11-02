@@ -5,8 +5,11 @@
 <nz-layout>
   <div>
     <form nz-form class="form-margin-top" (ngSubmit)="submitForm()" [formGroup]="form">
-      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label" nzRequired>
-        <h4>{{ 'GENERAL.TITLE' | translate }}</h4>
+      <nz-form-label [nzFor]="'title'" nz-col nzSpan="24" class="title-label">
+        <h4>
+          {{ 'GENERAL.TITLE' | translate }}
+          <span class="required-asterisk">*</span>
+        </h4>
       </nz-form-label>
       <nz-form-control nz-col nzSpan="24">
         <div class="mb-8">
@@ -35,9 +38,9 @@
         <span>{{ 'GENERAL.DESCRIPTION' | translate }}</span>
         <span class="optional-text">{{ 'FORM.OPTIONAL' | translate }}</span>
       </nz-form-label>
-
       <nz-form-control nz-col nzSpan="24" class="quill-desc">
         <quill-editor
+          class="quill"
           formControlName="description"
           (onContentChanged)="updateForm()"
           [style]="{ height: '150px', width: '100%' }"
@@ -54,9 +57,16 @@
         }
       </nz-form-control>
 
-      <ng-container>
-        <nz-form-item class="same_line mb-8">
-          <nz-form-label [nzNoColon]="true">{{ 'TYPE' | translate }}</nz-form-label>
+      <nz-form-item class="same_line mb-8">
+        <nz-form-label
+          [nzNoColon]="true"
+          [nzTooltipTitle]="'FORM.SWITCH_TOOLTIP' | translate"
+          nzTooltipIcon="question-circle"
+        >
+          {{ 'TYPE' | translate }}
+        </nz-form-label>
+
+        <nz-form-control>
           <nz-switch
             formControlName="type"
             id="switch"
@@ -64,17 +74,8 @@
             [nzCheckedChildren]="'FORM.TEST' | translate"
             [nzUnCheckedChildren]="'FORM.QUESTIONNAIRE' | translate"
           ></nz-switch>
-          <nz-form-label [nzNoColon]="true">
-            <i
-              nz-icon
-              nzType="question-circle"
-              nz-tooltip
-              [nzTooltipTitle]="'FORM.SWITCH_TOOLTIP' | translate"
-              class="icon-flex"
-            ></i>
-          </nz-form-label>
-        </nz-form-item>
-      </ng-container>
+        </nz-form-control>
+      </nz-form-item>
 
       <nz-form-item class="same_line item-margin-bottom">
         <label nz-checkbox formControlName="hasdeadline"></label>
@@ -120,26 +121,27 @@
       </nz-form-item>
 
       @if (formExists()) {
-        <ng-container>
-          <div>
-            <div class="mb-8">
-              <nz-form-label>{{ 'GENERAL.CREATED' | translate }}</nz-form-label>
-              <nz-form-label [nzNoColon]="true">
-                {{ project.created | date: DateFormat.DATE }}
-              </nz-form-label>
-            </div>
-            <div class="mb-8">
-              <nz-form-label>{{ 'GENERAL.MODIFIED' | translate }}</nz-form-label>
-              <nz-form-label [nzNoColon]="true">
-                {{ project.modified | date: DateFormat.DATE }}
-              </nz-form-label>
-            </div>
+        <div class="metadata-container">
+          <div class="metadata-item">
+            <span class="meta-label">{{ 'GENERAL.CREATED' | translate }}:</span>
+            <span class="meta-value">{{ project.created | date: DateFormat.DATE }}</span>
           </div>
-        </ng-container>
+          <div class="metadata-item">
+            <span class="meta-label">{{ 'GENERAL.MODIFIED' | translate }}:</span>
+            <span class="meta-value">{{ project.modified | date: DateFormat.DATE }}</span>
+          </div>
+        </div>
       }
 
       <div class="saveBtn mb-8">
-        <button id="btn" nz-button nzType="primary" type="submit">
+        <button
+          id="btn"
+          nz-button
+          nzType="primary"
+          type="submit"
+          class="btn-save"
+          [disabled]="form.invalid"
+        >
           {{ 'GENERAL.NEXT' | translate }}
         </button>
       </div>
