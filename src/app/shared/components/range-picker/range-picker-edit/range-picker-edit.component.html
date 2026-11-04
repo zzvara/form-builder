@@ -101,15 +101,9 @@
 
   <nz-form-item>
     <nz-form-control>
-      <nz-select
-        formControlName="mode"
-        [nzPlaceHolder]="'COMPONENTS.MODE' | translate"
-      >
+      <nz-select formControlName="mode" [nzPlaceHolder]="'COMPONENTS.MODE' | translate">
         @for (item of datePickerModes; track item.mode) {
-          <nz-option
-            [nzValue]="item.mode"
-            [nzLabel]="item.label"
-          ></nz-option>
+          <nz-option [nzValue]="item.mode" [nzLabel]="item.label"></nz-option>
         }
       </nz-select>
     </nz-form-control>
@@ -211,9 +205,7 @@
             <input
               nz-input
               formControlName="requiredMessage"
-              [placeholder]="
-                'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate
-              "
+              [placeholder]="'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate"
             />
           </nz-form-control>
 
@@ -243,9 +235,7 @@
         <nz-form-item>
           <nz-form-control [nzErrorTip]="minDateErrorMessageTemplate">
             <nz-date-picker
-              [nzPlaceHolder]="
-                'COMPONENTS.DATE_PICKER.SELECT_MIN_DATE' | translate
-              "
+              [nzPlaceHolder]="'COMPONENTS.DATE_PICKER.SELECT_MIN_DATE' | translate"
               formControlName="minDateValue"
               [nzMode]="getControlValue('mode')"
               [nzFormat]="getFullFormat"
@@ -266,9 +256,7 @@
             @if (hasErrors(control, 'minMaxError')) {
               <div>
                 {{ 'COMPONENTS.DATE_PICKER.MIN_ERROR' | translate }}
-                ({{
-                  control.errors['minMaxError'] | date: getFullFormat
-                }})!
+                ({{ control.errors['minMaxError'] | date: getFullFormat }})!
               </div>
             }
           </ng-template>
@@ -293,9 +281,7 @@
         <nz-form-item>
           <nz-form-control [nzErrorTip]="maxDateErrorMessageTemplate">
             <nz-date-picker
-              [nzPlaceHolder]="
-                'COMPONENTS.DATE_PICKER.SELECT_MAX_DATE' | translate
-              "
+              [nzPlaceHolder]="'COMPONENTS.DATE_PICKER.SELECT_MAX_DATE' | translate"
               formControlName="maxDateValue"
               [nzMode]="getControlValue('mode')"
               [nzFormat]="getFullFormat"
@@ -316,9 +302,7 @@
             @if (hasErrors(control, 'maxMinError')) {
               <div>
                 {{ 'COMPONENTS.DATE_PICKER.MAX_ERROR' | translate }}
-                ({{
-                  control.errors['maxMinError'] | date: getFullFormat
-                }})!
+                ({{ control.errors['maxMinError'] | date: getFullFormat }})!
               </div>
             }
           </ng-template>

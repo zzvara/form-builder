@@ -1,13 +1,26 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  EventEmitter,
+  input,
+  Output,
+  signal,
+  inject,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ProjectType } from '@interfaces/project';
-import { ColumnItem } from '@app/shared/interfaces/column-item.model';
-import { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
+import type { ProjectType } from '@interfaces/project';
+import type { ColumnItem } from '@app/shared/interfaces/column-item.model';
+import type { Questionnaire } from '@interfaces/questionnaire/questionnaire.interface';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
 import { NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { Router } from '@angular/router';
+import { RoutePath } from '@app/shared/models/route-path.model';
 import { SafeHtmlPipe } from '@app/shared/pipes/safe-html.pipe';
 import { DatePipe } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -17,42 +30,44 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzTableComponent,
     NzTableModule,
     NzTooltipModule,
     NzPopconfirmModule,
     NzIconModule,
+    NzEmptyModule,
+    NzButtonModule,
     SafeHtmlPipe,
     TranslatePipe,
     DatePipe,
   ],
 })
-export class ListViewComponent implements OnInit {
-  @Input() projects: Observable<Questionnaire[]> = of([]);
-  @Input() type?: ProjectType;
+export class ListViewComponent {
+  private translate = inject(TranslateService);
+  private router = inject(Router);
+
+  readonly projects = input<Questionnaire[]>([]);
+  readonly type = input<ProjectType>();
 
   @Output() deleteProject = new EventEmitter<string>();
   @Output() editProject = new EventEmitter<string>();
 
-  projectList: Questionnaire[] = [];
-  columnsConfig: ColumnItem[] = [];
+  readonly projectList = computed(() =>
+    this.projects().filter((project) => project.type === this.type()),
+  );
+  readonly columnsConfig = signal<ColumnItem[]>([]);
 
   DateFormat = DateFormat;
 
-  constructor(private translate: TranslateService) {}
-
-  ngOnInit(): void {
-    this.projects.subscribe((projects) => {
-      this.projectList = projects.filter((project) => project.type === this.type);
-    });
-
+  constructor() {
     this.setColumnsConfig();
-    this.translate.onLangChange.subscribe(() => this.setColumnsConfig());
+    this.translate.onLangChange.pipe(takeUntilDestroyed()).subscribe(() => this.setColumnsConfig());
   }
 
   setColumnsConfig(): void {
-    this.columnsConfig = [
+    this.columnsConfig.set([
       {
         title: this.translate.instant('GENERAL.TITLE'),
         sortOrder: null,
@@ -93,7 +108,7 @@ export class ListViewComponent implements OnInit {
         width: '100px',
         minWidth: '100px',
       },
-    ];
+    ]);
   }
 
   onDeleteProject(id: string): void {
@@ -102,5 +117,12 @@ export class ListViewComponent implements OnInit {
 
   onEditProject(id: string): void {
     this.editProject.emit(id);
+  }
+
+  onCreateNew(): void {
+    const currentType = this.type();
+    if (currentType) {
+      this.router.navigate([RoutePath.NEW], { queryParams: { type: currentType } });
+    }
   }
 }

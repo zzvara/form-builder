@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Project, ProjectVersion } from '@interfaces/project';
+import { toSignal } from '@angular/core/rxjs-interop';
+import type { Project, ProjectVersion } from '@interfaces/project';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 interface ProjectData {
@@ -14,6 +15,7 @@ interface ProjectData {
 export class JsonService {
   private jsonDataSubject = new BehaviorSubject<ProjectData | null>(null);
   jsonData$ = this.jsonDataSubject.asObservable();
+  readonly jsonData = toSignal(this.jsonData$, { initialValue: null });
 
   /**
    * Validates if a project has the required properties.
@@ -134,7 +136,7 @@ export class JsonService {
 
           observer.next(json);
           observer.complete();
-        } catch (e) {
+        } catch {
           observer.error(new Error('Failed to parse JSON file. Please ensure the file is valid.'));
         }
       };

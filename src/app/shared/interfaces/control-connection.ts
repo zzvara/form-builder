@@ -1,8 +1,6 @@
-import { AbstractControl } from '@angular/forms';
+import type { AbstractControl } from '@angular/forms';
 
-export interface ControlConnection {
-  [key: string]: ControlConnectionData[];
-}
+export type ControlConnection = Record<string, ControlConnectionData[]>;
 
 export interface ControlConnectionData {
   name: string;
@@ -11,7 +9,7 @@ export interface ControlConnectionData {
   additionalData?: DataSetterType;
 }
 
-export type DataSetterType<Caller = any, Value = any> = (
+export type DataSetterType<Caller = unknown, Value = unknown> = (
   caller: AbstractControl<Caller>,
   currentValue: Value,
 ) => Value | null;

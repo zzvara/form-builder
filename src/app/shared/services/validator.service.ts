@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
-import { forbiddenGlobalNames, javascriptKeywords } from '../constants/javascript-keywords.constants';
+import type { AbstractControl } from '@angular/forms';
+import {
+  forbiddenGlobalNames,
+  javascriptKeywords,
+} from '../constants/javascript-keywords.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ValidatorService {
-  constructor() {}
-
   static validVariableNameValidator() {
     return (control: AbstractControl) => {
-      const value = control.value.trim() ?? '';
+      const value = (control.value ?? '').trim();
 
       if (!value) {
         return null;
@@ -22,7 +23,7 @@ export class ValidatorService {
 
   static uniqueNameValidator(names: string[]) {
     return (control: AbstractControl) => {
-      const value = control.value.trim() ?? '';
+      const value = (control.value ?? '').trim();
 
       if (!value) {
         return null;

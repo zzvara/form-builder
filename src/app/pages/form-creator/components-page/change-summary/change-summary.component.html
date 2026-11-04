@@ -1,5 +1,5 @@
 <div class="cs-body">
-  @for (diffItem of diffItems; track $index) {
+  @for (diffItem of diffItems(); track $index) {
     <!-- Section header -->
     <h3 class="cs-section-title">{{ diffItem.key }}</h3>
 

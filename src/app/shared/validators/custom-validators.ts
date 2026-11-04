@@ -1,6 +1,6 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import type { AbstractControl, ValidatorFn } from '@angular/forms';
 import { compareTimeFull, defaultDateComparers } from '@helpers/date-helper';
-import { NzDateMode } from 'ng-zorro-antd/date-picker';
+import type { NzDateMode } from 'ng-zorro-antd/date-picker';
 
 type CustomValidationErrors =
   | { fieldIsEmpty: true }
@@ -25,7 +25,7 @@ export class CustomValidators {
     return null;
   }
 
-  static validateIsInList(list: () => any[]) {
+  static validateIsInList(list: () => readonly unknown[]) {
     return (control: AbstractControl) => {
       const value = control.value;
       if (list().some((val) => val === value)) {
@@ -79,7 +79,7 @@ export class CustomValidators {
     return (control: AbstractControl) => {
       if (ifPred()) {
         const value: number = control.value;
-        if (value && value < min) {
+        if (value != null && value < min) {
           return {
             minError: true,
           };
@@ -92,7 +92,7 @@ export class CustomValidators {
   static validateMinPred(min: () => number) {
     return (control: AbstractControl) => {
       const value: number = control.value;
-      if (value && value < min()) {
+      if (value != null && value < min()) {
         return {
           minError: true,
         };
@@ -107,8 +107,8 @@ export class CustomValidators {
   ) {
     return (control: AbstractControl) => {
       const value: number = control.value;
-      if (value && ifPred()) {
-        if (maxData().maxOn && maxData().maxNum && value > maxData().maxNum) {
+      if (value != null && ifPred()) {
+        if (maxData().maxOn && maxData().maxNum != null && value > maxData().maxNum) {
           return {
             minMaxError: maxData().maxNum,
           };
@@ -163,7 +163,7 @@ export class CustomValidators {
     return (control: AbstractControl) => {
       if (ifPred()) {
         const value: number = control.value;
-        if (value && value > max) {
+        if (value != null && value > max) {
           return {
             maxError: true,
           };
@@ -176,7 +176,7 @@ export class CustomValidators {
   static validateMaxPred(max: () => number) {
     return (control: AbstractControl) => {
       const value: number = control.value;
-      if (value && value > max()) {
+      if (value != null && value > max()) {
         return {
           maxError: true,
         };
@@ -191,8 +191,8 @@ export class CustomValidators {
   ) {
     return (control: AbstractControl) => {
       const value: number = control.value;
-      if (value && ifPred()) {
-        if (minData().minOn && minData().minNum && value < minData().minNum) {
+      if (value != null && ifPred()) {
+        if (minData().minOn && minData().minNum != null && value < minData().minNum) {
           return {
             maxMinError: minData().minNum,
           };

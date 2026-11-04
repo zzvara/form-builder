@@ -1,9 +1,7 @@
-import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
-import { DisabledTimeConfig, NzDateMode } from 'ng-zorro-antd/date-picker';
+import type { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import type { DisabledTimeConfig, NzDateMode } from 'ng-zorro-antd/date-picker';
 
-export type DefaultDateComparers = {
-  [key in NzDateMode]: (date1: Date, date2: Date) => ComparisonType;
-};
+export type DefaultDateComparers = Record<NzDateMode, (date1: Date, date2: Date) => ComparisonType>;
 
 export const defaultDateComparers: DefaultDateComparers = {
   decade: compareByYear,
@@ -83,9 +81,11 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
     },
     nzDisabledMinutes: (hour: number): number[] => {
       const minutes: number[] = [];
-      if (currentDate && hour) {
+      if (currentDate && hour != null && hour >= 0) {
+        const selectedDate = new Date(currentDate);
+        selectedDate.setHours(hour);
         if (data.minDate && data.minDateValue) {
-          const comparison = compareByHoursFull(currentDate, data.minDateValue);
+          const comparison = compareByHoursFull(selectedDate, data.minDateValue);
           if (comparison < 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -93,7 +93,7 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           }
         }
         if (data.maxDate && data.maxDateValue) {
-          const comparison = compareByHoursFull(currentDate, data.maxDateValue);
+          const comparison = compareByHoursFull(selectedDate, data.maxDateValue);
           if (comparison > 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -106,9 +106,11 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
     },
     nzDisabledSeconds: (hour: number, minute: number): number[] => {
       const seconds: number[] = [];
-      if (currentDate && hour && minute) {
+      if (currentDate && hour != null && hour >= 0 && minute != null && minute >= 0) {
+        const selectedDate = new Date(currentDate);
+        selectedDate.setHours(hour, minute);
         if (data.minDate && data.minDateValue) {
-          const comparison = compareByMinuteFull(currentDate, data.minDateValue);
+          const comparison = compareByMinuteFull(selectedDate, data.minDateValue);
           if (comparison < 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -116,7 +118,7 @@ export function getDisabledTimeConfig(data: MinMaxDateable, currentDate: Date): 
           }
         }
         if (data.maxDate && data.maxDateValue) {
-          const comparison = compareByMinuteFull(currentDate, data.maxDateValue);
+          const comparison = compareByMinuteFull(selectedDate, data.maxDateValue);
           if (comparison > 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -152,9 +154,11 @@ export function getDisabledTimeConfigForMaxDate(
     },
     nzDisabledMinutes: (hour: number): number[] => {
       const minutes: number[] = [];
-      if (currentDate && hour) {
+      if (currentDate && hour != null && hour >= 0) {
+        const selectedDate = new Date(currentDate);
+        selectedDate.setHours(hour);
         if (maxDate) {
-          const comparison = compareByHoursFull(currentDate, maxDate);
+          const comparison = compareByHoursFull(selectedDate, maxDate);
           if (comparison > 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -167,9 +171,11 @@ export function getDisabledTimeConfigForMaxDate(
     },
     nzDisabledSeconds: (hour: number, minute: number): number[] => {
       const seconds: number[] = [];
-      if (currentDate && hour && minute) {
+      if (currentDate && hour != null && hour >= 0 && minute != null && minute >= 0) {
+        const selectedDate = new Date(currentDate);
+        selectedDate.setHours(hour, minute);
         if (maxDate) {
-          const comparison = compareByMinuteFull(currentDate, maxDate);
+          const comparison = compareByMinuteFull(selectedDate, maxDate);
           if (comparison > 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -205,9 +211,11 @@ export function getDisabledTimeConfigForMinDate(
     },
     nzDisabledMinutes: (hour: number): number[] => {
       const minutes: number[] = [];
-      if (currentDate && hour) {
+      if (currentDate && hour != null && hour >= 0) {
+        const selectedDate = new Date(currentDate);
+        selectedDate.setHours(hour);
         if (minDate) {
-          const comparison = compareByHoursFull(currentDate, minDate);
+          const comparison = compareByHoursFull(selectedDate, minDate);
           if (comparison < 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -220,9 +228,11 @@ export function getDisabledTimeConfigForMinDate(
     },
     nzDisabledSeconds: (hour: number, minute: number): number[] => {
       const seconds: number[] = [];
-      if (currentDate && hour && minute) {
+      if (currentDate && hour != null && hour >= 0 && minute != null && minute >= 0) {
+        const selectedDate = new Date(currentDate);
+        selectedDate.setHours(hour, minute);
         if (minDate) {
-          const comparison = compareByMinuteFull(currentDate, minDate);
+          const comparison = compareByMinuteFull(selectedDate, minDate);
           if (comparison < 0) {
             return range(0, 60);
           } else if (comparison === 0) {
@@ -269,7 +279,7 @@ export function disabledMinutes(
   data: TimePickerComponentData,
 ): ((hour: number) => number[]) | undefined {
   return (hour) => {
-    if (hour) {
+    if (hour != null && hour >= 0) {
       const minutes: number[] = [];
       if (data.minTime && data.minTimeValue) {
         minutes.push(...disabledMinMinutes(data.minTimeValue)!(hour));
@@ -284,7 +294,7 @@ export function disabledMinutes(
 }
 export function disabledMinMinutes(minTime: Date): ((hour: number) => number[]) | undefined {
   return (hour) => {
-    if (hour) {
+    if (hour != null && hour >= 0) {
       const minutes: number[] = [];
       if (hour === minTime.getHours()) {
         minutes.push(...range(0, minTime.getMinutes()));
@@ -296,7 +306,7 @@ export function disabledMinMinutes(minTime: Date): ((hour: number) => number[]) 
 }
 export function disabledMaxMinutes(maxTime: Date): ((hour: number) => number[]) | undefined {
   return (hour) => {
-    if (hour) {
+    if (hour != null && hour >= 0) {
       const minutes: number[] = [];
       if (hour === maxTime.getHours()) {
         minutes.push(...range(maxTime.getMinutes() + 1, 60));
@@ -311,7 +321,7 @@ export function disabledSeconds(
   data: TimePickerComponentData,
 ): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
-    if (hour && minute) {
+    if (hour != null && hour >= 0 && minute != null && minute >= 0) {
       const seconds: number[] = [];
       if (data.minTime && data.minTimeValue) {
         seconds.push(...disabledMinSeconds(data.minTimeValue)!(hour, minute));
@@ -328,7 +338,7 @@ export function disabledMinSeconds(
   minTime: Date,
 ): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
-    if (hour && minute) {
+    if (hour != null && hour >= 0 && minute != null && minute >= 0) {
       const seconds: number[] = [];
       if (hour === minTime.getHours() && minute === minTime.getMinutes()) {
         seconds.push(...range(0, minTime.getSeconds()));
@@ -342,7 +352,7 @@ export function disabledMaxSeconds(
   maxTime: Date,
 ): ((hour: number, minute: number) => number[]) | undefined {
   return (hour, minute) => {
-    if (hour && minute) {
+    if (hour != null && hour >= 0 && minute != null && minute >= 0) {
       const seconds: number[] = [];
       if (hour === maxTime.getHours() && minute === maxTime.getMinutes()) {
         seconds.push(...range(maxTime.getSeconds() + 1, 60));
@@ -367,31 +377,11 @@ export function compareByNumbers(num1: number, num2: number): ComparisonType {
   return 0;
 }
 
-function getWeekNumber(date: Date): number {
-  // Copying date so the original date won't be modified
-  const tempDate = new Date(date.valueOf());
-
-  // ISO week date weeks start on Monday, so correct the day number
-  const dayNum = (date.getDay() + 6) % 7;
-
-  // Set the target to the nearest Thursday (current date + 4 - current day number)
-  tempDate.setDate(tempDate.getDate() - dayNum + 3);
-
-  // ISO 8601 week number of the year for this date
-  const firstThursday = tempDate.valueOf();
-
-  // Set the target to the first day of the year
-  // First set the target to January 1st
-  tempDate.setMonth(0, 1);
-
-  // If this is not a Thursday, set the target to the next Thursday
-  if (tempDate.getDay() !== 4) {
-    tempDate.setMonth(0, 1 + ((4 - tempDate.getDay() + 7) % 7));
-  }
-
-  // The weeknumber is the number of weeks between the first Thursday of the year
-  // and the Thursday in the target week
-  return 1 + Math.ceil((firstThursday - tempDate.valueOf()) / 604800000); // 604800000 = number of milliseconds in a week
+function startOfWeek(date: Date): number {
+  const monday = new Date(date);
+  monday.setHours(0, 0, 0, 0);
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+  return monday.getTime();
 }
 
 export function range(start: number, end: number): number[] {
@@ -417,11 +407,7 @@ export function compareByMonth(date1: Date, date2: Date): ComparisonType {
 }
 
 export function compareByWeek(date1: Date, date2: Date): ComparisonType {
-  const comparison = compareByMonth(date1, date2);
-  if (comparison === 0) {
-    return compareByNumbers(getWeekNumber(date1), getWeekNumber(date2));
-  }
-  return comparison;
+  return compareByNumbers(startOfWeek(date1), startOfWeek(date2));
 }
 
 export function compareByDay(date1: Date, date2: Date): ComparisonType {

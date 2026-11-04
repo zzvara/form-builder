@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { RepeatedSectionComponent } from '@components/repeated-section/repeated-section.component';
 
@@ -8,7 +9,7 @@ describe('SectionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RepeatedSectionComponent],
+      imports: [RepeatedSectionComponent],
     });
     fixture = TestBed.createComponent(RepeatedSectionComponent);
     component = fixture.componentInstance;

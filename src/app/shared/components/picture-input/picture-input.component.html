@@ -8,7 +8,7 @@
     [nzCustomRequest]="uploadToLocalStorage"
     [nzHeaders]="{ authorization: 'authorization-text' }"
     (nzChange)="onChange($event)"
-    [nzFileList]="fileList"
+    [nzFileList]="fileList()"
     [nzDownload]="onDownload"
     [nzRemove]="onRemove"
     nzListType="picture"

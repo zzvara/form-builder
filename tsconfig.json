@@ -1,22 +1,28 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.spec.json" },
+    { "path": "./tsconfig.worker.json" }
+  ],
   "compilerOptions": {
-    "baseUrl": "src",
     "paths": {
-      "@app/*": ["app/*"],
-      "@assets/*": ["assets/*"],
-      "@pages/*": ["app/pages/*"],
-      "@shared/*": ["app/shared/*"],
-      "@abstract-classes/*": ["app/shared/abstract-classes/*"],
-      "@components/*": ["app/shared/components/*"],
-      "@directives/*": ["app/shared/directives/*"],
-      "@helpers/*": ["app/shared/helpers/*"],
-      "@interfaces/*": ["app/shared/interfaces/*"],
-      "@models/*": ["app/shared/models/*"],
-      "@resolvers/*": ["app/shared/resolvers/*"],
-      "@services/*": ["app/shared/services/*"],
-      "@validators/*": ["app/shared/validators/*"]
+      "@app/*": ["./src/app/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@pages/*": ["./src/app/pages/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@abstract-classes/*": ["./src/app/shared/abstract-classes/*"],
+      "@components/*": ["./src/app/shared/components/*"],
+      "@directives/*": ["./src/app/shared/directives/*"],
+      "@helpers/*": ["./src/app/shared/helpers/*"],
+      "@interfaces/*": ["./src/app/shared/interfaces/*"],
+      "@models/*": ["./src/app/shared/models/*"],
+      "@resolvers/*": ["./src/app/shared/resolvers/*"],
+      "@services/*": ["./src/app/shared/services/*"],
+      "@validators/*": ["./src/app/shared/validators/*"]
     },
     "outDir": "./dist/out-tsc",
     "esModuleInterop": true,

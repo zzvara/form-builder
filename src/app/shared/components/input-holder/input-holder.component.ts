@@ -2,28 +2,28 @@
  * <<licensetext>>
  */
 
-import { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
-import { AbstractInput } from '@abstract-classes/abstract-input';
+import type { AbstractEditForm } from '@abstract-classes/abstract-edit-form';
+import type { AbstractInput } from '@abstract-classes/abstract-input';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
+import type { AfterViewInit, TemplateRef, Type } from '@angular/core';
 import {
-  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   EventEmitter,
   Input,
-  OnInit,
   Output,
-  TemplateRef,
-  Type,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormsModule, NgForm, NgModel } from '@angular/forms';
+import type { NgForm, NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { getInputGroups, translateComponentType } from '@pages/edit/config/edit-data-config';
-import { FormComponentMarker } from '@interfaces/form-component-marker';
-import { FormInputData } from '@interfaces/form-input-data';
-import { InlineEdit } from '@interfaces/inline-edit';
-import { InputData } from '@interfaces/input-data';
+import type { FormComponentMarker } from '@interfaces/form-component-marker';
+import type { FormInputData } from '@interfaces/form-input-data';
+import type { InlineEdit } from '@interfaces/inline-edit';
+import type { InputData } from '@interfaces/input-data';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NzCardComponent } from 'ng-zorro-antd/card';
 import {
@@ -41,6 +41,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'app-input-holder',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './input-holder.component.html',
   styleUrls: ['./input-holder.component.less'],
   standalone: true,
@@ -63,18 +64,19 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
   ],
 })
 export class InputHolderComponent<
-  T = any,
-  D extends InputData<T> = InputData,
+  T = unknown,
+  D extends InputData<T> = InputData<T>,
   E extends AbstractEditForm<T, D> = AbstractEditForm<T, D>,
->
-  implements OnInit, AfterViewInit
-{
-  @Input() formInput!: FormInputData<D, T>;
+> implements AfterViewInit {
+  private destroyRef = inject(DestroyRef);
+  private translate = inject(TranslateService);
+
+  @Input() formInput!: FormInputData<D>;
   get inputData(): D {
     return this.formInput.data!;
   }
 
-  @Input() customTitle!: TemplateRef<any>;
+  @Input() customTitle!: TemplateRef<unknown>;
 
   @Output() changedEvent = new EventEmitter<D>();
   @Output() removeComponentEvent = new EventEmitter<string>();
@@ -85,29 +87,12 @@ export class InputHolderComponent<
 
   @Input() inlineEdit: InlineEdit = { enabled: true };
 
-  componentInputs!: {
-    data: D;
-    inlineEdit: InlineEdit;
-  };
-
-  constructor(
-    private destroyRef: DestroyRef,
-    private translate: TranslateService,
-  ) {}
-
   get componentType(): Type<FormComponentMarker> {
     return translateComponentType[this.formInput.type];
   }
 
   get embeddedComponent(): AbstractInput<T, D, E> {
     return this.inputOutlet['_componentRef']?.instance;
-  }
-
-  ngOnInit(): void {
-    this.componentInputs = {
-      data: this.inputData,
-      inlineEdit: this.inlineEdit,
-    };
   }
 
   ngAfterViewInit() {
@@ -130,15 +115,17 @@ export class InputHolderComponent<
   }
 
   resetComponent() {
-    const defaultData: FormInputData<D, T> | undefined = getInputGroups(this.translate).find(
+    const defaultData = getInputGroups(this.translate).find(
       (group) => group.type === this.formInput.type,
     );
     if (defaultData) {
-      Object.keys(this.inputData)
-        .filter((key) => key !== 'id' && key !== 'sectionId')
-        .forEach((key) => {
-          this.inputData[key as keyof D] = defaultData.data![key as keyof D];
-        });
+      // The registry entry has the same component type and data shape as this input.
+      const defaults = defaultData.data as D;
+      this.formInput.data = {
+        ...defaults,
+        id: this.inputData.id,
+        sectionId: this.inputData.sectionId,
+      };
       this.changedEvent.emit(this.inputData);
     }
   }

@@ -38,6 +38,17 @@
           <ng-template #suffixTemplate>
             @if (!inputData.draft && !inputData.questionValue) {
               <i
+                tabindex="0"
+                [attr.role]="'button'"
+                (keydown.enter)="
+                  inputData.questionValue = '';
+                  change();
+                  $event.preventDefault();
+                  $event.stopPropagation()
+                "
+                (keydown.space)="$event.preventDefault()"
+                (keyup.space)="inputData.questionValue = ''; change(); $event.stopPropagation()"
+                [attr.aria-label]="'A11Y.CLEAR_QUESTION' | translate"
                 nz-icon
                 nzType="warning"
                 (click)="inputData.questionValue = ''; change()"
@@ -80,8 +91,8 @@
         *ngComponentOutlet="
           componentType;
           inputs: {
-            data: componentInputs.data,
-            inlineEdit: componentInputs.inlineEdit,
+            data: inputData,
+            inlineEdit: inlineEdit,
             label: inputPreviewTemp,
           }
         "

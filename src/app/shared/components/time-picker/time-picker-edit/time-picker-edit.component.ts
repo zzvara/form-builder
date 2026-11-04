@@ -1,8 +1,8 @@
 import { AbstractFieldLikeEditForm } from '@abstract-classes/abstract-fieldlike-edit-form';
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
+import type { TimePickerComponentData } from '@components/time-picker/interfaces/time-picker-component-data';
 import {
   disabledHours,
   disabledMaxHours,
@@ -29,10 +29,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzTimePickerComponent } from 'ng-zorro-antd/time-picker';
 import { QuillEditorComponent } from 'ngx-quill';
-import {CodeEditorModalComponent} from "@components/code-editor/code-editor-modal/code-editor-modal.component";
+import { CodeEditorModalComponent } from '@components/code-editor/code-editor-modal/code-editor-modal.component';
 
 @Component({
   selector: 'app-time-picker-edit',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './time-picker-edit.component.html',
   styleUrls: [],
   standalone: true,
@@ -50,7 +51,7 @@ import {CodeEditorModalComponent} from "@components/code-editor/code-editor-moda
     TranslatePipe,
     ReactiveFormsModule,
     DatePipe,
-    CodeEditorModalComponent
+    CodeEditorModalComponent,
   ],
 })
 export class TimePickerEditComponent extends AbstractFieldLikeEditForm<

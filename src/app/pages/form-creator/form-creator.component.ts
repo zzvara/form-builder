@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ProjectType } from '@app/shared/interfaces/project';
 import { ViewChild } from '@angular/core';
 import { InfoPageComponent } from './info-page/info-page.component';
@@ -13,6 +13,7 @@ import { ResultsPageComponent } from './results-page/results-page.component';
   templateUrl: './form-creator.component.html',
   styleUrls: ['./form-creator.component.less'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NzLayoutComponent,
     NzStepComponent,
@@ -30,75 +31,72 @@ export class FormCreatorComponent {
   @ViewChild(ComponentsPageComponent)
   componentsPageComponent?: ComponentsPageComponent;
 
-  projectId: string = '';
-  currentVersionNum?: number;
-  projectType: ProjectType = ProjectType.TEST;
-  page = 0;
-  infoValid = false;
-  componentValid = false;
+  readonly projectId = signal('');
+  readonly currentVersionNum = signal<number | undefined>(undefined);
+  readonly projectType = signal(ProjectType.TEST);
+  readonly page = signal(0);
+  readonly infoValid = signal(false);
+  readonly componentValid = signal(false);
 
   ProjectType = ProjectType;
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
-
   checkInfoForm() {
     if (this.infoPageComponent) {
-      this.infoValid = this.infoPageComponent.form.valid;
+      this.infoValid.set(this.infoPageComponent.form.valid);
     }
 
-    return this.infoValid;
+    return this.infoValid();
   }
 
   checkComponentsForm() {
     if (this.componentsPageComponent) {
-      this.componentValid = !this.componentsPageComponent.editComponent.isFormInvalid();
+      this.componentValid.set(!this.componentsPageComponent.editComponent.isFormInvalid());
     }
 
-    return this.componentValid;
+    return this.componentValid();
   }
 
   setProjectId(id: string) {
-    this.projectId = id;
+    this.projectId.set(id);
   }
 
   setVersionNum(versionNum: number) {
-    this.currentVersionNum = versionNum;
+    this.currentVersionNum.set(versionNum);
   }
 
   handleFormData(data: ProjectType) {
-    this.projectType = data;
-    this.cdr.detectChanges();
+    this.projectType.set(data);
   }
 
   setPage(p: number) {
     if (p <= 2) {
-      this.page = p;
+      this.page.set(p);
     }
   }
 
   nextPage() {
-    if (this.page < 2) {
-      this.page += 1;
+    if (this.page() < 2) {
+      this.page.update((page) => page + 1);
     }
   }
 
   toInfoPage() {
-    if (this.page >= 0) {
-      this.page = 0;
+    if (this.page() >= 0) {
+      this.page.set(0);
     }
   }
 
   toCompPage() {
-    if (this.page >= 1 || this.checkInfoForm()) {
+    if (this.page() >= 1 || this.checkInfoForm()) {
       this.infoPageComponent?.submitForm();
-      this.page = 1;
+      this.page.set(1);
     }
   }
 
   toAnswPage() {
-    if (this.page >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
+    if (this.page() >= 2 || (this.checkInfoForm() && this.checkComponentsForm())) {
       this.componentsPageComponent?.saveForm();
-      this.page = 2;
+      this.page.set(2);
     }
   }
 }

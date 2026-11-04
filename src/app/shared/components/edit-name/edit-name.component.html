@@ -13,7 +13,7 @@
     "
   ></nz-icon>
 
-  @if (isEditName) {
+  @if (isEditName()) {
     <form nz-form [formGroup]="form">
       <nz-form-control [nzValidateStatus]="form.controls['name']">
         <ng-template #suffixTemplate>
