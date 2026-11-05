@@ -27,6 +27,7 @@ export interface BaseField {
   id: string;
   title: string;
   type: FieldType;
+  draft: boolean;
   question: string;
   description?: RichTextString;
   sectionId?: string;

@@ -60,6 +60,7 @@ export function createTextField(overrides?: Partial<TextField>): TextField {
     id: uuidv4(),
     type: FieldType.TEXT,
     title: '',
+    draft: true,
     question: '',
     description: '',
     required: false,
@@ -73,6 +74,7 @@ export function createNumberField(overrides?: Partial<NumberField>): NumberField
   return {
     id: uuidv4(),
     type: FieldType.NUMBER,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -88,6 +90,7 @@ export function createDateField(overrides?: Partial<DateField>): DateField {
   return {
     id: uuidv4(),
     type: FieldType.DATE,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -107,6 +110,7 @@ export function createRangeField(overrides?: Partial<RangeField>): RangeField {
   return {
     id: uuidv4(),
     type: FieldType.RANGE,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -126,6 +130,7 @@ export function createTimeField(overrides?: Partial<TimeField>): TimeField {
   return {
     id: uuidv4(),
     type: FieldType.TIME,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -146,6 +151,7 @@ export function createTextboxField(overrides?: Partial<TextboxField>): TextboxFi
   return {
     id: uuidv4(),
     type: FieldType.TEXTBOX,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -160,6 +166,7 @@ export function createImageField(overrides?: Partial<ImageField>): ImageField {
   return {
     id: uuidv4(),
     type: FieldType.IMAGE,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -174,6 +181,7 @@ export function createSelectField(overrides?: Partial<SelectField>): SelectField
   return {
     id: uuidv4(),
     type: FieldType.SELECT,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -194,6 +202,7 @@ export function createRadioField(overrides?: Partial<RadioField>): RadioField {
   return {
     id: uuidv4(),
     type: FieldType.RADIO,
+    draft: true,
     title: '',
     question: '',
     description: '',
@@ -213,6 +222,7 @@ export function createCheckboxField(overrides?: Partial<CheckboxField>): Checkbo
   return {
     id: uuidv4(),
     type: FieldType.CHECKBOX,
+    draft: true,
     title: '',
     question: '',
     description: '',
