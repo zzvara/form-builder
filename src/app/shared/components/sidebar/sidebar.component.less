@@ -6,6 +6,8 @@ section {
   height: 100%;
   overflow: hidden;
   width: 300px;
+  border-right: @border-default;
+  border-top: @border-default;
 }
 
 .sticky-header {
@@ -14,7 +16,6 @@ section {
   top: 0;
   z-index: 10;
   padding: @spacing12;
-  background: #fff;
 }
 
 .body {
@@ -39,8 +40,10 @@ section {
 :host ::ng-deep {
   .ant-card {
     width: @width-full;
-    border: @border-default;
     margin-bottom: @spacing8;
+    border: @border-default;
+    border-radius: 4px;
+    overflow: hidden;
   }
 
   .ant-card-body {
