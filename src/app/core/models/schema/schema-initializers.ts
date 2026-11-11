@@ -22,6 +22,8 @@ import {
   type TextField,
   type FieldOption,
 } from './form-fields.model';
+import { type VisibilityRule, type CodeEditorVariable, CodeEditorVariableType
+ } from './form-rules.model';
 import { v4 as uuidv4 } from 'uuid';
 
 export function createEmptySchema(): FormSchema {
@@ -298,4 +300,22 @@ export function createFormComponent(type: FieldType | SectionType): FormComponen
   }
 
   return createFormField(type as FieldType);
+}
+
+export function createVisibilityRule(overrides?: Partial<VisibilityRule>): VisibilityRule {
+  return {
+    id: uuidv4(),
+    enabled: false,
+    code: '',
+    variables: [],
+    ...overrides,
+  };
+}
+
+export function createCodeEditorVariable(elementId: string, title: string, type = CodeEditorVariableType.STRING): CodeEditorVariable {
+  return {
+    elementId,
+    title,
+    type,
+  };
 }

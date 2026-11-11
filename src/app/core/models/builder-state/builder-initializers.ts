@@ -1,4 +1,4 @@
-import { type ActiveDialogState, type BuilderUiState, type DragAndDropState, PageStep, type StepValidationState, StepValidationStatus, type ViewportState } from './builder-ui-state.model';
+import { type ActiveDialogState, type BuilderUiState, type CodeEditorUiState, type DragAndDropState, PageStep, type StepValidationState, StepValidationStatus, type ViewportState } from './builder-ui-state.model';
 
 export function createInitialBuilderUiState(overrides?: Partial<BuilderUiState>): BuilderUiState {
   return {
@@ -48,6 +48,17 @@ export function createInitialStepValidation(overrides?: Partial<StepValidationSt
 export function createInitialViewportState(overrides?: Partial<ViewportState>): ViewportState {
   return {
     isMobileView: false,
+    ...overrides,
+  };
+}
+
+export function createCodeEditorUiState(
+  overrides?: Partial<CodeEditorUiState>,
+): CodeEditorUiState {
+  return {
+    draftCode: '',
+    errors: [],
+    isValid: true,
     ...overrides,
   };
 }

@@ -68,6 +68,29 @@ export interface DragAndDropState {
 }
 
 /**
+ * Diagnostic error produced by JSHint / CodeMirror
+ */
+export interface CodeEditorError {
+  from: number;
+  to: number;
+  code: string;
+  reason: string;
+  a?: string;
+  b?: string;
+  c?: string;
+  d?: string;
+}
+
+export interface CodeEditorUiState {
+  /** Unsaved code in the text editor before clicking save */
+  draftCode: string;
+  /** Current syntax/lint errors highlighted in the editor */
+  errors: CodeEditorError[];
+  /** Whether the current draft code is valid JavaScript */
+  isValid: boolean;
+}
+
+/**
  * Representation of the Builder UI State.
  */
 export interface BuilderUiState {
@@ -99,4 +122,7 @@ export interface BuilderUiState {
   /** History availability */
   canUndo: boolean;
   canRedo: boolean;
+
+  /** Code editor state for conditional rendering */
+  codeEditorState?: CodeEditorUiState;
 }

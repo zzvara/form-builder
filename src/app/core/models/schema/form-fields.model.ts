@@ -36,6 +36,7 @@ export interface BaseField {
   requiredMessage?: string;
   tooltip?: string;
   validations: ValidationRule[];
+  /** Multiple rules evaluate with a logical and */
   visibility: VisibilityRule[];
 }
 
