@@ -26,9 +26,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 export function createEmptySchema(): FormSchema {
   return {
-    id: uuidv4(),
-    title: '',
-    description: '',
     components: [],
   };
 }
