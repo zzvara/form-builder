@@ -22,8 +22,11 @@ import {
   type TextField,
   type FieldOption,
 } from './form-fields.model';
-import { type VisibilityRule, type CodeEditorVariable, CodeEditorVariableType
- } from './form-rules.model';
+import {
+  type VisibilityRule,
+  type CodeEditorVariable,
+  CodeEditorVariableType,
+} from './form-rules.model';
 import { v4 as uuidv4 } from 'uuid';
 
 export function createEmptySchema(): FormSchema {
@@ -312,7 +315,11 @@ export function createVisibilityRule(overrides?: Partial<VisibilityRule>): Visib
   };
 }
 
-export function createCodeEditorVariable(elementId: string, title: string, type = CodeEditorVariableType.STRING): CodeEditorVariable {
+export function createCodeEditorVariable(
+  elementId: string,
+  title: string,
+  type = CodeEditorVariableType.STRING,
+): CodeEditorVariable {
   return {
     elementId,
     title,

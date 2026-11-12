@@ -1,4 +1,13 @@
-import { type ActiveDialogState, type BuilderUiState, type CodeEditorUiState, type DragAndDropState, PageStep, type StepValidationState, StepValidationStatus, type ViewportState } from './builder-ui-state.model';
+import {
+  type ActiveDialogState,
+  type BuilderUiState,
+  type CodeEditorUiState,
+  type DragAndDropState,
+  PageStep,
+  type StepValidationState,
+  StepValidationStatus,
+  type ViewportState,
+} from './builder-ui-state.model';
 
 export function createInitialBuilderUiState(overrides?: Partial<BuilderUiState>): BuilderUiState {
   return {
@@ -16,7 +25,9 @@ export function createInitialBuilderUiState(overrides?: Partial<BuilderUiState>)
   };
 }
 
-export function createInitialDialogState(overrides?: Partial<ActiveDialogState>): ActiveDialogState {
+export function createInitialDialogState(
+  overrides?: Partial<ActiveDialogState>,
+): ActiveDialogState {
   return {
     repeatedSectionSettings: { isOpen: false },
     codeEditorModal: { isOpen: false },
@@ -27,7 +38,9 @@ export function createInitialDialogState(overrides?: Partial<ActiveDialogState>)
   };
 }
 
-export function createInitialDragDropState(overrides?: Partial<DragAndDropState>): DragAndDropState {
+export function createInitialDragDropState(
+  overrides?: Partial<DragAndDropState>,
+): DragAndDropState {
   return {
     isDragging: false,
     hoveredContainerId: undefined,
@@ -36,7 +49,9 @@ export function createInitialDragDropState(overrides?: Partial<DragAndDropState>
   };
 }
 
-export function createInitialStepValidation(overrides?: Partial<StepValidationState>): StepValidationState {
+export function createInitialStepValidation(
+  overrides?: Partial<StepValidationState>,
+): StepValidationState {
   return {
     [PageStep.INFO]: StepValidationStatus.UNKNOWN,
     [PageStep.COMPONENTS]: StepValidationStatus.UNKNOWN,
@@ -52,9 +67,7 @@ export function createInitialViewportState(overrides?: Partial<ViewportState>): 
   };
 }
 
-export function createCodeEditorUiState(
-  overrides?: Partial<CodeEditorUiState>,
-): CodeEditorUiState {
+export function createCodeEditorUiState(overrides?: Partial<CodeEditorUiState>): CodeEditorUiState {
   return {
     draftCode: '',
     errors: [],

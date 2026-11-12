@@ -28,9 +28,7 @@ export function createProjectMetadata(overrides?: Partial<ProjectMetadata>): Pro
   };
 }
 
-export function createProject(
-  overrides?: Partial<Project>,
-): Project {
+export function createProject(overrides?: Partial<Project>): Project {
   const metadata = createProjectMetadata(overrides?.metadata);
   return {
     metadata,

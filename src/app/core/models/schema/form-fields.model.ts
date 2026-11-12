@@ -1,5 +1,6 @@
 import type { ValidationRule, VisibilityRule } from './form-rules.model';
-import type { FormComponent, RichTextString } from './form-schema.model';
+import type { FormComponent } from './form-schema.model';
+import type { RichTextString } from '../project';
 import { type FormSection, type RepeatedSection, SectionType } from './form-section.model';
 
 export enum FieldType {

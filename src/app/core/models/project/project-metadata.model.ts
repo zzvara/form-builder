@@ -1,4 +1,4 @@
-import type { Project } from "./project.model";
+import type { Project } from './project.model';
 
 /** Represents a string containing HTML/XML from a rich text editor */
 export type RichTextString = string;

@@ -2,6 +2,6 @@ import type { FormSchema } from '../schema';
 import type { ProjectMetadata } from './project-metadata.model';
 
 export interface Project {
-  metadata: ProjectMetadata
+  metadata: ProjectMetadata;
   schema: FormSchema;
 }

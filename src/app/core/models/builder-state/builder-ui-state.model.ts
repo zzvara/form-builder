@@ -10,7 +10,7 @@ export enum PageStep {
 export enum StepValidationStatus {
   UNKNOWN = 'unknown',
   VALID = 'valid',
-  INVALID = 'invalid', 
+  INVALID = 'invalid',
 }
 
 /**
@@ -21,7 +21,9 @@ export type StepValidationState = Record<PageStep, StepValidationStatus>;
 /**
  * For accurately modeling dialog state
  */
-export interface ClosedDialog { isOpen: false }
+export interface ClosedDialog {
+  isOpen: false;
+}
 
 export type OpenDialog<T = void> = { isOpen: true } & (T extends void ? object : T);
 
@@ -100,10 +102,10 @@ export interface BuilderUiState {
   /** Validation status of the steps */
   stepValidation: StepValidationState;
 
-  /** 
+  /**
    * Currently selected/focused field or section ID on the canvas
    * If the component is inside a section, then the ID of the including section can be stored too
-  */
+   */
   selectedComponentId?: string;
   activeSectionId?: string;
 
