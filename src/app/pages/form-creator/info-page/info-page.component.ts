@@ -1,25 +1,14 @@
 import { CommonModule } from '@angular/common';
-import type { OnInit, OnDestroy } from '@angular/core';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  Input,
-  Output,
-  EventEmitter,
-  signal,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, signal, Signal, WritableSignal, OnDestroy, DestroyRef, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import type { Params } from '@angular/router';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DateFormat } from '@app/shared/constants/date-format.constant';
-import type { Project } from '@interfaces/project';
 import { ProjectType } from '@interfaces/project';
 import { TranslatePipe } from '@ngx-translate/core';
 import { JsonService } from '@services/json.service';
-import { ProjectService } from '@services/project.service';
+import { FormBuilderStore } from '@app/core/form-builder.store';
+import { RoutePath } from '@app/shared/models/route-path.model';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -64,39 +53,11 @@ import { QuillEditorComponent } from 'ngx-quill';
   ],
 })
 export class InfoPageComponent implements OnInit, OnDestroy {
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  private readonly projectService = inject<ProjectService<Project>>(ProjectService);
-  private readonly jsonService = inject(JsonService);
+  private readonly _formExists: WritableSignal<boolean> = signal(false);
+  public readonly formExists: Signal<boolean> = this._formExists.asReadonly();
 
-  private readonly destroyRef = inject(DestroyRef);
-  @Input() page?: number;
-  @Output() setPage = new EventEmitter<number>();
-  @Output() projectId = new EventEmitter<string>();
-  @Output() formData = new EventEmitter<ProjectType>();
-
-  private readonly projectState = signal<Project>({
-    id: '',
-    title: '',
-    description: '',
-    type: ProjectType.QUESTIONNAIRE,
-    time_checkbox: false,
-    deadline_checkbox: false,
-    time_limit: 0,
-    deadline: '',
-    created: new Date().toISOString().split('T')[0],
-    modified: new Date().toISOString().split('T')[0],
-  });
-  get project(): Project {
-    return this.projectState();
-  }
-  set project(value: Project) {
-    this.projectState.set(value);
-  }
-
-  readonly formExists = signal(false);
-  formId = '';
-  readonly saveFailed = signal(false);
+  private readonly _saveFailed: WritableSignal<boolean> = signal(false);
+  public readonly saveFailed: Signal<boolean> = this._saveFailed.asReadonly();
 
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -108,118 +69,114 @@ export class InfoPageComponent implements OnInit, OnDestroy {
     limit: new FormControl(0),
   });
   params: Params = {};
-
   DateFormat = DateFormat;
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly jsonService: JsonService,
+    public store: FormBuilderStore
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.params = params;
       if (params['id']) {
-        this.formExists.set(true);
-        this.formId = params['id'];
-
-        const project = this.projectService.searchData(this.formId)?.[0];
-        if (!project) {
-          console.error('Project not found', this.formId);
-          return;
+        this._formExists.set(true);
+        if (this.store.projectId() !== params['id']) {
+          this.store.setProject(params['id']);
         }
-        this.project = project;
+        this.initializeForm();
+      } else {
+        const newType = params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
+        if (!this.store.project()) {
+          this.store.initNewProject(newType);
+        }
+        this.form.patchValue(
+          {
+            type: newType === ProjectType.TEST,
+          },
+          { emitEvent: false }
+        );
         this.initializeForm();
       }
-      if (params['type']) {
-        this.project.type =
-          params['type'] === ProjectType.TEST ? ProjectType.TEST : ProjectType.QUESTIONNAIRE;
-        this.project = { ...this.project };
-        this.form.patchValue({
-          type: this.project.type === ProjectType.TEST,
-        });
-      }
     });
-
-    this.formData.emit(this.project.type);
 
     this.jsonService
       .getJsonData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
-        // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
-        if (data) {
-          this.project = { ...this.project, ...data.project };
+        if (data && data.project) {
+          this.store.updateProject(data.project);
           this.initializeForm();
         }
       });
-  }
 
-  initializeForm(): void {
-    this.form.patchValue({
-      title: this.project.title || '',
-      description: this.project.description || '',
-      type: this.project.type === ProjectType.TEST,
-      deadline: this.project.deadline || '',
-      hasdeadline: this.project.deadline_checkbox || false,
-      haslimit: this.project.time_checkbox || false,
-      limit: this.project.time_limit || 0,
+    this.initializeForm();
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.updateForm();
     });
   }
 
-  updateForm() {
-    this.project.title = this.form.controls['title'].value!;
-    this.project.description = this.form.controls['description'].value!;
-    this.project.type = this.form.controls['type'].value
-      ? ProjectType.TEST
-      : ProjectType.QUESTIONNAIRE;
-    this.project.deadline = this.form.controls['deadline'].value!;
-    this.project.deadline_checkbox = this.form.controls['hasdeadline'].value!;
-    this.project.time_checkbox = this.form.controls['haslimit'].value!;
-    if (this.project.time_checkbox) {
-      this.project.time_limit = this.form.controls['limit'].value!;
+  initializeForm(): void {
+    const currentProject = this.store.project();
+    if (!currentProject) {
+      this.router.navigate([RoutePath.NEW]);
+      return;
     }
-    this.project = { ...this.project };
-    this.formData.emit(this.project.type);
+
+    this.form.patchValue(
+      {
+        title: currentProject.title || '',
+        description: currentProject.description || '',
+        type: currentProject.type === ProjectType.TEST,
+        deadline: currentProject.deadline || '',
+        hasdeadline: currentProject.deadline_checkbox || false,
+        haslimit: currentProject.time_checkbox || false,
+        limit: currentProject.time_limit || 0,
+      },
+      { emitEvent: false }
+    );
+  }
+
+  updateForm() {
+    this.store.updateProject({
+      title: this.form.controls['title'].value || '',
+      description: this.form.controls['description'].value || '',
+      type: this.form.controls['type'].value ? ProjectType.TEST : ProjectType.QUESTIONNAIRE,
+      deadline: this.form.controls['deadline'].value || '',
+      deadline_checkbox: this.form.controls['hasdeadline'].value || false,
+      time_checkbox: this.form.controls['haslimit'].value || false,
+      time_limit: this.form.controls['haslimit'].value ? this.form.controls['limit'].value || 0 : 0,
+    });
   }
 
   ngOnDestroy() {
-    if (this.formExists() && this.formId !== '') {
-      this.projectId.emit(this.formId);
-    } else {
-      this.projectId.emit(this.project.id);
-    }
-
     this.jsonService.clearJsonData();
   }
 
   submitForm() {
     if (this.form.invalid) {
-      this.saveFailed.set(true);
+      this._saveFailed.set(true);
       return;
     }
 
     this.updateForm();
+    this.store.saveProject();
 
-    let projectId: string;
-
-    if (this.formExists() && this.formId !== '') {
-      this.projectService.update(this.formId, this.project);
-      projectId = this.formId;
-    } else {
-      this.projectService.add(this.project);
-      projectId = this.project.id;
+    const currentProjectId = this.store.project()?.id;
+    if (currentProjectId) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { id: currentProjectId },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
     }
 
-    // Update the URL with &id=projectId
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { id: projectId },
-      queryParamsHandling: 'merge',
-      replaceUrl: true,
-    });
-
-    this.page! += 1;
-    this.onsetPage(this.page!);
-    this.saveFailed.set(false);
-  }
-
-  onsetPage(page: number): void {
-    this.setPage.emit(page);
+    this._saveFailed.set(false);
+    this.store.nextPage();
   }
 }

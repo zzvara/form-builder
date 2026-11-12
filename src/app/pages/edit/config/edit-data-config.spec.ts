@@ -3,7 +3,9 @@ import { appConfig } from '@app/app.config';
 import { TranslateService } from '@ngx-translate/core';
 import { getInputGroups, getSideBarData, translateComponentType } from './edit-data-config';
 import { EditComponent } from '../edit.component';
-import { mockStorage, sectionFixture } from '@app/testing/fixtures';
+import { mockStorage, projectFixture, sectionFixture } from '@app/testing/fixtures';
+import { FormBuilderStore } from '@app/core/form-builder.store';
+import { ProjectType } from '@interfaces/project';
 
 describe('Editor component defaults', () => {
   beforeEach(() => {
@@ -23,10 +25,18 @@ describe('Editor component defaults', () => {
   });
 
   it('recomputes sidebar drop targets as sections change', () => {
-    const component = TestBed.runInInjectionContext(() => new EditComponent());
+    const fixture = TestBed.createComponent(EditComponent);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
     const sidebar = getSideBarData(component, TestBed.inject(TranslateService));
     expect(sidebar[0].dropListConnectedTo()).toEqual(['sectionDropList']);
-    component.editList = [{ id: 'new-section', data: sectionFixture('new-section') }];
+    TestBed.inject(FormBuilderStore).project.set(
+      projectFixture({
+        type: ProjectType.QUESTIONNAIRE,
+        editList: [{ id: 'new-section', data: sectionFixture('new-section') }],
+      }),
+    );
+    fixture.detectChanges();
     expect(sidebar[0].dropListConnectedTo()).toEqual(['new-section', 'sectionDropList']);
     expect(sidebar[1].dropListConnectedTo()).toBe('sectionDropList');
     expect(sidebar[1].groupContents.map((input) => input.type)).toEqual([

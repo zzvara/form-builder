@@ -1,14 +1,5 @@
-import type { OnInit, OnDestroy } from '@angular/core';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  signal,
-  inject,
-} from '@angular/core';
-import type { Project, ProjectVersion } from '@interfaces/project';
+import { ChangeDetectionStrategy, Component, OnDestroy, computed, inject } from '@angular/core';
+import { Project, ProjectVersion } from '@interfaces/project';
 import { JsonService } from '@services/json.service';
 import { ProjectService } from '@services/project.service';
 import type { ColumnItem } from '@app/shared/interfaces/column-item.model';
@@ -19,6 +10,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import type { FormInputData } from '@app/shared/interfaces/form-input-data';
 import { CodeEditorMode, CodeEditorType } from '@app/shared/enums/code-editor.enum';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 import { NzLayoutComponent } from 'ng-zorro-antd/layout';
 import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';
 import { NzDescriptionsComponent, NzDescriptionsItemComponent } from 'ng-zorro-antd/descriptions';
@@ -57,24 +49,37 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     NzPopoverModule,
   ],
 })
-export class ResultsPageComponent implements OnInit, OnDestroy {
-  private readonly projectService = inject<ProjectService<Project>>(ProjectService);
-  private readonly jsonService = inject(JsonService);
-  private readonly statisticsService = inject(StatisticsService);
-  private readonly translate = inject(TranslateService);
-  private readonly router = inject(Router);
+export class ResultsPageComponent implements OnDestroy {
+  public readonly project = this.store.project;
 
-  @Input() page?: number;
-  @Input() projectId: string | undefined;
-  @Input() versionNum?: number;
+  public readonly projectHistory = computed(() => {
+    this.projectService.items();
+    const projectId = this.store.projectId();
+    return projectId ? this.projectService.getProjectHistory(projectId) : [];
+  });
 
-  @Output() setPage = new EventEmitter<number>();
+  public readonly sectionInputStats = computed(() => {
+    const proj = this.project();
+    return proj ? this.statisticsService.calculateSectionInputStats(proj) : {};
+  });
 
-  readonly project = signal<Project | undefined>(undefined);
-  readonly projectHistory = signal<ProjectVersion<Project>[]>([]);
-  readonly sectionInputStats = signal<Record<string, number | string>>({});
-  readonly latestVersionNum = signal<number | undefined>(undefined);
-  readonly sectionInputs = signal<FormInputData[]>([]);
+  public readonly latestVersionNum = computed(() => {
+    const history = this.projectHistory();
+    return history.length > 0 ? history[history.length - 1].versionNum : undefined;
+  });
+
+  public readonly sectionInputs = computed(() => {
+    const proj = this.project();
+    const inputs: FormInputData[] = [];
+    if (proj?.editList) {
+      proj.editList.forEach((section) => {
+        if ('sectionInputs' in section.data) {
+          section.data.sectionInputs.forEach((input) => inputs.push(input));
+        }
+      });
+    }
+    return inputs;
+  });
 
   columnsConfig: ColumnItem[] = [
     {
@@ -95,62 +100,34 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   CodeEditorMode = CodeEditorMode;
   CodeEditorType = CodeEditorType;
 
-  ngOnInit(): void {
-    if (this.projectId !== undefined) {
-      this.projectHistory.set(this.projectService.getProjectHistory(this.projectId));
-      this.latestVersionNum.set(
-        this.projectHistory().length > 0
-          ? this.projectHistory()[this.projectHistory().length - 1].versionNum
-          : undefined,
-      );
-      this.project.set(
-        this.projectService.getProjectVersion(this.projectId, this.latestVersionNum() ?? 1),
-      );
-
-      this.calculateSectionInputStats();
-    }
-
-    this.project()?.editList?.forEach((section) => {
-      if ('sectionInputs' in section.data) {
-        section.data.sectionInputs.forEach((input) => {
-          this.sectionInputs.update((inputs) => [...inputs, input]);
-        });
-      }
-    });
-  }
+  constructor(
+    private readonly projectService: ProjectService<Project>,
+    private readonly jsonService: JsonService,
+    private readonly statisticsService: StatisticsService,
+    private readonly translate: TranslateService,
+    private readonly router: Router,
+    public readonly store: FormBuilderStore
+  ) {}
 
   nextPage() {
-    this.page! += 1;
-    this.onsetPage(this.page!);
-
     this.router.navigate(['/']);
   }
 
-  onsetPage(page: number): void {
-    this.setPage.emit(page);
-  }
-
   saveProjectWithHistoryToJson(): void {
-    if (this.project()) {
-      this.jsonService.saveProjectWithHistoryToJson(this.project()!, this.projectHistory());
+    const proj = this.project();
+    if (proj) {
+      this.jsonService.saveProjectWithHistoryToJson(proj, this.projectHistory());
     }
   }
 
   saveProjectToJson(): void {
-    if (this.project()) {
-      this.jsonService.saveProjectToJson(this.project()!);
-    }
-  }
-
-  private calculateSectionInputStats(): void {
-    if (this.project()) {
-      this.sectionInputStats.set(
-        this.statisticsService.calculateSectionInputStats(this.project()!),
-      );
+    const proj = this.project();
+    if (proj) {
+      this.jsonService.saveProjectToJson(proj);
     }
   }
 
   ngOnDestroy(): void {
-    this.jsonService.destroy();
+    this.jsonService.clearJsonData();
   }
 }
