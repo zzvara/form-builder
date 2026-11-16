@@ -49,23 +49,9 @@
               </div>
 
               <ng-container *cdkDragPlaceholder>
-                @switch (item.type) {
-                  @case ('SectionComponent') {
-                    <nz-card
-                      nzTitle="Section: section | Layout: vertical"
-                      class="element-list p-3"
-                    ></nz-card>
-                  }
-                  @case ('RepeatedSectionComponent') {
-                    <nz-card
-                      nzTitle="Section: section | Layout: vertical"
-                      class="element-list p-3"
-                    ></nz-card>
-                  }
-                  @default {
-                    <app-input-holder [formInput]="item" />
-                  }
-                }
+                <nz-card [nzBordered]="true" class="sidebar-placeholder">
+                  <b>{{ item.title | translate }}</b>
+                </nz-card>
               </ng-container>
             </nz-card>
           }
