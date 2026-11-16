@@ -1,9 +1,9 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import type { SidebarData } from '@components/sidebar/interfaces/sidebar-data';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 import { NzInputGroupComponent, NzInputModule } from 'ng-zorro-antd/input';
@@ -31,6 +31,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   ],
 })
 export class SidebarComponent {
+  private readonly translate = inject(TranslateService);
   private sidebarItems: SidebarData[] = [];
 
   readonly searchTerm = signal('');
@@ -46,15 +47,16 @@ export class SidebarComponent {
     return this.sidebarItems;
   }
 
-  filterItems() {
-    const searchTerm = this.searchTerm();
-    if (searchTerm) {
+  filterItems(): void {
+    const query = this.searchTerm().trim().toLowerCase();
+
+    if (query) {
       this.filteredData.set(
         this.sidebarItems
           .map((group) => ({
             ...group,
             groupContents: group.groupContents.filter((item) =>
-              item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+              this.translate.instant(item.title).toLowerCase().includes(query),
             ),
           }))
           .filter((group) => group.groupContents.length > 0),
@@ -64,7 +66,7 @@ export class SidebarComponent {
     }
   }
 
-  clearSearch() {
+  clearSearch(): void {
     this.searchTerm.set('');
     this.filteredData.set(this.sidebarItems);
   }
