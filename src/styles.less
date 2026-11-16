@@ -7,8 +7,44 @@
 
 /* You can add global styles to this file, and also import other style files */
 
+/* Light theme (default) */
 :root {
+  --header-bg: @gray-dark;
+  --layout-bg: @background-light;
+  --container-bg: @white;
+  --border-base: @border-light;
+  --input-border: @border-light;
+  --icon-color: @gray-dark;
+  --text-muted: @gray;
   --draft-bg: @background-lightest;
+  
+  --scrollbar-thumb: auto;
+  --scrollbar-track: auto;
+  
+  --quill-stroke: @quill-light-color;
+  --quill-fill: @quill-light-color;
+  
+  --version-footer-bg: @white;
+}
+
+/* dark theme */
+:root[data-theme='dark'] {
+  --header-bg: @medium;
+  --layout-bg: @darkest;
+  --container-bg: @dark;
+  --border-base: @medium;
+  --input-border: @light;
+  --icon-color: @lightest;
+  --text-muted: @medium;
+  --draft-bg: @medium-light;
+  
+  --scrollbar-thumb: @medium;
+  --scrollbar-track: @dark;
+  
+  --quill-stroke: @light;
+  --quill-fill: @light;
+  
+  --version-footer-bg: @darkest;
 }
 
 @h1-size: 44px;
@@ -99,4 +135,123 @@ h4 {
       margin: 0 !important;
     }
   }
+}
+
+.ant-layout-header {
+  background: var(--header-bg) !important;
+}
+
+.ant-layout, 
+.ant-layout-content, 
+.nz-steps {
+  background: var(--layout-bg);
+}
+
+.version-footer {
+  background-color: var(--version-footer-bg) !important;
+}
+
+.ant-card, 
+.ant-card-actions, 
+.form-page-container, 
+.form-container, 
+.form-container .ant-layout, 
+.ant-layout-sider, 
+.ant-layout-sider-dark, 
+.ant-layout-sider-dark .ant-card-body, 
+.ant-input-affix-wrapper, 
+.ant-descriptions-item-content {
+  background: var(--container-bg) !important;
+}
+
+#sectionDropList {
+  background-color: @transparent;
+}
+
+.ant-card-bordered {
+  border-color: var(--border-base);
+}
+.ant-card-bordered .ant-card-head {
+  border-bottom-color: var(--border-base);
+}
+.ant-card-actions {
+  border-top-color: var(--border-base);
+}
+.ant-card-actions > li:not(:last-child) {
+  border-right-color: var(--border-base);
+}
+.ant-descriptions-view table, 
+.ant-descriptions-view th, 
+.ant-descriptions-view td {
+  border: 1px solid var(--border-base);
+}
+.ant-tabs-nav-list {
+  border-bottom: 1px solid var(--border-base);
+}
+
+.theme-selector-button, 
+.language-selector-button, 
+.ant-modal-body .ant-input, 
+.ant-input-affix-wrapper, 
+.ant-checkbox-inner, 
+.ant-radio-inner, 
+.ant-input, 
+.ant-select:not(.ant-select-customize-input) .ant-select-selector, 
+.ant-btn-default,
+.ant-card-extra .ant-btn-dashed {
+  border-color: var(--input-border);
+}
+
+.theme-selector-button:hover,
+.language-selector-button:hover {
+  border-color: @primary-color !important;
+  color: @primary-color !important;
+}
+.ant-card-extra .ant-btn-dashed:hover {
+  border-color: @primary-color;
+}
+.ant-btn-default.ant-btn-dangerous {
+  border-color: @accent-danger;
+}
+.ant-btn-default.ant-btn-dangerous:hover {
+  border-color: #d9363e;
+}
+.ant-modal-body .ant-input-affix-wrapper-status-success {
+  border-color: @white;
+}
+.standalone-input-holder {
+  border: none !important;
+}
+
+.delete-icon, 
+.edit-icon {
+  color: var(--icon-color) !important;
+}
+.delete-icon:hover {
+  color: @accent-danger !important;
+}
+.id-text {
+  color: var(--text-muted) !important;
+}
+#structureList .anticon-aim {
+  color: @primary-color;
+}
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  color: @accent-danger;
+}
+
+:root {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.ql-snow .ql-stroke {
+  stroke: var(--quill-stroke);
+}
+.ql-snow .ql-fill {
+  fill: var(--quill-fill);
+}
+
+app-input-holder .draft-style .form-container,
+app-input-holder .draft-style .ant-input-affix-wrapper {
+  background-color: var(--draft-bg) !important;
 }

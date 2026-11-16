@@ -147,6 +147,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       existingLink.parentNode?.removeChild(existingLink);
     }
 
+    if (theme === ThemeEnum.DARK) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+
     this.eventService.themeChange.next(theme);
 
     if (theme === ThemeEnum.DARK) {
