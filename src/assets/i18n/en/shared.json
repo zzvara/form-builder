@@ -6,7 +6,8 @@
     "TITLE": "Title",
     "DESCRIPTION": "Description",
     "CREATED": "Created",
-    "MODIFIED": "Last modified"
+    "MODIFIED": "Last modified",
+    "DOWNLOAD_CONFIRMATION": "Are you sure, you want to download the project?"
   },
   "TITLE": {
     "DASHBOARD": "Dashboard",

@@ -6,7 +6,8 @@
     "TITLE": "Cím",
     "DESCRIPTION": "Leírás",
     "CREATED": "Létrehozva",
-    "MODIFIED": "Módosítva"
+    "MODIFIED": "Módosítva",
+    "DOWNLOAD_CONFIRMATION": "Biztosan le szeretné tölteni a projektet?"
   },
   "TITLE": {
     "DASHBOARD": "Kezdőlap",

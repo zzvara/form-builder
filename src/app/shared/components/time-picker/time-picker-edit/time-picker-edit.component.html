@@ -202,10 +202,7 @@
         </nz-form-label>
         <nz-form-item>
           <nz-form-control [nzErrorTip]="requiredErrorMessageTemplate">
-            <input
-              nz-input
-              formControlName="{{ 'COMPONENTS.PLACEHOLDER_ERROR_REQUIRED' | translate }}"
-            />
+            <input nz-input formControlName="requiredMessage" />
           </nz-form-control>
           <ng-template #requiredErrorMessageTemplate let-control>
             @if (hasErrors(control, 'required')) {

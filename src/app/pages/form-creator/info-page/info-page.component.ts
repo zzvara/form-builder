@@ -139,15 +139,15 @@ export class InfoPageComponent implements OnInit, OnDestroy {
     this.formData.emit(this.project.type);
 
     this.jsonService
-      .getJsonData()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data) => {
-        // TODO: Inconsistent function, sometimes works and sometimes doesn't :)
-        if (data) {
-          this.project = { ...this.project, ...data.project };
-          this.initializeForm();
-        }
-      });
+    .getJsonData()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe((data) => {
+      if (data?.project) {
+        this.project = { ...this.project, ...data.project };
+        this.initializeForm();
+        this.form.markAllAsTouched();
+      }
+    });
   }
 
   initializeForm(): void {
@@ -184,8 +184,6 @@ export class InfoPageComponent implements OnInit, OnDestroy {
     } else {
       this.projectId.emit(this.project.id);
     }
-
-    this.jsonService.clearJsonData();
   }
 
   submitForm() {
