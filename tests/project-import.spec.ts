@@ -1,10 +1,20 @@
+import { readFile } from 'node:fs/promises';
 import { expect, test } from './helpers/fixtures';
 import {
+  addQuestion,
+  addSection,
   addTextQuestion,
   importProject,
+  openResults,
+  openSettings,
   questionnaireRow,
+  renameComponent,
+  reopenQuestionnaire,
   saveProject,
+  saveSettings,
+  sectionBody,
   startQuestionnaire,
+  usedComponents,
 } from './helpers/form-builder';
 
 function jsonFile(name: string, content: string) {
@@ -83,6 +93,182 @@ test('importing after visiting the results page fills the new form', async ({ pa
   await expect(page.locator('#title')).toHaveValue('Imported in the same session', {
     timeout: 2000,
   });
+});
+
+test('round-trips sections, repetition, a condition and field settings through an exported file', async ({
+  page,
+  browser,
+}, testInfo) => {
+  test.slow();
+  const title = 'Portable structured questionnaire';
+  await startQuestionnaire(page, title);
+  const repeated = await addSection(page, 'Repeated Section');
+  await renameComponent(repeated, 'guestRepeats');
+  await repeated.locator('.repeated-settings-trigger').click();
+  const repeatSettings = page.locator('.ant-popover .repeated-settings-panel');
+  await repeatSettings.locator('nz-select').click();
+  await page.locator('.ant-select-dropdown').getByTitle('Given number', { exact: true }).click();
+  await repeatSettings.getByRole('spinbutton').fill('3');
+  await page.getByRole('textbox', { name: 'Search components' }).click();
+  await expect(repeated.locator('.repeated-settings-trigger')).toContainText('3x');
+
+  const question = await addQuestion(
+    page,
+    'Single-line Text Field',
+    'Guest name',
+    sectionBody(repeated),
+  );
+  await renameComponent(question, 'guestName');
+  await expect(repeated.locator('app-input-holder')).toHaveCount(1);
+  const source = await addSection(page, 'Section', { before: repeated });
+  await renameComponent(source, 'guestDetails');
+  const count = await addQuestion(page, 'Number Field', 'How many guests?', sectionBody(source));
+  await renameComponent(count, 'guestCount');
+  await expect(source.locator('app-input-holder')).toHaveCount(1);
+  await expect(repeated.locator('app-input-holder')).toHaveCount(1);
+  await expect(usedComponents(page).locator('.component-title')).toHaveText([
+    'guestDetails',
+    'guestRepeats',
+  ]);
+  const dialog = await openSettings(page, question);
+  await dialog.locator('input[formcontrolname="placeholderValue"]').fill('Enter a guest name');
+  await dialog.locator('[formcontrolname="maxLength"] input').check();
+  await dialog.locator('[formcontrolname="maxLengthNumber"] input').fill('12');
+  await dialog.locator('[formcontrolname="showCharacterCounter"] input').check();
+  await dialog.getByRole('checkbox', { name: 'Enable', exact: true }).check();
+  await dialog.getByText('Add variables', { exact: true }).click();
+  const picker = page.getByRole('dialog').last();
+  await picker
+    .locator('.ant-transfer-list')
+    .first()
+    .locator('.ant-transfer-list-content-item')
+    .filter({ hasText: 'guestCount' })
+    .getByRole('checkbox')
+    .check();
+  await picker.locator('.ant-transfer-operation button:not([disabled])').first().click();
+  await picker.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(dialog.locator('nz-tag').filter({ hasText: 'guestCount' })).toBeVisible();
+  await dialog.locator('.cm-content').click();
+  await page.keyboard.press('ControlOrMeta+A');
+  await page.keyboard.type('return guestCount >= 1;');
+  await dialog.getByText('Code', { exact: true }).click();
+  await expect(dialog.getByRole('button', { name: 'Save', exact: true })).toBeEnabled();
+  await saveSettings(dialog);
+  await expect(question.locator('.input-preview-container input')).toHaveAttribute(
+    'placeholder',
+    'Enter a guest name',
+  );
+  await expect(question.locator('.input-preview-container input')).toHaveAttribute(
+    'maxlength',
+    '12',
+  );
+  await expect(question.getByRole('img', { name: 'code', exact: true })).toBeVisible();
+
+  await openResults(page);
+  await page.getByRole('button', { name: 'Download Project', exact: true }).click();
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'OK', exact: true }).click();
+  const download = await downloadPromise;
+  const file = testInfo.outputPath(download.suggestedFilename());
+  await download.saveAs(file);
+  const exported = JSON.parse(await readFile(file, 'utf8'));
+  expect(exported.project.editList).toHaveLength(2);
+  expect(exported.project.editList[0].data).toMatchObject({
+    type: 'SectionComponent',
+    customTitle: 'guestDetails',
+    sectionInputs: [{ customTitle: 'guestCount', data: { questionValue: 'How many guests?' } }],
+  });
+  expect(exported.project.editList[1].data).toMatchObject({
+    type: 'RepeatedSectionComponent',
+    customTitle: 'guestRepeats',
+    repeatByOther: false,
+    repeatTimes: 3,
+    sectionInputs: [
+      {
+        customTitle: 'guestName',
+        data: {
+          questionValue: 'Guest name',
+          placeholderValue: 'Enter a guest name',
+          maxLength: true,
+          maxLengthNumber: 12,
+          showCharacterCounter: true,
+        },
+        codeEditor: {
+          enabled: true,
+          data: { code: 'return guestCount >= 1;', variables: [{ title: 'guestCount' }] },
+        },
+      },
+    ],
+  });
+  expect(
+    exported.project.editList[1].data.sectionInputs[0].codeEditor.data.variables[0].elementId,
+  ).toBe(exported.project.editList[0].data.sectionInputs[0].data.id);
+
+  const importContext = await browser.newContext({ baseURL: testInfo.project.use.baseURL });
+  try {
+    const importedPage = await importContext.newPage();
+    const importErrors: string[] = [];
+    importedPage.on('pageerror', (error) => importErrors.push(error.message));
+    importedPage.on('console', (message) => {
+      if (message.type() === 'error' && !message.text().startsWith('Failed to load resource')) {
+        importErrors.push(message.text());
+      }
+    });
+    await importedPage.goto('/');
+    await importProject(importedPage, file);
+    await expect(importedPage.locator('#title')).toHaveValue(title);
+    await importedPage.getByRole('button', { name: 'Next', exact: true }).click();
+    const importedSource = importedPage.locator('#sectionDropList .section-card').filter({
+      has: importedPage.locator('app-edit-name').filter({ hasText: 'guestDetails' }),
+    });
+    const importedRepeat = importedPage.locator('#sectionDropList .section-card').filter({
+      has: importedPage.locator('app-edit-name').filter({ hasText: 'guestRepeats' }),
+    });
+    await expect(importedSource.locator('input[name="inputQuestion"]')).toHaveValue(
+      'How many guests?',
+    );
+    await expect(importedSource.locator('app-input-holder app-edit-name')).toHaveText('guestCount');
+    await expect(importedRepeat.locator('.repeated-settings-trigger')).toContainText('3x');
+    const importedQuestion = importedRepeat.locator('app-input-holder');
+    await expect(importedQuestion.locator('input[name="inputQuestion"]')).toHaveValue('Guest name');
+    await expect(importedQuestion.locator('.input-preview-container input')).toHaveAttribute(
+      'placeholder',
+      'Enter a guest name',
+    );
+    await expect(importedQuestion.locator('.input-preview-container input')).toHaveAttribute(
+      'maxlength',
+      '12',
+    );
+    await expect(importedQuestion.locator('.input-preview-container')).toContainText('0/12');
+    const importedSettings = await openSettings(importedPage, importedQuestion);
+    await expect(importedSettings.getByRole('checkbox', { name: 'Enable' })).toBeChecked();
+    await expect(
+      importedSettings.locator('nz-tag').filter({ hasText: 'guestCount' }),
+    ).toBeVisible();
+    await expect(importedSettings.locator('.cm-content')).toHaveText('return guestCount >= 1;');
+    await importedSettings.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await saveProject(importedPage);
+    await reopenQuestionnaire(importedPage, title);
+    await expect(importedRepeat.locator('.repeated-settings-trigger')).toContainText('3x');
+    await expect(importedQuestion.locator('.input-preview-container input')).toHaveAttribute(
+      'placeholder',
+      'Enter a guest name',
+    );
+    await expect(importedQuestion.locator('.input-preview-container input')).toHaveAttribute(
+      'maxlength',
+      '12',
+    );
+    await expect(importedQuestion.getByRole('img', { name: 'code', exact: true })).toBeVisible();
+    const reopenedSettings = await openSettings(importedPage, importedQuestion);
+    await expect(reopenedSettings.getByRole('checkbox', { name: 'Enable' })).toBeChecked();
+    await expect(
+      reopenedSettings.locator('nz-tag').filter({ hasText: 'guestCount' }),
+    ).toBeVisible();
+    await expect(reopenedSettings.locator('.cm-content')).toHaveText('return guestCount >= 1;');
+    expect(importErrors, 'The imported project reported unexpected errors').toEqual([]);
+  } finally {
+    await importContext.close();
+  }
 });
 
 test('an imported description cannot run script on the dashboard', async ({ page }) => {

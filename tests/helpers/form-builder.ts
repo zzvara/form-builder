@@ -191,6 +191,29 @@ export async function openSettings(page: Page, question: Locator) {
   return dialog;
 }
 
+/** Saves a settings dialog and waits until it has closed, so the next dialog is a fresh one. */
+export async function saveSettings(dialog: Locator) {
+  await dialog.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(dialog).toBeHidden();
+}
+
+/** The live preview of a question, which is what a respondent would see and fill in. */
+export function previewOf(question: Locator) {
+  return question.locator('.input-preview-container');
+}
+
+/**
+ * A day of the open calendar popup. The six-week grid also shows days of the neighbouring months,
+ * whose numbers can repeat, so only the cells of the displayed month count.
+ */
+export function calendarDay(page: Page, day: string) {
+  return page
+    .getByRole('grid')
+    .first()
+    .getByRole('gridcell', { name: day, exact: true })
+    .and(page.locator('.ant-picker-cell-in-view'));
+}
+
 /** The currently visible ng-zorro tooltip, which carries no ARIA role to query by. */
 export function tooltip(page: Page) {
   return page.locator('.ant-tooltip:not(.ant-tooltip-hidden)');
@@ -214,6 +237,25 @@ export async function moveQuestionToSection(page: Page, question: Locator, secti
       return visibleCenter(page, body);
     },
     true,
+  );
+}
+
+/** Moves a nested question to the top level, before a top-level question. */
+export async function moveQuestionToTopLevel(page: Page, question: Locator, before: Locator) {
+  const header = question.locator('.ant-card-head').first();
+  await question.scrollIntoViewIfNeeded();
+  await settle(question);
+  await dragPointer(
+    page,
+    async () => {
+      const box = await header.boundingBox();
+      if (!box) throw new Error('The question header must be visible before dragging.');
+      return { x: box.x + 6, y: box.y + box.height / 2 };
+    },
+    async () => {
+      await before.scrollIntoViewIfNeeded();
+      return visibleCenter(page, before, 'top');
+    },
   );
 }
 

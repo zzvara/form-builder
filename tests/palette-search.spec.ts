@@ -12,3 +12,22 @@ test('finds a component by its complete displayed name', async ({ page }) => {
   );
   await expect(palette).toHaveText(['Number Field']);
 });
+
+for (const { query, label, description } of [
+  { query: 'Számmező', label: 'Számmező', description: 'complete translated name' },
+  { query: 'DÁTUM', label: 'Dátumválasztó', description: 'uppercase accented substring' },
+]) {
+  test(`finds a Hungarian component by its ${description}`, async ({ page }) => {
+    await startQuestionnaire(page, 'Hungarian palette search');
+    await page.locator('.language-selector-button').hover();
+    await page.getByRole('menuitem', { name: 'Hungarian', exact: true }).click();
+    const sidebar = page.locator('app-sidebar');
+    const palette = sidebar.locator('.cdk-drag');
+    const search = sidebar.getByRole('textbox', { name: 'Keresés' });
+    await expect(search).toBeVisible();
+    await expect(palette.filter({ hasText: label })).toHaveCount(1);
+    await search.fill(query);
+    test.fail(true, 'Palette search matches translation keys rather than Hungarian labels.');
+    await expect(palette).toHaveText([label]);
+  });
+}

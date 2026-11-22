@@ -8,7 +8,7 @@ import {
   testRow,
 } from './helpers/form-builder';
 
-test.describe('Questionnaire Creation Flow', () => {
+test.describe('Project creation and dashboard flow', () => {
   test('should require a title before continuing', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'New Questionnaire', exact: true }).click();
