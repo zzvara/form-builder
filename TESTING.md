@@ -36,7 +36,8 @@ npm.cmd test
 
 Playwright interacts with the application in a real browser. The configuration in
 `playwright.config.ts` runs Chromium tests from `tests/`. The specs cover questionnaire and
-test creation, the component editor, sections and conditions, versions, import/export,
+test creation, the component editor, the shared field settings (tooltips, required answers,
+placeholders, and default values), sections and conditions, versions, import/export,
 preferences, keyboard access, and responsive layouts; `tests/README.md` lists them, the shared
 helpers, and the known bugs that are tracked with `test.fail`.
 
@@ -111,7 +112,7 @@ dependencies, and runs `npm run test:e2e`. Playwright starts the locked local se
 `npm run serve:e2e -- --listen 4200`; no separate running development server is needed.
 
 CI uses one browser worker, retries failures up to twice, and starts a fresh server on port
-4200 by default. The suite takes about five and a half minutes on one local worker, so the
+4200 by default. The suite takes about eight minutes on one local worker, so the
 Playwright job is allowed 30 minutes. Set the `PLAYWRIGHT_PORT` environment variable to use
 another port when reproducing CI locally alongside a running development server. Each test
 uses Playwright's default 30 second timeout; the longest flows are marked with `test.slow()`.

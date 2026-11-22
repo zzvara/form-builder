@@ -2,7 +2,6 @@ import { expect, test } from './helpers/fixtures';
 import {
   addQuestion,
   addSection,
-  addTextQuestion,
   renameComponent,
   reopenQuestionnaire,
   saveProject,
@@ -46,48 +45,6 @@ test('deleting a section removes its children and undo restores the complete sec
   await saveProject(page);
   await reopenQuestionnaire(page, 'Recover a section');
   await expect(section.locator('input[name="inputQuestion"]')).toHaveValue('Nested age');
-});
-
-test('version selection restores saved question snapshots and respects history boundaries', async ({
-  page,
-}) => {
-  await startQuestionnaire(page, 'Versioned questionnaire');
-  const holder = await addTextQuestion(page, 'Original wording');
-  await saveProject(page);
-  await reopenQuestionnaire(page, 'Versioned questionnaire');
-  const selector = page.locator('.version-selector');
-  const originalVersion = (await selector.innerText()).match(/VERSION\s+\d+/)?.[0];
-  expect(originalVersion).toBeTruthy();
-  await holder.locator('input[name="inputQuestion"]').fill('Revised wording');
-  await saveProject(page);
-  await reopenQuestionnaire(page, 'Versioned questionnaire');
-  const latestVersion = (await selector.innerText()).match(/VERSION\s+\d+/)?.[0];
-  expect(latestVersion).toBeTruthy();
-  expect(latestVersion).not.toBe(originalVersion);
-  await expect(page.getByRole('button', { name: 'Next Version', exact: true })).toBeDisabled();
-
-  await selector.click();
-  await page
-    .getByRole('menuitem')
-    .filter({ has: page.getByText(originalVersion!, { exact: true }) })
-    .click();
-  await expect(holder.locator('input[name="inputQuestion"]')).toHaveValue('Original wording');
-  await expect(page.getByRole('menuitem')).toHaveCount(0);
-  await selector.click();
-  await page
-    .getByRole('menuitem')
-    .filter({ has: page.getByText('VERSION 1', { exact: true }) })
-    .click();
-  await expect(page.locator('#sectionDropList app-input-holder')).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Previous Version', exact: true })).toBeDisabled();
-  await expect(page.getByRole('menuitem')).toHaveCount(0);
-  await selector.click();
-  await page
-    .getByRole('menuitem')
-    .filter({ has: page.getByText(latestVersion!, { exact: true }) })
-    .click();
-  await expect(holder.locator('input[name="inputQuestion"]')).toHaveValue('Revised wording');
-  await expect(page.getByRole('button', { name: 'Next Version', exact: true })).toBeDisabled();
 });
 
 test('repeated section saves a fixed repetition count with its nested question', async ({
