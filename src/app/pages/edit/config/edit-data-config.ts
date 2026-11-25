@@ -34,14 +34,14 @@ const textInputOptions = (): InputComponentData => ({
   minLength: false,
   minLengthMessage: '',
   maxLength: false,
-  showTooltip: false,
+  showTooltip: true,
   showCharacterCounter: false,
 });
 const numberInputOptions = (): NumberInputComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
-  showTooltip: false,
+  showTooltip: true,
   max: false,
   min: false,
   stepNumber: 1,
@@ -52,7 +52,7 @@ const dateInputOptions = (): DatePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
-  showTooltip: false,
+  showTooltip: true,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
   inlineMode: false,
@@ -66,7 +66,7 @@ const rangeInputOptions = (): RangePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
-  showTooltip: false,
+  showTooltip: true,
   dateFormat: defaultDateFormats.date,
   timeFormat: ' ' + defaultDateFormats.time,
   inlineMode: false,
@@ -80,7 +80,7 @@ const timeInputOptions = (): TimePickerComponentData => ({
   required: false,
   draft: true,
   requiredMessage: '',
-  showTooltip: false,
+  showTooltip: true,
   maxTime: false,
   minTime: false,
   use12Hours: false,
@@ -97,7 +97,7 @@ const textAreaInputOptions = (): TextareaComponentData => ({
   minLength: false,
   minLengthMessage: '',
   maxLength: false,
-  showTooltip: false,
+  showTooltip: true,
   showCharacterCounter: false,
 });
 const pictureInputOptions: PictureInputComponentData = {
@@ -111,7 +111,7 @@ const selectInputOptions = (translateService: TranslateService): SelectComponent
   required: false,
   draft: true,
   requiredMessage: '',
-  showTooltip: false,
+  showTooltip: true,
   isMultipleChoice: false,
 });
 const radioGroupInputOptions = (translateService: TranslateService): RadioGroupData => ({

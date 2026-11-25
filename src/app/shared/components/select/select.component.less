@@ -3,3 +3,16 @@ nz-select {
   min-width: 120px;
   max-width: 100%;
 }
+
+.label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  ::ng-deep nz-form-label {
+    width: auto;
+    padding-bottom: 0;
+  }
+}

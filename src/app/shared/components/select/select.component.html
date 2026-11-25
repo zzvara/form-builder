@@ -1,10 +1,14 @@
 <nz-form-item>
-  @if (label) {
-    <ng-container [ngTemplateOutlet]="label"></ng-container>
+  @if (label || data.showTooltip) {
+    <div class="label-wrapper">
+      @if (label) {
+        <ng-container [ngTemplateOutlet]="label"></ng-container>
+      }
+      <ng-container *ngTemplateOutlet="prefixTemplate" />
+    </div>
   }
 
   <nz-form-control [nzErrorTip]="errorTemplate">
-    <ng-container *ngTemplateOutlet="prefixTemplate" />
     <nz-select
       #inputComponent
       [required]="data.required"
@@ -22,11 +26,13 @@
     </nz-select>
   </nz-form-control>
 </nz-form-item>
+
 <ng-template #errorTemplate let-control>
   @for (message of getErrorMessages(control); track message) {
     <div>{{ message }}</div>
   }
 </ng-template>
+
 <ng-template #prefixTemplate>
   @if (data.showTooltip) {
     <span nz-icon nz-tooltip [nzTooltipTitle]="data.tooltipText" nzType="info-circle"></span>
