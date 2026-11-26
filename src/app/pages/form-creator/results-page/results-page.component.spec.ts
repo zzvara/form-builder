@@ -7,6 +7,7 @@ import { ProjectService } from '@services/project.service';
 import { JsonService } from '@services/json.service';
 import { ProjectType } from '@interfaces/project';
 import { inputFixture, mockStorage, projectFixture, sectionFixture } from '@app/testing/fixtures';
+import { FormBuilderStore } from '@app/core/form-builder.store';
 
 describe('ResultsPageComponent', () => {
   let component: ResultsPageComponent;
@@ -28,9 +29,8 @@ describe('ResultsPageComponent', () => {
   });
 
   it('leaves results empty for a missing project and provides question comparators', () => {
-    component.projectId = 'missing';
-    component.ngOnInit();
-    expect(component.project()).toBeUndefined();
+    TestBed.inject(FormBuilderStore).project.set(null);
+    expect(component.project()).toBeNull();
     expect(component.projectHistory()).toEqual([]);
     const first = {
       ...projectFixture({ title: 'Alpha', description: 'Alpha' }),
@@ -54,8 +54,7 @@ describe('ResultsPageComponent', () => {
     });
     service.add(project);
     service.update(project.id, { ...project, title: 'Revised' });
-    component.projectId = project.id;
-    component.ngOnInit();
+    TestBed.inject(FormBuilderStore).setProject(project.id);
     expect(component.latestVersionNum()).toBe(2);
     expect(component.project()!.title).toBe('Revised');
     expect(component.sectionInputs()).toEqual([input]);
@@ -80,10 +79,7 @@ describe('ResultsPageComponent', () => {
 
   it('returns home when the wizard finishes', () => {
     const navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
-    const emit = spyOn(component.setPage, 'emit');
-    component.page = 2;
     component.nextPage();
-    expect(emit).toHaveBeenCalledWith(3);
     expect(navigate).toHaveBeenCalledWith(['/']);
   });
 });

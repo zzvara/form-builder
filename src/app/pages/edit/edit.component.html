@@ -1,6 +1,6 @@
 <nz-layout>
   <nz-sider class="sider-sticky" nzWidth="300px">
-    <app-sidebar [sidebarData]="sideBarData" />
+    <app-sidebar [sidebarData]="sideBarData()" />
   </nz-sider>
   <nz-layout class="inner-layout">
     <nz-content>
@@ -57,10 +57,10 @@
         id="sectionDropList"
         cdkDropList
         (cdkDropListDropped)="dropIntoEdit($event)"
-        [cdkDropListData]="editList"
+        [cdkDropListData]="editList()"
         [cdkDropListConnectedTo]="getEditDropListConnectedTo()"
       >
-        @for (edit of editList; track edit.id || $index) {
+        @for (edit of editList(); track edit.id || $index) {
           @if (edit.data | instanceOfSectionList) {
             <nz-card
               [id]="edit.id"
@@ -99,14 +99,14 @@
                 }
                 <app-edit-name
                   [edit]="edit"
-                  [names]="names"
+                  [names]="names()"
                   (updateName)="updateName()"
                 ></app-edit-name>
               </ng-template>
               <ng-template #sectionButtons>
                 <div class="section-buttons">
                   @if (edit.data | instanceOfRepeatedSection) {
-                    @if (!isMobileView) {
+                    @if (!isMobileView()) {
                       <button
                         nz-button
                         nzType="default"
@@ -213,7 +213,7 @@
                   }
                   <app-edit-name
                     [edit]="item"
-                    [names]="names"
+                    [names]="names()"
                     (updateName)="updateName()"
                   ></app-edit-name>
                 </ng-template>
@@ -245,7 +245,7 @@
               }
               <app-edit-name
                 [edit]="edit"
-                [names]="names"
+                [names]="names()"
                 (updateName)="updateName()"
               ></app-edit-name>
             </ng-template>
@@ -275,9 +275,9 @@
       cdkDropList
       [cdkDropListConnectedTo]="[]"
       (cdkDropListDropped)="dropIntoEdit($event)"
-      [cdkDropListData]="editList"
+      [cdkDropListData]="editList()"
     >
-      @for (edit of editList; track edit.id || $index) {
+      @for (edit of editList(); track edit.id || $index) {
         @if (edit.data | instanceOfSectionList) {
           <div class="section-item" cdkDrag [cdkDragData]="edit">
             <div class="section-children">
@@ -403,7 +403,7 @@
   </nz-sider>
 
   <nz-drawer
-    [nzVisible]="repeatedSettingsDrawerVisible"
+    [nzVisible]="repeatedSettingsDrawerVisible()"
     [nzPlacement]="'bottom'"
     [nzHeight]="'60vh'"
     [nzTitle]="'COMPONENTS.SECTION.REPEATED.REPEAT_LABEL' | translate"
@@ -411,7 +411,7 @@
     class="repeated-drawer-outer"
   >
     <ng-container *nzDrawerContent>
-      @if (activeRepeatedSection) {
+      @if (activeRepeatedSection()) {
         <div class="repeated-settings-drawer">
           <ng-container
             [ngTemplateOutlet]="repeatedSettingsFields"

@@ -1,23 +1,20 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { cloneDeep } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UndoRedoService<T> {
-  private undoStack: T[] = [];
-  private redoStack: T[] = [];
-  private hasInitialStateSaved = false;
+  // A belső állapotok mostantól reaktív Signalok
+  private readonly undoStack: WritableSignal<T[]> = signal([]);
+  private readonly redoStack: WritableSignal<T[]> = signal([]);
+  private readonly hasInitialStateSaved: WritableSignal<boolean> = signal(false);
   private readonly MAX_STACK_SIZE = 10;
-  private readonly undoAvailability = signal(false);
-  private readonly redoAvailability = signal(false);
-  readonly canUndoState = this.undoAvailability.asReadonly();
-  readonly canRedoState = this.redoAvailability.asReadonly();
-
-  private updateAvailability(): void {
-    this.undoAvailability.set(this.canUndo());
-    this.redoAvailability.set(this.canRedo());
-  }
+  // Publikus computed signalok a UI számára
+  public readonly canUndo: Signal<boolean> = computed(() => this.undoStack().length > 1);
+  public readonly canRedo: Signal<boolean> = computed(() => this.redoStack().length > 0);
+  readonly canUndoState = this.canUndo;
+  readonly canRedoState = this.canRedo;
 
   /**
    * Method to clone the state to avoid reference issues.
@@ -34,7 +31,8 @@ export class UndoRedoService<T> {
    * @returns {boolean} - True if the state is different, false otherwise.
    */
   private isStateDifferent(state: T): boolean {
-    return JSON.stringify(this.undoStack[this.undoStack.length - 1]) !== JSON.stringify(state);
+    const stack = this.undoStack();
+    return JSON.stringify(stack[stack.length - 1]) !== JSON.stringify(state);
   }
 
   /**
@@ -43,30 +41,41 @@ export class UndoRedoService<T> {
    * @returns {void}
    */
   saveState(state: T): void {
-    if (!this.hasInitialStateSaved || this.undoStack.length === 0 || this.isStateDifferent(state)) {
-      if (this.undoStack.length >= this.MAX_STACK_SIZE) {
+    const stack = this.undoStack();
+    if (!this.hasInitialStateSaved() || stack.length === 0 || this.isStateDifferent(state)) {
+      const newStack = [...stack];
+      if (newStack.length >= this.MAX_STACK_SIZE) {
         // Remove the oldest state if the stack size exceeds the limit
-        this.undoStack.shift();
+        newStack.shift();
       }
-      this.undoStack.push(this.cloneState(state));
-      this.redoStack = [];
-      this.hasInitialStateSaved = true;
-      this.updateAvailability();
+      newStack.push(this.cloneState(state));
+
+      // Signalok frissítése új értékekkel
+      this.undoStack.set(newStack);
+      this.redoStack.set([]);
+      this.hasInitialStateSaved.set(true);
     }
   }
 
   /**
    * Method to undo the last action and return the previous state.
-   * @param {T} currentState - The current state before undoing.
    * @returns {T | null} - The previous state if undo is possible, otherwise null.
    */
   undo(): T | null {
     if (this.canUndo()) {
+      const currentUndo = this.undoStack();
+      const poppedState = currentUndo[currentUndo.length - 1];
+
       // Current state is at the top of the undoStack (CLONE STATE IMPORTANT!)
-      this.redoStack.push(this.cloneState(this.undoStack.pop()!));
-      this.updateAvailability();
+      // Kivesszük a legfelső elemet az undo tömbből
+      this.undoStack.set(currentUndo.slice(0, -1));
+
+      // Belerakjuk a klónozott elemet a redo tömbbe
+      this.redoStack.update((redo) => [...redo, this.cloneState(poppedState)]);
+
       // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
-      return this.cloneState(this.undoStack[this.undoStack.length - 1]);
+      const newUndo = this.undoStack();
+      return this.cloneState(newUndo[newUndo.length - 1]);
     }
     return null;
   }
@@ -77,11 +86,18 @@ export class UndoRedoService<T> {
    */
   redo(): T | null {
     if (this.canRedo()) {
-      // Current state is at the top of the redoStack (CLONE STATE IMPORTANT!)
-      this.undoStack.push(this.cloneState(this.redoStack.pop()!));
-      this.updateAvailability();
+      const currentRedo = this.redoStack();
+      const poppedState = currentRedo[currentRedo.length - 1];
+
+      // Kivesszük a legfelső elemet a redo tömbből
+      this.redoStack.set(currentRedo.slice(0, -1));
+
+      // Belerakjuk a klónozott elemet az undo tömbbe
+      this.undoStack.update((undo) => [...undo, this.cloneState(poppedState)]);
+
       // Return the last undoStack or undefined (CLONE STATE IMPORTANT!)
-      return this.cloneState(this.undoStack[this.undoStack.length - 1]);
+      const newUndo = this.undoStack();
+      return this.cloneState(newUndo[newUndo.length - 1]);
     }
     return null;
   }
@@ -91,25 +107,8 @@ export class UndoRedoService<T> {
    * @returns {void}
    */
   clearHistory(): void {
-    this.undoStack = [];
-    this.redoStack = [];
-    this.hasInitialStateSaved = false;
-    this.updateAvailability();
-  }
-
-  /**
-   * Method to check if undo is possible.
-   * @returns {boolean} - True if undo is possible, false otherwise.
-   */
-  canUndo(): boolean {
-    return this.undoStack.length > 1;
-  }
-
-  /**
-   * Method to check if redo is possible.
-   * @returns {boolean} - True if redo is possible, false otherwise.
-   */
-  canRedo(): boolean {
-    return this.redoStack.length > 0;
+    this.undoStack.set([]);
+    this.redoStack.set([]);
+    this.hasInitialStateSaved.set(false);
   }
 }
