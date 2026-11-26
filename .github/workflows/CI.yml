@@ -174,9 +174,17 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           if [ -n "$total_line" ]; then
             passed="$(printf '%s\n' "$total_line" | grep -oE '[0-9]+ SUCCESS' | tail -n 1 | cut -d ' ' -f 1)"
-            echo "- Passed: ${passed:-0}" >> "$GITHUB_STEP_SUMMARY"
+            failed="$(printf '%s\n' "$total_line" | grep -oE '[0-9]+ FAILED' | tail -n 1 | cut -d ' ' -f 1)"
+            passed="${passed:-0}"
+            failed="${failed:-0}"
+            total=$((passed + failed))
+            echo "- Total: ${total}" >> "$GITHUB_STEP_SUMMARY"
+            echo "- Passed: ${passed}" >> "$GITHUB_STEP_SUMMARY"
+            echo "- Failed: ${failed}" >> "$GITHUB_STEP_SUMMARY"
             echo "- Result: \`$total_line\`" >> "$GITHUB_STEP_SUMMARY"
-            echo "- Passed: ${passed:-0}"
+            echo "- Total: ${total}"
+            echo "- Passed: ${passed}"
+            echo "- Failed: ${failed}"
             echo "$total_line"
           else
             echo "Test counts are unavailable because the test runner did not report a total." >> "$GITHUB_STEP_SUMMARY"
